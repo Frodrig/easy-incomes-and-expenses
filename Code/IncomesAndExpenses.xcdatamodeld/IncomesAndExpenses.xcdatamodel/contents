@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="12C60" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="IAECategory" representedClassName="IAECategory" syncable="YES">
+        <attribute name="categoryType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="tag" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="IAEConcept" representedClassName="IAEConcept" syncable="YES">
+        <attribute name="amount" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="dayOfTheMonth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="detailDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="category" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="IAECategory" syncable="YES"/>
+        <relationship name="month" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="IAEMonth" inverseName="concepts" inverseEntity="IAEMonth" syncable="YES"/>
+    </entity>
+    <entity name="IAEMonth" representedClassName="IAEMonth" syncable="YES">
+        <attribute name="month" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="concepts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="IAEConcept" inverseName="month" inverseEntity="IAEConcept" syncable="YES"/>
+        <relationship name="year" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="IAEYear" inverseName="months" inverseEntity="IAEYear" syncable="YES"/>
+    </entity>
+    <entity name="IAEYear" representedClassName="IAEYear" syncable="YES">
+        <attribute name="yearDate" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="months" optional="YES" toMany="YES" minCount="12" maxCount="12" deletionRule="Cascade" destinationEntity="IAEMonth" inverseName="year" inverseEntity="IAEMonth" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="IAECategory" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="IAEConcept" positionX="160" positionY="192" width="128" height="135"/>
+        <element name="IAEMonth" positionX="160" positionY="192" width="128" height="90"/>
+        <element name="IAEYear" positionX="160" positionY="192" width="128" height="75"/>
+    </elements>
+</model>

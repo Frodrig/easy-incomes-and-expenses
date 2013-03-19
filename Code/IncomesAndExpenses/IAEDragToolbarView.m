@@ -42,7 +42,7 @@
 
 - (void)dealloc
 {
-    self.layer.mask = nil;
+    //self.layer.mask = nil;
 }
 
 @end

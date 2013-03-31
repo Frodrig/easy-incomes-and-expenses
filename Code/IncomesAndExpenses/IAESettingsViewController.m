@@ -156,8 +156,10 @@
     if (indexPath.row == 0) {
         MFMailComposeViewController *appEmailViewController = [[MFMailComposeViewController alloc] init];
         appEmailViewController.mailComposeDelegate = self;
-        [appEmailViewController setSubject:NSLocalizedString(@"Feedback about Easy Incomes and Expenses Lite version 1.0!", @"Titulo email feedback")];
-        [appEmailViewController setToRecipients:[NSArray arrayWithObject:NSLocalizedString(@"hola@frodrig.com", @"Email feedback")]];
+        NSString *emailSubject = NSLocalizedString(@"LTEXT_EMAIL_SUBJECT", @"Email feedback");
+        emailSubject = [emailSubject stringByAppendingString:NSLocalizedString(@"LTEXT_VERSION", @"")];
+        [appEmailViewController setSubject:NSLocalizedString(emailSubject, @"")];
+        [appEmailViewController setToRecipients:[NSArray arrayWithObject:NSLocalizedString(@"LTEXT_EMAIL", @"")]];
         [self presentViewController:appEmailViewController animated:YES completion:nil];
     } else if (indexPath.row == 1) {
         IAEAboutViewController *aboutViewController = [[IAEAboutViewController alloc] initWithNibName:nil bundle:nil];

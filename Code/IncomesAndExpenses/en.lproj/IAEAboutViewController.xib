@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1552</int>
-		<string key="IBDocument.SystemVersion">12C60</string>
+		<string key="IBDocument.SystemVersion">12D78</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
-		<string key="IBDocument.AppKitVersion">1187.34</string>
-		<string key="IBDocument.HIToolboxVersion">625.00</string>
+		<string key="IBDocument.AppKitVersion">1187.37</string>
+		<string key="IBDocument.HIToolboxVersion">626.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			<string key="NS.object.0">2083</string>
@@ -161,7 +161,7 @@
 										<string key="NSFrame">{{-8, -87}, {288, 143}}</string>
 										<reference key="NSSuperview" ref="334155136"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="555269951"/>
+										<reference key="NSNextKeyView" ref="142902018"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -193,7 +193,7 @@
 								<string key="NSFrame">{{0, 46}, {280, 22}}</string>
 								<reference key="NSSuperview" ref="970174352"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="142902018"/>
+								<reference key="NSNextKeyView" ref="568276266"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">1</int>
@@ -214,7 +214,7 @@
 								<int key="IBUIContentMode">7</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-								<string type="base64-UTF8" key="IBUIText">RGV2ZWxvcGVkIGJ5CkZlcm5hbmRvIFJvZHLDrWd1ZXo</string>
+								<string type="base64-UTF8" key="IBUIText">RGVzaWduIGFuZCBkZXZlbG9wbWVudApGZXJuYW5kbyBSb2Ryw61ndWV6A</string>
 								<object class="NSColor" key="IBUITextColor">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MSAxIDEAA</bytes>
@@ -242,7 +242,7 @@
 						<string key="NSFrame">{{10, 10}, {280, 130}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="568276266"/>
+						<reference key="NSNextKeyView" ref="555269951"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">2</int>
@@ -394,17 +394,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">IAEAboutViewController</string>
 					<string key="superclassName">UIViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">buttonPressed:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">buttonPressed:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">buttonPressed:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">backgroundView</string>
 						<string key="NS.object.0">UIView</string>

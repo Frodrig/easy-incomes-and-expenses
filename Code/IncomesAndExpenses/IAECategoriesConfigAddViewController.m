@@ -50,6 +50,14 @@
         self.fromInputPanel = fromInputPanel;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+        
+        // Codigo ninja para capturar cuando el teclado se esconde en el caso de que este en modo split, algo
+        // que es posible desde la version de iOS 5 o superior. Este bug hizo que gente con el teclado partido
+        // no pudiera utilizar la aplicacion pues no se ejecutaba la logica al realizar la operacion
+        NSString *version = [[UIDevice currentDevice] systemVersion];        
+        if(version.floatValue > 5.0) {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShowOrHide:) name:UIKeyboardDidChangeFrameNotification object:nil];
+        }
     }
     return self;
 }
@@ -177,11 +185,11 @@
 
 #pragma mark - NotificationCenter
 
-- (void)keyboardDidHide:(NSNotification *)notification
+- (void)logicAfterKeyboardHide
 {
     if (!self.exitByCancel && self.validCategoryTag) {
         NSString *textFieldWithoutSpaces = [self.textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-
+        
         if (self.category) {
             if ([self.category.tag caseInsensitiveCompare:textFieldWithoutSpaces] != NSOrderedSame) {
                 self.category.tag = textFieldWithoutSpaces;
@@ -197,7 +205,24 @@
     } else {
         [self.navigationController popViewControllerAnimated:YES];
     }
+}
+
+- (void)keyboardDidHide:(NSNotification *)notification
+{
+    [self logicAfterKeyboardHide];
+}
+
+-(void)keyboardWillShowOrHide:(NSNotification *)notification
+{
+    NSDictionary* info = [notification userInfo];
+    CGRect currentKbRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    
+    BOOL keyboardVisible = CGRectIntersectsRect(currentKbRect, screenRect);
+    if (!keyboardVisible) {
+        [self logicAfterKeyboardHide];
+    }
 }
 
 

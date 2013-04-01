@@ -61,6 +61,8 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", @"Cerrar") style:UIBarButtonItemStyleBordered target:self action:@selector(closeBarButtonPressed:)];
     
     self.navigationItem.title = NSLocalizedString(@"Categories", @"Categorias");
+    
+    self.view.backgroundColor = [UIColor blackColor];
 }
 
 - (void)viewDidAppear:(BOOL)animated

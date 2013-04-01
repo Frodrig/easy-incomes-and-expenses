@@ -209,12 +209,20 @@
 
 - (void)keyboardDidHide:(NSNotification *)notification
 {
-    [self logicAfterKeyboardHide];
+    // IMPORTANTE: Cuadno el teclado es dividido dentro de la aplicacion llega este mensaje, lo que habra que hacer es comprobar
+    // si el centro del teclado sigue intersecando con las dimensiones de la pantalla. Si fuera asi, no procesamos el mensaje
+    // como un dismiss del teclado.
+    CGRect currentKbRect = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    currentKbRect = [self.view convertRect:currentKbRect fromView:nil];
+    BOOL keyboardWasSplit = CGRectIntersectsRect([[UIScreen mainScreen] bounds], currentKbRect);
+    if (!keyboardWasSplit) {
+        [self logicAfterKeyboardHide];
+    }
 }
 
 -(void)keyboardWillShowOrHide:(NSNotification *)notification
 {
-    NSDictionary* info = [notification userInfo];
+    NSDictionary *info = [notification userInfo];
     CGRect currentKbRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
     CGRect screenRect = [[UIScreen mainScreen] bounds];

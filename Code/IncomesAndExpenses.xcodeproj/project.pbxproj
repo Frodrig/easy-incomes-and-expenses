@@ -83,6 +83,10 @@
 		5BA0A288167E33B600CBB79B /* FooterSection0ConceptsTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA0A287167E33B600CBB79B /* FooterSection0ConceptsTableView.xib */; };
 		5BA97710166F42F5007B59C4 /* Section1ConceptsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA9770F166F42F5007B59C4 /* Section1ConceptsTableViewCell.xib */; };
 		5BA97713166F5A09007B59C4 /* ExtendedConceptsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA97712166F5A09007B59C4 /* ExtendedConceptsTableViewCell.xib */; };
+		5BAA5D861709699100B6B3F8 /* 441-help-symbol1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BAA5D841709699100B6B3F8 /* 441-help-symbol1@2x.png */; };
+		5BAA5D871709699100B6B3F8 /* 441-help-symbol1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BAA5D851709699100B6B3F8 /* 441-help-symbol1.png */; };
+		5BAA5D8E17096B7100B6B3F8 /* 287-at@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BAA5D8C17096B7100B6B3F8 /* 287-at@2x.png */; };
+		5BAA5D8F17096B7100B6B3F8 /* 287-at.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BAA5D8D17096B7100B6B3F8 /* 287-at.png */; };
 		5BB040FD16BFBD84009C1143 /* IAECategoryConfigHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BB040FC16BFBD83009C1143 /* IAECategoryConfigHeaderView.xib */; };
 		5BB0410216BFCA09009C1143 /* IAECategoryConfigHeaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB0410116BFCA09009C1143 /* IAECategoryConfigHeaderViewController.m */; };
 		5BB0410716BFD66B009C1143 /* IAECategoriesConfigAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB0410516BFD66B009C1143 /* IAECategoriesConfigAddViewController.m */; };
@@ -124,8 +128,6 @@
 		5BF3654B16B5836700781513 /* 14-gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BF3654916B5836700781513 /* 14-gear@2x.png */; };
 		5BF3655016B58C7E00781513 /* IAESettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF3654E16B58C7E00781513 /* IAESettingsViewController.m */; };
 		5BF3655116B58C7E00781513 /* IAESettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BF3654F16B58C7E00781513 /* IAESettingsViewController.xib */; };
-		5BF3655C16B59C4D00781513 /* 216-compose.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BF3655A16B59C4C00781513 /* 216-compose.png */; };
-		5BF3655D16B59C4D00781513 /* 216-compose@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BF3655B16B59C4C00781513 /* 216-compose@2x.png */; };
 		5BF4F09F16B7FD420031583A /* backtest.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BF4F09E16B7FD420031583A /* backtest.png */; };
 		5BF862BE1668D444009D024E /* IAECircularStringSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF862BD1668D444009D024E /* IAECircularStringSelection.m */; };
 /* End PBXBuildFile section */
@@ -241,6 +243,10 @@
 		5BA0A287167E33B600CBB79B /* FooterSection0ConceptsTableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FooterSection0ConceptsTableView.xib; sourceTree = "<group>"; };
 		5BA9770F166F42F5007B59C4 /* Section1ConceptsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Section1ConceptsTableViewCell.xib; sourceTree = "<group>"; };
 		5BA97712166F5A09007B59C4 /* ExtendedConceptsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExtendedConceptsTableViewCell.xib; sourceTree = "<group>"; };
+		5BAA5D841709699100B6B3F8 /* 441-help-symbol1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "441-help-symbol1@2x.png"; sourceTree = "<group>"; };
+		5BAA5D851709699100B6B3F8 /* 441-help-symbol1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "441-help-symbol1.png"; sourceTree = "<group>"; };
+		5BAA5D8C17096B7100B6B3F8 /* 287-at@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "287-at@2x.png"; sourceTree = "<group>"; };
+		5BAA5D8D17096B7100B6B3F8 /* 287-at.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "287-at.png"; sourceTree = "<group>"; };
 		5BB040FC16BFBD83009C1143 /* IAECategoryConfigHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAECategoryConfigHeaderView.xib; sourceTree = "<group>"; };
 		5BB0410016BFCA09009C1143 /* IAECategoryConfigHeaderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategoryConfigHeaderViewController.h; sourceTree = "<group>"; };
 		5BB0410116BFCA09009C1143 /* IAECategoryConfigHeaderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECategoryConfigHeaderViewController.m; sourceTree = "<group>"; };
@@ -303,8 +309,6 @@
 		5BF3654D16B58C7E00781513 /* IAESettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAESettingsViewController.h; sourceTree = "<group>"; };
 		5BF3654E16B58C7E00781513 /* IAESettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAESettingsViewController.m; sourceTree = "<group>"; };
 		5BF3654F16B58C7E00781513 /* IAESettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAESettingsViewController.xib; sourceTree = "<group>"; };
-		5BF3655A16B59C4C00781513 /* 216-compose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "216-compose.png"; sourceTree = "<group>"; };
-		5BF3655B16B59C4C00781513 /* 216-compose@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "216-compose@2x.png"; sourceTree = "<group>"; };
 		5BF4F09E16B7FD420031583A /* backtest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backtest.png; sourceTree = "<group>"; };
 		5BF862BC1668D444009D024E /* IAECircularStringSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECircularStringSelection.h; sourceTree = "<group>"; };
 		5BF862BD1668D444009D024E /* IAECircularStringSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECircularStringSelection.m; sourceTree = "<group>"; };
@@ -621,17 +625,19 @@
 				5BB08F7E16AD438800083058 /* 31-circle-plus.png */,
 				5BB08F7F16AD438800083058 /* 31-circle-plus@2x.png */,
 				5B65635F16B2E2D500CEE1F2 /* 437-minus.png */,
-				5BF3655A16B59C4C00781513 /* 216-compose.png */,
-				5BF3655B16B59C4C00781513 /* 216-compose@2x.png */,
 				5B7A4D6516B66889001751A9 /* 451-help-symbol2.png */,
 				5BB0411D16C02E54009C1143 /* 322-dislike.png */,
 				5BB0411E16C02E54009C1143 /* 322-dislike@2x.png */,
 				5B7A4D6616B66889001751A9 /* 451-help-symbol2@2x.png */,
 				5B7A4D6716B66889001751A9 /* 452-information-symbol2.png */,
+				5BAA5D841709699100B6B3F8 /* 441-help-symbol1@2x.png */,
+				5BAA5D851709699100B6B3F8 /* 441-help-symbol1.png */,
 				5B7A4D6816B66889001751A9 /* 452-information-symbol2@2x.png */,
 				5BF3654816B5836700781513 /* 14-gear.png */,
 				5BF3654916B5836700781513 /* 14-gear@2x.png */,
 				5B65636016B2E2D500CEE1F2 /* 437-minus@2x.png */,
+				5BAA5D8C17096B7100B6B3F8 /* 287-at@2x.png */,
+				5BAA5D8D17096B7100B6B3F8 /* 287-at.png */,
 				5B29BF5E16AC5DC900C2D161 /* 433-x.png */,
 				5B29BF5F16AC5DC900C2D161 /* 433-x@2x.png */,
 				5B29BF5A16AC5CBE00C2D161 /* 342-delete.png */,
@@ -953,8 +959,6 @@
 				5BF3654A16B5836700781513 /* 14-gear.png in Resources */,
 				5BF3654B16B5836700781513 /* 14-gear@2x.png in Resources */,
 				5BF3655116B58C7E00781513 /* IAESettingsViewController.xib in Resources */,
-				5BF3655C16B59C4D00781513 /* 216-compose.png in Resources */,
-				5BF3655D16B59C4D00781513 /* 216-compose@2x.png in Resources */,
 				5B7A4D6916B66889001751A9 /* 451-help-symbol2.png in Resources */,
 				5B7A4D6A16B66889001751A9 /* 451-help-symbol2@2x.png in Resources */,
 				5B7A4D6B16B66889001751A9 /* 452-information-symbol2.png in Resources */,
@@ -988,6 +992,10 @@
 				5B76116816C56C7A00558D6D /* Default-Landscape@2x~ipad.png in Resources */,
 				5B8A31CF16C9090E008731AD /* 72.png in Resources */,
 				5B8A31D116C90911008731AD /* 72@2x.png in Resources */,
+				5BAA5D861709699100B6B3F8 /* 441-help-symbol1@2x.png in Resources */,
+				5BAA5D871709699100B6B3F8 /* 441-help-symbol1.png in Resources */,
+				5BAA5D8E17096B7100B6B3F8 /* 287-at@2x.png in Resources */,
+				5BAA5D8F17096B7100B6B3F8 /* 287-at.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

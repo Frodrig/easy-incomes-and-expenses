@@ -92,7 +92,7 @@
     */
     if (indexPath.row == 0) {
         cell.textLabel.text = NSLocalizedString(@"Send Feedback", @"Opcion para mandar feedback");
-        cell.imageView.image = [UIImage imageNamed:@"216-compose.png"];
+        cell.imageView.image = [UIImage imageNamed:@"287-at.png.png"];
     } else if (indexPath.row == 1) {
         cell.textLabel.text = NSLocalizedString(@"About", @"Seccion acerca de");
         cell.imageView.image = [UIImage imageNamed:@"452-information-symbol2.png"];

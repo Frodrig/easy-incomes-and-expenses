@@ -247,6 +247,7 @@
 		5BAA5D851709699100B6B3F8 /* 441-help-symbol1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "441-help-symbol1.png"; sourceTree = "<group>"; };
 		5BAA5D8C17096B7100B6B3F8 /* 287-at@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "287-at@2x.png"; sourceTree = "<group>"; };
 		5BAA5D8D17096B7100B6B3F8 /* 287-at.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "287-at.png"; sourceTree = "<group>"; };
+		5BAA5E46170988AC00B6B3F8 /* IncomesAndExpenses copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "IncomesAndExpenses copy-Info.plist"; path = "/Users/fernandorodriguezmartinez/Trabajo/Freelance/Git/Easy Incomes and Expenses/Code/IncomesAndExpenses copy-Info.plist"; sourceTree = "<absolute>"; };
 		5BB040FC16BFBD83009C1143 /* IAECategoryConfigHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAECategoryConfigHeaderView.xib; sourceTree = "<group>"; };
 		5BB0410016BFCA09009C1143 /* IAECategoryConfigHeaderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategoryConfigHeaderViewController.h; sourceTree = "<group>"; };
 		5BB0410116BFCA09009C1143 /* IAECategoryConfigHeaderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECategoryConfigHeaderViewController.m; sourceTree = "<group>"; };
@@ -528,6 +529,7 @@
 				5B767DFC1636D7FC005315F8 /* IncomesAndExpenses */,
 				5B767DF51636D7FC005315F8 /* Frameworks */,
 				5B767DF31636D7FC005315F8 /* Products */,
+				5BAA5E46170988AC00B6B3F8 /* IncomesAndExpenses copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1150,6 +1152,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1165,8 +1168,11 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Debug;
 		};
@@ -1179,14 +1185,18 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
@@ -1196,6 +1206,8 @@
 		5B767E111636D7FC005315F8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IncomesAndExpenses/IncomesAndExpenses-Prefix.pch";
@@ -1208,6 +1220,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "Easy Inc & Exp";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1215,7 +1229,9 @@
 		5B767E121636D7FC005315F8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Fernando Rodríguez Martínez";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IncomesAndExpenses/IncomesAndExpenses-Prefix.pch";
@@ -1228,7 +1244,9 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "Easy Inc & Exp";
-				"PROVISIONING_PROFILE[sdk=*]" = "28D82C68-14DB-4784-B3F4-3AC432F97F97";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=*]" = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -298,7 +298,7 @@
 		5BDC867C1680D83500C761D5 /* IAEConcept.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEConcept.h; sourceTree = "<group>"; };
 		5BDC867D1680D83500C761D5 /* IAEConcept.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEConcept.m; sourceTree = "<group>"; };
 		5BE1F4BE1637EA4B004E13C2 /* IAEBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEBook.h; sourceTree = "<group>"; };
-		5BE1F4BF1637EA4B004E13C2 /* IAEBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEBook.m; sourceTree = "<group>"; };
+		5BE1F4BF1637EA4B004E13C2 /* IAEBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEBook.m; sourceTree = SOURCE_ROOT; };
 		5BE1F4C61637FE0C004E13C2 /* IAECategoryStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategoryStore.h; sourceTree = "<group>"; };
 		5BE1F4C71637FE0C004E13C2 /* IAECategoryStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECategoryStore.m; sourceTree = "<group>"; };
 		5BE1F4CA1637FF83004E13C2 /* CategoryDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CategoryDefs.h; sourceTree = "<group>"; };

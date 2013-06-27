@@ -14,26 +14,19 @@
 #import "IAEMonth.h"
 #import "IAECategoryStore.h"
 
+#import "IAEModeNavigationController.h"
+
 @implementation IAEAppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.backgroundColor = [UIColor blackColor];
-    
-    // Override point for customization after application launch.
-    //[self createYearTest];
-    //[[IAEBook sharedBook] saveAll];
-    
     [self createYearBookIfProceed];
-
-    self.window.rootViewController = [[IAEIncomeExpenseControllerViewController alloc] init];
     
-   
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.rootViewController = [[IAEModeNavigationController alloc] initWithApropiateRootModeViewController];
     [self.window makeKeyAndVisible];
     
-   
     return YES;
 }
 

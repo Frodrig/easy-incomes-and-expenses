@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4457.9" systemVersion="12E55" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <development version="5000" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3682.9"/>
+    </dependencies>
+    <scenes>
+        <!--Edit Mode View Controller - Horizontal-->
+        <scene sceneID="ZOc-zz-2EG">
+            <objects>
+                <viewController storyboardIdentifier="EditModeViewController" id="7Ea-79-0mi" customClass="IAEEditModeViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="JJO-TL-5Gw">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" title="Horizontal" id="oTA-2x-dhi">
+                        <barButtonItem key="leftBarButtonItem" title="Años" id="8dX-ur-a5f">
+                            <connections>
+                                <segue destination="Afd-Ns-84s" kind="modal" identifier="EditModeToYearsSegue" customClass="IAEYearsViewControllerCustomSegue" modalTransitionStyle="coverVertical" id="JHB-DG-SLv"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Opciones" id="eij-Jg-gKO">
+                            <connections>
+                                <segue destination="Muq-Ra-Fh9" kind="modal" id="Cjr-c2-dYj"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nSe-iv-lCf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-581" y="570"/>
+        </scene>
+        <!--Years View Controller - Años-->
+        <scene sceneID="9nd-87-Se5">
+            <objects>
+                <viewController id="eNP-D0-SiD" customClass="IAEYearsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7hB-0s-dTf">
+                        <rect key="frame" x="0.0" y="64" width="1024" height="704"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" title="Años" id="uVD-OB-GT6">
+                        <barButtonItem key="rightBarButtonItem" title="Cerrar" style="plain" id="yHQ-l3-ruQ">
+                            <connections>
+                                <action selector="closeButtonPressed:" destination="eNP-D0-SiD" id="0bZ-ff-wNy"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xou-rs-9xG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2173" y="1585"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="QJ2-1i-MY0">
+            <objects>
+                <navigationController definesPresentationContext="YES" modalPresentationStyle="formSheet" id="Afd-Ns-84s" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="sZr-Y5-3d3">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="eNP-D0-SiD" kind="relationship" relationship="rootViewController" id="fzB-GN-xgb"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4BW-Bs-U9c" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="934" y="1585"/>
+        </scene>
+        <!--Options View Controller - Opciones-->
+        <scene sceneID="nb7-En-Wra">
+            <objects>
+                <viewController id="fz1-v9-u6A" customClass="IAEOptionsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="FfR-RN-luz">
+                        <rect key="frame" x="0.0" y="64" width="1024" height="704"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" title="Opciones" id="q5t-fp-NT0">
+                        <barButtonItem key="rightBarButtonItem" title="Cerrar" style="plain" id="Wwh-Dt-kfA">
+                            <connections>
+                                <action selector="closeButtonPressed:" destination="fz1-v9-u6A" id="C3V-JJ-XmL"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Fpe-Ds-kRa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2173" y="2803"/>
+        </scene>
+        <!--Report Mode View Controller - Vertical-->
+        <scene sceneID="CCS-Io-eEh">
+            <objects>
+                <viewController storyboardIdentifier="ReportModeViewController" id="d8y-Q1-jCC" customClass="IAEReportModeViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="F8Y-6r-vNf">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" title="Vertical" id="Nml-Md-qzF">
+                        <barButtonItem key="leftBarButtonItem" title="Años" id="IDP-CP-zdh"/>
+                        <barButtonItem key="rightBarButtonItem" title="Opciones" id="gtC-Uf-2XT">
+                            <connections>
+                                <segue destination="Muq-Ra-Fh9" kind="modal" id="j3B-jV-G4D"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+                    <connections>
+                        <segue destination="Afd-Ns-84s" kind="modal" id="39j-eN-xBd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5DA-cu-qAv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-581" y="4361"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="qEy-pt-s4i">
+            <objects>
+                <navigationController definesPresentationContext="YES" modalPresentationStyle="formSheet" id="Muq-Ra-Fh9" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Xaq-Fc-VeE">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="fz1-v9-u6A" kind="relationship" relationship="rootViewController" id="yNY-03-s8X"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wqJ-dh-dS0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="934" y="2803"/>
+        </scene>
+    </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar" statusBarStyle="lightContent"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="JHB-DG-SLv"/>
+        <segue reference="Cjr-c2-dYj"/>
+    </inferredMetricsTieBreakers>
+</document>

@@ -40,14 +40,23 @@
 
 - (UIViewController *)createRootViewController
 {
+    UIInterfaceOrientation deviceInterfaceOrientation = [IAEOrientationHelper getInterfaceOrientation];
+    return [self createAndConfigureModeViewControllerForOrientation:deviceInterfaceOrientation];
+}
+
+- (UIViewController *)createAndConfigureModeViewControllerForOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
     NSAssert(_mainStoryBoard, @"No hay story board vinculado");
-    
+
     UIViewController *retViewController = nil;
-    if ([IAEOrientationHelper isActualOrientationPortraitOrientation]) {
+    if ([IAEOrientationHelper isPortraitOrientationForInterfaceOrientation:interfaceOrientation]) {
         retViewController = [_mainStoryBoard instantiateViewControllerWithIdentifier:@"ReportModeViewController"];
-    } else if ([IAEOrientationHelper isActualOrientationLandscapeOrientation]) {
+    } else if ([IAEOrientationHelper isLandscapeOrientationForInterfaceOrientation:interfaceOrientation]) {
         retViewController = [_mainStoryBoard instantiateViewControllerWithIdentifier:@"EditModeViewController"];
     }
+    
+    NSAssert(retViewController, @"Problemas creando el view controller");
+    retViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     
     return retViewController;
 }
@@ -89,39 +98,38 @@
 - (void)performTransitionToViewControllerForInterfaceOrientation:(UIInterfaceOrientation)destinationInterfaceOrientation
                                                     withDuration:(NSTimeInterval)duration
 {
-    UIViewController *destinationViewController = [self createOfFindModeViewControllerForInterfaceOrientation:destinationInterfaceOrientation];
+    UIViewController *destinationViewController = [self modeViewControllerForInterfaceOrientation:destinationInterfaceOrientation];
     if ([self.visibleViewController class] != [destinationViewController class]) {
+        
         if (self.viewControllers.count == 1) {
-            [self pushViewController:destinationViewController animated:YES];
+            [self pushViewController:destinationViewController animated:NO];
         } else {
             NSAssert(self.viewControllers.count == 2, @"Deberia de haber dos controles colocados");
-            [self popViewControllerAnimated:YES];
+            [self popViewControllerAnimated:NO];
         }
     }
-    
 }
 
-// ToDo: Refactorizar este metodo y particionarlo
-// Buscamos el ser capaces de realizar la transición entre view controllers correctamente como punto de partida de todo
-
-- (UIViewController *)createOfFindModeViewControllerForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+- (UIViewController *)modeViewControllerForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    UIViewController *retViewController = nil;
-    
-    Class classOfTheDestinationModeViewController = [self classForModeViewControllerForOrientation:interfaceOrientation];
-    for (UIViewController *viewController in self.viewControllers) {
-        if ([viewController class] == classOfTheDestinationModeViewController) {
-            retViewController = viewController;
-            break;
-        }
-    }
-    
+    UIViewController *retViewController = [self findModeViewControllerInNavigationControllerStackForOrientation:interfaceOrientation];
     if (nil == retViewController) {
-        
+        retViewController = [self createAndConfigureModeViewControllerForOrientation:interfaceOrientation];
     }
     
     return retViewController;
+}
+
+- (UIViewController *)findModeViewControllerInNavigationControllerStackForOrientation:(UIInterfaceOrientation)interfaceOrientation
+{    
+    Class classOfTheDestinationModeViewController = [self classForModeViewControllerForOrientation:interfaceOrientation];
+    for (UIViewController *viewController in self.viewControllers) {
+        if ([viewController class] == classOfTheDestinationModeViewController) {
+            return viewController;
+        }
+    }
     
+    return nil;
 }
 
 - (Class)classForModeViewControllerForOrientation:(UIInterfaceOrientation)interfaceOrientation

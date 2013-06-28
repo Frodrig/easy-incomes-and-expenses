@@ -24,6 +24,7 @@
     [self createYearBookIfProceed];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = [[IAEModeNavigationController alloc] initWithApropiateRootModeViewController];
     [self.window makeKeyAndVisible];
     

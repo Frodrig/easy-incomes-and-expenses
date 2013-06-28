@@ -31,7 +31,7 @@
 
 + (BOOL)isPortraitOrientationForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return interfaceOrientation == UIInterfaceOrientationLandscapeRight || interfaceOrientation == UIInterfaceOrientationLandscapeLeft;
+    return interfaceOrientation == UIInterfaceOrientationPortrait || interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown;
 }
 
 + (BOOL)isLandscapeOrientationForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

@@ -10,6 +10,8 @@
 
 @interface IAEOrientationHelper : NSObject
 
++ (UIInterfaceOrientation)getInterfaceOrientation;
+
 + (BOOL)isActualOrientationPortraitOrientation;
 + (BOOL)isActualOrientationLandscapeOrientation;
 

@@ -8,6 +8,7 @@
 
 #import "IAEValueDecoratorViewInvalidConfigurator.h"
 #import "IAEValueDecoratorView.h"
+#import "IAEColorHelper.h"
 
 @implementation IAEValueDecoratorViewInvalidConfigurator
 
@@ -15,7 +16,7 @@
 {
     [super configure:decoratorView];
     
-    decoratorView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.25];
+    decoratorView.backgroundColor = [IAEColorHelper colorForEconomicInvalidValue];
 }
 
 @end

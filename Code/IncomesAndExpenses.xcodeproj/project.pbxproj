@@ -59,6 +59,7 @@
 		5B5C968617816ED0008CD851 /* IAEValueDecoratorViewIncomeConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C968517816ED0008CD851 /* IAEValueDecoratorViewIncomeConfigurator.m */; };
 		5B5C968917816EE0008CD851 /* IAEValueDecoratorViewExpenseConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C968817816EE0008CD851 /* IAEValueDecoratorViewExpenseConfigurator.m */; };
 		5B5C968C17816EF0008CD851 /* IAEValueDecoratorViewInvalidConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C968B17816EF0008CD851 /* IAEValueDecoratorViewInvalidConfigurator.m */; };
+		5B5C968F17818906008CD851 /* IAEColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C968E17818906008CD851 /* IAEColorHelper.m */; };
 		5B65636116B2E2D500CEE1F2 /* 437-minus.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B65635F16B2E2D500CEE1F2 /* 437-minus.png */; };
 		5B65636216B2E2D500CEE1F2 /* 437-minus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B65636016B2E2D500CEE1F2 /* 437-minus@2x.png */; };
 		5B65636616B2E4CD00CEE1F2 /* IAEAmountStepperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B65636416B2E4CD00CEE1F2 /* IAEAmountStepperViewController.m */; };
@@ -231,6 +232,8 @@
 		5B5C968817816EE0008CD851 /* IAEValueDecoratorViewExpenseConfigurator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEValueDecoratorViewExpenseConfigurator.m; sourceTree = "<group>"; };
 		5B5C968A17816EF0008CD851 /* IAEValueDecoratorViewInvalidConfigurator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEValueDecoratorViewInvalidConfigurator.h; sourceTree = "<group>"; };
 		5B5C968B17816EF0008CD851 /* IAEValueDecoratorViewInvalidConfigurator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEValueDecoratorViewInvalidConfigurator.m; sourceTree = "<group>"; };
+		5B5C968D17818906008CD851 /* IAEColorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEColorHelper.h; sourceTree = "<group>"; };
+		5B5C968E17818906008CD851 /* IAEColorHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEColorHelper.m; sourceTree = "<group>"; };
 		5B65635F16B2E2D500CEE1F2 /* 437-minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "437-minus.png"; sourceTree = "<group>"; };
 		5B65636016B2E2D500CEE1F2 /* 437-minus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "437-minus@2x.png"; sourceTree = "<group>"; };
 		5B65636316B2E4CD00CEE1F2 /* IAEAmountStepperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEAmountStepperViewController.h; sourceTree = "<group>"; };
@@ -554,6 +557,8 @@
 			children = (
 				5B32D671177C929D0070AC72 /* IAEOrientationHelper.h */,
 				5B32D672177C929D0070AC72 /* IAEOrientationHelper.m */,
+				5B5C968D17818906008CD851 /* IAEColorHelper.h */,
+				5B5C968E17818906008CD851 /* IAEColorHelper.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -1237,6 +1242,7 @@
 				5BC916F416A57B030072AE5C /* IAEViewUtils.m in Sources */,
 				5B32D673177C929D0070AC72 /* IAEOrientationHelper.m in Sources */,
 				5BC916F816A57BCA0072AE5C /* IAEViewCategoryTypeIndicator.m in Sources */,
+				5B5C968F17818906008CD851 /* IAEColorHelper.m in Sources */,
 				5B32D654177C387A0070AC72 /* IAEEditModeViewController.m in Sources */,
 				5BC916FE16A5AD080072AE5C /* IAEInputButtonGrid.m in Sources */,
 				5B65636616B2E4CD00CEE1F2 /* IAEAmountStepperViewController.m in Sources */,

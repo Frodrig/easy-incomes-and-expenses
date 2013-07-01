@@ -53,10 +53,17 @@
 		5B53C81616765EB50016329C /* IAEConfigNavigationControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B53C81516765EB50016329C /* IAEConfigNavigationControllerViewController.m */; };
 		5B55449D17745EA2009CFC84 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B55449C17745EA2009CFC84 /* Media.xcassets */; };
 		5B5544A2177460DD009CFC84 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B5544A1177460DD009CFC84 /* Main.storyboard */; };
+		5B5C967B1781673A008CD851 /* IAEValueDecoratorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C967A1781673A008CD851 /* IAEValueDecoratorView.m */; };
+		5B5C967F17816A13008CD851 /* UIView+RoundedCorners.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C967E17816A13008CD851 /* UIView+RoundedCorners.m */; };
+		5B5C968217816D68008CD851 /* IAEValueDecoratorViewConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C968117816D68008CD851 /* IAEValueDecoratorViewConfigurator.m */; };
+		5B5C968617816ED0008CD851 /* IAEValueDecoratorViewIncomeConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C968517816ED0008CD851 /* IAEValueDecoratorViewIncomeConfigurator.m */; };
+		5B5C968917816EE0008CD851 /* IAEValueDecoratorViewExpenseConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C968817816EE0008CD851 /* IAEValueDecoratorViewExpenseConfigurator.m */; };
+		5B5C968C17816EF0008CD851 /* IAEValueDecoratorViewInvalidConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C968B17816EF0008CD851 /* IAEValueDecoratorViewInvalidConfigurator.m */; };
 		5B65636116B2E2D500CEE1F2 /* 437-minus.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B65635F16B2E2D500CEE1F2 /* 437-minus.png */; };
 		5B65636216B2E2D500CEE1F2 /* 437-minus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B65636016B2E2D500CEE1F2 /* 437-minus@2x.png */; };
 		5B65636616B2E4CD00CEE1F2 /* IAEAmountStepperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B65636416B2E4CD00CEE1F2 /* IAEAmountStepperViewController.m */; };
 		5B65636716B2E4CD00CEE1F2 /* IAEAmountStepperViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B65636516B2E4CD00CEE1F2 /* IAEAmountStepperViewController.xib */; };
+		5B6E9FA7177D9C950072EE34 /* UIView+LoadFromXib.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6E9FA6177D9C950072EE34 /* UIView+LoadFromXib.m */; };
 		5B708A0D16B911EF00502693 /* IAEYearsConfigViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B708A0C16B911EF00502693 /* IAEYearsConfigViewController.xib */; };
 		5B708A1516B912A900502693 /* HeaderSection1ConceptsTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B708A1216B912A900502693 /* HeaderSection1ConceptsTableView.xib */; };
 		5B708A2216B9174100502693 /* Section1WithoutContentConceptsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B708A1F16B9174000502693 /* Section1WithoutContentConceptsTableViewCell.xib */; };
@@ -212,12 +219,26 @@
 		5B55449C17745EA2009CFC84 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = IncomesAndExpenses/Media.xcassets; sourceTree = "<group>"; };
 		5B5544A017745F42009CFC84 /* IAEValueDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEValueDefs.h; sourceTree = "<group>"; };
 		5B5544A1177460DD009CFC84 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		5B5C96791781673A008CD851 /* IAEValueDecoratorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEValueDecoratorView.h; sourceTree = "<group>"; };
+		5B5C967A1781673A008CD851 /* IAEValueDecoratorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEValueDecoratorView.m; sourceTree = "<group>"; };
+		5B5C967D17816A13008CD851 /* UIView+RoundedCorners.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RoundedCorners.h"; sourceTree = "<group>"; };
+		5B5C967E17816A13008CD851 /* UIView+RoundedCorners.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RoundedCorners.m"; sourceTree = "<group>"; };
+		5B5C968017816D68008CD851 /* IAEValueDecoratorViewConfigurator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEValueDecoratorViewConfigurator.h; sourceTree = "<group>"; };
+		5B5C968117816D68008CD851 /* IAEValueDecoratorViewConfigurator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEValueDecoratorViewConfigurator.m; sourceTree = "<group>"; };
+		5B5C968417816ED0008CD851 /* IAEValueDecoratorViewIncomeConfigurator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEValueDecoratorViewIncomeConfigurator.h; sourceTree = "<group>"; };
+		5B5C968517816ED0008CD851 /* IAEValueDecoratorViewIncomeConfigurator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEValueDecoratorViewIncomeConfigurator.m; sourceTree = "<group>"; };
+		5B5C968717816EE0008CD851 /* IAEValueDecoratorViewExpenseConfigurator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEValueDecoratorViewExpenseConfigurator.h; sourceTree = "<group>"; };
+		5B5C968817816EE0008CD851 /* IAEValueDecoratorViewExpenseConfigurator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEValueDecoratorViewExpenseConfigurator.m; sourceTree = "<group>"; };
+		5B5C968A17816EF0008CD851 /* IAEValueDecoratorViewInvalidConfigurator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEValueDecoratorViewInvalidConfigurator.h; sourceTree = "<group>"; };
+		5B5C968B17816EF0008CD851 /* IAEValueDecoratorViewInvalidConfigurator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEValueDecoratorViewInvalidConfigurator.m; sourceTree = "<group>"; };
 		5B65635F16B2E2D500CEE1F2 /* 437-minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "437-minus.png"; sourceTree = "<group>"; };
 		5B65636016B2E2D500CEE1F2 /* 437-minus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "437-minus@2x.png"; sourceTree = "<group>"; };
 		5B65636316B2E4CD00CEE1F2 /* IAEAmountStepperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEAmountStepperViewController.h; sourceTree = "<group>"; };
 		5B65636416B2E4CD00CEE1F2 /* IAEAmountStepperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEAmountStepperViewController.m; sourceTree = "<group>"; };
 		5B65636516B2E4CD00CEE1F2 /* IAEAmountStepperViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEAmountStepperViewController.xib; sourceTree = "<group>"; };
 		5B65636816B2F9A300CEE1F2 /* IAEAmountStepperViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEAmountStepperViewControllerDelegate.h; sourceTree = "<group>"; };
+		5B6E9FA5177D9C950072EE34 /* UIView+LoadFromXib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+LoadFromXib.h"; sourceTree = "<group>"; };
+		5B6E9FA6177D9C950072EE34 /* UIView+LoadFromXib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+LoadFromXib.m"; sourceTree = "<group>"; };
 		5B708A0C16B911EF00502693 /* IAEYearsConfigViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEYearsConfigViewController.xib; sourceTree = "<group>"; };
 		5B708A1316B912A900502693 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/HeaderSection1ConceptsTableView.xib; sourceTree = "<group>"; };
 		5B708A1416B912A900502693 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/HeaderSection1ConceptsTableView.xib; sourceTree = "<group>"; };
@@ -569,14 +590,6 @@
 			name = "Modal Views";
 			sourceTree = "<group>";
 		};
-		5B55449F17745ECC009CFC84 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				5B5544A017745F42009CFC84 /* IAEValueDefs.h */,
-			);
-			name = Utils;
-			sourceTree = "<group>";
-		};
 		5B5750A2177443E0005D6B3E /* v1 */ = {
 			isa = PBXGroup;
 			children = (
@@ -591,12 +604,50 @@
 		5B5750A317744407005D6B3E /* v2 */ = {
 			isa = PBXGroup;
 			children = (
+				5B5C967817816718008CD851 /* Views */,
+				5B6E9FA3177D95770072EE34 /* Defs */,
+				5B6E9FA4177D9BAB0072EE34 /* Categories */,
 				5B32D670177C92840070AC72 /* Utils */,
 				5B32D651177C385A0070AC72 /* View - Controllers */,
-				5B55449F17745ECC009CFC84 /* Utils */,
 				5B5544A1177460DD009CFC84 /* Main.storyboard */,
 			);
 			name = v2;
+			sourceTree = "<group>";
+		};
+		5B5C967817816718008CD851 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5B5C96791781673A008CD851 /* IAEValueDecoratorView.h */,
+				5B5C967A1781673A008CD851 /* IAEValueDecoratorView.m */,
+				5B5C968317816D6C008CD851 /* ValueDecoratorView Configurator */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		5B5C967C17816A01008CD851 /* UIView */ = {
+			isa = PBXGroup;
+			children = (
+				5B6E9FA5177D9C950072EE34 /* UIView+LoadFromXib.h */,
+				5B6E9FA6177D9C950072EE34 /* UIView+LoadFromXib.m */,
+				5B5C967D17816A13008CD851 /* UIView+RoundedCorners.h */,
+				5B5C967E17816A13008CD851 /* UIView+RoundedCorners.m */,
+			);
+			name = UIView;
+			sourceTree = "<group>";
+		};
+		5B5C968317816D6C008CD851 /* ValueDecoratorView Configurator */ = {
+			isa = PBXGroup;
+			children = (
+				5B5C968017816D68008CD851 /* IAEValueDecoratorViewConfigurator.h */,
+				5B5C968117816D68008CD851 /* IAEValueDecoratorViewConfigurator.m */,
+				5B5C968A17816EF0008CD851 /* IAEValueDecoratorViewInvalidConfigurator.h */,
+				5B5C968B17816EF0008CD851 /* IAEValueDecoratorViewInvalidConfigurator.m */,
+				5B5C968417816ED0008CD851 /* IAEValueDecoratorViewIncomeConfigurator.h */,
+				5B5C968517816ED0008CD851 /* IAEValueDecoratorViewIncomeConfigurator.m */,
+				5B5C968717816EE0008CD851 /* IAEValueDecoratorViewExpenseConfigurator.h */,
+				5B5C968817816EE0008CD851 /* IAEValueDecoratorViewExpenseConfigurator.m */,
+			);
+			name = "ValueDecoratorView Configurator";
 			sourceTree = "<group>";
 		};
 		5B65635816B2E1D800CEE1F2 /* AmountStepperView */ = {
@@ -608,6 +659,22 @@
 				5B65636816B2F9A300CEE1F2 /* IAEAmountStepperViewControllerDelegate.h */,
 			);
 			name = AmountStepperView;
+			sourceTree = "<group>";
+		};
+		5B6E9FA3177D95770072EE34 /* Defs */ = {
+			isa = PBXGroup;
+			children = (
+				5B5544A017745F42009CFC84 /* IAEValueDefs.h */,
+			);
+			name = Defs;
+			sourceTree = "<group>";
+		};
+		5B6E9FA4177D9BAB0072EE34 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				5B5C967C17816A01008CD851 /* UIView */,
+			);
+			name = Categories;
 			sourceTree = "<group>";
 		};
 		5B708A1A16B915CD00502693 /* Coach arrows */ = {
@@ -1134,6 +1201,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B32D66F177C8C700070AC72 /* IAEModeNavigationController.m in Sources */,
+				5B5C968C17816EF0008CD851 /* IAEValueDecoratorViewInvalidConfigurator.m in Sources */,
 				5B767E031636D7FC005315F8 /* main.m in Sources */,
 				5B767E071636D7FC005315F8 /* IAEAppDelegate.m in Sources */,
 				5B32D661177C441A0070AC72 /* IAEOptionsViewController.m in Sources */,
@@ -1143,11 +1211,13 @@
 				5BD06157163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld in Sources */,
 				5B32D665177C48B00070AC72 /* IAEReportModeViewController.m in Sources */,
 				5BD06171163A8D2B00A80BE3 /* IAEMonth.m in Sources */,
+				5B5C968917816EE0008CD851 /* IAEValueDecoratorViewExpenseConfigurator.m in Sources */,
 				5BD06174163A8D2B00A80BE3 /* IAEYear.m in Sources */,
 				5BD06177163A99BB00A80BE3 /* IAECategory.m in Sources */,
 				5BF862BE1668D444009D024E /* IAECircularStringSelection.m in Sources */,
 				5B25A3C8166E210D00E63559 /* IAEIncomeExpenseControllerViewController.m in Sources */,
 				5B25A3CF166E268C00E63559 /* IAEConceptsViewController.m in Sources */,
+				5B5C968617816ED0008CD851 /* IAEValueDecoratorViewIncomeConfigurator.m in Sources */,
 				5B0FFF521670942300608968 /* IAEInputConceptsViewController.m in Sources */,
 				5B81427716723D23000014A1 /* IAEConceptsView.m in Sources */,
 				5B53C8061675D5180016329C /* IAEConfigViewController.m in Sources */,
@@ -1161,6 +1231,8 @@
 				5BCC1F4D16A0684A003946E8 /* IAEAnimationManager.m in Sources */,
 				5B0B500B16A434DB006BEAD7 /* IAEConstants.m in Sources */,
 				5BC916E816A5681A0072AE5C /* IAETableConceptViewCell.m in Sources */,
+				5B5C967B1781673A008CD851 /* IAEValueDecoratorView.m in Sources */,
+				5B5C968217816D68008CD851 /* IAEValueDecoratorViewConfigurator.m in Sources */,
 				5BC916F016A574B50072AE5C /* IAEDragToolbarView.m in Sources */,
 				5BC916F416A57B030072AE5C /* IAEViewUtils.m in Sources */,
 				5B32D673177C929D0070AC72 /* IAEOrientationHelper.m in Sources */,
@@ -1168,12 +1240,14 @@
 				5B32D654177C387A0070AC72 /* IAEEditModeViewController.m in Sources */,
 				5BC916FE16A5AD080072AE5C /* IAEInputButtonGrid.m in Sources */,
 				5B65636616B2E4CD00CEE1F2 /* IAEAmountStepperViewController.m in Sources */,
+				5B5C967F17816A13008CD851 /* UIView+RoundedCorners.m in Sources */,
 				5BF3655016B58C7E00781513 /* IAESettingsViewController.m in Sources */,
 				5B7A4D7C16B67821001751A9 /* IAEAboutViewController.m in Sources */,
 				5B35313916B6BFBF00BD8034 /* IAEPopoverBackgroundCustom.m in Sources */,
 				5B76446516BFA97500082050 /* IAECategoriesConfigViewControllerv2.m in Sources */,
 				5B76446C16BFAA7000082050 /* IAECategoryConfigCell.m in Sources */,
 				5BB0410216BFCA09009C1143 /* IAECategoryConfigHeaderViewController.m in Sources */,
+				5B6E9FA7177D9C950072EE34 /* UIView+LoadFromXib.m in Sources */,
 				5BB0410716BFD66B009C1143 /* IAECategoriesConfigAddViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

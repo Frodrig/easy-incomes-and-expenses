@@ -10,10 +10,10 @@
 #define IncomesAndExpenses_IAEValueDefs_h
 
 
-typedef enum {
-    INCOME_VALUE,
-    EXPENSE_VALUE,
-    ZERO_VALUE
-} ValueType;
+typedef NS_ENUM(NSUInteger, EconomicValueType) {
+    ECONOMIC_INCOME_VALUE,
+    ECONOMIC_EXPENSE_VALUE,
+    ECONOMIC_INVALID_VALUE
+};
 
 #endif

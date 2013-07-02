@@ -99,6 +99,7 @@
 		5B8A31CF16C9090E008731AD /* 72.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B8A31CD16C90901008731AD /* 72.png */; };
 		5B8A31D116C90911008731AD /* 72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B8A31D016C90911008731AD /* 72@2x.png */; };
 		5B903BB41782C55300DBEFB2 /* IAEEconomicValueTypeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B903BB31782C55300DBEFB2 /* IAEEconomicValueTypeHelper.m */; };
+		5B903BBC1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B903BBB1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.m */; };
 		5BA0A288167E33B600CBB79B /* FooterSection0ConceptsTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA0A287167E33B600CBB79B /* FooterSection0ConceptsTableView.xib */; };
 		5BA97710166F42F5007B59C4 /* Section1ConceptsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA9770F166F42F5007B59C4 /* Section1ConceptsTableViewCell.xib */; };
 		5BA97713166F5A09007B59C4 /* ExtendedConceptsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA97712166F5A09007B59C4 /* ExtendedConceptsTableViewCell.xib */; };
@@ -296,6 +297,8 @@
 		5B8A31D016C90911008731AD /* 72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "72@2x.png"; sourceTree = "<group>"; };
 		5B903BB21782C55300DBEFB2 /* IAEEconomicValueTypeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEconomicValueTypeHelper.h; sourceTree = "<group>"; };
 		5B903BB31782C55300DBEFB2 /* IAEEconomicValueTypeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEconomicValueTypeHelper.m; sourceTree = "<group>"; };
+		5B903BBA1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEditModeMonthBalanceView.h; sourceTree = "<group>"; };
+		5B903BBB1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEditModeMonthBalanceView.m; sourceTree = "<group>"; };
 		5BA0A287167E33B600CBB79B /* FooterSection0ConceptsTableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FooterSection0ConceptsTableView.xib; sourceTree = "<group>"; };
 		5BA9770F166F42F5007B59C4 /* Section1ConceptsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Section1ConceptsTableViewCell.xib; sourceTree = "<group>"; };
 		5BA97712166F5A09007B59C4 /* ExtendedConceptsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExtendedConceptsTableViewCell.xib; sourceTree = "<group>"; };
@@ -517,6 +520,7 @@
 		5B32D659177C41170070AC72 /* Edit Mode */ = {
 			isa = PBXGroup;
 			children = (
+				5B903BB91782DBAF00DBEFB2 /* Views */,
 				5B32D652177C387A0070AC72 /* IAEEditModeViewController.h */,
 				5B32D653177C387A0070AC72 /* IAEEditModeViewController.m */,
 			);
@@ -905,6 +909,15 @@
 				5B903BB31782C55300DBEFB2 /* IAEEconomicValueTypeHelper.m */,
 			);
 			name = "Economic Value Type Helper";
+			sourceTree = "<group>";
+		};
+		5B903BB91782DBAF00DBEFB2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5B903BBA1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.h */,
+				5B903BBB1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.m */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		5BB040F216BFBC54009C1143 /* Category Cell */ = {
@@ -1303,6 +1316,7 @@
 				5B5C968F17818906008CD851 /* IAEColorHelper.m in Sources */,
 				5B32D654177C387A0070AC72 /* IAEEditModeViewController.m in Sources */,
 				5BC916FE16A5AD080072AE5C /* IAEInputButtonGrid.m in Sources */,
+				5B903BBC1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.m in Sources */,
 				5B65636616B2E4CD00CEE1F2 /* IAEAmountStepperViewController.m in Sources */,
 				5B5C967F17816A13008CD851 /* UIView+RoundedCorners.m in Sources */,
 				5BF3655016B58C7E00781513 /* IAESettingsViewController.m in Sources */,

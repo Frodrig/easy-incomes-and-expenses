@@ -23,8 +23,8 @@
                                 <rect key="frame" x="20" y="10" width="488" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="488" id="7jn-qd-0pw"/>
-                                    <constraint firstAttribute="height" constant="45" id="Ztq-zn-IWp"/>
+                                    <constraint firstAttribute="width" constant="488" id="MSY-cW-Lfa"/>
+                                    <constraint firstAttribute="height" constant="45" id="uC7-UV-ZUZ"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="28"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -37,19 +37,41 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gI2-Hy-nOR">
+                                <rect key="frame" x="0.0" y="66" width="1024" height="166"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" red="0.97254908080000002" green="0.97254908080000002" blue="0.97254908080000002" alpha="1" colorSpace="deviceRGB"/>
+                            </scrollView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="12" translatesAutoresizingMaskIntoConstraints="NO" id="E2H-b7-TjG">
+                                <rect key="frame" x="387" y="243" width="250" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="250" id="Wlk-dw-XkM"/>
+                                    <constraint firstAttribute="height" constant="36" id="WtB-ge-Mfo"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="36" id="zc5-9f-B0u"/>
+                                </constraints>
+                                <color key="pageIndicatorTintColor" red="0.69803921570000005" green="0.69803921570000005" blue="0.69803921570000005" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="currentPageIndicatorTintColor" red="0.9215686917" green="0.9215686917" blue="0.9215686917" alpha="1" colorSpace="deviceRGB"/>
+                            </pageControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="9Kk-rQ-u6u" secondAttribute="trailing" constant="20" symbolic="YES" id="5NA-8Q-gCg"/>
-                            <constraint firstItem="V3B-5t-GkI" firstAttribute="leading" secondItem="JJO-TL-5Gw" secondAttribute="leading" id="6LW-Fy-Z51"/>
-                            <constraint firstItem="V3B-5t-GkI" firstAttribute="top" secondItem="JJO-TL-5Gw" secondAttribute="top" id="7ir-VE-MYJ"/>
-                            <constraint firstItem="9Kk-rQ-u6u" firstAttribute="top" secondItem="f89-fF-suD" secondAttribute="top" id="9cL-NN-hoS"/>
-                            <constraint firstItem="f89-fF-suD" firstAttribute="leading" secondItem="JJO-TL-5Gw" secondAttribute="leading" constant="20" symbolic="YES" id="Ar7-Md-clD"/>
-                            <constraint firstItem="9Kk-rQ-u6u" firstAttribute="leading" secondItem="f89-fF-suD" secondAttribute="trailing" constant="8" symbolic="YES" id="CLI-XY-OnW"/>
-                            <constraint firstItem="9Kk-rQ-u6u" firstAttribute="baseline" secondItem="f89-fF-suD" secondAttribute="baseline" id="Cmr-NM-hSI"/>
-                            <constraint firstItem="V3B-5t-GkI" firstAttribute="trailing" secondItem="JJO-TL-5Gw" secondAttribute="trailing" id="hyn-MY-B0a"/>
-                            <constraint firstItem="f89-fF-suD" firstAttribute="top" secondItem="JJO-TL-5Gw" secondAttribute="top" constant="10" id="jzP-QH-TrE"/>
-                            <constraint firstAttribute="bottom" secondItem="V3B-5t-GkI" secondAttribute="bottom" constant="661" id="xwg-Nx-DDv"/>
+                            <constraint firstItem="gI2-Hy-nOR" firstAttribute="centerX" secondItem="E2H-b7-TjG" secondAttribute="centerX" id="1kH-tU-Z2d"/>
+                            <constraint firstItem="f89-fF-suD" firstAttribute="baseline" secondItem="9Kk-rQ-u6u" secondAttribute="baseline" id="73i-vl-JUL"/>
+                            <constraint firstItem="gI2-Hy-nOR" firstAttribute="top" secondItem="f89-fF-suD" secondAttribute="bottom" constant="11" id="7Qp-iF-fbB"/>
+                            <constraint firstItem="E2H-b7-TjG" firstAttribute="top" secondItem="JJO-TL-5Gw" secondAttribute="top" constant="243" id="89B-pJ-h09"/>
+                            <constraint firstItem="9Kk-rQ-u6u" firstAttribute="top" secondItem="f89-fF-suD" secondAttribute="top" id="OFs-PR-Jj8"/>
+                            <constraint firstAttribute="trailing" secondItem="9Kk-rQ-u6u" secondAttribute="trailing" constant="20" symbolic="YES" id="XFR-3K-KbZ"/>
+                            <constraint firstItem="V3B-5t-GkI" firstAttribute="trailing" secondItem="JJO-TL-5Gw" secondAttribute="trailing" id="YmC-u9-cOo"/>
+                            <constraint firstItem="f89-fF-suD" firstAttribute="top" secondItem="JJO-TL-5Gw" secondAttribute="top" constant="10" id="Zel-3u-xGa"/>
+                            <constraint firstItem="V3B-5t-GkI" firstAttribute="top" secondItem="JJO-TL-5Gw" secondAttribute="top" id="aw3-Qn-WIV"/>
+                            <constraint firstItem="V3B-5t-GkI" firstAttribute="leading" secondItem="JJO-TL-5Gw" secondAttribute="leading" id="dYX-Z1-WEu"/>
+                            <constraint firstItem="gI2-Hy-nOR" firstAttribute="leading" secondItem="V3B-5t-GkI" secondAttribute="leading" id="esf-t1-Nwl"/>
+                            <constraint firstItem="gI2-Hy-nOR" firstAttribute="top" secondItem="V3B-5t-GkI" secondAttribute="bottom" constant="3" id="g3X-CT-daI"/>
+                            <constraint firstItem="f89-fF-suD" firstAttribute="leading" secondItem="JJO-TL-5Gw" secondAttribute="leading" constant="20" symbolic="YES" id="gSV-nR-6wT"/>
+                            <constraint firstItem="gI2-Hy-nOR" firstAttribute="trailing" secondItem="V3B-5t-GkI" secondAttribute="trailing" id="mSB-6K-iab"/>
+                            <constraint firstItem="9Kk-rQ-u6u" firstAttribute="leading" secondItem="f89-fF-suD" secondAttribute="trailing" constant="8" symbolic="YES" id="uZw-54-xQ3"/>
+                            <constraint firstItem="E2H-b7-TjG" firstAttribute="top" secondItem="gI2-Hy-nOR" secondAttribute="bottom" constant="11" id="vkT-WR-LUc"/>
                         </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
@@ -211,18 +233,12 @@
         </class>
         <class className="IAEOptionsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IAEOptionsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="closeButtonPressed:"/>
-            </relationships>
         </class>
         <class className="IAEReportModeViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IAEReportModeViewController.h"/>
         </class>
         <class className="IAEYearsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/IAEYearsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="closeButtonPressed:"/>
-            </relationships>
         </class>
         <class className="NSLayoutConstraint" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>

@@ -25,6 +25,7 @@
 - (IAEYear *)existYearDate:(NSNumber *)yearDate;
 
 - (IAEYear *)findActualYear;
+- (NSUInteger)findTodayMonthIndex;
 
 - (BOOL)saveAll;
 

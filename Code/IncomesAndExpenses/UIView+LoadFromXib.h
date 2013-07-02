@@ -10,6 +10,6 @@
 
 @interface UIView (LoadFromXib)
 
-+ (UIView *)viewFromXib:(NSString *)xibName;
++ (UIView *)viewFromXib:(NSString *)xibName withOwner:(id)owner;
 
 @end

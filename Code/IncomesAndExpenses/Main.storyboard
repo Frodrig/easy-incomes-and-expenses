@@ -92,6 +92,8 @@
                     <connections>
                         <outlet property="annualBalanceIndicatorLabel" destination="f89-fF-suD" id="ScE-qB-iLf"/>
                         <outlet property="annualBalanceValueLabel" destination="9Kk-rQ-u6u" id="N6m-ub-52o"/>
+                        <outlet property="monthsScrollPageController" destination="E2H-b7-TjG" id="6XS-Ix-UmU"/>
+                        <outlet property="monthsScrollView" destination="gI2-Hy-nOR" id="3xd-vw-J4d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nSe-iv-lCf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -223,27 +225,6 @@
             <point key="canvasLocation" x="934" y="2803"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="IAEEditModeViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/IAEEditModeViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="annualBalanceIndicatorLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="annualBalanceValueLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="IAEOptionsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/IAEOptionsViewController.h"/>
-        </class>
-        <class className="IAEReportModeViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/IAEReportModeViewController.h"/>
-        </class>
-        <class className="IAEYearsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/IAEYearsViewController.h"/>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="lightContent"/>
         <simulatedOrientationMetrics key="orientation"/>

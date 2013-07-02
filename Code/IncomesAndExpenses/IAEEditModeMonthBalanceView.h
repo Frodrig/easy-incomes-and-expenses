@@ -10,4 +10,8 @@
 
 @interface IAEEditModeMonthBalanceView : UIView
 
+@property(nonatomic, weak) UILabel *monthBalanceLabel;
+
+- (id)initWithFrame:(CGRect)frame andMonthIndex:(NSUInteger)monthIndex;
+
 @end

@@ -10,9 +10,10 @@
 
 @implementation UIView (LoadFromXib)
 
-+ (UIView *)viewFromXib:(NSString *)xibName
++ (UIView *)viewFromXib:(NSString *)xibName withOwner:(id)owner
 {
-    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"FooterSection0ConceptsTableView" owner:self options:nil];
+    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:xibName owner:owner options:nil];
+
     return [nib objectAtIndex:0];
 }
 

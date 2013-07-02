@@ -30,9 +30,9 @@
     return [self valueDecoratorOfValueType:ECONOMIC_EXPENSE_VALUE];
 }
 
-+ (instancetype)valueDecoratorViewOfInvalidValueType
++ (instancetype)valueDecoratorViewOfZeroValueType
 {
-    return [self valueDecoratorOfValueType:ECONOMIC_INVALID_VALUE];
+    return [self valueDecoratorOfValueType:ECONOMIC_ZERO_VALUE];
 }
 
 + (instancetype)valueDecoratorOfValueType:(EconomicValueType)valueType
@@ -64,7 +64,7 @@
 
 - (void)configureAtInit
 {
-    _economicValueType = ECONOMIC_INVALID_VALUE;
+    _economicValueType = ECONOMIC_ZERO_VALUE;
     [self configureAspectBasedInValueType];
 }
 
@@ -79,7 +79,7 @@
             decoratorViewConfigurator = [IAEValueDecoratorViewConfigurator valueDecoratorViewConfiguratorForExpenseValue];
             break;
         default:
-            NSAssert(self.economicValueType == ECONOMIC_INVALID_VALUE, @"Tipo de valor desconocido");
+            NSAssert(self.economicValueType == ECONOMIC_ZERO_VALUE, @"Tipo de valor desconocido");
             decoratorViewConfigurator = [IAEValueDecoratorViewConfigurator valueDecoratorViewConfiguratorForInvalidValue];
             break;
     };

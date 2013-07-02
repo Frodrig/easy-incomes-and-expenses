@@ -8,6 +8,6 @@
 
 #import "IAEValueDecoratorViewConfigurator.h"
 
-@interface IAEValueDecoratorViewInvalidConfigurator : IAEValueDecoratorViewConfigurator
+@interface IAEValueDecoratorViewZeroConfigurator : IAEValueDecoratorViewConfigurator
 
 @end

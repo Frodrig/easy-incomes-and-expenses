@@ -7,7 +7,7 @@
 //
 
 #import "IAEValueDecoratorViewConfigurator.h"
-#import "IAEValueDecoratorViewInvalidConfigurator.h"
+#import "IAEValueDecoratorViewZeroConfigurator.h"
 #import "IAEValueDecoratorViewExpenseConfigurator.h"
 #import "IAEValueDecoratorViewIncomeConfigurator.h"
 #import "UIView+RoundedCorners.h"
@@ -27,7 +27,7 @@
 
 + (instancetype)valueDecoratorViewConfiguratorForInvalidValue
 {
-    return (IAEValueDecoratorViewConfigurator *)[[IAEValueDecoratorViewInvalidConfigurator alloc] init];
+    return (IAEValueDecoratorViewConfigurator *)[[IAEValueDecoratorViewZeroConfigurator alloc] init];
 }
 
 - (void)configure:(IAEValueDecoratorView *)decoratorView

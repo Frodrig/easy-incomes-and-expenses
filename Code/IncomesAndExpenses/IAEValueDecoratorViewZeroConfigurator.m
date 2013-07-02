@@ -6,11 +6,11 @@
 //  Copyright (c) 2013 Fernando Rodríguez Martínez. All rights reserved.
 //
 
-#import "IAEValueDecoratorViewInvalidConfigurator.h"
+#import "IAEValueDecoratorViewZeroConfigurator.h"
 #import "IAEValueDecoratorView.h"
 #import "IAEColorHelper.h"
 
-@implementation IAEValueDecoratorViewInvalidConfigurator
+@implementation IAEValueDecoratorViewZeroConfigurator
 
 - (void)configure:(IAEValueDecoratorView *)decoratorView
 {

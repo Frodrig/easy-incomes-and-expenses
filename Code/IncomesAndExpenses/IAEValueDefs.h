@@ -13,7 +13,7 @@
 typedef NS_ENUM(NSUInteger, EconomicValueType) {
     ECONOMIC_INCOME_VALUE,
     ECONOMIC_EXPENSE_VALUE,
-    ECONOMIC_INVALID_VALUE
+    ECONOMIC_ZERO_VALUE
 };
 
 #endif

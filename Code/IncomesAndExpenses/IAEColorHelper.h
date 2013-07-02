@@ -12,6 +12,7 @@
 @interface IAEColorHelper : NSObject
 
 + (UIColor *)colorForEconomicValueType:(EconomicValueType)economicValueType;
++ (UIColor *)colorForEconomicValue:(NSDecimalNumber *)economicValue;
 
 + (UIColor *)colorForEconomicIncomeValue;
 + (UIColor *)colorForEconomicExpenseValue;

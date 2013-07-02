@@ -24,12 +24,15 @@
 
 - (IAEYear *)existYearDate:(NSNumber *)yearDate;
 
+- (IAEYear *)findActualYear;
+
 - (BOOL)saveAll;
 
 - (void)loadAll;
 - (void)loadYear:(NSUInteger)yearDate;
 - (void)loadMoreRecientYear;
 - (void)unloadAll;
+
 
 - (NSArray *)findAllConceptsWithCategory:(IAECategory *)category;
 

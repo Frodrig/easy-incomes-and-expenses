@@ -237,6 +237,12 @@
     return saveResult;
 }
 
+- (IAEYear *)findActualYear
+{
+    // Cuando estamos fuera de la pantalla de seleccion de año solo hay un año cargado y es el primero del array
+    NSAssert(self.years.count == 1, @"O no hay años o bien hay mas de uno cargado");
+    return [self.years objectAtIndex:0];
+}
 
 
 @end

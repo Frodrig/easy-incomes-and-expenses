@@ -20,7 +20,4 @@
 - (NSString *)decimalSeparator;
 - (NSString *)groupingSeparator;
 
-//- (void)setUserCurrencyCode:(IAECurrencyInfo *)currency;
-//- (IAECurrencyInfo *)findUserCurrencyInfo;
-
 @end

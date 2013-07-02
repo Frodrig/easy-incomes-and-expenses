@@ -15,6 +15,6 @@
 
 + (instancetype)valueDecoratorViewOfIncomeValueType;
 + (instancetype)valueDecoratorViewOfExpenseValueType;
-+ (instancetype)valueDecoratorViewOfInvalidValueType;
++ (instancetype)valueDecoratorViewOfZeroValueType;
 
 @end

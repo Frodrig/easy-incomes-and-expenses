@@ -24,8 +24,8 @@
             break;
             
         default:
-            NSAssert(economicValueType == ECONOMIC_INVALID_VALUE, @"Valor economico invalido");
-            return [UIColor colorWithWhite:0 alpha:0.25];
+            NSAssert(economicValueType == ECONOMIC_ZERO_VALUE, @"Valor economico invalido");
+            return [UIColor colorWithWhite:0.15 alpha:1];
             break;
     }
     
@@ -44,7 +44,7 @@
 
 + (UIColor *)colorForEconomicInvalidValue
 {
-    return [self colorForEconomicValueType:ECONOMIC_INVALID_VALUE];
+    return [self colorForEconomicValueType:ECONOMIC_ZERO_VALUE];
 }
 
 @end

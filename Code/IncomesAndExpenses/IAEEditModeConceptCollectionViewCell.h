@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class IAEValueDecoratorView;
+
 @interface IAEEditModeConceptCollectionViewCell : UICollectionViewCell
+
+@property (weak, nonatomic) IBOutlet IAEValueDecoratorView *valueDecoratorView;
 
 @end

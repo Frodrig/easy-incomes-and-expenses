@@ -7,6 +7,12 @@
 //
 
 #import "IAEEditModeConceptCollectionViewCell.h"
+#import "IAEValueDecoratorView.h"
+
+@interface IAEEditModeConceptCollectionViewCell()
+
+
+@end
 
 @implementation IAEEditModeConceptCollectionViewCell
 

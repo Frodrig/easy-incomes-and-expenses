@@ -29,6 +29,9 @@
 - (void)addConceptObject:(IAEConcept *)value;
 - (void)removeConceptObject:(IAEConcept *)value;
 
+- (BOOL)isIncomeCategory;
+- (BOOL)isExpenseCategory;
+
 - (NSString *)description;
 
 

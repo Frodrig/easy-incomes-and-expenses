@@ -62,17 +62,6 @@
     
     return result;
 }
-/*
-- (void)setTag:(NSString *)newTag
-{
-    if ([IAECategory isAValidTag:newTag])
-    {
-        [self willChangeValueForKey:@"tag"];
-        [self setPrimitiveTag:newTag];
-        [self didChangeValueForKey:@"tag"];
-    }
-}
-*/
 
 // Devuelve el tag pasando antes por la tabla de strings traducibles si resulta que es una generica
 - (NSString *)localizedTag
@@ -101,6 +90,16 @@
 - (NSString *)description
 {
     return self.tag;
+}
+
+- (BOOL)isIncomeCategory
+{
+    return self.categoryType == IncomeCategory;
+}
+
+- (BOOL)isExpenseCategory
+{
+    return self.categoryType == ExpenseCategory;
 }
 
 @end

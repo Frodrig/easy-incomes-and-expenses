@@ -11,10 +11,12 @@
 #import "IAEBook.h"
 #import "IAEYear.h"
 #import "IAEMonth.h"
+#import "IAEConcept.h"
 #import "IAEColorHelper.h"
 #import "IAEEconomicValueTypeHelper.h"
 #import "IAEEditModeMonthBalanceView.h"
 #import "IAEEditModeConceptCollectionViewCell.h"
+#import "IAEValueDecoratorView.h"
 #import "NSNumber+DefaultValues.h"
 #import "UIView+LoadFromXib.h"
 #import "UIView+RoundedCorners.h"
@@ -94,15 +96,6 @@
     [self goToActualMonth];
 }
 
-- (NSUInteger)findTodayMonthIndex
-{
-    NSDate *today = [NSDate date];
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *monthComponents = [gregorian components:NSMonthCalendarUnit fromDate:today];
-    
-    return [monthComponents month] - 1;
-}
-
 - (void)goToActualMonth
 {
     NSUInteger todayMonthIndex = [self findTodayMonthIndex];
@@ -121,6 +114,15 @@
 
 #pragma mark - Obtainings
 
+- (NSUInteger)findTodayMonthIndex
+{
+    NSDate *today = [NSDate date];
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *monthComponents = [gregorian components:NSMonthCalendarUnit fromDate:today];
+    
+    return [monthComponents month] - 1;
+}
+
 - (IAEYear *)findActualYear
 {
     return [[IAEBook sharedBook] findActualYear];
@@ -132,6 +134,15 @@
     IAEYear *year = [self findActualYear];
     
     return [year.ordererMonths objectAtIndex:todayMonthIndex];
+}
+
+- (IAEConcept *)findConceptAtIndexPath:(NSIndexPath *)indexPath
+{
+    IAEMonth *actualMonth = [self findActualMonth];
+    NSArray *concepts = [actualMonth allConceptsSortedByDate];
+    IAEConcept *concept = [concepts objectAtIndex:indexPath.row];
+    
+    return concept;
 }
 
 #pragma mark - AnnualBalance (vincule)
@@ -219,9 +230,10 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    IAEYear *actualYear = [self findActualYear];
-    NSUInteger conceptsOfYear = [actualYear findAllConcepts].count;
-    return conceptsOfYear;
+    IAEMonth *month = [self findActualMonth];
+    NSUInteger conceptsOfMonth = month.concepts.count;
+    
+    return conceptsOfMonth;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -230,7 +242,16 @@
     static NSString *cellId = @"EditModeConceptCell";
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
     
+    [self configureEditModeConceptCell:(IAEEditModeConceptCollectionViewCell *)cell withConceptAtIndexPath:indexPath];
+    
     return cell;
+}
+
+- (void)configureEditModeConceptCell:(IAEEditModeConceptCollectionViewCell *)cell withConceptAtIndexPath:(NSIndexPath *)indexPath
+{
+    IAEConcept *concept = [self findConceptAtIndexPath:indexPath];
+    
+    cell.valueDecoratorView.economicValueType = [IAEEconomicValueTypeHelper economicValueTypeOfEconomicValue:[concept amountWithSign]];
 }
 
 #pragma mark - UICollectionView Delegate

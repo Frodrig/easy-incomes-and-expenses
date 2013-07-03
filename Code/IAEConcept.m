@@ -25,4 +25,13 @@
     return [[NSNumber numberWithDouble:self.date] compare:[NSNumber numberWithDouble:concept.date]];
 }
 
+- (NSDecimalNumber *)amountWithSign
+{
+    NSDecimalNumber *retAmount = self.amount;
+    if ([self.category isExpenseCategory]) {
+        retAmount = [retAmount decimalNumberByMultiplyingBy:[NSDecimalNumber decimalNumberWithString:@"-1"]];
+    }
+    
+    return retAmount;
+}
 @end

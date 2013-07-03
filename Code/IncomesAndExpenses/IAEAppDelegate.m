@@ -56,11 +56,11 @@
     
     for (IAEYear *yearIt in [IAEBook sharedBook].years) {
         for (IAEMonth *monthIt in yearIt.months) {
-            for (int i = 0; i < 100; ++i) {
-                [monthIt addConceptWithAmount:[NSDecimalNumber decimalNumberWithString:@"1000"] category:[[IAECategoryStore sharedCategoryStore] generalIncomeCategory] date:[NSDate timeIntervalSinceReferenceDate] andDescription:@"Test concept"];
-            }
-            for (int i = 0; i < 100; ++i) {
+            for (int i = 0; i < 3; ++i) {
                 [monthIt addConceptWithAmount:[NSDecimalNumber decimalNumberWithString:@"1000"] category:[[IAECategoryStore sharedCategoryStore] generalExpenseCategory] date:[NSDate timeIntervalSinceReferenceDate] andDescription:@"Test concept"];
+            }
+            for (int i = 0; i < 3; ++i) {
+                [monthIt addConceptWithAmount:[NSDecimalNumber decimalNumberWithString:@"100"] category:[[IAECategoryStore sharedCategoryStore] generalIncomeCategory] date:[NSDate timeIntervalSinceReferenceDate] andDescription:@"Test concept"];
             }
         }
     }

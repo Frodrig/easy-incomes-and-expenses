@@ -13,5 +13,8 @@
 @interface IAEEditModeConceptCollectionViewCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet IAEValueDecoratorView *valueDecoratorView;
+@property (weak, nonatomic) IBOutlet UILabel *amountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *categoryNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *categoryTypeLabel;
 
 @end

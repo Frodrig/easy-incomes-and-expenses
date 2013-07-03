@@ -102,4 +102,9 @@
     return self.categoryType == ExpenseCategory;
 }
 
+- (NSString *)localizedCategoryTypeString
+{
+    return self.categoryType == IncomeCategory ? NSLocalizedString(@"Income", @"Ingreso") : NSLocalizedString(@"Expense", @"Gasto");
+}
+
 @end

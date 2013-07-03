@@ -25,6 +25,7 @@
 - (BOOL)setTagWithValidityCheck:(NSString *)tag;
 
 - (NSString *)localizedTag;
+- (NSString *)localizedCategoryTypeString;
 
 - (void)addConceptObject:(IAEConcept *)value;
 - (void)removeConceptObject:(IAEConcept *)value;

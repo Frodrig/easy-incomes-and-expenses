@@ -14,6 +14,7 @@
 #import "IAEColorHelper.h"
 #import "IAEEconomicValueTypeHelper.h"
 #import "IAEEditModeMonthBalanceView.h"
+#import "IAEEditModeConceptCollectionViewCell.h"
 #import "NSNumber+DefaultValues.h"
 #import "UIView+LoadFromXib.h"
 #import "UIView+RoundedCorners.h"
@@ -25,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *monthsScrollView;
 @property (weak, nonatomic) IBOutlet UIPageControl *monthsScrollPageController;
 @property (weak, nonatomic) IBOutlet UIView *conceptsContainerView;
+@property (weak, nonatomic) IBOutlet UICollectionView *conceptsCollectionView;
 
 @end
 
@@ -45,7 +47,7 @@
     
 	// Do any additional setup after loading the view.
     [self configureMonthScrollViewContent];
-    [self configureConceptsContainerView];
+    [self configureConceptsViews];
 }
 
 - (void)configureMonthScrollViewContent
@@ -58,9 +60,28 @@
     self.monthsScrollView.delegate = self;
 }
 
+- (void)configureConceptsViews
+{
+    [self configureConceptsContainerView];
+    [self configureConceptsCollectionView];
+}
+
 - (void)configureConceptsContainerView
 {
     [self.conceptsContainerView addRoundedCorners:UIRectCornerAllCorners withRadius:15];
+}
+
+- (void)configureConceptsCollectionView
+{
+    [self.conceptsCollectionView registerNib:[UINib nibWithNibName:@"IAEEditModeConceptCollectionViewCell" bundle:[NSBundle mainBundle]]
+                  forCellWithReuseIdentifier:@"EditModeConceptCell"];
+    
+    self.conceptsCollectionView.backgroundColor = [UIColor clearColor];
+    self.conceptsCollectionView.showsHorizontalScrollIndicator = NO;
+    self.conceptsCollectionView.showsVerticalScrollIndicator = NO;
+ 
+    self.conceptsCollectionView.delegate = self;
+    self.conceptsCollectionView.dataSource = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -73,9 +94,18 @@
     [self goToActualMonth];
 }
 
+- (NSUInteger)findTodayMonthIndex
+{
+    NSDate *today = [NSDate date];
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *monthComponents = [gregorian components:NSMonthCalendarUnit fromDate:today];
+    
+    return [monthComponents month] - 1;
+}
+
 - (void)goToActualMonth
 {
-    NSUInteger todayMonthIndex = [[IAEBook sharedBook] findTodayMonthIndex];
+    NSUInteger todayMonthIndex = [self findTodayMonthIndex];
     [self.monthsScrollView scrollRectToVisible:[self rectInMonthScrollViewForMonthBalanceViewWithIndex:todayMonthIndex] animated:NO];
 }
 
@@ -91,9 +121,17 @@
 
 #pragma mark - Obtainings
 
-- (IAEYear *)actualYear
+- (IAEYear *)findActualYear
 {
     return [[IAEBook sharedBook] findActualYear];
+}
+
+- (IAEMonth *)findActualMonth
+{
+    NSUInteger todayMonthIndex = [self findTodayMonthIndex];
+    IAEYear *year = [self findActualYear];
+    
+    return [year.ordererMonths objectAtIndex:todayMonthIndex];
 }
 
 #pragma mark - AnnualBalance (vincule)
@@ -115,7 +153,7 @@
 
 - (void)vinculeAnnualBalanceValueLabel
 {
-    NSDecimalNumber *yearBalance = [self actualYear].balance;
+    NSDecimalNumber *yearBalance = [self findActualYear].balance;
     UIColor *valueColor = [IAEColorHelper colorForEconomicValueType:[IAEEconomicValueTypeHelper economicValueTypeOfEconomicValue:yearBalance]];
     NSDictionary *attributeDictionary = [self createAttributeDictionaryForAnnualBalanceLabelsWithColor:valueColor];
     NSString *stringWithValue = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:yearBalance];
@@ -148,7 +186,7 @@
 
 - (void)createAndAddMonthBalanceItemsToMonthScrollView
 {
-    IAEYear *year = [self actualYear];
+    IAEYear *year = [self findActualYear];
     for (NSUInteger indexIt = 0; indexIt < year.months.count; ++indexIt) {
         CGRect frame = CGRectMake(self.monthsScrollView.bounds.size.width * indexIt,
                                   0,
@@ -171,6 +209,31 @@
 {
     self.monthsScrollPageController.currentPage = floor((self.monthsScrollView.contentOffset.x / self.monthsScrollView.bounds.size.width) + 0.5);
 }
+
+#pragma mark - UICollectionView DataSource
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    IAEYear *actualYear = [self findActualYear];
+    NSUInteger conceptsOfYear = [actualYear findAllConcepts].count;
+    return conceptsOfYear;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSAssert(collectionView == self.conceptsCollectionView, @"Se ha recibido una collection view no esperada");
+    static NSString *cellId = @"EditModeConceptCell";
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
+    
+    return cell;
+}
+
+#pragma mark - UICollectionView Delegate
 
 
 @end

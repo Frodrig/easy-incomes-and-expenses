@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface IAEEditModeViewController : UIViewController<UIScrollViewDelegate>
+@interface IAEEditModeViewController : UIViewController<UIScrollViewDelegate,
+                                                        UICollectionViewDataSource,
+                                                        UICollectionViewDelegate>
 
 @end

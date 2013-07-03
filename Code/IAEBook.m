@@ -244,14 +244,4 @@
     return [self.years objectAtIndex:0];
 }
 
-- (NSUInteger)findTodayMonthIndex
-{
-    NSDate *today = [NSDate date];
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *monthComponents = [gregorian components:NSMonthCalendarUnit fromDate:today];
-    
-    return [monthComponents month] - 1;
-}
-
-
 @end

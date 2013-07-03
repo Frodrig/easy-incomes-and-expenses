@@ -23,6 +23,8 @@
 		5B136C65166E4DB600EB12E7 /* FooterSection1ConceptsTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B136C64166E4DB600EB12E7 /* FooterSection1ConceptsTableView.xib */; };
 		5B136C68166E50EF00EB12E7 /* MonthBalanceCardConceptsTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B136C67166E50EF00EB12E7 /* MonthBalanceCardConceptsTableView.xib */; };
 		5B136C6F166E539500EB12E7 /* Section0ConceptsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B136C6E166E539500EB12E7 /* Section0ConceptsTableViewCell.xib */; };
+		5B1F0D3517841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1F0D3417841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m */; };
+		5B1F0D3717841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B1F0D3617841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib */; };
 		5B25A3C8166E210D00E63559 /* IAEIncomeExpenseControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B25A3C6166E210D00E63559 /* IAEIncomeExpenseControllerViewController.m */; };
 		5B25A3CF166E268C00E63559 /* IAEConceptsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B25A3CD166E268C00E63559 /* IAEConceptsViewController.m */; };
 		5B25A3D0166E268C00E63559 /* IAEConceptsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B25A3CE166E268C00E63559 /* IAEConceptsViewController.xib */; };
@@ -181,6 +183,9 @@
 		5B136C64166E4DB600EB12E7 /* FooterSection1ConceptsTableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FooterSection1ConceptsTableView.xib; sourceTree = "<group>"; };
 		5B136C67166E50EF00EB12E7 /* MonthBalanceCardConceptsTableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MonthBalanceCardConceptsTableView.xib; sourceTree = "<group>"; };
 		5B136C6E166E539500EB12E7 /* Section0ConceptsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Section0ConceptsTableViewCell.xib; sourceTree = "<group>"; };
+		5B1F0D3317841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEditModeConceptCollectionViewCell.h; sourceTree = "<group>"; };
+		5B1F0D3417841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEditModeConceptCollectionViewCell.m; sourceTree = "<group>"; };
+		5B1F0D3617841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEEditModeConceptCollectionViewCell.xib; sourceTree = "<group>"; };
 		5B25A3C5166E210D00E63559 /* IAEIncomeExpenseControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEIncomeExpenseControllerViewController.h; sourceTree = "<group>"; };
 		5B25A3C6166E210D00E63559 /* IAEIncomeExpenseControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEIncomeExpenseControllerViewController.m; sourceTree = "<group>"; };
 		5B25A3CC166E268C00E63559 /* IAEConceptsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEConceptsViewController.h; sourceTree = "<group>"; };
@@ -461,6 +466,26 @@
 			name = "TableView XIBs";
 			sourceTree = "<group>";
 		};
+		5B1F0D3117841C6900D0B4F1 /* Balance View */ = {
+			isa = PBXGroup;
+			children = (
+				5B903BBA1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.h */,
+				5B903BBB1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.m */,
+				5B903BBD1782DBDC00DBEFB2 /* IAEEditModeMonthBalanceItem.xib */,
+			);
+			name = "Balance View";
+			sourceTree = "<group>";
+		};
+		5B1F0D3217841C7400D0B4F1 /* Concept Collection View Cell */ = {
+			isa = PBXGroup;
+			children = (
+				5B1F0D3317841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.h */,
+				5B1F0D3417841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m */,
+				5B1F0D3617841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib */,
+			);
+			name = "Concept Collection View Cell";
+			sourceTree = "<group>";
+		};
 		5B25A3C4166E20BB00E63559 /* View - Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -522,9 +547,9 @@
 		5B32D659177C41170070AC72 /* Edit Mode */ = {
 			isa = PBXGroup;
 			children = (
-				5B903BB91782DBAF00DBEFB2 /* Views */,
 				5B32D652177C387A0070AC72 /* IAEEditModeViewController.h */,
 				5B32D653177C387A0070AC72 /* IAEEditModeViewController.m */,
+				5B903BB91782DBAF00DBEFB2 /* Views */,
 			);
 			name = "Edit Mode";
 			sourceTree = "<group>";
@@ -916,9 +941,8 @@
 		5B903BB91782DBAF00DBEFB2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5B903BBA1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.h */,
-				5B903BBB1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.m */,
-				5B903BBD1782DBDC00DBEFB2 /* IAEEditModeMonthBalanceItem.xib */,
+				5B1F0D3217841C7400D0B4F1 /* Concept Collection View Cell */,
+				5B1F0D3117841C6900D0B4F1 /* Balance View */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1267,6 +1291,7 @@
 				5BAA5D871709699100B6B3F8 /* 441-help-symbol1.png in Resources */,
 				5BAA5D8E17096B7100B6B3F8 /* 287-at@2x.png in Resources */,
 				5BAA5D8F17096B7100B6B3F8 /* 287-at.png in Resources */,
+				5B1F0D3717841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1305,6 +1330,7 @@
 				5BC41977167BC0B8009AECC2 /* IAECurrencyManager.m in Sources */,
 				5BC4197C167BC104009AECC2 /* IAECurrencyInfo.m in Sources */,
 				5B5C9692178194B0008CD851 /* IAEEconomicValueUpdater.m in Sources */,
+				5B1F0D3517841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m in Sources */,
 				5BDC867E1680D83500C761D5 /* IAEConcept.m in Sources */,
 				5B7782521684674E0035EB89 /* IAEYearsConfigViewController.m in Sources */,
 				5B77825716846D400035EB89 /* IAEYearConfigCardViewController.m in Sources */,

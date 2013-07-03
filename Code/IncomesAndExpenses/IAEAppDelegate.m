@@ -66,7 +66,6 @@
     }
     
     [[IAEBook sharedBook] saveAll];
-
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

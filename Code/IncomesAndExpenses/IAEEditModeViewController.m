@@ -16,6 +16,7 @@
 #import "IAEEditModeMonthBalanceView.h"
 #import "NSNumber+DefaultValues.h"
 #import "UIView+LoadFromXib.h"
+#import "UIView+RoundedCorners.h"
 
 @interface IAEEditModeViewController ()
 
@@ -23,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *annualBalanceValueLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *monthsScrollView;
 @property (weak, nonatomic) IBOutlet UIPageControl *monthsScrollPageController;
+@property (weak, nonatomic) IBOutlet UIView *conceptsContainerView;
 
 @end
 
@@ -43,6 +45,7 @@
     
 	// Do any additional setup after loading the view.
     [self configureMonthScrollViewContent];
+    [self configureConceptsContainerView];
 }
 
 - (void)configureMonthScrollViewContent
@@ -53,6 +56,11 @@
     self.monthsScrollView.showsVerticalScrollIndicator = NO;
     self.monthsScrollView.bounces = YES;
     self.monthsScrollView.delegate = self;
+}
+
+- (void)configureConceptsContainerView
+{
+    [self.conceptsContainerView addRoundedCorners:UIRectCornerAllCorners withRadius:15];
 }
 
 - (void)viewWillAppear:(BOOL)animated

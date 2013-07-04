@@ -66,12 +66,15 @@
 
 - (IBAction)incomeButtonPressed:(id)sender
 {
-    [self.delegate adjustConceptsAmountViewController:self didPressedIncomeButtonWithAmount:[self convertSliderValueToDesiredValue]];
+    NSNumber *amountValue = [self convertSliderValueToDesiredValue];
+    [self.delegate adjustConceptsAmountViewController:self didPressedAdjustButtonWithAmount:amountValue];
 }
 
 - (IBAction)expenseButtonPressed:(id)sender
 {
-    [self.delegate adjustConceptsAmountViewController:self didPressedExpenseButtonWithAmount:[self convertSliderValueToDesiredValue]];
+    NSNumber *amountValue = [self convertSliderValueToDesiredValue];
+    amountValue = [NSNumber numberWithFloat:amountValue.floatValue * -1.0];
+    [self.delegate adjustConceptsAmountViewController:self didPressedAdjustButtonWithAmount:amountValue];
 }
 
 - (IBAction)sliderValueChanged:(id)sender

@@ -34,4 +34,19 @@
     
     return retAmount;
 }
+
+- (BOOL)canAssignSignedValue:(NSDecimalNumber *)signedValue
+{
+    BOOL retCanAssign = YES;
+    
+    NSComparisonResult compareToZero = [signedValue compare:[NSDecimalNumber zero]];
+    if (compareToZero == NSOrderedAscending) {
+        retCanAssign = self.category.categoryType == ExpenseCategory;
+    } else if (compareToZero == NSOrderedDescending) {
+        retCanAssign = self.category.categoryType == IncomeCategory;
+    }
+    
+    return retCanAssign;
+}
+
 @end

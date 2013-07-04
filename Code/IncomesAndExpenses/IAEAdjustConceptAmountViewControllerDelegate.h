@@ -13,10 +13,7 @@
 @protocol IAEAdjustConceptAmountViewControllerDelegate <NSObject>
 
 - (void)adjustConceptsAmountViewController:(IAEAdjustConceptAmountViewController *)adjustConceptsAmountViewController
-          didPressedIncomeButtonWithAmount:(NSNumber *)amount;
-
-- (void)adjustConceptsAmountViewController:(IAEAdjustConceptAmountViewController *)adjustConceptsAmountViewController
-          didPressedExpenseButtonWithAmount:(NSNumber *)amount;
+          didPressedAdjustButtonWithAmount:(NSNumber *)amount;
 
 
 @end

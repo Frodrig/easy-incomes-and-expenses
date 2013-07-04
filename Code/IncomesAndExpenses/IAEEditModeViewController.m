@@ -22,6 +22,7 @@
 #import "NSNumber+DefaultValues.h"
 #import "UIView+LoadFromXib.h"
 #import "UIView+RoundedCorners.h"
+#import "NSDecimalNumber+AbsoluteValue.h"
 
 @interface IAEEditModeViewController ()
 
@@ -378,16 +379,18 @@
 
 - (void)openPopoverForAdjustConceptCellAmount:(IAEEditModeConceptCollectionViewCell *)cell
 {
-    IAEAdjustConceptAmountViewController *vc = [[IAEAdjustConceptAmountViewController alloc] init];
-    
-    [self createAndPresentPopoverForConceptCellView:cell.amountLabel withViewController:vc];
+    IAEAdjustConceptAmountViewController *viewController = [[IAEAdjustConceptAmountViewController alloc] init];
+    viewController.delegate = self;
+    viewController.conceptCellIndexPath = [self.conceptsCollectionView indexPathForCell:cell];
+
+    [self createAndPresentPopoverForConceptCellView:cell.amountLabel withViewController:viewController];
 }
 
 - (void)openPopoverForEditConceptCategory:(IAEEditModeConceptCollectionViewCell *)cell
 {
-    IAEAdjustConceptAmountViewController *vc = [[IAEAdjustConceptAmountViewController alloc] init];
+    //IAEAdjustConceptAmountViewController *viewController = [[IAEAdjustConceptAmountViewController alloc] init];
     
-    [self createAndPresentPopoverForConceptCellView:cell.categoryNameLabel withViewController:vc];
+    //[self createAndPresentPopoverForConceptCellView:cell.categoryNameLabel withViewController:viewController];
 }
 
 - (void)createAndPresentPopoverForConceptCellView:(UIView *)view withViewController:(UIViewController *)viewController
@@ -404,6 +407,35 @@
                 permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
 }
 
+#pragma mark - IAEAdjustConceptAmountViewController
+
+- (void)adjustConceptsAmountViewController:(IAEAdjustConceptAmountViewController *)adjustConceptsAmountViewController
+          didPressedAdjustButtonWithAmount:(NSNumber *)amount
+{
+    IAEMonth *month = [self findActualMonth];
+    NSIndexPath *cellIndexPath = adjustConceptsAmountViewController.conceptCellIndexPath;
+    IAEConcept *concept = [[month allConceptsSortedByDate] objectAtIndex:cellIndexPath.row];
+    IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:cellIndexPath];
+    
+    if ([self updateWithNewAbsoluteValueOfConcept:concept byAdding:amount]) {
+        [self configureEditModeConceptCell:cell withConceptAtIndexPath:adjustConceptsAmountViewController.conceptCellIndexPath];
+        [[IAEBook sharedBook] saveAll];
+    }
+}
+
+- (BOOL)updateWithNewAbsoluteValueOfConcept:(IAEConcept *)concept byAdding:(NSNumber *)amount
+{
+    NSDecimalNumber *amountDecimalNumber = [NSDecimalNumber decimalNumberWithString:[amount stringValue]];
+    NSDecimalNumber *conceptAmountWithSign = [concept amountWithSign];
+    NSDecimalNumber *newConceptValue = [conceptAmountWithSign decimalNumberByAdding:amountDecimalNumber];
+   
+    BOOL canUpdate = [concept canAssignSignedValue:newConceptValue];
+    if (canUpdate) {
+        concept.amount = [newConceptValue decimalNumberByAbsoluteValue];
+    }
+    
+    return canUpdate;
+}
 
 
 @end

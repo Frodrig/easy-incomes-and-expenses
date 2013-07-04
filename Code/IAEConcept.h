@@ -20,6 +20,8 @@
 @property (nonatomic, retain) IAECategory *category;
 @property (nonatomic, retain) IAEMonth *month;
 
+- (BOOL)canAssignSignedValue:(NSDecimalNumber *)signedValue;
+
 - (NSDecimalNumber *)amountWithSign;
 
 @end

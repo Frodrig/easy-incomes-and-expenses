@@ -49,6 +49,8 @@
 		5B32D66F177C8C700070AC72 /* IAEModeNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B32D66E177C8C700070AC72 /* IAEModeNavigationController.m */; };
 		5B32D673177C929D0070AC72 /* IAEOrientationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B32D672177C929D0070AC72 /* IAEOrientationHelper.m */; };
 		5B35313916B6BFBF00BD8034 /* IAEPopoverBackgroundCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B35313816B6BFBF00BD8034 /* IAEPopoverBackgroundCustom.m */; };
+		5B36AFF11785874D00132475 /* IAEAdjustConceptAmountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B36AFEF1785874D00132475 /* IAEAdjustConceptAmountViewController.m */; };
+		5B36AFF21785874D00132475 /* IAEAdjustConceptAmountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B36AFF01785874D00132475 /* IAEAdjustConceptAmountViewController.xib */; };
 		5B4612F51679DCB7008B73CE /* IAENewYearDatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4612F31679DCB7008B73CE /* IAENewYearDatePickerViewController.m */; };
 		5B53C8061675D5180016329C /* IAEConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B53C8041675D5180016329C /* IAEConfigViewController.m */; };
 		5B53C8071675D5180016329C /* IAEConfigViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B53C8051675D5180016329C /* IAEConfigViewController.xib */; };
@@ -219,6 +221,10 @@
 		5B32D672177C929D0070AC72 /* IAEOrientationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEOrientationHelper.m; sourceTree = "<group>"; };
 		5B35313716B6BFBF00BD8034 /* IAEPopoverBackgroundCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEPopoverBackgroundCustom.h; sourceTree = "<group>"; };
 		5B35313816B6BFBF00BD8034 /* IAEPopoverBackgroundCustom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEPopoverBackgroundCustom.m; sourceTree = "<group>"; };
+		5B36AFEE1785874D00132475 /* IAEAdjustConceptAmountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEAdjustConceptAmountViewController.h; sourceTree = "<group>"; };
+		5B36AFEF1785874D00132475 /* IAEAdjustConceptAmountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEAdjustConceptAmountViewController.m; sourceTree = "<group>"; };
+		5B36AFF01785874D00132475 /* IAEAdjustConceptAmountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEAdjustConceptAmountViewController.xib; sourceTree = "<group>"; };
+		5B36AFF31785906100132475 /* IAEAdjustConceptAmountViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEAdjustConceptAmountViewControllerDelegate.h; sourceTree = "<group>"; };
 		5B4612F21679DCB7008B73CE /* IAENewYearDatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAENewYearDatePickerViewController.h; sourceTree = "<group>"; };
 		5B4612F31679DCB7008B73CE /* IAENewYearDatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAENewYearDatePickerViewController.m; sourceTree = "<group>"; };
 		5B4612F81679E173008B73CE /* IAENewYearDatePickerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAENewYearDatePickerDelegate.h; sourceTree = "<group>"; };
@@ -549,6 +555,7 @@
 			children = (
 				5B32D652177C387A0070AC72 /* IAEEditModeViewController.h */,
 				5B32D653177C387A0070AC72 /* IAEEditModeViewController.m */,
+				5B36AFEC1785871E00132475 /* View Controllers */,
 				5B903BB91782DBAF00DBEFB2 /* Views */,
 			);
 			name = "Edit Mode";
@@ -619,6 +626,25 @@
 				5B35313816B6BFBF00BD8034 /* IAEPopoverBackgroundCustom.m */,
 			);
 			name = PopoverCustom;
+			sourceTree = "<group>";
+		};
+		5B36AFEC1785871E00132475 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				5B36AFED1785872900132475 /* Adjust Concept Amout */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		5B36AFED1785872900132475 /* Adjust Concept Amout */ = {
+			isa = PBXGroup;
+			children = (
+				5B36AFEE1785874D00132475 /* IAEAdjustConceptAmountViewController.h */,
+				5B36AFEF1785874D00132475 /* IAEAdjustConceptAmountViewController.m */,
+				5B36AFF01785874D00132475 /* IAEAdjustConceptAmountViewController.xib */,
+				5B36AFF31785906100132475 /* IAEAdjustConceptAmountViewControllerDelegate.h */,
+			);
+			name = "Adjust Concept Amout";
 			sourceTree = "<group>";
 		};
 		5B53C8011675D5010016329C /* Modal Views */ = {
@@ -1251,6 +1277,7 @@
 				5B65636716B2E4CD00CEE1F2 /* IAEAmountStepperViewController.xib in Resources */,
 				5BF3654A16B5836700781513 /* 14-gear.png in Resources */,
 				5BF3654B16B5836700781513 /* 14-gear@2x.png in Resources */,
+				5B36AFF21785874D00132475 /* IAEAdjustConceptAmountViewController.xib in Resources */,
 				5BF3655116B58C7E00781513 /* IAESettingsViewController.xib in Resources */,
 				5B7A4D6916B66889001751A9 /* 451-help-symbol2.png in Resources */,
 				5B7A4D6A16B66889001751A9 /* 451-help-symbol2@2x.png in Resources */,
@@ -1344,6 +1371,7 @@
 				5B32D673177C929D0070AC72 /* IAEOrientationHelper.m in Sources */,
 				5BC916F816A57BCA0072AE5C /* IAEViewCategoryTypeIndicator.m in Sources */,
 				5B5C968F17818906008CD851 /* IAEColorHelper.m in Sources */,
+				5B36AFF11785874D00132475 /* IAEAdjustConceptAmountViewController.m in Sources */,
 				5B32D654177C387A0070AC72 /* IAEEditModeViewController.m in Sources */,
 				5BC916FE16A5AD080072AE5C /* IAEInputButtonGrid.m in Sources */,
 				5B903BBC1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.m in Sources */,

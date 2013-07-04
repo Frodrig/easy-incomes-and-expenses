@@ -18,6 +18,7 @@
 #import "IAEEditModeMonthBalanceView.h"
 #import "IAEEditModeConceptCollectionViewCell.h"
 #import "IAEValueDecoratorView.h"
+#import "IAEAdjustConceptAmountViewController.h"
 #import "NSNumber+DefaultValues.h"
 #import "UIView+LoadFromXib.h"
 #import "UIView+RoundedCorners.h"
@@ -30,19 +31,28 @@
 @property (weak, nonatomic) IBOutlet UIPageControl *monthsScrollPageController;
 @property (weak, nonatomic) IBOutlet UIView *conceptsContainerView;
 @property (weak, nonatomic) IBOutlet UICollectionView *conceptsCollectionView;
+@property (nonatomic, strong) UIPopoverController *popover;
+@property (nonatomic, strong) UITapGestureRecognizer *tapConceptsRecognizer;
 @property (nonatomic) BOOL initialPositioning;
 
 @end
 
 @implementation IAEEditModeViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithCoder:aDecoder];
     if (self) {
-        // Custom initialization
+        [self initTapConceptsGestureRecognizer];
     }
+    
     return self;
+}
+
+- (void)initTapConceptsGestureRecognizer
+{
+    _tapConceptsRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnConceptsCollectionView:)];
+    _tapConceptsRecognizer.numberOfTapsRequired = 1;
 }
 
 - (void)viewDidLoad
@@ -83,6 +93,8 @@
     self.conceptsCollectionView.backgroundColor = [UIColor clearColor];
     self.conceptsCollectionView.showsHorizontalScrollIndicator = NO;
     self.conceptsCollectionView.showsVerticalScrollIndicator = NO;
+    
+    [self.conceptsCollectionView addGestureRecognizer:self.tapConceptsRecognizer];
  
     self.conceptsCollectionView.delegate = self;
     self.conceptsCollectionView.dataSource = self;
@@ -348,6 +360,50 @@
 }
 
 #pragma mark - UICollectionView Delegate
+
+#pragma mark - UITapGestureRecognizer
+
+- (void)tapOnConceptsCollectionView:(UITapGestureRecognizer *)tapGestureRecognizer
+{
+    CGPoint location = [tapGestureRecognizer locationInView:self.conceptsCollectionView];;
+    NSIndexPath *locationIndexPath = [self.conceptsCollectionView indexPathForItemAtPoint:location];
+    IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:locationIndexPath];
+    
+    if (CGRectContainsPoint(cell.amountLabel.frame, location)) {
+        [self openPopoverForAdjustConceptCellAmount:cell];
+    } else if (CGRectContainsPoint(cell.categoryNameLabel.frame, location) || CGRectContainsPoint(cell.categoryTypeLabel.frame, location)) {
+        [self openPopoverForEditConceptCategory:cell];
+    }
+}
+
+- (void)openPopoverForAdjustConceptCellAmount:(IAEEditModeConceptCollectionViewCell *)cell
+{
+    IAEAdjustConceptAmountViewController *vc = [[IAEAdjustConceptAmountViewController alloc] init];
+    
+    [self createAndPresentPopoverForConceptCellView:cell.amountLabel withViewController:vc];
+}
+
+- (void)openPopoverForEditConceptCategory:(IAEEditModeConceptCollectionViewCell *)cell
+{
+    IAEAdjustConceptAmountViewController *vc = [[IAEAdjustConceptAmountViewController alloc] init];
+    
+    [self createAndPresentPopoverForConceptCellView:cell.categoryNameLabel withViewController:vc];
+}
+
+- (void)createAndPresentPopoverForConceptCellView:(UIView *)view withViewController:(UIViewController *)viewController
+{
+    CGRect presentPopoverFrame = CGRectMake(view.frame.origin.x,
+                                            view.frame.origin.y + 10.0,
+                                            view.frame.size.width,
+                                            view.frame.size.height - 10.0);
+    
+    self.popover = [[UIPopoverController alloc] initWithContentViewController:viewController];
+    self.popover.popoverContentSize = viewController.view.bounds.size;
+    [self.popover presentPopoverFromRect:presentPopoverFrame
+                                  inView:self.conceptsCollectionView
+                permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
+}
+
 
 
 @end

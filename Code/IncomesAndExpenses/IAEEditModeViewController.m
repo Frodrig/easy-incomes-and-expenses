@@ -19,6 +19,7 @@
 #import "IAEEditModeConceptCollectionViewCell.h"
 #import "IAEValueDecoratorView.h"
 #import "IAEAdjustConceptAmountViewController.h"
+#import "IAECategorySelectorViewController.h"
 #import "NSNumber+DefaultValues.h"
 #import "UIView+LoadFromXib.h"
 #import "UIView+RoundedCorners.h"
@@ -400,6 +401,9 @@
 
 - (void)openPopoverForEditConceptCategory:(IAEEditModeConceptCollectionViewCell *)cell
 {
+    IAECategorySelectorViewController *viewController = [[IAECategorySelectorViewController alloc] init];
+    
+    [self createAndPresentPopoverForConceptCellView:cell.categoryNameLabel withViewController:viewController];
 }
 
 - (void)createAndPresentPopoverForConceptCellView:(UIView *)view withViewController:(UIViewController *)viewController

@@ -52,6 +52,8 @@
 		5B36AFF11785874D00132475 /* IAEAdjustConceptAmountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B36AFEF1785874D00132475 /* IAEAdjustConceptAmountViewController.m */; };
 		5B36AFF21785874D00132475 /* IAEAdjustConceptAmountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B36AFF01785874D00132475 /* IAEAdjustConceptAmountViewController.xib */; };
 		5B36AFF71785BBF400132475 /* NSDecimalNumber+AbsoluteValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B36AFF61785BBF400132475 /* NSDecimalNumber+AbsoluteValue.m */; };
+		5B36AFFC1785D73800132475 /* IAECategorySelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B36AFFA1785D73800132475 /* IAECategorySelectorViewController.m */; };
+		5B36AFFD1785D73800132475 /* IAECategorySelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B36AFFB1785D73800132475 /* IAECategorySelectorViewController.xib */; };
 		5B4612F51679DCB7008B73CE /* IAENewYearDatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4612F31679DCB7008B73CE /* IAENewYearDatePickerViewController.m */; };
 		5B53C8061675D5180016329C /* IAEConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B53C8041675D5180016329C /* IAEConfigViewController.m */; };
 		5B53C8071675D5180016329C /* IAEConfigViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B53C8051675D5180016329C /* IAEConfigViewController.xib */; };
@@ -228,6 +230,9 @@
 		5B36AFF31785906100132475 /* IAEAdjustConceptAmountViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEAdjustConceptAmountViewControllerDelegate.h; sourceTree = "<group>"; };
 		5B36AFF51785BBF300132475 /* NSDecimalNumber+AbsoluteValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDecimalNumber+AbsoluteValue.h"; sourceTree = "<group>"; };
 		5B36AFF61785BBF400132475 /* NSDecimalNumber+AbsoluteValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDecimalNumber+AbsoluteValue.m"; sourceTree = "<group>"; };
+		5B36AFF91785D73800132475 /* IAECategorySelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategorySelectorViewController.h; sourceTree = "<group>"; };
+		5B36AFFA1785D73800132475 /* IAECategorySelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECategorySelectorViewController.m; sourceTree = "<group>"; };
+		5B36AFFB1785D73800132475 /* IAECategorySelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAECategorySelectorViewController.xib; sourceTree = "<group>"; };
 		5B4612F21679DCB7008B73CE /* IAENewYearDatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAENewYearDatePickerViewController.h; sourceTree = "<group>"; };
 		5B4612F31679DCB7008B73CE /* IAENewYearDatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAENewYearDatePickerViewController.m; sourceTree = "<group>"; };
 		5B4612F81679E173008B73CE /* IAENewYearDatePickerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAENewYearDatePickerDelegate.h; sourceTree = "<group>"; };
@@ -634,6 +639,7 @@
 		5B36AFEC1785871E00132475 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				5B36AFF81785D71F00132475 /* Category Selector */,
 				5B36AFED1785872900132475 /* Adjust Concept Amout */,
 			);
 			name = "View Controllers";
@@ -657,6 +663,16 @@
 				5B36AFF61785BBF400132475 /* NSDecimalNumber+AbsoluteValue.m */,
 			);
 			name = NSDecimalNumber;
+			sourceTree = "<group>";
+		};
+		5B36AFF81785D71F00132475 /* Category Selector */ = {
+			isa = PBXGroup;
+			children = (
+				5B36AFF91785D73800132475 /* IAECategorySelectorViewController.h */,
+				5B36AFFA1785D73800132475 /* IAECategorySelectorViewController.m */,
+				5B36AFFB1785D73800132475 /* IAECategorySelectorViewController.xib */,
+			);
+			name = "Category Selector";
 			sourceTree = "<group>";
 		};
 		5B53C8011675D5010016329C /* Modal Views */ = {
@@ -1276,6 +1292,7 @@
 				5B29BF6016AC5DC900C2D161 /* 433-x.png in Resources */,
 				5B29BF6116AC5DC900C2D161 /* 433-x@2x.png in Resources */,
 				5BB08F8016AD438800083058 /* 22-circle-minus.png in Resources */,
+				5B36AFFD1785D73800132475 /* IAECategorySelectorViewController.xib in Resources */,
 				5BB08F8116AD438800083058 /* 22-circle-minus@2x.png in Resources */,
 				5BB08F8216AD438800083058 /* 31-circle-plus.png in Resources */,
 				5BB08F8316AD438800083058 /* 31-circle-plus@2x.png in Resources */,
@@ -1353,6 +1370,7 @@
 				5BD06157163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld in Sources */,
 				5B32D665177C48B00070AC72 /* IAEReportModeViewController.m in Sources */,
 				5BD06171163A8D2B00A80BE3 /* IAEMonth.m in Sources */,
+				5B36AFFC1785D73800132475 /* IAECategorySelectorViewController.m in Sources */,
 				5B5C968917816EE0008CD851 /* IAEValueDecoratorViewExpenseConfigurator.m in Sources */,
 				5BD06174163A8D2B00A80BE3 /* IAEYear.m in Sources */,
 				5B36AFF71785BBF400132475 /* NSDecimalNumber+AbsoluteValue.m in Sources */,

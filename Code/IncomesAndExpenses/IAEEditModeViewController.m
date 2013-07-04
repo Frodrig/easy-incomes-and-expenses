@@ -366,19 +366,31 @@
 
 - (void)tapOnConceptsCollectionView:(UITapGestureRecognizer *)tapGestureRecognizer
 {
+    [self findCellOfConceptCollectionViewAndExecuteActionUnderTapGesture:tapGestureRecognizer];
+}
+
+- (void)findCellOfConceptCollectionViewAndExecuteActionUnderTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer
+{
     CGPoint location = [tapGestureRecognizer locationInView:self.conceptsCollectionView];;
     NSIndexPath *locationIndexPath = [self.conceptsCollectionView indexPathForItemAtPoint:location];
     IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:locationIndexPath];
-    
+    CGPoint locationConvertedToCellArea = [cell convertPoint:location fromView:self.conceptsCollectionView];
+
+    [self executeActionOnCellOfConceptCollectionView:cell underTapLocaton:locationConvertedToCellArea];
+}
+
+- (void)executeActionOnCellOfConceptCollectionView:(IAEEditModeConceptCollectionViewCell *)cell underTapLocaton:(CGPoint)location
+{
     if (CGRectContainsPoint(cell.amountLabel.frame, location)) {
         [self openPopoverForAdjustConceptCellAmount:cell];
-    } else if (CGRectContainsPoint(cell.categoryNameLabel.frame, location) || CGRectContainsPoint(cell.categoryTypeLabel.frame, location)) {
+    } else if (CGRectContainsPoint(cell.categoryNameLabel.frame, location) ||
+               CGRectContainsPoint(cell.categoryTypeLabel.frame, location)) {
         [self openPopoverForEditConceptCategory:cell];
     }
 }
 
 - (void)openPopoverForAdjustConceptCellAmount:(IAEEditModeConceptCollectionViewCell *)cell
-{
+{    
     IAEAdjustConceptAmountViewController *viewController = [[IAEAdjustConceptAmountViewController alloc] init];
     viewController.delegate = self;
     viewController.conceptCellIndexPath = [self.conceptsCollectionView indexPathForCell:cell];
@@ -388,9 +400,6 @@
 
 - (void)openPopoverForEditConceptCategory:(IAEEditModeConceptCollectionViewCell *)cell
 {
-    //IAEAdjustConceptAmountViewController *viewController = [[IAEAdjustConceptAmountViewController alloc] init];
-    
-    //[self createAndPresentPopoverForConceptCellView:cell.categoryNameLabel withViewController:viewController];
 }
 
 - (void)createAndPresentPopoverForConceptCellView:(UIView *)view withViewController:(UIViewController *)viewController
@@ -412,15 +421,19 @@
 - (void)adjustConceptsAmountViewController:(IAEAdjustConceptAmountViewController *)adjustConceptsAmountViewController
           didPressedAdjustButtonWithAmount:(NSNumber *)amount
 {
+    [self modifyAmmountOfConceptOfCellIndexPath:adjustConceptsAmountViewController.conceptCellIndexPath byAddingAmmount:amount];
+}
+
+- (void)modifyAmmountOfConceptOfCellIndexPath:(NSIndexPath *)cellIndexPath byAddingAmmount:(NSNumber *)amount
+{
     IAEMonth *month = [self findActualMonth];
-    NSIndexPath *cellIndexPath = adjustConceptsAmountViewController.conceptCellIndexPath;
     IAEConcept *concept = [[month allConceptsSortedByDate] objectAtIndex:cellIndexPath.row];
     IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:cellIndexPath];
     
     if ([self updateWithNewAbsoluteValueOfConcept:concept byAdding:amount]) {
-        [self configureEditModeConceptCell:cell withConceptAtIndexPath:adjustConceptsAmountViewController.conceptCellIndexPath];
+        [self configureEditModeConceptCell:cell withConceptAtIndexPath:cellIndexPath];
         [[IAEBook sharedBook] saveAll];
-    }
+    }    
 }
 
 - (BOOL)updateWithNewAbsoluteValueOfConcept:(IAEConcept *)concept byAdding:(NSNumber *)amount

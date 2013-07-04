@@ -30,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UIPageControl *monthsScrollPageController;
 @property (weak, nonatomic) IBOutlet UIView *conceptsContainerView;
 @property (weak, nonatomic) IBOutlet UICollectionView *conceptsCollectionView;
+@property (nonatomic) BOOL initialPositioning;
 
 @end
 
@@ -99,8 +100,12 @@
 
 - (void)goToActualMonth
 {
+    self.initialPositioning = YES;
+    
     NSUInteger todayMonthIndex = [self findTodayMonthIndex];
     [self.monthsScrollView scrollRectToVisible:[self rectInMonthScrollViewForMonthBalanceViewWithIndex:todayMonthIndex] animated:NO];
+    
+    self.initialPositioning = NO;
 }
 
 - (CGRect)rectInMonthScrollViewForMonthBalanceViewWithIndex:(NSUInteger)monthIndex
@@ -214,12 +219,43 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self updateScrollPageController];
+    if (scrollView == self.monthsScrollView) {
+        [self updateMonthScrollViewAfterScroll];
+    }
+}
+
+- (void)updateMonthScrollViewAfterScroll
+{
+    if (!self.initialPositioning) {
+        [self updateScrollPageController];
+        [self setConceptsCollectionViewInTransitionAspect:YES];
+    }
 }
 
 - (void)updateScrollPageController
 {
     self.monthsScrollPageController.currentPage = floor((self.monthsScrollView.contentOffset.x / self.monthsScrollView.bounds.size.width) + 0.5);
+}
+
+- (void)setConceptsCollectionViewInTransitionAspect:(BOOL)transition
+{
+    [UIView animateWithDuration:0.25 animations:^{
+        self.conceptsCollectionView.alpha = transition ? 0.15 : 1.0;
+    }];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    if (scrollView == self.monthsScrollView) {
+        [self updateContentOfConceptsCollectionView];
+        [self setConceptsCollectionViewInTransitionAspect:NO];
+    }
+}
+
+- (void)updateContentOfConceptsCollectionView
+{
+    [self.conceptsCollectionView reloadData];
+    [self.conceptsCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
 }
 
 #pragma mark - UICollectionView DataSource

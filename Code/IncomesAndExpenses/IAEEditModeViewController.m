@@ -404,15 +404,16 @@
 
 - (void)createAndPresentPopoverForConceptCellView:(UIView *)view withViewController:(UIViewController *)viewController
 {
-    CGRect presentPopoverFrame = CGRectMake(view.frame.origin.x,
-                                            view.frame.origin.y + 10.0,
-                                            view.frame.size.width,
-                                            view.frame.size.height - 10.0);
+    CGRect traslateViewFrameToGlobalCoordination = [view.superview convertRect:view.frame toView:view.superview];
+    CGRect presentPopoverFrame = CGRectMake(traslateViewFrameToGlobalCoordination.origin.x,
+                                            traslateViewFrameToGlobalCoordination.origin.y + 10.0,
+                                            traslateViewFrameToGlobalCoordination.size.width,
+                                            traslateViewFrameToGlobalCoordination.size.height - 10.0);
     
     self.popover = [[UIPopoverController alloc] initWithContentViewController:viewController];
     self.popover.popoverContentSize = viewController.view.bounds.size;
     [self.popover presentPopoverFromRect:presentPopoverFrame
-                                  inView:self.conceptsCollectionView
+                                  inView:view.superview
                 permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
 }
 

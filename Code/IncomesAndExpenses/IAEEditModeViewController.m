@@ -184,18 +184,22 @@
 - (void)updateYearBalanceWithAnimation:(BOOL)animation
 {
     IAEYear *year = [self findActualYear];
+    NSDecimalNumber *yearBalance = [year balance];
+    
     [[IAEEconomicValueUpdater defaultEconomicValueUpdater] processEconomicLabel:self.annualBalanceValueLabel
-                                                                        toValue:[year balance]
-                                                                   withDuration:animation ? 25.0 : 0 ];
+                                                                        toValue:yearBalance
+                                                                   withDuration:animation ? 1.75 : 0 ];
 }
 
 - (void)updateMonthBalanceWithAnimation:(BOOL)animation
 {
     IAEMonth *month = [self findActualMonth];
+    NSDecimalNumber *monthBalance = [month balance];
     IAEEditModeMonthBalanceView *monthBalanceView = [self findActualMonthBalanceView];
+    
     [[IAEEconomicValueUpdater defaultEconomicValueUpdater] processEconomicLabel:monthBalanceView.monthBalanceLabel
-                                                                        toValue:[month balance]
-                                                                   withDuration:animation ? 25.0 : 0 ];    
+                                                                        toValue:monthBalance
+                                                                   withDuration:animation ? 1.55 : 0 ];
 }
 
 
@@ -507,16 +511,20 @@
 {
     IAEConcept *concept = [self findConceptAtIndexPath:indexPath];
     if (concept.category != category) {
+        NSDecimalNumber *tmpPrevBalance = [[self findActualMonth] balance];
+        
         CategoryType originalCategoryType = concept.category.categoryType;
         concept.category = category;
 
+        NSDecimalNumber *tmpNewBalance = [[self findActualMonth] balance];
+        
         [[IAEBook sharedBook] saveAll];
 
         IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:indexPath];
         [self configureEditModeConceptCell:cell withConceptAtIndexPath:indexPath];
 
         if (originalCategoryType != concept.category.categoryType) {
-            [self updateBalancesWithAnimation:NO];
+            [self updateBalancesWithAnimation:YES];
         }
     }
 }

@@ -616,6 +616,7 @@
 		5B32D670177C92840070AC72 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5BC41979167BC0BD009AECC2 /* CurrencyManager */,
 				5B903BB51782C8ED00DBEFB2 /* Orientation Helper */,
 				5B903BB61782C8F900DBEFB2 /* Color Helper */,
 				5B903BB71782C90300DBEFB2 /* Economic Value Helper */,
@@ -1215,7 +1216,6 @@
 				5BC916F516A57BB00072AE5C /* ViewClass */,
 				5BC916F116A57AF40072AE5C /* ViewUtils */,
 				5B0B500816A434C9006BEAD7 /* Constants */,
-				5BC41979167BC0BD009AECC2 /* CurrencyManager */,
 				5BCC1F4916A0682D003946E8 /* Animation */,
 				5B0B500616A434C3006BEAD7 /* Others */,
 			);

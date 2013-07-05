@@ -85,9 +85,10 @@
 
 - (NSDecimalNumber *)extractDecimalNumberFromLabel:(UILabel *)label
 {
-    NSDecimalNumber *decimalNumber = [NSDecimalNumber decimalNumberWithString:label.text];
-    
-    return decimalNumber;
+    NSNumber *number = [[IAECurrencyManager sharedManager].currencyFormatter numberFromString:label.text];
+    NSDecimalNumber *decimalNumber = [NSDecimalNumber decimalNumberWithString:number.stringValue];
+
+     return decimalNumber;
 }
 
 - (BOOL)isLabelCounterProcessingAnimation:(UILabel *)label
@@ -109,8 +110,9 @@
     if (link == self.displayLink) {
         NSMutableArray *pendingLabelsProcessed = [NSMutableArray arrayWithCapacity:self.pendingLabelUpdates.count];
         for (NSDictionary *labelCounterData in self.pendingLabelUpdates) {
-            NSDecimalNumber *newUpdateValueOfLabel = [self generateUpdatedLabelValueFromPendingData:labelCounterData withDisplayLink:link];
-            if ([labelCounterData objectForKey:@"to"] == newUpdateValueOfLabel) {
+            NSDecimalNumber *newUpdateValueOfLabel = [self generateUpdatedLabelValueAdDecimalNumberFromPendingData:labelCounterData
+                                                                                                   withDisplayLink:link];
+            if ([[labelCounterData objectForKey:@"to"] compare:newUpdateValueOfLabel] == NSOrderedSame) {
                 [pendingLabelsProcessed addObject:labelCounterData];
             }
             
@@ -123,13 +125,13 @@
     }
 }
 
--(NSDecimalNumber *)generateUpdatedLabelValueFromPendingData:(NSDictionary *)pendingLabelData withDisplayLink:(CADisplayLink *)link
+-(NSDecimalNumber *)generateUpdatedLabelValueAdDecimalNumberFromPendingData:(NSDictionary *)pendingLabelData withDisplayLink:(CADisplayLink *)link
 {
     NSDecimalNumber *from = [pendingLabelData objectForKey:@"from"];
     NSDecimalNumber *to = [pendingLabelData objectForKey:@"to"];
     NSNumber *duration = [pendingLabelData objectForKey:@"duration"];
     NSNumber *startTime = [pendingLabelData objectForKey:@"startTime"];
-    
+
     float dt = (link.timestamp - startTime.floatValue) / duration.doubleValue;
     
     NSDecimalNumber *updatedValue = nil;
@@ -167,6 +169,7 @@
 {
     if (self.pendingLabelUpdates.count == 0) {
         [self.displayLink removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+        self.displayLink = nil;
     }
 }
 

@@ -13,7 +13,7 @@
 
 @interface IAEConcept : NSManagedObject
 
-@property (nonatomic, retain) NSDecimalNumber * amount;
+@property (nonatomic, retain) NSDecimalNumber *amount;
 @property (nonatomic) NSTimeInterval date;
 @property (nonatomic) int16_t dayOfTheMonth;
 @property (nonatomic, retain) NSString * detailDescription;

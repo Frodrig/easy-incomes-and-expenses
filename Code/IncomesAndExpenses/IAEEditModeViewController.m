@@ -15,6 +15,7 @@
 #import "IAECategory.h"
 #import "IAEColorHelper.h"
 #import "IAEEconomicValueTypeHelper.h"
+#import "IAEEconomicValueUpdater.h"
 #import "IAEEditModeMonthBalanceView.h"
 #import "IAEEditModeConceptCollectionViewCell.h"
 #import "IAEValueDecoratorView.h"
@@ -164,6 +165,42 @@
     
     return concept;
 }
+
+- (IAEEditModeMonthBalanceView *)findActualMonthBalanceView
+{
+    UIView *balanceView = [self.monthsScrollView.subviews objectAtIndex:self.monthsScrollPageController.currentPage];
+    
+    return (IAEEditModeMonthBalanceView *)balanceView;
+}
+
+#pragma mark - Update 
+
+- (void)updateBalancesWithAnimation:(BOOL)animation
+{
+    [self updateYearBalanceWithAnimation:animation];
+    [self updateMonthBalanceWithAnimation:animation];
+}
+
+- (void)updateYearBalanceWithAnimation:(BOOL)animation
+{
+    IAEYear *year = [self findActualYear];
+    [[IAEEconomicValueUpdater defaultEconomicValueUpdater] processEconomicLabel:self.annualBalanceValueLabel
+                                                                        toValue:[year balance]
+                                                                   withDuration:animation ? 25.0 : 0 ];
+}
+
+- (void)updateMonthBalanceWithAnimation:(BOOL)animation
+{
+    IAEMonth *month = [self findActualMonth];
+    IAEEditModeMonthBalanceView *monthBalanceView = [self findActualMonthBalanceView];
+    [[IAEEconomicValueUpdater defaultEconomicValueUpdater] processEconomicLabel:monthBalanceView.monthBalanceLabel
+                                                                        toValue:[month balance]
+                                                                   withDuration:animation ? 25.0 : 0 ];    
+}
+
+
+- (void)processEconomicLabel:(UILabel *)label toValue:(NSDecimalNumber *)destinationValue withDuration:(CGFloat)duration { }
+
 
 #pragma mark - AnnualBalance (vincule)
 
@@ -386,7 +423,7 @@
         [self openPopoverForAdjustConceptCellAmount:cell];
     } else if (CGRectContainsPoint(cell.categoryNameLabel.frame, location) ||
                CGRectContainsPoint(cell.categoryTypeLabel.frame, location)) {
-        [self openPopoverForEditConceptCategory:cell];
+        [self openPopoverForEditConceptCellCategory:cell];
     }
 }
 
@@ -399,9 +436,11 @@
     [self createAndPresentPopoverForConceptCellView:cell.amountLabel withViewController:viewController];
 }
 
-- (void)openPopoverForEditConceptCategory:(IAEEditModeConceptCollectionViewCell *)cell
+- (void)openPopoverForEditConceptCellCategory:(IAEEditModeConceptCollectionViewCell *)cell
 {
     IAECategorySelectorViewController *viewController = [[IAECategorySelectorViewController alloc] init];
+    viewController.delegate = self;
+    viewController.conceptCellIndexPath = [self.conceptsCollectionView indexPathForCell:cell];
     
     [self createAndPresentPopoverForConceptCellView:cell.categoryNameLabel withViewController:viewController];
 }
@@ -453,6 +492,33 @@
     }
     
     return canUpdate;
+}
+
+#pragma IAECategorySelectorViewControllerDelegate
+
+- (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController didSelectCategory:(IAECategory *)category
+{
+    [self.popover dismissPopoverAnimated:YES];
+    
+    [self changeCategoryOfConceptAtIndexPath:categorySelectorViewController.conceptCellIndexPath toCategory:category];
+}
+
+- (void)changeCategoryOfConceptAtIndexPath:(NSIndexPath *)indexPath toCategory:(IAECategory *)category
+{
+    IAEConcept *concept = [self findConceptAtIndexPath:indexPath];
+    if (concept.category != category) {
+        CategoryType originalCategoryType = concept.category.categoryType;
+        concept.category = category;
+
+        [[IAEBook sharedBook] saveAll];
+
+        IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:indexPath];
+        [self configureEditModeConceptCell:cell withConceptAtIndexPath:indexPath];
+
+        if (originalCategoryType != concept.category.categoryType) {
+            [self updateBalancesWithAnimation:NO];
+        }
+    }
 }
 
 

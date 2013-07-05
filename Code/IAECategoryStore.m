@@ -183,6 +183,15 @@
     return retCategories;
 }
 
+- (NSArray *)generalCategoryAndAllUserCategoriesOfType:(CategoryType)type
+{
+    NSArray *allUserCategories = [self allUserCategoriesOfType:type];
+    NSArray *generalCategory = [NSArray arrayWithObject:type == IncomeCategory ? [self generalIncomeCategory] : [self generalExpenseCategory]];
+    NSArray *retArray = [generalCategory arrayByAddingObjectsFromArray:allUserCategories];
+    
+    return retArray;
+}
+
 // Como los tags son key y tambien texto para UI tenemos que comprobar si se ha seleccionado uno generico o no para usar su valor key
 - (NSString *)normalizeCategoryTag:(NSString *)tag
 {

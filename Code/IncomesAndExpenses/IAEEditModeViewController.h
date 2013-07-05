@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "IAEAdjustConceptAmountViewControllerDelegate.h"
+#import "IAECategorySelectorViewControllerDelegate.h"
 
 @interface IAEEditModeViewController : UIViewController<UIScrollViewDelegate,
                                                         UICollectionViewDataSource,
                                                         UICollectionViewDelegate,
-                                                        IAEAdjustConceptAmountViewControllerDelegate>
+                                                        IAEAdjustConceptAmountViewControllerDelegate,
+                                                        IAECategorySelectorViewControllerDelegate>
 
 @end

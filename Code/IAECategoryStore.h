@@ -31,5 +31,6 @@
 - (IAECategory *)findCategoryByTag:(NSString *)tag;
 
 - (NSArray *)allUserCategoriesOfType:(CategoryType)type;
+- (NSArray *)generalCategoryAndAllUserCategoriesOfType:(CategoryType)type;
 
 @end

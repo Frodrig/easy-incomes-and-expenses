@@ -149,6 +149,8 @@
 		5BD06171163A8D2B00A80BE3 /* IAEMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD06170163A8D2B00A80BE3 /* IAEMonth.m */; };
 		5BD06174163A8D2B00A80BE3 /* IAEYear.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD06173163A8D2B00A80BE3 /* IAEYear.m */; };
 		5BD06177163A99BB00A80BE3 /* IAECategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD06176163A99BB00A80BE3 /* IAECategory.m */; };
+		5BD94C0B1786B864009009B1 /* IAECategoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD94C0A1786B864009009B1 /* IAECategoryTableViewCell.m */; };
+		5BD94C0F1786B896009009B1 /* IAECategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BD94C0E1786B896009009B1 /* IAECategoryTableViewCell.xib */; };
 		5BDC867E1680D83500C761D5 /* IAEConcept.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BDC867D1680D83500C761D5 /* IAEConcept.m */; };
 		5BE1F4C01637EA4B004E13C2 /* IAEBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE1F4BF1637EA4B004E13C2 /* IAEBook.m */; };
 		5BE1F4C81637FE0C004E13C2 /* IAECategoryStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE1F4C71637FE0C004E13C2 /* IAECategoryStore.m */; };
@@ -375,6 +377,10 @@
 		5BD06173163A8D2B00A80BE3 /* IAEYear.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEYear.m; sourceTree = "<group>"; };
 		5BD06175163A99BB00A80BE3 /* IAECategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategory.h; sourceTree = "<group>"; };
 		5BD06176163A99BB00A80BE3 /* IAECategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECategory.m; sourceTree = "<group>"; };
+		5BD94C091786B864009009B1 /* IAECategoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategoryTableViewCell.h; sourceTree = "<group>"; };
+		5BD94C0A1786B864009009B1 /* IAECategoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECategoryTableViewCell.m; sourceTree = "<group>"; };
+		5BD94C0E1786B896009009B1 /* IAECategoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAECategoryTableViewCell.xib; sourceTree = "<group>"; };
+		5BD94C111786D051009009B1 /* IAECategorySelectorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategorySelectorViewControllerDelegate.h; sourceTree = "<group>"; };
 		5BDC867C1680D83500C761D5 /* IAEConcept.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEConcept.h; sourceTree = "<group>"; };
 		5BDC867D1680D83500C761D5 /* IAEConcept.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEConcept.m; sourceTree = "<group>"; };
 		5BE1F4BE1637EA4B004E13C2 /* IAEBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEBook.h; sourceTree = "<group>"; };
@@ -668,9 +674,11 @@
 		5B36AFF81785D71F00132475 /* Category Selector */ = {
 			isa = PBXGroup;
 			children = (
+				5BD94C111786D051009009B1 /* IAECategorySelectorViewControllerDelegate.h */,
 				5B36AFF91785D73800132475 /* IAECategorySelectorViewController.h */,
 				5B36AFFA1785D73800132475 /* IAECategorySelectorViewController.m */,
 				5B36AFFB1785D73800132475 /* IAECategorySelectorViewController.xib */,
+				5BD94C081786B83E009009B1 /* Views */,
 			);
 			name = "Category Selector";
 			sourceTree = "<group>";
@@ -1116,6 +1124,16 @@
 			name = Animation;
 			sourceTree = "<group>";
 		};
+		5BD94C081786B83E009009B1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5BD94C091786B864009009B1 /* IAECategoryTableViewCell.h */,
+				5BD94C0A1786B864009009B1 /* IAECategoryTableViewCell.m */,
+				5BD94C0E1786B896009009B1 /* IAECategoryTableViewCell.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		5BE1F4B81637E7DD004E13C2 /* Years */ = {
 			isa = PBXGroup;
 			children = (
@@ -1339,6 +1357,7 @@
 				5BB0411B16C02CB4009C1143 /* 23-circle-no.png in Resources */,
 				5BB0411C16C02CB4009C1143 /* 23-circle-no@2x.png in Resources */,
 				5BB0411F16C02E54009C1143 /* 322-dislike.png in Resources */,
+				5BD94C0F1786B896009009B1 /* IAECategoryTableViewCell.xib in Resources */,
 				5BB0412016C02E54009C1143 /* 322-dislike@2x.png in Resources */,
 				5B76116416C56C7300558D6D /* Default-Landscape~ipad.png in Resources */,
 				5B76116816C56C7A00558D6D /* Default-Landscape@2x~ipad.png in Resources */,
@@ -1370,6 +1389,7 @@
 				5BD06157163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld in Sources */,
 				5B32D665177C48B00070AC72 /* IAEReportModeViewController.m in Sources */,
 				5BD06171163A8D2B00A80BE3 /* IAEMonth.m in Sources */,
+				5BD94C0B1786B864009009B1 /* IAECategoryTableViewCell.m in Sources */,
 				5B36AFFC1785D73800132475 /* IAECategorySelectorViewController.m in Sources */,
 				5B5C968917816EE0008CD851 /* IAEValueDecoratorViewExpenseConfigurator.m in Sources */,
 				5BD06174163A8D2B00A80BE3 /* IAEYear.m in Sources */,

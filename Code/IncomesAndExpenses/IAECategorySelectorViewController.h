@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface IAECategorySelectorViewController : UIViewController
+@protocol IAECategorySelectorViewControllerDelegate;
+
+@interface IAECategorySelectorViewController : UIViewController<UITableViewDataSource,
+                                                                UITableViewDelegate>
+
+@property(nonatomic, weak)id<IAECategorySelectorViewControllerDelegate> delegate;
+@property(nonatomic, strong) NSIndexPath *conceptCellIndexPath;
 
 @end

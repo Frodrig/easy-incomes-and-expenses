@@ -6,6 +6,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IAECategorySelectorViewController">
             <connections>
+                <outlet property="categoriesTableView" destination="nEy-Ev-loT" id="czT-g7-7Mn"/>
+                <outlet property="categorySegmentedControl" destination="CYo-Qk-Izg" id="7Uo-CH-Grn"/>
                 <outlet property="view" destination="2" id="3"/>
             </connections>
         </placeholder>
@@ -32,8 +34,15 @@
                                     <segment title="Ingresos"/>
                                     <segment title="Gastos"/>
                                 </segments>
+                                <connections>
+                                    <action selector="categorySegmentedControlPressed:" destination="-1" eventType="valueChanged" id="j6u-UA-g1o"/>
+                                </connections>
                             </segmentedControl>
-                            <barButtonItem key="rightBarButtonItem" systemItem="add" id="oCf-KX-DpQ"/>
+                            <barButtonItem key="rightBarButtonItem" systemItem="add" id="oCf-KX-DpQ">
+                                <connections>
+                                    <action selector="addCategoryButtonPressed:" destination="-1" id="uom-LX-nJs"/>
+                                </connections>
+                            </barButtonItem>
                         </navigationItem>
                     </items>
                 </navigationBar>
@@ -41,9 +50,4 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
         </view>
     </objects>
-    <classes>
-        <class className="IAECategorySelectorViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/IAECategorySelectorViewController.h"/>
-        </class>
-    </classes>
 </document>

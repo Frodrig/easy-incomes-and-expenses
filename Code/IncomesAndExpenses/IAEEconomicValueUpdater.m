@@ -8,6 +8,8 @@
 
 #import "IAEEconomicValueUpdater.h"
 #import "IAECurrencyManager.h"
+#import "IAEEconomicValueTypeHelper.h"
+#import "IAEColorHelper.h"
 
 @interface IAEEconomicValueUpdater()
 
@@ -152,7 +154,13 @@
 - (void)updatePendingLabelEntry:(NSDictionary *)pendingLabelEntry withValue:(NSDecimalNumber *)value
 {
     UILabel *label = [pendingLabelEntry objectForKey:@"label"];
-    label.text = [NSString stringWithFormat:@"%@", [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:value]];
+    NSString *updatedString = [NSString stringWithFormat:@"%@", [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:value]];
+    UIColor *updatedColor = [IAEColorHelper colorForEconomicValueType:[IAEEconomicValueTypeHelper economicValueTypeOfEconomicValue:value]];
+    NSMutableDictionary *updatedAttributes = [[label.attributedText attributesAtIndex:0 effectiveRange:nil] mutableCopy];
+    [updatedAttributes setObject:updatedColor forKey:NSForegroundColorAttributeName];
+    
+    label.attributedText = [[NSAttributedString alloc] initWithString:updatedString
+                                                           attributes:updatedAttributes];
 }
 
 - (void)destroyDisplayLinkRunLoopIfAppropiate

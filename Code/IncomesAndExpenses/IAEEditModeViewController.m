@@ -277,8 +277,8 @@
 
 - (void)updateMonthScrollViewAfterScroll
 {
+    [self updateScrollPageController];
     if (!self.initialPositioning) {
-        [self updateScrollPageController];
         [self setConceptsCollectionViewInTransitionAspect:YES];
     }
 }

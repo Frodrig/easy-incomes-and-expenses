@@ -53,7 +53,8 @@ const NSUInteger EXPENSE_SEGMENTED_INDEX = 1;
 
 - (IBAction)addCategoryButtonPressed:(id)sender
 {
-    
+    CategoryType actualCategoryType = [self categoryTypeSelectedInCategorySegmentedControl];
+    [self.delegate categorySelectorViewController:self didSelectAddCategoryOfType:actualCategoryType];
 }
 
 - (IBAction)categorySegmentedControlPressed:(id)sender

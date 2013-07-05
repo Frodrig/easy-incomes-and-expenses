@@ -511,12 +511,8 @@
 {
     IAEConcept *concept = [self findConceptAtIndexPath:indexPath];
     if (concept.category != category) {
-        NSDecimalNumber *tmpPrevBalance = [[self findActualMonth] balance];
-        
         CategoryType originalCategoryType = concept.category.categoryType;
         concept.category = category;
-
-        NSDecimalNumber *tmpNewBalance = [[self findActualMonth] balance];
         
         [[IAEBook sharedBook] saveAll];
 
@@ -528,6 +524,13 @@
         }
     }
 }
+
+- (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
+            didSelectAddCategoryOfType:(CategoryType)categoryType
+{
+    [self.popover dismissPopoverAnimated:YES];
+}
+
 
 
 @end

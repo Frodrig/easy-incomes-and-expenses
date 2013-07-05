@@ -7,12 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CategoryDefs.h"
 
 @class IAECategorySelectorViewController;
 @class IAECategory;
 
 @protocol IAECategorySelectorViewControllerDelegate <NSObject>
 
-- (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController didSelectCategory:(IAECategory *)category;
+- (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
+                     didSelectCategory:(IAECategory *)category;
+
+- (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
+            didSelectAddCategoryOfType:(CategoryType)categoryType;
 
 @end

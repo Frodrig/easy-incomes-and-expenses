@@ -8,9 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "IAEValueDefs.h"
+#import "CategoryDefs.h"
 
 @interface IAEEconomicValueTypeHelper : NSObject
 
-+ (EconomicValueType)economicValueTypeOfEconomicValue:(NSDecimalNumber *)economicValue;
++ (EconomicValueType)economicValueTypeFromEconomicValue:(NSDecimalNumber *)economicValue;
++ (EconomicValueType)economicValueTypeFromCategoryType:(CategoryType)categoryType;
 
 @end

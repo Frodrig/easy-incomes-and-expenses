@@ -10,7 +10,7 @@
 
 @implementation IAEEconomicValueTypeHelper
 
-+ (EconomicValueType)economicValueTypeOfEconomicValue:(NSDecimalNumber *)economicValue
++ (EconomicValueType)economicValueTypeFromEconomicValue:(NSDecimalNumber *)economicValue
 {
     NSComparisonResult balanceValueType = [economicValue compare:[NSDecimalNumber zero]];
     
@@ -23,5 +23,18 @@
     
     return economicType;
 }
+
++ (EconomicValueType)economicValueTypeFromCategoryType:(CategoryType)categoryType
+{
+    EconomicValueType economicType = ECONOMIC_ZERO_VALUE;
+    if (categoryType == IncomeCategory) {
+        economicType = ECONOMIC_INCOME_VALUE;
+    } else if (categoryType == ExpenseCategory) {
+        economicType = ECONOMIC_EXPENSE_VALUE;
+    }
+    
+    return economicType;
+}
+
 
 @end

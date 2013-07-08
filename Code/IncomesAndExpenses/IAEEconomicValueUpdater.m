@@ -157,7 +157,7 @@
 {
     UILabel *label = [pendingLabelEntry objectForKey:@"label"];
     NSString *updatedString = [NSString stringWithFormat:@"%@", [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:value]];
-    UIColor *updatedColor = [IAEColorHelper colorForEconomicValueType:[IAEEconomicValueTypeHelper economicValueTypeOfEconomicValue:value]];
+    UIColor *updatedColor = [IAEColorHelper colorForEconomicValueType:[IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:value]];
     NSMutableDictionary *updatedAttributes = [[label.attributedText attributesAtIndex:0 effectiveRange:nil] mutableCopy];
     [updatedAttributes setObject:updatedColor forKey:NSForegroundColorAttributeName];
     

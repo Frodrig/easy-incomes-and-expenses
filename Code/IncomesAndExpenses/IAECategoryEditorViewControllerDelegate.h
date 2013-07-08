@@ -14,4 +14,12 @@
 
 - (void)cancelButtonWasPressedInCategoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController;
 
+- (void)categoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
+           DidValidateNewCategoryTag:(NSString *)categoryTag
+                      ofCategoryType:(CategoryType)categoryType;
+
+- (void)categoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
+           DidValidateRenameCategory:(IAECategory *)category
+                             withTag:(NSString *)tag;
+
 @end

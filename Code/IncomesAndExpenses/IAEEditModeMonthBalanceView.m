@@ -98,7 +98,7 @@
 {
     NSDecimalNumber *monthBalance = [self monthBalance];
     NSString *monthBalanceString = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:monthBalance];
-    UIColor *labelColor = [IAEColorHelper colorForEconomicValueType:[IAEEconomicValueTypeHelper economicValueTypeOfEconomicValue:monthBalance]];
+    UIColor *labelColor = [IAEColorHelper colorForEconomicValueType:[IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:monthBalance]];
     NSDictionary *attributes = [self createAttributeDictionaryForLabelsWithSize:59 color:labelColor andKerning:0];
     
     _monthBalanceLabel.attributedText = [[NSAttributedString alloc] initWithString:monthBalanceString attributes:attributes];

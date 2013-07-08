@@ -228,7 +228,7 @@
 - (void)vinculeAnnualBalanceValueLabel
 {
     NSDecimalNumber *yearBalance = [self findActualYear].balance;
-    UIColor *valueColor = [IAEColorHelper colorForEconomicValueType:[IAEEconomicValueTypeHelper economicValueTypeOfEconomicValue:yearBalance]];
+    UIColor *valueColor = [IAEColorHelper colorForEconomicValueType:[IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:yearBalance]];
     NSDictionary *attributeDictionary = [self createAttributeDictionaryForAnnualBalanceLabelsWithColor:valueColor];
     NSString *stringWithValue = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:yearBalance];
     
@@ -348,10 +348,10 @@
     IAECategory *category = concept.category;
     NSDecimalNumber *amountWithSign = [concept amountWithSign];
     NSString *amountWithSignString = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:amountWithSign];
-    EconomicValueType economicValueType = [IAEEconomicValueTypeHelper economicValueTypeOfEconomicValue:amountWithSign];
+    EconomicValueType economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:amountWithSign];
     UIColor *colorForEconomicValueType = [IAEColorHelper colorForEconomicValueType:economicValueType];
     
-    cell.valueDecoratorView.economicValueType = [IAEEconomicValueTypeHelper economicValueTypeOfEconomicValue:amountWithSign];
+    cell.valueDecoratorView.economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:amountWithSign];
     [self configureCategoryLabelsOfConceptCell:cell withCategory:category];
     [self configureAmountLabelOfConceptCell:cell withAmountWithSignString:amountWithSignString andColor:colorForEconomicValueType];
 }
@@ -557,6 +557,20 @@
 #pragma mark - IAECategoryEditorViewControllerDelegate
 
 - (void)cancelButtonWasPressedInCategoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)categoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
+           DidValidateNewCategoryTag:(NSString *)categoryTag
+                      ofCategoryType:(CategoryType)categoryType
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)categoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
+           DidValidateRenameCategory:(IAECategory *)category
+                             withTag:(NSString *)tag
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }

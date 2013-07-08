@@ -10,26 +10,28 @@
 #import "IAECategoryEditorViewControllerDelegate.h"
 #import "IAECategoryEditorDefs.h"
 #import "IAECategory.h"
+#import "IAEColorHelper.h"
+#import "IAEEconomicValueTypeHelper.h"
+#import "UIView+RoundedCorners.h"
 
 @interface IAECategoryEditorViewController ()
 @property (nonatomic) EdityModeCategoryType editModeContext;
 @property (nonatomic) CategoryType categoryTypeContext;
 @property (nonatomic, weak) IAECategory *categoryToRename;
 @property (weak, nonatomic) IBOutlet UILabel *informationLabel;
-@property (weak, nonatomic) IBOutlet UITextField *inputTextField;
+@property (weak, nonatomic) IBOutlet UITextField *categoryInputTextField;
 @property (weak, nonatomic) IBOutlet UIView *categoryTypeDecoratorView;
+@property (weak, nonatomic) IBOutlet UIView *categoryDecoratorAndInputContainerView;
 @property (weak, nonatomic) IBOutlet UILabel *problemWarningLabel;
+@property (nonatomic) BOOL cancelButtonWasPressed;
 @end
 
 @implementation IAECategoryEditorViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-        [self initModalTransitionAndPresentationStyles];
-    }
+    NSAssert(@"No deberiamos de inicializar desde este punto", @"");
+    self = nil;
     return self;
 }
 
@@ -65,28 +67,67 @@
     [self setModalPresentationStyle:UIModalPresentationFormSheet];
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (BOOL)disablesAutomaticKeyboardDismissal
+{
+    // IMPORTANTE: Por algun motivo para que el teclado desaparezca tras return, hay que sobrecargar esta funcion
+    return NO;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    [self configureTextLabels];
-}
-
-- (void)configureTextLabels
-{
-    [self configureTitleBarLabel];
+    [self configureInformationLabel];
+    [self configureCategoryDecoratorAndInputContainerView];
+    [self configureCategoryTypeDecoratorView];
     [self configureInputTextFieldDefaultText];
+    [self configureProblemWarningLabel];
 }
 
-- (void)configureTitleBarLabel
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self launchKeyboard];
+}
+
+#pragma mark - Configuration & Launch
+
+- (void)configureInformationLabel
 {
     self.informationLabel.attributedText = [[NSAttributedString alloc] initWithString:[self stringTagBasedOnEditModeForInformationLabel]
                                                                            attributes:[self createAttributeForLabelWithSize:32]];
 }
 
+- (void)configureCategoryDecoratorAndInputContainerView
+{
+    [self.categoryDecoratorAndInputContainerView addRoundedCorners:UIRectCornerAllCorners withRadius:10.0];
+}
+
 - (void)configureInputTextFieldDefaultText
 {
-    self.inputTextField.placeholder = [self stringTagBasedOnEditModeForInputTextField];
+    self.categoryInputTextField.delegate = self;
+    self.categoryInputTextField.placeholder = [self stringTagBasedOnEditModeForInputTextField];
+}
+
+- (void)configureCategoryTypeDecoratorView
+{
+    [self.categoryTypeDecoratorView addRoundedCorners:UIRectCornerTopLeft | UIRectCornerBottomLeft withRadius:10.0];
+    
+    EconomicValueType economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromCategoryType:self.categoryTypeContext];
+    self.categoryTypeDecoratorView.backgroundColor = [IAEColorHelper colorForEconomicValueType:economicValueType];
+}
+
+- (void)configureProblemWarningLabel
+{
+    self.problemWarningLabel.attributedText = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"TAG_INVALIDCATEGORY", "")
+                                                                              attributes:[self createAttributeForLabelWithSize:21]];
+    self.problemWarningLabel.hidden = YES;
 }
 
 - (NSString *)stringTagBasedOnEditModeForInformationLabel
@@ -115,12 +156,12 @@
 
 - (BOOL)isEditModeCategoryInAddMode
 {
-    return self.categoryTypeContext == EDITMODE_CATEGORY_ADD;
+    return self.editModeContext == EDITMODE_CATEGORY_ADD;
 }
 
 - (BOOL)isEditModeCategoryInRenameMode
 {
-    return self.categoryTypeContext == EDITMODE_CATEGORY_RENAME;
+    return self.editModeContext == EDITMODE_CATEGORY_RENAME;
 }
 
 - (NSDictionary *)createAttributeForLabelWithSize:(CGFloat)size
@@ -132,12 +173,128 @@
     return attributes;
 }
 
+- (void)launchKeyboard
+{
+    [self.categoryInputTextField becomeFirstResponder];
+}
+
 #pragma mark - UIControl Events
 
 - (IBAction)cancelButtonPressed:(id)sender
 {
+    [self setCancelActionAndNotifyToDelegate];
+}
+
+- (void)setCancelActionAndNotifyToDelegate
+{
+    self.cancelButtonWasPressed = YES;
     [self.delegate cancelButtonWasPressedInCategoryEditorViewController:self];
 }
 
+#pragma mark - UITextEditDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSAssert(textField == self.categoryInputTextField, @"No puede venir un textfield diferente");
+    BOOL shouldChangeCharacters = [self categoryInputShouldChangeCharactersInRange:range replacementString:string];
+    if (shouldChangeCharacters) {
+        NSString *categoryTag = [self createCategoryTagByReplaceCategoryInputInRange:range withString:string];
+        [self updateVisibilityWithAnimationOfProblemWarningLabelBasedInCategorTag:categoryTag];
+    }
+    
+    return shouldChangeCharacters;
+}
+
+- (BOOL)categoryInputShouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    static const NSUInteger MAX_LENGHT = 36;
+    
+    BOOL should = self.categoryInputTextField.text.length < MAX_LENGHT;
+    if (!should) {
+        should = range.length > 0 && [string isEqualToString:@""];
+    }
+    
+    if (should) {
+        should = ![string isEqualToString:@". "];
+    }
+
+    return should;
+}
+
+- (BOOL)isValidCategoryTag:(NSString *)categoryTag
+{
+    BOOL isValid = NO;
+    
+    ValidTagCheckResult validTagCheckResult = [IAECategory isAValidTag:categoryTag];
+    if (validTagCheckResult == InvalidEqualToAnotherTag && self.categoryToRename) {
+        isValid = [categoryTag caseInsensitiveCompare:self.categoryToRename.tag] == NSOrderedSame;
+    }
+    
+    return isValid;
+}
+
+- (NSString *)createCategoryTagByReplaceCategoryInputInRange:(NSRange)range withString:(NSString *)string
+{
+    NSString *categoryTag = [self.categoryInputTextField.text stringByReplacingCharactersInRange:range withString:string];
+    categoryTag = [categoryTag stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
+    return categoryTag;
+}
+
+- (void)updateVisibilityWithAnimationOfProblemWarningLabelBasedInCategorTag:(NSString *)categoryTag
+{
+    BOOL isValidCategoryTag = [self isValidCategoryTag:categoryTag];
+    BOOL hideWarningLabel = isValidCategoryTag || categoryTag.length == 0;
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        self.problemWarningLabel.alpha = hideWarningLabel ? 0.0 : 1.0;
+    }];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    NSAssert(textField == self.categoryInputTextField, @"");
+    
+    if (![self notifyToDelegateForNewOrRenamedCategoryIfProceed]) {
+        [self setCancelActionAndNotifyToDelegate];
+    }
+
+//    [self.categoryInputTextField resignFirstResponder];
+    
+    return YES;
+}
+
+#pragma mark - NotificationCenter
+
+- (BOOL)isClosingWithAValidTagCategory
+{
+    return self.cancelButtonWasPressed == NO && [self isValidCategoryTag:self.categoryInputTextField.text];
+}
+
+- (BOOL)notifyToDelegateForNewOrRenamedCategoryIfProceed
+{
+    BOOL notify = [self isClosingWithAValidTagCategory];
+    if (notify) {
+        [self notifyToDelegateForActionCompleted];
+    }
+    
+    return notify;
+}
+
+- (void)notifyToDelegateForActionCompleted
+{
+    NSString *normalizedCategoryTag = [self.categoryInputTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    if (self.editModeContext == EDITMODE_CATEGORY_ADD) {
+        [self.delegate categoryEditorViewController:self DidValidateNewCategoryTag:normalizedCategoryTag ofCategoryType:self.categoryTypeContext];
+    } else if (self.editModeContext == EDITMODE_CATEGORY_RENAME && [self categoryTagToRenameDifferentOfCategoryTag:normalizedCategoryTag]) {
+        [self.delegate categoryEditorViewController:self DidValidateRenameCategory:self.categoryToRename withTag:normalizedCategoryTag];
+    }
+}
+
+- (BOOL)categoryTagToRenameDifferentOfCategoryTag:(NSString *)categoryTag
+{
+    return [self.categoryToRename.tag caseInsensitiveCompare:categoryTag] != NSOrderedSame;
+}
 
 @end
+

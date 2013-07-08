@@ -13,7 +13,7 @@
 
 @class IAECategory;
 
-@interface IAECategoryEditorViewController : UIViewController
+@interface IAECategoryEditorViewController : UIViewController<UITextFieldDelegate>
 
 @property(nonatomic, weak)id<IAECategoryEditorViewControllerDelegate> delegate;
 

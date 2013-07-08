@@ -21,6 +21,7 @@
 #import "IAEValueDecoratorView.h"
 #import "IAEAdjustConceptAmountViewController.h"
 #import "IAECategorySelectorViewController.h"
+#import "IAECategoryEditorViewController.h"
 #import "NSNumber+DefaultValues.h"
 #import "UIView+LoadFromXib.h"
 #import "UIView+RoundedCorners.h"
@@ -37,6 +38,7 @@
 @property (nonatomic, strong) UIPopoverController *popover;
 @property (nonatomic, strong) UITapGestureRecognizer *tapConceptsRecognizer;
 @property (nonatomic) BOOL initialPositioning;
+@property (nonatomic, weak) IAECategory *categoryRenaming;
 
 @end
 
@@ -529,8 +531,35 @@
             didSelectAddCategoryOfType:(CategoryType)categoryType
 {
     [self.popover dismissPopoverAnimated:YES];
+    [self launchCategoryEditorViewControllerAndPrepareInstanceToAddNewCategoryOfType:categoryType];
 }
 
+- (void)launchCategoryEditorViewControllerAndPrepareInstanceToAddNewCategoryOfType:(CategoryType)categoryType
+{
+    self.categoryRenaming = nil;
+    
+    IAECategoryEditorViewController *categoryEditorViewController = [[IAECategoryEditorViewController alloc] initToAddCategoryOfType:categoryType];
+    categoryEditorViewController.delegate = self;
+    
+    [self presentViewController:categoryEditorViewController animated:YES completion:nil];
+}
+
+- (void)launchCategoryEditorViewControllerAndPrepareInstanceToRenameCategory:(IAECategory *)category
+{
+    
+}
+
+- (void)launchCategoryEditorViewController
+{
+   
+}
+
+#pragma mark - IAECategoryEditorViewControllerDelegate
+
+- (void)cancelButtonWasPressedInCategoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 
 @end

@@ -60,6 +60,8 @@
 		5B53C81616765EB50016329C /* IAEConfigNavigationControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B53C81516765EB50016329C /* IAEConfigNavigationControllerViewController.m */; };
 		5B55449D17745EA2009CFC84 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B55449C17745EA2009CFC84 /* Media.xcassets */; };
 		5B5544A2177460DD009CFC84 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B5544A1177460DD009CFC84 /* Main.storyboard */; };
+		5B55C406178AA8C20066F586 /* IAECategoryEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B55C404178AA8C20066F586 /* IAECategoryEditorViewController.m */; };
+		5B55C407178AA8C20066F586 /* IAECategoryEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B55C405178AA8C20066F586 /* IAECategoryEditorViewController.xib */; };
 		5B5C967B1781673A008CD851 /* IAEValueDecoratorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C967A1781673A008CD851 /* IAEValueDecoratorView.m */; };
 		5B5C967F17816A13008CD851 /* UIView+RoundedCorners.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C967E17816A13008CD851 /* UIView+RoundedCorners.m */; };
 		5B5C968217816D68008CD851 /* IAEValueDecoratorViewConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C968117816D68008CD851 /* IAEValueDecoratorViewConfigurator.m */; };
@@ -246,6 +248,9 @@
 		5B55449C17745EA2009CFC84 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = IncomesAndExpenses/Media.xcassets; sourceTree = "<group>"; };
 		5B5544A017745F42009CFC84 /* IAEValueDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEValueDefs.h; sourceTree = "<group>"; };
 		5B5544A1177460DD009CFC84 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		5B55C403178AA8C20066F586 /* IAECategoryEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategoryEditorViewController.h; sourceTree = "<group>"; };
+		5B55C404178AA8C20066F586 /* IAECategoryEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECategoryEditorViewController.m; sourceTree = "<group>"; };
+		5B55C405178AA8C20066F586 /* IAECategoryEditorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAECategoryEditorViewController.xib; sourceTree = "<group>"; };
 		5B5C96791781673A008CD851 /* IAEValueDecoratorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEValueDecoratorView.h; sourceTree = "<group>"; };
 		5B5C967A1781673A008CD851 /* IAEValueDecoratorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEValueDecoratorView.m; sourceTree = "<group>"; };
 		5B5C967D17816A13008CD851 /* UIView+RoundedCorners.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RoundedCorners.h"; sourceTree = "<group>"; };
@@ -313,6 +318,8 @@
 		5B7A4D7E16B68062001751A9 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		5B81427516723D23000014A1 /* IAEConceptsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEConceptsView.h; sourceTree = "<group>"; };
 		5B81427616723D23000014A1 /* IAEConceptsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEConceptsView.m; sourceTree = "<group>"; };
+		5B8488F3178AB88C0001551F /* IAECategoryEditorDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategoryEditorDefs.h; sourceTree = "<group>"; };
+		5B8488F5178AB8B10001551F /* IAECategoryEditorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategoryEditorViewControllerDelegate.h; sourceTree = "<group>"; };
 		5B8A31C816C904D2008731AD /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
 		5B8A31CB16C9088D008731AD /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
 		5B8A31CD16C90901008731AD /* 72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 72.png; sourceTree = "<group>"; };
@@ -646,6 +653,7 @@
 		5B36AFEC1785871E00132475 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				5B55C402178AA79D0066F586 /* Category Editor */,
 				5B36AFF81785D71F00132475 /* Category Selector */,
 				5B36AFED1785872900132475 /* Adjust Concept Amout */,
 			);
@@ -696,6 +704,18 @@
 				5B53C81516765EB50016329C /* IAEConfigNavigationControllerViewController.m */,
 			);
 			name = "Modal Views";
+			sourceTree = "<group>";
+		};
+		5B55C402178AA79D0066F586 /* Category Editor */ = {
+			isa = PBXGroup;
+			children = (
+				5B55C403178AA8C20066F586 /* IAECategoryEditorViewController.h */,
+				5B55C404178AA8C20066F586 /* IAECategoryEditorViewController.m */,
+				5B55C405178AA8C20066F586 /* IAECategoryEditorViewController.xib */,
+				5B8488F3178AB88C0001551F /* IAECategoryEditorDefs.h */,
+				5B8488F5178AB8B10001551F /* IAECategoryEditorViewControllerDelegate.h */,
+			);
+			name = "Category Editor";
 			sourceTree = "<group>";
 		};
 		5B5750A2177443E0005D6B3E /* v1 */ = {
@@ -1359,6 +1379,7 @@
 				5BB0411F16C02E54009C1143 /* 322-dislike.png in Resources */,
 				5BD94C0F1786B896009009B1 /* IAECategoryTableViewCell.xib in Resources */,
 				5BB0412016C02E54009C1143 /* 322-dislike@2x.png in Resources */,
+				5B55C407178AA8C20066F586 /* IAECategoryEditorViewController.xib in Resources */,
 				5B76116416C56C7300558D6D /* Default-Landscape~ipad.png in Resources */,
 				5B76116816C56C7A00558D6D /* Default-Landscape@2x~ipad.png in Resources */,
 				5B8A31CF16C9090E008731AD /* 72.png in Resources */,
@@ -1391,6 +1412,7 @@
 				5BD06171163A8D2B00A80BE3 /* IAEMonth.m in Sources */,
 				5BD94C0B1786B864009009B1 /* IAECategoryTableViewCell.m in Sources */,
 				5B36AFFC1785D73800132475 /* IAECategorySelectorViewController.m in Sources */,
+				5B55C406178AA8C20066F586 /* IAECategoryEditorViewController.m in Sources */,
 				5B5C968917816EE0008CD851 /* IAEValueDecoratorViewExpenseConfigurator.m in Sources */,
 				5BD06174163A8D2B00A80BE3 /* IAEYear.m in Sources */,
 				5B36AFF71785BBF400132475 /* NSDecimalNumber+AbsoluteValue.m in Sources */,

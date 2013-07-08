@@ -127,7 +127,8 @@
 {
     self.problemWarningLabel.attributedText = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"TAG_INVALIDCATEGORY", "")
                                                                               attributes:[self createAttributeForLabelWithSize:21]];
-    self.problemWarningLabel.hidden = YES;
+    self.problemWarningLabel.numberOfLines = 2;
+    self.problemWarningLabel.alpha = 0;
 }
 
 - (NSString *)stringTagBasedOnEditModeForInformationLabel
@@ -226,7 +227,9 @@
     BOOL isValid = NO;
     
     ValidTagCheckResult validTagCheckResult = [IAECategory isAValidTag:categoryTag];
-    if (validTagCheckResult == InvalidEqualToAnotherTag && self.categoryToRename) {
+    if (validTagCheckResult == ValidTag) {
+        isValid = YES;
+    } else if (validTagCheckResult == InvalidEqualToAnotherTag && self.categoryToRename) {
         isValid = [categoryTag caseInsensitiveCompare:self.categoryToRename.tag] == NSOrderedSame;
     }
     

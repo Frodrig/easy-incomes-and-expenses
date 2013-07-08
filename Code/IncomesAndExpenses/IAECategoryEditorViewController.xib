@@ -40,8 +40,8 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="onj-U3-Fep">
-                    <rect key="frame" x="20" y="277" width="500" height="25"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="onj-U3-Fep">
+                    <rect key="frame" x="20" y="249" width="500" height="65"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="21"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -70,4 +70,17 @@
             <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
+    <classes>
+        <class className="IAECategoryEditorViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/IAECategoryEditorViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancelButtonPressed:"/>
+                <relationship kind="outlet" name="categoryDecoratorAndInputContainerView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="categoryInputTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="categoryTypeDecoratorView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="informationLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="problemWarningLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+    </classes>
 </document>

@@ -23,6 +23,7 @@
 #import "IAECategorySelectorViewController.h"
 #import "IAECategoryEditorViewController.h"
 #import "NSNumber+DefaultValues.h"
+#import "IAECategoryStore.h"
 #import "UIView+LoadFromXib.h"
 #import "UIView+RoundedCorners.h"
 #import "NSDecimalNumber+AbsoluteValue.h"
@@ -565,6 +566,17 @@
            DidValidateNewCategoryTag:(NSString *)categoryTag
                       ofCategoryType:(CategoryType)categoryType
 {
+    [self exitAndCreateNewCategoryWithTag:categoryTag ofType:categoryType];
+}
+
+- (void)exitAndCreateNewCategoryWithTag:(NSString *)categoryTag ofType:(CategoryType)categoryType
+{
+    IAECategory *newCategory = [[IAECategoryStore sharedCategoryStore] createCategoryOfType:categoryType andTag:categoryTag withValidityTagCheck:NO];
+    NSAssert(newCategory, @"");
+    if (newCategory) {
+        [[IAEBook sharedBook] saveAll];
+    }
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

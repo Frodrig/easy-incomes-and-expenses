@@ -23,6 +23,8 @@ const NSUInteger EXPENSE_SEGMENTED_INDEX = 1;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *categorySegmentedControl;
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureRecognizer;
 @property (nonatomic, weak) IAECategoryTableViewCell *cellSelectedForContextualMenu;
+@property (nonatomic) NSUInteger actions;
+@property (weak, nonatomic) IBOutlet UINavigationItem *navigationToolBar;
 
 @end
 
@@ -30,35 +32,87 @@ const NSUInteger EXPENSE_SEGMENTED_INDEX = 1;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    NSAssert(0, @"No deberia de instanciarse este init");
+    self = nil;
+    
+    return self;
+}
+
+// Designated
+- (id)init
+{
+    self = [super initWithNibName:nil bundle:nil];
     if (self) {
+    }
+    
+    return self;
+}
+
+- (id)initWithExtraActions:(NSUInteger)actions
+{
+    self = [self init];
+    if (self) {
+        [self initActions:actions];
         [self initLongTapGestureRecognizer];
     }
+    
     return self;
+}
+
+- (void)initActions:(NSUInteger)actions
+{
+    _actions = actions;
 }
 
 - (void)initLongTapGestureRecognizer
 {
-    _longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureRecogzinerEvent:)];
-    _longPressGestureRecognizer.numberOfTapsRequired = 0;
-    _longPressGestureRecognizer.numberOfTouchesRequired = 1;
+    if ([self renameActionFlagEnabled] || [self deleteActionFlagEnabled]) {
+        _longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureRecogzinerEvent:)];
+        _longPressGestureRecognizer.numberOfTapsRequired = 0;
+        _longPressGestureRecognizer.numberOfTouchesRequired = 1;
+    }
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    [self configureNavigationItem];
     [self configureCategoriesTableView];
+}
+
+- (void)configureNavigationItem
+{
+    if (![self addActionFlagEnabled]) {
+        self.navigationToolBar.rightBarButtonItem = nil;
+    }
+}
+
+- (BOOL)addActionFlagEnabled
+{
+    return self.actions & CATEGORYSELECTOR_EXTRAACTION_ADD;
+}
+
+- (BOOL)renameActionFlagEnabled
+{
+    return self.actions & CATEGORYSELECTOR_EXTRAACTION_RENAME;
+}
+
+- (BOOL)deleteActionFlagEnabled
+{
+    return self.actions & CATEGORYSELECTOR_EXTRAACTION_DELETE;
 }
 
 - (void)configureCategoriesTableView
 {
     [self.categoriesTableView registerNib:[UINib nibWithNibName:@"IAECategoryTableViewCell" bundle:[NSBundle mainBundle]]
                    forCellReuseIdentifier:@"CategoryTableViewCell"];
-    
-    [self.categoriesTableView addGestureRecognizer:self.longPressGestureRecognizer];
     self.categoriesTableView.delegate = self;
     self.categoriesTableView.dataSource = self;
+    
+    if (self.longPressGestureRecognizer) {
+        [self.categoriesTableView addGestureRecognizer:self.longPressGestureRecognizer];
+    }
 }
 
 - (BOOL)canBecomeFirstResponder
@@ -176,16 +230,50 @@ const NSUInteger EXPENSE_SEGMENTED_INDEX = 1;
     if (![self isCellSelectedForContextualMenuGeneralCategory]) {
         [self becomeFirstResponder];
         
-        UIMenuItem *deleteCategoryMenuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Delete", @"")
-                                                                        action:@selector(deleteCategoryMenuSelected:)];
-        UIMenuItem *renameCategoryMenuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Rename", @"")
-                                                                        action:@selector(renameCategoryMenuSelected:)];
-        
         UIMenuController *menu = [UIMenuController sharedMenuController];
-        menu.menuItems = [NSArray arrayWithObjects:renameCategoryMenuItem, deleteCategoryMenuItem, nil];
+        menu.menuItems = [self createMenuItemContainerForMenuAction];
         [menu setTargetRect:self.cellSelectedForContextualMenu.frame inView:self.cellSelectedForContextualMenu];
         [menu setMenuVisible:YES animated:YES];
     }
+}
+
+- (NSArray *)createMenuItemContainerForMenuAction
+{
+    NSArray *menuItems = [NSArray array];
+    menuItems = [self addMenuItemAction:[self createMenuItemForRenameActionIfProceed] usingMenuItems:menuItems];
+    menuItems = [self addMenuItemAction:[self createMenuItemForDeleteActionIfProceed] usingMenuItems:menuItems];
+    
+    return menuItems;
+}
+
+- (UIMenuItem *)createMenuItemForRenameActionIfProceed
+{
+    UIMenuItem *menuItem = nil;
+    if ([self renameActionFlagEnabled]) {
+        menuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Rename", @"") action:@selector(renameCategoryMenuSelected:)];
+    }
+    
+    return menuItem;
+}
+
+- (NSArray *)addMenuItemAction:(UIMenuItem *)menuItem usingMenuItems:(NSArray *)menuItems
+{
+    NSAssert(menuItems, @"");
+    if (menuItem) {
+        menuItems = [menuItems arrayByAddingObject:menuItem];
+    }
+    
+    return [menuItems copy];
+}
+
+- (UIMenuItem *)createMenuItemForDeleteActionIfProceed
+{
+    UIMenuItem *menuItem = nil;
+    if ([self deleteActionFlagEnabled]) {
+        menuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Delete", @"") action:@selector(deleteCategoryMenuSelected:)];
+    }
+    
+    return menuItem;
 }
 
 - (BOOL)isCellSelectedForContextualMenuGeneralCategory

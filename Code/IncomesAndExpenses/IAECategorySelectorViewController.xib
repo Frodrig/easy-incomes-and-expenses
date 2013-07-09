@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4457.9" systemVersion="12E55" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="4471.1" systemVersion="12E55" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3682.9"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3697.3"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IAECategorySelectorViewController">
             <connections>
                 <outlet property="categoriesTableView" destination="nEy-Ev-loT" id="czT-g7-7Mn"/>
                 <outlet property="categorySegmentedControl" destination="CYo-Qk-Izg" id="7Uo-CH-Grn"/>
+                <outlet property="navigationItem" destination="r0e-RL-8bA" id="IPq-h0-mwc"/>
+                <outlet property="navigationToolBar" destination="r0e-RL-8bA" id="bW2-xV-7OU"/>
                 <outlet property="view" destination="2" id="3"/>
             </connections>
         </placeholder>

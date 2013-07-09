@@ -445,6 +445,7 @@
 
 - (void)openPopoverForEditConceptCellCategory:(IAEEditModeConceptCollectionViewCell *)cell
 {
+    //IAECategorySelectorViewController *viewController = [[IAECategorySelectorViewController alloc] init];
     IAECategorySelectorViewController *viewController = [[IAECategorySelectorViewController alloc] init];
     viewController.delegate = self;
     viewController.conceptCellIndexPath = [self.conceptsCollectionView indexPathForCell:cell];

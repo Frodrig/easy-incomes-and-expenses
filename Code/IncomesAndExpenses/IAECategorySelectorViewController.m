@@ -59,6 +59,16 @@ const NSUInteger EXPENSE_SEGMENTED_INDEX = 1;
     return self;
 }
 
+- (id)initWithAllExtraActions;
+{
+    self = [self initWithExtraActions:CATEGORYSELECTOR_EXTRAACTION_ALL_ACTIONS];
+    if (self) {
+        
+    }
+    
+    return self;
+}
+
 - (void)initActions:(NSUInteger)actions
 {
     _actions = actions;
@@ -86,11 +96,20 @@ const NSUInteger EXPENSE_SEGMENTED_INDEX = 1;
     if (![self addActionFlagEnabled]) {
         self.navigationToolBar.rightBarButtonItem = nil;
     }
+    
+    if (![self doneActionFlagEnabled]) {
+        self.navigationToolBar.leftBarButtonItem = nil;
+    }
 }
 
 - (BOOL)addActionFlagEnabled
 {
     return self.actions & CATEGORYSELECTOR_EXTRAACTION_ADD;
+}
+
+- (BOOL)doneActionFlagEnabled
+{
+    return self.actions & CATEGORYSELECTOR_EXTRAACTION_DONE;
 }
 
 - (BOOL)renameActionFlagEnabled
@@ -121,6 +140,11 @@ const NSUInteger EXPENSE_SEGMENTED_INDEX = 1;
 }
 
 #pragma mark - Control Events
+
+- (IBAction)doneButtonPressed:(id)sender
+{
+    [self.delegate doneButtonWasPressedInCategorySelectorViewController:self];
+}
 
 - (IBAction)addCategoryButtonPressed:(id)sender
 {

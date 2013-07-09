@@ -14,7 +14,8 @@ typedef NS_ENUM(NSUInteger, CategorySelectorActionFlags) {
     CATEGORYSELECTOR_EXTRAACTION_ADD = 0x0001,
     CATEGORYSELECTOR_EXTRAACTION_RENAME = 0x0001 << 1,
     CATEGORYSELECTOR_EXTRAACTION_DELETE = 0x0001 << 2,
-    ALL_ACTIONS = 0xFFFF
+    CATEGORYSELECTOR_EXTRAACTION_DONE = 0x0001 << 3,
+    CATEGORYSELECTOR_EXTRAACTION_ALL_ACTIONS = 0xFFFF
 };
 
 @interface IAECategorySelectorViewController : UIViewController<UITableViewDataSource,
@@ -25,5 +26,6 @@ typedef NS_ENUM(NSUInteger, CategorySelectorActionFlags) {
 
 - (id)init;
 - (id)initWithExtraActions:(NSUInteger)actions;
+- (id)initWithAllExtraActions;
 
 @end

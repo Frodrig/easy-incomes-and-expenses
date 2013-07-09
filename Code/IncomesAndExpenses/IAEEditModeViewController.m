@@ -136,6 +136,22 @@
     return rect;
 }
 
+#pragma mark - ControlEvents
+
+- (IBAction)categoriesButtonPressed:(id)sender
+{
+    [self openModalForPresentCategorySelectorViewController];
+}
+
+- (void)openModalForPresentCategorySelectorViewController
+{
+    IAECategorySelectorViewController *categorySelectorViewController = [[IAECategorySelectorViewController alloc] initWithAllExtraActions];
+    categorySelectorViewController.delegate = self;
+    categorySelectorViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+    
+    [self presentViewController:categorySelectorViewController animated:YES completion:nil];
+}
+
 #pragma mark - Obtainings
 
 - (NSUInteger)findTodayMonthIndex
@@ -174,6 +190,12 @@
     UIView *balanceView = [self.monthsScrollView.subviews objectAtIndex:self.monthsScrollPageController.currentPage];
     
     return (IAEEditModeMonthBalanceView *)balanceView;
+}
+
+- (BOOL)categorySelectorViewControllerWasLaunchedFromCategoryButton
+{
+    // Nota: Solo tendra sentido si realmente se ha lanzado
+    return self.popover == nil;
 }
 
 #pragma mark - Update 
@@ -445,7 +467,6 @@
 
 - (void)openPopoverForEditConceptCellCategory:(IAEEditModeConceptCollectionViewCell *)cell
 {
-    //IAECategorySelectorViewController *viewController = [[IAECategorySelectorViewController alloc] init];
     IAECategorySelectorViewController *viewController = [[IAECategorySelectorViewController alloc] init];
     viewController.delegate = self;
     viewController.conceptCellIndexPath = [self.conceptsCollectionView indexPathForCell:cell];
@@ -504,7 +525,13 @@
 
 #pragma IAECategorySelectorViewControllerDelegate
 
-- (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController didSelectCategory:(IAECategory *)category
+- (void)doneButtonWasPressedInCategorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
+                     didSelectCategory:(IAECategory *)category
 {
     [self.popover dismissPopoverAnimated:YES];
     
@@ -531,6 +558,26 @@
 
 - (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
             didSelectAddCategoryOfType:(CategoryType)categoryType
+{
+    if ([self categorySelectorViewControllerWasLaunchedFromCategoryButton]) {
+        [self launchCategoryEditorViewControllerModalFromCategorySelectorViewController:categorySelectorViewController
+                                                                        andCategoryType:categoryType];
+    } else {
+        [self dismissPopoverAndLaunchCategoryEditorViewControllerWithCategoryType:categoryType];
+    }
+}
+
+- (void)launchCategoryEditorViewControllerModalFromCategorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
+                                                                  andCategoryType:(CategoryType)categoryType
+{
+    IAECategoryEditorViewController *categoryEditorViewController = [[IAECategoryEditorViewController alloc] initToAddCategoryOfType:categoryType];
+    categoryEditorViewController.delegate = self;
+    categoryEditorViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+
+    [categorySelectorViewController presentViewController:categoryEditorViewController animated:YES completion:nil];
+}
+
+- (void)dismissPopoverAndLaunchCategoryEditorViewControllerWithCategoryType:(CategoryType)categoryType
 {
     [self.popover dismissPopoverAnimated:YES];
     [self launchCategoryEditorViewControllerAndPrepareInstanceToAddNewCategoryOfType:categoryType];
@@ -567,7 +614,11 @@
 
 - (void)cancelButtonWasPressedInCategoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if ([self categorySelectorViewControllerWasLaunchedFromCategoryButton]) {
+        [categoryEditorViewController dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 - (void)categoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController

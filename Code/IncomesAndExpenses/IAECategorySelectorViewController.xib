@@ -20,7 +20,7 @@
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="nEy-Ev-loT">
                     <rect key="frame" x="20" y="44" width="420" height="231"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
                 <navigationBar contentMode="scaleToFill" id="8oq-eD-0NW">
@@ -29,6 +29,11 @@
                     <items>
                         <navigationItem id="r0e-RL-8bA">
                             <nil key="title"/>
+                            <barButtonItem key="leftBarButtonItem" systemItem="done" id="2Ac-dk-o0H">
+                                <connections>
+                                    <action selector="doneButtonPressed:" destination="-1" id="0i2-N9-T3m"/>
+                                </connections>
+                            </barButtonItem>
                             <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="CYo-Qk-Izg">
                                 <rect key="frame" x="150" y="8" width="161" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>

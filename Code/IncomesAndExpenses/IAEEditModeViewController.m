@@ -145,7 +145,7 @@
 
 - (void)openModalForPresentCategorySelectorViewController
 {
-    IAECategorySelectorViewController *categorySelectorViewController = [[IAECategorySelectorViewController alloc] initWithAllExtraActions];
+    IAECategorySelectorViewController *categorySelectorViewController = [[IAECategorySelectorViewController alloc] initWithAllExtraActionsExceptSelection];
     categorySelectorViewController.delegate = self;
     categorySelectorViewController.modalPresentationStyle = UIModalPresentationFormSheet;
     
@@ -272,6 +272,14 @@
     UIFont *font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:28];
     
     return font;
+}
+
+#pragma mark - Varios(Popover)
+
+- (void)dismisPopover
+{
+    [self.popover dismissPopoverAnimated:YES];
+    self.popover = nil;
 }
 
 #pragma mark - ScrollViewMonths (vincule)
@@ -467,7 +475,7 @@
 
 - (void)openPopoverForEditConceptCellCategory:(IAEEditModeConceptCollectionViewCell *)cell
 {
-    IAECategorySelectorViewController *viewController = [[IAECategorySelectorViewController alloc] init];
+    IAECategorySelectorViewController *viewController = [[IAECategorySelectorViewController alloc] initWithExtraActions:CATEGORYSELECTOR_EXTRAACTION_CATEGORYSELECTION];
     viewController.delegate = self;
     viewController.conceptCellIndexPath = [self.conceptsCollectionView indexPathForCell:cell];
     
@@ -527,14 +535,15 @@
 
 - (void)doneButtonWasPressedInCategorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
 {
+    NSAssert([self categorySelectorViewControllerWasLaunchedFromCategoryButton], @"");
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
                      didSelectCategory:(IAECategory *)category
 {
-    [self.popover dismissPopoverAnimated:YES];
-    
+    NSAssert(![self categorySelectorViewControllerWasLaunchedFromCategoryButton], @"");
+    [self dismisPopover];
     [self changeCategoryOfConceptAtIndexPath:categorySelectorViewController.conceptCellIndexPath toCategory:category];
 }
 
@@ -560,15 +569,14 @@
             didSelectAddCategoryOfType:(CategoryType)categoryType
 {
     if ([self categorySelectorViewControllerWasLaunchedFromCategoryButton]) {
-        [self launchCategoryEditorViewControllerModalFromCategorySelectorViewController:categorySelectorViewController
+        [self launchCategoryEditorViewControllerModalToAddCategoryFromCategorySelectorViewController:categorySelectorViewController
                                                                         andCategoryType:categoryType];
     } else {
         [self dismissPopoverAndLaunchCategoryEditorViewControllerWithCategoryType:categoryType];
     }
 }
 
-- (void)launchCategoryEditorViewControllerModalFromCategorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
-                                                                  andCategoryType:(CategoryType)categoryType
+- (void)launchCategoryEditorViewControllerModalToAddCategoryFromCategorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController andCategoryType:(CategoryType)categoryType
 {
     IAECategoryEditorViewController *categoryEditorViewController = [[IAECategoryEditorViewController alloc] initToAddCategoryOfType:categoryType];
     categoryEditorViewController.delegate = self;
@@ -579,7 +587,7 @@
 
 - (void)dismissPopoverAndLaunchCategoryEditorViewControllerWithCategoryType:(CategoryType)categoryType
 {
-    [self.popover dismissPopoverAnimated:YES];
+    [self dismisPopover];
     [self launchCategoryEditorViewControllerAndPrepareInstanceToAddNewCategoryOfType:categoryType];
 }
 
@@ -596,8 +604,12 @@
 - (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewControler
              didSelectedRenameCategory:(IAECategory *)category
 {
-    [self.popover dismissPopoverAnimated:YES];
-    [self launchCategoryEditorViewControllerAndPrepareInstanceToRenameCategory:category];
+    if ([self categorySelectorViewControllerWasLaunchedFromCategoryButton]) {
+        [self launchCategoryEditorViewControllerModalFromCategorySelectorViewController:categorySelectorViewControler ToRenameCategory:category];
+    } else {
+        [self dismisPopover];
+        [self launchCategoryEditorViewControllerAndPrepareInstanceToRenameCategory:category];
+    }
 }
 
 - (void)launchCategoryEditorViewControllerAndPrepareInstanceToRenameCategory:(IAECategory *)category
@@ -608,6 +620,33 @@
     categoryEditorViewController.delegate = self;
     
     [self presentViewController:categoryEditorViewController animated:YES completion:nil];
+}
+
+- (void)launchCategoryEditorViewControllerModalFromCategorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
+                                                                 ToRenameCategory:(IAECategory *)category
+{
+    self.categoryRenaming = category;
+    
+    IAECategoryEditorViewController *categoryEditorViewController = [[IAECategoryEditorViewController alloc] initToRenameCategory:category];
+    categoryEditorViewController.delegate = self;
+    categoryEditorViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    
+    [categorySelectorViewController presentViewController:categoryEditorViewController animated:YES completion:nil];
+}
+
+- (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
+               didSelectRemoveCategory:(IAECategory *)category
+{
+    [[IAECategoryStore sharedCategoryStore] removeCategoryByTag:category.tag];
+    [[IAEBook sharedBook] saveAll];
+    
+    [self.conceptsCollectionView reloadData];
+    
+    if ([self categorySelectorViewControllerWasLaunchedFromCategoryButton]) {
+        [categorySelectorViewController reloadData];
+    } else {
+        [self dismisPopover];
+    }
 }
 
 #pragma mark - IAECategoryEditorViewControllerDelegate
@@ -631,6 +670,28 @@
         [[IAEBook sharedBook] saveAll];
     }
     
+    [self returnFromCategoryEditorViewController:categoryEditorViewController];
+}
+
+- (void)returnFromCategoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
+{
+    if ([self categorySelectorViewControllerWasLaunchedFromCategoryButton]) {
+        [self returnToUpdatedCategorySelectorViewControllerFromCategoryEditorViewController:categoryEditorViewController];
+    } else {
+        [self returnToUpdatedEditModeViewControllerFromCategoryEditorViewController:categoryEditorViewController];
+    }
+}
+
+- (void)returnToUpdatedCategorySelectorViewControllerFromCategoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
+{
+    IAECategorySelectorViewController *categorySelector = (IAECategorySelectorViewController *)categoryEditorViewController.presentingViewController;
+    [categoryEditorViewController dismissViewControllerAnimated:YES completion:nil];
+    [categorySelector reloadData];
+}
+
+- (void)returnToUpdatedEditModeViewControllerFromCategoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
+{
+    [self.conceptsCollectionView reloadData];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -641,20 +702,7 @@
     category.tag = tag;
     [[IAEBook sharedBook] saveAll];
     
-    [self.conceptsCollectionView reloadData];
- 
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
-               didSelectRemoveCategory:(IAECategory *)category
-{
-    [[IAECategoryStore sharedCategoryStore] removeCategoryByTag:category.tag];
-    [[IAEBook sharedBook] saveAll];
-    
-    [self.conceptsCollectionView reloadData];
-    
-    [self.popover dismissPopoverAnimated:YES];
+    [self returnFromCategoryEditorViewController:categoryEditorViewController];
 }
 
 @end

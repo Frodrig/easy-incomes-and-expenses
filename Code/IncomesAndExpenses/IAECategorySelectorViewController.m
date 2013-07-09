@@ -39,18 +39,9 @@ const NSUInteger EXPENSE_SEGMENTED_INDEX = 1;
 }
 
 // Designated
-- (id)init
-{
-    self = [super initWithNibName:nil bundle:nil];
-    if (self) {
-    }
-    
-    return self;
-}
-
 - (id)initWithExtraActions:(NSUInteger)actions
 {
-    self = [self init];
+    self = [super initWithNibName:nil bundle:nil];
     if (self) {
         [self initActions:actions];
         [self initLongTapGestureRecognizer];
@@ -63,7 +54,20 @@ const NSUInteger EXPENSE_SEGMENTED_INDEX = 1;
 {
     self = [self initWithExtraActions:CATEGORYSELECTOR_EXTRAACTION_ALL_ACTIONS];
     if (self) {
-        
+        // ...
+    }
+    
+    return self;
+}
+
+- (id)initWithAllExtraActionsExceptSelection
+{
+    self = [self initWithExtraActions:CATEGORYSELECTOR_EXTRAACTION_ADD |
+                                      CATEGORYSELECTOR_EXTRAACTION_DONE |
+                                      CATEGORYSELECTOR_EXTRAACTION_DELETE |
+                                      CATEGORYSELECTOR_EXTRAACTION_RENAME];
+    if (self) {
+        // ...
     }
     
     return self;
@@ -102,6 +106,11 @@ const NSUInteger EXPENSE_SEGMENTED_INDEX = 1;
     }
 }
 
+- (BOOL)categorySelectionFlagEnabled
+{
+    return self.actions & CATEGORYSELECTOR_EXTRAACTION_CATEGORYSELECTION;
+}
+
 - (BOOL)addActionFlagEnabled
 {
     return self.actions & CATEGORYSELECTOR_EXTRAACTION_ADD;
@@ -126,12 +135,18 @@ const NSUInteger EXPENSE_SEGMENTED_INDEX = 1;
 {
     [self.categoriesTableView registerNib:[UINib nibWithNibName:@"IAECategoryTableViewCell" bundle:[NSBundle mainBundle]]
                    forCellReuseIdentifier:@"CategoryTableViewCell"];
+    self.categoriesTableView.allowsSelection = [self categorySelectionFlagEnabled];
     self.categoriesTableView.delegate = self;
     self.categoriesTableView.dataSource = self;
     
     if (self.longPressGestureRecognizer) {
         [self.categoriesTableView addGestureRecognizer:self.longPressGestureRecognizer];
     }
+}
+
+- (void)reloadData
+{
+    [self.categoriesTableView reloadData];
 }
 
 - (BOOL)canBecomeFirstResponder

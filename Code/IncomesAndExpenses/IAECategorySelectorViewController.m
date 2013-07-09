@@ -245,7 +245,8 @@ const NSUInteger EXPENSE_SEGMENTED_INDEX = 1;
 
 - (void)renameCategoryMenuSelected:(id)sender
 {
-    NSLog(@"RENAME");
+    IAECategory *category = [self categoryOfCellSelectedForContextualMenu];
+    [self.delegate categorySelectorViewController:self didSelectedRenameCategory:category];
 }
 
 #pragma mark - UIAlertViewDelegate

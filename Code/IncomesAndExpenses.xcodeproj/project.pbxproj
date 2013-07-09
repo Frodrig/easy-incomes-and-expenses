@@ -653,8 +653,8 @@
 		5B36AFEC1785871E00132475 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				5B55C402178AA79D0066F586 /* Category Editor */,
 				5B36AFF81785D71F00132475 /* Category Selector */,
+				5B55C402178AA79D0066F586 /* Category Editor */,
 				5B36AFED1785872900132475 /* Adjust Concept Amout */,
 			);
 			name = "View Controllers";

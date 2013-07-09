@@ -545,14 +545,21 @@
     [self presentViewController:categoryEditorViewController animated:YES completion:nil];
 }
 
-- (void)launchCategoryEditorViewControllerAndPrepareInstanceToRenameCategory:(IAECategory *)category
+- (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewControler
+             didSelectedRenameCategory:(IAECategory *)category
 {
-    
+    [self.popover dismissPopoverAnimated:YES];
+    [self launchCategoryEditorViewControllerAndPrepareInstanceToRenameCategory:category];
 }
 
-- (void)launchCategoryEditorViewController
+- (void)launchCategoryEditorViewControllerAndPrepareInstanceToRenameCategory:(IAECategory *)category
 {
-   
+    self.categoryRenaming = category;
+    
+    IAECategoryEditorViewController *categoryEditorViewController = [[IAECategoryEditorViewController alloc] initToRenameCategory:category];
+    categoryEditorViewController.delegate = self;
+    
+    [self presentViewController:categoryEditorViewController animated:YES completion:nil];
 }
 
 #pragma mark - IAECategoryEditorViewControllerDelegate
@@ -565,11 +572,6 @@
 - (void)categoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
            DidValidateNewCategoryTag:(NSString *)categoryTag
                       ofCategoryType:(CategoryType)categoryType
-{
-    [self exitAndCreateNewCategoryWithTag:categoryTag ofType:categoryType];
-}
-
-- (void)exitAndCreateNewCategoryWithTag:(NSString *)categoryTag ofType:(CategoryType)categoryType
 {
     IAECategory *newCategory = [[IAECategoryStore sharedCategoryStore] createCategoryOfType:categoryType andTag:categoryTag withValidityTagCheck:NO];
     NSAssert(newCategory, @"");
@@ -584,6 +586,11 @@
            DidValidateRenameCategory:(IAECategory *)category
                              withTag:(NSString *)tag
 {
+    category.tag = tag;
+    [[IAEBook sharedBook] saveAll];
+    
+    [self.conceptsCollectionView reloadData];
+ 
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

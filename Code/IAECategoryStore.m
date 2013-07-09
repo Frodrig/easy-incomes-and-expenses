@@ -226,6 +226,11 @@
     return [self findCategoryByTag:@"General Expense"];
 }
 
+- (BOOL)isGeneralCategory:(IAECategory *)category
+{
+    return [self generalExpenseCategory] == category || [self generalIncomeCategory] == category;
+}
+
 - (IAECategory *)findCategoryByTag:(NSString *)tag
 {
     NSString *normalizedTag = [self normalizeCategoryTag:tag];

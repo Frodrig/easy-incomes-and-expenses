@@ -16,8 +16,10 @@
 
 - (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
                      didSelectCategory:(IAECategory *)category;
-
 - (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
             didSelectAddCategoryOfType:(CategoryType)categoryType;
+
+- (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
+               didSelectRemoveCategory:(IAECategory *)category;
 
 @end

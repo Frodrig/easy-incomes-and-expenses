@@ -587,5 +587,15 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
+               didSelectRemoveCategory:(IAECategory *)category
+{
+    [[IAECategoryStore sharedCategoryStore] removeCategoryByTag:category.tag];
+    [[IAEBook sharedBook] saveAll];
+    
+    [self.conceptsCollectionView reloadData];
+    
+    [self.popover dismissPopoverAnimated:YES];
+}
 
 @end

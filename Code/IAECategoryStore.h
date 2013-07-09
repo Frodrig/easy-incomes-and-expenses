@@ -23,6 +23,8 @@
 - (IAECategory *)generalIncomeCategory;
 - (IAECategory *)generalExpenseCategory;
 
+- (BOOL)isGeneralCategory:(IAECategory *)category;
+
 - (IAECategory *)createCategoryOfType:(CategoryType)type andTag:(NSString *)tag withValidityTagCheck:(BOOL)validity;
 
 - (void)removeCategoryByTag:(NSString *)tag;

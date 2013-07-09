@@ -10,6 +10,8 @@
 #import "IAECategoryStore.h"
 #import "IAECategoryTableViewCell.h"
 #import "IAECategory.h"
+#import "IAECategoryStore.h"
+#import "IAEBook.h"
 #import "IAECategorySelectorViewControllerDelegate.h"
 
 const NSUInteger INCOME_SEGMENTED_INDEX = 0;
@@ -19,6 +21,8 @@ const NSUInteger EXPENSE_SEGMENTED_INDEX = 1;
 
 @property (weak, nonatomic) IBOutlet UITableView *categoriesTableView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *categorySegmentedControl;
+@property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureRecognizer;
+@property (nonatomic, weak) IAECategoryTableViewCell *cellSelectedForContextualMenu;
 
 @end
 
@@ -28,9 +32,16 @@ const NSUInteger EXPENSE_SEGMENTED_INDEX = 1;
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        [self initLongTapGestureRecognizer];
     }
     return self;
+}
+
+- (void)initLongTapGestureRecognizer
+{
+    _longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureRecogzinerEvent:)];
+    _longPressGestureRecognizer.numberOfTapsRequired = 0;
+    _longPressGestureRecognizer.numberOfTouchesRequired = 1;
 }
 
 - (void)viewDidLoad
@@ -45,8 +56,14 @@ const NSUInteger EXPENSE_SEGMENTED_INDEX = 1;
     [self.categoriesTableView registerNib:[UINib nibWithNibName:@"IAECategoryTableViewCell" bundle:[NSBundle mainBundle]]
                    forCellReuseIdentifier:@"CategoryTableViewCell"];
     
+    [self.categoriesTableView addGestureRecognizer:self.longPressGestureRecognizer];
     self.categoriesTableView.delegate = self;
     self.categoriesTableView.dataSource = self;
+}
+
+- (BOOL)canBecomeFirstResponder
+{
+    return YES;
 }
 
 #pragma mark - Control Events
@@ -126,6 +143,118 @@ const NSUInteger EXPENSE_SEGMENTED_INDEX = 1;
     }
     
     return categoryType;
+}
+
+#pragma mark - LongTapGestureRecognizer
+
+- (void)longPressGestureRecogzinerEvent:(UILongPressGestureRecognizer *)longPressGestureRecognizer
+{
+    [self launchContextualMenuOnCellUnderLongPressGestureRecognizer:longPressGestureRecognizer];
+}
+
+- (void)launchContextualMenuOnCellUnderLongPressGestureRecognizer:(UILongPressGestureRecognizer *)longPressGestureRecognizer
+{
+    self.cellSelectedForContextualMenu = [self findCellUnderLongTapGestureRecognizer:longPressGestureRecognizer];
+    if (self.cellSelectedForContextualMenu) {
+        [self launchContextualMenuOnCellSelectedForContextualMenuIfCategoryOfCellIsNotGeneral];
+    }
+}
+
+- (IAECategoryTableViewCell *)findCellUnderLongTapGestureRecognizer:(UILongPressGestureRecognizer *)longPressGestureRecognizer
+{
+    CGPoint longPressLocation = [longPressGestureRecognizer locationInView:self.categoriesTableView];
+    NSIndexPath *cellIndexPath = [self.categoriesTableView indexPathForRowAtPoint:longPressLocation];
+    IAECategoryTableViewCell *cell = (IAECategoryTableViewCell *)[self.categoriesTableView cellForRowAtIndexPath:cellIndexPath];
+    
+    return cell;
+}
+
+- (void)launchContextualMenuOnCellSelectedForContextualMenuIfCategoryOfCellIsNotGeneral
+{
+    NSAssert(self.cellSelectedForContextualMenu, @"");
+    
+    if (![self isCellSelectedForContextualMenuGeneralCategory]) {
+        [self becomeFirstResponder];
+        
+        UIMenuItem *deleteCategoryMenuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Delete", @"")
+                                                                        action:@selector(deleteCategoryMenuSelected:)];
+        UIMenuItem *renameCategoryMenuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Rename", @"")
+                                                                        action:@selector(renameCategoryMenuSelected:)];
+        
+        UIMenuController *menu = [UIMenuController sharedMenuController];
+        menu.menuItems = [NSArray arrayWithObjects:renameCategoryMenuItem, deleteCategoryMenuItem, nil];
+        [menu setTargetRect:self.cellSelectedForContextualMenu.frame inView:self.cellSelectedForContextualMenu];
+        [menu setMenuVisible:YES animated:YES];
+    }
+}
+
+- (BOOL)isCellSelectedForContextualMenuGeneralCategory
+{
+    IAECategory *category = [self categoryOfCellSelectedForContextualMenu];
+    return [[IAECategoryStore sharedCategoryStore] isGeneralCategory:category];
+}
+
+#pragma mark - MenuController
+
+- (void)deleteCategoryMenuSelected:(id)sender
+{
+    if ([self categoryOfCellSelectedHaveConcepts]) {
+        [self launchAlertViewBeforeDeleteCategory];
+    } else {
+        [self removeCategoryOfCellSelected];
+    }
+}
+
+- (BOOL)categoryOfCellSelectedHaveConcepts
+{
+    NSUInteger numberOfConceptsOfCategory = [self findNumberOfConceptsOfCategoryOfCellSelected];
+    return numberOfConceptsOfCategory > 0;
+}
+
+- (NSUInteger)findNumberOfConceptsOfCategoryOfCellSelected
+{
+    IAECategory *category = [self categoryOfCellSelectedForContextualMenu];
+    NSUInteger numConceptsOfCategory = [[IAEBook sharedBook] findAllConceptsWithCategory:category].count;
+    
+    return numConceptsOfCategory;
+}
+
+- (IAECategory *)categoryOfCellSelectedForContextualMenu
+{
+    IAECategory *category = [[IAECategoryStore sharedCategoryStore] findCategoryByTag:self.cellSelectedForContextualMenu.categoryLabel.text];
+    return category;
+}
+
+- (void)launchAlertViewBeforeDeleteCategory
+{
+    UIAlertView *alertView = [[UIAlertView alloc]
+                              initWithTitle:NSLocalizedString(@"Confirm remove", @"Advertenciai para confirmar el borrado de una categoria")
+                              message:NSLocalizedString(@"There are one or more items with this category. If you remove this category the items will change to the general category associated.", @"Descripcion de lo que ocurrira al borrar una categoria")
+                              delegate:self
+                              cancelButtonTitle:NSLocalizedString(@"Cancel", @"Opcion para cancelar el borrado de una categoria")
+                              otherButtonTitles:NSLocalizedString(@"Remove", @"Opcion para confirmar el borrado de una categoria"), nil];
+    
+    [alertView show];
+}
+
+- (void)removeCategoryOfCellSelected
+{
+    IAECategory *category = [self categoryOfCellSelectedForContextualMenu];
+    [self.delegate categorySelectorViewController:self didSelectRemoveCategory:category];
+}
+
+- (void)renameCategoryMenuSelected:(id)sender
+{
+    NSLog(@"RENAME");
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        [self removeCategoryOfCellSelected];
+    }
 }
 
 @end

@@ -604,22 +604,8 @@
 - (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewControler
              didSelectedRenameCategory:(IAECategory *)category
 {
-    if ([self categorySelectorViewControllerWasLaunchedFromCategoryButton]) {
-        [self launchCategoryEditorViewControllerModalFromCategorySelectorViewController:categorySelectorViewControler ToRenameCategory:category];
-    } else {
-        [self dismisPopover];
-        [self launchCategoryEditorViewControllerAndPrepareInstanceToRenameCategory:category];
-    }
-}
-
-- (void)launchCategoryEditorViewControllerAndPrepareInstanceToRenameCategory:(IAECategory *)category
-{
-    self.categoryRenaming = category;
-    
-    IAECategoryEditorViewController *categoryEditorViewController = [[IAECategoryEditorViewController alloc] initToRenameCategory:category];
-    categoryEditorViewController.delegate = self;
-    
-    [self presentViewController:categoryEditorViewController animated:YES completion:nil];
+    NSAssert([self categorySelectorViewControllerWasLaunchedFromCategoryButton], @"");
+    [self launchCategoryEditorViewControllerModalFromCategorySelectorViewController:categorySelectorViewControler ToRenameCategory:category];
 }
 
 - (void)launchCategoryEditorViewControllerModalFromCategorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
@@ -641,12 +627,8 @@
     [[IAEBook sharedBook] saveAll];
     
     [self.conceptsCollectionView reloadData];
-    
-    if ([self categorySelectorViewControllerWasLaunchedFromCategoryButton]) {
-        [categorySelectorViewController reloadData];
-    } else {
-        [self dismisPopover];
-    }
+    NSAssert([self categorySelectorViewControllerWasLaunchedFromCategoryButton], @"");
+    [categorySelectorViewController reloadData];
 }
 
 #pragma mark - IAECategoryEditorViewControllerDelegate

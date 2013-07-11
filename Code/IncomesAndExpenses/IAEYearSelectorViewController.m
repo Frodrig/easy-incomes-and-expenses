@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *yearsSegmentedControl;
 @property (weak, nonatomic) IBOutlet UICollectionView *yearsCollectionView;
 @property (nonatomic) NSUInteger yearLoadedBeforeStart;
+@property (weak, nonatomic) IBOutlet UILabel *actualYearOpenLabel;
 @end
 
 @implementation IAEYearSelectorViewController
@@ -23,9 +24,14 @@
 static NSString * const titleTagActualYear = @"TAG_YEARSELECTOR_ACTUALYEAR";
 static NSString * const titleTagWithConceptsYears = @"TAG_YEARSELECTOR_WITHCONCEPTYEARS";
 static NSString * const titleTagAllYears = @"TAG_YEARSELECTOR_ALLYEARS";
+static NSString * const titleTagYearOpen = @"TAG_YEARSELECTOR_ACTUALOPENYEAR";
 
 static NSString * const nibNameForCollectionViewCell = @"IAEYearSelectorCollectionViewCell";
 static NSString * const collectionViewCellReuseIdentifier = @"YearSelectorCollectionViewCell";
+
+static NSString * const fontFamilyForActualYearOpenLabel = @"HelveticaNeue";
+
+static NSUInteger fontFamilySizeForActualYearOpenLabel = 17;
 
 static NSUInteger yearsSegmentedControlActualYearIndex = 0;
 static NSUInteger yearsSegmentedControlYearsWithConceptsIndex = 1;
@@ -44,7 +50,6 @@ static NSUInteger yearsSegmentedControlAllYearsIndex = 2;
 {
     [super viewDidLoad];
     
-	[self configureYearsSegmentedControl];
     [self configureYearsCollectionView];
     [self configureYearBookAndSaveYearLoadedBeforeStart];
 }
@@ -59,7 +64,22 @@ static NSUInteger yearsSegmentedControlAllYearsIndex = 2;
     [[IAEBook sharedBook] loadAll];
 }
 
-- (void)configureYearsSegmentedControl
+- (void)configureYearsCollectionView
+{
+    [self.yearsCollectionView registerNib:[UINib nibWithNibName:nibNameForCollectionViewCell bundle:[NSBundle mainBundle]]
+               forCellWithReuseIdentifier:collectionViewCellReuseIdentifier];
+    self.yearsCollectionView.dataSource = self;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self vinculeYearsSegmentedControlLabels];
+    [self vinculeActualYearOpenLabel];
+}
+
+- (void)vinculeYearsSegmentedControlLabels
 {
     [self.yearsSegmentedControl setTitle:NSLocalizedString(titleTagActualYear, @"")
                        forSegmentAtIndex:yearsSegmentedControlActualYearIndex];
@@ -69,11 +89,20 @@ static NSUInteger yearsSegmentedControlAllYearsIndex = 2;
                        forSegmentAtIndex:yearsSegmentedControlAllYearsIndex];
 }
 
-- (void)configureYearsCollectionView
+- (void)vinculeActualYearOpenLabel
 {
-    [self.yearsCollectionView registerNib:[UINib nibWithNibName:nibNameForCollectionViewCell bundle:[NSBundle mainBundle]]
-               forCellWithReuseIdentifier:collectionViewCellReuseIdentifier];
-    self.yearsCollectionView.dataSource = self;
+    NSString *textLabel = [NSString stringWithFormat:NSLocalizedString(titleTagYearOpen, @""), self.yearLoadedBeforeStart];
+    self.actualYearOpenLabel.attributedText = [[NSAttributedString alloc] initWithString:textLabel
+                                                                              attributes:[self createAttributeDictionaryForActualYearOpenLabel]];
+}
+
+- (NSDictionary *)createAttributeDictionaryForActualYearOpenLabel
+{
+    NSDictionary *attributes =  @{NSFontAttributeName: [UIFont fontWithName:fontFamilyForActualYearOpenLabel size:fontFamilySizeForActualYearOpenLabel],
+                                  NSForegroundColorAttributeName: [UIColor darkGrayColor],
+                                  NSKernAttributeName: [NSNumber numberWithInteger:0.0]};
+    
+    return attributes;
 }
 
 #pragma mark - Button Events
@@ -98,14 +127,32 @@ static NSUInteger yearsSegmentedControlAllYearsIndex = 2;
 {
     NSAssert(collectionView == self.yearsCollectionView, @"");
     IAEYearSelectorCollectionViewCell *cell = (IAEYearSelectorCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:collectionViewCellReuseIdentifier forIndexPath:indexPath];
-    [self configureCollectionViewCell:cell associatedToYearDate:indexPath.row];
+    [self configureCell:cell WithIndexPath:indexPath];
     
     return cell;
 }
 
-- (void)configureCollectionViewCell:(IAEYearSelectorCollectionViewCell *)cell associatedToYearDate:(NSUInteger)yearDate
+- (void)configureCell:(IAEYearSelectorCollectionViewCell *)cell WithIndexPath:(NSIndexPath *)indexPath
 {
+    IAEYear *year = [self findYearOfIndexPath:indexPath];
+    if (year) {
+        [cell configureWithYearDate:year.yearDate andBalance:[year balance]];
+    } else {
+        [cell configureWithYearDate:[self yearDateFromIndexPath:indexPath]];
+    }
+}
+
+- (IAEYear *)findYearOfIndexPath:(NSIndexPath *)indexPath
+{
+    NSUInteger yearDate = [self yearDateFromIndexPath:indexPath];
+    IAEYear *year = [[IAEBook sharedBook] findYearWithDate:[NSNumber numberWithUnsignedInteger:yearDate]];
     
+    return year;
+}
+
+- (NSUInteger)yearDateFromIndexPath:(NSIndexPath *)indexPath
+{
+    return [IAEDateHelper findActualYear] - indexPath.row;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section

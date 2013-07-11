@@ -12,8 +12,7 @@
 
 @interface IAEYearSelectorCollectionViewCell : UICollectionViewCell
 
-@property (weak, nonatomic) IBOutlet IAEValueDecoratorView *economicDecoratorView;
-@property (weak, nonatomic) IBOutlet UILabel *yearLabel;
-@property (weak, nonatomic) IBOutlet UILabel *balanceLabel;
+- (void)configureWithYearDate:(NSUInteger)yearDate andBalance:(NSDecimalNumber *)balance;
+- (void)configureWithYearDate:(NSUInteger)yearDate;
 
 @end

@@ -156,7 +156,7 @@
     _years = [NSMutableArray arrayWithArray:[self loadYearsWithLimit:1 andPredicate:nil]];
 }
 
-- (IAEYear *)existYearDate:(NSNumber *)yearDate
+- (IAEYear *)findYearWithDate:(NSNumber *)yearDate
 {
     IAEYear *resultYear;
     for (IAEYear *year in self.years) {
@@ -179,7 +179,7 @@
 - (IAEYear *)createYear:(NSNumber *)yearDate
 {
     IAEYear *newYear;
-    if (![self existYearDate:yearDate])
+    if (![self findYearWithDate:yearDate])
     {
         newYear = [NSEntityDescription insertNewObjectForEntityForName:@"IAEYear" inManagedObjectContext:self.context];
         newYear.yearDate = yearDate.intValue;
@@ -199,7 +199,7 @@
 
 - (void)deleteYear:(NSNumber *)yearDate
 {
-    IAEYear *year = [self existYearDate:yearDate];
+    IAEYear *year = [self findYearWithDate:yearDate];
     if (year)
     {
         //[self.context deleteObject:year];

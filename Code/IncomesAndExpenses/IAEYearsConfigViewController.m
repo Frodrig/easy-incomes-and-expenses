@@ -229,7 +229,7 @@
     
     NSNumber *yearDate = [NSNumber numberWithUnsignedInteger:yearCardToRemove.goToYearButton.tag];
     
-    IAEYear* year = [[IAEBook sharedBook] existYearDate:yearDate];
+    IAEYear* year = [[IAEBook sharedBook] findYearWithDate:yearDate];
     
     if ([year findAllConcepts].count > 0)
     {

@@ -390,11 +390,11 @@
 - (void)configureCategoryLabelsOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
                                 withCategory:(IAECategory *)category
 {
-    NSDictionary *categoryNameLabelAttributes = [self createdAttributeDictionaryForConceptCellWithFont:[self createFontForCategoryConceptNameLabelInConceptCell]
+    NSDictionary *categoryNameLabelAttributes = [self createAttributeDictionaryForConceptCellWithFont:[self createFontForCategoryConceptNameLabelInConceptCell]
                                                                                               andColor:[UIColor blackColor]];
     cell.categoryNameLabel.attributedText = [[NSAttributedString alloc] initWithString:[category localizedTag] attributes:categoryNameLabelAttributes];
     
-    NSDictionary *categoryTypeLabelAttributes = [self createdAttributeDictionaryForConceptCellWithFont:[self createFontForCategoryConceptTypeLabelInConceptCell] andColor:[UIColor blackColor]];
+    NSDictionary *categoryTypeLabelAttributes = [self createAttributeDictionaryForConceptCellWithFont:[self createFontForCategoryConceptTypeLabelInConceptCell] andColor:[UIColor blackColor]];
     cell.categoryTypeLabel.attributedText = [[NSAttributedString alloc] initWithString:[category localizedCategoryTypeString] attributes:categoryTypeLabelAttributes];
     
 }
@@ -403,12 +403,12 @@
                  withAmountWithSignString:(NSString *)amountSignedString
                                  andColor:(UIColor *)color
 {
-    NSDictionary *amountLabelAttributes = [self createdAttributeDictionaryForConceptCellWithFont:[self createFontForAmountLabelInConceptCell]
+    NSDictionary *amountLabelAttributes = [self createAttributeDictionaryForConceptCellWithFont:[self createFontForAmountLabelInConceptCell]
                                                                                         andColor:color];
     cell.amountLabel.attributedText = [[NSAttributedString alloc] initWithString:amountSignedString attributes:amountLabelAttributes];
 }
 
-- (NSDictionary *)createdAttributeDictionaryForConceptCellWithFont:(UIFont *)font andColor:(UIColor *)color
+- (NSDictionary *)createAttributeDictionaryForConceptCellWithFont:(UIFont *)font andColor:(UIColor *)color
 {
     NSDictionary *attributes =  @{NSFontAttributeName: font,
                                   NSForegroundColorAttributeName: color,

@@ -77,6 +77,7 @@
 		5B62D874178EC20E009879A6 /* IAEOrientationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B62D86C178EC20E009879A6 /* IAEOrientationHelper.m */; };
 		5B62D87D178EC27D009879A6 /* IAEDateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B62D87C178EC27D009879A6 /* IAEDateHelper.m */; };
 		5B62D881178EC3CB009879A6 /* IAECurrencyInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B62D87F178EC3CB009879A6 /* IAECurrencyInfo.m */; };
+		5B62D884178F1516009879A6 /* UIView+DrawBottomLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B62D883178F1516009879A6 /* UIView+DrawBottomLine.m */; };
 		5B65636116B2E2D500CEE1F2 /* 437-minus.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B65635F16B2E2D500CEE1F2 /* 437-minus.png */; };
 		5B65636216B2E2D500CEE1F2 /* 437-minus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B65636016B2E2D500CEE1F2 /* 437-minus@2x.png */; };
 		5B65636616B2E4CD00CEE1F2 /* IAEAmountStepperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B65636416B2E4CD00CEE1F2 /* IAEAmountStepperViewController.m */; };
@@ -283,6 +284,8 @@
 		5B62D87C178EC27D009879A6 /* IAEDateHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEDateHelper.m; sourceTree = "<group>"; };
 		5B62D87F178EC3CB009879A6 /* IAECurrencyInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECurrencyInfo.m; sourceTree = "<group>"; };
 		5B62D880178EC3CB009879A6 /* IAECurrencyInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECurrencyInfo.h; sourceTree = "<group>"; };
+		5B62D882178F1516009879A6 /* UIView+DrawBottomLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+DrawBottomLine.h"; sourceTree = "<group>"; };
+		5B62D883178F1516009879A6 /* UIView+DrawBottomLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+DrawBottomLine.m"; sourceTree = "<group>"; };
 		5B65635F16B2E2D500CEE1F2 /* 437-minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "437-minus.png"; sourceTree = "<group>"; };
 		5B65636016B2E2D500CEE1F2 /* 437-minus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "437-minus@2x.png"; sourceTree = "<group>"; };
 		5B65636316B2E4CD00CEE1F2 /* IAEAmountStepperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEAmountStepperViewController.h; sourceTree = "<group>"; };
@@ -757,6 +760,8 @@
 				5B6E9FA6177D9C950072EE34 /* UIView+LoadFromXib.m */,
 				5B5C967D17816A13008CD851 /* UIView+RoundedCorners.h */,
 				5B5C967E17816A13008CD851 /* UIView+RoundedCorners.m */,
+				5B62D882178F1516009879A6 /* UIView+DrawBottomLine.h */,
+				5B62D883178F1516009879A6 /* UIView+DrawBottomLine.m */,
 			);
 			name = UIView;
 			sourceTree = "<group>";
@@ -1468,6 +1473,7 @@
 				5B62D870178EC20E009879A6 /* IAEColorHelper.m in Sources */,
 				5BF862BE1668D444009D024E /* IAECircularStringSelection.m in Sources */,
 				5B25A3C8166E210D00E63559 /* IAEIncomeExpenseControllerViewController.m in Sources */,
+				5B62D884178F1516009879A6 /* UIView+DrawBottomLine.m in Sources */,
 				5B25A3CF166E268C00E63559 /* IAEConceptsViewController.m in Sources */,
 				5B5C968617816ED0008CD851 /* IAEValueDecoratorViewIncomeConfigurator.m in Sources */,
 				5B0FFF521670942300608968 /* IAEInputConceptsViewController.m in Sources */,

@@ -109,7 +109,7 @@
     yearLabel.textAlignment = NSTextAlignmentCenter;
     yearLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:32.0];
     
-    BOOL userInteractionEnabled = ![[IAEBook sharedBook] existYearDate:[NSNumber numberWithUnsignedInt:self.actualYear.unsignedIntValue - row]];
+    BOOL userInteractionEnabled = ![[IAEBook sharedBook] findYearWithDate:[NSNumber numberWithUnsignedInt:self.actualYear.unsignedIntValue - row]];
     yearLabel.userInteractionEnabled = userInteractionEnabled;
     yearLabel.enabled = yearLabel.userInteractionEnabled;
     

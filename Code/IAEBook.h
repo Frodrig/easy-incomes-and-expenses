@@ -24,8 +24,7 @@
 - (IAEYear *)createYear:(NSNumber *)yearDate;
 - (void)deleteYear:(NSNumber *)yearDate;
 
-- (IAEYear *)existYearDate:(NSNumber *)yearDate;
-
+- (IAEYear *)findYearWithDate:(NSNumber *)yearDate;
 - (IAEYear *)findActualYear;
 
 - (BOOL)saveAll;

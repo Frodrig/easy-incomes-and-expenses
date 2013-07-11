@@ -15,6 +15,7 @@
 #import "UIView+RoundedCorners.h"
 
 @interface IAECategoryEditorViewController ()
+
 @property (nonatomic) EdityModeCategoryType editModeContext;
 @property (nonatomic) CategoryType categoryTypeContext;
 @property (nonatomic, weak) IAECategory *categoryToRename;
@@ -27,6 +28,10 @@
 @end
 
 @implementation IAECategoryEditorViewController
+
+static NSUInteger sizeInformationLabel = 32;
+static NSUInteger sizeInputTextField = 68;
+static NSUInteger sizeRoundedRectCorners = 10;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -101,23 +106,32 @@
 - (void)configureInformationLabel
 {
     self.informationLabel.attributedText = [[NSAttributedString alloc] initWithString:[self stringTagBasedOnEditModeForInformationLabel]
-                                                                           attributes:[self createAttributeForLabelWithSize:32]];
+                                                                           attributes:[self createAttributeForLabelWithSize:sizeInformationLabel]];
 }
 
 - (void)configureCategoryDecoratorAndInputContainerView
 {
-    [self.categoryDecoratorAndInputContainerView addRoundedCorners:UIRectCornerAllCorners withRadius:10.0];
+    [self.categoryDecoratorAndInputContainerView addRoundedCorners:UIRectCornerAllCorners withRadius:sizeRoundedRectCorners];
 }
 
 - (void)configureInputTextFieldDefaultText
 {
+    self.categoryInputTextField.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:sizeInputTextField];
+    
+    NSDictionary *attributesForCategoryInputText = [self createAttributeForLabelWithSize:sizeInputTextField];
+    self.categoryInputTextField.attributedText = [[NSAttributedString alloc] initWithString:@""
+                                                                                 attributes:attributesForCategoryInputText];
+    
+    NSDictionary *attributesForCategoryPlaceholderText = [self createAttributeForLabelWithSize:sizeInputTextField andColor:[UIColor lightGrayColor]];
+    self.categoryInputTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:[self stringTagBasedOnEditModeForInputTextField]
+                                                                                        attributes:attributesForCategoryPlaceholderText];
+    self.categoryInputTextField.textAlignment = NSTextAlignmentLeft;
     self.categoryInputTextField.delegate = self;
-    self.categoryInputTextField.placeholder = [self stringTagBasedOnEditModeForInputTextField];
 }
 
 - (void)configureCategoryTypeDecoratorView
 {
-    [self.categoryTypeDecoratorView addRoundedCorners:UIRectCornerTopLeft | UIRectCornerBottomLeft withRadius:10.0];
+    [self.categoryTypeDecoratorView addRoundedCorners:UIRectCornerTopLeft | UIRectCornerBottomLeft withRadius:sizeRoundedRectCorners];
     
     EconomicValueType economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromCategoryType:self.categoryTypeContext];
     self.categoryTypeDecoratorView.backgroundColor = [IAEColorHelper colorForEconomicValueType:economicValueType];
@@ -167,8 +181,14 @@
 
 - (NSDictionary *)createAttributeForLabelWithSize:(CGFloat)size
 {
+    return [self createAttributeForLabelWithSize:size andColor:[UIColor blackColor]];
+}
+
+- (NSDictionary *)createAttributeForLabelWithSize:(CGFloat)size andColor:(UIColor *)color
+{
+    NSAssert(color, @"");
     NSDictionary *attributes =  @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:size],
-                                  NSForegroundColorAttributeName: [UIColor blackColor],
+                                  NSForegroundColorAttributeName: color,
                                   NSKernAttributeName: [NSNumber numberWithInteger:0.0]};
     
     return attributes;

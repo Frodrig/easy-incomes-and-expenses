@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface IAEYearsViewController : UIViewController
+@interface IAEYearSelectorViewController : UIViewController<UICollectionViewDataSource>
+
+- (IBAction)closeButtonPressed:(id)sender;
+- (IBAction)yearSegmentedControlPressed:(id)sender;
 
 @end

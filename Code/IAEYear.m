@@ -139,4 +139,10 @@
     return concepts;
 }
 
+- (NSUInteger)findNumberOfConcepts
+{
+    return [self findAllConcepts].count;
+}
+
+
 @end

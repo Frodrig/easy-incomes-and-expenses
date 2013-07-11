@@ -30,6 +30,8 @@
 - (NSArray *)findAllConceptsWithCategory:(IAECategory *)category;
 - (NSArray *)findAllConcepts;
 
+- (NSUInteger)findNumberOfConcepts;
+
 @end
 
 @interface IAEYear (CoreDataGeneratedAccessors)

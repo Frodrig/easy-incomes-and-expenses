@@ -244,4 +244,17 @@
     return [self.years objectAtIndex:0];
 }
 
+- (NSArray *)findAllYearWithConcepts
+{
+    NSMutableArray *yearsSelected = [NSMutableArray arrayWithCapacity:self.years.count];
+    for (IAEYear *year in self.years) {
+        if ([year findNumberOfConcepts] > 0) {
+            [yearsSelected addObject:year];
+        }
+    }
+    
+    return [NSArray arrayWithArray:yearsSelected];
+}
+
+
 @end

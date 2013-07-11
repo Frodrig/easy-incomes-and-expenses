@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4471.1" systemVersion="12E55" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4471.1" systemVersion="12E55" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <development version="5000" identifier="xcode"/>
@@ -10,57 +10,45 @@
         <scene sceneID="ZOc-zz-2EG">
             <objects>
                 <viewController storyboardIdentifier="EditModeViewController" id="7Ea-79-0mi" customClass="IAEEditModeViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="8e7-Mu-rwD"/>
-                        <viewControllerLayoutGuide type="bottom" id="L9X-OZ-EJW"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="JJO-TL-5Gw">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="724"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V3B-5t-GkI" customClass="IAEEditModeAnnualBalanceView">
+                            <view contentMode="scaleToFill" id="V3B-5t-GkI" customClass="IAEEditModeAnnualBalanceView">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="63"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Balance anual:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f89-fF-suD">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Balance anual:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="f89-fF-suD">
                                 <rect key="frame" x="20" y="10" width="488" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="45" id="Xd5-SP-BMe"/>
-                                    <constraint firstAttribute="width" constant="488" id="srK-fP-rdd"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="28"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="€ 6.000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Kk-rQ-u6u">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="€ 6.000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9Kk-rQ-u6u">
                                 <rect key="frame" x="516" y="10" width="488" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="28"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gI2-Hy-nOR">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="gI2-Hy-nOR">
                                 <rect key="frame" x="0.0" y="66" width="1024" height="166"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" red="0.97254908080000002" green="0.97254908080000002" blue="0.97254908080000002" alpha="1" colorSpace="deviceRGB"/>
                             </scrollView>
-                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="12" translatesAutoresizingMaskIntoConstraints="NO" id="E2H-b7-TjG">
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="12" id="E2H-b7-TjG">
                                 <rect key="frame" x="387" y="243" width="250" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="KjT-V6-aNx"/>
-                                    <constraint firstAttribute="width" constant="250" id="tet-2m-oDE"/>
-                                </constraints>
                                 <color key="pageIndicatorTintColor" red="0.69803921570000005" green="0.69803921570000005" blue="0.69803921570000005" alpha="1" colorSpace="deviceRGB"/>
                                 <color key="currentPageIndicatorTintColor" red="0.9215686917" green="0.9215686917" blue="0.9215686917" alpha="1" colorSpace="deviceRGB"/>
                             </pageControl>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G41-3w-8Uv">
+                            <view contentMode="scaleToFill" id="G41-3w-8Uv">
                                 <rect key="frame" x="37" y="300" width="950" height="340"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Ua3-PB-7Qf">
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="Ua3-PB-7Qf">
                                         <rect key="frame" x="0.0" y="0.0" width="950" height="340"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="sJu-XV-bwF">
@@ -84,39 +72,13 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.97254908080000002" green="0.97254908080000002" blue="0.97254908080000002" alpha="1" colorSpace="deviceRGB"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CFa-CD-M6a">
+                            <view contentMode="scaleToFill" id="CFa-CD-M6a">
                                 <rect key="frame" x="206" y="660" width="612" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.97254908080000002" green="0.97254908080000002" blue="0.97254908080000002" alpha="1" colorSpace="deviceRGB"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="E2H-b7-TjG" firstAttribute="top" secondItem="gI2-Hy-nOR" secondAttribute="bottom" constant="11" id="02R-H1-9xA"/>
-                            <constraint firstItem="E2H-b7-TjG" firstAttribute="centerX" secondItem="gI2-Hy-nOR" secondAttribute="centerX" id="0OR-2E-PTF"/>
-                            <constraint firstItem="gI2-Hy-nOR" firstAttribute="top" secondItem="V3B-5t-GkI" secondAttribute="bottom" constant="3" id="703-Pc-Poy"/>
-                            <constraint firstItem="CFa-CD-M6a" firstAttribute="leading" secondItem="JJO-TL-5Gw" secondAttribute="leading" constant="206" id="7SR-dp-POw"/>
-                            <constraint firstItem="gI2-Hy-nOR" firstAttribute="trailing" secondItem="JJO-TL-5Gw" secondAttribute="trailing" id="9qk-MQ-q8a"/>
-                            <constraint firstItem="E2H-b7-TjG" firstAttribute="centerX" secondItem="G41-3w-8Uv" secondAttribute="centerX" id="AbQ-7s-YQN"/>
-                            <constraint firstItem="9Kk-rQ-u6u" firstAttribute="leading" secondItem="f89-fF-suD" secondAttribute="trailing" constant="8" symbolic="YES" id="DXS-C1-ar4"/>
-                            <constraint firstItem="V3B-5t-GkI" firstAttribute="top" secondItem="JJO-TL-5Gw" secondAttribute="top" id="Ge6-Nc-uSq"/>
-                            <constraint firstItem="E2H-b7-TjG" firstAttribute="top" secondItem="JJO-TL-5Gw" secondAttribute="top" constant="243" id="RpM-Dt-H5S"/>
-                            <constraint firstAttribute="trailing" secondItem="9Kk-rQ-u6u" secondAttribute="trailing" constant="20" symbolic="YES" id="T9w-tc-oRN"/>
-                            <constraint firstItem="CFa-CD-M6a" firstAttribute="top" secondItem="G41-3w-8Uv" secondAttribute="bottom" constant="20" id="X4A-Xk-xnU"/>
-                            <constraint firstItem="gI2-Hy-nOR" firstAttribute="leading" secondItem="JJO-TL-5Gw" secondAttribute="leading" id="c2K-Ex-mBy"/>
-                            <constraint firstItem="G41-3w-8Uv" firstAttribute="top" secondItem="E2H-b7-TjG" secondAttribute="bottom" constant="21" id="eYM-UH-JuJ"/>
-                            <constraint firstItem="f89-fF-suD" firstAttribute="baseline" secondItem="9Kk-rQ-u6u" secondAttribute="baseline" id="hRN-15-SD6"/>
-                            <constraint firstItem="f89-fF-suD" firstAttribute="top" secondItem="JJO-TL-5Gw" secondAttribute="top" constant="10" id="iYE-cu-X84"/>
-                            <constraint firstItem="V3B-5t-GkI" firstAttribute="leading" secondItem="gI2-Hy-nOR" secondAttribute="leading" id="jJG-5x-Fen"/>
-                            <constraint firstItem="f89-fF-suD" firstAttribute="top" secondItem="9Kk-rQ-u6u" secondAttribute="top" id="lnw-ha-bqp"/>
-                            <constraint firstItem="f89-fF-suD" firstAttribute="leading" secondItem="JJO-TL-5Gw" secondAttribute="leading" constant="20" symbolic="YES" id="mVb-IB-jfT"/>
-                            <constraint firstItem="G41-3w-8Uv" firstAttribute="leading" secondItem="JJO-TL-5Gw" secondAttribute="leading" constant="37" id="o0d-Gv-1P8"/>
-                            <constraint firstItem="gI2-Hy-nOR" firstAttribute="trailing" secondItem="V3B-5t-GkI" secondAttribute="trailing" id="pgE-2A-cMT"/>
-                            <constraint firstItem="G41-3w-8Uv" firstAttribute="centerX" secondItem="CFa-CD-M6a" secondAttribute="centerX" id="sQq-Ek-Xa5"/>
-                            <constraint firstAttribute="bottom" secondItem="CFa-CD-M6a" secondAttribute="bottom" constant="20" symbolic="YES" id="vOs-Sg-scx"/>
-                            <constraint firstItem="CFa-CD-M6a" firstAttribute="top" secondItem="JJO-TL-5Gw" secondAttribute="top" constant="660" id="waD-9p-P4c"/>
-                            <constraint firstItem="gI2-Hy-nOR" firstAttribute="top" secondItem="f89-fF-suD" secondAttribute="bottom" constant="11" id="zR9-G7-TVa"/>
-                        </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
@@ -151,27 +113,65 @@
             </objects>
             <point key="canvasLocation" x="-417" y="577"/>
         </scene>
-        <!--Years View Controller - Años-->
+        <!--Year Selector View Controller-->
         <scene sceneID="9nd-87-Se5">
             <objects>
-                <viewController id="eNP-D0-SiD" customClass="IAEYearsViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Yb5-vj-e9n"/>
-                        <viewControllerLayoutGuide type="bottom" id="6C7-Hs-H6s"/>
-                    </layoutGuides>
+                <viewController id="eNP-D0-SiD" customClass="IAEYearSelectorViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7hB-0s-dTf">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="540" height="620"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="OvN-DD-Tpe">
+                                <rect key="frame" x="0.0" y="0.0" width="540" height="620"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="t5K-a1-FdI">
+                                    <size key="itemSize" width="540" height="139"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="yyk-bX-CWq">
+                                        <rect key="frame" x="0.0" y="0.0" width="540" height="139"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="540" height="139"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" title="Años" id="uVD-OB-GT6">
-                        <barButtonItem key="rightBarButtonItem" title="Cerrar" style="plain" id="yHQ-l3-ruQ">
+                    <navigationItem key="navigationItem" id="GqG-U8-5lL">
+                        <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" title="Cerrar" style="plain" id="lVe-hb-nnA">
                             <connections>
-                                <action selector="closeButtonPressed:" destination="eNP-D0-SiD" id="0bZ-ff-wNy"/>
+                                <action selector="closeButtonPressed:" destination="eNP-D0-SiD" id="6E9-bK-eYB"/>
                             </connections>
                         </barButtonItem>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="TdM-PK-aQV">
+                            <rect key="frame" x="111" y="8" width="319" height="29"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="Actual"/>
+                                <segment title="Con Conceptos"/>
+                                <segment title=""/>
+                            </segments>
+                            <connections>
+                                <action selector="yearSegmentedControlPressed:" destination="eNP-D0-SiD" eventType="valueChanged" id="eG1-4t-krd"/>
+                            </connections>
+                        </segmentedControl>
                     </navigationItem>
+                    <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="yearsCollectionView" destination="OvN-DD-Tpe" id="WR3-Uo-Whe"/>
+                        <outlet property="yearsSegmentedControl" destination="TdM-PK-aQV" id="N7c-pv-49x"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xou-rs-9xG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -197,10 +197,6 @@
         <scene sceneID="nb7-En-Wra">
             <objects>
                 <viewController id="fz1-v9-u6A" customClass="IAECategorySelectorViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="DS2-yt-Koa"/>
-                        <viewControllerLayoutGuide type="bottom" id="r2p-oe-pCT"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="FfR-RN-luz">
                         <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -224,15 +220,11 @@
         <scene sceneID="CCS-Io-eEh">
             <objects>
                 <viewController storyboardIdentifier="ReportModeViewController" id="d8y-Q1-jCC" customClass="IAEReportModeViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="JSt-Uo-Yfa"/>
-                        <viewControllerLayoutGuide type="bottom" id="OM1-Fk-Rn2"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="F8Y-6r-vNf">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="980"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="REPORT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9JJ-cL-oyN">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="REPORT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9JJ-cL-oyN">
                                 <rect key="frame" x="20" y="20" width="728" height="984"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="150"/>

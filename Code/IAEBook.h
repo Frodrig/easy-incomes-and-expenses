@@ -5,6 +5,8 @@
 //  Created by Fernando Rodríguez Martínez on 24/10/12.
 //  Copyright (c) 2012 Fernando Rodríguez Martínez. All rights reserved.
 //
+// Nota: IAEBook works always with the loaded years. If you have only one year loaded all operations of, for example, type "find" will work with that
+// year only.
 
 #import <Foundation/Foundation.h>
 
@@ -35,5 +37,6 @@
 
 
 - (NSArray *)findAllConceptsWithCategory:(IAECategory *)category;
+- (NSArray *)findAllYearWithConcepts;
 
 @end

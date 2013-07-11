@@ -669,6 +669,8 @@
     IAECategorySelectorViewController *categorySelector = (IAECategorySelectorViewController *)categoryEditorViewController.presentingViewController;
     [categoryEditorViewController dismissViewControllerAnimated:YES completion:nil];
     [categorySelector reloadData];
+    
+    [self.conceptsCollectionView reloadData];
 }
 
 - (void)returnToUpdatedEditModeViewControllerFromCategoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController

@@ -10,12 +10,19 @@
 #import "IAEAdjustConceptAmountViewControllerDelegate.h"
 #import "IAECategorySelectorViewControllerDelegate.h"
 #import "IAECategoryEditorViewControllerDelegate.h"
+#import "IAEYearSelectorViewControllerDelegate.h"
+#import "IAEEditModeMonthBalanceViewDataSource.h"
 
 @interface IAEEditModeViewController : UIViewController<UIScrollViewDelegate,
                                                         UICollectionViewDataSource,
                                                         UICollectionViewDelegate,
                                                         IAEAdjustConceptAmountViewControllerDelegate,
                                                         IAECategorySelectorViewControllerDelegate,
-                                                        IAECategoryEditorViewControllerDelegate>
+                                                        IAECategoryEditorViewControllerDelegate,
+                                                        IAEYearSelectorViewControllerDelegate,
+                                                        IAEEditModeMonthBalanceViewDataSource>
+
+- (IBAction)categoriesButtonPressed:(id)sender;
+- (IBAction)yearsButtonPressed:(id)sender;
 
 @end

@@ -7,12 +7,11 @@
 //
 
 #import "IAEEditModeMonthBalanceView.h"
+#import "IAEEditModeMonthBalanceViewDataSource.h"
 #import "UIView+LoadFromXib.h"
-#import "IAEBook.h"
-#import "IAEYear.h"
-#import "IAEMonth.h"
 #import "IAECurrencyManager.h"
 #import "IAEColorHelper.h"
+#import "IAEEconomicValueUpdater.h"
 #import "IAEEconomicValueTypeHelper.h"
 
 #define VIEWTAG_MONTHNAMELABEL     10
@@ -23,10 +22,13 @@
 @property(nonatomic) NSUInteger monthIndex;
 @property(nonatomic, weak) UIView *editModeBalanceItem;
 @property(nonatomic, weak) UILabel *monthNameLabel;
+@property(nonatomic, weak) UILabel *monthBalanceLabel;
 
 @end
 
 @implementation IAEEditModeMonthBalanceView
+
+static CGFloat timeBalanceUpdateAnimation = 1.55;
 
 - (UILabel *)monthBalanceLabel
 {
@@ -71,7 +73,6 @@
 - (void)prepareLabelsOfBalanceItem
 {
     [self vinculeLabelsOfBalanceItemAsProperties];
-    [self configureMonthLabelsText];
 }
 
 - (void)vinculeLabelsOfBalanceItemAsProperties
@@ -80,59 +81,56 @@
     _monthBalanceLabel = (UILabel *)[_editModeBalanceItem viewWithTag:VIEWTAG_MONTHBALANCE_LABEL];
 }
 
-- (void)configureMonthLabelsText
+- (void)reloadDataWithAnimation:(BOOL)animation
 {
-    [self configureMonthNameLabelText];
-    [self configureMonthBalanceLabelText];
+    [self configureMonthNameLabelText:animation];
+    [self configureMonthBalanceLabelText:animation];
 }
 
-- (void)configureMonthNameLabelText
+- (void)configureMonthNameLabelText:(BOOL)animation
 {
     NSString *monthName = [self monthName];
     NSDictionary *attributes = [self createAttributeDictionaryForLabelsWithSize:73 color:[UIColor blackColor] andKerning:15];
     
-    _monthNameLabel.attributedText = [[NSAttributedString alloc] initWithString:monthName attributes:attributes];
+    self.monthNameLabel.attributedText = [[NSAttributedString alloc] initWithString:monthName attributes:attributes];
 }
 
-- (void)configureMonthBalanceLabelText
+- (void)configureMonthBalanceLabelText:(BOOL)animation
 {
     NSDecimalNumber *monthBalance = [self monthBalance];
-    NSString *monthBalanceString = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:monthBalance];
+    NSString *monthBalanceString = animation ? self.monthBalanceLabel.text : [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:monthBalance];
     UIColor *labelColor = [IAEColorHelper colorForEconomicValueType:[IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:monthBalance]];
     NSDictionary *attributes = [self createAttributeDictionaryForLabelsWithSize:59 color:labelColor andKerning:0];
-    
-    _monthBalanceLabel.attributedText = [[NSAttributedString alloc] initWithString:monthBalanceString attributes:attributes];
+   
+    self.monthBalanceLabel.attributedText = [[NSAttributedString alloc] initWithString:monthBalanceString attributes:attributes];
+
+    if (animation) {
+        [[IAEEconomicValueUpdater defaultEconomicValueUpdater] processEconomicLabel:self.monthBalanceLabel
+                                                                            toValue:monthBalance
+                                                                       withDuration:timeBalanceUpdateAnimation];
+    }
 }
 
 - (NSString *)monthName
 {
-    IAEMonth *month = [self month];
-    return [month description];
+    NSString *monthName = [self.dataSource editModeMonthBalanceView:self monthNameForMonthWithIndex:self.monthIndex];
+ 
+    return monthName;
 }
 
 - (NSString *)monthBalanceString
 {
-    IAEMonth *month = [self month];
-    NSString *balance = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:[month balance]];
-    
-    return balance;
+    NSDecimalNumber *monthBalance = [self monthBalance];
+    NSString *monthBalanceString = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:monthBalance];
+
+    return monthBalanceString;
 }
 
 - (NSDecimalNumber *)monthBalance
 {
-    IAEMonth *month = [self month];
-    return [month balance];
-}
+    NSDecimalNumber *monthBalance = [self.dataSource editModeMonthBalanceView:self monthBalanceForMonthWithIndex:self.monthIndex];
 
-- (IAEMonth *)month
-{
-    IAEYear *year = [self year];
-    return [year.ordererMonths objectAtIndex:_monthIndex];
-}
-
-- (IAEYear *)year
-{
-    return [[IAEBook sharedBook] findActualYear];
+    return monthBalance;
 }
 
 - (NSDictionary *)createAttributeDictionaryForLabelsWithSize:(CGFloat)size color:(UIColor *)color andKerning:(CGFloat)kerning

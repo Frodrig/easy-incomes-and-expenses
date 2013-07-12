@@ -344,6 +344,8 @@
 		5B903BBA1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEditModeMonthBalanceView.h; sourceTree = "<group>"; };
 		5B903BBB1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEditModeMonthBalanceView.m; sourceTree = "<group>"; };
 		5B903BBD1782DBDC00DBEFB2 /* IAEEditModeMonthBalanceItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IAEEditModeMonthBalanceItem.xib; sourceTree = "<group>"; };
+		5B94035C178FEA5C00F9C1D0 /* IAEYearSelectorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEYearSelectorViewControllerDelegate.h; sourceTree = "<group>"; };
+		5B94035E178FF51600F9C1D0 /* IAEEditModeMonthBalanceViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEditModeMonthBalanceViewDataSource.h; sourceTree = "<group>"; };
 		5BA0A287167E33B600CBB79B /* FooterSection0ConceptsTableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FooterSection0ConceptsTableView.xib; sourceTree = "<group>"; };
 		5BA9770F166F42F5007B59C4 /* Section1ConceptsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Section1ConceptsTableViewCell.xib; sourceTree = "<group>"; };
 		5BA97712166F5A09007B59C4 /* ExtendedConceptsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExtendedConceptsTableViewCell.xib; sourceTree = "<group>"; };
@@ -504,14 +506,15 @@
 			name = "TableView XIBs";
 			sourceTree = "<group>";
 		};
-		5B1F0D3117841C6900D0B4F1 /* Balance View */ = {
+		5B1F0D3117841C6900D0B4F1 /* Month Balance View */ = {
 			isa = PBXGroup;
 			children = (
 				5B903BBA1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.h */,
 				5B903BBB1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.m */,
 				5B903BBD1782DBDC00DBEFB2 /* IAEEditModeMonthBalanceItem.xib */,
+				5B94035E178FF51600F9C1D0 /* IAEEditModeMonthBalanceViewDataSource.h */,
 			);
-			name = "Balance View";
+			name = "Month Balance View";
 			sourceTree = "<group>";
 		};
 		5B1F0D3217841C7400D0B4F1 /* Concept Collection View Cell */ = {
@@ -576,6 +579,7 @@
 			isa = PBXGroup;
 			children = (
 				5B32D65E177C440E0070AC72 /* Options */,
+				5B94035D178FEE9700F9C1D0 /* Category Selector */,
 				5B32D65A177C417A0070AC72 /* Year Selector */,
 				5B32D66C177C8C4F0070AC72 /* Modes */,
 			);
@@ -598,6 +602,7 @@
 			children = (
 				5B32D65B177C41980070AC72 /* IAEYearSelectorViewController.h */,
 				5B32D65C177C41980070AC72 /* IAEYearSelectorViewController.m */,
+				5B94035C178FEA5C00F9C1D0 /* IAEYearSelectorViewControllerDelegate.h */,
 				5B62D85E178EAC66009879A6 /* Year Selector Collection View */,
 			);
 			name = "Year Selector";
@@ -653,8 +658,6 @@
 		5B36AFEC1785871E00132475 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				5B36AFF81785D71F00132475 /* Category Selector */,
-				5B55C402178AA79D0066F586 /* Category Editor */,
 				5B36AFED1785872900132475 /* Adjust Concept Amout */,
 			);
 			name = "View Controllers";
@@ -1087,9 +1090,18 @@
 			isa = PBXGroup;
 			children = (
 				5B1F0D3217841C7400D0B4F1 /* Concept Collection View Cell */,
-				5B1F0D3117841C6900D0B4F1 /* Balance View */,
+				5B1F0D3117841C6900D0B4F1 /* Month Balance View */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		5B94035D178FEE9700F9C1D0 /* Category Selector */ = {
+			isa = PBXGroup;
+			children = (
+				5B36AFF81785D71F00132475 /* Category Selector */,
+				5B55C402178AA79D0066F586 /* Category Editor */,
+			);
+			name = "Category Selector";
 			sourceTree = "<group>";
 		};
 		5BB040F216BFBC54009C1143 /* Category Cell */ = {

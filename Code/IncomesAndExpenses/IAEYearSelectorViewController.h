@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol IAEYearSelectorViewControllerDelegate;
+
 @interface IAEYearSelectorViewController : UIViewController<UICollectionViewDataSource>
+
+@property(nonatomic, weak) id<IAEYearSelectorViewControllerDelegate> delegate;
 
 - (IBAction)closeButtonPressed:(id)sender;
 - (IBAction)yearSegmentedControlPressed:(id)sender;

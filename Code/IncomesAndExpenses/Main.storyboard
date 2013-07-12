@@ -107,6 +107,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nSe-iv-lCf" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <barButtonItem title="Años" id="Dot-VC-q0a">
                     <connections>
+                        <action selector="yearsButtonPressed:" destination="7Ea-79-0mi" id="wH5-lY-nyw"/>
                         <segue destination="Afd-Ns-84s" kind="modal" id="Yxv-RQ-p8V"/>
                     </connections>
                 </barButtonItem>
@@ -118,11 +119,11 @@
             <objects>
                 <viewController id="eNP-D0-SiD" customClass="IAEYearSelectorViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7hB-0s-dTf">
-                        <rect key="frame" x="0.0" y="0.0" width="540" height="620"/>
+                        <rect key="frame" x="0.0" y="64" width="540" height="556"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="OvN-DD-Tpe">
-                                <rect key="frame" x="0.0" y="0.0" width="540" height="570"/>
+                                <rect key="frame" x="0.0" y="0.0" width="540" height="506"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="contentInset" minX="0.0" minY="10" maxX="0.0" maxY="5"/>
@@ -145,7 +146,7 @@
                                 </cells>
                             </collectionView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="El año abierto actualmente es el 2013" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bAH-bQ-0Ug">
-                                <rect key="frame" x="20" y="578" width="500" height="22"/>
+                                <rect key="frame" x="20" y="514" width="500" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>

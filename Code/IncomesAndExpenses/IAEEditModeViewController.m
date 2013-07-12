@@ -22,6 +22,8 @@
 #import "IAEAdjustConceptAmountViewController.h"
 #import "IAECategorySelectorViewController.h"
 #import "IAECategoryEditorViewController.h"
+#import "IAEYearSelectorViewController.h"
+#import "IAEYearSelectorViewControllerDelegate.h"
 #import "NSNumber+DefaultValues.h"
 #import "IAECategoryStore.h"
 #import "UIView+LoadFromXib.h"
@@ -152,6 +154,20 @@
     [self presentViewController:categorySelectorViewController animated:YES completion:nil];
 }
 
+- (IBAction)yearsButtonPressed:(id)sender
+{
+    [self openModalForPresentYearSelectorViewController];
+}
+
+- (void)openModalForPresentYearSelectorViewController
+{
+    IAEYearSelectorViewController *yearSelectorViewController = [[IAEYearSelectorViewController alloc] initWithNibName:nil bundle:nil];
+    yearSelectorViewController.delegate = self;
+    yearSelectorViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+    
+    [self presentViewController:yearSelectorViewController animated:YES completion:nil];
+}
+
 #pragma mark - Obtainings
 
 - (NSUInteger)findTodayMonthIndex
@@ -218,15 +234,10 @@
 
 - (void)updateMonthBalanceWithAnimation:(BOOL)animation
 {
-    IAEMonth *month = [self findActualMonth];
-    NSDecimalNumber *monthBalance = [month balance];
     IAEEditModeMonthBalanceView *monthBalanceView = [self findActualMonthBalanceView];
     
-    [[IAEEconomicValueUpdater defaultEconomicValueUpdater] processEconomicLabel:monthBalanceView.monthBalanceLabel
-                                                                        toValue:monthBalance
-                                                                   withDuration:animation ? 1.55 : 0 ];
+    [monthBalanceView reloadDataWithAnimation:YES];
 }
-
 
 - (void)processEconomicLabel:(UILabel *)label toValue:(NSDecimalNumber *)destinationValue withDuration:(CGFloat)duration { }
 
@@ -298,6 +309,8 @@
                                   self.monthsScrollView.bounds.size.width,
                                   self.monthsScrollView.bounds.size.height);
         IAEEditModeMonthBalanceView *monthBalanceView = [[IAEEditModeMonthBalanceView alloc] initWithFrame:frame andMonthIndex:indexIt];
+        monthBalanceView.dataSource = self;
+        [monthBalanceView reloadDataWithAnimation:NO];
         
         [self.monthsScrollView addSubview:monthBalanceView];
     }
@@ -344,6 +357,36 @@
 {
     [self.conceptsCollectionView reloadData];
     [self.conceptsCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+}
+
+#pragma mark - IAEEditModeMonthBalanceViewDataSource
+
+- (NSString *)editModeMonthBalanceView:(IAEEditModeMonthBalanceView *)editModeMonthBalanceView
+            monthNameForMonthWithIndex:(NSUInteger)monthIndex
+{
+    IAEMonth *month = [self findForActualYearMonthAtIndex:monthIndex];
+    NSString *monthName = [month description];
+    
+    return monthName;
+}
+
+- (NSDecimalNumber *)editModeMonthBalanceView:(IAEEditModeMonthBalanceView *)editModeMonthBalanceView
+                monthBalanceForMonthWithIndex:(NSUInteger)monthIndex
+{
+    IAEMonth *month = [self findForActualYearMonthAtIndex:monthIndex];
+    NSDecimalNumber *monthBalance = [month balance];
+    
+    return monthBalance;
+}
+
+- (IAEMonth *)findForActualYearMonthAtIndex:(NSUInteger)monthIndex
+{
+    NSAssert(monthIndex >= 0, @"");
+    NSAssert(monthIndex < 12, @"");
+    IAEYear *year = [self findActualYear];
+    IAEMonth *month = [year.ordererMonths objectAtIndex:monthIndex];
+
+    return month;
 }
 
 #pragma mark - UICollectionView DataSource
@@ -497,7 +540,7 @@
                 permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
 }
 
-#pragma mark - IAEAdjustConceptAmountViewController
+#pragma mark - IAEAdjustConceptAmountViewControllerDelegate
 
 - (void)adjustConceptsAmountViewController:(IAEAdjustConceptAmountViewController *)adjustConceptsAmountViewController
           didPressedAdjustButtonWithAmount:(NSNumber *)amount
@@ -531,7 +574,7 @@
     return canUpdate;
 }
 
-#pragma IAECategorySelectorViewControllerDelegate
+#pragma mark - IAECategorySelectorViewControllerDelegate
 
 - (void)doneButtonWasPressedInCategorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
 {
@@ -688,5 +731,29 @@
     
     [self returnFromCategoryEditorViewController:categoryEditorViewController];
 }
+
+#pragma mark - IAEYearSelectorViewControllerDelegate
+
+- (void)yearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController didLoadSelectedYearDate:(NSUInteger)yearDate
+{
+    
+}
+
+- (void)yearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController didCreateAndLoadSelectedYearDate:(NSUInteger)yearDate
+{
+    
+}
+
+
+- (void)closeButtonWasPressedInYearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController
+{
+    // ...
+}
+
+- (void)actualYearSelectedWasSelectedInYearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController
+{
+    // ...
+}
+
 
 @end

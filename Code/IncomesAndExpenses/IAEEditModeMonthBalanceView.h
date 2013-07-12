@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol IAEEditModeMonthBalanceViewDataSource;
+
 @interface IAEEditModeMonthBalanceView : UIView
 
-@property(nonatomic, weak) UILabel *monthBalanceLabel;
+@property(nonatomic, weak)id<IAEEditModeMonthBalanceViewDataSource> dataSource;
 
 - (id)initWithFrame:(CGRect)frame andMonthIndex:(NSUInteger)monthIndex;
+
+- (void)reloadDataWithAnimation:(BOOL)animation;
 
 @end

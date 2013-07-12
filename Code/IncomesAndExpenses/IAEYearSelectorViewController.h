@@ -10,7 +10,8 @@
 
 @protocol IAEYearSelectorViewControllerDelegate;
 
-@interface IAEYearSelectorViewController : UIViewController<UICollectionViewDataSource>
+@interface IAEYearSelectorViewController : UIViewController<UICollectionViewDataSource,
+                                                            UICollectionViewDelegate>
 
 @property(nonatomic, weak) id<IAEYearSelectorViewControllerDelegate> delegate;
 

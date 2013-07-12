@@ -751,14 +751,44 @@
 
 - (void)yearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController didLoadSelectedYearDate:(NSUInteger)yearDate
 {
-    
+    NSAssert(yearDate != [self findActualYear].yearDate, @"Aqui no se deberia de llegar con el mismo año que el que hay ahora");
+    [self reloadAll];
+    [self goToActualMonth];
+}
+
+- (void)reloadAll
+{
+    [self reloadAnnualBalance];
+    [self reloadMonthsBalance];
+    [self reloadMonthConcepts];
+}
+
+- (void)reloadAnnualBalance
+{
+    [self vinculeAnnualBalanceContent];
+}
+
+- (void)reloadMonthsBalance
+{
+    for (UIView *view in self.monthsScrollView.subviews) {
+        if ([view isKindOfClass:[IAEEditModeMonthBalanceView class]]) {
+            IAEEditModeMonthBalanceView *monthBalance = (IAEEditModeMonthBalanceView *)(view);
+            [monthBalance reloadDataWithAnimation:YES];
+        }
+    }
+}
+
+- (void)reloadMonthConcepts
+{
+    [self.conceptsCollectionView reloadData];
 }
 
 - (void)yearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController didCreateAndLoadSelectedYearDate:(NSUInteger)yearDate
 {
-    
+    NSAssert(yearDate != [self findActualYear].yearDate, @"Aqui no se deberia de llegar con el mismo año que el que hay ahora");
+    [self reloadAll];
+    [self goToActualMonth];
 }
-
 
 - (void)closeButtonWasPressedInYearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController
 {

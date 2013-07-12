@@ -23,6 +23,7 @@
 
 - (IAEYear *)createYear:(NSNumber *)yearDate;
 - (void)deleteYear:(NSNumber *)yearDate;
+- (void)deleteYearsWithZeroConceptsPreservingActualYear;
 
 - (IAEYear *)findYearWithDate:(NSNumber *)yearDate;
 - (IAEYear *)findActualYear;

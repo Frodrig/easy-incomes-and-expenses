@@ -200,18 +200,60 @@
 - (void)deleteYear:(NSNumber *)yearDate
 {
     IAEYear *year = [self findYearWithDate:yearDate];
-    if (year)
-    {
-        //[self.context deleteObject:year];
+    [self deleteYearObject:year];
+}
+
+- (void)deleteYearObject:(IAEYear *)year
+{
+    if (year) {
+        NSUInteger yearDate = year.yearDate;
+        
         [self.years removeObjectIdenticalTo:year];
         [self.context deleteObject:year];
         
-        NSDictionary *extraInfo = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithUnsignedInteger:yearDate.unsignedIntValue], nil] forKeys:[NSArray arrayWithObjects:@"YearDate", nil]];
-        
-        NSNotification *notification = [NSNotification notificationWithName:@"YearRemoved" object:self userInfo:extraInfo];
-        
-        [[NSNotificationCenter defaultCenter] postNotification:notification];
+        [self postYearRemovedNotificationWithYearDate:yearDate];
+    }
+}
 
+- (void)postYearRemovedNotificationWithYearDate:(NSUInteger)yearDate
+{
+    NSArray *objectsForExtraInfoDictionary = [NSArray arrayWithObjects:[NSNumber numberWithUnsignedInteger:yearDate], nil];
+    NSArray *keysForExtraInfoDictionary = [NSArray arrayWithObjects:@"YearDate", nil];
+    NSDictionary *extraInfo = [NSDictionary dictionaryWithObjects:objectsForExtraInfoDictionary forKeys:keysForExtraInfoDictionary];
+    NSNotification *notification = [NSNotification notificationWithName:@"YearRemoved" object:self userInfo:extraInfo];
+    
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
+}
+
+- (void)deleteYearsWithZeroConceptsPreservingActualYear
+{
+    // Notas:
+    // Preserva siempre el año actual aunque no tenga conceptos
+    
+    IAEYear *actualYear = [self findActualYear];
+    if (actualYear) {
+        NSMutableArray *actualLoadedYears = [NSMutableArray arrayWithArray:self.years];
+        
+        [self loadAll];
+
+        NSMutableSet *yearsToDelete = [[NSMutableSet alloc] initWithCapacity:self.years.count];
+        for (IAEYear *year in self.years) {
+            if ([year findNumberOfConcepts] == 0 && actualYear != year) {
+                [yearsToDelete addObject:year];
+            }
+        }
+        
+        while (yearsToDelete.count > 0) {
+            IAEYear *yearObjectToDelete = [yearsToDelete anyObject];
+            [yearsToDelete removeObject:yearObjectToDelete];
+            
+            [actualLoadedYears removeObjectIdenticalTo:yearObjectToDelete];
+            [self deleteYearObject:yearObjectToDelete];
+        }
+        
+        if (actualLoadedYears.count > 0) {
+            _years = [NSMutableArray arrayWithArray:actualLoadedYears];
+        }
     }
 }
 

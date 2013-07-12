@@ -46,12 +46,12 @@
 - (void)createYearTest
 {
     [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2013]];
-   /* [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2012]];
-    [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2011]];
+    //[[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2012]];
+    //[[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2011]];
     [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2010]];
-    [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2009]];
-    [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2008]];
-    [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2007]];*/
+    //[[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2009]];
+    //[[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2008]];
+    [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2007]];
     [[IAEBook sharedBook] loadAll];
     
     for (IAEYear *yearIt in [IAEBook sharedBook].years) {

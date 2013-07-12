@@ -736,10 +736,10 @@
 			isa = PBXGroup;
 			children = (
 				5B62D861178EC1FA009879A6 /* Utils */,
-				5B767E231636E797005315F8 /* Model */,
 				5B5C967817816718008CD851 /* Views */,
 				5B6E9FA3177D95770072EE34 /* Defs */,
 				5B6E9FA4177D9BAB0072EE34 /* Categories */,
+				5B767E231636E797005315F8 /* Model */,
 				5B32D651177C385A0070AC72 /* View - Controllers */,
 				5B62D860178EC1EB009879A6 /* Story Boards */,
 			);

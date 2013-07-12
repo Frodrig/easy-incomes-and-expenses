@@ -80,7 +80,7 @@ static NSUInteger containerViewRoundRectSize = 10;
 
     [self showControlsAssociatedWithConcepts:NO];
     self.yearLabel.attributedText = [[NSAttributedString alloc] initWithString:[self yearStringFromYearDate:yearDate]
-                                                                    attributes:[self createAttributeDictionaryForYearLabelWithColor:[UIColor colorWithWhite:0.85 alpha:1.0]]];
+                                                                    attributes:[self createAttributeDictionaryForYearLabelWithColor:[UIColor blackColor]]];
 }
 
 - (void)showControlsAssociatedWithConcepts:(BOOL)show

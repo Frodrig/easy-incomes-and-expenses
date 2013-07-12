@@ -316,6 +316,20 @@
     }
 }
 
+#pragma mark - UIPopoverControllerViewDelegate
+
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+    [self updateBalancesIfDismissFromAdjustConceptAmountPopover:popoverController];
+}
+
+- (void)updateBalancesIfDismissFromAdjustConceptAmountPopover:(UIPopoverController *)popover
+{
+    if ([popover.contentViewController isKindOfClass:[IAEAdjustConceptAmountViewController class]]) {
+        [self updateBalancesWithAnimation:YES];
+    }
+}
+
 #pragma mark - UIScrollView Delegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -534,6 +548,7 @@
                                             traslateViewFrameToGlobalCoordination.size.height - 10.0);
     
     self.popover = [[UIPopoverController alloc] initWithContentViewController:viewController];
+    self.popover.delegate = self;
     self.popover.popoverContentSize = viewController.view.bounds.size;
     [self.popover presentPopoverFromRect:presentPopoverFrame
                                   inView:view.superview
@@ -557,7 +572,7 @@
     if ([self updateWithNewAbsoluteValueOfConcept:concept byAdding:amount]) {
         [self configureEditModeConceptCell:cell withConceptAtIndexPath:cellIndexPath];
         [[IAEBook sharedBook] saveAll];
-    }    
+    }
 }
 
 - (BOOL)updateWithNewAbsoluteValueOfConcept:(IAEConcept *)concept byAdding:(NSNumber *)amount

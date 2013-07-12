@@ -13,7 +13,8 @@
 #import "IAEYearSelectorViewControllerDelegate.h"
 #import "IAEEditModeMonthBalanceViewDataSource.h"
 
-@interface IAEEditModeViewController : UIViewController<UIScrollViewDelegate,
+@interface IAEEditModeViewController : UIViewController<UIPopoverControllerDelegate,
+                                                        UIScrollViewDelegate,
                                                         UICollectionViewDataSource,
                                                         UICollectionViewDelegate,
                                                         IAEAdjustConceptAmountViewControllerDelegate,

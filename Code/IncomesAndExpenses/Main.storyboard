@@ -108,7 +108,6 @@
                 <barButtonItem title="Años" id="Dot-VC-q0a">
                     <connections>
                         <action selector="yearsButtonPressed:" destination="7Ea-79-0mi" id="wH5-lY-nyw"/>
-                        <segue destination="Afd-Ns-84s" kind="modal" id="Yxv-RQ-p8V"/>
                     </connections>
                 </barButtonItem>
             </objects>
@@ -291,7 +290,4 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="Yxv-RQ-p8V"/>
-    </inferredMetricsTieBreakers>
 </document>

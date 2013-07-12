@@ -370,7 +370,9 @@
 - (void)updateContentOfConceptsCollectionView
 {
     [self.conceptsCollectionView reloadData];
-    [self.conceptsCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+    if ([self.conceptsCollectionView numberOfItemsInSection:0] > 0) {
+        [self.conceptsCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+    }
 }
 
 #pragma mark - IAEEditModeMonthBalanceViewDataSource
@@ -751,7 +753,6 @@
 
 - (void)yearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController didLoadSelectedYearDate:(NSUInteger)yearDate
 {
-    NSAssert(yearDate != [self findActualYear].yearDate, @"Aqui no se deberia de llegar con el mismo año que el que hay ahora");
     [self reloadAll];
     [self goToActualMonth];
 }
@@ -785,7 +786,6 @@
 
 - (void)yearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController didCreateAndLoadSelectedYearDate:(NSUInteger)yearDate
 {
-    NSAssert(yearDate != [self findActualYear].yearDate, @"Aqui no se deberia de llegar con el mismo año que el que hay ahora");
     [self reloadAll];
     [self goToActualMonth];
 }

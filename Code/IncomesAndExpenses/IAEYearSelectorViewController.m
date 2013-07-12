@@ -195,6 +195,13 @@ static NSUInteger yearsSegmentedControlAllYearsIndex = 2;
     return [IAEDateHelper findActualYear] - indexPath.row;
 }
 
+- (NSUInteger)yearDateBasedInSegmentedControlStateFromIndexPath:(NSIndexPath *)indexPath
+{
+    IAEYear *year = [self yearBasedInSegmentedControlStateUsingIndexPath:indexPath];
+    
+    return year != nil ? year.yearDate : [self yearDateFromIndexPath:indexPath];
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     NSUInteger numItems = [self findNumberOfItemsBasedInYearSegmentedControlValue];
@@ -219,7 +226,7 @@ static NSUInteger yearsSegmentedControlAllYearsIndex = 2;
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSUInteger yearDateSelected = [self yearDateFromIndexPath:indexPath];
+    NSUInteger yearDateSelected = [self yearDateBasedInSegmentedControlStateFromIndexPath:indexPath];
     [self chooseActionAfterSelectCellWithYearDate:yearDateSelected];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -237,6 +244,7 @@ static NSUInteger yearsSegmentedControlAllYearsIndex = 2;
 
 - (void)actionSelectedActualYear
 {
+    [[IAEBook sharedBook] loadYear:self.yearLoadedBeforeStart];
     [self.delegate actualYearSelectedWasSelectedInYearSelectorViewController:self];
 }
 

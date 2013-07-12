@@ -116,6 +116,7 @@
 		5B8A31D116C90911008731AD /* 72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B8A31D016C90911008731AD /* 72@2x.png */; };
 		5B903BBC1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B903BBB1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.m */; };
 		5B903BBE1783220A00DBEFB2 /* IAEEditModeMonthBalanceItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B903BBD1782DBDC00DBEFB2 /* IAEEditModeMonthBalanceItem.xib */; };
+		5B94036017904C1400F9C1D0 /* IAEYearSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B94035F17904C1400F9C1D0 /* IAEYearSelectorViewController.xib */; };
 		5BA0A288167E33B600CBB79B /* FooterSection0ConceptsTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA0A287167E33B600CBB79B /* FooterSection0ConceptsTableView.xib */; };
 		5BA97710166F42F5007B59C4 /* Section1ConceptsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA9770F166F42F5007B59C4 /* Section1ConceptsTableViewCell.xib */; };
 		5BA97713166F5A09007B59C4 /* ExtendedConceptsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA97712166F5A09007B59C4 /* ExtendedConceptsTableViewCell.xib */; };
@@ -346,6 +347,7 @@
 		5B903BBD1782DBDC00DBEFB2 /* IAEEditModeMonthBalanceItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IAEEditModeMonthBalanceItem.xib; sourceTree = "<group>"; };
 		5B94035C178FEA5C00F9C1D0 /* IAEYearSelectorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEYearSelectorViewControllerDelegate.h; sourceTree = "<group>"; };
 		5B94035E178FF51600F9C1D0 /* IAEEditModeMonthBalanceViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEditModeMonthBalanceViewDataSource.h; sourceTree = "<group>"; };
+		5B94035F17904C1400F9C1D0 /* IAEYearSelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEYearSelectorViewController.xib; sourceTree = "<group>"; };
 		5BA0A287167E33B600CBB79B /* FooterSection0ConceptsTableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FooterSection0ConceptsTableView.xib; sourceTree = "<group>"; };
 		5BA9770F166F42F5007B59C4 /* Section1ConceptsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Section1ConceptsTableViewCell.xib; sourceTree = "<group>"; };
 		5BA97712166F5A09007B59C4 /* ExtendedConceptsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExtendedConceptsTableViewCell.xib; sourceTree = "<group>"; };
@@ -603,6 +605,7 @@
 				5B32D65B177C41980070AC72 /* IAEYearSelectorViewController.h */,
 				5B32D65C177C41980070AC72 /* IAEYearSelectorViewController.m */,
 				5B94035C178FEA5C00F9C1D0 /* IAEYearSelectorViewControllerDelegate.h */,
+				5B94035F17904C1400F9C1D0 /* IAEYearSelectorViewController.xib */,
 				5B62D85E178EAC66009879A6 /* Year Selector Collection View */,
 			);
 			name = "Year Selector";
@@ -1379,6 +1382,7 @@
 				5BC916FA16A582840072AE5C /* HeaderCompactMode.xib in Resources */,
 				5B29BF4616AC55EE00C2D161 /* 20-circle-east.png in Resources */,
 				5B29BF4716AC55EE00C2D161 /* 20-circle-east@2x.png in Resources */,
+				5B94036017904C1400F9C1D0 /* IAEYearSelectorViewController.xib in Resources */,
 				5B29BF4816AC55EE00C2D161 /* 36-circle-west.png in Resources */,
 				5B29BF4916AC55EE00C2D161 /* 36-circle-west@2x.png in Resources */,
 				5B29BF4C16AC58C900C2D161 /* 218-trash2.png in Resources */,

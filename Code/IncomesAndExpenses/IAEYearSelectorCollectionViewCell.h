@@ -12,6 +12,8 @@
 
 @interface IAEYearSelectorCollectionViewCell : UICollectionViewCell
 
+@property(nonatomic) BOOL showOpenYearDecorator;
+
 - (void)configureWithYearDate:(NSUInteger)yearDate andBalance:(NSDecimalNumber *)balance;
 - (void)configureWithYearDate:(NSUInteger)yearDate;
 

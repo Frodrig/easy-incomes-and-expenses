@@ -145,6 +145,8 @@ static NSUInteger yearsSegmentedControlAllYearsIndex = 2;
     } else {
         [cell configureWithYearDate:[self yearDateFromIndexPath:indexPath]];
     }
+    
+    cell.showOpenYearDecorator = year.yearDate == self.yearLoadedBeforeStart;
 }
 
 - (IAEYear *)yearBasedInSegmentedControlStateUsingIndexPath:(NSIndexPath *)indexPath

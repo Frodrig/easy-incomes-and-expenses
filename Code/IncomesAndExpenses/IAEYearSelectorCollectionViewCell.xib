@@ -30,12 +30,17 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="6.000 €" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kdm-9n-jJx">
-                                <rect key="frame" x="260" y="18" width="220" height="30"/>
+                                <rect key="frame" x="260" y="18" width="212" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Italic" family="Helvetica Neue" pointSize="21"/>
                                 <color key="textColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="deviceRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" id="Cug-cX-R0d" customClass="IAECircleDecoratorView">
+                                <rect key="frame" x="472" y="0.0" width="20" height="65"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
@@ -47,6 +52,7 @@
                 <outlet property="balanceLabel" destination="kdm-9n-jJx" id="hEb-12-cM9"/>
                 <outlet property="cellContainerView" destination="GF8-Ce-LrS" id="e17-0c-g7Q"/>
                 <outlet property="economicDecoratorView" destination="AYA-LM-uxa" id="HGg-rH-5Nu"/>
+                <outlet property="openYearDecoratorView" destination="Cug-cX-R0d" id="p0A-Jc-G4q"/>
                 <outlet property="yearLabel" destination="shA-Ps-YAj" id="M1N-Ok-122"/>
             </connections>
         </collectionViewCell>

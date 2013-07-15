@@ -11,7 +11,7 @@
 #import "IAEEconomicValueTypeHelper.h"
 #import "UIView+RoundedCorners.h"
 #import "IAECurrencyManager.h"
-
+#import "IAECircleDecoratorView.h"
 
 @interface IAEYearSelectorCollectionViewCell()
 
@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet IAEValueDecoratorView *economicDecoratorView;
 @property (weak, nonatomic) IBOutlet UILabel *yearLabel;
 @property (weak, nonatomic) IBOutlet UILabel *balanceLabel;
+@property (weak, nonatomic) IBOutlet IAECircleDecoratorView *openYearDecoratorView;
 
 @end
 
@@ -32,15 +33,15 @@ static NSUInteger fontFamilySizeForBalanceLabel = 21;
 
 static NSUInteger containerViewRoundRectSize = 10;
 
-- (id)initWithFrame:(CGRect)frame
+- (void)setShowOpenYearDecorator:(BOOL)showOpenYearDecorator
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
+    if (showOpenYearDecorator != _showOpenYearDecorator) {
+        _showOpenYearDecorator = showOpenYearDecorator;
     }
-    return self;
+    
+    // Nota: Lo sacamos para tener siempre sincronizado el valor
+    _openYearDecoratorView.hidden = !_showOpenYearDecorator;
 }
-
 
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

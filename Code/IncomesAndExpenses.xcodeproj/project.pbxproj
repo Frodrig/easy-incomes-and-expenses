@@ -161,6 +161,7 @@
 		5BDC867E1680D83500C761D5 /* IAEConcept.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BDC867D1680D83500C761D5 /* IAEConcept.m */; };
 		5BE1F4C01637EA4B004E13C2 /* IAEBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE1F4BF1637EA4B004E13C2 /* IAEBook.m */; };
 		5BE1F4C81637FE0C004E13C2 /* IAECategoryStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE1F4C71637FE0C004E13C2 /* IAECategoryStore.m */; };
+		5BEA98AB1793E3A500098AE0 /* IAECircleDecoratorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA98AA1793E3A500098AE0 /* IAECircleDecoratorView.m */; };
 		5BF3654A16B5836700781513 /* 14-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BF3654816B5836700781513 /* 14-gear.png */; };
 		5BF3654B16B5836700781513 /* 14-gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BF3654916B5836700781513 /* 14-gear@2x.png */; };
 		5BF3655016B58C7E00781513 /* IAESettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF3654E16B58C7E00781513 /* IAESettingsViewController.m */; };
@@ -411,6 +412,8 @@
 		5BE1F4C71637FE0C004E13C2 /* IAECategoryStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECategoryStore.m; sourceTree = "<group>"; };
 		5BE1F4CA1637FF83004E13C2 /* CategoryDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CategoryDefs.h; sourceTree = "<group>"; };
 		5BE1F4CF16380DF7004E13C2 /* MonthDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MonthDefs.h; sourceTree = "<group>"; };
+		5BEA98A91793E3A500098AE0 /* IAECircleDecoratorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECircleDecoratorView.h; sourceTree = "<group>"; };
+		5BEA98AA1793E3A500098AE0 /* IAECircleDecoratorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECircleDecoratorView.m; sourceTree = "<group>"; };
 		5BF15EDD168617C80037A21C /* IAEYearsConfigViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEYearsConfigViewControllerDelegate.h; sourceTree = "<group>"; };
 		5BF2F8311672257B00257B61 /* IAEInputConceptsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEInputConceptsDataSource.h; sourceTree = "<group>"; };
 		5BF3654816B5836700781513 /* 14-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-gear.png"; sourceTree = "<group>"; };
@@ -739,7 +742,6 @@
 			isa = PBXGroup;
 			children = (
 				5B62D861178EC1FA009879A6 /* Utils */,
-				5B5C967817816718008CD851 /* Views */,
 				5B6E9FA3177D95770072EE34 /* Defs */,
 				5B6E9FA4177D9BAB0072EE34 /* Categories */,
 				5B767E231636E797005315F8 /* Model */,
@@ -752,9 +754,8 @@
 		5B5C967817816718008CD851 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5B5C96791781673A008CD851 /* IAEValueDecoratorView.h */,
-				5B5C967A1781673A008CD851 /* IAEValueDecoratorView.m */,
-				5B5C968317816D6C008CD851 /* ValueDecoratorView Configurator */,
+				5BEA98A81793E36E00098AE0 /* Circle Decorator View */,
+				5BEA98A71793E36600098AE0 /* Value Decorator View */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -817,6 +818,7 @@
 		5B62D861178EC1FA009879A6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5B5C967817816718008CD851 /* Views */,
 				5B62D87E178EC3C0009879A6 /* Currency Info */,
 				5B62D87A178EC24B009879A6 /* Date Helper */,
 				5B62D875178EC219009879A6 /* Economic Value Type Helper */,
@@ -1285,6 +1287,25 @@
 			name = IAEConcept;
 			sourceTree = "<group>";
 		};
+		5BEA98A71793E36600098AE0 /* Value Decorator View */ = {
+			isa = PBXGroup;
+			children = (
+				5B5C96791781673A008CD851 /* IAEValueDecoratorView.h */,
+				5B5C967A1781673A008CD851 /* IAEValueDecoratorView.m */,
+				5B5C968317816D6C008CD851 /* ValueDecoratorView Configurator */,
+			);
+			name = "Value Decorator View";
+			sourceTree = "<group>";
+		};
+		5BEA98A81793E36E00098AE0 /* Circle Decorator View */ = {
+			isa = PBXGroup;
+			children = (
+				5BEA98A91793E3A500098AE0 /* IAECircleDecoratorView.h */,
+				5BEA98AA1793E3A500098AE0 /* IAECircleDecoratorView.m */,
+			);
+			name = "Circle Decorator View";
+			sourceTree = "<group>";
+		};
 		5BF3654C16B58C4A00781513 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -1483,6 +1504,7 @@
 				5B5C968917816EE0008CD851 /* IAEValueDecoratorViewExpenseConfigurator.m in Sources */,
 				5BD06174163A8D2B00A80BE3 /* IAEYear.m in Sources */,
 				5B62D873178EC20E009879A6 /* IAECurrencyManager.m in Sources */,
+				5BEA98AB1793E3A500098AE0 /* IAECircleDecoratorView.m in Sources */,
 				5B36AFF71785BBF400132475 /* NSDecimalNumber+AbsoluteValue.m in Sources */,
 				5BD06177163A99BB00A80BE3 /* IAECategory.m in Sources */,
 				5B62D86E178EC20E009879A6 /* IAEEconomicValueTypeHelper.m in Sources */,

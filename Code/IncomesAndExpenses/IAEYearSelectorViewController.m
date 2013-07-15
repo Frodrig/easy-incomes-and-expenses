@@ -128,7 +128,8 @@ static NSUInteger yearsSegmentedControlAllYearsIndex = 2;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSAssert(collectionView == self.yearsCollectionView, @"");
-    IAEYearSelectorCollectionViewCell *cell = (IAEYearSelectorCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:collectionViewCellReuseIdentifier forIndexPath:indexPath];
+    IAEYearSelectorCollectionViewCell *cell = (IAEYearSelectorCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:collectionViewCellReuseIdentifier
+                                                                                                                             forIndexPath:indexPath];
     [self configureCell:cell WithIndexPath:indexPath];
     
     return cell;
@@ -176,7 +177,7 @@ static NSUInteger yearsSegmentedControlAllYearsIndex = 2;
 
 - (IAEYear *)findYearUsingIndexAccessOfIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray *years = [IAEBook sharedBook].years;
+    NSArray *years = [[IAEBook sharedBook] findAllYearWithConcepts];
     IAEYear *year = years.count > indexPath.row ? [years objectAtIndex:indexPath.row] : nil;
     
     return year;

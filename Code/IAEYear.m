@@ -127,13 +127,9 @@
 - (NSArray *)findAllConcepts
 {
     NSMutableArray *concepts = [[NSMutableArray alloc] initWithCapacity:self.months.count];
-    for (IAEMonth *months in self.months)
-    {
+    for (IAEMonth *months in self.months) {
         NSArray *conceptsOfMonth = [months.concepts sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]]];
         [concepts addObjectsFromArray:conceptsOfMonth];
-       
-        //[concepts addObjectsFromArray:[months findAllCategoriesInConceptsOfType:IncomeCategory]];
-        //[concepts addObjectsFromArray:[months findAllCategoriesInConceptsOfType:ExpenseCategory]];
     }
     
     return concepts;

@@ -753,14 +753,14 @@
 
 - (void)yearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController didLoadSelectedYearDate:(NSUInteger)yearDate
 {
-    [self reloadAll];
+    [self reloadAllWithAnimation:NO];
     [self goToActualMonth];
 }
 
-- (void)reloadAll
+- (void)reloadAllWithAnimation:(BOOL)animation
 {
     [self reloadAnnualBalance];
-    [self reloadMonthsBalance];
+    [self reloadMonthsBalanceWithAnimation:animation];
     [self reloadMonthConcepts];
 }
 
@@ -769,12 +769,12 @@
     [self vinculeAnnualBalanceContent];
 }
 
-- (void)reloadMonthsBalance
+- (void)reloadMonthsBalanceWithAnimation:(BOOL)animation
 {
     for (UIView *view in self.monthsScrollView.subviews) {
         if ([view isKindOfClass:[IAEEditModeMonthBalanceView class]]) {
             IAEEditModeMonthBalanceView *monthBalance = (IAEEditModeMonthBalanceView *)(view);
-            [monthBalance reloadDataWithAnimation:YES];
+            [monthBalance reloadDataWithAnimation:animation];
         }
     }
 }
@@ -786,7 +786,7 @@
 
 - (void)yearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController didCreateAndLoadSelectedYearDate:(NSUInteger)yearDate
 {
-    [self reloadAll];
+    [self reloadAllWithAnimation:NO];
     [self goToActualMonth];
 }
 

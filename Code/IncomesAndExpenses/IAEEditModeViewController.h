@@ -26,4 +26,6 @@
 - (IBAction)categoriesButtonPressed:(id)sender;
 - (IBAction)yearsButtonPressed:(id)sender;
 
+- (void)reloadAllWithAnimation:(BOOL)animation;
+
 @end

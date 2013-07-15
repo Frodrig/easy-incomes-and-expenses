@@ -25,6 +25,8 @@
 - (void)deleteYear:(NSNumber *)yearDate;
 - (void)deleteYearsWithZeroConceptsPreservingActualYear;
 
+- (void)deleteAllConceptsOfYear:(IAEYear *)year;
+
 - (IAEYear *)findYearWithDate:(NSNumber *)yearDate;
 - (IAEYear *)findActualYear;
 

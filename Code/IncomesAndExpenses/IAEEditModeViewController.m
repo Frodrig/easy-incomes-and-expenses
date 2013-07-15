@@ -42,6 +42,7 @@
 @property (nonatomic, strong) UITapGestureRecognizer *tapConceptsRecognizer;
 @property (nonatomic) BOOL initialPositioning;
 @property (nonatomic, weak) IAECategory *categoryRenaming;
+@property (nonatomic) BOOL reloadAllPendingFromYearSelectorIfReturnWithSameYearDate;
 
 @end
 
@@ -764,6 +765,12 @@
     [self reloadMonthConcepts];
 }
 
+- (void)reloadAllAndGoToActualMonthWithAnimation:(BOOL)animation
+{
+    [self reloadAllWithAnimation:animation];
+    [self goToActualMonth];
+}
+
 - (void)reloadAnnualBalance
 {
     [self vinculeAnnualBalanceContent];
@@ -786,19 +793,39 @@
 
 - (void)yearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController didCreateAndLoadSelectedYearDate:(NSUInteger)yearDate
 {
-    [self reloadAllWithAnimation:NO];
-    [self goToActualMonth];
+    [self reloadAllAndGoToActualMonthWithAnimation:NO];
 }
 
 - (void)closeButtonWasPressedInYearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController
 {
-    // ...
+    [self reloadAllAndGoToActualMonthWithAnimationIfActualYearWasCleanInYearSelector];
+}
+
+- (void)reloadAllAndGoToActualMonthWithAnimationIfActualYearWasCleanInYearSelector
+{
+    if (self.reloadAllPendingFromYearSelectorIfReturnWithSameYearDate) {
+        [self reloadAllAndGoToActualMonthWithAnimation:NO];
+        self.reloadAllPendingFromYearSelectorIfReturnWithSameYearDate = NO;
+    }
 }
 
 - (void)actualYearSelectedWasSelectedInYearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController
 {
-    // ...
+    [self reloadAllAndGoToActualMonthWithAnimationIfActualYearWasCleanInYearSelector];
 }
+
+- (void)yearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController didCleanActualYearDate:(NSUInteger)yearDate
+{
+    // Nota: Este evento informa de que se ha vaciado el año abiertopero que aun no se ha cerrado el dialogo selector, es decir, la recarga
+    // de datos sucedera si y solo si, se retorna al mismo año abierto antes de abrir la venta de seleccion de años
+    self.reloadAllPendingFromYearSelectorIfReturnWithSameYearDate = YES;
+}
+
+- (BOOL)isActualYearEqualToYearDate:(NSUInteger)yearDate
+{
+    return yearDate == [self findActualYear].yearDate;
+}
+
 
 
 @end

@@ -18,6 +18,8 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *yearsCollectionView;
 @property (nonatomic) NSUInteger yearLoadedBeforeStart;
 @property (weak, nonatomic) IBOutlet UILabel *actualYearOpenLabel;
+@property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureRecognizer;
+@property (nonatomic, weak) IAEYearSelectorCollectionViewCell *selectedCellWithActionMenu;
 @end
 
 @implementation IAEYearSelectorViewController
@@ -38,12 +40,20 @@ static NSUInteger yearsSegmentedControlActualYearIndex = 0;
 static NSUInteger yearsSegmentedControlYearsWithConceptsIndex = 1;
 static NSUInteger yearsSegmentedControlAllYearsIndex = 2;
 
+static NSUInteger alertViewCleanButtonIndex = 1;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        [self initLongPressGestureRecognizer];
     }
     return self;
+}
+
+- (void)initLongPressGestureRecognizer
+{
+    _longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureRecognizerAction:)];
 }
 
 - (void)viewDidLoad
@@ -69,6 +79,10 @@ static NSUInteger yearsSegmentedControlAllYearsIndex = 2;
 {
     [self.yearsCollectionView registerNib:[UINib nibWithNibName:nibNameForCollectionViewCell bundle:[NSBundle mainBundle]]
                forCellWithReuseIdentifier:collectionViewCellReuseIdentifier];
+
+    self.yearsCollectionView.allowsSelection = YES;
+    [self.yearsCollectionView addGestureRecognizer:self.longPressGestureRecognizer];
+
     self.yearsCollectionView.dataSource = self;
     self.yearsCollectionView.delegate = self;
 }
@@ -107,14 +121,23 @@ static NSUInteger yearsSegmentedControlAllYearsIndex = 2;
     return attributes;
 }
 
+- (void)dealloc
+{
+    [self.yearsCollectionView removeGestureRecognizer:self.longPressGestureRecognizer];
+}
+
+- (BOOL)canBecomeFirstResponder
+{
+    return YES;
+}
+
 #pragma mark - Button Events
 
 - (IBAction)closeButtonPressed:(id)sender
 {
-    if (self.yearLoadedBeforeStart != 0) {
-        [[IAEBook sharedBook] loadYear:self.yearLoadedBeforeStart];
-    }
-    
+    NSAssert(self.yearLoadedBeforeStart != 0, @"");
+    [[IAEBook sharedBook] loadYear:self.yearLoadedBeforeStart];
+    [self.delegate closeButtonWasPressedInYearSelectorViewController:self];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -153,14 +176,19 @@ static NSUInteger yearsSegmentedControlAllYearsIndex = 2;
 {
     IAEYear *year = nil;
     if ([self isSegmentedControlInPresentYearState]) {
-        year = [self findYearUsingIndexAccessOfIndexPath:indexPath];
+        year = [self findYearUsingYearDate:[IAEDateHelper findActualYear]];
     } else if ([self isSegmentedControlInWithConceptsYearsState]) {
         year = [self findYearUsingIndexAccessOfIndexPath:indexPath];
-    } else if ([self isSegmentedCOntrolInAllYearsState]) {
+    } else if ([self isSegmentedControlInAllYearsState]) {
         year = [self findYearUsingYearDateOfIndexPath:indexPath];
     }
     
     return year;
+}
+
+- (IAEYear *)yearBasedInSegmentedControlStateUsingCell:(IAEYearSelectorCollectionViewCell *)cell
+{
+    return [self yearBasedInSegmentedControlStateUsingIndexPath:[self.yearsCollectionView indexPathForCell:cell]];
 }
 
 - (BOOL)isSegmentedControlInPresentYearState
@@ -173,9 +201,16 @@ static NSUInteger yearsSegmentedControlAllYearsIndex = 2;
     return self.yearsSegmentedControl.selectedSegmentIndex == yearsSegmentedControlYearsWithConceptsIndex;
 }
 
-- (BOOL)isSegmentedCOntrolInAllYearsState
+- (BOOL)isSegmentedControlInAllYearsState
 {
     return self.yearsSegmentedControl.selectedSegmentIndex == yearsSegmentedControlAllYearsIndex;
+}
+
+- (IAEYear *)findYearUsingYearDate:(NSUInteger)yearDate
+{
+    IAEYear *year = [[IAEBook sharedBook] findYearWithDate:[NSNumber numberWithUnsignedInteger:yearDate]];
+    
+    return year;
 }
 
 - (IAEYear *)findYearUsingIndexAccessOfIndexPath:(NSIndexPath *)indexPath
@@ -199,6 +234,12 @@ static NSUInteger yearsSegmentedControlAllYearsIndex = 2;
     return [IAEDateHelper findActualYear] - indexPath.row;
 }
 
+- (NSUInteger)yearDateBasedInSegmentedControlStateFromCell:(UICollectionViewCell *)cell
+{
+    NSIndexPath *cellIndexPath = [self.yearsCollectionView indexPathForCell:cell];
+    return [self yearDateBasedInSegmentedControlStateFromIndexPath:cellIndexPath];
+}
+
 - (NSUInteger)yearDateBasedInSegmentedControlStateFromIndexPath:(NSIndexPath *)indexPath
 {
     IAEYear *year = [self yearBasedInSegmentedControlStateUsingIndexPath:indexPath];
@@ -219,7 +260,7 @@ static NSUInteger yearsSegmentedControlAllYearsIndex = 2;
         numberOfItems = [IAEBook sharedBook].years.count > 0 ? 1 : 0;
     } else if ([self isSegmentedControlInWithConceptsYearsState]) {
         numberOfItems = [[IAEBook sharedBook] findAllYearWithConcepts].count;
-    } else if ([self isSegmentedCOntrolInAllYearsState]) {
+    } else if ([self isSegmentedControlInAllYearsState]) {
         numberOfItems = [IAEDateHelper findActualYear];
     }
     
@@ -230,9 +271,7 @@ static NSUInteger yearsSegmentedControlAllYearsIndex = 2;
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSUInteger yearDateSelected = [self yearDateBasedInSegmentedControlStateFromIndexPath:indexPath];
-    [self chooseActionAfterSelectCellWithYearDate:yearDateSelected];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self launchMenuOfOptionsAtYearCellIndexPathIfProceed:indexPath];
 }
 
 - (void)chooseActionAfterSelectCellWithYearDate:(NSUInteger)yearDateSelected
@@ -265,6 +304,116 @@ static NSUInteger yearsSegmentedControlAllYearsIndex = 2;
     [[IAEBook sharedBook] loadYear:yearDate];
     
     [self.delegate yearSelectorViewController:self didCreateAndLoadSelectedYearDate:yearDate];
+}
+
+#pragma mark - UIGestureRecognizer
+
+- (void)longPressGestureRecognizerAction:(UILongPressGestureRecognizer *)longPressGestureRecognizer
+{
+    [self findCellOfYearAndLaunchMenuOfOptionsUnderLongPressGestureRecognizer:longPressGestureRecognizer];
+}
+
+- (void)findCellOfYearAndLaunchMenuOfOptionsUnderLongPressGestureRecognizer:(UILongPressGestureRecognizer *)longPressGestureRecognizer
+{
+    NSIndexPath *locationIndexPath = [self findIndexPathOfCellUnderLongPressGestureRecognizer:longPressGestureRecognizer];
+    [self launchMenuOfOptionsAtYearCellIndexPathIfProceed:locationIndexPath];
+}
+
+- (NSIndexPath *)findIndexPathOfCellUnderLongPressGestureRecognizer:(UILongPressGestureRecognizer *)longPressGestureRecognizer
+{
+    CGPoint location = [longPressGestureRecognizer locationInView:self.yearsCollectionView];
+    NSIndexPath *locationIndexPath = [self.yearsCollectionView indexPathForItemAtPoint:location];
+
+    return locationIndexPath;
+}
+
+- (void)launchMenuOfOptionsAtYearCellIndexPathIfProceed:(NSIndexPath *)cellIndexPath
+{
+    self.selectedCellWithActionMenu = nil;
+    if (cellIndexPath) {
+        [self becomeFirstResponder];
+            
+        self.selectedCellWithActionMenu = (IAEYearSelectorCollectionViewCell *)[self.yearsCollectionView cellForItemAtIndexPath:cellIndexPath];
+            
+        UIMenuController *menu = [UIMenuController sharedMenuController];
+        BOOL menuWithOpenAndCleanActions = [self yearBasedInSegmentedControlStateUsingIndexPath:cellIndexPath] != nil;
+        menu.menuItems = menuWithOpenAndCleanActions ? [self createMenuItemsContainerForOpenAndCleanActions] :
+                                                       [self createMenuItemContainerForOpenAction];
+        [menu setTargetRect:self.selectedCellWithActionMenu.frame inView:self.yearsCollectionView];
+        [menu setMenuVisible:YES animated:YES];
+    }
+}
+
+- (NSArray *)createMenuItemsContainerForOpenAndCleanActions
+{
+    return [NSArray arrayWithObjects:[self createMenuItemForOpenAction], [self createMenuItemForCleanAction], nil];
+}
+
+- (NSArray *)createMenuItemContainerForOpenAction
+{
+    return [NSArray arrayWithObject:[self createMenuItemForOpenAction]];
+}
+
+- (UIMenuItem *)createMenuItemForOpenAction
+{
+    UIMenuItem *menuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"TAG_YEARSELECTOR_OPENACTION", @"")
+                                                      action:@selector(openActionMenuSelected:)];
+    
+    return menuItem;
+}
+
+- (UIMenuItem *)createMenuItemForCleanAction
+{
+    UIMenuItem *menuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"TAG_YEARSELECTOR_CLEANACTION", @"")
+                                                      action:@selector(cleanActionMenuSelected:)];
+    
+    return menuItem;
+}
+
+- (void)openActionMenuSelected:(id)sender
+{
+    IAEYear *yearOfSelectedCellWithActionMenu = [self yearBasedInSegmentedControlStateUsingCell:self.selectedCellWithActionMenu];
+    [self chooseActionAfterSelectCellWithYearDate:yearOfSelectedCellWithActionMenu.yearDate];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)cleanActionMenuSelected:(id)sender
+{
+    IAEYear *yearOfSelectedCellWithActionMenu = [self yearBasedInSegmentedControlStateUsingCell:self.selectedCellWithActionMenu];
+    NSAssert(yearOfSelectedCellWithActionMenu, @"");
+    if ([yearOfSelectedCellWithActionMenu findNumberOfConcepts] > 0) {
+        UIAlertView *alertView = [[UIAlertView alloc]
+                                  initWithTitle:NSLocalizedString(@"TAG_CONFIRM_CLEANYEARCONCEPTS_TITLE", @"")
+                                  message:NSLocalizedString(@"TAG_CONFIRM_CLEANYEARCONCEPTS_TEXT", @"")
+                                  delegate:self
+                                  cancelButtonTitle:NSLocalizedString(@"TAG_ALERTVIEW_CANCEL", @"")
+                                  otherButtonTitles:NSLocalizedString(@"TAG_ALERTVIEW_CLEAN", @""), nil];
+        
+        [alertView show];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == alertViewCleanButtonIndex) {
+        [self cleanYearSelectedWithActionMenu];
+    }
+    
+    self.selectedCellWithActionMenu = nil;
+}
+
+- (void)cleanYearSelectedWithActionMenu
+{
+    NSUInteger yearDateSelectedForClean = [self yearDateBasedInSegmentedControlStateFromCell:self.selectedCellWithActionMenu];
+    IAEYear *yearSelectedForClean = [self yearBasedInSegmentedControlStateUsingCell:self.selectedCellWithActionMenu];
+    [[IAEBook sharedBook] deleteAllConceptsOfYear:yearSelectedForClean];
+    [[IAEBook sharedBook] saveAll];
+    
+    if (yearDateSelectedForClean == self.yearLoadedBeforeStart) {
+        [self.delegate yearSelectorViewController:self didCleanActualYearDate:yearDateSelectedForClean];
+    }
+    
+    [self.yearsCollectionView reloadData];
 }
 
 @end

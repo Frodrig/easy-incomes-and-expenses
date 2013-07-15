@@ -215,6 +215,15 @@
     }
 }
 
+- (void)deleteAllConceptsOfYear:(IAEYear *)year
+{
+    if ([year findNumberOfConcepts] > 0) {
+        NSNumber *yearDate = [NSNumber numberWithUnsignedInteger:year.yearDate];
+        [self deleteYear:yearDate];
+        [self createYear:yearDate];
+    }
+}
+
 - (void)postYearRemovedNotificationWithYearDate:(NSUInteger)yearDate
 {
     NSArray *objectsForExtraInfoDictionary = [NSArray arrayWithObjects:[NSNumber numberWithUnsignedInteger:yearDate], nil];

@@ -14,7 +14,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="724"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" id="V3B-5t-GkI" customClass="IAEEditModeAnnualBalanceView">
+                            <view contentMode="scaleToFill" id="V3B-5t-GkI">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="63"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

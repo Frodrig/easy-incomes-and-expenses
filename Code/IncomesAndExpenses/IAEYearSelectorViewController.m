@@ -138,8 +138,9 @@ static NSUInteger yearsSegmentedControlAllYearsIndex = 2;
 - (void)configureCell:(IAEYearSelectorCollectionViewCell *)cell WithIndexPath:(NSIndexPath *)indexPath
 {
     IAEYear *year = [self yearBasedInSegmentedControlStateUsingIndexPath:indexPath];
+    BOOL isAValidYearAndHaveConcepts = year && [year findNumberOfConcepts] > 0;
     
-    if (year) {
+    if (isAValidYearAndHaveConcepts) {
         [cell configureWithYearDate:year.yearDate andBalance:[year balance]];
     } else {
         [cell configureWithYearDate:[self yearDateFromIndexPath:indexPath]];

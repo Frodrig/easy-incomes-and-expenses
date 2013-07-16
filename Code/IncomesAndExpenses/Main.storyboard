@@ -84,13 +84,10 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Edit" id="keZ-vo-FzI">
-                        <barButtonItem key="rightBarButtonItem" title="Categorías" id="AgY-ym-Q0h">
-                            <connections>
-                                <action selector="categoriesButtonPressed:" destination="7Ea-79-0mi" id="ZZC-xV-ey1"/>
-                            </connections>
-                        </barButtonItem>
                         <connections>
                             <outlet property="leftBarButtonItem" destination="Dot-VC-q0a" id="Bpz-2o-rrO"/>
+                            <outlet property="rightBarButtonItem" destination="AgY-ym-Q0h" id="BRz-hc-pNT"/>
+                            <outlet property="titleView" destination="Yxn-Dz-OEd" id="AdG-Gr-a2n"/>
                         </connections>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
@@ -106,23 +103,29 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nSe-iv-lCf" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Zeh-1R-fQi">
-                    <rect key="frame" x="0.0" y="0.0" width="250" height="44"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                <barButtonItem title="Categorías" id="AgY-ym-Q0h">
+                    <connections>
+                        <action selector="categoriesButtonPressed:" destination="7Ea-79-0mi" id="ZZC-xV-ey1"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem title="Años" id="Dot-VC-q0a">
+                    <connections>
+                        <action selector="yearsButtonPressed:" destination="7Ea-79-0mi" id="wH5-lY-nyw"/>
+                    </connections>
+                </barButtonItem>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Yxn-Dz-OEd">
+                    <rect key="frame" x="0.0" y="0.0" width="350" height="44"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="21"/>
-                    <state key="normal" title="Edit Mode" image="14-gear_gray.png">
-                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" title="Easy Incomes and Expenses" image="14-gear_gray.png">
+                        <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <state key="highlighted">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
-                <barButtonItem title="Años" id="Dot-VC-q0a">
-                    <connections>
-                        <action selector="yearsButtonPressed:" destination="7Ea-79-0mi" id="wH5-lY-nyw"/>
-                    </connections>
-                </barButtonItem>
             </objects>
             <point key="canvasLocation" x="-709" y="571"/>
         </scene>

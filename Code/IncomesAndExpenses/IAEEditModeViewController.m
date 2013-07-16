@@ -24,6 +24,7 @@
 #import "IAECategoryEditorViewController.h"
 #import "IAEYearSelectorViewController.h"
 #import "IAEYearSelectorViewControllerDelegate.h"
+#import "IAEAboutAndOptionsViewController.h"
 #import "NSNumber+DefaultValues.h"
 #import "IAECategoryStore.h"
 #import "UIView+LoadFromXib.h"
@@ -184,6 +185,14 @@
     yearSelectorViewController.modalPresentationStyle = UIModalPresentationFormSheet;
     
     [self presentViewController:yearSelectorViewController animated:YES completion:nil];
+}
+
+- (IBAction)settingsOptionPressed:(id)sender
+{
+    IAEAboutAndOptionsViewController *aboutAndOptionsViewController = [[IAEAboutAndOptionsViewController alloc] initWithNibName:nil bundle:nil];
+    aboutAndOptionsViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+    
+    [self presentViewController:aboutAndOptionsViewController animated:YES completion:nil];
 }
 
 #pragma mark - Obtainings

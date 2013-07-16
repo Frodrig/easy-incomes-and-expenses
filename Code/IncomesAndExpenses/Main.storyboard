@@ -125,6 +125,9 @@
                     <state key="highlighted">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="settingsOptionPressed:" destination="7Ea-79-0mi" eventType="touchUpInside" id="Grq-ff-sYt"/>
+                    </connections>
                 </button>
             </objects>
             <point key="canvasLocation" x="-709" y="571"/>

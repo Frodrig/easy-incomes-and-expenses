@@ -424,6 +424,7 @@
 		5BF4F09E16B7FD420031583A /* backtest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backtest.png; sourceTree = "<group>"; };
 		5BF862BC1668D444009D024E /* IAECircularStringSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECircularStringSelection.h; sourceTree = "<group>"; };
 		5BF862BD1668D444009D024E /* IAECircularStringSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECircularStringSelection.m; sourceTree = "<group>"; };
+		5BF92532179531CD0002CF9F /* ;.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ";.m"; sourceTree = "<group>"; };
 		5BFC593B16393119003F8E9C /* IAEMonthDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IAEMonthDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -596,6 +597,7 @@
 			children = (
 				5B32D652177C387A0070AC72 /* IAEEditModeViewController.h */,
 				5B32D653177C387A0070AC72 /* IAEEditModeViewController.m */,
+				5BF92532179531CD0002CF9F /* ;.m */,
 				5B36AFEC1785871E00132475 /* View Controllers */,
 				5B903BB91782DBAF00DBEFB2 /* Views */,
 			);

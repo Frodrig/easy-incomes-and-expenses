@@ -53,25 +53,23 @@
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [self initDobleTapConceptsGestureRecognizer];
         [self initTapConceptsGestureRecognizer];
+        [self initDobleTapConceptsGestureRecognizer];
     }
     
     return self;
-}
-
-- (void)initDobleTapConceptsGestureRecognizer
-{
-    _dobleTapConceptsRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dobleTapConceptsCollectionView:)];
-    _dobleTapConceptsRecognizer.numberOfTapsRequired = 2;
 }
 
 - (void)initTapConceptsGestureRecognizer
 {
     _tapConceptsRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnConceptsCollectionView:)];
     _tapConceptsRecognizer.numberOfTapsRequired = 1;
-    
-    [_tapConceptsRecognizer requireGestureRecognizerToFail:_dobleTapConceptsRecognizer];
+}
+
+- (void)initDobleTapConceptsGestureRecognizer
+{
+    _dobleTapConceptsRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dobleTapConceptsCollectionView:)];
+    _dobleTapConceptsRecognizer.numberOfTapsRequired = 2;
 }
 
 - (void)dealloc
@@ -202,22 +200,12 @@
     return [[IAEBook sharedBook] findActualYear];
 }
 
-- (IAEMonth *)findMonthOfPresentDay
-{
-    NSUInteger todayMonthIndex = [self findTodayMonthIndex];
-    return [self findMonthForActalYearAtIndex:todayMonthIndex];
-}
-
 - (IAEMonth *)findActualMonth
 {
-    NSUInteger actualMonthIndex = self.monthsScrollPageController.currentPage;
-    return [self findMonthForActalYearAtIndex:actualMonthIndex];
-}
-
-- (IAEMonth *)findMonthForActalYearAtIndex:(NSUInteger)index
-{
+    NSUInteger todayMonthIndex = [self findTodayMonthIndex];
     IAEYear *year = [self findActualYear];
-    return [year.ordererMonths objectAtIndex:index];
+    
+    return [year.ordererMonths objectAtIndex:todayMonthIndex];
 }
 
 - (IAEConcept *)findConceptAtIndexPath:(NSIndexPath *)indexPath
@@ -227,11 +215,6 @@
     IAEConcept *concept = [concepts objectAtIndex:indexPath.row];
     
     return concept;
-}
-
-- (IAEConcept *)findConceptOfCell:(UICollectionViewCell *)cell
-{
-    return [self findConceptAtIndexPath:[self.conceptsCollectionView indexPathForCell:cell]];
 }
 
 - (IAEEditModeMonthBalanceView *)findActualMonthBalanceView
@@ -539,14 +522,13 @@
 
 - (void)dobleTapConceptsCollectionView:(UITapGestureRecognizer *)tapGestureRecognizer
 {
-    NSAssert(tapGestureRecognizer == self.dobleTapConceptsRecognizer, @"");
-    [self findCellOfConceptsCollectionViewAndExecuteAtionUnderDobleTapGesture:tapGestureRecognizer];
+    NSAssert(tapGestureRecognizer == self.dobleTapConceptsRecognizer, @"")
 }
 
 - (void)findCellOfConceptCollectionViewAndExecuteActionUnderTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer
 {
     IAEEditModeConceptCollectionViewCell *cell = [self findConceptCellUnderLocationOfGestureRecognizer:tapGestureRecognizer];
-    [self executeActionOnCellOfConceptCollectionView:cell underLocatonOfTapGestureRecognizer:tapGestureRecognizer];
+    [self executeActionOnCellOfConceptCollectionView:cell underLocatonOfGestureRecognizer:tapGestureRecognizer];
 }
 
 - (IAEEditModeConceptCollectionViewCell *)findConceptCellUnderLocationOfGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
@@ -559,7 +541,7 @@
 }
 
 - (void)executeActionOnCellOfConceptCollectionView:(IAEEditModeConceptCollectionViewCell *)cell
-                   underLocatonOfTapGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+                   underLocatonOfGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
 {
     CGPoint location = [self convertLocationToCellArea:cell fromGestureRecognizer:gestureRecognizer];
     if (CGRectContainsPoint(cell.amountLabel.frame, location)) {
@@ -610,28 +592,6 @@
     [self.popover presentPopoverFromRect:presentPopoverFrame
                                   inView:view.superview
                 permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
-}
-
-- (void)findCellOfConceptsCollectionViewAndExecuteAtionUnderDobleTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer
-{
-    IAEEditModeConceptCollectionViewCell *cell = [self findConceptCellUnderLocationOfGestureRecognizer:tapGestureRecognizer];
-    if (cell) {
-        [self removeConceptAndUpdateBalancesOfCell:cell withAnimation:YES];
-    }
-}
-
-- (void)removeConceptAndUpdateBalancesOfCell:(UICollectionViewCell *)cell withAnimation:(BOOL)animation
-{
-    NSAssert(cell, @"");
-    
-    IAEConcept *concept = [self findConceptOfCell:cell];
-    IAEMonth *month = [self findActualMonth];
-    [month removeConcept:concept];
-    
-    [[IAEBook sharedBook] saveAll];
-    
-    [self.conceptsCollectionView reloadData];
-    [self updateBalancesWithAnimation:YES];
 }
 
 #pragma mark - IAEAdjustConceptAmountViewControllerDelegate

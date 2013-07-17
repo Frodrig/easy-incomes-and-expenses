@@ -50,12 +50,16 @@
 
 @implementation IAEEditModeViewController
 
+static NSString * const notificationDayModeOnName = @"dayModeToOn";
+static NSString * const notificationDayModeOffName = @"dayModeToOff";
+
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
         [self initDobleTapConceptsGestureRecognizer];
         [self initTapConceptsGestureRecognizer];
+        [self initAsObserverOfNotificationCenter];
     }
     
     return self;
@@ -75,8 +79,22 @@
     [_tapConceptsRecognizer requireGestureRecognizerToFail:_dobleTapConceptsRecognizer];
 }
 
+- (void)initAsObserverOfNotificationCenter
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notificationCenterOnDayModeOn:)
+                                                 name:notificationDayModeOnName
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notificationCenterOnDayModeOff:)
+                                                 name:notificationDayModeOffName
+                                               object:nil];
+}
+
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.conceptsCollectionView removeGestureRecognizer:self.tapConceptsRecognizer];
     [self.conceptsCollectionView removeGestureRecognizer:self.dobleTapConceptsRecognizer];
 }
@@ -294,7 +312,7 @@
 
 - (void)vinculeAnnualBalanceIndicatorLabel
 {
-    NSString *localizedString = NSLocalizedString(@"TAG_EDITMODE_ANNUALBALANCEINDICATOR", @"");
+    NSString *localizedString = NSLocalizedString(@"LTEXT_EDITMODE_ANNUALBALANCEINDICATOR", @"");
     UIColor *color = [UIColor colorWithWhite:0.0 alpha:1.0];
     NSDictionary *attributeDictionary = [self createAttributeDictionaryForAnnualBalanceLabelsWithColor:color];
 
@@ -911,6 +929,17 @@
     return yearDate == [self findActualYear].yearDate;
 }
 
+#pragma mark - Notification Center
+
+- (void)notificationCenterOnDayModeOn:(NSNotification *)notification
+{
+    NSLog(@"day mode on");
+}
+
+- (void)notificationCenterOnDayModeOff:(NSNotification *)notification
+{
+    NSLog(@"day mode off");
+}
 
 
 @end

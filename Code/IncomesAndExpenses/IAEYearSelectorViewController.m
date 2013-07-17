@@ -24,10 +24,10 @@
 
 @implementation IAEYearSelectorViewController
 
-static NSString * const titleTagActualYear = @"TAG_YEARSELECTOR_ACTUALYEAR";
-static NSString * const titleTagWithConceptsYears = @"TAG_YEARSELECTOR_WITHCONCEPTYEARS";
-static NSString * const titleTagAllYears = @"TAG_YEARSELECTOR_ALLYEARS";
-static NSString * const titleTagYearOpen = @"TAG_YEARSELECTOR_ACTUALOPENYEAR";
+static NSString * const titleTagActualYear = @"LTEXT_YEARSELECTOR_ACTUALYEAR";
+static NSString * const titleTagWithConceptsYears = @"LTEXT_YEARSELECTOR_WITHCONCEPTYEARS";
+static NSString * const titleTagAllYears = @"LTEXT_YEARSELECTOR_ALLYEARS";
+static NSString * const titleTagYearOpen = @"LTEXT_YEARSELECTOR_ACTUALOPENYEAR";
 
 static NSString * const nibNameForCollectionViewCell = @"IAEYearSelectorCollectionViewCell";
 static NSString * const collectionViewCellReuseIdentifier = @"YearSelectorCollectionViewCell";
@@ -356,7 +356,7 @@ static NSUInteger alertViewCleanButtonIndex = 1;
 
 - (UIMenuItem *)createMenuItemForOpenAction
 {
-    UIMenuItem *menuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"TAG_YEARSELECTOR_OPENACTION", @"")
+    UIMenuItem *menuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"LTEXT_YEARSELECTOR_OPENACTION", @"")
                                                       action:@selector(openActionMenuSelected:)];
     
     return menuItem;
@@ -364,7 +364,7 @@ static NSUInteger alertViewCleanButtonIndex = 1;
 
 - (UIMenuItem *)createMenuItemForCleanAction
 {
-    UIMenuItem *menuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"TAG_YEARSELECTOR_CLEANACTION", @"")
+    UIMenuItem *menuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"LTEXT_YEARSELECTOR_CLEANACTION", @"")
                                                       action:@selector(cleanActionMenuSelected:)];
     
     return menuItem;
@@ -383,11 +383,11 @@ static NSUInteger alertViewCleanButtonIndex = 1;
     NSAssert(yearOfSelectedCellWithActionMenu, @"");
     if ([yearOfSelectedCellWithActionMenu findNumberOfConcepts] > 0) {
         UIAlertView *alertView = [[UIAlertView alloc]
-                                  initWithTitle:NSLocalizedString(@"TAG_CONFIRM_CLEANYEARCONCEPTS_TITLE", @"")
-                                  message:NSLocalizedString(@"TAG_CONFIRM_CLEANYEARCONCEPTS_TEXT", @"")
+                                  initWithTitle:NSLocalizedString(@"LTEXT_CONFIRM_CLEANYEARCONCEPTS_TITLE", @"")
+                                  message:NSLocalizedString(@"LTEXT_CONFIRM_CLEANYEARCONCEPTS_TEXT", @"")
                                   delegate:self
-                                  cancelButtonTitle:NSLocalizedString(@"TAG_ALERTVIEW_CANCEL", @"")
-                                  otherButtonTitles:NSLocalizedString(@"TAG_ALERTVIEW_CLEAN", @""), nil];
+                                  cancelButtonTitle:NSLocalizedString(@"LTEXT_ALERTVIEW_CANCEL", @"")
+                                  otherButtonTitles:NSLocalizedString(@"LTEXT_ALERTVIEW_CLEAN", @""), nil];
         
         [alertView show];
     }

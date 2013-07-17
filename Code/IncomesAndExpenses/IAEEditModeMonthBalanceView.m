@@ -14,8 +14,8 @@
 #import "IAEEconomicValueUpdater.h"
 #import "IAEEconomicValueTypeHelper.h"
 
-#define VIEWTAG_MONTHNAMELABEL     10
-#define VIEWTAG_MONTHBALANCE_LABEL 20
+#define VIEWLTEXT_MONTHNAMELABEL     10
+#define VIEWLTEXT_MONTHBALANCE_LABEL 20
 
 @interface IAEEditModeMonthBalanceView()
 
@@ -32,12 +32,12 @@ static CGFloat timeBalanceUpdateAnimation = 1.55;
 
 - (UILabel *)monthBalanceLabel
 {
-    return (UILabel *)[self viewWithTag:VIEWTAG_MONTHBALANCE_LABEL];
+    return (UILabel *)[self viewWithTag:VIEWLTEXT_MONTHBALANCE_LABEL];
 }
 
 - (UILabel *)monthNameLabel
 {
-    return (UILabel *)[self viewWithTag:VIEWTAG_MONTHNAMELABEL];
+    return (UILabel *)[self viewWithTag:VIEWLTEXT_MONTHNAMELABEL];
 }
 
 - (id)initWithFrame:(CGRect)frame andMonthIndex:(NSUInteger)monthIndex;
@@ -77,8 +77,8 @@ static CGFloat timeBalanceUpdateAnimation = 1.55;
 
 - (void)vinculeLabelsOfBalanceItemAsProperties
 {
-    _monthNameLabel = (UILabel *)[_editModeBalanceItem viewWithTag:VIEWTAG_MONTHNAMELABEL];
-    _monthBalanceLabel = (UILabel *)[_editModeBalanceItem viewWithTag:VIEWTAG_MONTHBALANCE_LABEL];
+    _monthNameLabel = (UILabel *)[_editModeBalanceItem viewWithTag:VIEWLTEXT_MONTHNAMELABEL];
+    _monthBalanceLabel = (UILabel *)[_editModeBalanceItem viewWithTag:VIEWLTEXT_MONTHBALANCE_LABEL];
 }
 
 - (void)reloadDataWithAnimation:(BOOL)animation

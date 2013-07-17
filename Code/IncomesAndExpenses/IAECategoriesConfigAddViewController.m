@@ -38,7 +38,7 @@
 @synthesize exitByCancel = exitByCancel_;
 @synthesize invalidCategoryTagLabel = invalidCategoryTagLabel_;
 @synthesize invalidViewCategoryTagInfo = invalidViewCategoryTagInfo_;
-@synthesize validCategoryTag = validCategoryTag_;
+@synthesize validCategoryTag = validCategoryLTEXT_;
 @synthesize fromInputPanel = fromInputPanel_;
 
 - (id)initWithCategoryType:(CategoryType)categoryType andRenamingCategory:(IAECategory *)category fromInputPanel:(BOOL)fromInputPanel

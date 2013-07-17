@@ -18,11 +18,13 @@
 
 @implementation IAEAppDelegate
 
+static NSString * const userDefaultsDayModeActive = @"dayModeActive";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     //[self createYearTest];
     [self createYearBookIfProceed];
+    [self prepareDefaults];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
@@ -41,6 +43,13 @@
         NSDateComponents *yearComponent = [gregorian components:NSYearCalendarUnit fromDate:[NSDate date]];
         [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:yearComponent.year]];
     }
+}
+
+- (void)prepareDefaults
+{
+    // Defaults del registration  domain
+    NSDictionary *defaults = @{userDefaultsDayModeActive: [NSNumber numberWithBool:NO]};
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 }
 
 - (void)createYearTest

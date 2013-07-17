@@ -139,7 +139,7 @@ static NSUInteger sizeRoundedRectCorners = 10;
 
 - (void)configureProblemWarningLabel
 {
-    self.problemWarningLabel.attributedText = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"TAG_INVALIDCATEGORY", "")
+    self.problemWarningLabel.attributedText = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"LTEXT_INVALIDCATEGORY", "")
                                                                               attributes:[self createAttributeForLabelWithSize:21]];
     self.problemWarningLabel.numberOfLines = 2;
     self.problemWarningLabel.alpha = 0;
@@ -149,9 +149,9 @@ static NSUInteger sizeRoundedRectCorners = 10;
 {
     NSString *stringTag = nil;
     if ([self isEditModeCategoryInAddMode]) {
-        stringTag = NSLocalizedString(@"TAG_ADD_NEW_CATEGORY", @"");
+        stringTag = NSLocalizedString(@"LTEXT_ADD_NEW_CATEGORY", @"");
     } else if ([self isEditModeCategoryInRenameMode]) {
-        stringTag = NSLocalizedString(@"TAG_RENAME_CATEGORY", @"");
+        stringTag = NSLocalizedString(@"LTEXT_RENAME_CATEGORY", @"");
     }
     
     return stringTag;
@@ -161,7 +161,7 @@ static NSUInteger sizeRoundedRectCorners = 10;
 {
     NSString *stringTag = nil;
     if ([self isEditModeCategoryInAddMode]) {
-        stringTag = NSLocalizedString(@"TAG_PLACEHOLDER_CATEGORY", "");
+        stringTag = NSLocalizedString(@"LTEXT_PLACEHOLDER_CATEGORY", "");
     } else if ([self isEditModeCategoryInRenameMode]) {
         stringTag = self.categoryToRename.tag;
     }

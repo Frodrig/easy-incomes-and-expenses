@@ -47,9 +47,7 @@
 {
     IAEConcept *newConcept;
     
-    if ([amount compare:[NSDecimalNumber zero]] != NSOrderedSame)
-   // if (amount.doubleValue != 0.0)
-    {
+    if ([amount compare:[NSDecimalNumber zero]] != NSOrderedSame) {
         newConcept = [NSEntityDescription insertNewObjectForEntityForName:@"IAEConcept" inManagedObjectContext:[IAEBook sharedBook].context];
         [self addConceptsObject:newConcept];
  
@@ -62,12 +60,6 @@
         newConcept.amount = amount;
         newConcept.date = date;
         newConcept.detailDescription = [description copy];
-    
-        /*
-        if ([self.delegate respondsToSelector:@selector(month:didAddNewConcept:)])
-            [self.delegate month:self didAddNewConcept:newConcept];
-        
-        */
         
          NSDictionary *extraInfo = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:self, newConcept, nil] forKeys:[NSArray arrayWithObjects:@"Month", @"Concept", nil]];
          
@@ -156,10 +148,10 @@
 - (NSArray *)findAllConceptsWithCategory:(IAECategory *)category
 {
     NSMutableArray *concepts = [[NSMutableArray alloc] initWithCapacity:self.concepts.count];
-    for (IAEConcept *concept in self.concepts)
-    {
-        if (concept.category == category)
+    for (IAEConcept *concept in self.concepts) {
+        if (concept.category == category) {
             [concepts addObject:concept];
+        }
     }
     
     return concepts;
@@ -205,12 +197,9 @@
     NSMutableSet *categoriesFound = [NSMutableSet setWithCapacity:self.concepts.count];
     
     NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:self.concepts.count];
-    for (IAEConcept *concept in self.concepts)
-    {
-        if (concept.category.categoryType == type && ![categoriesFound containsObject:concept.category])
-        {
+    for (IAEConcept *concept in self.concepts) {
+        if (concept.category.categoryType == type && ![categoriesFound containsObject:concept.category]) {
             [array addObject:concept.category];
-            
             [categoriesFound addObject:concept.category];
         }
     }

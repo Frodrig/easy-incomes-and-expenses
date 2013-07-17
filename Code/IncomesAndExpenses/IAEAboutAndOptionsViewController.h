@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IAEInfoAboutAndOptionsCollectionViewCellDelegate.h"
+#import <MessageUI/MFMailComposeViewController.h>
 
-@interface IAEAboutAndOptionsViewController : UIViewController/*<UICollectionViewDataSource,
-                                                               UICollectionViewDelegateFlowLayout>*/
+@interface IAEAboutAndOptionsViewController : UIViewController<UICollectionViewDataSource,
+                                                               UICollectionViewDelegateFlowLayout,
+                                                               IAEInfoAboutAndOptionsCollectionViewCellDelegate,
+                                                               MFMailComposeViewControllerDelegate>
 
 @end

@@ -28,6 +28,10 @@
 		5B25A3C8166E210D00E63559 /* IAEIncomeExpenseControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B25A3C6166E210D00E63559 /* IAEIncomeExpenseControllerViewController.m */; };
 		5B25A3CF166E268C00E63559 /* IAEConceptsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B25A3CD166E268C00E63559 /* IAEConceptsViewController.m */; };
 		5B25A3D0166E268C00E63559 /* IAEConceptsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B25A3CE166E268C00E63559 /* IAEConceptsViewController.xib */; };
+		5B26461117968496006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B26461017968496006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.m */; };
+		5B264613179684A5006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B264612179684A5006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.xib */; };
+		5B26461617968F84006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B26461517968F84006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.xib */; };
+		5B26461A17969084006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B26461917969084006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.m */; };
 		5B281B7816B7C8F4001A1562 /* background-popover.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B281B7716B7C8F4001A1562 /* background-popover.png */; };
 		5B281B8016B7D97B001A1562 /* arrow-popover.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B281B7F16B7D97B001A1562 /* arrow-popover.png */; };
 		5B29BF4616AC55EE00C2D161 /* 20-circle-east.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B29BF4216AC55EE00C2D161 /* 20-circle-east.png */; };
@@ -88,6 +92,7 @@
 		5B708A2216B9174100502693 /* Section1WithoutContentConceptsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B708A1F16B9174000502693 /* Section1WithoutContentConceptsTableViewCell.xib */; };
 		5B708A2916B91B0300502693 /* coacharrowdown.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B708A2716B91B0300502693 /* coacharrowdown.png */; };
 		5B708A2A16B91B0300502693 /* coacharrowdown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B708A2816B91B0300502693 /* coacharrowdown@2x.png */; };
+		5B7319F31796A8AB00FAF632 /* IAEInfoAboutAndOptionsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B26461C1796A1CA006F6E58 /* IAEInfoAboutAndOptionsCollectionViewCell.xib */; };
 		5B76116416C56C7300558D6D /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B76116316C56C7300558D6D /* Default-Landscape~ipad.png */; };
 		5B76116816C56C7A00558D6D /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B76116716C56C7A00558D6D /* Default-Landscape@2x~ipad.png */; };
 		5B76446516BFA97500082050 /* IAECategoriesConfigViewControllerv2.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B76446316BFA97500082050 /* IAECategoriesConfigViewControllerv2.m */; };
@@ -118,6 +123,7 @@
 		5B903BBE1783220A00DBEFB2 /* IAEEditModeMonthBalanceItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B903BBD1782DBDC00DBEFB2 /* IAEEditModeMonthBalanceItem.xib */; };
 		5B94036017904C1400F9C1D0 /* IAEYearSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B94035F17904C1400F9C1D0 /* IAEYearSelectorViewController.xib */; };
 		5BA0A288167E33B600CBB79B /* FooterSection0ConceptsTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA0A287167E33B600CBB79B /* FooterSection0ConceptsTableView.xib */; };
+		5BA51A7C1796D81E00A3D923 /* IAEInfoAboutAndOptionsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA51A7B1796D81E00A3D923 /* IAEInfoAboutAndOptionsCollectionViewCell.m */; };
 		5BA97710166F42F5007B59C4 /* Section1ConceptsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA9770F166F42F5007B59C4 /* Section1ConceptsTableViewCell.xib */; };
 		5BA97713166F5A09007B59C4 /* ExtendedConceptsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA97712166F5A09007B59C4 /* ExtendedConceptsTableViewCell.xib */; };
 		5BAA5D861709699100B6B3F8 /* 441-help-symbol1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BAA5D841709699100B6B3F8 /* 441-help-symbol1@2x.png */; };
@@ -210,6 +216,13 @@
 		5B25A3CC166E268C00E63559 /* IAEConceptsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEConceptsViewController.h; sourceTree = "<group>"; };
 		5B25A3CD166E268C00E63559 /* IAEConceptsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEConceptsViewController.m; sourceTree = "<group>"; };
 		5B25A3CE166E268C00E63559 /* IAEConceptsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEConceptsViewController.xib; sourceTree = "<group>"; };
+		5B26460F17968496006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHeaderAboutAndOptionsCollectionReusableView.h; sourceTree = "<group>"; };
+		5B26461017968496006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHeaderAboutAndOptionsCollectionReusableView.m; sourceTree = "<group>"; };
+		5B264612179684A5006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEHeaderAboutAndOptionsCollectionReusableView.xib; sourceTree = "<group>"; };
+		5B26461517968F84006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAESettingsAboutAndOptionsCollectionViewCell.xib; sourceTree = "<group>"; };
+		5B26461817969084006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAESettingsAboutAndOptionsCollectionViewCell.h; sourceTree = "<group>"; };
+		5B26461917969084006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAESettingsAboutAndOptionsCollectionViewCell.m; sourceTree = "<group>"; };
+		5B26461C1796A1CA006F6E58 /* IAEInfoAboutAndOptionsCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEInfoAboutAndOptionsCollectionViewCell.xib; sourceTree = "<group>"; };
 		5B281B7716B7C8F4001A1562 /* background-popover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background-popover.png"; sourceTree = "<group>"; };
 		5B281B7F16B7D97B001A1562 /* arrow-popover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-popover.png"; sourceTree = "<group>"; };
 		5B29BF4216AC55EE00C2D161 /* 20-circle-east.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "20-circle-east.png"; sourceTree = "<group>"; };
@@ -354,6 +367,9 @@
 		5B94035E178FF51600F9C1D0 /* IAEEditModeMonthBalanceViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEditModeMonthBalanceViewDataSource.h; sourceTree = "<group>"; };
 		5B94035F17904C1400F9C1D0 /* IAEYearSelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEYearSelectorViewController.xib; sourceTree = "<group>"; };
 		5BA0A287167E33B600CBB79B /* FooterSection0ConceptsTableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FooterSection0ConceptsTableView.xib; sourceTree = "<group>"; };
+		5BA51A7A1796D81E00A3D923 /* IAEInfoAboutAndOptionsCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEInfoAboutAndOptionsCollectionViewCell.h; sourceTree = "<group>"; };
+		5BA51A7B1796D81E00A3D923 /* IAEInfoAboutAndOptionsCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEInfoAboutAndOptionsCollectionViewCell.m; sourceTree = "<group>"; };
+		5BA51A7D1796DA2000A3D923 /* IAEInfoAboutAndOptionsCollectionViewCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEInfoAboutAndOptionsCollectionViewCellDelegate.h; sourceTree = "<group>"; };
 		5BA9770F166F42F5007B59C4 /* Section1ConceptsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Section1ConceptsTableViewCell.xib; sourceTree = "<group>"; };
 		5BA97712166F5A09007B59C4 /* ExtendedConceptsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExtendedConceptsTableViewCell.xib; sourceTree = "<group>"; };
 		5BAA5D841709699100B6B3F8 /* 441-help-symbol1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "441-help-symbol1@2x.png"; sourceTree = "<group>"; };
@@ -576,6 +592,47 @@
 				5B136C66166E501700EB12E7 /* TableView XIBs */,
 			);
 			name = Concepts;
+			sourceTree = "<group>";
+		};
+		5B26460E17968383006F6E58 /* Collection View Cells & Views */ = {
+			isa = PBXGroup;
+			children = (
+				5B26461B1796A185006F6E58 /* IAEInfoAboutAndOptionsCollectionViewCell */,
+				5B26461417968548006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView */,
+				5B26461717969066006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell */,
+			);
+			name = "Collection View Cells & Views";
+			sourceTree = "<group>";
+		};
+		5B26461417968548006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView */ = {
+			isa = PBXGroup;
+			children = (
+				5B26460F17968496006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.h */,
+				5B26461017968496006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.m */,
+				5B264612179684A5006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.xib */,
+			);
+			name = IAEHeaderAboutAndOptionsCollectionReusableView;
+			sourceTree = "<group>";
+		};
+		5B26461717969066006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				5B26461517968F84006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.xib */,
+				5B26461817969084006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.h */,
+				5B26461917969084006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.m */,
+			);
+			name = IAESettingsAboutAndOptionsCollectionViewCell;
+			sourceTree = "<group>";
+		};
+		5B26461B1796A185006F6E58 /* IAEInfoAboutAndOptionsCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				5B26461C1796A1CA006F6E58 /* IAEInfoAboutAndOptionsCollectionViewCell.xib */,
+				5BA51A7A1796D81E00A3D923 /* IAEInfoAboutAndOptionsCollectionViewCell.h */,
+				5BA51A7B1796D81E00A3D923 /* IAEInfoAboutAndOptionsCollectionViewCell.m */,
+				5BA51A7D1796DA2000A3D923 /* IAEInfoAboutAndOptionsCollectionViewCellDelegate.h */,
+			);
+			name = IAEInfoAboutAndOptionsCollectionViewCell;
 			sourceTree = "<group>";
 		};
 		5B29BF2C16AC3DCB00C2D161 /* Graphics */ = {
@@ -1353,6 +1410,7 @@
 				5BF9253E179554800002CF9F /* IAEAboutAndOptionsViewController.h */,
 				5BF9253F179554800002CF9F /* IAEAboutAndOptionsViewController.m */,
 				5BF92540179554800002CF9F /* IAEAboutAndOptionsViewController.xib */,
+				5B26460E17968383006F6E58 /* Collection View Cells & Views */,
 			);
 			name = "About and Options";
 			sourceTree = "<group>";
@@ -1415,6 +1473,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B7319F31796A8AB00FAF632 /* IAEInfoAboutAndOptionsCollectionViewCell.xib in Resources */,
 				5B767E011636D7FC005315F8 /* InfoPlist.strings in Resources */,
 				5B767E091636D7FC005315F8 /* Default.png in Resources */,
 				5B767E0B1636D7FC005315F8 /* Default@2x.png in Resources */,
@@ -1467,6 +1526,7 @@
 				5B7A4D6916B66889001751A9 /* 451-help-symbol2.png in Resources */,
 				5B7A4D6A16B66889001751A9 /* 451-help-symbol2@2x.png in Resources */,
 				5B7A4D6B16B66889001751A9 /* 452-information-symbol2.png in Resources */,
+				5B26461617968F84006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.xib in Resources */,
 				5B7A4D6C16B66889001751A9 /* 452-information-symbol2@2x.png in Resources */,
 				5BF92537179544880002CF9F /* 14-gear_gray@2x.png in Resources */,
 				5B281B7816B7C8F4001A1562 /* background-popover.png in Resources */,
@@ -1478,6 +1538,7 @@
 				5B708A1516B912A900502693 /* HeaderSection1ConceptsTableView.xib in Resources */,
 				5B708A2216B9174100502693 /* Section1WithoutContentConceptsTableViewCell.xib in Resources */,
 				5B708A2916B91B0300502693 /* coacharrowdown.png in Resources */,
+				5B264613179684A5006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.xib in Resources */,
 				5B708A2A16B91B0300502693 /* coacharrowdown@2x.png in Resources */,
 				5B0F8BA816B92320002D62A5 /* CompactConceptsTableViewCell.xib in Resources */,
 				5B0F8BB016B92425002D62A5 /* IAEInputConceptsViewController.xib in Resources */,
@@ -1524,6 +1585,7 @@
 				5B767E031636D7FC005315F8 /* main.m in Sources */,
 				5B767E071636D7FC005315F8 /* IAEAppDelegate.m in Sources */,
 				5B32D661177C441A0070AC72 /* IAEOptionsViewController.m in Sources */,
+				5BA51A7C1796D81E00A3D923 /* IAEInfoAboutAndOptionsCollectionViewCell.m in Sources */,
 				5BE1F4C01637EA4B004E13C2 /* IAEBook.m in Sources */,
 				5B32D65D177C41980070AC72 /* IAEYearSelectorViewController.m in Sources */,
 				5BE1F4C81637FE0C004E13C2 /* IAECategoryStore.m in Sources */,
@@ -1536,6 +1598,7 @@
 				5B55C406178AA8C20066F586 /* IAECategoryEditorViewController.m in Sources */,
 				5B5C968917816EE0008CD851 /* IAEValueDecoratorViewExpenseConfigurator.m in Sources */,
 				5BD06174163A8D2B00A80BE3 /* IAEYear.m in Sources */,
+				5B26461A17969084006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.m in Sources */,
 				5B62D873178EC20E009879A6 /* IAECurrencyManager.m in Sources */,
 				5BF92541179554800002CF9F /* IAEAboutAndOptionsViewController.m in Sources */,
 				5BEA98AB1793E3A500098AE0 /* IAECircleDecoratorView.m in Sources */,
@@ -1543,6 +1606,7 @@
 				5BD06177163A99BB00A80BE3 /* IAECategory.m in Sources */,
 				5B62D86E178EC20E009879A6 /* IAEEconomicValueTypeHelper.m in Sources */,
 				5B62D870178EC20E009879A6 /* IAEColorHelper.m in Sources */,
+				5B26461117968496006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.m in Sources */,
 				5BF862BE1668D444009D024E /* IAECircularStringSelection.m in Sources */,
 				5B25A3C8166E210D00E63559 /* IAEIncomeExpenseControllerViewController.m in Sources */,
 				5B62D884178F1516009879A6 /* UIView+DrawBottomLine.m in Sources */,

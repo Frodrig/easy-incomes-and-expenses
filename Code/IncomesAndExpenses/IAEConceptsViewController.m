@@ -22,28 +22,28 @@
 #import "IAEPopoverBackgroundCustom.h"
 #import <QuartzCore/QuartzCore.h>
 
-static const NSUInteger TAG_SCROLLVIEW_CELLSECTION0_CONCEPTSTABLE = 1;
-static const NSUInteger TAG_SCROLLVIEW_CELLSECTION1_CONCEPTSTABLE = 100;
-static const NSUInteger TAG_YEARLABEL_CELLSECTION0_CONCEPTSTABLE = 2;
-static const NSUInteger TAG_YEARLABELAMOUNT_CELLSECTION0_CONCEPTSTABLE = 3;
-static const NSUInteger TAG_MONTHLABEL_MONTHBALANCECARD = 10;
-static const NSUInteger TAG_BALANCELABEL_MONTHBALANCECARD = 20;
-static const NSUInteger TAG_PAGECONTROL_MONTHBALANCECARD = 300;
-static const NSUInteger TAG_AMOUNTCATEGORYTAGLABEL_EXTENDEDCONCEPTTABLEVIEW = 500;
-static const NSUInteger TAG_AMOUNTCATEGORYTYPELABEL_EXTENDEDCONCEPTTABLEVIEW = 510;
-static const NSUInteger TAG_AMOUNTLABEL_EXTENDEDCONCEPTTABLEVIEW = 520;
-static const NSUInteger TAG_COUNTLABEL_EXTENDEDCONCEPTTABLEVIEW = 530;
-static const NSUInteger TAG_VIEWCATEGORYINDICATOR_EXTENDEDCONCEPTTABLEVIEW = 550;
-static const NSUInteger TAG_LABEL_FOOTERCELLSECTION1_CONCEPTSTABLE = 600;
-static const NSUInteger TAG_PAGECONTROL_FOOTERCELLSECTION1_CONCEPTSTABLE = 610;
-static const NSUInteger TAG_COACHARROW_WITHOUTCONCEPTSCELL_CONCEPTSTABLE = 666;
-static const NSUInteger TAG_CATEGORYTAGLABEL_COMPACTCOMPACTTABLEVEW = 700;
-static const NSUInteger TAG_AMOUNTLABEL_COMPACTCOMPACTTABLEVEW = 710;
-static const NSUInteger TAG_PERCENTAGELABEL_COMPACTCOMPACTTABLEVEW = 720;
-static const NSUInteger TAG_NODATALABEL_COMPACTCOMPACTTABLEVEW = 730;
-static const NSUInteger TAG_FOOTERTOTALAMOUNT_COMPACTTABLEVIEW = 800;
-static const NSUInteger TAG_HEADERCATEGORYINDICATOR_COMPACTTABLEVIEW = 900;
-static const NSUInteger TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
+static const NSUInteger LTEXT_SCROLLVIEW_CELLSECTION0_CONCEPTSTABLE = 1;
+static const NSUInteger LTEXT_SCROLLVIEW_CELLSECTION1_CONCEPTSTABLE = 100;
+static const NSUInteger LTEXT_YEARLABEL_CELLSECTION0_CONCEPTSTABLE = 2;
+static const NSUInteger LTEXT_YEARLABELAMOUNT_CELLSECTION0_CONCEPTSTABLE = 3;
+static const NSUInteger LTEXT_MONTHLABEL_MONTHBALANCECARD = 10;
+static const NSUInteger LTEXT_BALANCELABEL_MONTHBALANCECARD = 20;
+static const NSUInteger LTEXT_PAGECONTROL_MONTHBALANCECARD = 300;
+static const NSUInteger LTEXT_AMOUNTCATEGORYTAGLABEL_EXTENDEDCONCEPTTABLEVIEW = 500;
+static const NSUInteger LTEXT_AMOUNTCATEGORYTYPELABEL_EXTENDEDCONCEPTTABLEVIEW = 510;
+static const NSUInteger LTEXT_AMOUNTLABEL_EXTENDEDCONCEPTTABLEVIEW = 520;
+static const NSUInteger LTEXT_COUNTLABEL_EXTENDEDCONCEPTTABLEVIEW = 530;
+static const NSUInteger LTEXT_VIEWCATEGORYINDICATOR_EXTENDEDCONCEPTTABLEVIEW = 550;
+static const NSUInteger LTEXT_LABEL_FOOTERCELLSECTION1_CONCEPTSTABLE = 600;
+static const NSUInteger LTEXT_PAGECONTROL_FOOTERCELLSECTION1_CONCEPTSTABLE = 610;
+static const NSUInteger LTEXT_COACHARROW_WITHOUTCONCEPTSCELL_CONCEPTSTABLE = 666;
+static const NSUInteger LTEXT_CATEGORYTAGLABEL_COMPACTCOMPACTTABLEVEW = 700;
+static const NSUInteger LTEXT_AMOUNTLABEL_COMPACTCOMPACTTABLEVEW = 710;
+static const NSUInteger LTEXT_PERCENTAGELABEL_COMPACTCOMPACTTABLEVEW = 720;
+static const NSUInteger LTEXT_NODATALABEL_COMPACTCOMPACTTABLEVEW = 730;
+static const NSUInteger LTEXT_FOOTERTOTALAMOUNT_COMPACTTABLEVIEW = 800;
+static const NSUInteger LTEXT_HEADERCATEGORYINDICATOR_COMPACTTABLEVIEW = 900;
+static const NSUInteger LTEXT_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
 
 @interface IAEConceptsViewController ()
 
@@ -178,8 +178,8 @@ static const NSUInteger TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
         
         incomeHeaderSectionForCompactTableView_ = [nib objectAtIndex:0];
         
-        UILabel *descriptionCategoryLabel = (UILabel *)[incomeHeaderSectionForCompactTableView_ viewWithTag:TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW];
-        IAEViewCategoryTypeIndicator *categoryIndicator = (IAEViewCategoryTypeIndicator *)[incomeHeaderSectionForCompactTableView_ viewWithTag:TAG_HEADERCATEGORYINDICATOR_COMPACTTABLEVIEW];
+        UILabel *descriptionCategoryLabel = (UILabel *)[incomeHeaderSectionForCompactTableView_ viewWithTag:LTEXT_HEADERCATEGORYLABEL_COMPACTTABLEVIEW];
+        IAEViewCategoryTypeIndicator *categoryIndicator = (IAEViewCategoryTypeIndicator *)[incomeHeaderSectionForCompactTableView_ viewWithTag:LTEXT_HEADERCATEGORYINDICATOR_COMPACTTABLEVIEW];
         
         descriptionCategoryLabel.text = @"Incomes";
         categoryIndicator.category = IncomeCategory;
@@ -197,9 +197,9 @@ static const NSUInteger TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"HeaderCompactMode" owner:self options:nil];
         expenseHeaderSectionForCompactTableView_ = [nib objectAtIndex:0];
         
-        UILabel *descriptionCategoryLabel = (UILabel *)[expenseHeaderSectionForCompactTableView_ viewWithTag:TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW];
+        UILabel *descriptionCategoryLabel = (UILabel *)[expenseHeaderSectionForCompactTableView_ viewWithTag:LTEXT_HEADERCATEGORYLABEL_COMPACTTABLEVIEW];
         
-        IAEViewCategoryTypeIndicator *categoryIndicator = (IAEViewCategoryTypeIndicator *)[expenseHeaderSectionForCompactTableView_ viewWithTag:TAG_HEADERCATEGORYINDICATOR_COMPACTTABLEVIEW];
+        IAEViewCategoryTypeIndicator *categoryIndicator = (IAEViewCategoryTypeIndicator *)[expenseHeaderSectionForCompactTableView_ viewWithTag:LTEXT_HEADERCATEGORYINDICATOR_COMPACTTABLEVIEW];
         
         descriptionCategoryLabel.text = NSLocalizedString(@"Expenses", @"Titulo asociado a gastos");
         categoryIndicator.category = ExpenseCategory;
@@ -291,7 +291,7 @@ static const NSUInteger TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
     // Aprovechamos para solucionar el problema con las dimensiones del UIScrollView de la celda de meses ya que durante el proceso
     // de creacion la anchura aun no se ha seteado y por lo tanto no podemos calcular correctamente cuanto tiene que medir el ancho
     // del content view del scroll view. En este punto si podemos hacerlo y tomaremos simplemente la anchura del propio scrollview.
-    UIScrollView *scrollViewMonths = (UIScrollView *)[self.conceptsTableView viewWithTag:TAG_SCROLLVIEW_CELLSECTION0_CONCEPTSTABLE];
+    UIScrollView *scrollViewMonths = (UIScrollView *)[self.conceptsTableView viewWithTag:LTEXT_SCROLLVIEW_CELLSECTION0_CONCEPTSTABLE];
     
     CGSize scrollViewContentSize = scrollViewMonths.contentSize;
     scrollViewContentSize.width = scrollViewMonths.bounds.size.width * 12;
@@ -299,7 +299,7 @@ static const NSUInteger TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
         
     // Nos ocurre lo mismo con el ScrollView de la celda 1 y sus TableViews
     // En particular hay problemas con el tamaño de los frames en compactConceptsTableView
-    UIScrollView *scrollViewConcepts  = (UIScrollView *)[self.conceptsTableView viewWithTag:TAG_SCROLLVIEW_CELLSECTION1_CONCEPTSTABLE];
+    UIScrollView *scrollViewConcepts  = (UIScrollView *)[self.conceptsTableView viewWithTag:LTEXT_SCROLLVIEW_CELLSECTION1_CONCEPTSTABLE];
     
     scrollViewContentSize = scrollViewConcepts.contentSize;
     scrollViewContentSize.width = scrollViewConcepts.bounds.size.width * 2;
@@ -329,7 +329,7 @@ static const NSUInteger TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
 - (NSUInteger)findActualMonthIndex
 {
     if (nil == self.actualCalculatedIndexMonth) {
-        UIScrollView *actualMonthScrollView = (UIScrollView *)[self.conceptsTableView viewWithTag:TAG_SCROLLVIEW_CELLSECTION0_CONCEPTSTABLE];
+        UIScrollView *actualMonthScrollView = (UIScrollView *)[self.conceptsTableView viewWithTag:LTEXT_SCROLLVIEW_CELLSECTION0_CONCEPTSTABLE];
     
         self.actualCalculatedIndexMonth = [NSNumber numberWithUnsignedInteger:actualMonthScrollView.contentOffset.x / (actualMonthScrollView.contentSize.width / 12)];
     }
@@ -356,15 +356,15 @@ static const NSUInteger TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
 
 - (void)showExtendedConceptTableView
 {
-    UIPageControl *pageControll = (UIPageControl *)[self.footerSection1 viewWithTag:TAG_PAGECONTROL_FOOTERCELLSECTION1_CONCEPTSTABLE];
+    UIPageControl *pageControll = (UIPageControl *)[self.footerSection1 viewWithTag:LTEXT_PAGECONTROL_FOOTERCELLSECTION1_CONCEPTSTABLE];
     if (pageControll.currentPage == 1)
     {
-        UIScrollView *scrollView = (UIScrollView *)[self.conceptsTableView viewWithTag:TAG_SCROLLVIEW_CELLSECTION1_CONCEPTSTABLE];
+        UIScrollView *scrollView = (UIScrollView *)[self.conceptsTableView viewWithTag:LTEXT_SCROLLVIEW_CELLSECTION1_CONCEPTSTABLE];
         
         [scrollView scrollRectToVisible:CGRectMake(0.0, 0.0, scrollView.bounds.size.width, scrollView.bounds.size.height) animated:[self actualSelectedMonth].concepts.count > 0 ? YES : NO];
         [self.extendedConceptsTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
         
-        UILabel *footerLabel = (UILabel *)[self.conceptsTableView viewWithTag:TAG_LABEL_FOOTERCELLSECTION1_CONCEPTSTABLE];
+        UILabel *footerLabel = (UILabel *)[self.conceptsTableView viewWithTag:LTEXT_LABEL_FOOTERCELLSECTION1_CONCEPTSTABLE];
         
         footerLabel.text = NSLocalizedString(@"Extended", @"Titulo seccion extendida de la tabla de conceptos");
         
@@ -374,8 +374,8 @@ static const NSUInteger TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
 
 - (void)reloadYearAndGlobalBalanceInfoAnimated:(BOOL)animated
 {
-    UILabel *yearLabel = (UILabel *)[self.headerSection0 viewWithTag:TAG_YEARLABEL_CELLSECTION0_CONCEPTSTABLE];
-    UILabel *amountLabel = (UILabel *)[self.headerSection0 viewWithTag:TAG_YEARLABELAMOUNT_CELLSECTION0_CONCEPTSTABLE];
+    UILabel *yearLabel = (UILabel *)[self.headerSection0 viewWithTag:LTEXT_YEARLABEL_CELLSECTION0_CONCEPTSTABLE];
+    UILabel *amountLabel = (UILabel *)[self.headerSection0 viewWithTag:LTEXT_YEARLABELAMOUNT_CELLSECTION0_CONCEPTSTABLE];
     
     IAEMonth *actualMonth = [self findActualMonth];
     
@@ -408,7 +408,7 @@ static const NSUInteger TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
 {
     self.actualCalculatedIndexMonth = nil;
     
-    UIScrollView *scrollView = (UIScrollView *)[self.conceptsTableView viewWithTag:TAG_SCROLLVIEW_CELLSECTION0_CONCEPTSTABLE];
+    UIScrollView *scrollView = (UIScrollView *)[self.conceptsTableView viewWithTag:LTEXT_SCROLLVIEW_CELLSECTION0_CONCEPTSTABLE];
     CGRect monthRectToScroll = CGRectMake(scrollView.bounds.size.width * self.actualMonthIndex, 0.0, scrollView.bounds.size.width, scrollView.bounds.size.height);
     
     [scrollView scrollRectToVisible:monthRectToScroll animated:NO];
@@ -488,7 +488,7 @@ static const NSUInteger TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
     // Damos orden de recarga de informacion
     IAEMonth *actualMonth = [self findActualMonth];
     
-    //UIPageControl *pageControl = (UIPageControl *)[self.footerSection0 viewWithTag:TAG_PAGECONTROL_MONTHBALANCECARD];
+    //UIPageControl *pageControl = (UIPageControl *)[self.footerSection0 viewWithTag:LTEXT_PAGECONTROL_MONTHBALANCECARD];
     //pageControl.currentPage = actualMonth.month - 1;
     
     [UIView animateWithDuration:0.25 animations:^{
@@ -497,7 +497,7 @@ static const NSUInteger TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
     
     //self.footerSection1.hidden = input ? YES : actualMonth.concepts.count == 0 ? YES : NO;
     
-    UIScrollView *scrollViewConceptsCell = (UIScrollView *)[self.conceptsTableView viewWithTag:TAG_SCROLLVIEW_CELLSECTION1_CONCEPTSTABLE];
+    UIScrollView *scrollViewConceptsCell = (UIScrollView *)[self.conceptsTableView viewWithTag:LTEXT_SCROLLVIEW_CELLSECTION1_CONCEPTSTABLE];
     scrollViewConceptsCell.scrollEnabled = input ? NO : actualMonth.concepts.count == 0 ? NO : YES;
     
     self.extendedConceptsTableView.scrollEnabled = actualMonth.concepts.count == 0 ? NO : YES; //scrollViewConceptsCell.scrollEnabled;
@@ -512,7 +512,7 @@ static const NSUInteger TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    if (scrollView == [self.conceptsTableView viewWithTag:TAG_SCROLLVIEW_CELLSECTION0_CONCEPTSTABLE]) {
+    if (scrollView == [self.conceptsTableView viewWithTag:LTEXT_SCROLLVIEW_CELLSECTION0_CONCEPTSTABLE]) {
         self.monthBeforeScrollingInMonthCards = [self actualSelectedMonth];
     }
 }
@@ -520,11 +520,11 @@ static const NSUInteger TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     // Actualizaciones ligeras y contínuas basadas en el scroll
-    if (scrollView == [self.conceptsTableView viewWithTag:TAG_SCROLLVIEW_CELLSECTION0_CONCEPTSTABLE]) {
+    if (scrollView == [self.conceptsTableView viewWithTag:LTEXT_SCROLLVIEW_CELLSECTION0_CONCEPTSTABLE]) {
         // Añadimos +0.5 porque al hacer scroll hacia la izquierda el currentOffset da una posicion mas a la izquierda antes de volverse a corregir por si solo
         NSUInteger pageControlIndex = floor(scrollView.contentOffset.x / scrollView.bounds.size.width + 0.5);
         
-        UIPageControl *pageControl = (UIPageControl *)[self.footerSection0 viewWithTag:TAG_PAGECONTROL_MONTHBALANCECARD];
+        UIPageControl *pageControl = (UIPageControl *)[self.footerSection0 viewWithTag:LTEXT_PAGECONTROL_MONTHBALANCECARD];
         pageControl.currentPage = pageControlIndex;
         
         self.actualCalculatedIndexMonth = nil;
@@ -533,9 +533,9 @@ static const NSUInteger TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
 
 - (void)updateFooterContentOfConceptsTable
 {
-    UIScrollView *conceptsScrollView = (UIScrollView *) [self.conceptsTableView viewWithTag:TAG_SCROLLVIEW_CELLSECTION1_CONCEPTSTABLE];
-    UIPageControl *pageControll = (UIPageControl *)[self.footerSection1 viewWithTag:TAG_PAGECONTROL_FOOTERCELLSECTION1_CONCEPTSTABLE];
-    UILabel *modeLabel = (UILabel *)[self.footerSection1 viewWithTag:TAG_LABEL_FOOTERCELLSECTION1_CONCEPTSTABLE];
+    UIScrollView *conceptsScrollView = (UIScrollView *) [self.conceptsTableView viewWithTag:LTEXT_SCROLLVIEW_CELLSECTION1_CONCEPTSTABLE];
+    UIPageControl *pageControll = (UIPageControl *)[self.footerSection1 viewWithTag:LTEXT_PAGECONTROL_FOOTERCELLSECTION1_CONCEPTSTABLE];
+    UILabel *modeLabel = (UILabel *)[self.footerSection1 viewWithTag:LTEXT_LABEL_FOOTERCELLSECTION1_CONCEPTSTABLE];
     
     CGPoint actualOffset = conceptsScrollView.contentOffset;
     if (actualOffset.x == CGPointZero.x) {
@@ -550,7 +550,7 @@ static const NSUInteger TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     // Actualizaciones pesadas basadas en el fin del scroll
-    if (scrollView == [self.conceptsTableView viewWithTag:TAG_SCROLLVIEW_CELLSECTION0_CONCEPTSTABLE]) {
+    if (scrollView == [self.conceptsTableView viewWithTag:LTEXT_SCROLLVIEW_CELLSECTION0_CONCEPTSTABLE]) {
         self.actualCalculatedIndexMonth = nil;
         IAEMonth *actualMonth = [self findActualMonth];
         if (self.monthBeforeScrollingInMonthCards != actualMonth) {
@@ -562,7 +562,7 @@ static const NSUInteger TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
             self.compactConceptsTableView.contentOffset = CGPointZero;
             [self updateConceptsTableViewHeaderVisibilityWithAnimation:YES];
         }
-    } else if (scrollView == [self.conceptsTableView viewWithTag:TAG_SCROLLVIEW_CELLSECTION1_CONCEPTSTABLE]) {
+    } else if (scrollView == [self.conceptsTableView viewWithTag:LTEXT_SCROLLVIEW_CELLSECTION1_CONCEPTSTABLE]) {
         [self updateFooterContentOfConceptsTable];
     }
 }
@@ -638,10 +638,10 @@ static const NSUInteger TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
 - (void)configureMonthBalanceCard:(UIViewController *)viewController withMonth:(IAEMonth *)month andAnimation:(BOOL)animation
 {
     NSDecimalNumber *monthBalance = [month balance];
-    UILabel *monthLabel = (UILabel *)[viewController.view viewWithTag:TAG_MONTHLABEL_MONTHBALANCECARD];
+    UILabel *monthLabel = (UILabel *)[viewController.view viewWithTag:LTEXT_MONTHLABEL_MONTHBALANCECARD];
     monthLabel.text = [month description];
         
-    UILabel *balanceLabel = (UILabel *)[viewController.view viewWithTag:TAG_BALANCELABEL_MONTHBALANCECARD];
+    UILabel *balanceLabel = (UILabel *)[viewController.view viewWithTag:LTEXT_BALANCELABEL_MONTHBALANCECARD];
         
     if (month.concepts.count == 0) {
         balanceLabel.text = NSLocalizedString(@"No items", @"Para indicar que no hay conceptos vinculados");
@@ -860,7 +860,7 @@ static const NSUInteger TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
         {
             UIView *footerView = section == IncomeCategory ? self.incomeFooterSectionsForCompactTableView : self.expenseFooterSectionsForCompactTableView;
             
-            UILabel *amountLabelFooter = (UILabel *)[footerView viewWithTag:TAG_FOOTERTOTALAMOUNT_COMPACTTABLEVIEW];
+            UILabel *amountLabelFooter = (UILabel *)[footerView viewWithTag:LTEXT_FOOTERTOTALAMOUNT_COMPACTTABLEVIEW];
             
             NSDecimalNumber *amount = section == IncomeCategory ? [actualMonth incomes] : [actualMonth expenses];
             if (section == ExpenseCategory)
@@ -929,7 +929,7 @@ static const NSUInteger TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
         
         cell = [self.conceptsTableView dequeueReusableCellWithIdentifier:cellIdentifier];
         
-        [self createAndPrepareMonthBalanceCardsIn:(UIScrollView *)[cell viewWithTag:TAG_SCROLLVIEW_CELLSECTION0_CONCEPTSTABLE]];
+        [self createAndPrepareMonthBalanceCardsIn:(UIScrollView *)[cell viewWithTag:LTEXT_SCROLLVIEW_CELLSECTION0_CONCEPTSTABLE]];
     }
     else
     {
@@ -937,7 +937,7 @@ static const NSUInteger TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
             
         cell = [self.conceptsTableView dequeueReusableCellWithIdentifier:cellIdentifier];
             
-        [self createAndPrepareConceptsTableViewsIn:(UIScrollView *)[cell viewWithTag:TAG_SCROLLVIEW_CELLSECTION1_CONCEPTSTABLE]];
+        [self createAndPrepareConceptsTableViewsIn:(UIScrollView *)[cell viewWithTag:LTEXT_SCROLLVIEW_CELLSECTION1_CONCEPTSTABLE]];
     }
     
     return cell;
@@ -949,12 +949,12 @@ static const NSUInteger TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
     
     UITableViewCell *cell = [self.extendedConceptsTableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
-    UILabel *categoryLabel = (UILabel *)[cell viewWithTag:TAG_AMOUNTCATEGORYTAGLABEL_EXTENDEDCONCEPTTABLEVIEW];
-    UILabel *categoryTypeLabel = (UILabel *)[cell viewWithTag:TAG_AMOUNTCATEGORYTYPELABEL_EXTENDEDCONCEPTTABLEVIEW];
-    UILabel *amountLabel = (UILabel *)[cell viewWithTag:TAG_AMOUNTLABEL_EXTENDEDCONCEPTTABLEVIEW];
-    UILabel *counterLabel = (UILabel *)[cell viewWithTag:TAG_COUNTLABEL_EXTENDEDCONCEPTTABLEVIEW];
+    UILabel *categoryLabel = (UILabel *)[cell viewWithTag:LTEXT_AMOUNTCATEGORYTAGLABEL_EXTENDEDCONCEPTTABLEVIEW];
+    UILabel *categoryTypeLabel = (UILabel *)[cell viewWithTag:LTEXT_AMOUNTCATEGORYTYPELABEL_EXTENDEDCONCEPTTABLEVIEW];
+    UILabel *amountLabel = (UILabel *)[cell viewWithTag:LTEXT_AMOUNTLABEL_EXTENDEDCONCEPTTABLEVIEW];
+    UILabel *counterLabel = (UILabel *)[cell viewWithTag:LTEXT_COUNTLABEL_EXTENDEDCONCEPTTABLEVIEW];
     
-    IAEViewCategoryTypeIndicator *categoryIndicatorView = (IAEViewCategoryTypeIndicator *)[cell viewWithTag:TAG_VIEWCATEGORYINDICATOR_EXTENDEDCONCEPTTABLEVIEW];
+    IAEViewCategoryTypeIndicator *categoryIndicatorView = (IAEViewCategoryTypeIndicator *)[cell viewWithTag:LTEXT_VIEWCATEGORYINDICATOR_EXTENDEDCONCEPTTABLEVIEW];
 
     [categoryIndicatorView applyRoundedCorners];
     
@@ -982,10 +982,10 @@ static const NSUInteger TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
     
     UITableViewCell *cell = [self.compactConceptsTableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
-    UILabel *categoryLabel = (UILabel *)[cell viewWithTag:TAG_CATEGORYTAGLABEL_COMPACTCOMPACTTABLEVEW];
-    UILabel *amountLabel = (UILabel *)[cell viewWithTag:TAG_AMOUNTLABEL_COMPACTCOMPACTTABLEVEW];
-    UILabel *percentageLabel = (UILabel *)[cell viewWithTag:TAG_PERCENTAGELABEL_COMPACTCOMPACTTABLEVEW];
-    UILabel *noDataLabel = (UILabel *)[cell viewWithTag:TAG_NODATALABEL_COMPACTCOMPACTTABLEVEW];
+    UILabel *categoryLabel = (UILabel *)[cell viewWithTag:LTEXT_CATEGORYTAGLABEL_COMPACTCOMPACTTABLEVEW];
+    UILabel *amountLabel = (UILabel *)[cell viewWithTag:LTEXT_AMOUNTLABEL_COMPACTCOMPACTTABLEVEW];
+    UILabel *percentageLabel = (UILabel *)[cell viewWithTag:LTEXT_PERCENTAGELABEL_COMPACTCOMPACTTABLEVEW];
+    UILabel *noDataLabel = (UILabel *)[cell viewWithTag:LTEXT_NODATALABEL_COMPACTCOMPACTTABLEVEW];
 
     // 0 -> incomes section
     // 1 -> expense section
@@ -1365,7 +1365,7 @@ static const NSUInteger TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
         BOOL passCheckLimits = [stepperValue compare:[IAEConstants maxDecimalNumberAllowed]] != NSOrderedDescending;
         if (passCheckLimits) {
             NSComparisonResult compareValues = [actualValue compare:stepperValue];
-            UILabel *labelAmount = (UILabel *)[cellToChangeAmount viewWithTag:TAG_AMOUNTLABEL_EXTENDEDCONCEPTTABLEVIEW];
+            UILabel *labelAmount = (UILabel *)[cellToChangeAmount viewWithTag:LTEXT_AMOUNTLABEL_EXTENDEDCONCEPTTABLEVIEW];
             [[IAEAnimationManager sharedManager] destroyViewGosthEffect:labelAmount withDuration:0.5 andDisplacement:compareValues == NSOrderedAscending ? 44.0 : -44.0];
             if (concept.category.categoryType == ExpenseCategory) {
                 labelAmount.text = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:[stepperValue decimalNumberByMultiplyingBy:[NSDecimalNumber decimalNumberWithString:@"-1"]]];
@@ -1418,7 +1418,7 @@ static const NSUInteger TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
     self.changeAmountPopover.popoverBackgroundViewClass = [IAEPopoverBackgroundCustom class];
     self.changeAmountPopover.popoverContentSize = CGSizeMake(amountStepperViewController.view.bounds.size.width, amountStepperViewController.view.bounds.size.height);
     
-    UILabel *amountLabel = (UILabel *)[cell viewWithTag:TAG_AMOUNTLABEL_EXTENDEDCONCEPTTABLEVIEW];
+    UILabel *amountLabel = (UILabel *)[cell viewWithTag:LTEXT_AMOUNTLABEL_EXTENDEDCONCEPTTABLEVIEW];
     CGRect amountLabelRect = [amountLabel convertRect:amountLabel.frame toView:self.extendedConceptsTableView];
     CGSize sizeOfLabel = [amountLabel.text sizeWithFont:amountLabel.font];
     CGRect popoverPosition = CGRectMake(amountLabelRect.origin.x - sizeOfLabel.width - 40.0,
@@ -1437,7 +1437,7 @@ static const NSUInteger TAG_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
     NSDecimalNumber *stepperValue = [NSDecimalNumber decimalNumberWithString:[NSNumber numberWithDouble:stepper.value].stringValue];
     NSComparisonResult compareValues = [actualValue compare:stepperValue];
 
-    UILabel *labelAmount = (UILabel *)[cellToChangeAmount viewWithTag:TAG_AMOUNTLABEL_EXTENDEDCONCEPTTABLEVIEW];
+    UILabel *labelAmount = (UILabel *)[cellToChangeAmount viewWithTag:LTEXT_AMOUNTLABEL_EXTENDEDCONCEPTTABLEVIEW];
     [[IAEAnimationManager sharedManager] destroyViewGosthEffect:labelAmount withDuration:0.3 andDisplacement:compareValues == NSOrderedAscending ? 44.0 : -44.0];
     labelAmount.text = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:stepperValue];
     

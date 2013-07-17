@@ -207,19 +207,34 @@
     return array;
 }
 
-- (NSArray *)allConceptsSortedByDate
+- (NSArray *)allConceptsSortedByEntryInstant
 {
-    return [self.concepts sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]]];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO];
+    return [self allConceptsSortedByDescriptors:@[sortDescriptor]];
+}
+
+- (NSArray *)allConceptsSortedByDay
+{
+    NSSortDescriptor *daySortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"day" ascending:NO];
+    NSSortDescriptor *dateSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO];
+
+    return [self allConceptsSortedByDescriptors:@[daySortDescriptor, dateSortDescriptor]];
+}
+
+- (NSArray *)allConceptsSortedByDescriptors:(NSArray *)sortDescriptors
+{
+    NSArray *conceptsSorted = [self.concepts sortedArrayUsingDescriptors:sortDescriptors];
+    return conceptsSorted;
 }
 
 - (NSDecimalNumber *)balanceOfAllConceptsOfCategory:(IAECategory *)category
 {
     NSDecimalNumber *balance = [NSDecimalNumber zero];
-    
     NSArray *concepts = [self findAllConceptsWithCategory:category];
     
-    for (IAEConcept *concept in concepts)
+    for (IAEConcept *concept in concepts) {
         balance = [balance decimalNumberByAdding:concept.amount];
+    }
     
     return balance;
 }

@@ -250,7 +250,7 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 - (IAEConcept *)findConceptAtIndexPath:(NSIndexPath *)indexPath
 {
     IAEMonth *actualMonth = [self findActualMonth];
-    NSArray *concepts = [actualMonth allConceptsSortedByDate];
+    NSArray *concepts = [actualMonth allConceptsSortedByEntryInstant];
     IAEConcept *concept = [concepts objectAtIndex:indexPath.row];
     
     return concept;
@@ -672,7 +672,7 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 - (void)modifyAmmountOfConceptOfCellIndexPath:(NSIndexPath *)cellIndexPath byAddingAmmount:(NSNumber *)amount
 {
     IAEMonth *month = [self findActualMonth];
-    IAEConcept *concept = [[month allConceptsSortedByDate] objectAtIndex:cellIndexPath.row];
+    IAEConcept *concept = [[month allConceptsSortedByEntryInstant] objectAtIndex:cellIndexPath.row];
     IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:cellIndexPath];
     
     if ([self updateWithNewAbsoluteValueOfConcept:concept byAdding:amount]) {

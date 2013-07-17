@@ -33,7 +33,9 @@
 - (NSDecimalNumber *)balance;
 - (NSDecimalNumber *)total;
 - (NSDecimalNumber *)balanceOfAllConceptsOfCategory:(IAECategory *)category;
-- (NSArray *)allConceptsSortedByDate;
+
+- (NSArray *)allConceptsSortedByEntryInstant;
+- (NSArray *)allConceptsSortedByDay;
 
 - (NSDecimalNumber *)sumAllAmountOfCategories:(NSArray *)categories;
 - (NSArray *)findAllCategoriesInConceptsOfType:(CategoryType)type;

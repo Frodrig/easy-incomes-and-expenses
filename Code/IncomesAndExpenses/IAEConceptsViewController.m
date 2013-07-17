@@ -615,7 +615,7 @@ static const NSUInteger LTEXT_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
             UITableViewCell *changeCategoryCellSelected = [self.changeCategoryTableViewController.tableView cellForRowAtIndexPath:indexPath];
             
             IAECategory *newCategory = [[IAECategoryStore sharedCategoryStore] findCategoryByTag:changeCategoryCellSelected.textLabel.text];
-            IAEConcept *conceptToChange = [[[self actualSelectedMonth] allConceptsSortedByDate] objectAtIndex:conceptToChangeCategoryIndexPath.row];
+            IAEConcept *conceptToChange = [[[self actualSelectedMonth] allConceptsSortedByEntryInstant] objectAtIndex:conceptToChangeCategoryIndexPath.row];
             conceptToChange.category = newCategory;
             [[IAEBook sharedBook] saveAll];
 
@@ -960,7 +960,7 @@ static const NSUInteger LTEXT_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
     
     IAEMonth *actualMonth = [self findActualMonth];
     
-    NSArray *concepts = [actualMonth allConceptsSortedByDate];
+    NSArray *concepts = [actualMonth allConceptsSortedByEntryInstant];
     
     IAEConcept *concept = [concepts objectAtIndex:indexPath.row];
     
@@ -1036,7 +1036,7 @@ static const NSUInteger LTEXT_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
 {
     NSIndexPath *selectedCellIndex = [self.extendedConceptsTableView indexPathForSelectedRow];
     IAEMonth *actualMonth = [self actualSelectedMonth];
-    NSArray *concepts = [actualMonth allConceptsSortedByDate];
+    NSArray *concepts = [actualMonth allConceptsSortedByEntryInstant];
     IAEConcept *selectedConcept = [concepts objectAtIndex:selectedCellIndex.row];
     
     NSArray *categories = [NSArray arrayWithObject:selectedConcept.category.categoryType == IncomeCategory ? [[IAECategoryStore sharedCategoryStore] generalIncomeCategory] : [[IAECategoryStore sharedCategoryStore] generalExpenseCategory]];
@@ -1070,7 +1070,7 @@ static const NSUInteger LTEXT_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
         cell.textLabel.text = [category localizedTag];
         NSIndexPath *selectedCellIndex = [self.extendedConceptsTableView indexPathForSelectedRow];
         IAEMonth *actualMonth = [self actualSelectedMonth];
-        NSArray *concepts = [actualMonth allConceptsSortedByDate];
+        NSArray *concepts = [actualMonth allConceptsSortedByEntryInstant];
         IAEConcept *selectedConcept = [concepts objectAtIndex:selectedCellIndex.row];
         if (selectedConcept.category == category) {
             cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"17-check.png"]];
@@ -1357,7 +1357,7 @@ static const NSUInteger LTEXT_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
     // Tip importante: los conceptos guardan su valor en valor absoluto y es el tipo de categoria lo que los cualifica
     NSIndexPath *conceptCellToChangeAmountIndex = [self.extendedConceptsTableView indexPathForSelectedRow];
     UITableViewCell *cellToChangeAmount = [self.extendedConceptsTableView cellForRowAtIndexPath:conceptCellToChangeAmountIndex];
-    IAEConcept *concept = [[[self actualSelectedMonth] allConceptsSortedByDate] objectAtIndex:conceptCellToChangeAmountIndex.row];
+    IAEConcept *concept = [[[self actualSelectedMonth] allConceptsSortedByEntryInstant] objectAtIndex:conceptCellToChangeAmountIndex.row];
     NSDecimalNumber *actualValue = [concept amount];
     NSDecimalNumber *stepperValue = concept.category.categoryType == IncomeCategory ? [actualValue decimalNumberByAdding:value] : [actualValue decimalNumberBySubtracting:value];
    
@@ -1432,7 +1432,7 @@ static const NSUInteger LTEXT_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
 {
     NSIndexPath *conceptCellToChangeAmountIndex = [self.extendedConceptsTableView indexPathForSelectedRow];
     UITableViewCell *cellToChangeAmount = [self.extendedConceptsTableView cellForRowAtIndexPath:conceptCellToChangeAmountIndex];
-    IAEConcept *concept = [[[self actualSelectedMonth] allConceptsSortedByDate] objectAtIndex:conceptCellToChangeAmountIndex.row];
+    IAEConcept *concept = [[[self actualSelectedMonth] allConceptsSortedByEntryInstant] objectAtIndex:conceptCellToChangeAmountIndex.row];
     NSDecimalNumber *actualValue = [concept amount];
     NSDecimalNumber *stepperValue = [NSDecimalNumber decimalNumberWithString:[NSNumber numberWithDouble:stepper.value].stringValue];
     NSComparisonResult compareValues = [actualValue compare:stepperValue];
@@ -1451,7 +1451,7 @@ static const NSUInteger LTEXT_HEADERCATEGORYLABEL_COMPACTTABLEVIEW = 910;
     
     IAEMonth *actualMonth = [self findActualMonth];
     
-    NSArray *concepts = [actualMonth allConceptsSortedByDate];
+    NSArray *concepts = [actualMonth allConceptsSortedByEntryInstant];
     
     IAEConcept *conceptToRemove = [concepts objectAtIndex:cellIndexPath.row];
     

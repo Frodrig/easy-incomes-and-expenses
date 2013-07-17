@@ -74,6 +74,8 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 
 - (void)notifyDayModeChanged
 {
+    // ToDo: Seria mas eficiente que llegara la notificacion solo cuando se va a cerrar el dialogo para evitar cambios continuados
+
     NSString *notificationName = self.dayModeSwitch.on ? notificationDayModeOnName : notificationDayModeOffName;
     NSNotification *notification = [NSNotification notificationWithName:notificationName object:nil];
     [[NSNotificationCenter defaultCenter] postNotification:notification];

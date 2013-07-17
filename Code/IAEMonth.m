@@ -215,7 +215,7 @@
 
 - (NSArray *)allConceptsSortedByDay
 {
-    NSSortDescriptor *daySortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"day" ascending:NO];
+    NSSortDescriptor *daySortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"dayOfTheMonth" ascending:NO];
     NSSortDescriptor *dateSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO];
 
     return [self allConceptsSortedByDescriptors:@[daySortDescriptor, dateSortDescriptor]];

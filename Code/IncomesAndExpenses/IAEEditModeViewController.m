@@ -50,6 +50,8 @@
 
 @implementation IAEEditModeViewController
 
+static NSString * const userDefaultsDayModeActive = @"dayModeActive";
+
 static NSString * const notificationDayModeOnName = @"dayModeToOn";
 static NSString * const notificationDayModeOffName = @"dayModeToOff";
 
@@ -247,10 +249,18 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
     return [year.ordererMonths objectAtIndex:index];
 }
 
-- (IAEConcept *)findConceptAtIndexPath:(NSIndexPath *)indexPath
+- (NSArray *)allConceptsSortedAsAppropriateFromActualMonth
 {
     IAEMonth *actualMonth = [self findActualMonth];
-    NSArray *concepts = [actualMonth allConceptsSortedByEntryInstant];
+    BOOL dayModeActive = [[NSUserDefaults standardUserDefaults] boolForKey:userDefaultsDayModeActive];
+    NSArray *sortedConcepts =  dayModeActive ? [actualMonth  allConceptsSortedByDay] : [actualMonth  allConceptsSortedByEntryInstant];
+    
+    return sortedConcepts;
+}
+
+- (IAEConcept *)findConceptAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray *concepts = [self allConceptsSortedAsAppropriateFromActualMonth];
     IAEConcept *concept = [concepts objectAtIndex:indexPath.row];
     
     return concept;
@@ -671,8 +681,12 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 
 - (void)modifyAmmountOfConceptOfCellIndexPath:(NSIndexPath *)cellIndexPath byAddingAmmount:(NSNumber *)amount
 {
+    /*
     IAEMonth *month = [self findActualMonth];
     IAEConcept *concept = [[month allConceptsSortedByEntryInstant] objectAtIndex:cellIndexPath.row];
+    */
+    IAEConcept *concept = [self findConceptAtIndexPath:cellIndexPath];
+    
     IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:cellIndexPath];
     
     if ([self updateWithNewAbsoluteValueOfConcept:concept byAdding:amount]) {
@@ -933,12 +947,12 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 
 - (void)notificationCenterOnDayModeOn:(NSNotification *)notification
 {
-    NSLog(@"day mode on");
+    [self.conceptsCollectionView reloadData];
 }
 
 - (void)notificationCenterOnDayModeOff:(NSNotification *)notification
 {
-    NSLog(@"day mode off");
+    [self.conceptsCollectionView reloadData];
 }
 
 

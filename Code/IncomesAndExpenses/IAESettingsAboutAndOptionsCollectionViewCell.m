@@ -69,6 +69,7 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 - (IBAction)daySwitchValueChanged:(id)sender
 {
     [[NSUserDefaults standardUserDefaults] setBool:self.dayModeSwitch.on forKey:userDefaultsDayModeActive];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     [self notifyDayModeChanged];
 }
 

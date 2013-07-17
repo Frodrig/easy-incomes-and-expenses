@@ -17,4 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *categoryNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *categoryTypeLabel;
 
+- (void)setIdentifierWithEntryInstantIndex:(NSUInteger)index;
+- (void)setIdentifierWithDayOfTheMonthIndex:(NSUInteger)index andDayOfTheWeekName:(NSString *)name;
+
 @end

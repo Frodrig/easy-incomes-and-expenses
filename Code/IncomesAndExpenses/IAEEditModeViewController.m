@@ -234,16 +234,16 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 - (IAEMonth *)findMonthOfPresentDay
 {
     NSUInteger todayMonthIndex = [self findTodayMonthIndex];
-    return [self findMonthForActalYearAtIndex:todayMonthIndex];
+    return [self findMonthForActualYearAtIndex:todayMonthIndex];
 }
 
 - (IAEMonth *)findActualMonth
 {
     NSUInteger actualMonthIndex = self.monthsScrollPageController.currentPage;
-    return [self findMonthForActalYearAtIndex:actualMonthIndex];
+    return [self findMonthForActualYearAtIndex:actualMonthIndex];
 }
 
-- (IAEMonth *)findMonthForActalYearAtIndex:(NSUInteger)index
+- (IAEMonth *)findMonthForActualYearAtIndex:(NSUInteger)index
 {
     IAEYear *year = [self findActualYear];
     return [year.ordererMonths objectAtIndex:index];
@@ -252,10 +252,14 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 - (NSArray *)allConceptsSortedAsAppropriateFromActualMonth
 {
     IAEMonth *actualMonth = [self findActualMonth];
-    BOOL dayModeActive = [[NSUserDefaults standardUserDefaults] boolForKey:userDefaultsDayModeActive];
-    NSArray *sortedConcepts =  dayModeActive ? [actualMonth  allConceptsSortedByDay] : [actualMonth  allConceptsSortedByEntryInstant];
+    NSArray *sortedConcepts =  [self isDayModeActiveForConcepts] ? [actualMonth  allConceptsSortedByDay] : [actualMonth  allConceptsSortedByEntryInstant];
     
     return sortedConcepts;
+}
+
+- (BOOL)isDayModeActiveForConcepts
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:userDefaultsDayModeActive];
 }
 
 - (IAEConcept *)findConceptAtIndexPath:(NSIndexPath *)indexPath
@@ -282,6 +286,14 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 {
     // Nota: Solo tendra sentido si realmente se ha lanzado
     return self.popover == nil;
+}
+
+- (NSUInteger)findNumberOfConceptsOfActualMonth
+{
+    IAEMonth *month = [self findActualMonth];
+    NSUInteger conceptsOfMonth = month.concepts.count;
+    
+    return conceptsOfMonth;
 }
 
 #pragma mark - Update 
@@ -484,10 +496,7 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    IAEMonth *month = [self findActualMonth];
-    NSUInteger conceptsOfMonth = month.concepts.count;
-    
-    return conceptsOfMonth;
+    return [self findNumberOfConceptsOfActualMonth];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -510,10 +519,12 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
     NSString *amountWithSignString = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:amountWithSign];
     EconomicValueType economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:amountWithSign];
     UIColor *colorForEconomicValueType = [IAEColorHelper colorForEconomicValueType:economicValueType];
+    NSUInteger instantEntryIndex = [self findNumberOfConceptsOfActualMonth] - indexPath.row;
     
     cell.valueDecoratorView.economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:amountWithSign];
     [self configureCategoryLabelsOfConceptCell:cell withCategory:category];
     [self configureAmountLabelOfConceptCell:cell withAmountWithSignString:amountWithSignString andColor:colorForEconomicValueType];
+    [self configureIdentifierOfConceptCell:cell withIndex:instantEntryIndex];
 }
 
 - (void)configureCategoryLabelsOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
@@ -562,6 +573,13 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 {
     UIFont *font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:17];
     return font;
+}
+
+- (void)configureIdentifierOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell withIndex:(NSUInteger)index
+{
+    if (![self isDayModeActiveForConcepts]) {
+        [cell setIdentifierWithEntryInstantIndex:index];
+    }
 }
 
 #pragma mark - UICollectionView Delegate

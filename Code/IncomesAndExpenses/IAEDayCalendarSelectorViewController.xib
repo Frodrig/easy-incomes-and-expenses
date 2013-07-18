@@ -9,6 +9,7 @@
                 <outlet property="daysOfTheMonthContainerView" destination="APh-iE-bzJ" id="l7E-4j-tCI"/>
                 <outlet property="daysOfTheWeekContainerView" destination="z2t-zf-iyo" id="lDX-UD-hoR"/>
                 <outlet property="navigationBar" destination="jrh-8i-SdE" id="f5x-cA-v2C"/>
+                <outlet property="navigationBarTitle" destination="4Ef-Xn-h4d" id="a2I-fm-Hcc"/>
                 <outlet property="view" destination="yhG-rh-jRD" id="wxz-Rj-R71"/>
             </connections>
         </placeholder>

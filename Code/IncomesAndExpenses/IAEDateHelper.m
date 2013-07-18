@@ -48,4 +48,27 @@
     return [dayOfTheWeekNames objectAtIndex:dayOfTheWeekIndex - 1];
 }
 
++ (NSString *)findMonthNameStringWithMonthIndex:(NSUInteger)monthIndex
+{
+    static NSArray *monthsNames = nil;
+    if (nil == monthsNames) {
+        monthsNames = @[NSLocalizedString(@"LTEXT_MONTH_JANUARY", @""),
+                        NSLocalizedString(@"LTEXT_MONTH_FEBRUARY", @""),
+                        NSLocalizedString(@"LTEXT_MONTH_MARCH", @""),
+                        NSLocalizedString(@"LTEXT_MONTH_APRIL", @""),
+                        NSLocalizedString(@"LTEXT_MONTH_MAY", @""),
+                        NSLocalizedString(@"LTEXT_MONTH_JUNE", @""),
+                        NSLocalizedString(@"LTEXT_MONTH_JULY", @""),
+                        NSLocalizedString(@"LTEXT_MONTH_AUGUST", @""),
+                        NSLocalizedString(@"LTEXT_MONTH_SEPTEMBER", @""),
+                        NSLocalizedString(@"LTEXT_MONTH_NOVEMBER", @""),
+                        NSLocalizedString(@"LTEXT_MONTH_OCTOBER", @""),
+                        NSLocalizedString(@"LTEXT_MONTH_DECEMBER", @"")];
+    }
+    
+    NSAssert(monthIndex > 0, @"");
+    NSAssert(monthIndex < 13, @"");
+    return [monthsNames objectAtIndex:monthIndex - 1];
+}
+
 @end

@@ -700,7 +700,11 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 
 - (void)openPopoverForSelectDayOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
-    IAEDayCalendarSelectorViewController *viewController = [[IAEDayCalendarSelectorViewController alloc] initWithNibName:nil bundle:nil];
+    IAEYear *year = [self findActualYear];
+    IAEMonth *month = [self findActualMonth];
+    
+    IAEDayCalendarSelectorViewController *viewController = [[IAEDayCalendarSelectorViewController alloc] initWithYearDate:year.yearDate
+                                                                                                            andMonthIndex:month.month];
     
     [self createAndPresentPopoverForConceptCellView:cell.identifierContainerView withViewController:viewController];
 }

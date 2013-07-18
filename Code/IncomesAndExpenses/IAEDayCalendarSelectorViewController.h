@@ -10,4 +10,6 @@
 
 @interface IAEDayCalendarSelectorViewController : UIViewController
 
+- (instancetype)initWithYearDate:(NSUInteger)yearDate andMonthIndex:(NSUInteger)monthIndex;
+
 @end

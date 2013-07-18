@@ -136,13 +136,15 @@ static NSString * const ltexForEntryWithNoDay = @"LTEXT_EDITMODECONCEPTCELL_ENTR
 
 - (void)createAndAddInIdentifierContainerViewEntryInstantLabel
 {
-    UILabel *label = [self createEmptyDefaultLabelWithTag:tagForEntryInstantLabelOfIdentifierContainerView andNumberOfLines:1];
+    UILabel *label = [self createEmptyDefaultLabelWithRect:self.identifierContainerView.bounds
+                                                       tag:tagForEntryInstantLabelOfIdentifierContainerView
+                                          andNumberOfLines:1];
     [self.identifierContainerView addSubview:label];
 }
 
-- (UILabel *)createEmptyDefaultLabelWithTag:(NSUInteger)tag andNumberOfLines:(NSUInteger)numberOfLines
+- (UILabel *)createEmptyDefaultLabelWithRect:(CGRect)rect tag:(NSUInteger)tag andNumberOfLines:(NSUInteger)numberOfLines
 {
-    UILabel *label = [[UILabel alloc] initWithFrame:self.identifierContainerView.bounds];
+    UILabel *label = [[UILabel alloc] initWithFrame:rect];
     label.tag = tag;
     label.textAlignment = NSTextAlignmentCenter;
     label.numberOfLines = numberOfLines;
@@ -177,7 +179,9 @@ static NSString * const ltexForEntryWithNoDay = @"LTEXT_EDITMODECONCEPTCELL_ENTR
 
 - (void)createAndAddIdentifierWithoutDay
 {
-    UILabel *label = [self createEmptyDefaultLabelWithTag:tagForNoDayLabelOfIdentifierContainerVew andNumberOfLines:2];
+    UILabel *label = [self createEmptyDefaultLabelWithRect:self.identifierContainerView.bounds
+                                                       tag:tagForNoDayLabelOfIdentifierContainerVew
+                                          andNumberOfLines:2];
     [self.identifierContainerView addSubview:label];
 }
 

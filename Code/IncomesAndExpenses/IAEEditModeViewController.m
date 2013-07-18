@@ -579,7 +579,17 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 {
     if (![self isDayModeActiveForConcepts]) {
         [cell setIdentifierWithEntryInstantIndex:index];
+    } else if ([self isDayOfTheMonthAssociatedWithConceptCell:cell]) {
+        // ...
+    } else {
+        [cell setIdentifierWithoutDay];
     }
+}
+
+- (BOOL)isDayOfTheMonthAssociatedWithConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
+{
+    IAEConcept *concept = [self findConceptOfCell:cell];
+    return concept.dayOfTheMonth != 0;
 }
 
 #pragma mark - UICollectionView Delegate

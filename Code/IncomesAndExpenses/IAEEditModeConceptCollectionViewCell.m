@@ -22,9 +22,14 @@
 static NSUInteger tagForEntryInstantLabelOfIdentifierContainerView = 10;
 static NSUInteger tagForDayIndexLabelOfIdentifierContainerView = 20;
 static NSUInteger tagForDayOfTheWeekNameLabelOfIdentifierContainerView = 30;
+static NSUInteger tagForNoDayLabelOfIdentifierContainerVew = 40;
 
 static NSString  * const entryInstantFontFamilyName = @"HelveticaNeue-Bold";
 static CGFloat entryInstantFontFamilySize = 66;
+static NSString * const entryWithNoDayFontFamilyName = @"HelveticaNeue";
+static CGFloat entryWithNoDayFontFamilySize = 17;
+
+static NSString * const ltexForEntryWithNoDay = @"LTEXT_EDITMODECONCEPTCELL_ENTRYWITHNODAY";
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -49,30 +54,60 @@ static CGFloat entryInstantFontFamilySize = 66;
 
 - (void)setIdentifierWithEntryInstantIndex:(NSUInteger)index
 {
-    [self removeIdentifierContainerViewSubviewsIfNotConfiguredWithEntryInstantIndex];
-    [self createAndAddInIdentifierContainerViewEntryInstantLabel];
+    if ([self removeIdentifierContainerViewSubviewsIfNotConfiguredWithEntryInstantIndex]) {
+        [self createAndAddInIdentifierContainerViewEntryInstantLabel];
+    }
+    
     [self configureEntryInstantLabelWithIndex:index];
 }
 
 - (void)setIdentifierWithDayOfTheMonthIndex:(NSUInteger)index andDayOfTheWeekName:(NSString *)name
 {
-    [self removeIdentifierContainerViewSubviewsIfNotConfiguredWithDay];
-    [self createAndAddInIdentifierContainerViewDayLabels];
+    if ([self removeIdentifierContainerViewSubviewsIfNotConfiguredWithDay]) {
+        [self createAndAddInIdentifierContainerViewDayLabels];
+    }
+    
     [self configureDayLabelsWithDayOfTheMonthIndex:index andDayOfTheWeekName:name];
 }
 
-- (void)removeIdentifierContainerViewSubviewsIfNotConfiguredWithEntryInstantIndex
+- (void)setIdentifierWithoutDay
 {
-    if (![self isContainerViewConfiguredWithEntryInstantIndex]) {
-        [self removeIdentifierContainerViewSubviews];
+    if ([self removeIdentifierContainerViewSubviewsIfNotConfiguredWithNoDay]) {
+        [self createAndAddIdentifierWithoutDay];
     }
+    
+    [self configureNoDayLabel];
 }
 
-- (void)removeIdentifierContainerViewSubviewsIfNotConfiguredWithDay
+- (BOOL)removeIdentifierContainerViewSubviewsIfNotConfiguredWithEntryInstantIndex
 {
-    if (![self isContainerViewConfiguredWithDay]) {
+    BOOL remove = ![self isContainerViewConfiguredWithEntryInstantIndex];
+    if (remove) {
         [self removeIdentifierContainerViewSubviews];
     }
+    
+    return remove;
+}
+
+- (BOOL)removeIdentifierContainerViewSubviewsIfNotConfiguredWithDay
+{
+    BOOL remove = ![self isContainerViewConfiguredWithDay];
+    if (remove) {
+        [self removeIdentifierContainerViewSubviews];
+    }
+    
+    return remove;
+}
+
+- (BOOL)removeIdentifierContainerViewSubviewsIfNotConfiguredWithNoDay
+{
+    BOOL remove = ![self isContainerViewConfiguredWithNoDay];
+    
+    if (remove) {
+        [self removeIdentifierContainerViewSubviews];
+    }
+    
+    return remove;
 }
 
 - (BOOL)isContainerViewConfiguredWithEntryInstantIndex
@@ -86,6 +121,11 @@ static CGFloat entryInstantFontFamilySize = 66;
             [self.identifierContainerView viewWithTag:tagForDayOfTheWeekNameLabelOfIdentifierContainerView] != nil);
 }
 
+- (BOOL)isContainerViewConfiguredWithNoDay
+{
+    return ([self.identifierContainerView viewWithTag:tagForNoDayLabelOfIdentifierContainerVew] != nil);
+}
+
 - (void)removeIdentifierContainerViewSubviews
 {
     while(self.identifierContainerView.subviews.count > 0) {
@@ -96,13 +136,20 @@ static CGFloat entryInstantFontFamilySize = 66;
 
 - (void)createAndAddInIdentifierContainerViewEntryInstantLabel
 {
-    UILabel *label = [[UILabel alloc] initWithFrame:self.identifierContainerView.bounds];
-    label.tag = tagForEntryInstantLabelOfIdentifierContainerView;
-    label.textAlignment = NSTextAlignmentCenter;
-    label.backgroundColor = [UIColor clearColor];
-    [label setMinimumScaleFactor:0.1];
-    
+    UILabel *label = [self createEmptyDefaultLabelWithTag:tagForEntryInstantLabelOfIdentifierContainerView andNumberOfLines:1];
     [self.identifierContainerView addSubview:label];
+}
+
+- (UILabel *)createEmptyDefaultLabelWithTag:(NSUInteger)tag andNumberOfLines:(NSUInteger)numberOfLines
+{
+    UILabel *label = [[UILabel alloc] initWithFrame:self.identifierContainerView.bounds];
+    label.tag = tag;
+    label.textAlignment = NSTextAlignmentCenter;
+    label.numberOfLines = numberOfLines;
+    label.backgroundColor = [UIColor clearColor];
+    [label setMinimumScaleFactor:0.5];
+    
+    return label;
 }
 
 - (void)configureEntryInstantLabelWithIndex:(NSUInteger)index
@@ -126,6 +173,24 @@ static CGFloat entryInstantFontFamilySize = 66;
 - (void)configureDayLabelsWithDayOfTheMonthIndex:(NSUInteger)dayOfTheMonthIndex andDayOfTheWeekName:(NSString *)dayOfTheWeekName
 {
     // ...
+}
+
+- (void)createAndAddIdentifierWithoutDay
+{
+    UILabel *label = [self createEmptyDefaultLabelWithTag:tagForNoDayLabelOfIdentifierContainerVew andNumberOfLines:2];
+    [self.identifierContainerView addSubview:label];
+}
+
+- (void)configureNoDayLabel
+{
+    NSString *text = NSLocalizedString(ltexForEntryWithNoDay, @"");
+    UIFont *font = [UIFont fontWithName:entryWithNoDayFontFamilyName size:entryWithNoDayFontFamilySize];
+    NSDictionary *attributes = @{NSFontAttributeName: font,
+                                 NSForegroundColorAttributeName: [UIColor colorWithWhite:0.8 alpha:1.0],
+                                 NSKernAttributeName: [NSNumber numberWithInt:0]};
+    
+    UILabel *label = (UILabel *)[self.identifierContainerView viewWithTag:tagForNoDayLabelOfIdentifierContainerVew];
+    label.attributedText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
 

@@ -19,5 +19,6 @@
 
 - (void)setIdentifierWithEntryInstantIndex:(NSUInteger)index;
 - (void)setIdentifierWithDayOfTheMonthIndex:(NSUInteger)index andDayOfTheWeekName:(NSString *)name;
+- (void)setIdentifierWithoutDay;
 
 @end

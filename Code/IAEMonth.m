@@ -43,29 +43,42 @@
     return [NSNumber numberWithInteger:daysRange.length];
 }
 
-- (IAEConcept *)addConceptWithAmount:(NSDecimalNumber *)amount category:(IAECategory *)category date:(NSTimeInterval)date andDescription:(NSString *)description
+- (IAEConcept *)addConceptWithAmount:(NSDecimalNumber *)amount
+                            category:(IAECategory *)category
+                                date:(NSTimeInterval)date
+                      andDescription:(NSString *)description
+{
+    return [self addConceptWithAmount:amount category:category date:date andDescription:description];
+}
+
+- (IAEConcept *)addConceptWithAmount:(NSDecimalNumber *)amount
+                            category:(IAECategory *)category
+                                date:(NSTimeInterval)date
+                       dayOfTheMonth:(NSUInteger)dayOfTheMonth
+                      andDescription:(NSString *)description
 {
     IAEConcept *newConcept;
     
     if ([amount compare:[NSDecimalNumber zero]] != NSOrderedSame) {
         newConcept = [NSEntityDescription insertNewObjectForEntityForName:@"IAEConcept" inManagedObjectContext:[IAEBook sharedBook].context];
         [self addConceptsObject:newConcept];
- 
+        
         [newConcept addObserver:self forKeyPath:@"amount" options:0 context:NULL];
         [newConcept addObserver:self forKeyPath:@"category" options:0 context:NULL];
         [newConcept addObserver:self forKeyPath:@"detailDescription" options:0 context:NULL];
         [newConcept addObserver:self forKeyPath:@"dayOfTheMonth" options:0 context:NULL];
-
+        
         newConcept.category = category;
         newConcept.amount = amount;
         newConcept.date = date;
+        newConcept.dayOfTheMonth = dayOfTheMonth;
         newConcept.detailDescription = [description copy];
         
-         NSDictionary *extraInfo = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:self, newConcept, nil] forKeys:[NSArray arrayWithObjects:@"Month", @"Concept", nil]];
-         
-         NSNotification *notification = [NSNotification notificationWithName:@"NewConceptAdded" object:self userInfo:extraInfo];
-         
-         [[NSNotificationCenter defaultCenter] postNotification:notification];
+        NSDictionary *extraInfo = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:self, newConcept, nil] forKeys:[NSArray arrayWithObjects:@"Month", @"Concept", nil]];
+        
+        NSNotification *notification = [NSNotification notificationWithName:@"NewConceptAdded" object:self userInfo:extraInfo];
+        
+        [[NSNotificationCenter defaultCenter] postNotification:notification];
     }
     
     return newConcept;

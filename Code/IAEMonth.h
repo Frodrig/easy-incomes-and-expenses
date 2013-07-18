@@ -24,7 +24,16 @@
 
 - (NSDecimalNumber *)daysOfTheMonth;
 
-- (IAEConcept *)addConceptWithAmount:(NSDecimalNumber *)amount category:(IAECategory *)category date:(NSTimeInterval)date andDescription:(NSString *)description;
+- (IAEConcept *)addConceptWithAmount:(NSDecimalNumber *)amount
+                            category:(IAECategory *)category
+                                date:(NSTimeInterval)date
+                      andDescription:(NSString *)description;
+
+- (IAEConcept *)addConceptWithAmount:(NSDecimalNumber *)amount
+                            category:(IAECategory *)category
+                                date:(NSTimeInterval)date
+                       dayOfTheMonth:(NSUInteger)dayOfTheMonth
+                      andDescription:(NSString *)description;
 
 - (void)removeConcept:(IAEConcept *)concept;
 

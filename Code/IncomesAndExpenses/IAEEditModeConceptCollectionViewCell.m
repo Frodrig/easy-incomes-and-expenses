@@ -180,7 +180,6 @@ static NSString * const ltexForEntryWithNoDay = @"LTEXT_EDITMODECONCEPTCELL_ENTR
     
     UILabel *label = (UILabel *)[self.identifierContainerView viewWithTag:tagForEntryInstantLabelOfIdentifierContainerView];
     label.attributedText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
-    [label sizeToFit];
 }
 
 - (void)createAndAddInIdentifierContainerViewDayLabels

@@ -37,7 +37,6 @@
 - (void)loadMoreRecientYear;
 - (void)unloadAll;
 
-
 - (NSArray *)findAllConceptsWithCategory:(IAECategory *)category;
 - (NSArray *)findAllYearWithConcepts;
 

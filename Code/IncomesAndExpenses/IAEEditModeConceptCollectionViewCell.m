@@ -10,6 +10,7 @@
 #import "IAEValueDecoratorView.h"
 #import "UIView+DrawBottomLine.m"
 #import "NSNumber+DefaultValues.h"
+#import "NSString+TwoDigitString.h"
 
 @interface IAEEditModeConceptCollectionViewCell()
 
@@ -21,13 +22,14 @@
 
 static NSUInteger tagForEntryInstantLabelOfIdentifierContainerView = 10;
 static NSUInteger tagForDayIndexLabelOfIdentifierContainerView = 20;
-static NSUInteger tagForDayOfTheWeekNameLabelOfIdentifierContainerView = 30;
-static NSUInteger tagForNoDayLabelOfIdentifierContainerVew = 40;
+static NSUInteger tagForNoDayLabelOfIdentifierContainerVew = 30;
 
 static NSString  * const entryInstantFontFamilyName = @"HelveticaNeue-Bold";
 static CGFloat entryInstantFontFamilySize = 66;
 static NSString * const entryWithNoDayFontFamilyName = @"HelveticaNeue";
 static CGFloat entryWithNoDayFontFamilySize = 17;
+static NSString * const entryDayOfTheMonthFontFamilyName = @"HelveticaNeue";
+static CGFloat entryDayOfTheMonthFontFamilySize = 24;
 
 static NSString * const ltexForEntryWithNoDay = @"LTEXT_EDITMODECONCEPTCELL_ENTRYWITHNODAY";
 
@@ -117,8 +119,7 @@ static NSString * const ltexForEntryWithNoDay = @"LTEXT_EDITMODECONCEPTCELL_ENTR
 
 - (BOOL)isContainerViewConfiguredWithDay
 {
-    return ([self.identifierContainerView viewWithTag:tagForDayIndexLabelOfIdentifierContainerView] != nil &&
-            [self.identifierContainerView viewWithTag:tagForDayOfTheWeekNameLabelOfIdentifierContainerView] != nil);
+    return ([self.identifierContainerView viewWithTag:tagForDayIndexLabelOfIdentifierContainerView] != nil);
 }
 
 - (BOOL)isContainerViewConfiguredWithNoDay
@@ -169,12 +170,37 @@ static NSString * const ltexForEntryWithNoDay = @"LTEXT_EDITMODECONCEPTCELL_ENTR
 
 - (void)createAndAddInIdentifierContainerViewDayLabels
 {
-    // ....
+    [self createAndAddInIdentifierContainerViewDayOfTheMonthLabel];
+}
+
+- (void)createAndAddInIdentifierContainerViewDayOfTheMonthLabel
+{
+    UILabel *dayOfTheMonthLabel = [self createEmptyDefaultLabelWithRect:self.identifierContainerView.bounds
+                                                                    tag:tagForDayIndexLabelOfIdentifierContainerView
+                                                       andNumberOfLines:2];
+    [self.identifierContainerView addSubview:dayOfTheMonthLabel];
 }
 
 - (void)configureDayLabelsWithDayOfTheMonthIndex:(NSUInteger)dayOfTheMonthIndex andDayOfTheWeekName:(NSString *)dayOfTheWeekName
 {
-    // ...
+    [self configureDayOfTheMonthAndWeekLabelWithIndex:dayOfTheMonthIndex andWeekdayName:dayOfTheWeekName];
+}
+
+- (void)configureDayOfTheMonthAndWeekLabelWithIndex:(NSUInteger)dayOfTheMonthIndex andWeekdayName:(NSString *)dayOfTheWeekName
+{
+    UIFont *font = [UIFont fontWithName:entryWithNoDayFontFamilyName size:entryDayOfTheMonthFontFamilySize];
+    NSDictionary *attributes = @{NSFontAttributeName: font,
+                                 NSForegroundColorAttributeName: [UIColor colorWithWhite:0.8 alpha:1.0],
+                                 NSKernAttributeName: [NSNumber numberWithInt:2.0]};
+    
+    UILabel *label = (UILabel *)[self.identifierContainerView viewWithTag:tagForDayIndexLabelOfIdentifierContainerView];
+ 
+    NSString *dayOfTheMonth = [NSString stringWithAtLastTwoDigitFromNumber:[NSNumber numberWithUnsignedInteger:dayOfTheMonthIndex]];
+    NSString *dayOfTheWeekNamePrepared = [dayOfTheWeekName substringWithRange:NSMakeRange(0, 3)];
+    dayOfTheWeekNamePrepared = [dayOfTheWeekNamePrepared lowercaseString];
+    NSString *text = [NSString stringWithFormat:@"%@\n%@", dayOfTheMonth, dayOfTheWeekNamePrepared];
+    
+    label.attributedText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
 - (void)createAndAddIdentifierWithoutDay

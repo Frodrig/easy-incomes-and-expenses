@@ -27,6 +27,7 @@
 #import "IAEAboutAndOptionsViewController.h"
 #import "NSNumber+DefaultValues.h"
 #import "IAECategoryStore.h"
+#import "IAEDateHelper.h"
 #import "UIView+LoadFromXib.h"
 #import "UIView+RoundedCorners.h"
 #import "NSDecimalNumber+AbsoluteValue.h"
@@ -294,6 +295,15 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
     NSUInteger conceptsOfMonth = month.concepts.count;
     
     return conceptsOfMonth;
+}
+
+- (NSString *)findDayOfTheWeekNameFromConcept:(IAEConcept *)concept
+{
+    NSDate *dateFromTimeInterval = [NSDate dateWithTimeIntervalSince1970:concept.date];
+    NSDateComponents *dateComponents = [[IAEDateHelper findCurrentCalendar] components:NSWeekdayCalendarUnit fromDate:dateFromTimeInterval];
+    NSString *dayOfTheWeekName = [IAEDateHelper findDayOfTheWeekNameStringWithDayOfTheWeekIndex:dateComponents.weekday];
+    
+    return dayOfTheWeekName;
 }
 
 #pragma mark - Update 
@@ -580,7 +590,7 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
     if (![self isDayModeActiveForConcepts]) {
         [cell setIdentifierWithEntryInstantIndex:index];
     } else if ([self isDayOfTheMonthAssociatedWithConceptCell:cell]) {
-        // ...
+        [self setIdentifierForDayOfTheMonthAndDayOfTheWeekNameForCell:cell withIndex:index];
     } else {
         [cell setIdentifierWithoutDay];
     }
@@ -590,6 +600,14 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 {
     IAEConcept *concept = [self findConceptOfCell:cell];
     return concept.dayOfTheMonth != 0;
+}
+
+- (void)setIdentifierForDayOfTheMonthAndDayOfTheWeekNameForCell:(IAEEditModeConceptCollectionViewCell *)cell withIndex:(NSUInteger)index
+{
+    IAEConcept *concept = [self findConceptOfCell:cell];
+    NSString *dayOfTheWeekName = [self findDayOfTheWeekNameFromConcept:concept];
+    
+    [cell setIdentifierWithDayOfTheMonthIndex:concept.dayOfTheMonth andDayOfTheWeekName:dayOfTheWeekName];
 }
 
 #pragma mark - UICollectionView Delegate
@@ -709,10 +727,6 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 
 - (void)modifyAmmountOfConceptOfCellIndexPath:(NSIndexPath *)cellIndexPath byAddingAmmount:(NSNumber *)amount
 {
-    /*
-    IAEMonth *month = [self findActualMonth];
-    IAEConcept *concept = [[month allConceptsSortedByEntryInstant] objectAtIndex:cellIndexPath.row];
-    */
     IAEConcept *concept = [self findConceptAtIndexPath:cellIndexPath];
     
     IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:cellIndexPath];

@@ -10,6 +10,8 @@
 
 @interface IAEDateHelper : NSObject
 
++ (NSCalendar *)findCurrentCalendar;
 + (NSUInteger)findActualYear;
++ (NSString *)findDayOfTheWeekNameStringWithDayOfTheWeekIndex:(NSUInteger)dayOfTheWeekIndex;
 
 @end

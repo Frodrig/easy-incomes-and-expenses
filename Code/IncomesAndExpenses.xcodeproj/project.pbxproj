@@ -123,6 +123,8 @@
 		5B903BBE1783220A00DBEFB2 /* IAEEditModeMonthBalanceItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B903BBD1782DBDC00DBEFB2 /* IAEEditModeMonthBalanceItem.xib */; };
 		5B94036017904C1400F9C1D0 /* IAEYearSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B94035F17904C1400F9C1D0 /* IAEYearSelectorViewController.xib */; };
 		5BA0130D179800AC00337E84 /* NSString+TwoDigitString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA0130C179800AC00337E84 /* NSString+TwoDigitString.m */; };
+		5BA0131217983A9000337E84 /* IAEDayCalendarSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA0131017983A9000337E84 /* IAEDayCalendarSelectorViewController.m */; };
+		5BA0131317983A9000337E84 /* IAEDayCalendarSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA0131117983A9000337E84 /* IAEDayCalendarSelectorViewController.xib */; };
 		5BA0A288167E33B600CBB79B /* FooterSection0ConceptsTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA0A287167E33B600CBB79B /* FooterSection0ConceptsTableView.xib */; };
 		5BA51A7C1796D81E00A3D923 /* IAEInfoAboutAndOptionsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA51A7B1796D81E00A3D923 /* IAEInfoAboutAndOptionsCollectionViewCell.m */; };
 		5BA97710166F42F5007B59C4 /* Section1ConceptsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA9770F166F42F5007B59C4 /* Section1ConceptsTableViewCell.xib */; };
@@ -369,6 +371,9 @@
 		5B94035F17904C1400F9C1D0 /* IAEYearSelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEYearSelectorViewController.xib; sourceTree = "<group>"; };
 		5BA0130B179800AC00337E84 /* NSString+TwoDigitString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+TwoDigitString.h"; sourceTree = "<group>"; };
 		5BA0130C179800AC00337E84 /* NSString+TwoDigitString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+TwoDigitString.m"; sourceTree = "<group>"; };
+		5BA0130F17983A9000337E84 /* IAEDayCalendarSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEDayCalendarSelectorViewController.h; sourceTree = "<group>"; };
+		5BA0131017983A9000337E84 /* IAEDayCalendarSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEDayCalendarSelectorViewController.m; sourceTree = "<group>"; };
+		5BA0131117983A9000337E84 /* IAEDayCalendarSelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEDayCalendarSelectorViewController.xib; sourceTree = "<group>"; };
 		5BA0A287167E33B600CBB79B /* FooterSection0ConceptsTableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FooterSection0ConceptsTableView.xib; sourceTree = "<group>"; };
 		5BA51A7A1796D81E00A3D923 /* IAEInfoAboutAndOptionsCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEInfoAboutAndOptionsCollectionViewCell.h; sourceTree = "<group>"; };
 		5BA51A7B1796D81E00A3D923 /* IAEInfoAboutAndOptionsCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEInfoAboutAndOptionsCollectionViewCell.m; sourceTree = "<group>"; };
@@ -734,6 +739,7 @@
 		5B36AFEC1785871E00132475 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				5BA0130E17983A6600337E84 /* Day Calendar Selector */,
 				5B36AFED1785872900132475 /* Adjust Concept Amout */,
 			);
 			name = "View Controllers";
@@ -1192,6 +1198,16 @@
 			name = String;
 			sourceTree = "<group>";
 		};
+		5BA0130E17983A6600337E84 /* Day Calendar Selector */ = {
+			isa = PBXGroup;
+			children = (
+				5BA0130F17983A9000337E84 /* IAEDayCalendarSelectorViewController.h */,
+				5BA0131017983A9000337E84 /* IAEDayCalendarSelectorViewController.m */,
+				5BA0131117983A9000337E84 /* IAEDayCalendarSelectorViewController.xib */,
+			);
+			name = "Day Calendar Selector";
+			sourceTree = "<group>";
+		};
 		5BB040F216BFBC54009C1143 /* Category Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1582,6 +1598,7 @@
 				5BAA5D8E17096B7100B6B3F8 /* 287-at@2x.png in Resources */,
 				5BAA5D8F17096B7100B6B3F8 /* 287-at.png in Resources */,
 				5B62D85D178EA8A2009879A6 /* IAEYearSelectorCollectionViewCell.xib in Resources */,
+				5BA0131317983A9000337E84 /* IAEDayCalendarSelectorViewController.xib in Resources */,
 				5B1F0D3717841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1617,6 +1634,7 @@
 				5BEA98AB1793E3A500098AE0 /* IAECircleDecoratorView.m in Sources */,
 				5B36AFF71785BBF400132475 /* NSDecimalNumber+AbsoluteValue.m in Sources */,
 				5BD06177163A99BB00A80BE3 /* IAECategory.m in Sources */,
+				5BA0131217983A9000337E84 /* IAEDayCalendarSelectorViewController.m in Sources */,
 				5B62D86E178EC20E009879A6 /* IAEEconomicValueTypeHelper.m in Sources */,
 				5B62D870178EC20E009879A6 /* IAEColorHelper.m in Sources */,
 				5B26461117968496006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.m in Sources */,

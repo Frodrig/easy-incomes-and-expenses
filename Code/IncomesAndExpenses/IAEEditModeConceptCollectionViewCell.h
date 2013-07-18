@@ -16,9 +16,15 @@
 @property (weak, nonatomic) IBOutlet UILabel *amountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *categoryNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *categoryTypeLabel;
+@property (weak, nonatomic) IBOutlet UIView *identifierContainerView;
 
 - (void)setIdentifierWithEntryInstantIndex:(NSUInteger)index;
 - (void)setIdentifierWithDayOfTheMonthIndex:(NSUInteger)index andDayOfTheWeekName:(NSString *)name;
 - (void)setIdentifierWithoutDay;
+
+- (BOOL)isAmountLabelContainingLocationPoint:(CGPoint)location;
+- (BOOL)isCategoryNameOrTypeContainingLocationPoint:(CGPoint)location;
+- (BOOL)isIdentifierOrDayContainingLocationPoint:(CGPoint)location;
+
 
 @end

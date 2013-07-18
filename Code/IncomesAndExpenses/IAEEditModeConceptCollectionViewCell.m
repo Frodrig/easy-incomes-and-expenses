@@ -14,8 +14,6 @@
 
 @interface IAEEditModeConceptCollectionViewCell()
 
-@property (weak, nonatomic) IBOutlet UIView *identifierContainerView;
-
 @end
 
 @implementation IAEEditModeConceptCollectionViewCell
@@ -49,6 +47,23 @@ static NSString * const ltexForEntryWithNoDay = @"LTEXT_EDITMODECONCEPTCELL_ENTR
 {
     // Drawing code
     [self drawBottomDotLine];
+}
+
+#pragma mark - Location Test
+
+- (BOOL)isAmountLabelContainingLocationPoint:(CGPoint)location
+{
+    return CGRectContainsPoint(self.amountLabel.frame, location);
+}
+
+- (BOOL)isCategoryNameOrTypeContainingLocationPoint:(CGPoint)location
+{
+    return CGRectContainsPoint(self.categoryNameLabel.frame, location) || CGRectContainsPoint(self.categoryTypeLabel.frame, location);
+}
+
+- (BOOL)isIdentifierOrDayContainingLocationPoint:(CGPoint)location
+{
+    return CGRectContainsPoint(self.identifierContainerView.frame, location);
 }
 
 // Esto va en otra clase como, por ejemplo, un configurador

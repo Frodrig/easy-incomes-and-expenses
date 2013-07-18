@@ -25,6 +25,7 @@
 #import "IAEYearSelectorViewController.h"
 #import "IAEYearSelectorViewControllerDelegate.h"
 #import "IAEAboutAndOptionsViewController.h"
+#import "IAEDayCalendarSelectorViewController.h"
 #import "NSNumber+DefaultValues.h"
 #import "IAECategoryStore.h"
 #import "IAEDateHelper.h"
@@ -645,11 +646,13 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
                    underLocatonOfTapGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
 {
     CGPoint location = [self convertLocationToCellArea:cell fromGestureRecognizer:gestureRecognizer];
-    if (CGRectContainsPoint(cell.amountLabel.frame, location)) {
-        [self openPopoverForAdjustConceptCellAmount:cell];
-    } else if (CGRectContainsPoint(cell.categoryNameLabel.frame, location) ||
-               CGRectContainsPoint(cell.categoryTypeLabel.frame, location)) {
-        [self openPopoverForEditConceptCellCategory:cell];
+    
+    if ([cell isAmountLabelContainingLocationPoint:location]) {
+        [self openPopoverForAdjustAmountOfConceptCell:cell];
+    } else if ([cell isCategoryNameOrTypeContainingLocationPoint:location]) {
+        [self openPopoverForEditCategoryOfConceptCell:cell];
+    } else if ([cell isIdentifierOrDayContainingLocationPoint:location] && [self isDayModeActiveForConcepts]) {
+        [self openPopoverForSelectDayOfConceptCell:cell];
     }
 }
 
@@ -661,7 +664,7 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
     return locationConvertedToCellArea;
 }
 
-- (void)openPopoverForAdjustConceptCellAmount:(IAEEditModeConceptCollectionViewCell *)cell
+- (void)openPopoverForAdjustAmountOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
 {    
     IAEAdjustConceptAmountViewController *viewController = [[IAEAdjustConceptAmountViewController alloc] init];
     viewController.delegate = self;
@@ -670,7 +673,7 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
     [self createAndPresentPopoverForConceptCellView:cell.amountLabel withViewController:viewController];
 }
 
-- (void)openPopoverForEditConceptCellCategory:(IAEEditModeConceptCollectionViewCell *)cell
+- (void)openPopoverForEditCategoryOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
     IAECategorySelectorViewController *viewController = [[IAECategorySelectorViewController alloc] initWithExtraActions:CATEGORYSELECTOR_EXTRAACTION_CATEGORYSELECTION];
     viewController.delegate = self;
@@ -693,6 +696,13 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
     [self.popover presentPopoverFromRect:presentPopoverFrame
                                   inView:view.superview
                 permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
+}
+
+- (void)openPopoverForSelectDayOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
+{
+    IAEDayCalendarSelectorViewController *viewController = [[IAEDayCalendarSelectorViewController alloc] initWithNibName:nil bundle:nil];
+    
+    [self createAndPresentPopoverForConceptCellView:cell.identifierContainerView withViewController:viewController];
 }
 
 - (void)findCellOfConceptsCollectionViewAndExecuteAtionUnderDobleTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer

@@ -8,6 +8,7 @@
 
 #import "IAEDayCalendarSelectorViewController.h"
 #import "IAEDateHelper.h"
+#import "IAEVersionHelper.h"
 
 @interface IAEDayCalendarSelectorViewController ()
 
@@ -21,6 +22,9 @@
 @end
 
 @implementation IAEDayCalendarSelectorViewController
+
+static NSString * const dayOfTheWeekFontFamilyName = @"HelveticaNeue";
+static NSUInteger dayOfTheWeekFontSize = 12;
 
 - (instancetype)initWithYearDate:(NSUInteger)yearDate andMonthIndex:(NSUInteger)monthIndex
 {
@@ -44,6 +48,7 @@
     [super viewDidLoad];
     
     [self configureNavigationBarTitle];
+    [self configureDaysOfTheWeekContainerView];
 }
 
 - (void)configureNavigationBarTitle
@@ -53,5 +58,33 @@
 
     self.navigationBarTitle.title = [NSString stringWithFormat:NSLocalizedString(@"LTEXT_CALENDARDAYSELECTOR_TITLE", ""), monthName, yearName];
 }
+
+- (void)configureDaysOfTheWeekContainerView
+{
+    const NSUInteger numberOfDays = 7;
+    const CGFloat labelWidth = self.daysOfTheWeekContainerView.bounds.size.width / numberOfDays;
+    const CGFloat labelHeight = self.daysOfTheWeekContainerView.bounds.size.height;
+    
+    NSMutableArray *dayOfTheWeekIndexes = [NSMutableArray arrayWithArray:@[@1, @2, @3, @4, @5, @6, @7]];
+    if ([IAEVersionHelper isSpanishVersion]) {
+        [dayOfTheWeekIndexes exchangeObjectAtIndex:0 withObjectAtIndex:1];
+    }
+    
+    for (NSNumber *dayIndexIt in dayOfTheWeekIndexes) {
+        NSString *labelText = [IAEDateHelper findDayOfTheWeekNameStringWithDayOfTheWeekIndex:[dayIndexIt unsignedIntegerValue] inSortForm:YES];
+        NSDictionary *labelAttributes = @{NSFontAttributeName: [UIFont fontWithName:dayOfTheWeekFontFamilyName size:dayOfTheWeekFontSize],
+                                          NSForegroundColorAttributeName: [UIColor darkGrayColor],
+                                          NSKernAttributeName: @0.0};
+        
+        CGRect dayOfTheWeekFrame = CGRectMake(labelWidth * self.daysOfTheWeekContainerView.subviews.count, 0, labelWidth, labelHeight);
+        UILabel *dayLabel = [[UILabel alloc] initWithFrame:dayOfTheWeekFrame];
+        dayLabel.backgroundColor = [UIColor clearColor];
+        dayLabel.textAlignment = NSTextAlignmentCenter;
+        dayLabel.attributedText = [[NSAttributedString alloc] initWithString:labelText attributes:labelAttributes];
+        
+        [self.daysOfTheWeekContainerView addSubview:dayLabel];
+    }
+}
+
 
 @end

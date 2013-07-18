@@ -11,8 +11,11 @@
 @interface IAEDateHelper : NSObject
 
 + (NSCalendar *)findCurrentCalendar;
+
 + (NSUInteger)findActualYear;
-+ (NSString *)findDayOfTheWeekNameStringWithDayOfTheWeekIndex:(NSUInteger)dayOfTheWeekIndex;
+
++ (NSString *)findDayOfTheWeekNameStringWithDayOfTheWeekIndex:(NSUInteger)dayOfTheWeekIndex inSortForm:(BOOL)sortForm;
+
 + (NSString *)findMonthNameStringWithMonthIndex:(NSUInteger)monthIndex;
 
 @end

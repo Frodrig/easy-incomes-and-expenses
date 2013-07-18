@@ -29,7 +29,7 @@
     return currentCalendar;
 }
 
-+ (NSString *)findDayOfTheWeekNameStringWithDayOfTheWeekIndex:(NSUInteger)dayOfTheWeekIndex
++ (NSString *)findDayOfTheWeekNameStringWithDayOfTheWeekIndex:(NSUInteger)dayOfTheWeekIndex inSortForm:(BOOL)sortForm;
 {
     static NSArray *dayOfTheWeekNames = nil;
     if (nil == dayOfTheWeekNames) {
@@ -45,7 +45,14 @@
     
     NSAssert(dayOfTheWeekIndex > 0, @"");
     NSAssert(dayOfTheWeekIndex < 8, @"");
-    return [dayOfTheWeekNames objectAtIndex:dayOfTheWeekIndex - 1];
+    NSString *name = [dayOfTheWeekNames objectAtIndex:dayOfTheWeekIndex - 1];
+    
+    if (sortForm) {
+        name = [name substringWithRange:NSMakeRange(0, 3)];
+        name = [name lowercaseString];
+    }
+    
+    return name;
 }
 
 + (NSString *)findMonthNameStringWithMonthIndex:(NSUInteger)monthIndex

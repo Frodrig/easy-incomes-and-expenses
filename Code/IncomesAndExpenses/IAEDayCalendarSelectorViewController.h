@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol IAEDayCalendarSelectorViewControllerDelegate;
+
 @interface IAEDayCalendarSelectorViewController : UIViewController
+
+@property(nonatomic, weak)id<IAEDayCalendarSelectorViewControllerDelegate> delegate;
 
 - (instancetype)initWithYearDate:(NSUInteger)yearDate monthIndex:(NSUInteger)monthIndex andDaySelected:(NSUInteger)daySelected;
 

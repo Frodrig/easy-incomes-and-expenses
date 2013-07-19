@@ -46,6 +46,7 @@
 @property (nonatomic, strong) UITapGestureRecognizer *dobleTapConceptsRecognizer;
 @property (nonatomic) BOOL initialPositioning;
 @property (nonatomic, weak) IAECategory *categoryRenaming;
+@property (nonatomic, weak) IAEConcept *conceptChangingDay;
 @property (nonatomic) BOOL reloadAllPendingFromYearSelectorIfReturnWithSameYearDate;
 
 @end
@@ -389,7 +390,7 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 - (void)dismisPopover
 {
     [self.popover dismissPopoverAnimated:YES];
-    self.popover = nil;
+    [self performActionsAfterDismissPopover:self.popover];
 }
 
 #pragma mark - ScrollViewMonths (vincule)
@@ -419,7 +420,18 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
 {
-    [self updateBalancesIfDismissFromAdjustConceptAmountPopover:popoverController];
+    [self performActionsAfterDismissPopover:popoverController];
+}
+
+- (void)performActionsAfterDismissPopover:(UIPopoverController *)popoverController
+{
+    if ([popoverController.contentViewController isKindOfClass:[IAEAdjustConceptAmountViewController class]]) {
+        [self updateBalancesWithAnimation:YES];
+    } else if ([popoverController.contentViewController isKindOfClass:[IAEDayCalendarSelectorViewController class]]) {
+        [self cleanDayCalendarSelectorProperties];
+    }
+    
+    self.popover = nil;
 }
 
 - (void)updateBalancesIfDismissFromAdjustConceptAmountPopover:(UIPopoverController *)popover
@@ -427,6 +439,11 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
     if ([popover.contentViewController isKindOfClass:[IAEAdjustConceptAmountViewController class]]) {
         [self updateBalancesWithAnimation:YES];
     }
+}
+
+- (void)cleanDayCalendarSelectorProperties
+{
+    self.conceptChangingDay = nil;
 }
 
 #pragma mark - UIScrollView Delegate
@@ -706,6 +723,8 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 
 - (void)openPopoverForSelectDayOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
+    self.conceptChangingDay = [self findConceptOfCell:cell];
+    
     IAEYear *year = [self findActualYear];
     IAEMonth *month = [self findActualMonth];
     NSUInteger selectedDay = [self findDayOfTheMonthForConceptCell:cell];
@@ -713,6 +732,7 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
     IAEDayCalendarSelectorViewController *viewController = [[IAEDayCalendarSelectorViewController alloc] initWithYearDate:year.yearDate
                                                                                                                monthIndex:month.month
                                                                                                            andDaySelected:selectedDay];
+    viewController.delegate = self;
     
     [self createAndPresentPopoverForConceptCellView:cell.identifierContainerView withViewController:viewController];
 }
@@ -1019,5 +1039,24 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
     [self.conceptsCollectionView reloadData];
 }
 
+#pragma mark - IAEDayCalendarSelectorViewControllerDelegate
+
+- (void)dayCalendarSelectorViewController:(IAEDayCalendarSelectorViewController *)dayCalendarSelectorViewController
+                             didSelectDay:(NSUInteger)day
+{
+    [self updateConceptChangingDayWithDay:day];
+    [self dismisPopover];
+}
+
+- (void)updateConceptChangingDayWithDay:(NSUInteger)day
+{
+    NSAssert(self.conceptChangingDay, @"");
+    if (self.conceptChangingDay.dayOfTheMonth != day) {
+        self.conceptChangingDay.dayOfTheMonth = day;
+        [[IAEBook sharedBook] saveAll];
+        
+        [self.conceptsCollectionView reloadData];
+    }
+}
 
 @end

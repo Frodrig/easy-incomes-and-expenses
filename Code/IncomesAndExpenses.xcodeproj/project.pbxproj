@@ -267,6 +267,7 @@
 		5B4612F21679DCB7008B73CE /* IAENewYearDatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAENewYearDatePickerViewController.h; sourceTree = "<group>"; };
 		5B4612F31679DCB7008B73CE /* IAENewYearDatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAENewYearDatePickerViewController.m; sourceTree = "<group>"; };
 		5B4612F81679E173008B73CE /* IAENewYearDatePickerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAENewYearDatePickerDelegate.h; sourceTree = "<group>"; };
+		5B48BFFA1799425500BF0A68 /* IAEDayCalendarSelectorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEDayCalendarSelectorViewControllerDelegate.h; sourceTree = "<group>"; };
 		5B53C8031675D5180016329C /* IAEConfigViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEConfigViewController.h; sourceTree = "<group>"; };
 		5B53C8041675D5180016329C /* IAEConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEConfigViewController.m; sourceTree = "<group>"; };
 		5B53C8051675D5180016329C /* IAEConfigViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEConfigViewController.xib; sourceTree = "<group>"; };
@@ -1217,6 +1218,7 @@
 				5BA0130F17983A9000337E84 /* IAEDayCalendarSelectorViewController.h */,
 				5BA0131017983A9000337E84 /* IAEDayCalendarSelectorViewController.m */,
 				5BA0131117983A9000337E84 /* IAEDayCalendarSelectorViewController.xib */,
+				5B48BFFA1799425500BF0A68 /* IAEDayCalendarSelectorViewControllerDelegate.h */,
 			);
 			name = "Day Calendar Selector";
 			sourceTree = "<group>";

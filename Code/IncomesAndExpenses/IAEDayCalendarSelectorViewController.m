@@ -7,6 +7,7 @@
 //
 
 #import "IAEDayCalendarSelectorViewController.h"
+#import "IAEDayCalendarSelectorViewControllerDelegate.h"
 #import "IAECircleDecoratorView.h"
 #import "IAEDateHelper.h"
 #import "IAEVersionHelper.h"
@@ -179,7 +180,9 @@ static NSUInteger tagDaySelectedDecoratorView = 100;
     if ([self findLabelForActualDaySelected] != selectedDayLabelAtLocation) {
         [self removeDaySelectedDecoratorView];
         self.daySelected = selectedDayLabelAtLocation.tag;
-        [self configureDaySelectedDecoratorView];
+        [self configureDaySelectedDecoratorView];;
+        
+        [self.delegate dayCalendarSelectorViewController:self didSelectDay:self.daySelected];
     }
 }
 

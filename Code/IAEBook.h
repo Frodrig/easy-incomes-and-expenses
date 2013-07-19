@@ -37,6 +37,9 @@
 - (void)loadMoreRecientYear;
 - (void)unloadAll;
 
+// IMPORTANTE: La funcion mas destructiva
+- (void)deleteAllAndSave;
+
 - (NSArray *)findAllConceptsWithCategory:(IAECategory *)category;
 - (NSArray *)findAllYearWithConcepts;
 

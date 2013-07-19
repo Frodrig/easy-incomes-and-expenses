@@ -22,8 +22,8 @@ static NSString * const userDefaultsDayModeActive = @"dayModeActive";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    //[self createYearTest];
-    //[self createYearTest2];
+    [self processProcessInfoEnvironment];
+    
     [self createYearBookIfProceed];
     [self prepareDefaults];
     
@@ -33,6 +33,15 @@ static NSString * const userDefaultsDayModeActive = @"dayModeActive";
     [self.window makeKeyAndVisible];
     
     return YES;
+}
+
+- (void)processProcessInfoEnvironment
+{
+    NSNumber *testEnviromentVariable = [[NSProcessInfo processInfo].environment valueForKey:@"createTestDataAtLaunch"];
+    if ([testEnviromentVariable boolValue]) {
+        [[IAEBook sharedBook] deleteAllAndSave];
+        [self createYearTest2];
+    }
 }
 
 - (void)createYearBookIfProceed

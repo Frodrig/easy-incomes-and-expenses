@@ -308,5 +308,18 @@
     return [NSArray arrayWithArray:yearsSelected];
 }
 
+- (void)deleteAllAndSave
+{
+    [self loadAll];
+    while (self.years.count > 0) {
+        IAEYear *year = [self.years objectAtIndex:0];
+        [self deleteYear:[NSNumber numberWithUnsignedInteger:year.yearDate]];
+    }
+    
+    NSAssert(self.years.count == 0, @"");
+    [self saveAll];
+}
+
+
 
 @end

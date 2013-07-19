@@ -89,18 +89,18 @@
     return dateComponentsWithWeekDay.weekday;
 }
 
-+ (NSUInteger)findNumberOfDaysOfMonth:(NSUInteger)monthIndex ofYearDate:(NSUInteger)yearDate
++ (NSUInteger)findNumberOfDaysFromYearDate:(NSUInteger)yearDate andMonthIndex:(NSUInteger)monthIndex
 {
-    NSDateComponents *dateComponents = [self createDateComponentsForMonth:monthIndex yearDate:yearDate];
+    NSDateComponents *dateComponents = [self createDateComponentsFromYearDate:yearDate andMonthIndex:monthIndex];
     NSDate *date = [[self findCurrentCalendar] dateFromComponents:dateComponents];
     NSRange rangeDaysOfMonth = [[self findCurrentCalendar] rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:date];
     
     return rangeDaysOfMonth.length;
 }
 
-+ (NSUInteger)findFirstDayWeekOfTheMonth:(NSUInteger)monthIndex ofYearDate:(NSUInteger)yearDate
++ (NSUInteger)findFirstDayWeekFromYearDate:(NSUInteger)yearDate andMonthIndex:(NSUInteger)monthIndex 
 {
-    NSDateComponents *dateComponents = [self createDateComponentsForMonth:monthIndex yearDate:yearDate];
+    NSDateComponents *dateComponents = [self createDateComponentsFromYearDate:yearDate andMonthIndex:monthIndex];
     NSDate *date = [[self findCurrentCalendar] dateFromComponents:dateComponents];
     NSUInteger firstWeekDay = [[self findCurrentCalendar] ordinalityOfUnit:NSWeekdayCalendarUnit inUnit:NSWeekCalendarUnit forDate:date];
     
@@ -109,13 +109,13 @@
 
 + (NSDateComponents *)createDateComponentsForDay:(NSUInteger)day month:(NSUInteger)monthIndex andYearDate:(NSUInteger)yearDate
 {
-    NSDateComponents *dateComponents = [self createDateComponentsForMonth:monthIndex yearDate:yearDate];
+    NSDateComponents *dateComponents = [self createDateComponentsFromYearDate:yearDate andMonthIndex:monthIndex];
     dateComponents.day = day;
     
     return dateComponents;
 }
 
-+ (NSDateComponents *)createDateComponentsForMonth:(NSUInteger)monthIndex yearDate:(NSUInteger)yearDate
++ (NSDateComponents *)createDateComponentsFromYearDate:(NSUInteger)yearDate andMonthIndex:(NSUInteger)monthIndex
 {
     NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
     dateComponents.year = yearDate;

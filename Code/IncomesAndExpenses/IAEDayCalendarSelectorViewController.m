@@ -108,8 +108,8 @@ static NSUInteger tagDaySelectedDecoratorView = 100;
     const NSUInteger numberOfRows = 5;
     const NSUInteger dayOfTheMonthWidthSize = self.daysOfTheMonthContainerView.bounds.size.width / numberOfColumns;
     const NSUInteger dayOfTheMonthHeightSize = self.daysOfTheMonthContainerView.bounds.size.height / numberOfRows;
-    const NSUInteger firstDayOfTheWeekIndex = [IAEDateHelper findFirstDayWeekOfTheMonth:self.monthIndex ofYearDate:self.yearDate];
-    const NSUInteger maxDaysInMonth = [IAEDateHelper findNumberOfDaysOfMonth:self.monthIndex ofYearDate:self.yearDate];
+    const NSUInteger firstDayOfTheWeekIndex = [IAEDateHelper findFirstDayWeekFromYearDate:self.yearDate andMonthIndex:self.monthIndex];
+    const NSUInteger maxDaysInMonth = [IAEDateHelper findNumberOfDaysFromYearDate:self.yearDate andMonthIndex:self.monthIndex];
     
     NSUInteger dayIt = 1;
     for (NSUInteger rowIt = 0; rowIt < numberOfRows; rowIt++) {
@@ -211,7 +211,7 @@ static NSUInteger tagDaySelectedDecoratorView = 100;
 - (NSUInteger)findDayAtColumnAndRow:(CGPoint)columnAndRow
 {
     const NSUInteger numberOfColumns = 7;
-    const NSUInteger firstDayOfTheWeekIndex = [IAEDateHelper findFirstDayWeekOfTheMonth:self.monthIndex ofYearDate:self.yearDate];
+    const NSUInteger firstDayOfTheWeekIndex = [IAEDateHelper findFirstDayWeekFromYearDate:self.yearDate andMonthIndex:self.monthIndex];
     NSUInteger day = (columnAndRow.y * numberOfColumns + columnAndRow.x + 1) - (firstDayOfTheWeekIndex - 1);
     
     return day;

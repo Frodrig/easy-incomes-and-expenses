@@ -45,7 +45,7 @@
                     <items>
                         <navigationItem id="kDn-ew-bL9">
                             <nil key="title"/>
-                            <barButtonItem key="leftBarButtonItem" style="plain" systemItem="done" id="FQc-H3-57K">
+                            <barButtonItem key="leftBarButtonItem" style="done" systemItem="done" id="FQc-H3-57K">
                                 <connections>
                                     <action selector="closeButtonPressed:" destination="-1" id="FnW-CR-xpd"/>
                                 </connections>

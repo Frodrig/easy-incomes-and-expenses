@@ -19,7 +19,7 @@
 
 + (NSString *)findMonthNameStringWithMonthIndex:(NSUInteger)monthIndex;
 
-+ (NSUInteger)findNumberOfDaysOfMonth:(NSUInteger)monthIndex ofYearDate:(NSUInteger)yearDate;
-+ (NSUInteger)findFirstDayWeekOfTheMonth:(NSUInteger)monthIndex ofYearDate:(NSUInteger)yearDate;
++ (NSUInteger)findNumberOfDaysFromYearDate:(NSUInteger)yearDate andMonthIndex:(NSUInteger)monthIndex;
++ (NSUInteger)findFirstDayWeekFromYearDate:(NSUInteger)yearDate andMonthIndex:(NSUInteger)monthIndex;
 
 @end

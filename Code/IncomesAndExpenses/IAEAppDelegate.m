@@ -23,6 +23,7 @@ static NSString * const userDefaultsDayModeActive = @"dayModeActive";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     //[self createYearTest];
+    //[self createYearTest2];
     [self createYearBookIfProceed];
     [self prepareDefaults];
     
@@ -70,6 +71,22 @@ static NSString * const userDefaultsDayModeActive = @"dayModeActive";
             }
             for (int i = 0; i < 3; ++i) {
                 [monthIt addConceptWithAmount:[NSDecimalNumber decimalNumberWithString:@"100"] category:[[IAECategoryStore sharedCategoryStore] generalIncomeCategory] date:[NSDate timeIntervalSinceReferenceDate] andDescription:@"Test concept"];
+            }
+        }
+    }
+    
+    [[IAEBook sharedBook] saveAll];
+}
+
+- (void)createYearTest2
+{
+    [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2013]];
+    [[IAEBook sharedBook] loadAll];
+
+    for (IAEYear *yearIt in [IAEBook sharedBook].years) {
+        for (IAEMonth *monthIt in yearIt.months) {
+            for (int i = 1; i < 27; ++i) {
+                [monthIt addConceptWithAmount:[NSDecimalNumber decimalNumberWithString:@"100"] category:[[IAECategoryStore sharedCategoryStore] generalExpenseCategory] date:[NSDate timeIntervalSinceReferenceDate] dayOfTheMonth:i andDescription:@"Test concept"];
             }
         }
     }

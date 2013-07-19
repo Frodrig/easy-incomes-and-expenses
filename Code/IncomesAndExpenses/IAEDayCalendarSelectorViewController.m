@@ -211,7 +211,8 @@ static NSUInteger tagDaySelectedDecoratorView = 100;
 - (NSUInteger)findDayAtColumnAndRow:(CGPoint)columnAndRow
 {
     const NSUInteger numberOfColumns = 7;
-    NSUInteger day = (columnAndRow.y * numberOfColumns + columnAndRow.x) + 1;
+    const NSUInteger firstDayOfTheWeekIndex = [IAEDateHelper findFirstDayWeekOfTheMonth:self.monthIndex ofYearDate:self.yearDate];
+    NSUInteger day = (columnAndRow.y * numberOfColumns + columnAndRow.x + 1) - (firstDayOfTheWeekIndex - 1);
     
     return day;
 }

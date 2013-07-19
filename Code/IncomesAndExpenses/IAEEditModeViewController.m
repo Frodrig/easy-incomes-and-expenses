@@ -275,7 +275,8 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 
 - (IAEConcept *)findConceptOfCell:(UICollectionViewCell *)cell
 {
-    return [self findConceptAtIndexPath:[self.conceptsCollectionView indexPathForCell:cell]];
+    NSIndexPath *indexPathOfCell = [self.conceptsCollectionView indexPathForCell:cell];
+    return [self findConceptAtIndexPath:indexPathOfCell];
 }
 
 - (IAEEditModeMonthBalanceView *)findActualMonthBalanceView
@@ -548,17 +549,19 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 {
     // Nota: Por defecto los conceptos tienen el valor absoluto de la cantidad que almacenan de ahi el pedir la cantidad con signo si procede
     IAEConcept *concept = [self findConceptAtIndexPath:indexPath];
+    NSAssert(concept, @"");
     IAECategory *category = concept.category;
+    NSAssert(category, @"");
     NSDecimalNumber *amountWithSign = [concept amountWithSign];
     NSString *amountWithSignString = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:amountWithSign];
     EconomicValueType economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:amountWithSign];
     UIColor *colorForEconomicValueType = [IAEColorHelper colorForEconomicValueType:economicValueType];
     NSUInteger instantEntryIndex = [self findNumberOfConceptsOfActualMonth] - indexPath.row;
-    
+
     cell.valueDecoratorView.economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:amountWithSign];
     [self configureCategoryLabelsOfConceptCell:cell withCategory:category];
     [self configureAmountLabelOfConceptCell:cell withAmountWithSignString:amountWithSignString andColor:colorForEconomicValueType];
-    [self configureIdentifierOfConceptCell:cell withIndex:instantEntryIndex];
+    [self configureIdentifierOfConceptCell:cell atIndexPath:indexPath withIndex:instantEntryIndex];
 }
 
 - (void)configureCategoryLabelsOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
@@ -566,7 +569,8 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 {
     NSDictionary *categoryNameLabelAttributes = [self createAttributeDictionaryForConceptCellWithFont:[self createFontForCategoryConceptNameLabelInConceptCell]
                                                                                               andColor:[UIColor blackColor]];
-    cell.categoryNameLabel.attributedText = [[NSAttributedString alloc] initWithString:[category localizedTag] attributes:categoryNameLabelAttributes];
+    cell.categoryNameLabel.attributedText = [[NSAttributedString alloc] initWithString:[category localizedTag]
+                                                                            attributes:categoryNameLabelAttributes];
     
     NSDictionary *categoryTypeLabelAttributes = [self createAttributeDictionaryForConceptCellWithFont:[self createFontForCategoryConceptTypeLabelInConceptCell] andColor:[UIColor blackColor]];
     cell.categoryTypeLabel.attributedText = [[NSAttributedString alloc] initWithString:[category localizedCategoryTypeString] attributes:categoryTypeLabelAttributes];
@@ -609,26 +613,30 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
     return font;
 }
 
-- (void)configureIdentifierOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell withIndex:(NSUInteger)index
+- (void)configureIdentifierOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
+                             atIndexPath:(NSIndexPath *)indexPath
+                               withIndex:(NSUInteger)index
 {
     if (![self isDayModeActiveForConcepts]) {
         [cell setIdentifierWithEntryInstantIndex:index];
-    } else if ([self isDayOfTheMonthAssociatedWithConceptCell:cell]) {
-        [self setIdentifierForDayOfTheMonthAndDayOfTheWeekNameForCell:cell withIndex:index];
+    } else if ([self isDayOfTheMonthAssociatedWithConceptCell:cell atIndexPath:indexPath]) {
+        [self setIdentifierForDayOfTheMonthAndDayOfTheWeekNameForCell:cell atIndexPath:indexPath withIndex:index];
     } else {
         [cell setIdentifierWithoutDay];
     }
 }
 
-- (BOOL)isDayOfTheMonthAssociatedWithConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
+- (BOOL)isDayOfTheMonthAssociatedWithConceptCell:(IAEEditModeConceptCollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    IAEConcept *concept = [self findConceptOfCell:cell];
+    IAEConcept *concept = [self findConceptAtIndexPath:indexPath];
     return concept.dayOfTheMonth != 0;
 }
 
-- (void)setIdentifierForDayOfTheMonthAndDayOfTheWeekNameForCell:(IAEEditModeConceptCollectionViewCell *)cell withIndex:(NSUInteger)index
+- (void)setIdentifierForDayOfTheMonthAndDayOfTheWeekNameForCell:(IAEEditModeConceptCollectionViewCell *)cell
+                                                    atIndexPath:(NSIndexPath *)indexPath
+                                                      withIndex:(NSUInteger)index
 {
-    IAEConcept *concept = [self findConceptOfCell:cell];
+    IAEConcept *concept = [self findConceptAtIndexPath:indexPath];
     NSString *dayOfTheWeekName = [self findDayOfTheWeekNameFromConcept:concept];
     
     [cell setIdentifierWithDayOfTheMonthIndex:concept.dayOfTheMonth andDayOfTheWeekName:dayOfTheWeekName];
@@ -1054,7 +1062,6 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
     if (self.conceptChangingDay.dayOfTheMonth != day) {
         self.conceptChangingDay.dayOfTheMonth = day;
         [[IAEBook sharedBook] saveAll];
-        
         [self.conceptsCollectionView reloadData];
     }
 }

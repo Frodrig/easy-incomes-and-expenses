@@ -186,12 +186,13 @@
         
         [self.years addObject:newYear];
         [self.years sortUsingSelector:@selector(compareDescendingPriority:)];
-        
+        /*
         NSDictionary *extraInfo = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithUnsignedInteger:yearDate.unsignedIntValue], nil] forKeys:[NSArray arrayWithObjects:@"YearDate", nil]];
         
         NSNotification *notification = [NSNotification notificationWithName:@"NewYearCreated" object:self userInfo:extraInfo];
         
         [[NSNotificationCenter defaultCenter] postNotification:notification];
+        */
      }
     
     return newYear;
@@ -206,12 +207,12 @@
 - (void)deleteYearObject:(IAEYear *)year
 {
     if (year) {
-        NSUInteger yearDate = year.yearDate;
+        //NSUInteger yearDate = year.yearDate;
         
         [self.years removeObjectIdenticalTo:year];
         [self.context deleteObject:year];
         
-        [self postYearRemovedNotificationWithYearDate:yearDate];
+        //[self postYearRemovedNotificationWithYearDate:yearDate];
     }
 }
 

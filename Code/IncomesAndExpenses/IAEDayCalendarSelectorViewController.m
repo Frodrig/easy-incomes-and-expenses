@@ -142,21 +142,23 @@ static NSUInteger tagDaySelectedDecoratorView = 100;
 - (void)configureDaySelectedDecoratorView
 {
     UILabel *dayLabel = [self findLabelForActualDaySelected];
-    CGRect circleFrame = CGRectMake(dayLabel.frame.origin.x,
-                                    dayLabel.frame.origin.y,
-                                    dayLabel.frame.size.width,
-                                    dayLabel.frame.size.height);
-    IAECircleDecoratorView *circleDecoratorView = [[IAECircleDecoratorView alloc] initWithFrame:circleFrame];
-    circleDecoratorView.circleColor = [UIColor colorWithRed:255 green:0 blue:0 alpha:0.75];
-    circleDecoratorView.backgroundColor = [UIColor clearColor];
-    circleDecoratorView.tag = tagDaySelectedDecoratorView;
-    
-    [self.daysOfTheMonthContainerView insertSubview:circleDecoratorView belowSubview:dayLabel];
+    if (dayLabel != nil) {
+        CGRect circleFrame = CGRectMake(dayLabel.frame.origin.x,
+                                        dayLabel.frame.origin.y,
+                                        dayLabel.frame.size.width,
+                                        dayLabel.frame.size.height);
+        IAECircleDecoratorView *circleDecoratorView = [[IAECircleDecoratorView alloc] initWithFrame:circleFrame];
+        circleDecoratorView.circleColor = [UIColor colorWithRed:255 green:0 blue:0 alpha:0.75];
+        circleDecoratorView.backgroundColor = [UIColor clearColor];
+        circleDecoratorView.tag = tagDaySelectedDecoratorView;
+        
+        [self.daysOfTheMonthContainerView insertSubview:circleDecoratorView belowSubview:dayLabel];
+    }
 }
 
 - (UILabel *)findLabelForActualDaySelected
 {
-    UILabel *label = (UILabel *)[self.daysOfTheMonthContainerView viewWithTag:self.daySelected];
+    UILabel *label = self.daySelected != 0 ? (UILabel *)[self.daysOfTheMonthContainerView viewWithTag:self.daySelected] : nil;
     return label;
 }
 

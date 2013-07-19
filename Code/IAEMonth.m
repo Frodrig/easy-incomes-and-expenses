@@ -48,7 +48,7 @@
                                 date:(NSTimeInterval)date
                       andDescription:(NSString *)description
 {
-    return [self addConceptWithAmount:amount category:category date:date andDescription:description];
+    return [self addConceptWithAmount:amount category:category date:date dayOfTheMonth:0 andDescription:description];
 }
 
 - (IAEConcept *)addConceptWithAmount:(NSDecimalNumber *)amount
@@ -62,23 +62,24 @@
     if ([amount compare:[NSDecimalNumber zero]] != NSOrderedSame) {
         newConcept = [NSEntityDescription insertNewObjectForEntityForName:@"IAEConcept" inManagedObjectContext:[IAEBook sharedBook].context];
         [self addConceptsObject:newConcept];
-        
+        /*
         [newConcept addObserver:self forKeyPath:@"amount" options:0 context:NULL];
         [newConcept addObserver:self forKeyPath:@"category" options:0 context:NULL];
         [newConcept addObserver:self forKeyPath:@"detailDescription" options:0 context:NULL];
         [newConcept addObserver:self forKeyPath:@"dayOfTheMonth" options:0 context:NULL];
-        
+        */
         newConcept.category = category;
         newConcept.amount = amount;
         newConcept.date = date;
         newConcept.dayOfTheMonth = dayOfTheMonth;
         newConcept.detailDescription = [description copy];
-        
+        /*
         NSDictionary *extraInfo = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:self, newConcept, nil] forKeys:[NSArray arrayWithObjects:@"Month", @"Concept", nil]];
         
         NSNotification *notification = [NSNotification notificationWithName:@"NewConceptAdded" object:self userInfo:extraInfo];
         
         [[NSNotificationCenter defaultCenter] postNotification:notification];
+        */
     }
     
     return newConcept;
@@ -320,14 +321,10 @@
                         change:(NSDictionary *)change
                        context:(void *)context
 {
-    if ([keyPath isEqualToString:@"dayOfTheMonth"])
-    {
-        // Habria que reordenar el array
-    }
-        
     // OJO esto hay que cambiarlo para usar el notification center
-    if ([self.delegate respondsToSelector:@selector(month:didUpdateConcept:)])
+    /*if ([self.delegate respondsToSelector:@selector(month:didUpdateConcept:)])
         [self.delegate month:self didUpdateConcept:object];
+     */
 }
 
 @end

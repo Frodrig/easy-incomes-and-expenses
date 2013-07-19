@@ -54,7 +54,6 @@ static NSString * const userDefaultsDayModeActive = @"dayModeActive";
 
 - (void)createYearTest
 {
-    
     [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2013]];
     //[[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2012]];
     //[[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2011]];
@@ -70,7 +69,7 @@ static NSString * const userDefaultsDayModeActive = @"dayModeActive";
                 [monthIt addConceptWithAmount:[NSDecimalNumber decimalNumberWithString:@"1000"] category:[[IAECategoryStore sharedCategoryStore] generalExpenseCategory] date:[NSDate timeIntervalSinceReferenceDate] dayOfTheMonth:arc4random_uniform(10) andDescription:@"Test concept"];
             }
             for (int i = 0; i < 3; ++i) {
-                [monthIt addConceptWithAmount:[NSDecimalNumber decimalNumberWithString:@"100"] category:[[IAECategoryStore sharedCategoryStore] generalIncomeCategory] date:[NSDate timeIntervalSinceReferenceDate] dayOfTheMonth:arc4random_uniform(20) andDescription:@"Test concept"];
+                [monthIt addConceptWithAmount:[NSDecimalNumber decimalNumberWithString:@"100"] category:[[IAECategoryStore sharedCategoryStore] generalIncomeCategory] date:[NSDate timeIntervalSinceReferenceDate] andDescription:@"Test concept"];
             }
         }
     }

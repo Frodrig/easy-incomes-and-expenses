@@ -129,10 +129,12 @@
     
         [newCategory addObserver:self forKeyPath:@"tag" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
 
+        /*
         NSDictionary *extraInfo = [NSDictionary dictionaryWithObject:newCategory forKey:@"Category"];
         NSNotification *notification = [NSNotification notificationWithName:@"CategoryCreated" object:self userInfo:extraInfo];
         
         [[NSNotificationCenter defaultCenter] postNotification:notification];
+         */
     }
     
     return newCategory;
@@ -150,9 +152,8 @@
             concept.category = baseCategory;
         }
         
-        NSDictionary *extraInfo = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithInt:category.categoryType], category.tag, nil]
-                                                              forKeys:[NSArray arrayWithObjects:@"CategoryType", @"CategoryTag", nil]];
-        NSNotification *notification = [NSNotification notificationWithName:@"CategoryRemoved" object:self userInfo:extraInfo];
+        //NSDictionary *extraInfo = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithInt:category.categoryType], category.tag, nil] forKeys:[NSArray arrayWithObjects:@"CategoryType", @"CategoryTag", nil]];
+        //NSNotification *notification = [NSNotification notificationWithName:@"CategoryRemoved" object:self userInfo:extraInfo];
         
         [category removeObserver:self forKeyPath:@"tag" context:NULL];
         
@@ -160,7 +161,7 @@
         
         [[IAEBook sharedBook].context deleteObject:category];
         
-        [[NSNotificationCenter defaultCenter] postNotification:notification];
+        //[[NSNotificationCenter defaultCenter] postNotification:notification];
     }
 }
 
@@ -273,13 +274,11 @@
                 // Ordenamos
                 [self sortUserCategoriesByTag];
                 
-                NSDictionary *extraInfo = [NSDictionary
-                                           dictionaryWithObjects:[NSArray arrayWithObjects:object, strOldValue, nil]
-                                           forKeys:[NSArray arrayWithObjects:@"Category", @"OldTag", nil]];
+                //NSDictionary *extraInfo = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:object, strOldValue, nil] forKeys:[NSArray arrayWithObjects:@"Category", @"OldTag", nil]];
                 
-                NSNotification *notification = [NSNotification notificationWithName:@"CategoryRenamed" object:self userInfo:extraInfo];
+                //NSNotification *notification = [NSNotification notificationWithName:@"CategoryRenamed" object:self userInfo:extraInfo];
                 
-                [[NSNotificationCenter defaultCenter] postNotification:notification];
+                //[[NSNotificationCenter defaultCenter] postNotification:notification];
             }
         }
     }

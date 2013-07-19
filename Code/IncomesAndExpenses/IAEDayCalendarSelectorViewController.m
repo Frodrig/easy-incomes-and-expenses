@@ -13,13 +13,14 @@
 
 @interface IAEDayCalendarSelectorViewController ()
 
+@property (nonatomic) NSUInteger yearDate;
+@property (nonatomic) NSUInteger monthIndex;
+@property (nonatomic) NSUInteger daySelected;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationBarTitle;
 @property (weak, nonatomic) IBOutlet UIView *daysOfTheWeekContainerView;
 @property (weak, nonatomic) IBOutlet UIView *daysOfTheMonthContainerView;
-@property (nonatomic) NSUInteger yearDate;
-@property (nonatomic) NSUInteger monthIndex;
-@property (nonatomic) NSUInteger daySelected;
+@property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 
 @end
 
@@ -40,9 +41,16 @@ static NSUInteger tagDaySelectedDecoratorView = 100;
         _yearDate = yearDate;
         _monthIndex = monthIndex;
         _daySelected = daySelected;
+        
+        [self initTapGestureRecognizer];
     }
     
     return self;
+}
+
+- (void)initTapGestureRecognizer
+{
+    _tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureDetected:)];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -59,6 +67,7 @@ static NSUInteger tagDaySelectedDecoratorView = 100;
     [self configureDaysOfTheWeekContainerView];
     [self configureDaysOfTheMonthContainerView];
     [self configureDaySelectedDecoratorView];
+    [self configureTapGestureRecognizer];
 }
 
 - (void)configureNavigationBarTitle
@@ -139,6 +148,7 @@ static NSUInteger tagDaySelectedDecoratorView = 100;
     IAECircleDecoratorView *circleDecoratorView = [[IAECircleDecoratorView alloc] initWithFrame:circleFrame];
     circleDecoratorView.circleColor = [UIColor colorWithRed:255 green:0 blue:0 alpha:0.75];
     circleDecoratorView.backgroundColor = [UIColor clearColor];
+    circleDecoratorView.tag = tagDaySelectedDecoratorView;
     
     [self.daysOfTheMonthContainerView insertSubview:circleDecoratorView belowSubview:dayLabel];
 }
@@ -153,6 +163,52 @@ static NSUInteger tagDaySelectedDecoratorView = 100;
 {
     UIView *decorator = [self.daysOfTheMonthContainerView viewWithTag:tagDaySelectedDecoratorView];
     [decorator removeFromSuperview];
+}
+
+- (void)configureTapGestureRecognizer
+{
+    [self.daysOfTheMonthContainerView addGestureRecognizer:self.tapGestureRecognizer];
+}
+
+#pragma mark - TapGestureRecognizer
+
+- (void)tapGestureDetected:(UITapGestureRecognizer *)tapGestureRecognizer
+{
+    CGPoint location = [tapGestureRecognizer locationInView:self.daysOfTheMonthContainerView];
+    UILabel *selectedDayLabelAtLocation = [self findSelectedDayLabelAtLocation:location];
+    if ([self findLabelForActualDaySelected] != selectedDayLabelAtLocation) {
+        [self removeDaySelectedDecoratorView];
+        self.daySelected = selectedDayLabelAtLocation.tag;
+        [self configureDaySelectedDecoratorView];
+    }
+}
+
+- (UILabel *)findSelectedDayLabelAtLocation:(CGPoint)location
+{
+    CGPoint columnAndRow = [self findColumnAndRowOfLocationInDayOfTheMonthContainer:location];
+    NSUInteger day = [self findDayAtColumnAndRow:columnAndRow];
+    UILabel *label = (UILabel *)[self.daysOfTheMonthContainerView viewWithTag:day];
+    
+    return label;
+}
+
+- (CGPoint)findColumnAndRowOfLocationInDayOfTheMonthContainer:(CGPoint)location
+{
+    const NSUInteger numberOfColumns = 7;
+    const NSUInteger numberOfRows = 5;
+    const NSUInteger dayOfTheMonthWidthSize = self.daysOfTheMonthContainerView.bounds.size.width / numberOfColumns;
+    const NSUInteger dayOfTheMonthHeightSize = self.daysOfTheMonthContainerView.bounds.size.height / numberOfRows;
+    
+    CGPoint columnAndRow = CGPointMake(floorf(location.x / dayOfTheMonthWidthSize), floorf(location.y / dayOfTheMonthHeightSize));
+    return columnAndRow;
+}
+
+- (NSUInteger)findDayAtColumnAndRow:(CGPoint)columnAndRow
+{
+    const NSUInteger numberOfColumns = 7;
+    NSUInteger day = (columnAndRow.y * numberOfColumns + columnAndRow.x) + 1;
+    
+    return day;
 }
 
 @end

@@ -302,9 +302,10 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 
 - (NSString *)findDayOfTheWeekNameFromConcept:(IAEConcept *)concept
 {
-    NSDate *dateFromTimeInterval = [NSDate dateWithTimeIntervalSince1970:concept.date];
-    NSDateComponents *dateComponents = [[IAEDateHelper findCurrentCalendar] components:NSWeekdayCalendarUnit fromDate:dateFromTimeInterval];
-    NSString *dayOfTheWeekName = [IAEDateHelper findDayOfTheWeekNameStringWithDayOfTheWeekIndex:dateComponents.weekday inSortForm:NO];
+    NSUInteger dayOfTheWeekIndex = [IAEDateHelper findDayOfTheWeekIndexFromYearDate:concept.month.year.yearDate
+                                                                         monthIndex:concept.month.month
+                                                                   andDayOfTheMonth:concept.dayOfTheMonth];
+    NSString *dayOfTheWeekName = [IAEDateHelper findDayOfTheWeekNameStringWithDayOfTheWeekIndex:dayOfTheWeekIndex inShortForm:NO];
     
     return dayOfTheWeekName;
 }

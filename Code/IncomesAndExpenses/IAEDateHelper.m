@@ -29,7 +29,7 @@
     return currentCalendar;
 }
 
-+ (NSString *)findDayOfTheWeekNameStringWithDayOfTheWeekIndex:(NSUInteger)dayOfTheWeekIndex inSortForm:(BOOL)sortForm;
++ (NSString *)findDayOfTheWeekNameStringWithDayOfTheWeekIndex:(NSUInteger)dayOfTheWeekIndex inShortForm:(BOOL)sortForm;
 {
     static NSArray *dayOfTheWeekNames = nil;
     if (nil == dayOfTheWeekNames) {
@@ -78,9 +78,20 @@
     return [monthsNames objectAtIndex:monthIndex - 1];
 }
 
++ (NSUInteger)findDayOfTheWeekIndexFromYearDate:(NSUInteger)yearDate
+                                     monthIndex:(NSUInteger)monthIndex
+                               andDayOfTheMonth:(NSUInteger)dayOfTheMonth
+{
+    NSDateComponents *dateComponents = [self createDateComponentsForDay:dayOfTheMonth month:monthIndex andYearDate:yearDate];
+    NSDate *date = [[self findCurrentCalendar] dateFromComponents:dateComponents];
+    NSDateComponents *dateComponentsWithWeekDay = [[self findCurrentCalendar] components:NSWeekdayCalendarUnit fromDate:date];
+    
+    return dateComponentsWithWeekDay.weekday;
+}
+
 + (NSUInteger)findNumberOfDaysOfMonth:(NSUInteger)monthIndex ofYearDate:(NSUInteger)yearDate
 {
-    NSDateComponents *dateComponents = [self createDateComponentsForMonth:monthIndex ofYearDate:yearDate];
+    NSDateComponents *dateComponents = [self createDateComponentsForMonth:monthIndex yearDate:yearDate];
     NSDate *date = [[self findCurrentCalendar] dateFromComponents:dateComponents];
     NSRange rangeDaysOfMonth = [[self findCurrentCalendar] rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:date];
     
@@ -89,21 +100,30 @@
 
 + (NSUInteger)findFirstDayWeekOfTheMonth:(NSUInteger)monthIndex ofYearDate:(NSUInteger)yearDate
 {
-    NSDateComponents *dateComponents = [self createDateComponentsForMonth:monthIndex ofYearDate:yearDate];
+    NSDateComponents *dateComponents = [self createDateComponentsForMonth:monthIndex yearDate:yearDate];
     NSDate *date = [[self findCurrentCalendar] dateFromComponents:dateComponents];
     NSUInteger firstWeekDay = [[self findCurrentCalendar] ordinalityOfUnit:NSWeekdayCalendarUnit inUnit:NSWeekCalendarUnit forDate:date];
     
     return firstWeekDay;
 }
 
-+ (NSDateComponents *)createDateComponentsForMonth:(NSUInteger)monthIndex ofYearDate:(NSUInteger)yearDate
++ (NSDateComponents *)createDateComponentsForDay:(NSUInteger)day month:(NSUInteger)monthIndex andYearDate:(NSUInteger)yearDate
+{
+    NSDateComponents *dateComponents = [self createDateComponentsForMonth:monthIndex yearDate:yearDate];
+    dateComponents.day = day;
+    
+    return dateComponents;
+}
+
++ (NSDateComponents *)createDateComponentsForMonth:(NSUInteger)monthIndex yearDate:(NSUInteger)yearDate
 {
     NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
     dateComponents.year = yearDate;
     dateComponents.month = monthIndex;
-    dateComponents.weekday = 1;
+    dateComponents.day = 1;
     
     return dateComponents;
 }
+
 
 @end

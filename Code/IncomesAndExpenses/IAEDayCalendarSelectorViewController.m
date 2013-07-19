@@ -87,7 +87,7 @@ static NSUInteger tagDaySelectedDecoratorView = 100;
     
     NSArray *dayOfTheWeekIndexes = [IAEVersionHelper isSpanishVersion] ? @[@2, @3, @4, @5, @6, @7, @1] : @[@1, @2, @3, @4, @5, @6, @7];
     for (NSNumber *dayIndexIt in dayOfTheWeekIndexes) {
-        NSString *labelText = [IAEDateHelper findDayOfTheWeekNameStringWithDayOfTheWeekIndex:[dayIndexIt unsignedIntegerValue] inSortForm:YES];
+        NSString *labelText = [IAEDateHelper findDayOfTheWeekNameStringWithDayOfTheWeekIndex:[dayIndexIt unsignedIntegerValue] inShortForm:YES];
         NSDictionary *labelAttributes = @{NSFontAttributeName: [UIFont fontWithName:dayOfTheWeekFontFamilyName size:dayOfTheWeekFontSize],
                                           NSForegroundColorAttributeName: [UIColor darkTextColor],
                                           NSKernAttributeName: @0.0};

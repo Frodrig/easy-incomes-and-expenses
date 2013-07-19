@@ -14,7 +14,8 @@
 
 + (NSUInteger)findActualYear;
 
-+ (NSString *)findDayOfTheWeekNameStringWithDayOfTheWeekIndex:(NSUInteger)dayOfTheWeekIndex inSortForm:(BOOL)sortForm;
++ (NSString *)findDayOfTheWeekNameStringWithDayOfTheWeekIndex:(NSUInteger)dayOfTheWeekIndex inShortForm:(BOOL)sortForm;
++ (NSUInteger)findDayOfTheWeekIndexFromYearDate:(NSUInteger)yearDate monthIndex:(NSUInteger)monthIndex andDayOfTheMonth:(NSUInteger)dayOfTheMonth;
 
 + (NSString *)findMonthNameStringWithMonthIndex:(NSUInteger)monthIndex;
 

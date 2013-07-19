@@ -78,4 +78,32 @@
     return [monthsNames objectAtIndex:monthIndex - 1];
 }
 
++ (NSUInteger)findNumberOfDaysOfMonth:(NSUInteger)monthIndex ofYearDate:(NSUInteger)yearDate
+{
+    NSDateComponents *dateComponents = [self createDateComponentsForMonth:monthIndex ofYearDate:yearDate];
+    NSDate *date = [[self findCurrentCalendar] dateFromComponents:dateComponents];
+    NSRange rangeDaysOfMonth = [[self findCurrentCalendar] rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:date];
+    
+    return rangeDaysOfMonth.length;
+}
+
++ (NSUInteger)findFirstDayWeekOfTheMonth:(NSUInteger)monthIndex ofYearDate:(NSUInteger)yearDate
+{
+    NSDateComponents *dateComponents = [self createDateComponentsForMonth:monthIndex ofYearDate:yearDate];
+    NSDate *date = [[self findCurrentCalendar] dateFromComponents:dateComponents];
+    NSUInteger firstWeekDay = [[self findCurrentCalendar] ordinalityOfUnit:NSWeekdayCalendarUnit inUnit:NSWeekCalendarUnit forDate:date];
+    
+    return firstWeekDay;
+}
+
++ (NSDateComponents *)createDateComponentsForMonth:(NSUInteger)monthIndex ofYearDate:(NSUInteger)yearDate
+{
+    NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
+    dateComponents.year = yearDate;
+    dateComponents.month = monthIndex;
+    dateComponents.weekday = 1;
+    
+    return dateComponents;
+}
+
 @end

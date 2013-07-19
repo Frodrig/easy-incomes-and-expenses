@@ -26,6 +26,9 @@
 static NSString * const dayOfTheWeekFontFamilyName = @"HelveticaNeue";
 static NSUInteger dayOfTheWeekFontSize = 12;
 
+static NSString * const dayOfTheMonthFontFamilyName = @"HelveticaNeue-Ultralight";
+static NSUInteger dayOfTheMonthFontSize = 21;
+
 - (instancetype)initWithYearDate:(NSUInteger)yearDate andMonthIndex:(NSUInteger)monthIndex
 {
     self = [super initWithNibName:nil bundle:nil];
@@ -49,6 +52,7 @@ static NSUInteger dayOfTheWeekFontSize = 12;
     
     [self configureNavigationBarTitle];
     [self configureDaysOfTheWeekContainerView];
+    [self configureDaysOfTheMonthContainerView];
 }
 
 - (void)configureNavigationBarTitle
@@ -65,15 +69,14 @@ static NSUInteger dayOfTheWeekFontSize = 12;
     const CGFloat labelWidth = self.daysOfTheWeekContainerView.bounds.size.width / numberOfDays;
     const CGFloat labelHeight = self.daysOfTheWeekContainerView.bounds.size.height;
     
-    NSMutableArray *dayOfTheWeekIndexes = [NSMutableArray arrayWithArray:@[@1, @2, @3, @4, @5, @6, @7]];
-    if ([IAEVersionHelper isSpanishVersion]) {
-        [dayOfTheWeekIndexes exchangeObjectAtIndex:0 withObjectAtIndex:1];
-    }
+    // Nota: Son los indices a los dias de la semana que usa IAEDateHelper para devolver sus nombres
+    // El indice 1 apunta a domingo y el indice 2 a lunes
+    NSArray *dayOfTheWeekIndexes = [IAEVersionHelper isSpanishVersion] ? @[@2, @3, @4, @5, @6, @7, @1] : @[@1, @2, @3, @4, @5, @6, @7];
     
     for (NSNumber *dayIndexIt in dayOfTheWeekIndexes) {
         NSString *labelText = [IAEDateHelper findDayOfTheWeekNameStringWithDayOfTheWeekIndex:[dayIndexIt unsignedIntegerValue] inSortForm:YES];
         NSDictionary *labelAttributes = @{NSFontAttributeName: [UIFont fontWithName:dayOfTheWeekFontFamilyName size:dayOfTheWeekFontSize],
-                                          NSForegroundColorAttributeName: [UIColor darkGrayColor],
+                                          NSForegroundColorAttributeName: [UIColor darkTextColor],
                                           NSKernAttributeName: @0.0};
         
         CGRect dayOfTheWeekFrame = CGRectMake(labelWidth * self.daysOfTheWeekContainerView.subviews.count, 0, labelWidth, labelHeight);
@@ -83,6 +86,42 @@ static NSUInteger dayOfTheWeekFontSize = 12;
         dayLabel.attributedText = [[NSAttributedString alloc] initWithString:labelText attributes:labelAttributes];
         
         [self.daysOfTheWeekContainerView addSubview:dayLabel];
+    }
+}
+
+- (void)configureDaysOfTheMonthContainerView
+{
+    const NSUInteger numberOfColumns = 7;
+    const NSUInteger numberOfRows = 5;
+    const NSUInteger dayOfTheMonthWidthSize = self.daysOfTheMonthContainerView.bounds.size.width / numberOfColumns;
+    const NSUInteger dayOfTheMonthHeightSize = self.daysOfTheMonthContainerView.bounds.size.height / numberOfRows;
+    const NSUInteger firstDayOfTheWeekIndex = [IAEDateHelper findFirstDayWeekOfTheMonth:self.monthIndex ofYearDate:self.yearDate];
+    const NSUInteger maxDaysInMonth = [IAEDateHelper findNumberOfDaysOfMonth:self.monthIndex ofYearDate:self.yearDate];
+    
+    NSUInteger dayIt = 1;
+    for (NSUInteger rowIt = 0; rowIt < numberOfRows; rowIt++) {
+        for (NSUInteger columnIt = 0; columnIt < numberOfColumns; ++columnIt) {
+            const BOOL validDayForMonth = (rowIt > 0 || columnIt >= firstDayOfTheWeekIndex - 1) && (dayIt <= maxDaysInMonth);
+            if (validDayForMonth) {
+                CGRect labelRect = CGRectMake(columnIt * dayOfTheMonthWidthSize,
+                                              rowIt * dayOfTheMonthHeightSize,
+                                              dayOfTheMonthWidthSize,
+                                              dayOfTheMonthHeightSize);
+                NSString *labelText = [NSString stringWithFormat:@"%d", dayIt];
+                NSDictionary *labelAttributes = @{NSFontAttributeName: [UIFont fontWithName:dayOfTheMonthFontFamilyName size:dayOfTheMonthFontSize],
+                                                  NSForegroundColorAttributeName: [UIColor darkTextColor],
+                                                  NSKernAttributeName: @0.0};
+                
+                UILabel *dayLabel = [[UILabel alloc] initWithFrame:labelRect];
+                dayLabel.textAlignment = NSTextAlignmentCenter;
+                dayLabel.backgroundColor = [UIColor clearColor];
+                dayLabel.attributedText = [[NSAttributedString alloc] initWithString:labelText attributes:labelAttributes];
+                
+                [self.daysOfTheMonthContainerView addSubview:dayLabel];
+                
+                ++dayIt;
+            }
+        }
     }
 }
 

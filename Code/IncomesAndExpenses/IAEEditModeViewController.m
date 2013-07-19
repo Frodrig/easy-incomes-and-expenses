@@ -307,6 +307,12 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
     return dayOfTheWeekName;
 }
 
+- (NSUInteger)findDayOfTheMonthForConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
+{
+    IAEConcept *concept = [self findConceptOfCell:cell];
+    return concept.dayOfTheMonth;
+}
+
 #pragma mark - Update 
 
 - (void)updateBalancesWithAnimation:(BOOL)animation
@@ -702,9 +708,11 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 {
     IAEYear *year = [self findActualYear];
     IAEMonth *month = [self findActualMonth];
+    NSUInteger selectedDay = [self findDayOfTheMonthForConceptCell:cell];
     
     IAEDayCalendarSelectorViewController *viewController = [[IAEDayCalendarSelectorViewController alloc] initWithYearDate:year.yearDate
-                                                                                                            andMonthIndex:month.month];
+                                                                                                               monthIndex:month.month
+                                                                                                           andDaySelected:selectedDay];
     
     [self createAndPresentPopoverForConceptCellView:cell.identifierContainerView withViewController:viewController];
 }

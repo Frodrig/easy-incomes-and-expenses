@@ -7,6 +7,7 @@
 //
 
 #import "IAEDayCalendarSelectorViewController.h"
+#import "IAECircleDecoratorView.h"
 #import "IAEDateHelper.h"
 #import "IAEVersionHelper.h"
 
@@ -18,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIView *daysOfTheMonthContainerView;
 @property (nonatomic) NSUInteger yearDate;
 @property (nonatomic) NSUInteger monthIndex;
+@property (nonatomic) NSUInteger daySelected;
 
 @end
 
@@ -27,14 +29,17 @@ static NSString * const dayOfTheWeekFontFamilyName = @"HelveticaNeue";
 static NSUInteger dayOfTheWeekFontSize = 12;
 
 static NSString * const dayOfTheMonthFontFamilyName = @"HelveticaNeue-Ultralight";
-static NSUInteger dayOfTheMonthFontSize = 21;
+static NSUInteger dayOfTheMonthFontSize = 19;
 
-- (instancetype)initWithYearDate:(NSUInteger)yearDate andMonthIndex:(NSUInteger)monthIndex
+static NSUInteger tagDaySelectedDecoratorView = 100;
+
+- (instancetype)initWithYearDate:(NSUInteger)yearDate monthIndex:(NSUInteger)monthIndex andDaySelected:(NSUInteger)daySelected
 {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         _yearDate = yearDate;
         _monthIndex = monthIndex;
+        _daySelected = daySelected;
     }
     
     return self;
@@ -53,6 +58,7 @@ static NSUInteger dayOfTheMonthFontSize = 21;
     [self configureNavigationBarTitle];
     [self configureDaysOfTheWeekContainerView];
     [self configureDaysOfTheMonthContainerView];
+    [self configureDaySelectedDecoratorView];
 }
 
 - (void)configureNavigationBarTitle
@@ -69,10 +75,7 @@ static NSUInteger dayOfTheMonthFontSize = 21;
     const CGFloat labelWidth = self.daysOfTheWeekContainerView.bounds.size.width / numberOfDays;
     const CGFloat labelHeight = self.daysOfTheWeekContainerView.bounds.size.height;
     
-    // Nota: Son los indices a los dias de la semana que usa IAEDateHelper para devolver sus nombres
-    // El indice 1 apunta a domingo y el indice 2 a lunes
     NSArray *dayOfTheWeekIndexes = [IAEVersionHelper isSpanishVersion] ? @[@2, @3, @4, @5, @6, @7, @1] : @[@1, @2, @3, @4, @5, @6, @7];
-    
     for (NSNumber *dayIndexIt in dayOfTheWeekIndexes) {
         NSString *labelText = [IAEDateHelper findDayOfTheWeekNameStringWithDayOfTheWeekIndex:[dayIndexIt unsignedIntegerValue] inSortForm:YES];
         NSDictionary *labelAttributes = @{NSFontAttributeName: [UIFont fontWithName:dayOfTheWeekFontFamilyName size:dayOfTheWeekFontSize],
@@ -116,6 +119,7 @@ static NSUInteger dayOfTheMonthFontSize = 21;
                 dayLabel.textAlignment = NSTextAlignmentCenter;
                 dayLabel.backgroundColor = [UIColor clearColor];
                 dayLabel.attributedText = [[NSAttributedString alloc] initWithString:labelText attributes:labelAttributes];
+                dayLabel.tag = dayIt;
                 
                 [self.daysOfTheMonthContainerView addSubview:dayLabel];
                 
@@ -125,5 +129,30 @@ static NSUInteger dayOfTheMonthFontSize = 21;
     }
 }
 
+- (void)configureDaySelectedDecoratorView
+{
+    UILabel *dayLabel = [self findLabelForActualDaySelected];
+    CGRect circleFrame = CGRectMake(dayLabel.frame.origin.x,
+                                    dayLabel.frame.origin.y,
+                                    dayLabel.frame.size.width,
+                                    dayLabel.frame.size.height);
+    IAECircleDecoratorView *circleDecoratorView = [[IAECircleDecoratorView alloc] initWithFrame:circleFrame];
+    circleDecoratorView.circleColor = [UIColor colorWithRed:255 green:0 blue:0 alpha:0.75];
+    circleDecoratorView.backgroundColor = [UIColor clearColor];
+    
+    [self.daysOfTheMonthContainerView insertSubview:circleDecoratorView belowSubview:dayLabel];
+}
+
+- (UILabel *)findLabelForActualDaySelected
+{
+    UILabel *label = (UILabel *)[self.daysOfTheMonthContainerView viewWithTag:self.daySelected];
+    return label;
+}
+
+- (void)removeDaySelectedDecoratorView
+{
+    UIView *decorator = [self.daysOfTheMonthContainerView viewWithTag:tagDaySelectedDecoratorView];
+    [decorator removeFromSuperview];
+}
 
 @end

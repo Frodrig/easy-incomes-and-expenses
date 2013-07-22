@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IAECalculatorViewController">
             <connections>
+                <outlet property="displayPanel" destination="xJU-jx-OgO" id="AaF-Do-jyx"/>
                 <outlet property="dragPanel" destination="dms-eI-2KD" id="gqm-Is-eUm"/>
                 <outlet property="view" destination="uGo-IA-Aba" id="119-QN-C61"/>
             </connections>
@@ -59,12 +60,12 @@
                     </subviews>
                     <color key="backgroundColor" red="0.9215686917" green="0.9215686917" blue="0.9215686917" alpha="1" colorSpace="deviceRGB"/>
                 </view>
-                <view contentMode="scaleToFill" id="xJU-jx-OgO" customClass="IAEDisplayPanel">
+                <view contentMode="scaleToFill" id="xJU-jx-OgO" customClass="IAEDisplayPanelCalculatorView">
                     <rect key="frame" x="0.0" y="44" width="612" height="64"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="jo5-Ky-7Wq">
-                            <rect key="frame" x="20" y="10" width="79" height="44"/>
+                        <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="jo5-Ky-7Wq">
+                            <rect key="frame" x="20" y="10" width="242" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
                             <state key="normal" title="Categoría">
@@ -74,8 +75,11 @@
                             <state key="highlighted">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="categoryButtonPressed:" destination="-1" eventType="touchUpInside" id="z7v-P2-gKd"/>
+                            </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="87f-F2-PTJ">
+                        <button opaque="NO" tag="20" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="87f-F2-PTJ">
                             <rect key="frame" x="270" y="10" width="73" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
@@ -87,7 +91,7 @@
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Eef-Df-IuI">
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="30" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Eef-Df-IuI">
                             <rect key="frame" x="351" y="10" width="241" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>

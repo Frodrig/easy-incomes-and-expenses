@@ -15,6 +15,9 @@
 @property(nonatomic, weak)id<IAECalculatorViewControllerDelegate> delegate;
 @property(nonatomic, readonly)CGFloat sizeHeightOffsetWhenShowed;
 
+- (IBAction)incomeButtonPressed:(id)sender;
+- (IBAction)expenseButtonPressed:(id)sender;
+
 - (BOOL)isInHideMode;
 - (BOOL)isInVisibleMode;
 - (BOOL)isInIncomeMode;

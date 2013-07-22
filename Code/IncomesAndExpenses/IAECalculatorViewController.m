@@ -8,6 +8,9 @@
 
 #import "IAECalculatorViewController.h"
 #import "IAEDragPanelCalculatorView.h"
+#import "IAEDisplayPanelCalculatorView.h"
+#import "IAECategoryStore.h"
+#import "IAECategory.h"
 #import "IAECalculatorViewControllerDelegate.h"
 
 @interface IAECalculatorViewController ()
@@ -19,8 +22,10 @@ typedef NS_ENUM(NSUInteger, CalculatorMode) {
 };
 
 @property (weak, nonatomic) IBOutlet IAEDragPanelCalculatorView *dragPanel;
-@property(nonatomic)CalculatorMode mode;
-
+@property (weak, nonatomic) IBOutlet IAEDisplayPanelCalculatorView *displayPanel;
+@property (nonatomic) CalculatorMode mode;
+@property (nonatomic, weak) IAECategory *actualCategory;
+@property (nonatomic) NSUInteger actualDay;
 @end
 
 @implementation IAECalculatorViewController
@@ -28,19 +33,42 @@ typedef NS_ENUM(NSUInteger, CalculatorMode) {
 static CGFloat animationDurationShowHideAction = 0.25;
 static CGFloat marginHeightOffsetWhenShowed = 10;
 
+static NSString * const userDefaultsDayModeActive = @"dayModeActive";
+static NSString * const notificationDayModeOnName = @"dayModeToOn";
+static NSString * const notificationDayModeOffName = @"dayModeToOff";
+
 - (CGFloat)sizeHeightOffsetWhenShowed
 {
     return [self calculeAbsoluteOffsetDisplacementValue] + marginHeightOffsetWhenShowed;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithCoder:aDecoder];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        _mode = CM_HIDE;
+        [self initValues];
+        [self initAsObserverOfNotificationCenter];
     }
     
     return self;
+}
+
+- (void)initValues
+{
+    _mode = CM_HIDE;    
+}
+
+- (void)initAsObserverOfNotificationCenter
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notificationCenterOnDayModeOn:)
+                                                 name:notificationDayModeOnName
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notificationCenterOnDayModeOff:)
+                                                 name:notificationDayModeOffName
+                                               object:nil];
 }
 
 - (void)viewDidLoad
@@ -74,11 +102,13 @@ static CGFloat marginHeightOffsetWhenShowed = 10;
 
 - (IBAction)incomeButtonPressed:(id)sender
 {
+    self.actualCategory = [[IAECategoryStore sharedCategoryStore] generalIncomeCategory];
     [self processDragPannelButtonPressedWithMode:CM_INCOME];
 }
 
 - (IBAction)expenseButtonPressed:(id)sender
 {
+    self.actualCategory = [[IAECategoryStore sharedCategoryStore] generalExpenseCategory];
     [self processDragPannelButtonPressedWithMode:CM_EXPENSE];
 }
 
@@ -88,6 +118,7 @@ static CGFloat marginHeightOffsetWhenShowed = 10;
     
     if ([self isInHideMode]) {
         [self showInMode:mode];
+        [self configureDisplayPanelInShowMode];
     } else if ([self isDragPannelModeEqualToMode:mode]) {
         [self hide];
     } else {
@@ -96,26 +127,50 @@ static CGFloat marginHeightOffsetWhenShowed = 10;
     }
 }
 
+- (void)configureDisplayPanelInShowMode
+{
+    NSAssert(![self isInHideMode], @"");
+    
+    [self configureCategoryInDisplayPanel];
+    [self configureDayInDisplayPanel];
+}
+
+- (void)configureCategoryInDisplayPanel
+{
+    [self.displayPanel setCategoryName:self.actualCategory.tag];
+}
+
+- (void)configureDayInDisplayPanel
+{
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:userDefaultsDayModeActive]) {
+        [self.displayPanel showDayButton];
+        [self.displayPanel setDay:self.actualDay];
+    } else {
+        [self.displayPanel hideDayButton];
+    }
+}
+
 - (BOOL)isDragPannelModeEqualToMode:(CalculatorMode)mode
 {
     return mode == self.mode;
 }
 
-#pragma mark - Hide / Show actions
-
 - (void)showInMode:(CalculatorMode)mode;
 {
     NSAssert(mode != CM_HIDE, @"");
-    [self.delegate showButtonPressedOnCalculatorViewController:self];
     self.mode = mode;
+    
     [self updateVisibilityWithOffset:-[self calculeAbsoluteOffsetDisplacementValue] usingAnimation:YES];
+    
+    [self.delegate showButtonPressedOnCalculatorViewController:self];
 }
 
 - (void)hide
 {
-    [self.delegate hideButtonPressedOnCalculatorViewController:self];
     self.mode = CM_HIDE;
     [self updateVisibilityWithOffset:[self calculeAbsoluteOffsetDisplacementValue] usingAnimation:YES];
+
+    [self.delegate hideButtonPressedOnCalculatorViewController:self];
 }
 
 - (CGFloat)calculeAbsoluteOffsetDisplacementValue
@@ -132,5 +187,26 @@ static CGFloat marginHeightOffsetWhenShowed = 10;
                                      self.view.frame.size.height);
     }];
 }
+
+#pragma mark - Display Panel Events
+
+- (IBAction)categoryButtonPressed:(id)sender
+{
+}
+
+#pragma mark - Notification Center
+
+
+- (void)notificationCenterOnDayModeOn:(NSNotification *)notification
+{
+    [self configureDayInDisplayPanel];
+}
+
+- (void)notificationCenterOnDayModeOff:(NSNotification *)notification
+{
+    [self configureDayInDisplayPanel];
+}
+
+
 
 @end

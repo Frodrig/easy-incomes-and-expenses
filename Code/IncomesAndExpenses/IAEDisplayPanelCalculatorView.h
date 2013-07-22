@@ -10,4 +10,12 @@
 
 @interface IAEDisplayPanelCalculatorView : UIView
 
+- (void)setCategoryName:(NSString *)categoryName;
+- (void)setDay:(NSUInteger)day;
+- (void)setAmount:(NSDecimalNumber *)amount;
+
+- (void)showDayButton;
+- (void)hideDayButton;
+- (BOOL)isDayButtonVisible;
+
 @end

@@ -26,6 +26,7 @@
 #import "IAEYearSelectorViewControllerDelegate.h"
 #import "IAEAboutAndOptionsViewController.h"
 #import "IAEDayCalendarSelectorViewController.h"
+#import "IAECalculatorViewController.h"
 #import "NSNumber+DefaultValues.h"
 #import "IAECategoryStore.h"
 #import "IAEDateHelper.h"
@@ -41,6 +42,7 @@
 @property (weak, nonatomic) IBOutlet UIPageControl *monthsScrollPageController;
 @property (weak, nonatomic) IBOutlet UIView *conceptsContainerView;
 @property (weak, nonatomic) IBOutlet UICollectionView *conceptsCollectionView;
+@property (nonatomic, strong) IAECalculatorViewController *calculatorViewController;
 @property (nonatomic, strong) UIPopoverController *popover;
 @property (nonatomic, strong) UITapGestureRecognizer *tapConceptsRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *dobleTapConceptsRecognizer;
@@ -65,6 +67,7 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
         [self initDobleTapConceptsGestureRecognizer];
         [self initTapConceptsGestureRecognizer];
         [self initAsObserverOfNotificationCenter];
+        [self initCalculatorViewController];
     }
     
     return self;
@@ -95,6 +98,11 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
                                              selector:@selector(notificationCenterOnDayModeOff:)
                                                  name:notificationDayModeOffName
                                                object:nil];
+}
+
+- (void)initCalculatorViewController
+{
+    _calculatorViewController = [[IAECalculatorViewController alloc] init];
 }
 
 - (void)dealloc
@@ -156,6 +164,7 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
     
     [self vinculeAnnualBalanceContent];
     [self vinculeMonthScrollViewContent];
+    [self vinculeCalculatorViewControllerView];
     
     [self goToActualMonth];
 }
@@ -341,8 +350,20 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
     [monthBalanceView reloadDataWithAnimation:YES];
 }
 
-- (void)processEconomicLabel:(UILabel *)label toValue:(NSDecimalNumber *)destinationValue withDuration:(CGFloat)duration { }
+- (void)processEconomicLabel:(UILabel *)label toValue:(NSDecimalNumber *)destinationValue withDuration:(CGFloat)duration
+{
+}
 
+#pragma mark - CalculatorViewController (vincule)
+
+- (void)vinculeCalculatorViewControllerView
+{
+    self.calculatorViewController.view.frame = CGRectMake(206,
+                                                          660,
+                                                          self.calculatorViewController.view.bounds.size.width,
+                                                          self.calculatorViewController.view.bounds.size.height);
+    [self.view addSubview:self.calculatorViewController.view];
+}
 
 #pragma mark - AnnualBalance (vincule)
 

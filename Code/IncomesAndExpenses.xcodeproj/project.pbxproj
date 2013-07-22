@@ -124,9 +124,9 @@
 		5B903BBE1783220A00DBEFB2 /* IAEEditModeMonthBalanceItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B903BBD1782DBDC00DBEFB2 /* IAEEditModeMonthBalanceItem.xib */; };
 		5B907832179D1AA700B2A0F7 /* IAECalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B907830179D1AA700B2A0F7 /* IAECalculatorViewController.m */; };
 		5B907833179D1AA700B2A0F7 /* IAECalculatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B907831179D1AA700B2A0F7 /* IAECalculatorViewController.xib */; };
-		5B907838179D25BD00B2A0F7 /* IAEDragPanelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B907837179D25BD00B2A0F7 /* IAEDragPanelView.m */; };
-		5B90783C179D268000B2A0F7 /* IAEDisplayPanelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B90783B179D268000B2A0F7 /* IAEDisplayPanelView.m */; };
-		5B907840179D269E00B2A0F7 /* IAEKeyboardPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B90783F179D269E00B2A0F7 /* IAEKeyboardPanel.m */; };
+		5B907838179D25BD00B2A0F7 /* IAEDragPanelCalculatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B907837179D25BD00B2A0F7 /* IAEDragPanelCalculatorView.m */; };
+		5B90783C179D268000B2A0F7 /* IAEDisplayPanelCalculatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B90783B179D268000B2A0F7 /* IAEDisplayPanelCalculatorView.m */; };
+		5B907840179D269E00B2A0F7 /* IAEKeyboardPanelCalculatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B90783F179D269E00B2A0F7 /* IAEKeyboardPanelCalculatorView.m */; };
 		5B94036017904C1400F9C1D0 /* IAEYearSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B94035F17904C1400F9C1D0 /* IAEYearSelectorViewController.xib */; };
 		5BA0130D179800AC00337E84 /* NSString+TwoDigitString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA0130C179800AC00337E84 /* NSString+TwoDigitString.m */; };
 		5BA0131217983A9000337E84 /* IAEDayCalendarSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA0131017983A9000337E84 /* IAEDayCalendarSelectorViewController.m */; };
@@ -379,12 +379,12 @@
 		5B907830179D1AA700B2A0F7 /* IAECalculatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECalculatorViewController.m; sourceTree = "<group>"; };
 		5B907831179D1AA700B2A0F7 /* IAECalculatorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAECalculatorViewController.xib; sourceTree = "<group>"; };
 		5B907834179D1AB900B2A0F7 /* IAECalculatorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECalculatorViewControllerDelegate.h; sourceTree = "<group>"; };
-		5B907836179D25BD00B2A0F7 /* IAEDragPanelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEDragPanelView.h; sourceTree = "<group>"; };
-		5B907837179D25BD00B2A0F7 /* IAEDragPanelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEDragPanelView.m; sourceTree = "<group>"; };
-		5B90783A179D268000B2A0F7 /* IAEDisplayPanelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEDisplayPanelView.h; sourceTree = "<group>"; };
-		5B90783B179D268000B2A0F7 /* IAEDisplayPanelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEDisplayPanelView.m; sourceTree = "<group>"; };
-		5B90783E179D269E00B2A0F7 /* IAEKeyboardPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEKeyboardPanel.h; sourceTree = "<group>"; };
-		5B90783F179D269E00B2A0F7 /* IAEKeyboardPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEKeyboardPanel.m; sourceTree = "<group>"; };
+		5B907836179D25BD00B2A0F7 /* IAEDragPanelCalculatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEDragPanelCalculatorView.h; sourceTree = "<group>"; };
+		5B907837179D25BD00B2A0F7 /* IAEDragPanelCalculatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEDragPanelCalculatorView.m; sourceTree = "<group>"; };
+		5B90783A179D268000B2A0F7 /* IAEDisplayPanelCalculatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEDisplayPanelCalculatorView.h; sourceTree = "<group>"; };
+		5B90783B179D268000B2A0F7 /* IAEDisplayPanelCalculatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEDisplayPanelCalculatorView.m; sourceTree = "<group>"; };
+		5B90783E179D269E00B2A0F7 /* IAEKeyboardPanelCalculatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEKeyboardPanelCalculatorView.h; sourceTree = "<group>"; };
+		5B90783F179D269E00B2A0F7 /* IAEKeyboardPanelCalculatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEKeyboardPanelCalculatorView.m; sourceTree = "<group>"; };
 		5B94035C178FEA5C00F9C1D0 /* IAEYearSelectorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEYearSelectorViewControllerDelegate.h; sourceTree = "<group>"; };
 		5B94035E178FF51600F9C1D0 /* IAEEditModeMonthBalanceViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEditModeMonthBalanceViewDataSource.h; sourceTree = "<group>"; };
 		5B94035F17904C1400F9C1D0 /* IAEYearSelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEYearSelectorViewController.xib; sourceTree = "<group>"; };
@@ -1235,8 +1235,8 @@
 		5B907839179D266900B2A0F7 /* Drag Panel */ = {
 			isa = PBXGroup;
 			children = (
-				5B907836179D25BD00B2A0F7 /* IAEDragPanelView.h */,
-				5B907837179D25BD00B2A0F7 /* IAEDragPanelView.m */,
+				5B907836179D25BD00B2A0F7 /* IAEDragPanelCalculatorView.h */,
+				5B907837179D25BD00B2A0F7 /* IAEDragPanelCalculatorView.m */,
 			);
 			name = "Drag Panel";
 			sourceTree = "<group>";
@@ -1244,8 +1244,8 @@
 		5B90783D179D268400B2A0F7 /* Display Panel */ = {
 			isa = PBXGroup;
 			children = (
-				5B90783A179D268000B2A0F7 /* IAEDisplayPanelView.h */,
-				5B90783B179D268000B2A0F7 /* IAEDisplayPanelView.m */,
+				5B90783A179D268000B2A0F7 /* IAEDisplayPanelCalculatorView.h */,
+				5B90783B179D268000B2A0F7 /* IAEDisplayPanelCalculatorView.m */,
 			);
 			name = "Display Panel";
 			sourceTree = "<group>";
@@ -1253,8 +1253,8 @@
 		5B907841179D26A300B2A0F7 /* Keyboard Panel */ = {
 			isa = PBXGroup;
 			children = (
-				5B90783E179D269E00B2A0F7 /* IAEKeyboardPanel.h */,
-				5B90783F179D269E00B2A0F7 /* IAEKeyboardPanel.m */,
+				5B90783E179D269E00B2A0F7 /* IAEKeyboardPanelCalculatorView.h */,
+				5B90783F179D269E00B2A0F7 /* IAEKeyboardPanelCalculatorView.m */,
 			);
 			name = "Keyboard Panel";
 			sourceTree = "<group>";
@@ -1736,7 +1736,7 @@
 				5B1F0D3517841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m in Sources */,
 				5BDC867E1680D83500C761D5 /* IAEConcept.m in Sources */,
 				5B7782521684674E0035EB89 /* IAEYearsConfigViewController.m in Sources */,
-				5B907840179D269E00B2A0F7 /* IAEKeyboardPanel.m in Sources */,
+				5B907840179D269E00B2A0F7 /* IAEKeyboardPanelCalculatorView.m in Sources */,
 				5B77825716846D400035EB89 /* IAEYearConfigCardViewController.m in Sources */,
 				5BCC1F4D16A0684A003946E8 /* IAEAnimationManager.m in Sources */,
 				5B0B500B16A434DB006BEAD7 /* IAEConstants.m in Sources */,
@@ -1744,13 +1744,13 @@
 				5B5C967B1781673A008CD851 /* IAEValueDecoratorView.m in Sources */,
 				5B5C968217816D68008CD851 /* IAEValueDecoratorViewConfigurator.m in Sources */,
 				5BC916F016A574B50072AE5C /* IAEDragToolbarView.m in Sources */,
-				5B907838179D25BD00B2A0F7 /* IAEDragPanelView.m in Sources */,
+				5B907838179D25BD00B2A0F7 /* IAEDragPanelCalculatorView.m in Sources */,
 				5BC916F416A57B030072AE5C /* IAEViewUtils.m in Sources */,
 				5B62D881178EC3CB009879A6 /* IAECurrencyInfo.m in Sources */,
 				5BC916F816A57BCA0072AE5C /* IAEViewCategoryTypeIndicator.m in Sources */,
 				5B36AFF11785874D00132475 /* IAEAdjustConceptAmountViewController.m in Sources */,
 				5B62D87D178EC27D009879A6 /* IAEDateHelper.m in Sources */,
-				5B90783C179D268000B2A0F7 /* IAEDisplayPanelView.m in Sources */,
+				5B90783C179D268000B2A0F7 /* IAEDisplayPanelCalculatorView.m in Sources */,
 				5B32D654177C387A0070AC72 /* IAEEditModeViewController.m in Sources */,
 				5BC916FE16A5AD080072AE5C /* IAEInputButtonGrid.m in Sources */,
 				5B903BBC1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.m in Sources */,

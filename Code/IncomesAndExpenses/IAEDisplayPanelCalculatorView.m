@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Fernando Rodríguez Martínez. All rights reserved.
 //
 
-#import "IAEDisplayPanelView.h"
+#import "IAEDisplayPanelCalculatorView.h"
 
-@implementation IAEDisplayPanelView
+@implementation IAEDisplayPanelCalculatorView
 
 - (id)initWithFrame:(CGRect)frame
 {

@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+@class IAECalculatorViewController;
+
 @protocol IAECalculatorViewControllerDelegate <NSObject>
+
+- (void)showButtonPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController;
+- (void)hideButtonPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController;
 
 @end

@@ -13,5 +13,11 @@
 @interface IAECalculatorViewController : UIViewController
 
 @property(nonatomic, weak)id<IAECalculatorViewControllerDelegate> delegate;
+@property(nonatomic, readonly)CGFloat sizeHeightOffsetWhenShowed;
+
+- (BOOL)isInHideMode;
+- (BOOL)isInVisibleMode;
+- (BOOL)isInIncomeMode;
+- (BOOL)isInExpenseMode;
 
 @end

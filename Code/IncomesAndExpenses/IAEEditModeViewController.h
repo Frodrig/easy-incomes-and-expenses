@@ -13,6 +13,7 @@
 #import "IAEYearSelectorViewControllerDelegate.h"
 #import "IAEEditModeMonthBalanceViewDataSource.h"
 #import "IAEDayCalendarSelectorViewControllerDelegate.h"
+#import "IAECalculatorViewControllerDelegate.h"
 
 @interface IAEEditModeViewController : UIViewController<UIPopoverControllerDelegate,
                                                         UIScrollViewDelegate,
@@ -23,7 +24,8 @@
                                                         IAECategoryEditorViewControllerDelegate,
                                                         IAEYearSelectorViewControllerDelegate,
                                                         IAEEditModeMonthBalanceViewDataSource,
-                                                        IAEDayCalendarSelectorViewControllerDelegate>
+                                                        IAEDayCalendarSelectorViewControllerDelegate,
+                                                        IAECalculatorViewControllerDelegate>
 
 - (IBAction)categoriesButtonPressed:(id)sender;
 - (IBAction)yearsButtonPressed:(id)sender;

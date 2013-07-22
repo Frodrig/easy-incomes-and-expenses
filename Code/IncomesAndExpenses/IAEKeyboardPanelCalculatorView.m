@@ -1,17 +1,23 @@
 //
-//  IAEDragPanelView.m
+//  IAEKeyboardPanel.m
 //  IncomesAndExpenses
 //
 //  Created by Fernando Rodríguez on 22/07/13.
 //  Copyright (c) 2013 Fernando Rodríguez Martínez. All rights reserved.
 //
 
-#import "IAEDragPanelView.h"
-#import "UIView+RoundedCorners.h"
+#import "IAEKeyboardPanelCalculatorView.h"
 
-@implementation IAEDragPanelView
+@implementation IAEKeyboardPanelCalculatorView
 
-static NSUInteger radiusTopCorners = 20;
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        // Initialization code
+    }
+    return self;
+}
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -21,15 +27,5 @@ static NSUInteger radiusTopCorners = 20;
     // Drawing code
 }
 */
-
-- (void)awakeFromNib
-{
-    [self configureContainerView];
-}
-
-- (void)configureContainerView
-{
-    [self addRoundedCorners:UIRectCornerTopLeft | UIRectCornerTopRight withRadius:radiusTopCorners];
-}
 
 @end

@@ -36,6 +36,7 @@
 
 @interface IAEEditModeViewController ()
 
+@property (weak, nonatomic) IBOutlet UIView *annualBalanceContainerView;
 @property (weak, nonatomic) IBOutlet UILabel *annualBalanceIndicatorLabel;
 @property (weak, nonatomic) IBOutlet UILabel *annualBalanceValueLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *monthsScrollView;
@@ -103,6 +104,7 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 - (void)initCalculatorViewController
 {
     _calculatorViewController = [[IAECalculatorViewController alloc] init];
+    _calculatorViewController.delegate = self;
 }
 
 - (void)dealloc
@@ -165,7 +167,7 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
     [self vinculeAnnualBalanceContent];
     [self vinculeMonthScrollViewContent];
     [self vinculeCalculatorViewControllerView];
-    
+        
     [self goToActualMonth];
 }
 
@@ -1086,6 +1088,44 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
         [[IAEBook sharedBook] saveAll];
         [self.conceptsCollectionView reloadData];
     }
+}
+
+#pragma mark - IAECalculatorViewControllerDelegate
+
+- (void)showButtonPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
+{
+    [UIView animateWithDuration:0.25 animations:^{
+        [self updateFramePositionBeforeShowCalculatorForView:self.annualBalanceContainerView];
+        [self updateFramePositionBeforeShowCalculatorForView:self.monthsScrollView];
+        [self updateFramePositionBeforeShowCalculatorForView:self.monthsScrollPageController];
+        [self updateFramePositionBeforeShowCalculatorForView:self.conceptsContainerView];
+    }];
+}
+
+- (void)hideButtonPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
+{
+    [UIView animateWithDuration:0.25 animations:^{
+        [self updateFramePositionAfterShowCalculatorForView:self.annualBalanceContainerView];
+        [self updateFramePositionAfterShowCalculatorForView:self.monthsScrollView];
+        [self updateFramePositionAfterShowCalculatorForView:self.monthsScrollPageController];
+        [self updateFramePositionAfterShowCalculatorForView:self.conceptsContainerView];
+    }];
+}
+
+- (void)updateFramePositionBeforeShowCalculatorForView:(UIView *)view
+{
+    view.frame = CGRectMake(view.frame.origin.x,
+                            view.frame.origin.y - self.calculatorViewController.sizeHeightOffsetWhenShowed,
+                            view.frame.size.width,
+                            view.frame.size.height);
+}
+
+- (void)updateFramePositionAfterShowCalculatorForView:(UIView *)view
+{
+    view.frame = CGRectMake(view.frame.origin.x,
+                            view.frame.origin.y + self.calculatorViewController.sizeHeightOffsetWhenShowed,
+                            view.frame.size.width,
+                            view.frame.size.height);
 }
 
 @end

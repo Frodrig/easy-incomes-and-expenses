@@ -1,5 +1,5 @@
 //
-//  IAEKeyboardPanel.h
+//  IAEDragPanelView.h
 //  IncomesAndExpenses
 //
 //  Created by Fernando Rodríguez on 22/07/13.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface IAEKeyboardPanel : UIView
+@interface IAEDragPanelCalculatorView : UIView
 
 @end

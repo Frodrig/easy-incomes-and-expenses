@@ -294,13 +294,13 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 - (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
             didSelectAddCategoryOfType:(CategoryType)categoryType
 {
+    [self dismissPopover];
+
     IAECategoryEditorViewController *categoryEditorViewController = [[IAECategoryEditorViewController alloc] initToAddCategoryOfType:categoryType];
     categoryEditorViewController.delegate = self;
     categoryEditorViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     
-    [categorySelectorViewController presentViewController:categoryEditorViewController animated:YES completion:nil];
-    
-    [self dismissPopover];
+    [self presentViewController:categoryEditorViewController animated:YES completion:nil];
 }
 
 #pragma mark - IAECalendarSelectorViewControllerDelegate

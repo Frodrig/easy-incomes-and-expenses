@@ -14,6 +14,8 @@
 
 @protocol IAECategorySelectorViewControllerDelegate <NSObject>
 
+@optional
+
 - (void)doneButtonWasPressedInCategorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController;
 
 - (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController

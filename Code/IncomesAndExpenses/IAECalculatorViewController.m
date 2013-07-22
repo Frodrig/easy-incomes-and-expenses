@@ -12,6 +12,8 @@
 #import "IAECategoryStore.h"
 #import "IAECategory.h"
 #import "IAECalculatorViewControllerDelegate.h"
+#import "IAECategorySelectorViewController.h"
+#import "IAEDayCalendarSelectorViewController.h"
 
 @interface IAECalculatorViewController ()
 
@@ -26,6 +28,8 @@ typedef NS_ENUM(NSUInteger, CalculatorMode) {
 @property (nonatomic) CalculatorMode mode;
 @property (nonatomic, weak) IAECategory *actualCategory;
 @property (nonatomic) NSUInteger actualDay;
+@property (nonatomic, strong) UIPopoverController *popover;
+
 @end
 
 @implementation IAECalculatorViewController
@@ -74,6 +78,12 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+}
+
+- (void)dismissPopover
+{
+    [self.popover dismissPopoverAnimated:YES];
+    self.popover = nil;
 }
 
 #pragma mark - State questions
@@ -131,16 +141,16 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 {
     NSAssert(![self isInHideMode], @"");
     
-    [self configureCategoryInDisplayPanel];
-    [self configureDayInDisplayPanel];
+    [self configureDisplayPanelWithActualCategory];
+    [self configureDisplayPanelWithActualDay];
 }
 
-- (void)configureCategoryInDisplayPanel
+- (void)configureDisplayPanelWithActualCategory
 {
     [self.displayPanel setCategoryName:self.actualCategory.tag];
 }
 
-- (void)configureDayInDisplayPanel
+- (void)configureDisplayPanelWithActualDay
 {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:userDefaultsDayModeActive]) {
         [self.displayPanel showDayButton];
@@ -190,21 +200,84 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 
 #pragma mark - Display Panel Events
 
-- (IBAction)categoryButtonPressed:(id)sender
+- (IBAction)categoryButtonPressed:(UIButton *)button
 {
+    [self launchPopoverForSelectCategoryFromRect:button.frame];
+}
+
+- (void)launchPopoverForSelectCategoryFromRect:(CGRect)rect
+{
+    NSUInteger categorySelectorOptions = CATEGORYSELECTOR_EXTRAACTION_CATEGORYSELECTION | CATEGORYSELECTOR_EXTRAACTION_ADD;
+    IAECategorySelectorViewController *viewController = [[IAECategorySelectorViewController alloc] initWithExtraActions:categorySelectorOptions];
+    viewController.delegate = self;
+    
+    self.popover = [[UIPopoverController alloc] initWithContentViewController:viewController];
+    self.popover.delegate = self;
+    
+    [self.popover presentPopoverFromRect:rect
+                                  inView:self.displayPanel
+                permittedArrowDirections:UIPopoverArrowDirectionDown
+                                animated:YES];
+}
+
+- (IBAction)dayButtonPressed:(UIButton *)button
+{
+    [self launchPopoverForSelectDayFromRect:button.frame];
+}
+
+- (void)launchPopoverForSelectDayFromRect:(CGRect)rect
+{
+    
+}
+
+#pragma mark - UIPopoverControllerDelegate
+
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+    self.popover = nil;
+}
+
+- (BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController
+{
+    return YES;
+}
+
+#pragma IAECategorySelectorViewControllerDelegate
+
+- (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
+                     didSelectCategory:(IAECategory *)category
+{
+    self.actualCategory = category;
+    [self configureDisplayPanelWithActualCategory];
+    
+    [self dismissPopover];
+}
+
+- (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
+            didSelectAddCategoryOfType:(CategoryType)categoryType
+{
+    
+}
+
+
+#pragma mark - IAECalendarSelectorViewControllerDelegate
+
+- (void)dayCalendarSelectorViewController:(IAEDayCalendarSelectorViewController *)dayCalendarSelectorViewController
+                             didSelectDay:(NSUInteger)day
+{
+    
 }
 
 #pragma mark - Notification Center
 
-
 - (void)notificationCenterOnDayModeOn:(NSNotification *)notification
 {
-    [self configureDayInDisplayPanel];
+    [self configureDisplayPanelWithActualDay];
 }
 
 - (void)notificationCenterOnDayModeOff:(NSNotification *)notification
 {
-    [self configureDayInDisplayPanel];
+    [self configureDisplayPanelWithActualDay];
 }
 
 

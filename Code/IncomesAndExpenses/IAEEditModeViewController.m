@@ -105,6 +105,7 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 {
     _calculatorViewController = [[IAECalculatorViewController alloc] init];
     _calculatorViewController.delegate = self;
+    _calculatorViewController.dataSource = self;
 }
 
 - (void)dealloc
@@ -1126,6 +1127,18 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
                             view.frame.origin.y + self.calculatorViewController.sizeHeightOffsetWhenShowed,
                             view.frame.size.width,
                             view.frame.size.height);
+}
+
+#pragma mark - IAECalculatorViewControllerDataSource
+
+- (IAEYear *)yearForCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
+{
+    return [self findActualYear];
+}
+
+- (IAEMonth *)monthForCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
+{
+    return [self findActualMonth];
 }
 
 @end

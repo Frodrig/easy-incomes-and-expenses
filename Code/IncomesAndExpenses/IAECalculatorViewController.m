@@ -11,7 +11,11 @@
 #import "IAEDisplayPanelCalculatorView.h"
 #import "IAECategoryStore.h"
 #import "IAECategory.h"
+#import "IAEYear.h"
+#import "IAEMonth.h"
+#import "IAEBook.h"
 #import "IAECalculatorViewControllerDelegate.h"
+#import "IAECalculatorViewControllerDataSource.h"
 #import "IAECategorySelectorViewController.h"
 #import "IAEDayCalendarSelectorViewController.h"
 
@@ -227,7 +231,21 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 
 - (void)launchPopoverForSelectDayFromRect:(CGRect)rect
 {
+    IAEYear *year = [self.dataSource yearForCalculatorViewController:self];
+    IAEMonth *month = [self.dataSource monthForCalculatorViewController:self];
+    IAEDayCalendarSelectorViewController *viewController = [[IAEDayCalendarSelectorViewController alloc] initWithYearDate:year.yearDate
+                                                                                                               monthIndex:month.month
+                                                                                                           andDaySelected:self.actualDay];
+    viewController.delegate = self;
     
+    self.popover = [[UIPopoverController alloc] initWithContentViewController:viewController];
+    self.popover.popoverContentSize = viewController.view.frame.size;
+    self.popover.delegate = self;
+    
+    [self.popover presentPopoverFromRect:rect
+                                  inView:self.displayPanel
+                permittedArrowDirections:UIPopoverArrowDirectionDown
+                                animated:YES];
 }
 
 #pragma mark - UIPopoverControllerDelegate
@@ -256,7 +274,6 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 - (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
             didSelectAddCategoryOfType:(CategoryType)categoryType
 {
-    
 }
 
 
@@ -265,7 +282,10 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 - (void)dayCalendarSelectorViewController:(IAEDayCalendarSelectorViewController *)dayCalendarSelectorViewController
                              didSelectDay:(NSUInteger)day
 {
+    self.actualDay = day;
+    [self configureDisplayPanelWithActualDay];
     
+    [self dismissPopover];
 }
 
 #pragma mark - Notification Center

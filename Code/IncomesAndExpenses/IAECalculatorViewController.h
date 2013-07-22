@@ -11,13 +11,16 @@
 #import "IAEDayCalendarSelectorViewControllerDelegate.h"
 
 @protocol IAECalculatorViewControllerDelegate;
+@protocol IAECalculatorViewControllerDataSource;
 
 @interface IAECalculatorViewController : UIViewController<UIPopoverControllerDelegate,
                                                           IAECategorySelectorViewControllerDelegate,
                                                           IAEDayCalendarSelectorViewControllerDelegate>
 
-@property(nonatomic, weak)id<IAECalculatorViewControllerDelegate> delegate;
-@property(nonatomic, readonly)CGFloat sizeHeightOffsetWhenShowed;
+@property (nonatomic, weak) id<IAECalculatorViewControllerDelegate> delegate;
+@property (nonatomic, weak) id<IAECalculatorViewControllerDataSource> dataSource;
+
+@property (nonatomic, readonly) CGFloat sizeHeightOffsetWhenShowed;
 
 - (IBAction)incomeButtonPressed:(id)sender;
 - (IBAction)expenseButtonPressed:(id)sender;

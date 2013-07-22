@@ -385,6 +385,7 @@
 		5B90783B179D268000B2A0F7 /* IAEDisplayPanelCalculatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEDisplayPanelCalculatorView.m; sourceTree = "<group>"; };
 		5B90783E179D269E00B2A0F7 /* IAEKeyboardPanelCalculatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEKeyboardPanelCalculatorView.h; sourceTree = "<group>"; };
 		5B90783F179D269E00B2A0F7 /* IAEKeyboardPanelCalculatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEKeyboardPanelCalculatorView.m; sourceTree = "<group>"; };
+		5B907842179D7FED00B2A0F7 /* IAECalculatorViewControllerDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECalculatorViewControllerDataSource.h; sourceTree = "<group>"; };
 		5B94035C178FEA5C00F9C1D0 /* IAEYearSelectorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEYearSelectorViewControllerDelegate.h; sourceTree = "<group>"; };
 		5B94035E178FF51600F9C1D0 /* IAEEditModeMonthBalanceViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEditModeMonthBalanceViewDataSource.h; sourceTree = "<group>"; };
 		5B94035F17904C1400F9C1D0 /* IAEYearSelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEYearSelectorViewController.xib; sourceTree = "<group>"; };
@@ -1218,6 +1219,7 @@
 				5B907830179D1AA700B2A0F7 /* IAECalculatorViewController.m */,
 				5B907831179D1AA700B2A0F7 /* IAECalculatorViewController.xib */,
 				5B907834179D1AB900B2A0F7 /* IAECalculatorViewControllerDelegate.h */,
+				5B907842179D7FED00B2A0F7 /* IAECalculatorViewControllerDataSource.h */,
 			);
 			name = Calculator;
 			sourceTree = "<group>";

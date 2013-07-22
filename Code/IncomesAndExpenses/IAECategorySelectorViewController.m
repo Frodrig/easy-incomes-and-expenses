@@ -154,6 +154,17 @@ const NSUInteger EXPENSE_SEGMENTED_INDEX = 1;
     return YES;
 }
 
+- (void)changeToCategory:(CategoryType)category
+{
+    CategoryType actualCategory = [self categoryTypeSelectedInCategorySegmentedControl];
+    if (actualCategory != category) {
+        NSAssert(category != InvalidCategory, @"");
+        self.categorySegmentedControl.selectedSegmentIndex = category == IncomeCategory ? INCOME_SEGMENTED_INDEX : EXPENSE_SEGMENTED_INDEX;
+        
+        [self reloadData];
+    }
+}
+
 #pragma mark - Control Events
 
 - (IBAction)doneButtonPressed:(id)sender

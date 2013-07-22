@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CategoryDefs.h"
 
 @protocol IAECategorySelectorViewControllerDelegate;
 
@@ -30,5 +31,11 @@ typedef NS_ENUM(NSUInteger, CategorySelectorActionFlags) {
 - (id)initWithAllExtraActionsExceptSelection;
 
 - (void)reloadData;
+
+- (IBAction)doneButtonPressed:(id)sender;
+- (IBAction)addCategoryButtonPressed:(id)sender;
+- (IBAction)categorySegmentedControlPressed:(id)sender;
+
+- (void)changeToCategory:(CategoryType)category;
 
 @end

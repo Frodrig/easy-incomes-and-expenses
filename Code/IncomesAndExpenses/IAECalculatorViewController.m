@@ -18,6 +18,7 @@
 #import "IAECalculatorViewControllerDataSource.h"
 #import "IAECategorySelectorViewController.h"
 #import "IAEDayCalendarSelectorViewController.h"
+#import "IAECategoryEditorViewController.h"
 
 @interface IAECalculatorViewController ()
 
@@ -116,13 +117,11 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 
 - (IBAction)incomeButtonPressed:(id)sender
 {
-    self.actualCategory = [[IAECategoryStore sharedCategoryStore] generalIncomeCategory];
     [self processDragPannelButtonPressedWithMode:CM_INCOME];
 }
 
 - (IBAction)expenseButtonPressed:(id)sender
 {
-    self.actualCategory = [[IAECategoryStore sharedCategoryStore] generalExpenseCategory];
     [self processDragPannelButtonPressedWithMode:CM_EXPENSE];
 }
 
@@ -132,12 +131,20 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
     
     if ([self isInHideMode]) {
         [self showInMode:mode];
-        [self configureDisplayPanelInShowMode];
     } else if ([self isDragPannelModeEqualToMode:mode]) {
         [self hide];
     } else {
         NSAssert(![self isDragPannelModeEqualToMode:mode], @"");
-        self.mode = mode;
+        [self changeToMode:mode];
+    }
+}
+
+- (void)setDefaultCategoryForActualMode
+{
+    if (self.mode == CM_INCOME) {
+        self.actualCategory = [[IAECategoryStore sharedCategoryStore] generalIncomeCategory];
+    } else if (self.mode == CM_EXPENSE) {
+        self.actualCategory = [[IAECategoryStore sharedCategoryStore] generalExpenseCategory];
     }
 }
 
@@ -173,10 +180,20 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 {
     NSAssert(mode != CM_HIDE, @"");
     self.mode = mode;
-    
+
     [self updateVisibilityWithOffset:-[self calculeAbsoluteOffsetDisplacementValue] usingAnimation:YES];
+    [self setDefaultCategoryForActualMode];
+    [self configureDisplayPanelInShowMode];
     
     [self.delegate showButtonPressedOnCalculatorViewController:self];
+}
+
+- (void)changeToMode:(CalculatorMode)mode
+{
+    self.mode = mode;
+    
+    [self setDefaultCategoryForActualMode];
+    [self configureDisplayPanelWithActualCategory];
 }
 
 - (void)hide
@@ -214,14 +231,17 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
     NSUInteger categorySelectorOptions = CATEGORYSELECTOR_EXTRAACTION_CATEGORYSELECTION | CATEGORYSELECTOR_EXTRAACTION_ADD;
     IAECategorySelectorViewController *viewController = [[IAECategorySelectorViewController alloc] initWithExtraActions:categorySelectorOptions];
     viewController.delegate = self;
-    
+
     self.popover = [[UIPopoverController alloc] initWithContentViewController:viewController];
+    self.popover.popoverContentSize = viewController.view.frame.size;
     self.popover.delegate = self;
     
     [self.popover presentPopoverFromRect:rect
                                   inView:self.displayPanel
                 permittedArrowDirections:UIPopoverArrowDirectionDown
                                 animated:YES];
+    
+    [viewController changeToCategory:self.actualCategory.categoryType];
 }
 
 - (IBAction)dayButtonPressed:(UIButton *)button
@@ -274,8 +294,14 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 - (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
             didSelectAddCategoryOfType:(CategoryType)categoryType
 {
+    IAECategoryEditorViewController *categoryEditorViewController = [[IAECategoryEditorViewController alloc] initToAddCategoryOfType:categoryType];
+    categoryEditorViewController.delegate = self;
+    categoryEditorViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    
+    [categorySelectorViewController presentViewController:categoryEditorViewController animated:YES completion:nil];
+    
+    [self dismissPopover];
 }
-
 
 #pragma mark - IAECalendarSelectorViewControllerDelegate
 
@@ -286,6 +312,27 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
     [self configureDisplayPanelWithActualDay];
     
     [self dismissPopover];
+}
+
+#pragma mark - IAECategoryEditorViewControllerDelegate
+
+- (void)cancelButtonWasPressedInCategoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
+{
+    [categoryEditorViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)categoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
+           DidValidateNewCategoryTag:(NSString *)categoryTag
+                      ofCategoryType:(CategoryType)categoryType
+{
+    [categoryEditorViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)categoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
+           DidValidateRenameCategory:(IAECategory *)category
+                             withTag:(NSString *)tag
+{
+    [categoryEditorViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Notification Center

@@ -9,13 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "IAECategorySelectorViewControllerDelegate.h"
 #import "IAEDayCalendarSelectorViewControllerDelegate.h"
+#import "IAECategoryEditorViewControllerDelegate.h"
 
 @protocol IAECalculatorViewControllerDelegate;
 @protocol IAECalculatorViewControllerDataSource;
 
 @interface IAECalculatorViewController : UIViewController<UIPopoverControllerDelegate,
                                                           IAECategorySelectorViewControllerDelegate,
-                                                          IAEDayCalendarSelectorViewControllerDelegate>
+                                                          IAEDayCalendarSelectorViewControllerDelegate,
+                                                          IAECategoryEditorViewControllerDelegate>
 
 @property (nonatomic, weak) id<IAECalculatorViewControllerDelegate> delegate;
 @property (nonatomic, weak) id<IAECalculatorViewControllerDataSource> dataSource;

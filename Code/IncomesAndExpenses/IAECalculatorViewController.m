@@ -74,43 +74,47 @@ static CGFloat marginHeightOffsetWhenShowed = 10;
 
 - (IBAction)incomeButtonPressed:(id)sender
 {
-    if ([self isInHideMode]) {
-        [self.delegate showButtonPressedOnCalculatorViewController:self];
-        [self show];
-        self.mode = CM_INCOME;
-    } else if ([self isInIncomeMode]) {
-        [self.delegate hideButtonPressedOnCalculatorViewController:self];
-        [self hide];
-        self.mode = CM_HIDE;
-    } else if ([self isInExpenseMode]) {
-        self.mode = CM_INCOME;
-    }
+    [self processDragPannelButtonPressedWithMode:CM_INCOME];
 }
 
 - (IBAction)expenseButtonPressed:(id)sender
 {
+    [self processDragPannelButtonPressedWithMode:CM_EXPENSE];
+}
+
+- (void)processDragPannelButtonPressedWithMode:(CalculatorMode)mode
+{
+    NSAssert(mode != CM_HIDE, @"");
+    
     if ([self isInHideMode]) {
-        [self.delegate showButtonPressedOnCalculatorViewController:self];
-        [self show];
-        self.mode = CM_EXPENSE;
-    } else if ([self isInExpenseMode]) {
-        [self.delegate hideButtonPressedOnCalculatorViewController:self];
+        [self showInMode:mode];
+    } else if ([self isDragPannelModeEqualToMode:mode]) {
         [self hide];
-        self.mode = CM_HIDE;
-    } else if ([self isInIncomeMode]) {
-        self.mode = CM_EXPENSE;
+    } else {
+        NSAssert(![self isDragPannelModeEqualToMode:mode], @"");
+        self.mode = mode;
     }
+}
+
+- (BOOL)isDragPannelModeEqualToMode:(CalculatorMode)mode
+{
+    return mode == self.mode;
 }
 
 #pragma mark - Hide / Show actions
 
-- (void)show
+- (void)showInMode:(CalculatorMode)mode;
 {
+    NSAssert(mode != CM_HIDE, @"");
+    [self.delegate showButtonPressedOnCalculatorViewController:self];
+    self.mode = mode;
     [self updateVisibilityWithOffset:-[self calculeAbsoluteOffsetDisplacementValue] usingAnimation:YES];
 }
 
 - (void)hide
 {
+    [self.delegate hideButtonPressedOnCalculatorViewController:self];
+    self.mode = CM_HIDE;
     [self updateVisibilityWithOffset:[self calculeAbsoluteOffsetDisplacementValue] usingAnimation:YES];
 }
 

@@ -320,7 +320,7 @@ static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
 {
     BOOL canDelete = self.actualAmount.length > 0;
     if (canDelete) {
-        NSDecimalNumber *actualNumberAmount = [NSDecimalNumber decimalNumberWithString:self.actualAmount];
+        NSDecimalNumber *actualNumberAmount = [self convertToDecimalNumberKeyboardAmountValue:self.actualAmount];
         canDelete = ![actualNumberAmount isEqualToValue:[NSDecimalNumber zero]];
         if (!canDelete) {
             canDelete = [self isDecimalSymbolPressentInAmountStringValue:self.actualAmount];
@@ -328,6 +328,19 @@ static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
     }
     
     return canDelete;
+}
+
+- (NSDecimalNumber *)convertToDecimalNumberKeyboardAmountValue:(NSString *)amountValue
+{
+    // Nota: La conversion es necesaria porque NSDecimalNumber no entiende un decimal con ',' solo con '.'
+    NSMutableString *amountValueForDecimalConversion = [NSMutableString stringWithString:amountValue];
+    [amountValueForDecimalConversion replaceOccurrencesOfString:[[IAECurrencyManager sharedManager] decimalSeparator]
+                                                     withString:@"."
+                                                        options:NSBackwardsSearch
+                                                          range:NSMakeRange(0, amountValueForDecimalConversion.length)];
+    NSDecimalNumber *decimal = [NSDecimalNumber decimalNumberWithString:amountValueForDecimalConversion];
+    
+    return decimal;
 }
 
 - (IBAction)keyboardDecimalPressed:(UIButton *)button
@@ -364,7 +377,7 @@ static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
 {
     if (self.actualAmount.length > 0) {
         IAEMonth *month = [self.dataSource monthForCalculatorViewController:self];
-        IAEConcept *newConcept = [month addConceptWithAmount:[NSDecimalNumber decimalNumberWithString:self.actualAmount]
+        IAEConcept *newConcept = [month addConceptWithAmount:[self convertToDecimalNumberKeyboardAmountValue:self.actualAmount]
                                                     category:self.actualCategory
                                                         date:[[NSDate date] timeIntervalSince1970]
                                                dayOfTheMonth:self.actualDay
@@ -474,16 +487,9 @@ static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
 
 - (NSString *)convertToAmountStringDisplayableTheAmountString:(NSString *)amountValue
 {
-    IAECurrencyManager *currencyManager = [IAECurrencyManager sharedManager];
-
-    // Nota: La conversion es necesaria porque NSDecimalNumber no entiende un decimal con ',' solo con '.'
-    NSMutableString *amountValueForDecimalConversion = [NSMutableString stringWithString:amountValue];
-    [amountValueForDecimalConversion replaceOccurrencesOfString:[currencyManager decimalSeparator]
-                                                     withString:@"."
-                                                        options:NSBackwardsSearch
-                                                          range:NSMakeRange(0, amountValueForDecimalConversion.length)];
-    NSDecimalNumber *actualAmountDecimal = [NSDecimalNumber decimalNumberWithString:amountValueForDecimalConversion];
-    NSString *amountStringDisplayable = [NSMutableString stringWithString:[currencyManager.currencyFormatter stringFromNumber:actualAmountDecimal]];
+    NSDecimalNumber *actualAmountDecimal = [self convertToDecimalNumberKeyboardAmountValue:amountValue];
+    NSString *amountStringDisplayable = [NSMutableString stringWithString:[[IAECurrencyManager sharedManager].currencyFormatter
+                                                                           stringFromNumber:actualAmountDecimal]];
     
     return amountStringDisplayable;
 }
@@ -534,42 +540,6 @@ static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
     self.actualAmount = nil;
     [self configureDisplayPanelWithActualAmount];
 }
-
-/*
-- (IBAction)commaButtonPressed:(UIButton *)button
-{
-    [[IAEAnimationManager sharedManager] buttonPressedEffect:button];
-    
-    // Solo si no se ha puesto la coma antes
-    // TODO: Cuidado con la localizacion porque en algunos paises el punto se usa como decimal. En españa es la coma pero
-    // el sistema solo reconoce el punto para hacer la conversion.
-    NSRange decimalRange = [self.actualAmount rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:[[IAECurrencyManager sharedManager] decimalSeparator]]];
-    
-    if (decimalRange.location == NSNotFound)
-        [self appenValueToPannel:[[IAECurrencyManager sharedManager] decimalSeparator]];
-}
-
-- (IBAction)deleteButtonPressed:(UIButton *)button
-{
-    [[IAEAnimationManager sharedManager] buttonPressedEffect:button];
-    
-    // Se puede borrar si:
-    // - El valor NO es cero.
-    // - El valor ES cero PERO el ultimo caracter es el decimal
-    NSDecimalNumber *actualNumberAmount = [NSDecimalNumber decimalNumberWithString:self.actualAmount];
-    
-    BOOL canUseDeleteButton = ![actualNumberAmount isEqualToValue:[NSDecimalNumber zero]];
-    if (!canUseDeleteButton)
-        canUseDeleteButton = [self.actualAmount rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:[[IAECurrencyManager sharedManager] decimalSeparator]]].location != NSNotFound;
-    
-    if (canUseDeleteButton)
-    {
-        [self.actualAmount deleteCharactersInRange:NSMakeRange(self.actualAmount.length - 1, 1)];
-        
-        [self deployActualAmountToNumericPanel];
-    }
-}
-*/
 
 #pragma mark - UIPopoverControllerDelegate
 

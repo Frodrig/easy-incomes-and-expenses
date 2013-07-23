@@ -178,6 +178,7 @@ static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
     
     [self configureDisplayPanelWithActualCategory];
     [self configureDisplayPanelWithActualDay];
+    [self configureDisplayPanelWithActualAmount];
 }
 
 - (void)configureDisplayPanelWithActualCategory
@@ -434,19 +435,21 @@ static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
 - (void)configureDisplayPanelWithActualAmount
 {
     NSString *amountStringToDisplay = [NSMutableString string];
+    IAECurrencyManager *currencyManager = [IAECurrencyManager sharedManager];
+    [currencyManager saveCurrencyFormatterFractionState];
+
     if (self.actualAmount.length > 0) {
-        IAECurrencyManager *currencyManager = [IAECurrencyManager sharedManager];
-        [currencyManager saveCurrencyFormatterFractionState];
-        
-        NSUInteger maximumFractionDigits = [self findMaximumFractionDigitsToDisplayForActualAmount];
+        NSUInteger maximumFractionDigits = [self findMaximumFractionDigitsToDisplayForAmountValue:self.actualAmount];
         currencyManager.currencyFormatter.maximumFractionDigits = maximumFractionDigits;
         amountStringToDisplay = [self convertToAmountStringDisplayableTheAmountString:self.actualAmount];
         amountStringToDisplay = [self stringWithDecimalSeparatorAddedManuallyIfAppropiateFromStringAmount:self.actualAmount
                                                                                   toAmountStringToDisplay:amountStringToDisplay];
-        
-        [currencyManager restoreCurrencyFormatterFractionState];
+    } else {
+        currencyManager.currencyFormatter.maximumFractionDigits = 0;
+        amountStringToDisplay = [self convertToAmountStringDisplayableTheAmountString:@"0"];
     }
     
+    [currencyManager restoreCurrencyFormatterFractionState];
     [self.displayPanel setAmountString:amountStringToDisplay];
 }
 
@@ -455,7 +458,7 @@ static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
     IAECurrencyManager *currencyManager = [IAECurrencyManager sharedManager];
 
     // Nota: La conversion es necesaria porque NSDecimalNumber no entiende un decimal con ',' solo con '.'
-    NSMutableString *amountValueForDecimalConversion = [NSMutableString stringWithString:self.actualAmount];
+    NSMutableString *amountValueForDecimalConversion = [NSMutableString stringWithString:amountValue];
     [amountValueForDecimalConversion replaceOccurrencesOfString:[currencyManager decimalSeparator]
                                                      withString:@"."
                                                         options:NSBackwardsSearch
@@ -478,7 +481,7 @@ static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
         NSString *amountStringToDisplayWithoutCurrencySymbol = [amountStringToDisplay stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:[[IAECurrencyManager sharedManager] currencySymbol]]];
         amountStringToDisplayWithoutCurrencySymbol = [amountStringToDisplayWithoutCurrencySymbol stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         NSRange amountRangeInStringToDisplay = [amountStringToDisplay rangeOfString:amountStringToDisplayWithoutCurrencySymbol];
-                
+        
         NSMutableString *composedString = [NSMutableString stringWithString:amountStringToDisplay];
         [composedString insertString:[[IAECurrencyManager sharedManager] decimalSeparator] atIndex:amountRangeInStringToDisplay.location + amountRangeInStringToDisplay.length];
         amountStringToDisplay = [NSString stringWithString:composedString];
@@ -487,14 +490,14 @@ static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
     return amountStringToDisplay;
 }
 
-- (NSUInteger)findMaximumFractionDigitsToDisplayForActualAmount
+- (NSUInteger)findMaximumFractionDigitsToDisplayForAmountValue:(NSString *)amountValue
 {
     NSUInteger maximumFractionDigits = maximumFractionDigits;
     
-    NSRange decimalRange = [self findDecimalRangeLocationInAmountString:self.actualAmount];
-    if (decimalRange.location == NSNotFound || decimalRange.location == self.actualAmount.length - 1) {
+    NSRange decimalRange = [self findDecimalRangeLocationInAmountString:amountValue];
+    if (decimalRange.location == NSNotFound || decimalRange.location == amountValue.length - 1) {
         maximumFractionDigits = 0;
-    } else if (decimalRange.location == self.actualAmount.length - 2) {
+    } else if (decimalRange.location == amountValue.length - 2) {
         maximumFractionDigits = 1;
     }
     

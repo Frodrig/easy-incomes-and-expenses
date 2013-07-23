@@ -941,11 +941,10 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
            DidValidateNewCategoryTag:(NSString *)categoryTag
                       ofCategoryType:(CategoryType)categoryType
 {
+    // ToDo: Valorar que la creacion se realice en el editor de categorias para factorizar en un unico sitio la creacion
     IAECategory *newCategory = [[IAECategoryStore sharedCategoryStore] createCategoryOfType:categoryType andTag:categoryTag withValidityTagCheck:NO];
     NSAssert(newCategory, @"");
-    if (newCategory) {
-        [[IAEBook sharedBook] saveAll];
-    }
+    [[IAEBook sharedBook] saveAll];
     
     [self returnFromCategoryEditorViewController:categoryEditorViewController];
 }

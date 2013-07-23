@@ -285,11 +285,16 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 - (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
                      didSelectCategory:(IAECategory *)category
 {
+    [self changeActualCategoryTo:category];
+    
+    [self dismissPopover];
+}
+
+- (void)changeActualCategoryTo:(IAECategory *)category
+{
     self.actualCategory = category;
     self.mode = category.categoryType == IncomeCategory ? CM_INCOME : CM_EXPENSE;
     [self configureDisplayPanelWithActualCategory];
-    
-    [self dismissPopover];
 }
 
 - (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
@@ -326,6 +331,13 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
            DidValidateNewCategoryTag:(NSString *)categoryTag
                       ofCategoryType:(CategoryType)categoryType
 {
+    // ToDo: Valorar que la creacion se realice en el editor de categorias para factorizar en un unico sitio la creacion
+    IAECategory *category = [[IAECategoryStore sharedCategoryStore] createCategoryOfType:categoryType andTag:categoryTag withValidityTagCheck:NO];
+    NSAssert(category, @"");
+    [[IAEBook sharedBook] saveAll];
+
+    [self changeActualCategoryTo:category];
+
     [categoryEditorViewController dismissViewControllerAnimated:YES completion:nil];
 }
 

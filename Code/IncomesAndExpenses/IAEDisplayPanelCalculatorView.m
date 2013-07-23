@@ -115,7 +115,8 @@ static CGFloat fontFamilyKernForAmountLabel = 0.0;
 
 - (void)setAmountString:(NSString *)amount
 {
-    self.amountLabel.attributedText = [[NSAttributedString alloc] initWithString:amount
+    NSString *amountToDisplay = amount.length > 0 ? amount : @"0";
+    self.amountLabel.attributedText = [[NSAttributedString alloc] initWithString:amountToDisplay
                                                                       attributes:[self createAttributesForAmountLabel]];
 }
 

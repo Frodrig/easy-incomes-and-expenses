@@ -13,8 +13,8 @@
 
 @protocol IAECalculatorViewControllerDelegate <NSObject>
 
-- (void)showButtonPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController;
-- (void)hideButtonPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController;
+- (void)showButtonWasPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController;
+- (void)hideButtonWasPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController;
 
 - (void)calculatorViewController:(IAECalculatorViewController *)calculatorViewController didCreateNewConcept:(IAEConcept *)concept;
 

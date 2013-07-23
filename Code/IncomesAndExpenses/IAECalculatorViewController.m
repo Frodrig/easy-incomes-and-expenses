@@ -37,6 +37,7 @@ typedef NS_ENUM(NSUInteger, CalculatorMode) {
 @property (nonatomic, strong) NSMutableString *actualAmount;
 @property (nonatomic, strong) UIPopoverController *popover;
 @property (nonatomic, strong) NSDecimalNumber *maxDecimalNumberAllowed;
+@property (nonatomic) NSUInteger numberConceptsCreatedInSession;
 
 @end
 
@@ -210,7 +211,7 @@ static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
     [self setDefaultCategoryForActualMode];
     [self configureDisplayPanelInShowMode];
     
-    [self.delegate showButtonPressedOnCalculatorViewController:self];
+    [self.delegate showButtonWasPressedOnCalculatorViewController:self];
 }
 
 - (void)changeToMode:(CalculatorMode)mode
@@ -226,7 +227,7 @@ static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
     self.mode = CM_HIDE;
     [self updateVisibilityWithOffset:[self calculeAbsoluteOffsetDisplacementValue] usingAnimation:YES];
 
-    [self.delegate hideButtonPressedOnCalculatorViewController:self];
+    [self.delegate hideButtonWasPressedOnCalculatorViewController:self];
 }
 
 - (CGFloat)calculeAbsoluteOffsetDisplacementValue
@@ -368,6 +369,7 @@ static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
                                                         date:[[NSDate date] timeIntervalSince1970]
                                                dayOfTheMonth:self.actualDay
                                               andDescription:@""];
+        self.numberConceptsCreatedInSession++;
         [[IAEBook sharedBook] saveAll];
         
         [self resetAmountPannel];

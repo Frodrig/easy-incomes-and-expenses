@@ -350,7 +350,7 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 {
     IAEEditModeMonthBalanceView *monthBalanceView = [self findActualMonthBalanceView];
     
-    [monthBalanceView reloadDataWithAnimation:YES];
+    [monthBalanceView reloadDataWithAnimation:animation];
 }
 
 - (void)processEconomicLabel:(UILabel *)label toValue:(NSDecimalNumber *)destinationValue withDuration:(CGFloat)duration
@@ -1092,7 +1092,7 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 
 #pragma mark - IAECalculatorViewControllerDelegate
 
-- (void)showButtonPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
+- (void)showButtonWasPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
 {
     [UIView animateWithDuration:0.25 animations:^{
         [self updateFramePositionBeforeShowCalculatorForView:self.annualBalanceContainerView];
@@ -1102,7 +1102,7 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
     }];
 }
 
-- (void)hideButtonPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
+- (void)hideButtonWasPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
 {
     [UIView animateWithDuration:0.25 animations:^{
         [self updateFramePositionAfterShowCalculatorForView:self.annualBalanceContainerView];
@@ -1143,6 +1143,7 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 - (void)calculatorViewController:(IAECalculatorViewController *)calculatorViewController didCreateNewConcept:(IAEConcept *)concept
 {
     [self.conceptsCollectionView reloadData];
+    [self updateBalancesWithAnimation:NO];
 }
 
 @end

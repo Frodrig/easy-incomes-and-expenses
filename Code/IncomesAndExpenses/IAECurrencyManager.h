@@ -19,6 +19,7 @@
 
 - (NSString *)decimalSeparator;
 - (NSString *)groupingSeparator;
+- (NSString *)currencySymbol;
 
 - (void)saveCurrencyFormatterFractionState;
 - (void)restoreCurrencyFormatterFractionState;

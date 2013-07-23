@@ -68,15 +68,19 @@
 - (NSString *)decimalSeparator
 {
     NSLocale *locale = [NSLocale currentLocale];
-    
     return [locale objectForKey:NSLocaleDecimalSeparator];
 }
 
 - (NSString *)groupingSeparator
 {
     NSLocale *locale = [NSLocale currentLocale];
-    
     return [locale objectForKey:NSLocaleGroupingSeparator];
+}
+
+- (NSString *)currencySymbol
+{
+    NSLocale *locale = [NSLocale currentLocale];
+    return [locale objectForKey:NSLocaleCurrencySymbol];
 }
 
 - (void)saveCurrencyFormatterFractionState

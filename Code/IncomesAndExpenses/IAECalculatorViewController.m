@@ -440,8 +440,9 @@ static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
         
         NSUInteger maximumFractionDigits = [self findMaximumFractionDigitsToDisplayForActualAmount];
         currencyManager.currencyFormatter.maximumFractionDigits = maximumFractionDigits;
-        amountStringToDisplay = [self convertToAmountStringDisplayableTheAmountStringWrittenInKeyboard:self.actualAmount];
-        amountStringToDisplay = [self stringWithDecimalSeparatorAddedManuallyIfAppropiateToAmountStringToDisplay:amountStringToDisplay];
+        amountStringToDisplay = [self convertToAmountStringDisplayableTheAmountString:self.actualAmount];
+        amountStringToDisplay = [self stringWithDecimalSeparatorAddedManuallyIfAppropiateFromStringAmount:self.actualAmount
+                                                                                  toAmountStringToDisplay:amountStringToDisplay];
         
         [currencyManager restoreCurrencyFormatterFractionState];
     }
@@ -449,7 +450,7 @@ static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
     [self.displayPanel setAmountString:amountStringToDisplay];
 }
 
-- (NSString *)convertToAmountStringDisplayableTheAmountStringWrittenInKeyboard:(NSString *)amountValue
+- (NSString *)convertToAmountStringDisplayableTheAmountString:(NSString *)amountValue
 {
     IAECurrencyManager *currencyManager = [IAECurrencyManager sharedManager];
 
@@ -465,16 +466,21 @@ static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
     return amountStringDisplayable;
 }
 
-- (NSString *)stringWithDecimalSeparatorAddedManuallyIfAppropiateToAmountStringToDisplay:(NSString *)amountStringToDisplay
+- (NSString *)stringWithDecimalSeparatorAddedManuallyIfAppropiateFromStringAmount:(NSString *)stringAmount
+                                                          toAmountStringToDisplay:(NSString *)amountStringToDisplay
 {
-    NSRange locationOfDecimalInActualAmount = [self findDecimalRangeLocationInAmountString:self.actualAmount];
+    NSRange locationOfDecimalInActualAmount = [self findDecimalRangeLocationInAmountString:stringAmount];
     NSRange locationOfDecimalInAmountStringToDisplay = [self findDecimalRangeLocationInAmountString:amountStringToDisplay];
    
     BOOL needToInsertDecimalSeparatorManually = locationOfDecimalInActualAmount.location != NSNotFound &&
                                                 locationOfDecimalInAmountStringToDisplay.location == NSNotFound;
     if (needToInsertDecimalSeparatorManually) {
+        NSString *amountStringToDisplayWithoutCurrencySymbol = [amountStringToDisplay stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:[[IAECurrencyManager sharedManager] currencySymbol]]];
+        amountStringToDisplayWithoutCurrencySymbol = [amountStringToDisplayWithoutCurrencySymbol stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        NSRange amountRangeInStringToDisplay = [amountStringToDisplay rangeOfString:amountStringToDisplayWithoutCurrencySymbol];
+                
         NSMutableString *composedString = [NSMutableString stringWithString:amountStringToDisplay];
-        [composedString insertString:[[IAECurrencyManager sharedManager] decimalSeparator] atIndex:locationOfDecimalInActualAmount.location];
+        [composedString insertString:[[IAECurrencyManager sharedManager] decimalSeparator] atIndex:amountRangeInStringToDisplay.location + amountRangeInStringToDisplay.length];
         amountStringToDisplay = [NSString stringWithString:composedString];
     }
     

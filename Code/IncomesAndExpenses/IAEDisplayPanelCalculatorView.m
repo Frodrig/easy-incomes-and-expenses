@@ -78,7 +78,7 @@ static CGFloat fontFamilyKernForAmountLabel = 0.0;
 
 - (void)configureAmount
 {
-    [self setAmount:[NSDecimalNumber zero]];
+    // ...
 }
 
 #pragma mark - Category
@@ -113,10 +113,9 @@ static CGFloat fontFamilyKernForAmountLabel = 0.0;
 
 #pragma mark - Ammount
 
-- (void)setAmount:(NSDecimalNumber *)amount
+- (void)setAmountString:(NSString *)amount
 {
-    NSString *amountString = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:amount];
-    self.amountLabel.attributedText = [[NSAttributedString alloc] initWithString:amountString
+    self.amountLabel.attributedText = [[NSAttributedString alloc] initWithString:amount
                                                                       attributes:[self createAttributesForAmountLabel]];
 }
 
@@ -128,6 +127,11 @@ static CGFloat fontFamilyKernForAmountLabel = 0.0;
                                  NSKernAttributeName: [NSNumber numberWithFloat:fontFamilyKernForAmountLabel]};
     
     return attributes;
+}
+
+- (void)clearAmountString
+{
+    
 }
 
 

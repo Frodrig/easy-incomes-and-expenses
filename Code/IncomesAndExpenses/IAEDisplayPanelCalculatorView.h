@@ -12,7 +12,7 @@
 
 - (void)setCategoryName:(NSString *)categoryName;
 - (void)setDay:(NSUInteger)day;
-- (void)setAmount:(NSDecimalNumber *)amount;
+- (void)setAmountString:(NSString *)amount;
 
 - (void)showDayButton;
 - (void)hideDayButton;

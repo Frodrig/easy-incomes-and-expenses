@@ -29,6 +29,10 @@
 
 - (IBAction)categoryButtonPressed:(UIButton *)button;
 - (IBAction)dayButtonPressed:(UIButton *)button;
+- (IBAction)keyboardNumberPressed:(UIButton *)button;
+- (IBAction)keyboardDeletePressed:(UIButton *)button;
+- (IBAction)keyboardDecimalPressed:(UIButton *)button;
+- (IBAction)keyboardEnterPressed:(UIButton *)button;
 
 - (BOOL)isInHideMode;
 - (BOOL)isInVisibleMode;

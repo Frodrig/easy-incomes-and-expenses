@@ -20,4 +20,7 @@
 - (NSString *)decimalSeparator;
 - (NSString *)groupingSeparator;
 
+- (void)saveCurrencyFormatterFractionState;
+- (void)restoreCurrencyFormatterFractionState;
+
 @end

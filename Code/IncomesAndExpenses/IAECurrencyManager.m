@@ -9,6 +9,13 @@
 #import "IAECurrencyManager.h"
 #import "IAECurrencyInfo.h"
 
+@interface IAECurrencyManager()
+
+@property (nonatomic, strong) NSNumber *maximumFractionDigitState;
+@property (nonatomic, strong) NSNumber *minimumFractionDigitState;
+
+@end
+
 @implementation IAECurrencyManager
 
 //@synthesize currencies = currencies_;
@@ -70,6 +77,25 @@
     NSLocale *locale = [NSLocale currentLocale];
     
     return [locale objectForKey:NSLocaleGroupingSeparator];
+}
+
+- (void)saveCurrencyFormatterFractionState
+{
+    NSAssert(self.maximumFractionDigitState == nil && self.minimumFractionDigitState == nil, @"");
+    
+    self.maximumFractionDigitState = [NSNumber numberWithUnsignedInteger:self.currencyFormatter.maximumFractionDigits];
+    self.minimumFractionDigitState = [NSNumber numberWithUnsignedInteger:self.currencyFormatter.minimumFractionDigits];
+}
+
+- (void)restoreCurrencyFormatterFractionState
+{
+    NSAssert(self.maximumFractionDigitState && self.minimumFractionDigitState, @"");
+
+    self.currencyFormatter.maximumFractionDigits = [self.maximumFractionDigitState unsignedIntegerValue];
+    self.currencyFormatter.minimumFractionDigits = [self.minimumFractionDigitState unsignedIntegerValue];
+    
+    self.maximumFractionDigitState = nil;
+    self.minimumFractionDigitState = nil;
 }
 
 @end

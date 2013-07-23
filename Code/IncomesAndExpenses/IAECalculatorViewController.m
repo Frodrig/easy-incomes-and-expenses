@@ -19,6 +19,7 @@
 #import "IAECategorySelectorViewController.h"
 #import "IAEDayCalendarSelectorViewController.h"
 #import "IAECategoryEditorViewController.h"
+#import "IAECurrencyManager.h"
 
 @interface IAECalculatorViewController ()
 
@@ -33,7 +34,9 @@ typedef NS_ENUM(NSUInteger, CalculatorMode) {
 @property (nonatomic) CalculatorMode mode;
 @property (nonatomic, weak) IAECategory *actualCategory;
 @property (nonatomic) NSUInteger actualDay;
+@property (nonatomic, strong) NSMutableString *actualAmount;
 @property (nonatomic, strong) UIPopoverController *popover;
+@property (nonatomic, strong) NSDecimalNumber *maxDecimalNumberAllowed;
 
 @end
 
@@ -45,6 +48,27 @@ static CGFloat marginHeightOffsetWhenShowed = 10;
 static NSString * const userDefaultsDayModeActive = @"dayModeActive";
 static NSString * const notificationDayModeOnName = @"dayModeToOn";
 static NSString * const notificationDayModeOffName = @"dayModeToOff";
+
+static NSUInteger amountMaxNumbersLenght = 15;
+static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
+
+- (NSString *)actualAmount
+{
+    if (_actualAmount == nil) {
+        _actualAmount = [NSMutableString stringWithString:@"0"];
+    }
+    
+    return _actualAmount;
+}
+
+- (NSDecimalNumber *)maxDecimalNumberAllowed
+{
+    if (_maxDecimalNumberAllowed == nil) {
+        _maxDecimalNumberAllowed = [NSDecimalNumber decimalNumberWithString:@"9999999999999" locale:[NSLocale currentLocale]];
+    }
+    
+    return _maxDecimalNumberAllowed;
+}
 
 - (CGFloat)sizeHeightOffsetWhenShowed
 {
@@ -267,6 +291,234 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
                 permittedArrowDirections:UIPopoverArrowDirectionDown
                                 animated:YES];
 }
+
+- (IBAction)keyboardNumberPressed:(UIButton *)button
+{
+    [self numberPressedWithValue:button.tag];
+}
+
+- (IBAction)keyboardDeletePressed:(UIButton *)button
+{
+    if ([self deleteOneValueInAmount]) {
+        [self configureDisplayPanelWithActualAmount];
+    }
+}
+
+- (BOOL)deleteOneValueInAmount
+{
+    BOOL canDelete = [self canDeleteOneValueInAmount];
+    if (canDelete) {
+        [self.actualAmount deleteCharactersInRange:NSMakeRange(self.actualAmount.length - 1, 1)];
+    }
+    
+    return canDelete;
+}
+
+- (BOOL)canDeleteOneValueInAmount
+{
+    NSDecimalNumber *actualNumberAmount = [NSDecimalNumber decimalNumberWithString:self.actualAmount];
+    BOOL canDelete = ![actualNumberAmount isEqualToValue:[NSDecimalNumber zero]];
+    if (!canDelete) {
+        canDelete = [self isDecimalSymbolPressentInActualAmountValue];
+    }
+    
+    return canDelete;
+}
+
+- (IBAction)keyboardDecimalPressed:(UIButton *)button
+{
+    if ([self appendDecimalSeparatorInAmount]) {
+        [self configureDisplayPanelWithActualAmount];
+    }
+}
+
+- (BOOL)appendDecimalSeparatorInAmount
+{
+    BOOL canAppend = [self canAppendDecimalSeparator];
+    if (canAppend) {
+        NSString *decimalSeparator = [[IAECurrencyManager sharedManager] decimalSeparator];
+        self.actualAmount = [NSMutableString stringWithFormat:@"%@%@", self.actualAmount, decimalSeparator];
+    }
+    
+    return canAppend;
+}
+
+- (BOOL)canAppendDecimalSeparator
+{
+    BOOL decimalSymbolPresent = [self findDecimalRangeLocation].location == NSNotFound ? NO : YES;
+    
+    return decimalSymbolPresent ? NO : self.actualAmount.length <= amountMaxNumbersLenght - 1;
+}
+
+- (IBAction)keyboardEnterPressed:(UIButton *)button
+{
+    
+}
+
+#pragma mark - Keyboard
+
+- (void)numberPressedWithValue:(NSUInteger)value
+{
+    if ([self appendNewNumberToAmountWithValue:value]) {
+        [self configureDisplayPanelWithActualAmount];
+    }
+}
+
+- (BOOL)appendNewNumberToAmountWithValue:(NSUInteger)value
+{
+    NSAssert(value >= 0 && value < 10, @"");
+
+    BOOL canAppend = [self canAppendNewNumberToAmountWithValue:value];
+    if (canAppend) {
+        NSString *stringValue = [[NSNumber numberWithUnsignedInteger:value] stringValue];
+        self.actualAmount = [NSMutableString stringWithFormat:@"%@%@", self.actualAmount, stringValue];
+    }
+    
+    return canAppend;
+}
+
+- (BOOL)canAppendNewNumberToAmountWithValue:(NSUInteger)value
+{
+    NSAssert(value >= 0 && value < 10, @"");
+
+    BOOL withSpaceForNewNumber = [self isActualAmountWithSpaceForNewValue];
+    BOOL withSpaceForDecimalNumber = [self isActualAmountWithSpaceForNewDecimalNumber];
+    BOOL withValueUnderMaxAllowed = [self isActualAmountUnderMaxDecimalNumberAllowedWithNewValue:value];
+
+    return withSpaceForNewNumber && withSpaceForDecimalNumber && withValueUnderMaxAllowed;
+}
+
+- (BOOL)isActualAmountWithSpaceForNewValue
+{
+    return self.actualAmount.length <= amountMaxNumbersLenght;
+}
+
+- (BOOL)isActualAmountWithSpaceForNewDecimalNumber
+{
+    BOOL spaceAvailable = [self characterSpaceForDecimalNumbers] > 0;
+    
+    return spaceAvailable;
+}
+
+- (NSUInteger)characterSpaceForDecimalNumbers
+{
+    NSRange decimalRange = [self findDecimalRangeLocation];
+    NSUInteger space = decimalRange.location == NSNotFound ? amountMaxNumberLenghtInDecimalPart :
+                                                            amountMaxNumberLenghtInDecimalPart - (self.actualAmount.length - decimalRange.location);
+   
+    return space;
+}
+
+- (NSRange)findDecimalRangeLocation
+{
+    NSString *decimalSeparator = [[IAECurrencyManager sharedManager] decimalSeparator];
+    NSRange decimalRange = [self.actualAmount rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:decimalSeparator]];
+    
+    return decimalRange;
+}
+
+- (BOOL)isActualAmountUnderMaxDecimalNumberAllowedWithNewValue:(NSUInteger)value
+{
+    NSString *stringValue = [[NSNumber numberWithUnsignedInteger:value] stringValue];
+    NSString *tmpValue = [NSMutableString stringWithFormat:@"%@%@", self.actualAmount, stringValue];
+    NSDecimalNumber *tmpNumberValue = [NSDecimalNumber decimalNumberWithString:tmpValue];
+    
+    return [tmpNumberValue compare:self.maxDecimalNumberAllowed] != NSOrderedDescending;
+}
+
+- (void)configureDisplayPanelWithActualAmount
+{
+    NSString *amountStringToDisplay = @"";
+    if (self.actualAmount.length > 0) {
+        IAECurrencyManager *currencyManager = [IAECurrencyManager sharedManager];
+
+        [currencyManager saveCurrencyFormatterFractionState];
+        currencyManager.currencyFormatter.maximumFractionDigits = [self findMaximumFractionDigitsToDisplayForActualAmount];
+        
+        NSString *decimalSeparator = [currencyManager decimalSeparator];
+        NSMutableString *normalizedStrValue = [NSMutableString stringWithString:self.actualAmount];
+        [normalizedStrValue replaceOccurrencesOfString:decimalSeparator
+                                            withString:@"."
+                                               options:NSBackwardsSearch
+                                                 range:NSMakeRange(0, normalizedStrValue.length)];
+        amountStringToDisplay = [currencyManager.currencyFormatter stringFromNumber:[NSDecimalNumber decimalNumberWithString:normalizedStrValue]];
+        
+        // Nota: En los casos en los que se haya encontrado la coma y el maximo de decimales sea de 0,
+        //       el simbolo de separacion se escribe manualmente.
+        // ToDo: Aclarar el motivo de este codigo
+        BOOL decimalSymbolWithNoSpaceForNewDecimals = [self isDecimalSymbolPressentInActualAmountValue] &&
+                                                      currencyManager.currencyFormatter.maximumFractionDigits == 0;
+        if (decimalSymbolWithNoSpaceForNewDecimals) {
+            amountStringToDisplay = [NSMutableString stringWithString:[amountStringToDisplay stringByAppendingString:decimalSeparator]];
+        }
+        
+        [currencyManager restoreCurrencyFormatterFractionState];
+    }
+    
+    [self.displayPanel setAmountString:amountStringToDisplay];
+}
+
+- (NSUInteger)findMaximumFractionDigitsToDisplayForActualAmount
+{
+    NSUInteger maximumFractionDigits = maximumFractionDigits;
+    
+    NSRange decimalRange = [self findDecimalRangeLocation];
+    if (decimalRange.location == NSNotFound || decimalRange.location == self.actualAmount.length - 1) {
+        maximumFractionDigits = 0;
+    } else if (decimalRange.location == self.actualAmount.length - 2) {
+        maximumFractionDigits = 1;
+    }
+    
+    return maximumFractionDigits;
+}
+
+- (BOOL)isDecimalSymbolPressentInActualAmountValue
+{
+    NSRange decimalRange = [self findDecimalRangeLocation];
+    return decimalRange.location == NSNotFound ? NO : YES;
+}
+
+- (void)resetAmountPannel
+{
+    self.actualAmount = nil;
+    [self configureDisplayPanelWithActualAmount];
+}
+
+/*
+- (IBAction)commaButtonPressed:(UIButton *)button
+{
+    [[IAEAnimationManager sharedManager] buttonPressedEffect:button];
+    
+    // Solo si no se ha puesto la coma antes
+    // TODO: Cuidado con la localizacion porque en algunos paises el punto se usa como decimal. En españa es la coma pero
+    // el sistema solo reconoce el punto para hacer la conversion.
+    NSRange decimalRange = [self.actualAmount rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:[[IAECurrencyManager sharedManager] decimalSeparator]]];
+    
+    if (decimalRange.location == NSNotFound)
+        [self appenValueToPannel:[[IAECurrencyManager sharedManager] decimalSeparator]];
+}
+
+- (IBAction)deleteButtonPressed:(UIButton *)button
+{
+    [[IAEAnimationManager sharedManager] buttonPressedEffect:button];
+    
+    // Se puede borrar si:
+    // - El valor NO es cero.
+    // - El valor ES cero PERO el ultimo caracter es el decimal
+    NSDecimalNumber *actualNumberAmount = [NSDecimalNumber decimalNumberWithString:self.actualAmount];
+    
+    BOOL canUseDeleteButton = ![actualNumberAmount isEqualToValue:[NSDecimalNumber zero]];
+    if (!canUseDeleteButton)
+        canUseDeleteButton = [self.actualAmount rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:[[IAECurrencyManager sharedManager] decimalSeparator]]].location != NSNotFound;
+    
+    if (canUseDeleteButton)
+    {
+        [self.actualAmount deleteCharactersInRange:NSMakeRange(self.actualAmount.length - 1, 1)];
+        
+        [self deployActualAmountToNumericPanel];
+    }
+}
+*/
 
 #pragma mark - UIPopoverControllerDelegate
 

@@ -32,7 +32,7 @@ typedef NS_ENUM(NSUInteger, CalculatorMode) {
 @property (weak, nonatomic) IBOutlet IAEDragPanelCalculatorView *dragPanel;
 @property (weak, nonatomic) IBOutlet IAEDisplayPanelCalculatorView *displayPanel;
 @property (nonatomic) CalculatorMode mode;
-@property (nonatomic, weak) IAECategory *actualCategory;
+@property (nonatomic, strong) IAECategory *actualCategory;
 @property (nonatomic) NSUInteger actualDay;
 @property (nonatomic, strong) NSMutableString *actualAmount;
 @property (nonatomic, strong) UIPopoverController *popover;
@@ -356,7 +356,24 @@ static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
 
 - (IBAction)keyboardEnterPressed:(UIButton *)button
 {
-    
+    [self createNewConcept];
+}
+
+- (void)createNewConcept
+{
+    if (self.actualAmount.length > 0) {
+        IAEMonth *month = [self.dataSource monthForCalculatorViewController:self];
+        IAEConcept *newConcept = [month addConceptWithAmount:[NSDecimalNumber decimalNumberWithString:self.actualAmount]
+                                                    category:self.actualCategory
+                                                        date:[[NSDate date] timeIntervalSince1970]
+                                               dayOfTheMonth:self.actualDay
+                                              andDescription:@""];
+        [[IAEBook sharedBook] saveAll];
+        
+        [self resetAmountPannel];
+        
+        [self.delegate calculatorViewController:self didCreateNewConcept:newConcept];
+    }
 }
 
 #pragma mark - Keyboard
@@ -641,6 +658,7 @@ static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
 
 - (void)notificationCenterOnDayModeOff:(NSNotification *)notification
 {
+    self.actualDay = 0;
     [self configureDisplayPanelWithActualDay];
 }
 

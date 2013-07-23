@@ -1140,4 +1140,9 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
     return [self findActualMonth];
 }
 
+- (void)calculatorViewController:(IAECalculatorViewController *)calculatorViewController didCreateNewConcept:(IAEConcept *)concept
+{
+    [self.conceptsCollectionView reloadData];
+}
+
 @end

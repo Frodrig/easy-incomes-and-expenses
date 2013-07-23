@@ -24,4 +24,7 @@ typedef enum
     ValidTag
 } ValidTagCheckResult;
 
+static NSString * const tagGeneralIncomeCategory = @"General Income";
+static NSString * const tagGeneralExpenseCategory = @"General Expense";
+
 #endif

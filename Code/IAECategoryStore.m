@@ -11,6 +11,10 @@
 #import "IAEConcept.h"
 #import "IAEBook.h"
 
+@interface IAECategoryStore()
+
+@end
+
 @implementation IAECategoryStore
 
 @synthesize userDefinedCategories = _userDefinedCategories;
@@ -21,7 +25,7 @@
     {
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
         request.entity = [[[IAEBook sharedBook].model entitiesByName] objectForKey:@"IAECategory"];
-        request.predicate = [NSPredicate predicateWithFormat:@"(NOT tag MATCHES %@) AND (NOT tag MATCHES %@)", @"General Income", @"General Expense"];
+        request.predicate = [NSPredicate predicateWithFormat:@"(NOT tag MATCHES %@) AND (NOT tag MATCHES %@)", tagGeneralIncomeCategory, tagGeneralExpenseCategory];
         
         NSError *error;
         
@@ -58,8 +62,8 @@
         [self createIncomeAndExpenseCategories];
         
         // Se añade como observer de las categorias ya existentes
-        [self setAsObserverOfCategories:[NSArray arrayWithObject:[self generalIncomeCategory]]];
-        [self setAsObserverOfCategories:[NSArray arrayWithObject:[self generalExpenseCategory]]];
+        [self setAsObserverOfCategories:[NSArray arrayWithObject:_generalIncomeCategory]];
+        [self setAsObserverOfCategories:[NSArray arrayWithObject:_generalExpenseCategory]];
         [self setAsObserverOfCategories:[self userDefinedCategories]];
         
         [self sortUserCategoriesByTag];
@@ -90,16 +94,17 @@
     
     NSError *error;
     NSArray *result = [[IAEBook sharedBook].context executeFetchRequest:request error:&error];
-    if (nil != error)
-    {
+    if (nil != error) {
         [NSException raise:@"IAECategoryStore: Failed fetching" format:@"Cause: %@", error];
     }
     
-    if (result.count == 0)
-    {
+    if (result.count == 0) {
         // Nota: Las categorias base no se pueden crear por el usuario ni renombrar ni borrar por lo que no emiten notificacion
-        [self createCategoryWithoutChecksAndObserversOfType:IncomeCategory andTag:@"General Income"];
-        [self createCategoryWithoutChecksAndObserversOfType:ExpenseCategory andTag:@"General Expense"];
+        _generalIncomeCategory = [self createCategoryWithoutChecksAndObserversOfType:IncomeCategory andTag:tagGeneralIncomeCategory];
+        _generalExpenseCategory = [self createCategoryWithoutChecksAndObserversOfType:ExpenseCategory andTag:tagGeneralExpenseCategory];
+    } else {
+        _generalIncomeCategory = [self findCategoryByTag:tagGeneralIncomeCategory];
+        _generalExpenseCategory = [self findCategoryByTag:tagGeneralExpenseCategory];
     }
 }
 
@@ -197,10 +202,10 @@
 - (NSString *)normalizeCategoryTag:(NSString *)tag
 {
     NSString *retNormalizedTag = tag;
-    if ([tag compare:NSLocalizedString(@"General Income", @"General Income")] == NSOrderedSame) {
-        retNormalizedTag = @"General Income";
-    } else if ([tag compare:NSLocalizedString(@"General Expense", @"General Expense")] == NSOrderedSame) {
-        retNormalizedTag = @"General Expense";
+    if ([tag compare:NSLocalizedString(tagGeneralIncomeCategory, tagGeneralIncomeCategory)] == NSOrderedSame) {
+        retNormalizedTag = tagGeneralIncomeCategory;
+    } else if ([tag compare:NSLocalizedString(tagGeneralExpenseCategory, tagGeneralExpenseCategory)] == NSOrderedSame) {
+        retNormalizedTag = tagGeneralExpenseCategory;
     }
     return retNormalizedTag;
 }
@@ -215,16 +220,6 @@
         
         return result;
     }];
-}
-
-- (IAECategory *)generalIncomeCategory
-{
-    return [self findCategoryByTag:@"General Income"];
-}
-
-- (IAECategory *)generalExpenseCategory
-{
-    return [self findCategoryByTag:@"General Expense"];
 }
 
 - (BOOL)isGeneralCategory:(IAECategory *)category

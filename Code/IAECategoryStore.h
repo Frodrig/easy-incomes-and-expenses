@@ -17,11 +17,10 @@
 // OJO esto deberia de ser una propiedad readonly para que desde fuera no se pueda modificar el array
 // IMPORTATE: Las categorias de usuario siempre se mantinen ordenadas alfabeticamente
 @property (nonatomic, strong, readonly) NSMutableArray *userDefinedCategories;
+@property (nonatomic, strong, readonly) IAECategory *generalIncomeCategory;
+@property (nonatomic, strong, readonly) IAECategory *generalExpenseCategory;
 
 + (IAECategoryStore *)sharedCategoryStore;
-
-- (IAECategory *)generalIncomeCategory;
-- (IAECategory *)generalExpenseCategory;
 
 - (BOOL)isGeneralCategory:(IAECategory *)category;
 

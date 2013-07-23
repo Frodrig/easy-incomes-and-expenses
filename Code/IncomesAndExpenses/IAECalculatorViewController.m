@@ -286,6 +286,7 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
                      didSelectCategory:(IAECategory *)category
 {
     self.actualCategory = category;
+    self.mode = category.categoryType == IncomeCategory ? CM_INCOME : CM_EXPENSE;
     [self configureDisplayPanelWithActualCategory];
     
     [self dismissPopover];

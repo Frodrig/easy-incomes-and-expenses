@@ -7,8 +7,26 @@
 //
 
 #import "IAEKeyboardPanelCalculatorView.h"
+#import "IAECurrencyManager.h"
+
+@interface IAEKeyboardPanelCalculatorView()
+
+@property (nonatomic, weak) UIButton *decimalButton;
+
+@end
 
 @implementation IAEKeyboardPanelCalculatorView
+
+static NSUInteger tagDecimalButton = 200;
+
+- (UIButton *)decimalButton
+{
+    if (_decimalButton == nil) {
+        _decimalButton = (UIButton *)[self viewWithTag:tagDecimalButton];
+    }
+    
+    return _decimalButton;
+}
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -19,13 +37,15 @@
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+- (void)awakeFromNib
 {
-    // Drawing code
+    [self configureDecimalButton];
 }
-*/
+
+- (void)configureDecimalButton
+{
+    NSString *decimalSymbol = [[IAECurrencyManager sharedManager] decimalSeparator];
+    [self.decimalButton setTitle:decimalSymbol forState:UIControlStateNormal];
+}
 
 @end

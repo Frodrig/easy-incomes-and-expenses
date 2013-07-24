@@ -17,13 +17,16 @@
 @synthesize context = _context;
 @synthesize model = _model;
 
-#pragma mark - Class Singleton
+static NSString * const fileNameForStoreData = @"incomeandexpenses.data";
+
+#pragma mark - Singleton
 
 + (IAEBook *)sharedBook
 {
     static IAEBook *sharedBook = nil;
-    if (!sharedBook)
+    if (nil == sharedBook) {
         sharedBook = [[super allocWithZone:nil] init];
+    }
     
     return sharedBook;
 }
@@ -48,10 +51,8 @@
 - (NSURL *)storeFileURLWithPath
 {
     NSArray *documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    
     NSString *documentDirectory = [documentDirectories objectAtIndex:0];
-    
-    NSURL* retURL = [NSURL fileURLWithPath:[documentDirectory stringByAppendingPathComponent:@"incomeandexpenses.data"]];
+    NSURL* retURL = [NSURL fileURLWithPath:[documentDirectory stringByAppendingPathComponent:fileNameForStoreData]];
     
     return retURL;
 }
@@ -59,7 +60,6 @@
 - (void)prepareModelAndContextOfDB
 {
     _model = [NSManagedObjectModel mergedModelFromBundles:nil];
-    
     NSPersistentStoreCoordinator *persistentStore = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_model];
     
     NSError *error;
@@ -67,10 +67,8 @@
                                        configuration:nil
                                                  URL:[self storeFileURLWithPath]
                                              options:nil
-                                               error:&error])
-    {
-        [NSException raise:@"Open DB failed"
-                    format:@"Reason: %@", [error localizedDescription]];
+                                               error:&error]) {
+        [NSException raise:@"Open DB failed" format:@"Reason: %@", [error localizedDescription]];
     }
     
     _context = [[NSManagedObjectContext alloc] init];
@@ -101,7 +99,6 @@
 - (void)unloadAll
 {    
     [self doRefreshObjectMergeChangesExceptForObjects:nil];
-    
     _years = nil;
 }
 
@@ -142,8 +139,7 @@
     if (yearFound) {
         [self doRefreshObjectMergeChangesExceptForObjects:[NSSet setWithObject:yearFound]];
         _years = [NSMutableArray arrayWithObject:yearFound];
-    }
-    else {
+    } else {
         [self doRefreshObjectMergeChangesExceptForObjects:nil];
         _years = [NSMutableArray arrayWithArray:[self loadYearsWithLimit:1 andPredicate:[NSPredicate predicateWithFormat:@"yearDate == %@", [NSNumber numberWithUnsignedInteger:year]]]];
     }
@@ -152,7 +148,6 @@
 - (void)loadMoreRecientYear
 {
     [self doRefreshObjectMergeChangesExceptForObjects:nil];
-
     _years = [NSMutableArray arrayWithArray:[self loadYearsWithLimit:1 andPredicate:nil]];
 }
 
@@ -178,21 +173,13 @@
 
 - (IAEYear *)createYear:(NSNumber *)yearDate
 {
-    IAEYear *newYear;
-    if (![self findYearWithDate:yearDate])
-    {
+    IAEYear *newYear = nil;
+    if (![self findYearWithDate:yearDate]) {
         newYear = [NSEntityDescription insertNewObjectForEntityForName:@"IAEYear" inManagedObjectContext:self.context];
         newYear.yearDate = yearDate.intValue;
         
         [self.years addObject:newYear];
         [self.years sortUsingSelector:@selector(compareDescendingPriority:)];
-        /*
-        NSDictionary *extraInfo = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithUnsignedInteger:yearDate.unsignedIntValue], nil] forKeys:[NSArray arrayWithObjects:@"YearDate", nil]];
-        
-        NSNotification *notification = [NSNotification notificationWithName:@"NewYearCreated" object:self userInfo:extraInfo];
-        
-        [[NSNotificationCenter defaultCenter] postNotification:notification];
-        */
      }
     
     return newYear;
@@ -207,12 +194,8 @@
 - (void)deleteYearObject:(IAEYear *)year
 {
     if (year) {
-        //NSUInteger yearDate = year.yearDate;
-        
         [self.years removeObjectIdenticalTo:year];
         [self.context deleteObject:year];
-        
-        //[self postYearRemovedNotificationWithYearDate:yearDate];
     }
 }
 
@@ -235,11 +218,9 @@
     [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
+// Nota: Preserva siempre el año actual aunque no tenga conceptos
 - (void)deleteYearsWithZeroConceptsPreservingActualYear
 {
-    // Notas:
-    // Preserva siempre el año actual aunque no tenga conceptos
-    
     IAEYear *actualYear = [self findActualYear];
     if (actualYear) {
         NSMutableArray *actualLoadedYears = [NSMutableArray arrayWithArray:self.years];
@@ -267,7 +248,7 @@
     }
 }
 
-// OJO para los años cargados solo
+// Nota: Solo para los años cargados
 - (NSArray *)findAllConceptsWithCategory:(IAECategory *)category
 {
     NSMutableArray *concepts = [[NSMutableArray alloc] initWithCapacity:self.years.count];
@@ -280,11 +261,11 @@
 
 - (BOOL)saveAll
 {
-    NSError *error;
+    NSError *error = nil;
     BOOL saveResult = [self.context save:&error];
-    
-    if (!saveResult)
+    if (!saveResult) {
         [NSException raise:@"Error saving" format:@"Reason %@", [error localizedDescription]];
+    }
     
     return saveResult;
 }

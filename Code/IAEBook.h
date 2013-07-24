@@ -21,26 +21,24 @@
 
 + (IAEBook *)sharedBook;
 
-- (IAEYear *)createYear:(NSNumber *)yearDate;
-- (void)deleteYear:(NSNumber *)yearDate;
-- (void)deleteYearsWithZeroConceptsPreservingActualYear;
-
-- (void)deleteAllConceptsOfYear:(IAEYear *)year;
-
-- (IAEYear *)findYearWithDate:(NSNumber *)yearDate;
-- (IAEYear *)findActualYear;
-
-- (BOOL)saveAll;
-
 - (void)loadAll;
 - (void)loadYear:(NSUInteger)yearDate;
 - (void)loadMoreRecientYear;
 - (void)unloadAll;
 
-// IMPORTANTE: La funcion mas destructiva
+- (IAEYear *)createYear:(NSNumber *)yearDate;
+- (void)deleteYear:(NSNumber *)yearDate;
+- (void)deleteYearsWithZeroConceptsPreservingActualYear;
+- (void)deleteAllConceptsOfYear:(IAEYear *)year;
+
+// OJO: La funcion mas destructiva
 - (void)deleteAllAndSave;
 
+- (IAEYear *)findYearWithDate:(NSNumber *)yearDate;
+- (IAEYear *)findActualYear;
 - (NSArray *)findAllConceptsWithCategory:(IAECategory *)category;
 - (NSArray *)findAllYearWithConcepts;
+
+- (BOOL)saveAll;
 
 @end

@@ -19,35 +19,35 @@
 @dynamic categoryType;
 @dynamic tag;
 
+static NSString * const ltextGeneralIncome = @"General Income";
+static NSString * const ltextGeneralExpense = @"General Expense";
+static NSString * const ltextIncomeCategoryType = @"Income";
+static NSString * const ltextExpenseCategoryType = @"Expense";
+
+// Notas:
+// - No vacio
+// - Con al menos un caracter distinto que espacio
+// - No existe otra categoria con el mismo nombre
 + (ValidTagCheckResult)isAValidTag:(NSString *)tag
 {
-    // No vacio
-    // Con al menos un caracter distinto que espacio
-    // No existe otra categoria con el mismo nombre
+    NSString *tagTrimming = nil;
     
     ValidTagCheckResult result = tag.length > 0 ? ValidTag : InvalidEmptyTag;
-    
-    NSString *tagTrimming;
     if (result == ValidTag) {
         tagTrimming = [tag stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        
         result = tagTrimming.length == 0 ? InvalidWhiteSpaceOnlyTag : ValidTag;
     }
     
     if (result == ValidTag) {
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
         request.entity = [[[IAEBook sharedBook].model entitiesByName] objectForKey:@"IAECategory"];
-        
-        NSError *error;
-        
+        NSError *error = nil;
         NSArray *fetchRequest = [[IAEBook sharedBook].context executeFetchRequest:request error:&error];
-        if (error != nil)
+        if (error != nil) {
             [NSException raise:@"IAECategoryStore: Failed searching all categories " format:@"cause :%@", error];
-        else
-        {
+        } else {
             NSUInteger indexOfObject = [fetchRequest indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
                 IAECategory *category = obj;
-                
                 *stop = NSOrderedSame == [category.tag caseInsensitiveCompare:tagTrimming];
                 if (!*stop) {
                     *stop = NSOrderedSame == [[category localizedTag] caseInsensitiveCompare:tagTrimming];
@@ -67,11 +67,12 @@
 - (NSString *)localizedTag
 {
     NSString *retTag = self.tag;
-    if ([self.tag compare:@"General Income"] == NSOrderedSame) {
-        retTag = NSLocalizedString(@"General Income", @"Ingreso general");
-    } else if ([self.tag compare:@"General Expense"] == NSOrderedSame) {
-        retTag = NSLocalizedString(@"General Expense", @"Gasto general");
+    if ([self.tag compare:ltextGeneralIncome] == NSOrderedSame) {
+        retTag = NSLocalizedString(ltextGeneralIncome, @"");
+    } else if ([self.tag compare:ltextGeneralExpense] == NSOrderedSame) {
+        retTag = NSLocalizedString(ltextGeneralExpense, @"");
     }
+    
     return retTag;
 }
 
@@ -80,9 +81,9 @@
 - (BOOL)setTagWithValidityCheck:(NSString *)tag
 {
     BOOL setOk = [IAECategory isAValidTag:tag];
-    
-    if (setOk)
+    if (setOk) {
         self.tag = tag;
+    }
     
     return setOk;
 }
@@ -104,7 +105,8 @@
 
 - (NSString *)localizedCategoryTypeString
 {
-    return self.categoryType == IncomeCategory ? NSLocalizedString(@"Income", @"Ingreso") : NSLocalizedString(@"Expense", @"Gasto");
+    return self.categoryType == IncomeCategory ? NSLocalizedString(ltextIncomeCategoryType, @"") :
+                                                 NSLocalizedString(ltextExpenseCategoryType, @"");
 }
 
 @end

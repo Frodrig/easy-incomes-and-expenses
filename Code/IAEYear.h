@@ -18,8 +18,6 @@
 @property (nonatomic, retain) NSSet *months;
 @property (nonatomic, strong) NSArray *ordererMonths;
 
-//- (id)initWithYear:(NSNumber *)yearDate;
-
 - (NSComparisonResult)compare:(IAEYear *)aYear;
 - (NSComparisonResult)compareDescendingPriority:(IAEYear *)aYear;
 
@@ -29,7 +27,6 @@
 
 - (NSArray *)findAllConceptsWithCategory:(IAECategory *)category;
 - (NSArray *)findAllConcepts;
-
 - (NSUInteger)findNumberOfConcepts;
 
 @end

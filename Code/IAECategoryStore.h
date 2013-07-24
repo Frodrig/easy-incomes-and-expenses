@@ -14,15 +14,12 @@
 
 @interface IAECategoryStore : NSObject
 
-// OJO esto deberia de ser una propiedad readonly para que desde fuera no se pueda modificar el array
-// IMPORTATE: Las categorias de usuario siempre se mantinen ordenadas alfabeticamente
+// Nota: Las categorias de usuario siempre se mantienen ordenadas alfabeticamente
 @property (nonatomic, strong, readonly) NSMutableArray *userDefinedCategories;
 @property (nonatomic, strong, readonly) IAECategory *generalIncomeCategory;
 @property (nonatomic, strong, readonly) IAECategory *generalExpenseCategory;
 
 + (IAECategoryStore *)sharedCategoryStore;
-
-- (BOOL)isGeneralCategory:(IAECategory *)category;
 
 - (IAECategory *)createCategoryOfType:(CategoryType)type andTag:(NSString *)tag withValidityTagCheck:(BOOL)validity;
 
@@ -30,8 +27,9 @@
 - (void)removeCategory:(IAECategory *)category;
 
 - (IAECategory *)findCategoryByTag:(NSString *)tag;
-
 - (NSArray *)allUserCategoriesOfType:(CategoryType)type;
 - (NSArray *)generalCategoryAndAllUserCategoriesOfType:(CategoryType)type;
+
+- (BOOL)isGeneralCategory:(IAECategory *)category;
 
 @end

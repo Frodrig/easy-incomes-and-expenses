@@ -21,24 +21,32 @@
 
 @synthesize delegate = _delegate;
 
-/*
-+ (id)monthFromYear:(IAEYear *)year withMonthType:(MonthType)month
-{
-    return [[IAEMonth alloc] initFromYear:year andMonthType:month];
-}
-*/
+static NSUInteger invalidDayOfTheMonth = 0;
+
+static NSString * const entityNameConcept = @"IAEConcept";
+
+static NSString * const ltextJanuaryName = @"January";
+static NSString * const ltextFebruaryName = @"February";
+static NSString * const ltextMarchName = @"March";
+static NSString * const ltextAprilName = @"April";
+static NSString * const ltextMayName = @"May";
+static NSString * const ltextJuneName = @"June";
+static NSString * const ltextJulyName = @"July";
+static NSString * const ltextAugustName = @"August";
+static NSString * const ltextSeptemberName = @"September";
+static NSString * const ltextOctoberName = @"October";
+static NSString * const ltextNovemberName = @"November";
+static NSString * const ltextDecemberName = @"December";
 
 - (NSNumber *)daysOfTheMonth
 {
     NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
     dateComponents.year = self.year.yearDate;
     dateComponents.month = self.month;
-        
     NSCalendar *currentCalendar = [NSCalendar currentCalendar];
-        
     NSRange daysRange = [currentCalendar rangeOfUnit:NSDayCalendarUnit
-                                                  inUnit:NSMonthCalendarUnit
-                                                 forDate:[currentCalendar dateFromComponents:dateComponents]];
+                                              inUnit:NSMonthCalendarUnit
+                                             forDate:[currentCalendar dateFromComponents:dateComponents]];
         
     return [NSNumber numberWithInteger:daysRange.length];
 }
@@ -48,7 +56,11 @@
                                 date:(NSTimeInterval)date
                       andDescription:(NSString *)description
 {
-    return [self addConceptWithAmount:amount category:category date:date dayOfTheMonth:0 andDescription:description];
+    return [self addConceptWithAmount:amount
+                             category:category
+                                 date:date
+                        dayOfTheMonth:invalidDayOfTheMonth
+                       andDescription:description];
 }
 
 - (IAEConcept *)addConceptWithAmount:(NSDecimalNumber *)amount
@@ -57,29 +69,15 @@
                        dayOfTheMonth:(NSUInteger)dayOfTheMonth
                       andDescription:(NSString *)description
 {
-    IAEConcept *newConcept;
-    
+    IAEConcept *newConcept = nil;
     if ([amount compare:[NSDecimalNumber zero]] != NSOrderedSame) {
-        newConcept = [NSEntityDescription insertNewObjectForEntityForName:@"IAEConcept" inManagedObjectContext:[IAEBook sharedBook].context];
+        newConcept = [NSEntityDescription insertNewObjectForEntityForName:entityNameConcept inManagedObjectContext:[IAEBook sharedBook].context];
         [self addConceptsObject:newConcept];
-        /*
-        [newConcept addObserver:self forKeyPath:@"amount" options:0 context:NULL];
-        [newConcept addObserver:self forKeyPath:@"category" options:0 context:NULL];
-        [newConcept addObserver:self forKeyPath:@"detailDescription" options:0 context:NULL];
-        [newConcept addObserver:self forKeyPath:@"dayOfTheMonth" options:0 context:NULL];
-        */
         newConcept.category = category;
         newConcept.amount = amount;
         newConcept.date = date;
         newConcept.dayOfTheMonth = dayOfTheMonth;
         newConcept.detailDescription = [description copy];
-        /*
-        NSDictionary *extraInfo = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:self, newConcept, nil] forKeys:[NSArray arrayWithObjects:@"Month", @"Concept", nil]];
-        
-        NSNotification *notification = [NSNotification notificationWithName:@"NewConceptAdded" object:self userInfo:extraInfo];
-        
-        [[NSNotificationCenter defaultCenter] postNotification:notification];
-        */
     }
     
     return newConcept;
@@ -87,23 +85,22 @@
 
 - (void)removeConcept:(IAEConcept *)concept
 {
-    if ([self.delegate respondsToSelector:@selector(month:willRemoveConcept:)])
-        [self.delegate month:self willRemoveConcept:concept];
+    [self.delegate month:self willRemoveConcept:concept];
     
     [self removeConceptsObject:concept];
     [[IAEBook sharedBook].context deleteObject:concept];
     
-    if ([self.delegate respondsToSelector:@selector(conceptRemovedFromMonth:)])
-        [self.delegate conceptRemovedFromMonth:self];
+    [self.delegate conceptRemovedFromMonth:self];
 }
 
 - (NSDecimalNumber *)sumAllAmountOfCategoryType:(CategoryType)category
 {
     NSDecimalNumber *sumDecimalNumber = [NSDecimalNumber zero];
-    
-    for (IAEConcept *concept in self.concepts)
-        if (concept.category.categoryType == category)
+    for (IAEConcept *concept in self.concepts) {
+        if (concept.category.categoryType == category) {
             sumDecimalNumber = [sumDecimalNumber decimalNumberByAdding:concept.amount];
+        }
+    }
     
     return sumDecimalNumber;
 }
@@ -111,10 +108,11 @@
 - (NSDecimalNumber *)sumAllAmountOfCategory:(IAECategory *)category
 {
     NSDecimalNumber *sumDecimalNumber = [NSDecimalNumber zero];
-    
-    for (IAEConcept *concept in self.concepts)
-        if (concept.category == category)
+    for (IAEConcept *concept in self.concepts) {
+        if (concept.category == category) {
             sumDecimalNumber = [sumDecimalNumber decimalNumberByAdding:concept.amount];
+        }
+    }
     
     return sumDecimalNumber;
 }
@@ -132,9 +130,9 @@
 - (NSDecimalNumber *)sumAllAmountOfCategories:(NSArray *)categories
 {
     NSDecimalNumber *sumDecimalNumber = [NSDecimalNumber zero];
-    
-    for (IAECategory *category in categories)
+    for (IAECategory *category in categories) {
         sumDecimalNumber = [sumDecimalNumber decimalNumberByAdding:[self sumAllAmountOfCategory:category]];
+    }
     
     return sumDecimalNumber;
 }
@@ -143,7 +141,6 @@
 {
     NSDecimalNumber *incomes = [self incomes];
     NSDecimalNumber *expenses = [self expenses];
-    
     NSDecimalNumber *balance = [incomes decimalNumberBySubtracting:expenses];
     
     return balance;
@@ -153,7 +150,6 @@
 {
     NSDecimalNumber *incomes = [self incomes];
     NSDecimalNumber *expenses = [self expenses];
-    
     NSDecimalNumber *total = [incomes decimalNumberByAdding:expenses];
     
     return total;
@@ -183,21 +179,17 @@
     NSArray *categories = [self findAllCategoriesInConceptsOfType:type];
     
     NSMutableDictionary *categoriesAmounts = [[NSMutableDictionary alloc] init];
-    for (IAECategory *category in categories)
-    {
+    for (IAECategory *category in categories) {
         NSDecimalNumber *value = [self balanceOfAllConceptsOfCategory:category];
         NSString *key = category.tag;
-            
         [categoriesAmounts setObject:value forKey:key];
     }
         
     NSArray *sortedCategories = [categories sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         IAECategory *category1 = obj1;
         IAECategory *category2 = obj2;
-            
         NSDecimalNumber *amountCategory1 = [categoriesAmounts objectForKey:category1.tag];
         NSDecimalNumber *amountCategory2 = [categoriesAmounts objectForKey:category2.tag];
-            
         NSComparisonResult compareResult = [amountCategory2 compare:amountCategory1];
             
         return compareResult;
@@ -224,6 +216,7 @@
 - (NSArray *)allConceptsSortedByEntryInstant
 {
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO];
+    
     return [self allConceptsSortedByDescriptors:@[sortDescriptor]];
 }
 
@@ -238,6 +231,7 @@
 - (NSArray *)allConceptsSortedByDescriptors:(NSArray *)sortDescriptors
 {
     NSArray *conceptsSorted = [self.concepts sortedArrayUsingDescriptors:sortDescriptors];
+    
     return conceptsSorted;
 }
 
@@ -255,76 +249,27 @@
 
 - (NSString *)description
 {
-    NSString *retDescription;
-    
-    switch (self.month) {
-        case January:
-            retDescription = NSLocalizedString(@"January", @"Enero");
-            break;
-            
-        case February:
-            retDescription = NSLocalizedString(@"February", @"Febrero");
-            break;
-            
-        case March:
-            retDescription = NSLocalizedString(@"March", @"Marzo");
-            break;
-            
-        case April:
-            retDescription = NSLocalizedString(@"April", @"Abril");
-            break;
-            
-        case May:
-            retDescription = NSLocalizedString(@"May", @"Mayo");
-            break;
-            
-        case June:
-            retDescription = NSLocalizedString(@"June", @"Junio");
-            break;
-            
-        case July:
-            retDescription = NSLocalizedString(@"July", @"Julio");
-            break;
-            
-        case August:
-            retDescription = NSLocalizedString(@"August", @"Agosto");
-            break;
-            
-        case September:
-            retDescription = NSLocalizedString(@"September", @"Septiembre");
-            break;
-            
-        case October:
-            retDescription = NSLocalizedString(@"October", @"Octubre");
-            break;
-            
-        case November:
-            retDescription = NSLocalizedString(@"November", @"Noviembre");
-            break;
-            
-        case December:
-            retDescription = NSLocalizedString(@"December", @"Diciembre");
-            break;
-            
-        default:
-            retDescription = @"Invalid";
-            break;
+    static NSDictionary *monthsNames = nil;
+    if (nil == monthsNames) {
+        monthsNames = @{[NSNumber numberWithInt:January]: ltextJanuaryName,
+                                  [NSNumber numberWithInt:February]: ltextFebruaryName,
+                                  [NSNumber numberWithInt:March]: ltextMarchName,
+                                  [NSNumber numberWithInt:April]: ltextAprilName,
+                                  [NSNumber numberWithInt:May]: ltextMayName,
+                                  [NSNumber numberWithInt:June]: ltextJuneName,
+                                  [NSNumber numberWithInt:July]: ltextJulyName,
+                                  [NSNumber numberWithInt:August]: ltextAugustName,
+                                  [NSNumber numberWithInt:September]: ltextSeptemberName,
+                                  [NSNumber numberWithInt:October]: ltextOctoberName,
+                                  [NSNumber numberWithInt:November]: ltextNovemberName,
+                                  [NSNumber numberWithInt:December]: ltextDecemberName,};
     }
     
+    NSString *retDescription = [monthsNames objectForKey:[NSNumber numberWithInt:self.month]];
+    retDescription = NSLocalizedString(retDescription, @"");
+    NSAssert(retDescription, @"");
+    
     return retDescription;
-}
-
-#pragma mark - Key-Value Observing
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context
-{
-    // OJO esto hay que cambiarlo para usar el notification center
-    /*if ([self.delegate respondsToSelector:@selector(month:didUpdateConcept:)])
-        [self.delegate month:self didUpdateConcept:object];
-     */
 }
 
 @end

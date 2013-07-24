@@ -42,18 +42,16 @@
 - (NSDecimalNumber *)balance;
 - (NSDecimalNumber *)total;
 - (NSDecimalNumber *)balanceOfAllConceptsOfCategory:(IAECategory *)category;
+- (NSDecimalNumber *)sumAllAmountOfCategories:(NSArray *)categories;
 
 - (NSArray *)allConceptsSortedByEntryInstant;
 - (NSArray *)allConceptsSortedByDay;
-
-- (NSDecimalNumber *)sumAllAmountOfCategories:(NSArray *)categories;
+- (NSArray *)findAllConceptsWithCategory:(IAECategory *)category;
+- (NSArray *)findAllConceptsWithCategoryTag:(NSString *)tag;
 - (NSArray *)findAllCategoriesInConceptsOfType:(CategoryType)type;
 - (NSArray *)findAllCategoriesSortedByAbsoluteValueOfAmountsInConceptsOfType:(CategoryType)type;
 
 - (NSString *)description;
-
-- (NSArray *)findAllConceptsWithCategory:(IAECategory *)category;
-- (NSArray *)findAllConceptsWithCategoryTag:(NSString *)tag;
 
 @end
 

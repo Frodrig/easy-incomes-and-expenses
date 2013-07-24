@@ -130,119 +130,6 @@
             </objects>
             <point key="canvasLocation" x="-709" y="571"/>
         </scene>
-        <!--Year Selector View Controller-->
-        <scene sceneID="9nd-87-Se5">
-            <objects>
-                <viewController id="eNP-D0-SiD" customClass="IAEYearSelectorViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="7hB-0s-dTf">
-                        <rect key="frame" x="0.0" y="64" width="540" height="556"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="OvN-DD-Tpe">
-                                <rect key="frame" x="0.0" y="0.0" width="540" height="506"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <inset key="contentInset" minX="0.0" minY="10" maxX="0.0" maxY="5"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="t5K-a1-FdI">
-                                    <size key="itemSize" width="500" height="65"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="yyk-bX-CWq">
-                                        <rect key="frame" x="20" y="0.0" width="500" height="65"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="500" height="65"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                    </collectionViewCell>
-                                </cells>
-                            </collectionView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="El año abierto actualmente es el 2013" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bAH-bQ-0Ug">
-                                <rect key="frame" x="20" y="514" width="500" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="GqG-U8-5lL">
-                        <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" title="Cerrar" style="plain" id="lVe-hb-nnA">
-                            <connections>
-                                <action selector="closeButtonPressed:" destination="eNP-D0-SiD" id="6E9-bK-eYB"/>
-                            </connections>
-                        </barButtonItem>
-                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="TdM-PK-aQV">
-                            <rect key="frame" x="111" y="8" width="319" height="29"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <segments>
-                                <segment title="Actual"/>
-                                <segment title="Con Conceptos"/>
-                                <segment title=""/>
-                            </segments>
-                            <connections>
-                                <action selector="yearSegmentedControlPressed:" destination="eNP-D0-SiD" eventType="valueChanged" id="eG1-4t-krd"/>
-                            </connections>
-                        </segmentedControl>
-                    </navigationItem>
-                    <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <connections>
-                        <outlet property="actualYearOpenLabel" destination="bAH-bQ-0Ug" id="OX1-n0-WvD"/>
-                        <outlet property="yearsCollectionView" destination="OvN-DD-Tpe" id="WR3-Uo-Whe"/>
-                        <outlet property="yearsSegmentedControl" destination="TdM-PK-aQV" id="N7c-pv-49x"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Xou-rs-9xG" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2173" y="1585"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="QJ2-1i-MY0">
-            <objects>
-                <navigationController definesPresentationContext="YES" modalPresentationStyle="formSheet" id="Afd-Ns-84s" sceneMemberID="viewController">
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="sZr-Y5-3d3">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="eNP-D0-SiD" kind="relationship" relationship="rootViewController" id="fzB-GN-xgb"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4BW-Bs-U9c" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="934" y="1585"/>
-        </scene>
-        <!--Category Selector View Controller - Categorías-->
-        <scene sceneID="nb7-En-Wra">
-            <objects>
-                <viewController id="fz1-v9-u6A" customClass="IAECategorySelectorViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="FfR-RN-luz">
-                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" title="Categorías" id="q5t-fp-NT0">
-                        <barButtonItem key="rightBarButtonItem" title="Cerrar" style="plain" id="Wwh-Dt-kfA">
-                            <connections>
-                                <action selector="closeButtonPressed:" destination="fz1-v9-u6A" id="C3V-JJ-XmL"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Fpe-Ds-kRa" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2173" y="2803"/>
-        </scene>
         <!--Report Mode View Controller - Report-->
         <scene sceneID="CCS-Io-eEh">
             <objects>
@@ -263,11 +150,7 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Report" id="Nml-Md-qzF">
-                        <barButtonItem key="rightBarButtonItem" title="Opciones" id="gtC-Uf-2XT">
-                            <connections>
-                                <segue destination="Muq-Ra-Fh9" kind="modal" id="6E9-iG-uxQ"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Opciones" id="gtC-Uf-2XT"/>
                         <connections>
                             <outlet property="leftBarButtonItem" destination="IDP-CP-zdh" id="sPU-kd-RpJ"/>
                         </connections>
@@ -276,30 +159,9 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5DA-cu-qAv" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <barButtonItem title="Años" id="IDP-CP-zdh">
-                    <connections>
-                        <segue destination="Afd-Ns-84s" kind="modal" id="LyE-oB-Abe"/>
-                    </connections>
-                </barButtonItem>
+                <barButtonItem title="Años" id="IDP-CP-zdh"/>
             </objects>
-            <point key="canvasLocation" x="-581" y="4361"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="qEy-pt-s4i">
-            <objects>
-                <navigationController definesPresentationContext="YES" modalPresentationStyle="formSheet" id="Muq-Ra-Fh9" sceneMemberID="viewController">
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Xaq-Fc-VeE">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="fz1-v9-u6A" kind="relationship" relationship="rootViewController" id="yNY-03-s8X"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wqJ-dh-dS0" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="934" y="2803"/>
+            <point key="canvasLocation" x="-557" y="1551"/>
         </scene>
     </scenes>
     <resources>

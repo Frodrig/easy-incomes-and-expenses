@@ -12,7 +12,7 @@
 
 + (NSCalendar *)findCurrentCalendar;
 
-+ (NSUInteger)findActualYear;
++ (NSUInteger)findActualYearDate;
 
 + (NSString *)findDayOfTheWeekNameStringWithDayOfTheWeekIndex:(NSUInteger)dayOfTheWeekIndex inShortForm:(BOOL)sortForm;
 + (NSUInteger)findDayOfTheWeekIndexFromYearDate:(NSUInteger)yearDate monthIndex:(NSUInteger)monthIndex andDayOfTheMonth:(NSUInteger)dayOfTheMonth;

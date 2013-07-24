@@ -153,7 +153,9 @@ static NSString * const fileNameForStoreData = @"incomeandexpenses.data";
 
 - (IAEYear *)findYearWithDate:(NSNumber *)yearDate
 {
-    IAEYear *resultYear;
+    NSAssert(yearDate.unsignedIntegerValue, @"");
+    
+    IAEYear *resultYear = nil;
     for (IAEYear *year in self.years) {
         if (year.yearDate == yearDate.unsignedIntegerValue) {
             resultYear = year;
@@ -162,7 +164,7 @@ static NSString * const fileNameForStoreData = @"incomeandexpenses.data";
     }
     
     if (!resultYear) {
-        NSArray *result = [self loadYearsWithLimit:1 andPredicate:[NSPredicate predicateWithFormat:@"yearDate == %@", [NSNumber numberWithUnsignedInteger:yearDate.unsignedIntegerValue]]];
+        NSArray *result = [self loadYearsWithLimit:1 andPredicate:[NSPredicate predicateWithFormat:@"yearDate == %d", yearDate.unsignedIntegerValue]];
         if (result.count > 0) {
             resultYear = [result objectAtIndex:0];
         }

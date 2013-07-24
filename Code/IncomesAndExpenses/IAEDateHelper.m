@@ -10,7 +10,7 @@
 
 @implementation IAEDateHelper
 
-+ (NSUInteger)findActualYear
++ (NSUInteger)findActualYearDate
 {
     NSDate *actualDate = [NSDate date];
     NSCalendar *calendar = [NSCalendar currentCalendar];

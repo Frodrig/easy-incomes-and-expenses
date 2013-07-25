@@ -39,6 +39,7 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *monthsScrollView;
 @property (weak, nonatomic) IBOutlet UIPageControl *monthsScrollPageController;
 @property (weak, nonatomic) IBOutlet UIView *conceptsContainerView;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *modeSegmentedControl;
 @property (weak, nonatomic) IBOutlet UICollectionView *conceptsCollectionView;
 @property (nonatomic, strong) IAECalculatorViewController *calculatorViewController;
 @property (nonatomic, strong) UIPopoverController *popover;
@@ -57,6 +58,12 @@ static NSString * const userDefaultsDayModeActive = @"dayModeActive";
 
 static NSString * const notificationDayModeOnName = @"dayModeToOn";
 static NSString * const notificationDayModeOffName = @"dayModeToOff";
+
+static NSString * const ltextModeSegmentedControlEditMode = @"LTEXT_MODESEGMENTEDCONTROL_EDITMODE";
+static NSString * const ltextModeSegmentedControlReportmode = @"LTEXT_MODESEGMENTEDCONTROL_REPORTMODE";
+
+static NSUInteger indexInSegmentedControlForEditMode = 0;
+static NSUInteger indexInSegmentedControlForReportMode = 1;
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -124,6 +131,7 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
     
 	// Do any additional setup after loading the view.
     [self configureMonthScrollViewContent];
+    [self configureModeSegmentedControl];
     [self configureConceptsViews];
 }
 
@@ -135,6 +143,14 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
     self.monthsScrollView.showsVerticalScrollIndicator = NO;
     self.monthsScrollView.bounces = YES;
     self.monthsScrollView.delegate = self;
+}
+
+- (void)configureModeSegmentedControl
+{
+    [self.modeSegmentedControl setTitle:NSLocalizedString(ltextModeSegmentedControlEditMode, @"")
+                      forSegmentAtIndex:indexInSegmentedControlForEditMode];
+    [self.modeSegmentedControl setTitle:NSLocalizedString(ltextModeSegmentedControlReportmode, @"")
+                      forSegmentAtIndex:indexInSegmentedControlForReportMode];
 }
 
 - (void)configureConceptsViews
@@ -1060,6 +1076,7 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
     [UIView animateWithDuration:0.25 animations:^{
         [self updateFramePositionBeforeShowCalculatorForView:self.monthsScrollView];
         [self updateFramePositionBeforeShowCalculatorForView:self.monthsScrollPageController];
+        [self updateFramePositionBeforeShowCalculatorForView:self.modeSegmentedControl];
         [self updateFramePositionBeforeShowCalculatorForView:self.conceptsContainerView];
     }];
 }
@@ -1069,6 +1086,7 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
     [UIView animateWithDuration:0.25 animations:^{
         [self updateFramePositionAfterShowCalculatorForView:self.monthsScrollView];
         [self updateFramePositionAfterShowCalculatorForView:self.monthsScrollPageController];
+        [self updateFramePositionAfterShowCalculatorForView:self.modeSegmentedControl];
         [self updateFramePositionAfterShowCalculatorForView:self.conceptsContainerView];
     }];
 }

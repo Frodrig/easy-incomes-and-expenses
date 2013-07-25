@@ -348,6 +348,9 @@
 			isa = PBXGroup;
 			children = (
 				5B32D659177C41170070AC72 /* Easy Incomes and Expenses */,
+				5B90782E179D1A8B00B2A0F7 /* Calculator */,
+				5BA0130E17983A6600337E84 /* Day Calendar Selector */,
+				5B36AFED1785872900132475 /* Adjust Concept Amout */,
 				5BF925381795540F0002CF9F /* About and Options */,
 				5B94035D178FEE9700F9C1D0 /* Category Selector */,
 				5B32D65A177C417A0070AC72 /* Year Selector */,
@@ -360,7 +363,6 @@
 			children = (
 				5B32D652177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.h */,
 				5B32D653177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m */,
-				5B36AFEC1785871E00132475 /* View Controllers */,
 				5B903BB91782DBAF00DBEFB2 /* Views */,
 			);
 			name = "Easy Incomes and Expenses";
@@ -376,16 +378,6 @@
 				5B62D85E178EAC66009879A6 /* Year Selector Collection View */,
 			);
 			name = "Year Selector";
-			sourceTree = "<group>";
-		};
-		5B36AFEC1785871E00132475 /* View Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				5B90782E179D1A8B00B2A0F7 /* Calculator */,
-				5BA0130E17983A6600337E84 /* Day Calendar Selector */,
-				5B36AFED1785872900132475 /* Adjust Concept Amout */,
-			);
-			name = "View Controllers";
 			sourceTree = "<group>";
 		};
 		5B36AFED1785872900132475 /* Adjust Concept Amout */ = {

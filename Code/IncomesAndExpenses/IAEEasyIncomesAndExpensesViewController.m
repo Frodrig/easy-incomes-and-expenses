@@ -36,9 +36,6 @@
 
 @interface IAEEasyIncomesAndExpensesViewController ()
 
-@property (weak, nonatomic) IBOutlet UIView *annualBalanceContainerView;
-@property (weak, nonatomic) IBOutlet UILabel *annualBalanceIndicatorLabel;
-@property (weak, nonatomic) IBOutlet UILabel *annualBalanceValueLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *monthsScrollView;
 @property (weak, nonatomic) IBOutlet UIPageControl *monthsScrollPageController;
 @property (weak, nonatomic) IBOutlet UIView *conceptsContainerView;
@@ -65,6 +62,7 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
+        [self initCommonProperties];
         [self initDobleTapConceptsGestureRecognizer];
         [self initTapConceptsGestureRecognizer];
         [self initAsObserverOfNotificationCenter];
@@ -72,6 +70,11 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
     }
     
     return self;
+}
+
+- (void)initCommonProperties
+{
+    self.initialPositioning = YES;
 }
 
 - (void)initDobleTapConceptsGestureRecognizer
@@ -165,21 +168,23 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 {
     [super viewWillAppear:animated];
     
-    [self vinculeAnnualBalanceContent];
     [self vinculeMonthScrollViewContent];
     [self vinculeCalculatorViewControllerView];
         
+    [self gotoToActualMonthWithoutTransitionEffect];
+}
+
+- (void)gotoToActualMonthWithoutTransitionEffect
+{
+    self.initialPositioning = YES;
     [self goToActualMonth];
+    self.initialPositioning = NO;
 }
 
 - (void)goToActualMonth
 {
-    self.initialPositioning = YES;
-    
     NSUInteger todayMonthIndex = [self findTodayMonthIndex];
     [self.monthsScrollView scrollRectToVisible:[self rectInMonthScrollViewForMonthBalanceViewWithIndex:todayMonthIndex] animated:NO];
-    
-    self.initialPositioning = NO;
 }
 
 - (CGRect)rectInMonthScrollViewForMonthBalanceViewWithIndex:(NSUInteger)monthIndex
@@ -332,18 +337,7 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 
 - (void)updateBalancesWithAnimation:(BOOL)animation
 {
-    [self updateYearBalanceWithAnimation:animation];
     [self updateMonthBalanceWithAnimation:animation];
-}
-
-- (void)updateYearBalanceWithAnimation:(BOOL)animation
-{
-    IAEYear *year = [self findActualYear];
-    NSDecimalNumber *yearBalance = [year balance];
-    
-    [[IAEEconomicValueUpdater defaultEconomicValueUpdater] processEconomicLabel:self.annualBalanceValueLabel
-                                                                        toValue:yearBalance
-                                                                   withDuration:animation ? 1.75 : 0 ];
 }
 
 - (void)updateMonthBalanceWithAnimation:(BOOL)animation
@@ -369,31 +363,6 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 }
 
 #pragma mark - AnnualBalance (vincule)
-
-- (void)vinculeAnnualBalanceContent
-{
-    [self vinculeAnnualBalanceIndicatorLabel];
-    [self vinculeAnnualBalanceValueLabel];
-}
-
-- (void)vinculeAnnualBalanceIndicatorLabel
-{
-    NSString *localizedString = NSLocalizedString(@"LTEXT_EDITMODE_ANNUALBALANCEINDICATOR", @"");
-    UIColor *color = [UIColor colorWithWhite:0.0 alpha:1.0];
-    NSDictionary *attributeDictionary = [self createAttributeDictionaryForAnnualBalanceLabelsWithColor:color];
-
-    self.annualBalanceIndicatorLabel.attributedText = [[NSAttributedString alloc] initWithString:localizedString attributes:attributeDictionary];
-}
-
-- (void)vinculeAnnualBalanceValueLabel
-{
-    NSDecimalNumber *yearBalance = [self findActualYear].balance;
-    UIColor *valueColor = [IAEColorHelper colorForEconomicValueType:[IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:yearBalance]];
-    NSDictionary *attributeDictionary = [self createAttributeDictionaryForAnnualBalanceLabelsWithColor:valueColor];
-    NSString *stringWithValue = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:yearBalance];
-    
-    self.annualBalanceValueLabel.attributedText = [[NSAttributedString alloc] initWithString:stringWithValue attributes:attributeDictionary];
-}
 
 - (NSDictionary *)createAttributeDictionaryForAnnualBalanceLabelsWithColor:(UIColor *)color
 {
@@ -993,7 +962,6 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 
 - (void)reloadAllWithAnimation:(BOOL)animation
 {
-    [self reloadAnnualBalance];
     [self reloadMonthsBalanceWithAnimation:animation];
     [self reloadMonthConcepts];
 }
@@ -1002,11 +970,6 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 {
     [self reloadAllWithAnimation:animation];
     [self goToActualMonth];
-}
-
-- (void)reloadAnnualBalance
-{
-    [self vinculeAnnualBalanceContent];
 }
 
 - (void)reloadMonthsBalanceWithAnimation:(BOOL)animation
@@ -1095,7 +1058,6 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 - (void)showButtonWasPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
 {
     [UIView animateWithDuration:0.25 animations:^{
-        [self updateFramePositionBeforeShowCalculatorForView:self.annualBalanceContainerView];
         [self updateFramePositionBeforeShowCalculatorForView:self.monthsScrollView];
         [self updateFramePositionBeforeShowCalculatorForView:self.monthsScrollPageController];
         [self updateFramePositionBeforeShowCalculatorForView:self.conceptsContainerView];
@@ -1105,7 +1067,6 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 - (void)hideButtonWasPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
 {
     [UIView animateWithDuration:0.25 animations:^{
-        [self updateFramePositionAfterShowCalculatorForView:self.annualBalanceContainerView];
         [self updateFramePositionAfterShowCalculatorForView:self.monthsScrollView];
         [self updateFramePositionAfterShowCalculatorForView:self.monthsScrollPageController];
         [self updateFramePositionAfterShowCalculatorForView:self.conceptsContainerView];

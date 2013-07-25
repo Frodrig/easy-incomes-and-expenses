@@ -12,10 +12,12 @@
 #import "IAEYear.h"
 #import "IAEMonth.h"
 #import "IAECategoryStore.h"
-
-#import "IAEModeNavigationController.h"
+#import "IAEEasyIncomesAndExpensesViewController.h"
 
 @implementation IAEAppDelegate
+
+static NSString * const mainStoryBoardName = @"Main";
+static NSString * const easyIncomesAndExpensesViewControllerID = @"EasyIncomesAndExpensesViewControllerID";
 
 static NSString * const userDefaultsDayModeActive = @"dayModeActive";
 
@@ -28,10 +30,20 @@ static NSString * const userDefaultsDayModeActive = @"dayModeActive";
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-    self.window.rootViewController = [[IAEModeNavigationController alloc] initWithApropiateRootModeViewController];
+    UIViewController *rootViewController = [self instantiateFromStoryBoardEasyIncomesViewController];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:rootViewController];
+    self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
     
     return YES;
+}
+
+- (UIViewController *)instantiateFromStoryBoardEasyIncomesViewController
+{
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:mainStoryBoardName bundle:[NSBundle mainBundle]];
+    UIViewController *viewController = [storyBoard instantiateViewControllerWithIdentifier:easyIncomesAndExpensesViewControllerID];
+    
+    return viewController;
 }
 
 - (void)processProcessInfoEnvironment

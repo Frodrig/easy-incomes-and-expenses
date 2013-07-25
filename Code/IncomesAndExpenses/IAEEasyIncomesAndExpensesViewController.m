@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Fernando Rodríguez Martínez. All rights reserved.
 //
 
-#import "IAEEditModeViewController.h"
+#import "IAEEasyIncomesAndExpensesViewController.h"
 #import "IAECurrencyManager.h"
 #import "IAEBook.h"
 #import "IAEYear.h"
@@ -34,7 +34,7 @@
 #import "UIView+RoundedCorners.h"
 #import "NSDecimalNumber+AbsoluteValue.h"
 
-@interface IAEEditModeViewController ()
+@interface IAEEasyIncomesAndExpensesViewController ()
 
 @property (weak, nonatomic) IBOutlet UIView *annualBalanceContainerView;
 @property (weak, nonatomic) IBOutlet UILabel *annualBalanceIndicatorLabel;
@@ -54,7 +54,7 @@
 
 @end
 
-@implementation IAEEditModeViewController
+@implementation IAEEasyIncomesAndExpensesViewController
 
 static NSString * const userDefaultsDayModeActive = @"dayModeActive";
 

@@ -15,10 +15,8 @@
 		5B26461617968F84006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B26461517968F84006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.xib */; };
 		5B26461A17969084006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B26461917969084006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.m */; };
 		5B28813417985822006E4F9B /* IAEVersionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B28813317985822006E4F9B /* IAEVersionHelper.m */; };
-		5B32D654177C387A0070AC72 /* IAEEditModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B32D653177C387A0070AC72 /* IAEEditModeViewController.m */; };
+		5B32D654177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B32D653177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m */; };
 		5B32D65D177C41980070AC72 /* IAEYearSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B32D65C177C41980070AC72 /* IAEYearSelectorViewController.m */; };
-		5B32D665177C48B00070AC72 /* IAEReportModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B32D664177C48B00070AC72 /* IAEReportModeViewController.m */; };
-		5B32D66F177C8C700070AC72 /* IAEModeNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B32D66E177C8C700070AC72 /* IAEModeNavigationController.m */; };
 		5B36AFF11785874D00132475 /* IAEAdjustConceptAmountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B36AFEF1785874D00132475 /* IAEAdjustConceptAmountViewController.m */; };
 		5B36AFF21785874D00132475 /* IAEAdjustConceptAmountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B36AFF01785874D00132475 /* IAEAdjustConceptAmountViewController.xib */; };
 		5B36AFF71785BBF400132475 /* NSDecimalNumber+AbsoluteValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B36AFF61785BBF400132475 /* NSDecimalNumber+AbsoluteValue.m */; };
@@ -107,14 +105,10 @@
 		5B26461C1796A1CA006F6E58 /* IAEInfoAboutAndOptionsCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEInfoAboutAndOptionsCollectionViewCell.xib; sourceTree = "<group>"; };
 		5B28813217985822006E4F9B /* IAEVersionHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEVersionHelper.h; sourceTree = "<group>"; };
 		5B28813317985822006E4F9B /* IAEVersionHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEVersionHelper.m; sourceTree = "<group>"; };
-		5B32D652177C387A0070AC72 /* IAEEditModeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEditModeViewController.h; sourceTree = "<group>"; };
-		5B32D653177C387A0070AC72 /* IAEEditModeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEditModeViewController.m; sourceTree = "<group>"; };
+		5B32D652177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEasyIncomesAndExpensesViewController.h; sourceTree = "<group>"; };
+		5B32D653177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEasyIncomesAndExpensesViewController.m; sourceTree = "<group>"; };
 		5B32D65B177C41980070AC72 /* IAEYearSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEYearSelectorViewController.h; sourceTree = "<group>"; };
 		5B32D65C177C41980070AC72 /* IAEYearSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEYearSelectorViewController.m; sourceTree = "<group>"; };
-		5B32D663177C48B00070AC72 /* IAEReportModeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEReportModeViewController.h; sourceTree = "<group>"; };
-		5B32D664177C48B00070AC72 /* IAEReportModeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEReportModeViewController.m; sourceTree = "<group>"; };
-		5B32D66D177C8C700070AC72 /* IAEModeNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEModeNavigationController.h; sourceTree = "<group>"; };
-		5B32D66E177C8C700070AC72 /* IAEModeNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEModeNavigationController.m; sourceTree = "<group>"; };
 		5B36AFEE1785874D00132475 /* IAEAdjustConceptAmountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEAdjustConceptAmountViewController.h; sourceTree = "<group>"; };
 		5B36AFEF1785874D00132475 /* IAEAdjustConceptAmountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEAdjustConceptAmountViewController.m; sourceTree = "<group>"; };
 		5B36AFF01785874D00132475 /* IAEAdjustConceptAmountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEAdjustConceptAmountViewController.xib; sourceTree = "<group>"; };
@@ -353,23 +347,23 @@
 		5B32D651177C385A0070AC72 /* View - Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				5B32D659177C41170070AC72 /* Easy Incomes and Expenses */,
 				5BF925381795540F0002CF9F /* About and Options */,
 				5B94035D178FEE9700F9C1D0 /* Category Selector */,
 				5B32D65A177C417A0070AC72 /* Year Selector */,
-				5B32D66C177C8C4F0070AC72 /* Modes */,
 			);
 			name = "View - Controllers";
 			sourceTree = "<group>";
 		};
-		5B32D659177C41170070AC72 /* Edit Mode */ = {
+		5B32D659177C41170070AC72 /* Easy Incomes and Expenses */ = {
 			isa = PBXGroup;
 			children = (
-				5B32D652177C387A0070AC72 /* IAEEditModeViewController.h */,
-				5B32D653177C387A0070AC72 /* IAEEditModeViewController.m */,
+				5B32D652177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.h */,
+				5B32D653177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m */,
 				5B36AFEC1785871E00132475 /* View Controllers */,
 				5B903BB91782DBAF00DBEFB2 /* Views */,
 			);
-			name = "Edit Mode";
+			name = "Easy Incomes and Expenses";
 			sourceTree = "<group>";
 		};
 		5B32D65A177C417A0070AC72 /* Year Selector */ = {
@@ -382,26 +376,6 @@
 				5B62D85E178EAC66009879A6 /* Year Selector Collection View */,
 			);
 			name = "Year Selector";
-			sourceTree = "<group>";
-		};
-		5B32D662177C487E0070AC72 /* Report Mode */ = {
-			isa = PBXGroup;
-			children = (
-				5B32D663177C48B00070AC72 /* IAEReportModeViewController.h */,
-				5B32D664177C48B00070AC72 /* IAEReportModeViewController.m */,
-			);
-			name = "Report Mode";
-			sourceTree = "<group>";
-		};
-		5B32D66C177C8C4F0070AC72 /* Modes */ = {
-			isa = PBXGroup;
-			children = (
-				5B32D66D177C8C700070AC72 /* IAEModeNavigationController.h */,
-				5B32D66E177C8C700070AC72 /* IAEModeNavigationController.m */,
-				5B32D662177C487E0070AC72 /* Report Mode */,
-				5B32D659177C41170070AC72 /* Edit Mode */,
-			);
-			name = Modes;
 			sourceTree = "<group>";
 		};
 		5B36AFEC1785871E00132475 /* View Controllers */ = {
@@ -1001,7 +975,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B32D66F177C8C700070AC72 /* IAEModeNavigationController.m in Sources */,
 				5B28813417985822006E4F9B /* IAEVersionHelper.m in Sources */,
 				5B5C968C17816EF0008CD851 /* IAEValueDecoratorViewZeroConfigurator.m in Sources */,
 				5B767E031636D7FC005315F8 /* main.m in Sources */,
@@ -1012,7 +985,6 @@
 				5B32D65D177C41980070AC72 /* IAEYearSelectorViewController.m in Sources */,
 				5BE1F4C81637FE0C004E13C2 /* IAECategoryStore.m in Sources */,
 				5BD06157163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld in Sources */,
-				5B32D665177C48B00070AC72 /* IAEReportModeViewController.m in Sources */,
 				5BD06171163A8D2B00A80BE3 /* IAEMonth.m in Sources */,
 				5BD94C0B1786B864009009B1 /* IAECategoryTableViewCell.m in Sources */,
 				5B62D874178EC20E009879A6 /* IAEOrientationHelper.m in Sources */,
@@ -1044,7 +1016,7 @@
 				5B36AFF11785874D00132475 /* IAEAdjustConceptAmountViewController.m in Sources */,
 				5B62D87D178EC27D009879A6 /* IAEDateHelper.m in Sources */,
 				5B90783C179D268000B2A0F7 /* IAEDisplayPanelCalculatorView.m in Sources */,
-				5B32D654177C387A0070AC72 /* IAEEditModeViewController.m in Sources */,
+				5B32D654177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m in Sources */,
 				5B903BBC1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.m in Sources */,
 				5B5C967F17816A13008CD851 /* UIView+RoundedCorners.m in Sources */,
 				5B62D85B178EA870009879A6 /* IAEYearSelectorCollectionViewCell.m in Sources */,

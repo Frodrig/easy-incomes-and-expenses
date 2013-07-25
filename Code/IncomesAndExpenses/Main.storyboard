@@ -6,10 +6,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3697.3"/>
     </dependencies>
     <scenes>
-        <!--Edit Mode View Controller - Edit-->
+        <!--Easy Incomes And Expenses View Controller - Edit-->
         <scene sceneID="ZOc-zz-2EG">
             <objects>
-                <viewController storyboardIdentifier="EditModeViewController" id="7Ea-79-0mi" customClass="IAEEditModeViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EasyIncomesAndExpensesViewControllerID" id="7Ea-79-0mi" customClass="IAEEasyIncomesAndExpensesViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JJO-TL-5Gw">
                         <rect key="frame" x="0.0" y="64" width="1024" height="704"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -129,39 +129,6 @@
                 </button>
             </objects>
             <point key="canvasLocation" x="-709" y="571"/>
-        </scene>
-        <!--Report Mode View Controller - Report-->
-        <scene sceneID="CCS-Io-eEh">
-            <objects>
-                <viewController storyboardIdentifier="ReportModeViewController" id="d8y-Q1-jCC" customClass="IAEReportModeViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="F8Y-6r-vNf">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="980"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="REPORT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9JJ-cL-oyN">
-                                <rect key="frame" x="20" y="20" width="728" height="984"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="150"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Report" id="Nml-Md-qzF">
-                        <barButtonItem key="rightBarButtonItem" title="Opciones" id="gtC-Uf-2XT"/>
-                        <connections>
-                            <outlet property="leftBarButtonItem" destination="IDP-CP-zdh" id="sPU-kd-RpJ"/>
-                        </connections>
-                    </navigationItem>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5DA-cu-qAv" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <barButtonItem title="Años" id="IDP-CP-zdh"/>
-            </objects>
-            <point key="canvasLocation" x="-557" y="1551"/>
         </scene>
     </scenes>
     <resources>

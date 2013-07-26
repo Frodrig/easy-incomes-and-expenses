@@ -23,6 +23,8 @@
 @property (nonatomic, weak) id<IAECalculatorViewControllerDataSource> dataSource;
 
 @property (nonatomic, readonly) CGFloat sizeHeightOffsetWhenShowed;
+@property (nonatomic, readonly) CGFloat sizeHeightOfDragPanel;
+@property (nonatomic, readonly) BOOL disableMode;
 
 - (IBAction)incomeButtonPressed:(id)sender;
 - (IBAction)expenseButtonPressed:(id)sender;
@@ -38,5 +40,9 @@
 - (BOOL)isInVisibleMode;
 - (BOOL)isInIncomeMode;
 - (BOOL)isInExpenseMode;
+
+- (void)disable;
+- (void)enable;
+- (BOOL)isDisabeOptionAvailable;
 
 @end

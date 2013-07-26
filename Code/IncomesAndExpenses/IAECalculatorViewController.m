@@ -31,6 +31,8 @@ typedef NS_ENUM(NSUInteger, CalculatorMode) {
 
 @property (weak, nonatomic) IBOutlet IAEDragPanelCalculatorView *dragPanel;
 @property (weak, nonatomic) IBOutlet IAEDisplayPanelCalculatorView *displayPanel;
+@property (weak, nonatomic) IBOutlet UIButton *incomeButton;
+@property (weak, nonatomic) IBOutlet UIButton *expenseButton;
 @property (nonatomic) CalculatorMode mode;
 @property (nonatomic, strong) IAECategory *actualCategory;
 @property (nonatomic) NSUInteger actualDay;
@@ -38,10 +40,14 @@ typedef NS_ENUM(NSUInteger, CalculatorMode) {
 @property (nonatomic, strong) UIPopoverController *popover;
 @property (nonatomic, strong) NSDecimalNumber *maxDecimalNumberAllowed;
 @property (nonatomic) NSUInteger numberConceptsCreatedInSession;
+@property (nonatomic) CGPoint centerPositionBeforeDisable;
 
 @end
 
 @implementation IAECalculatorViewController
+
+
+@synthesize sizeHeightOfDragPanel = _sizeHeightOfDragPanel;
 
 static CGFloat animationDurationShowHideAction = 0.25;
 static CGFloat marginHeightOffsetWhenShowed = 10;
@@ -52,6 +58,9 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 
 static NSUInteger amountMaxNumbersLenght = 15;
 static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
+
+static CGFloat animationDurationForDisableAction = 0.25;
+static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
 
 - (NSString *)actualAmount
 {
@@ -76,6 +85,15 @@ static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
     return [self calculeAbsoluteOffsetDisplacementValue] + marginHeightOffsetWhenShowed;
 }
 
+- (CGFloat)sizeHeightOfDragPanel
+{
+    if (_sizeHeightOfDragPanel == 0) {
+        _sizeHeightOfDragPanel = self.dragPanel.bounds.size.height;
+    }
+    
+    return _sizeHeightOfDragPanel;
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -89,7 +107,8 @@ static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
 
 - (void)initValues
 {
-    _mode = CM_HIDE;    
+    _mode = CM_HIDE;
+    self.view.autoresizingMask = UIViewAutoresizingNone;
 }
 
 - (void)initAsObserverOfNotificationCenter
@@ -114,6 +133,43 @@ static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
 {
     [self.popover dismissPopoverAnimated:YES];
     self.popover = nil;
+}
+
+#pragma mark - Enabled & Disabled
+
+- (void)disable
+{
+    if ([self isDisabeOptionAvailable]) {
+        [UIView animateWithDuration:animationDurationForDisableAction animations:^{
+            self.view.center = CGPointMake(self.view.center.x,
+                                           self.view.center.y + self.dragPanel.bounds.size.height * ratioOfDragPanelVisiableForDisableAction);
+        }];
+        [self setIncomeAndExpenseButtonsInEnableState:NO];
+        _disableMode = YES;
+    }
+}
+
+- (void)enable
+{
+    if (self.disableMode) {
+        [UIView animateWithDuration:animationDurationForDisableAction animations:^{
+            self.view.center = CGPointMake(self.view.center.x,
+                                           self.view.center.y - self.dragPanel.bounds.size.height * ratioOfDragPanelVisiableForDisableAction);
+        }];
+        [self setIncomeAndExpenseButtonsInEnableState:YES];
+        _disableMode = NO;
+    }
+}
+
+- (void)setIncomeAndExpenseButtonsInEnableState:(BOOL)enabledState
+{
+    [self.incomeButton setEnabled:enabledState];
+    [self.expenseButton setEnabled:enabledState];
+}
+
+- (BOOL)isDisabeOptionAvailable
+{
+    return ([self isInHideMode] && !self.disableMode);
 }
 
 #pragma mark - State questions

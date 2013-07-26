@@ -9,6 +9,8 @@
             <connections>
                 <outlet property="displayPanel" destination="xJU-jx-OgO" id="AaF-Do-jyx"/>
                 <outlet property="dragPanel" destination="dms-eI-2KD" id="gqm-Is-eUm"/>
+                <outlet property="expenseButton" destination="3on-F9-yD1" id="fZy-HM-fE5"/>
+                <outlet property="incomeButton" destination="PjF-me-0zt" id="Vly-DB-zTN"/>
                 <outlet property="view" destination="uGo-IA-Aba" id="119-QN-C61"/>
             </connections>
         </placeholder>

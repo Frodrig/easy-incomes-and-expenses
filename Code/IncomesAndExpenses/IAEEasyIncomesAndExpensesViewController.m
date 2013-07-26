@@ -362,6 +362,18 @@ static NSString * const idConceptCellName = @"EditModeConceptCell";
     return self.popover == nil;
 }
 
+- (IAEContextView *)findActualSelectedContext
+{
+    IAEContextView *actualSelectedContext = nil;
+    if ([self isActualSelectedContextAMonth]) {
+        actualSelectedContext = [self findActualSelectedMonthContextView];
+    } else {
+        actualSelectedContext = [self findContextViewAtGlobalPosition:globalIndexForYearInContextScrollView];
+    }
+    
+    return actualSelectedContext;
+}
+
 - (NSUInteger)findNumberOfConceptsOfActualSelectedContext
 {
     NSUInteger numberOfConcepts = 0;
@@ -430,10 +442,22 @@ static NSString * const idConceptCellName = @"EditModeConceptCell";
 
 - (void)vinculeCalculatorViewControllerView
 {
+    /*
     self.calculatorViewController.view.frame = CGRectMake(206,
                                                           660,
                                                           self.calculatorViewController.view.bounds.size.width,
                                                           self.calculatorViewController.view.bounds.size.height);
+    */
+    self.calculatorViewController.view.frame = CGRectMake(0,
+                                                          0,
+                                                          self.calculatorViewController.view.bounds.size.width,
+                                                          self.calculatorViewController.view.bounds.size.height);
+    
+    CGFloat centerY = self.view.frame.size.height +
+                      self.calculatorViewController.view.bounds.size.height / 2 -
+                      self.calculatorViewController.sizeHeightOfDragPanel;
+    self.calculatorViewController.view.center = CGPointMake(self.view.center.x, centerY);
+    
     [self.view addSubview:self.calculatorViewController.view];
 }
 
@@ -561,7 +585,22 @@ static NSString * const idConceptCellName = @"EditModeConceptCell";
     if (scrollView == self.contextScrollView) {
         [self updateContentOfConceptsCollectionView];
         [self setConceptsCollectionViewInTransitionAspect:NO];
+        [self updateCalculatorViewHideHalfState];
     }
+}
+
+- (void)updateCalculatorViewHideHalfState
+{
+    if ([self isActualSelectedContextTheYearOpen]) {
+        [self.calculatorViewController disable];
+    } else {
+        [self.calculatorViewController enable];
+    }
+}
+
+- (BOOL)isHideHalfCalculatorViewEnabled
+{
+    return YES;
 }
 
 - (void)updateContentOfConceptsCollectionView

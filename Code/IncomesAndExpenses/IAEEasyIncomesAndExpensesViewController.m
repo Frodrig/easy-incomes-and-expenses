@@ -290,8 +290,13 @@ static NSString * const idConceptCellName = @"EditModeConceptCell";
 
 - (IAEMonth *)findActualSelectedMonth
 {
-    NSUInteger actualMonthIndex = self.contextScrollPageController.currentPage - 1;
-    return [self findMonthForOpenYearAtIndex:actualMonthIndex];
+    IAEMonth *month = nil;
+    if (self.contextScrollPageController.currentPage != globalIndexForYearInContextScrollView) {
+        NSUInteger actualMonthIndex = self.contextScrollPageController.currentPage - 1;
+        month = [self findMonthForOpenYearAtIndex:actualMonthIndex];
+    }
+    
+    return month;
 }
 
 - (IAEMonth *)findMonthForOpenYearAtIndex:(NSUInteger)index
@@ -401,11 +406,11 @@ static NSString * const idConceptCellName = @"EditModeConceptCell";
 
 - (void)updateBalancesWithAnimation:(BOOL)animation
 {
-    [self updateMonthBalanceWithAnimation:animation];
+    [self updateSelectedMonthBalanceWithAnimation:animation];
     [self updateOpenYearBalance];
 }
 
-- (void)updateMonthBalanceWithAnimation:(BOOL)animation
+- (void)updateSelectedMonthBalanceWithAnimation:(BOOL)animation
 {
     IAEContextView *contextView = [self findActualSelectedMonthContextView];
     [contextView reloadDataWithAnimation:animation];
@@ -1054,8 +1059,8 @@ static NSString * const idConceptCellName = @"EditModeConceptCell";
 
 - (void)reloadAllWithAnimation:(BOOL)animation
 {
-    [self reloadMonthsBalanceWithAnimation:animation];
-    [self reloadMonthConcepts];
+    [self reloadBalancesOfContextViewsWithAnimation:animation];
+    [self reloadConceptsOfActualSelectedContextView];
 }
 
 - (void)reloadAllAndGoToTodayMonthWithAnimation:(BOOL)animation
@@ -1064,7 +1069,7 @@ static NSString * const idConceptCellName = @"EditModeConceptCell";
     [self goToTodayMonth];
 }
 
-- (void)reloadMonthsBalanceWithAnimation:(BOOL)animation
+- (void)reloadBalancesOfContextViewsWithAnimation:(BOOL)animation
 {
     for (UIView *view in self.contextScrollView.subviews) {
         if ([view isKindOfClass:[IAEContextView class]]) {
@@ -1074,7 +1079,7 @@ static NSString * const idConceptCellName = @"EditModeConceptCell";
     }
 }
 
-- (void)reloadMonthConcepts
+- (void)reloadConceptsOfActualSelectedContextView
 {
     [self.conceptsCollectionView reloadData];
 }
@@ -1086,10 +1091,10 @@ static NSString * const idConceptCellName = @"EditModeConceptCell";
 
 - (void)closeButtonWasPressedInYearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController
 {
-    [self reloadAllAndGoToActualSelectedMonthWithAnimationIfOpenYearWasCleanInYearSelector];
+    [self reloadAllAndGoToTodayMonthWithAnimationIfOpenYearWasCleanInYearSelector];
 }
 
-- (void)reloadAllAndGoToActualSelectedMonthWithAnimationIfOpenYearWasCleanInYearSelector
+- (void)reloadAllAndGoToTodayMonthWithAnimationIfOpenYearWasCleanInYearSelector
 {
     if (self.reloadAllPendingFromYearSelectorIfReturnWithSameYearDate) {
         [self reloadAllAndGoToTodayMonthWithAnimation:NO];
@@ -1099,7 +1104,7 @@ static NSString * const idConceptCellName = @"EditModeConceptCell";
 
 - (void)openYearSelectedWasSelectedInYearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController
 {
-    [self reloadAllAndGoToActualSelectedMonthWithAnimationIfOpenYearWasCleanInYearSelector];
+    [self reloadAllAndGoToTodayMonthWithAnimationIfOpenYearWasCleanInYearSelector];
 }
 
 - (void)yearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController didCleanOpenYearDate:(NSUInteger)yearDate

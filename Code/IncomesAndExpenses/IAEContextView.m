@@ -103,7 +103,7 @@ static NSUInteger sizeFontForBalanceLabel = 59;
 - (void)configureContentBalanceLabelText:(BOOL)animation
 {
     NSDecimalNumber *contentBalance = [self contentBalance];
-    NSString *contentBalanceString = animation ? self.contentNameLabel.text : [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:contentBalance];
+    NSString *contentBalanceString = animation ? self.contentBalanceLabel.text : [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:contentBalance];
     UIColor *labelColor = [IAEColorHelper colorForEconomicValueType:[IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:contentBalance]];
     NSDictionary *attributes = [self createAttributeDictionaryForLabelsWithSize:sizeFontForBalanceLabel color:labelColor andKerning:0];
     

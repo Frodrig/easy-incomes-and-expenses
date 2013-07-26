@@ -741,7 +741,7 @@ static NSString * const idConceptCellName = @"EditModeConceptCell";
 - (void)dobleTapConceptsCollectionView:(UITapGestureRecognizer *)tapGestureRecognizer
 {
     NSAssert(tapGestureRecognizer == self.dobleTapConceptsRecognizer, @"");
-    [self findCellOfConceptsCollectionViewAndExecuteAtionUnderDobleTapGesture:tapGestureRecognizer];
+    [self findCellOfConceptsCollectionViewAndExecuteActionUnderDobleTapGesture:tapGestureRecognizer];
 }
 
 - (void)findCellOfConceptCollectionViewAndExecuteActionUnderTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer
@@ -831,7 +831,7 @@ static NSString * const idConceptCellName = @"EditModeConceptCell";
     [self createAndPresentPopoverForConceptCellView:cell.identifierContainerView withViewController:viewController];
 }
 
-- (void)findCellOfConceptsCollectionViewAndExecuteAtionUnderDobleTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer
+- (void)findCellOfConceptsCollectionViewAndExecuteActionUnderDobleTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer
 {
     IAEEditModeConceptCollectionViewCell *cell = [self findConceptCellUnderLocationOfGestureRecognizer:tapGestureRecognizer];
     if (cell) {

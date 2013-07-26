@@ -82,9 +82,9 @@
                     <connections>
                         <outlet property="conceptsCollectionView" destination="Ua3-PB-7Qf" id="Z3m-0j-JJI"/>
                         <outlet property="conceptsContainerView" destination="G41-3w-8Uv" id="ZM7-Tm-HwF"/>
+                        <outlet property="contextScrollPageController" destination="E2H-b7-TjG" id="IC6-MX-nHc"/>
+                        <outlet property="contextScrollView" destination="gI2-Hy-nOR" id="kx0-Zc-Ssu"/>
                         <outlet property="modeSegmentedControl" destination="iQJ-fE-Ltz" id="wtQ-Ue-Syc"/>
-                        <outlet property="monthsScrollPageController" destination="E2H-b7-TjG" id="6XS-Ix-UmU"/>
-                        <outlet property="monthsScrollView" destination="gI2-Hy-nOR" id="3xd-vw-J4d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nSe-iv-lCf" userLabel="First Responder" sceneMemberID="firstResponder"/>

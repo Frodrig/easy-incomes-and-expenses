@@ -144,5 +144,30 @@ static NSString * const entityNameMonth = @"IAEMonth";
     return [self findAllConcepts].count;
 }
 
+- (NSArray *)findAllConceptsSortedByEntryInstant
+{
+    NSArray *allConceptsSorted = [NSArray array];
+    for (IAEMonth *month in self.ordererMonths) {
+        allConceptsSorted = [allConceptsSorted arrayByAddingObjectsFromArray:[month allConceptsSortedByEntryInstant]];
+    }
+    
+    return allConceptsSorted;
+}
+
+- (NSArray *)findAllConceptsSortedByDay
+{
+    NSArray *allConceptSorted = [NSArray array];
+    for (IAEMonth *month in self.ordererMonths) {
+        allConceptSorted = [allConceptSorted arrayByAddingObjectsFromArray:[month allConceptsSortedByDay]];
+    }
+    
+    return allConceptSorted;
+}
+
+- (NSString *)yearDateAsString
+{
+    return [NSString stringWithFormat:@"%d", self.yearDate];
+}
+
 
 @end

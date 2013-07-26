@@ -65,6 +65,12 @@ static NSString * const ltextModeSegmentedControlReportmode = @"LTEXT_MODESEGMEN
 static NSUInteger indexInSegmentedControlForEditMode = 0;
 static NSUInteger indexInSegmentedControlForReportMode = 1;
 
+static NSUInteger contentScrollViewNumberOfItems = 13;
+static NSUInteger globalIndexForYearInContextScrollView = 0;
+
+static NSString * const nibConceptCellName = @"IAEEditModeConceptCollectionViewCell";
+static NSString * const idConceptCellName = @"EditModeConceptCell";
+
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
@@ -137,7 +143,8 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
 
 - (void)configureContextScrollViewContent
 {
-    self.contextScrollView.contentSize = CGSizeMake(12 * self.contextScrollView.bounds.size.width, self.contextScrollView.bounds.size.height);
+    self.contextScrollView.contentSize = CGSizeMake(contentScrollViewNumberOfItems * self.contextScrollView.bounds.size.width,
+                                                    self.contextScrollView.bounds.size.height);
     self.contextScrollView.pagingEnabled = YES;
     self.contextScrollView.showsHorizontalScrollIndicator = NO;
     self.contextScrollView.showsVerticalScrollIndicator = NO;
@@ -166,8 +173,8 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
 
 - (void)configureConceptsCollectionView
 {
-    [self.conceptsCollectionView registerNib:[UINib nibWithNibName:@"IAEEditModeConceptCollectionViewCell" bundle:[NSBundle mainBundle]]
-                  forCellWithReuseIdentifier:@"EditModeConceptCell"];
+    UINib *nibForConceptCell = [UINib nibWithNibName:nibConceptCellName bundle:[NSBundle mainBundle]];
+    [self.conceptsCollectionView registerNib:nibForConceptCell forCellWithReuseIdentifier:idConceptCellName];
     
     self.conceptsCollectionView.backgroundColor = [UIColor clearColor];
     self.conceptsCollectionView.showsHorizontalScrollIndicator = NO;
@@ -187,10 +194,10 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
     [self vinculeContextScrollViewContent];
     [self vinculeCalculatorViewControllerView];
         
-    [self gotoToTodaylMonthWithoutTransitionEffect];
+    [self gotoToTodayMonthWithoutTransitionEffect];
 }
 
-- (void)gotoToTodaylMonthWithoutTransitionEffect
+- (void)gotoToTodayMonthWithoutTransitionEffect
 {
     self.initialPositioning = YES;
     [self goToTodayMonth];
@@ -199,13 +206,14 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
 
 - (void)goToTodayMonth
 {
-    NSUInteger todayMonthIndex = [self findTodayMonthIndex];
-    [self.contextScrollView scrollRectToVisible:[self rectInMonthScrollViewForMonthBalanceViewWithIndex:todayMonthIndex] animated:NO];
+    NSUInteger globalContextViewIndex = [self findTodayMonthContextViewGlobalIndexInContextScrollView];
+    CGRect contextViewRect = [self rectInContextScrollViewForContextViewWithGlobalIndex:globalContextViewIndex];
+    [self.contextScrollView scrollRectToVisible:contextViewRect animated:NO];
 }
 
-- (CGRect)rectInMonthScrollViewForMonthBalanceViewWithIndex:(NSUInteger)monthIndex
+- (CGRect)rectInContextScrollViewForContextViewWithGlobalIndex:(NSUInteger)globalIndex
 {
-    CGRect rect = CGRectMake(monthIndex * self.contextScrollView.bounds.size.width,
+    CGRect rect = CGRectMake(globalIndex * self.contextScrollView.bounds.size.width,
                              0,
                              self.contextScrollView.bounds.size.width,
                              self.contextScrollView.bounds.size.height);
@@ -253,6 +261,13 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
 
 #pragma mark - Obtainings
 
+- (NSUInteger)findTodayMonthContextViewGlobalIndexInContextScrollView
+{
+    NSUInteger todayMonthContextViewGlobalIndex = [self findTodayMonthIndex] + 1;
+  
+    return todayMonthContextViewGlobalIndex;
+}
+
 - (NSUInteger)findTodayMonthIndex
 {
     NSDate *today = [NSDate date];
@@ -275,7 +290,7 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
 
 - (IAEMonth *)findActualSelectedMonth
 {
-    NSUInteger actualMonthIndex = self.contextScrollPageController.currentPage;
+    NSUInteger actualMonthIndex = self.contextScrollPageController.currentPage - 1;
     return [self findMonthForOpenYearAtIndex:actualMonthIndex];
 }
 
@@ -285,12 +300,18 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
     return [year.ordererMonths objectAtIndex:index];
 }
 
-- (NSArray *)allConceptsSortedAsAppropriateFromActualSelectedMonth
+- (NSArray *)allConceptsSortedAsAppropriateFromActualSelectedContext
 {
-    IAEMonth *actualMonth = [self findActualSelectedMonth];
-    NSArray *sortedConcepts =  [self isDayModeActiveForConcepts] ? [actualMonth  allConceptsSortedByDay] : [actualMonth  allConceptsSortedByEntryInstant];
+    NSArray *allConcepts = nil;
+    if ([self isActualSelectedContextAMonth]) {
+        IAEMonth *actualMonth = [self findActualSelectedMonth];
+        allConcepts = [self isDayModeActiveForConcepts] ? [actualMonth  allConceptsSortedByDay] : [actualMonth allConceptsSortedByEntryInstant];
+    } else {
+        IAEYear *openYear = [self findOpenYear];
+        allConcepts = [self isDayModeActiveForConcepts] ? [openYear findAllConceptsSortedByDay] : [openYear findAllConceptsSortedByEntryInstant];
+    }
     
-    return sortedConcepts;
+    return allConcepts;
 }
 
 - (BOOL)isDayModeActiveForConcepts
@@ -300,7 +321,7 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
 
 - (IAEConcept *)findConceptAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray *concepts = [self allConceptsSortedAsAppropriateFromActualSelectedMonth];
+    NSArray *concepts = [self allConceptsSortedAsAppropriateFromActualSelectedContext];
     IAEConcept *concept = [concepts objectAtIndex:indexPath.row];
     
     return concept;
@@ -314,7 +335,18 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
 
 - (IAEContextView *)findActualSelectedMonthContextView
 {
-    UIView *contextView = [self.contextScrollView.subviews objectAtIndex:self.contextScrollPageController.currentPage];
+    NSAssert(self.contextScrollPageController.currentPage > 0, @"");
+    return [self findContextViewAtGlobalPosition:self.contextScrollPageController.currentPage];
+}
+
+- (IAEContextView *)findOpenYearContextView
+{
+    return [self findContextViewAtGlobalPosition:0];
+}
+
+- (IAEContextView *)findContextViewAtGlobalPosition:(NSUInteger)globalPosition
+{
+    UIView *contextView = [self.contextScrollView.subviews objectAtIndex:globalPosition];
     
     return (IAEContextView *)contextView;
 }
@@ -325,12 +357,28 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
     return self.popover == nil;
 }
 
-- (NSUInteger)findNumberOfConceptsOfActualSelectedMonth
+- (NSUInteger)findNumberOfConceptsOfActualSelectedContext
 {
-    IAEMonth *month = [self findActualSelectedMonth];
-    NSUInteger conceptsOfMonth = month.concepts.count;
+    NSUInteger numberOfConcepts = 0;
+    if ([self isActualSelectedContextAMonth]) {
+        IAEMonth *month = [self findActualSelectedMonth];
+        numberOfConcepts = month.concepts.count;
+    } else {
+        IAEYear *year = [self findOpenYear];
+        numberOfConcepts = [year findAllConcepts].count;
+    }
     
-    return conceptsOfMonth;
+    return numberOfConcepts;
+}
+
+- (BOOL)isActualSelectedContextTheYearOpen
+{
+    return self.contextScrollPageController.currentPage == globalIndexForYearInContextScrollView ? YES : NO;
+}
+
+- (BOOL)isActualSelectedContextAMonth
+{
+    return [self isActualSelectedContextTheYearOpen] ? NO : YES;
 }
 
 - (NSString *)findDayOfTheWeekNameFromConcept:(IAEConcept *)concept
@@ -354,13 +402,19 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
 - (void)updateBalancesWithAnimation:(BOOL)animation
 {
     [self updateMonthBalanceWithAnimation:animation];
+    [self updateOpenYearBalance];
 }
 
 - (void)updateMonthBalanceWithAnimation:(BOOL)animation
 {
     IAEContextView *contextView = [self findActualSelectedMonthContextView];
-    
     [contextView reloadDataWithAnimation:animation];
+}
+
+- (void)updateOpenYearBalance
+{
+    IAEContextView *contextView = [self findOpenYearContextView];
+    [contextView reloadDataWithAnimation:NO];
 }
 
 - (void)processEconomicLabel:(UILabel *)label toValue:(NSDecimalNumber *)destinationValue withDuration:(CGFloat)duration
@@ -408,23 +462,34 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
 
 - (void)vinculeContextScrollViewContent
 {
-    [self createAndAddMonthBalanceItemsToMonthScrollView];
+    [self addToContextScrollViewContextWithGlobalPosition:0 contextType:CONTEXT_VIEW_YEAR andValueIndex:[self findOpenYear].yearDate];
+    [self addToContextScrollViewContextWithGlobalPosition:1 contextType:CONTEXT_VIEW_MONTH andValueIndex:January];
+    [self addToContextScrollViewContextWithGlobalPosition:2 contextType:CONTEXT_VIEW_MONTH andValueIndex:February];
+    [self addToContextScrollViewContextWithGlobalPosition:3 contextType:CONTEXT_VIEW_MONTH andValueIndex:March];
+    [self addToContextScrollViewContextWithGlobalPosition:4 contextType:CONTEXT_VIEW_MONTH andValueIndex:April];
+    [self addToContextScrollViewContextWithGlobalPosition:5 contextType:CONTEXT_VIEW_MONTH andValueIndex:May];
+    [self addToContextScrollViewContextWithGlobalPosition:6 contextType:CONTEXT_VIEW_MONTH andValueIndex:June];
+    [self addToContextScrollViewContextWithGlobalPosition:7 contextType:CONTEXT_VIEW_MONTH andValueIndex:July];
+    [self addToContextScrollViewContextWithGlobalPosition:8 contextType:CONTEXT_VIEW_MONTH andValueIndex:August];
+    [self addToContextScrollViewContextWithGlobalPosition:9 contextType:CONTEXT_VIEW_MONTH andValueIndex:September];
+    [self addToContextScrollViewContextWithGlobalPosition:10 contextType:CONTEXT_VIEW_MONTH andValueIndex:October];
+    [self addToContextScrollViewContextWithGlobalPosition:11 contextType:CONTEXT_VIEW_MONTH andValueIndex:November];
+    [self addToContextScrollViewContextWithGlobalPosition:12 contextType:CONTEXT_VIEW_MONTH andValueIndex:December];
 }
 
-- (void)createAndAddMonthBalanceItemsToMonthScrollView
+- (void)addToContextScrollViewContextWithGlobalPosition:(NSUInteger)globalPosition
+                                            contextType:(IAEContextViewType)contextType
+                                          andValueIndex:(NSUInteger)contextValueIndex
 {
-    IAEYear *year = [self findOpenYear];
-    for (NSUInteger indexIt = 0; indexIt < year.months.count; ++indexIt) {
-        CGRect frame = CGRectMake(self.contextScrollView.bounds.size.width * indexIt,
-                                  0,
-                                  self.contextScrollView.bounds.size.width,
-                                  self.contextScrollView.bounds.size.height);
-        IAEContextView *contextView = [[IAEContextView alloc] initWithFrame:frame type:CONTEXT_VIEW_MONTH andValueIndex:indexIt];
-        contextView.dataSource = self;
-        [contextView reloadDataWithAnimation:NO];
-        
-        [self.contextScrollView addSubview:contextView];
-    }
+    CGRect frame = CGRectMake(self.contextScrollView.bounds.size.width * globalPosition,
+                              0,
+                              self.contextScrollView.bounds.size.width,
+                              self.contextScrollView.bounds.size.height);
+    IAEContextView *contextView = [[IAEContextView alloc] initWithFrame:frame type:contextType andValueIndex:contextValueIndex];
+    contextView.dataSource = self;
+    [contextView reloadDataWithAnimation:NO];
+    
+    [self.contextScrollView addSubview:contextView];
 }
 
 #pragma mark - UIPopoverControllerViewDelegate
@@ -462,11 +527,11 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (scrollView == self.contextScrollView) {
-        [self updateMonthScrollViewAfterScroll];
+        [self updateContextScrollViewAfterScroll];
     }
 }
 
-- (void)updateMonthScrollViewAfterScroll
+- (void)updateContextScrollViewAfterScroll
 {
     [self updateScrollPageController];
     if (!self.initialPositioning) {
@@ -506,18 +571,32 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
 
 - (NSString *)nameForContextView:(IAEContextView *)contextView
 {
-    IAEMonth *month = [self findForOpenYearMonthAtIndex:contextView.valueIndex];
-    NSString *monthName = [month description];
+    NSString *name = nil;
     
-    return monthName;
+    IAEYear *year = [self findOpenYear];
+    if (contextView.contextType == CONTEXT_VIEW_MONTH) {
+        IAEMonth *month = [year.ordererMonths objectAtIndex:contextView.valueIndex - 1];
+        name = [month description];
+    } else if (contextView.contextType == CONTEXT_VIEW_YEAR) {
+        name = [year yearDateAsString];
+    }
+    
+    return name;
 }
 
 - (NSDecimalNumber *)balanceForContextView:(IAEContextView *)contextView
 {
-    IAEMonth *month = [self findForOpenYearMonthAtIndex:contextView.valueIndex];
-    NSDecimalNumber *monthBalance = [month balance];
+    NSDecimalNumber *balance = nil;
     
-    return monthBalance;
+    IAEYear *openYear = [self findOpenYear];
+    if (contextView.contextType == CONTEXT_VIEW_MONTH) {
+        IAEMonth *month = [openYear.ordererMonths objectAtIndex:contextView.valueIndex - 1];
+        balance = [month balance];
+    } else if (contextView.contextType == CONTEXT_VIEW_YEAR) {
+        balance = [openYear balance];
+    }
+    
+    return balance;
 }
 
 - (IAEMonth *)findForOpenYearMonthAtIndex:(NSUInteger)monthIndex
@@ -539,14 +618,13 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [self findNumberOfConceptsOfActualSelectedMonth];
+    return [self findNumberOfConceptsOfActualSelectedContext];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSAssert(collectionView == self.conceptsCollectionView, @"Se ha recibido una collection view no esperada");
-    static NSString *cellId = @"EditModeConceptCell";
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:idConceptCellName forIndexPath:indexPath];
     
     [self configureEditModeConceptCell:(IAEEditModeConceptCollectionViewCell *)cell withConceptAtIndexPath:indexPath];
     
@@ -564,7 +642,7 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
     NSString *amountWithSignString = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:amountWithSign];
     EconomicValueType economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:amountWithSign];
     UIColor *colorForEconomicValueType = [IAEColorHelper colorForEconomicValueType:economicValueType];
-    NSUInteger instantEntryIndex = [self findNumberOfConceptsOfActualSelectedMonth] - indexPath.row;
+    NSUInteger instantEntryIndex = [self findNumberOfConceptsOfActualSelectedContext] - indexPath.row;
 
     cell.valueDecoratorView.economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:amountWithSign];
     [self configureCategoryLabelsOfConceptCell:cell withCategory:category];

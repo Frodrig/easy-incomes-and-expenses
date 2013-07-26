@@ -27,7 +27,12 @@
 
 - (NSArray *)findAllConceptsWithCategory:(IAECategory *)category;
 - (NSArray *)findAllConcepts;
+- (NSArray *)findAllConceptsSortedByEntryInstant;
+- (NSArray *)findAllConceptsSortedByDay;
+
 - (NSUInteger)findNumberOfConcepts;
+
+- (NSString *)yearDateAsString;
 
 @end
 

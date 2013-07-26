@@ -324,7 +324,7 @@ static NSUInteger alertViewCleanButtonIndex = 1;
 - (void)actionSelectedActualYear
 {
     [[IAEBook sharedBook] loadYear:self.yearLoadedBeforeStart];
-    [self.delegate actualYearSelectedWasSelectedInYearSelectorViewController:self];
+    [self.delegate openYearSelectedWasSelectedInYearSelectorViewController:self];
 }
 
 - (void)actionSelectedYearWithConceptsWithDate:(NSUInteger)yearDate
@@ -447,7 +447,7 @@ static NSUInteger alertViewCleanButtonIndex = 1;
     [[IAEBook sharedBook] saveAll];
     
     if (yearDateSelectedForClean == self.yearLoadedBeforeStart) {
-        [self.delegate yearSelectorViewController:self didCleanActualYearDate:yearDateSelectedForClean];
+        [self.delegate yearSelectorViewController:self didCleanOpenYearDate:yearDateSelectedForClean];
     }
     
     [self.yearsCollectionView reloadData];

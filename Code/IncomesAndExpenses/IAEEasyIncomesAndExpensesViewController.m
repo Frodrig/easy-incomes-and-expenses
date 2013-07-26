@@ -262,7 +262,7 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
     return [monthComponents month] - 1;
 }
 
-- (IAEYear *)findActualYear
+- (IAEYear *)findOpenYear
 {
     return [[IAEBook sharedBook] findActualYear];
 }
@@ -270,18 +270,18 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
 - (IAEMonth *)findMonthOfPresentDay
 {
     NSUInteger todayMonthIndex = [self findTodayMonthIndex];
-    return [self findMonthForActualYearAtIndex:todayMonthIndex];
+    return [self findMonthForOpenYearAtIndex:todayMonthIndex];
 }
 
 - (IAEMonth *)findActualMonth
 {
     NSUInteger actualMonthIndex = self.monthsScrollPageController.currentPage;
-    return [self findMonthForActualYearAtIndex:actualMonthIndex];
+    return [self findMonthForOpenYearAtIndex:actualMonthIndex];
 }
 
-- (IAEMonth *)findMonthForActualYearAtIndex:(NSUInteger)index
+- (IAEMonth *)findMonthForOpenYearAtIndex:(NSUInteger)index
 {
-    IAEYear *year = [self findActualYear];
+    IAEYear *year = [self findOpenYear];
     return [year.ordererMonths objectAtIndex:index];
 }
 
@@ -413,7 +413,7 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
 
 - (void)createAndAddMonthBalanceItemsToMonthScrollView
 {
-    IAEYear *year = [self findActualYear];
+    IAEYear *year = [self findOpenYear];
     for (NSUInteger indexIt = 0; indexIt < year.months.count; ++indexIt) {
         CGRect frame = CGRectMake(self.monthsScrollView.bounds.size.width * indexIt,
                                   0,
@@ -507,7 +507,7 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
 - (NSString *)editModeMonthBalanceView:(IAEEditModeMonthBalanceView *)editModeMonthBalanceView
             monthNameForMonthWithIndex:(NSUInteger)monthIndex
 {
-    IAEMonth *month = [self findForActualYearMonthAtIndex:monthIndex];
+    IAEMonth *month = [self findForOpenYearMonthAtIndex:monthIndex];
     NSString *monthName = [month description];
     
     return monthName;
@@ -516,17 +516,17 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
 - (NSDecimalNumber *)editModeMonthBalanceView:(IAEEditModeMonthBalanceView *)editModeMonthBalanceView
                 monthBalanceForMonthWithIndex:(NSUInteger)monthIndex
 {
-    IAEMonth *month = [self findForActualYearMonthAtIndex:monthIndex];
+    IAEMonth *month = [self findForOpenYearMonthAtIndex:monthIndex];
     NSDecimalNumber *monthBalance = [month balance];
     
     return monthBalance;
 }
 
-- (IAEMonth *)findForActualYearMonthAtIndex:(NSUInteger)monthIndex
+- (IAEMonth *)findForOpenYearMonthAtIndex:(NSUInteger)monthIndex
 {
     NSAssert(monthIndex >= 0, @"");
     NSAssert(monthIndex < 12, @"");
-    IAEYear *year = [self findActualYear];
+    IAEYear *year = [self findOpenYear];
     IAEMonth *month = [year.ordererMonths objectAtIndex:monthIndex];
 
     return month;
@@ -743,7 +743,7 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
 {
     self.conceptChangingDay = [self findConceptOfCell:cell];
     
-    IAEYear *year = [self findActualYear];
+    IAEYear *year = [self findOpenYear];
     IAEMonth *month = [self findActualMonth];
     NSUInteger selectedDay = [self findDayOfTheMonthForConceptCell:cell];
     
@@ -1010,10 +1010,10 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
 
 - (void)closeButtonWasPressedInYearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController
 {
-    [self reloadAllAndGoToActualMonthWithAnimationIfActualYearWasCleanInYearSelector];
+    [self reloadAllAndGoToActualMonthWithAnimationIfOpenYearWasCleanInYearSelector];
 }
 
-- (void)reloadAllAndGoToActualMonthWithAnimationIfActualYearWasCleanInYearSelector
+- (void)reloadAllAndGoToActualMonthWithAnimationIfOpenYearWasCleanInYearSelector
 {
     if (self.reloadAllPendingFromYearSelectorIfReturnWithSameYearDate) {
         [self reloadAllAndGoToActualMonthWithAnimation:NO];
@@ -1021,21 +1021,21 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
     }
 }
 
-- (void)actualYearSelectedWasSelectedInYearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController
+- (void)openYearSelectedWasSelectedInYearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController
 {
-    [self reloadAllAndGoToActualMonthWithAnimationIfActualYearWasCleanInYearSelector];
+    [self reloadAllAndGoToActualMonthWithAnimationIfOpenYearWasCleanInYearSelector];
 }
 
-- (void)yearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController didCleanActualYearDate:(NSUInteger)yearDate
+- (void)yearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController didCleanOpenYearDate:(NSUInteger)yearDate
 {
     // Nota: Este evento informa de que se ha vaciado el año abiertopero que aun no se ha cerrado el dialogo selector, es decir, la recarga
     // de datos sucedera si y solo si, se retorna al mismo año abierto antes de abrir la venta de seleccion de años
     self.reloadAllPendingFromYearSelectorIfReturnWithSameYearDate = YES;
 }
 
-- (BOOL)isActualYearEqualToYearDate:(NSUInteger)yearDate
+- (BOOL)isOpenYearEqualToYearDate:(NSUInteger)yearDate
 {
-    return yearDate == [self findActualYear].yearDate;
+    return yearDate == [self findOpenYear].yearDate;
 }
 
 #pragma mark - Notification Center
@@ -1111,7 +1111,7 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
 
 - (IAEYear *)yearForCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
 {
-    return [self findActualYear];
+    return [self findOpenYear];
 }
 
 - (IAEMonth *)monthForCalculatorViewController:(IAECalculatorViewController *)calculatorViewController

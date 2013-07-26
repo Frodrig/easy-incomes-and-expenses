@@ -11,7 +11,7 @@
 #import "IAECategorySelectorViewControllerDelegate.h"
 #import "IAECategoryEditorViewControllerDelegate.h"
 #import "IAEYearSelectorViewControllerDelegate.h"
-#import "IAEEditModeMonthBalanceViewDataSource.h"
+#import "IAEContextViewDataSource.h"
 #import "IAEDayCalendarSelectorViewControllerDelegate.h"
 #import "IAECalculatorViewControllerDelegate.h"
 #import "IAECalculatorViewControllerDataSource.h"
@@ -24,7 +24,7 @@
                                                                       IAECategorySelectorViewControllerDelegate,
                                                                       IAECategoryEditorViewControllerDelegate,
                                                                       IAEYearSelectorViewControllerDelegate,
-                                                                      IAEEditModeMonthBalanceViewDataSource,
+                                                                      IAEContextViewDataSource,
                                                                       IAEDayCalendarSelectorViewControllerDelegate,
                                                                       IAECalculatorViewControllerDelegate,
                                                                       IAECalculatorViewControllerDataSource>

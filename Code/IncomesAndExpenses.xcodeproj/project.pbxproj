@@ -59,8 +59,8 @@
 		5B7A4D7F16B68062001751A9 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B7A4D7E16B68062001751A9 /* MessageUI.framework */; };
 		5B8A31CF16C9090E008731AD /* 72.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B8A31CD16C90901008731AD /* 72.png */; };
 		5B8A31D116C90911008731AD /* 72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B8A31D016C90911008731AD /* 72@2x.png */; };
-		5B903BBC1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B903BBB1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.m */; };
-		5B903BBE1783220A00DBEFB2 /* IAEEditModeMonthBalanceItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B903BBD1782DBDC00DBEFB2 /* IAEEditModeMonthBalanceItem.xib */; };
+		5B8CD5D117A262A800A353A5 /* IAEContextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8CD5D017A262A800A353A5 /* IAEContextView.m */; };
+		5B8CD5D317A262BC00A353A5 /* IAEContextViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B8CD5D217A262BC00A353A5 /* IAEContextViewContent.xib */; };
 		5B907832179D1AA700B2A0F7 /* IAECalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B907830179D1AA700B2A0F7 /* IAECalculatorViewController.m */; };
 		5B907833179D1AA700B2A0F7 /* IAECalculatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B907831179D1AA700B2A0F7 /* IAECalculatorViewController.xib */; };
 		5B907838179D25BD00B2A0F7 /* IAEDragPanelCalculatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B907837179D25BD00B2A0F7 /* IAEDragPanelCalculatorView.m */; };
@@ -182,9 +182,11 @@
 		5B8A31CB16C9088D008731AD /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
 		5B8A31CD16C90901008731AD /* 72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 72.png; sourceTree = "<group>"; };
 		5B8A31D016C90911008731AD /* 72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "72@2x.png"; sourceTree = "<group>"; };
-		5B903BBA1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEditModeMonthBalanceView.h; sourceTree = "<group>"; };
-		5B903BBB1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEditModeMonthBalanceView.m; sourceTree = "<group>"; };
-		5B903BBD1782DBDC00DBEFB2 /* IAEEditModeMonthBalanceItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IAEEditModeMonthBalanceItem.xib; sourceTree = "<group>"; };
+		5B8CD5CF17A262A800A353A5 /* IAEContextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEContextView.h; sourceTree = "<group>"; };
+		5B8CD5D017A262A800A353A5 /* IAEContextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEContextView.m; sourceTree = "<group>"; };
+		5B8CD5D217A262BC00A353A5 /* IAEContextViewContent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEContextViewContent.xib; sourceTree = "<group>"; };
+		5B8CD5D417A262D100A353A5 /* IAEContextViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEContextViewDataSource.h; sourceTree = "<group>"; };
+		5B8CD5D517A262F400A353A5 /* IAEContextViewDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEContextViewDefs.h; sourceTree = "<group>"; };
 		5B90782F179D1AA700B2A0F7 /* IAECalculatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECalculatorViewController.h; sourceTree = "<group>"; };
 		5B907830179D1AA700B2A0F7 /* IAECalculatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECalculatorViewController.m; sourceTree = "<group>"; };
 		5B907831179D1AA700B2A0F7 /* IAECalculatorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAECalculatorViewController.xib; sourceTree = "<group>"; };
@@ -197,7 +199,6 @@
 		5B90783F179D269E00B2A0F7 /* IAEKeyboardPanelCalculatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEKeyboardPanelCalculatorView.m; sourceTree = "<group>"; };
 		5B907842179D7FED00B2A0F7 /* IAECalculatorViewControllerDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECalculatorViewControllerDataSource.h; sourceTree = "<group>"; };
 		5B94035C178FEA5C00F9C1D0 /* IAEYearSelectorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEYearSelectorViewControllerDelegate.h; sourceTree = "<group>"; };
-		5B94035E178FF51600F9C1D0 /* IAEEditModeMonthBalanceViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEditModeMonthBalanceViewDataSource.h; sourceTree = "<group>"; };
 		5B94035F17904C1400F9C1D0 /* IAEYearSelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEYearSelectorViewController.xib; sourceTree = "<group>"; };
 		5BA0130B179800AC00337E84 /* NSString+TwoDigitString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+TwoDigitString.h"; sourceTree = "<group>"; };
 		5BA0130C179800AC00337E84 /* NSString+TwoDigitString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+TwoDigitString.m"; sourceTree = "<group>"; };
@@ -262,17 +263,6 @@
 				5B0F8BC616B94ADD002D62A5 /* Localizable.strings */,
 			);
 			name = Localizacion;
-			sourceTree = "<group>";
-		};
-		5B1F0D3117841C6900D0B4F1 /* Month Balance View */ = {
-			isa = PBXGroup;
-			children = (
-				5B903BBA1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.h */,
-				5B903BBB1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.m */,
-				5B903BBD1782DBDC00DBEFB2 /* IAEEditModeMonthBalanceItem.xib */,
-				5B94035E178FF51600F9C1D0 /* IAEEditModeMonthBalanceViewDataSource.h */,
-			);
-			name = "Month Balance View";
 			sourceTree = "<group>";
 		};
 		5B1F0D3217841C7400D0B4F1 /* Concept Collection View Cell */ = {
@@ -671,11 +661,23 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
+		5B8CD5CE17A2623F00A353A5 /* Context View */ = {
+			isa = PBXGroup;
+			children = (
+				5B8CD5CF17A262A800A353A5 /* IAEContextView.h */,
+				5B8CD5D017A262A800A353A5 /* IAEContextView.m */,
+				5B8CD5D217A262BC00A353A5 /* IAEContextViewContent.xib */,
+				5B8CD5D417A262D100A353A5 /* IAEContextViewDataSource.h */,
+				5B8CD5D517A262F400A353A5 /* IAEContextViewDefs.h */,
+			);
+			name = "Context View";
+			sourceTree = "<group>";
+		};
 		5B903BB91782DBAF00DBEFB2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5B8CD5CE17A2623F00A353A5 /* Context View */,
 				5B1F0D3217841C7400D0B4F1 /* Concept Collection View Cell */,
-				5B1F0D3117841C6900D0B4F1 /* Month Balance View */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -937,13 +939,13 @@
 				5B767E0D1636D7FC005315F8 /* Default-568h@2x.png in Resources */,
 				5BF92542179554800002CF9F /* IAEAboutAndOptionsViewController.xib in Resources */,
 				5B94036017904C1400F9C1D0 /* IAEYearSelectorViewController.xib in Resources */,
-				5B903BBE1783220A00DBEFB2 /* IAEEditModeMonthBalanceItem.xib in Resources */,
 				5B36AFFD1785D73800132475 /* IAECategorySelectorViewController.xib in Resources */,
 				5B36AFF21785874D00132475 /* IAEAdjustConceptAmountViewController.xib in Resources */,
 				5B907833179D1AA700B2A0F7 /* IAECalculatorViewController.xib in Resources */,
 				5B26461617968F84006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.xib in Resources */,
 				5BF92537179544880002CF9F /* 14-gear_gray@2x.png in Resources */,
 				5B264613179684A5006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.xib in Resources */,
+				5B8CD5D317A262BC00A353A5 /* IAEContextViewContent.xib in Resources */,
 				5B55449D17745EA2009CFC84 /* Media.xcassets in Resources */,
 				5B0F8BC416B94ADD002D62A5 /* Localizable.strings in Resources */,
 				5B5544A2177460DD009CFC84 /* Main.storyboard in Resources */,
@@ -977,6 +979,7 @@
 				5B32D65D177C41980070AC72 /* IAEYearSelectorViewController.m in Sources */,
 				5BE1F4C81637FE0C004E13C2 /* IAECategoryStore.m in Sources */,
 				5BD06157163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld in Sources */,
+				5B8CD5D117A262A800A353A5 /* IAEContextView.m in Sources */,
 				5BD06171163A8D2B00A80BE3 /* IAEMonth.m in Sources */,
 				5BD94C0B1786B864009009B1 /* IAECategoryTableViewCell.m in Sources */,
 				5B62D874178EC20E009879A6 /* IAEOrientationHelper.m in Sources */,
@@ -1009,7 +1012,6 @@
 				5B62D87D178EC27D009879A6 /* IAEDateHelper.m in Sources */,
 				5B90783C179D268000B2A0F7 /* IAEDisplayPanelCalculatorView.m in Sources */,
 				5B32D654177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m in Sources */,
-				5B903BBC1782DBC300DBEFB2 /* IAEEditModeMonthBalanceView.m in Sources */,
 				5B5C967F17816A13008CD851 /* UIView+RoundedCorners.m in Sources */,
 				5B62D85B178EA870009879A6 /* IAEYearSelectorCollectionViewCell.m in Sources */,
 				5BA0130D179800AC00337E84 /* NSString+TwoDigitString.m in Sources */,

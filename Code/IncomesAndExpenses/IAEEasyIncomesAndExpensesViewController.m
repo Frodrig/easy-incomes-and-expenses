@@ -16,7 +16,7 @@
 #import "IAEColorHelper.h"
 #import "IAEEconomicValueTypeHelper.h"
 #import "IAEEconomicValueUpdater.h"
-#import "IAEEditModeMonthBalanceView.h"
+#import "IAEContextView.h"
 #import "IAEEditModeConceptCollectionViewCell.h"
 #import "IAEValueDecoratorView.h"
 #import "IAEAdjustConceptAmountViewController.h"
@@ -312,11 +312,11 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
     return [self findConceptAtIndexPath:indexPathOfCell];
 }
 
-- (IAEEditModeMonthBalanceView *)findActualMonthBalanceView
+- (IAEContextView *)findActualMonthContextView
 {
-    UIView *balanceView = [self.monthsScrollView.subviews objectAtIndex:self.monthsScrollPageController.currentPage];
+    UIView *contextView = [self.monthsScrollView.subviews objectAtIndex:self.monthsScrollPageController.currentPage];
     
-    return (IAEEditModeMonthBalanceView *)balanceView;
+    return (IAEContextView *)contextView;
 }
 
 - (BOOL)categorySelectorViewControllerWasLaunchedFromCategoryButton
@@ -358,9 +358,9 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
 
 - (void)updateMonthBalanceWithAnimation:(BOOL)animation
 {
-    IAEEditModeMonthBalanceView *monthBalanceView = [self findActualMonthBalanceView];
+    IAEContextView *contextView = [self findActualMonthContextView];
     
-    [monthBalanceView reloadDataWithAnimation:animation];
+    [contextView reloadDataWithAnimation:animation];
 }
 
 - (void)processEconomicLabel:(UILabel *)label toValue:(NSDecimalNumber *)destinationValue withDuration:(CGFloat)duration
@@ -419,11 +419,11 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
                                   0,
                                   self.monthsScrollView.bounds.size.width,
                                   self.monthsScrollView.bounds.size.height);
-        IAEEditModeMonthBalanceView *monthBalanceView = [[IAEEditModeMonthBalanceView alloc] initWithFrame:frame andMonthIndex:indexIt];
-        monthBalanceView.dataSource = self;
-        [monthBalanceView reloadDataWithAnimation:NO];
+        IAEContextView *contextView = [[IAEContextView alloc] initWithFrame:frame type:CONTEXT_VIEW_MONTH andValueIndex:indexIt];
+        contextView.dataSource = self;
+        [contextView reloadDataWithAnimation:NO];
         
-        [self.monthsScrollView addSubview:monthBalanceView];
+        [self.monthsScrollView addSubview:contextView];
     }
 }
 
@@ -502,21 +502,19 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
     }
 }
 
-#pragma mark - IAEEditModeMonthBalanceViewDataSource
+#pragma mark - IAEContextViewDataSource
 
-- (NSString *)editModeMonthBalanceView:(IAEEditModeMonthBalanceView *)editModeMonthBalanceView
-            monthNameForMonthWithIndex:(NSUInteger)monthIndex
+- (NSString *)nameForContextView:(IAEContextView *)contextView
 {
-    IAEMonth *month = [self findForOpenYearMonthAtIndex:monthIndex];
+    IAEMonth *month = [self findForOpenYearMonthAtIndex:contextView.valueIndex];
     NSString *monthName = [month description];
     
     return monthName;
 }
 
-- (NSDecimalNumber *)editModeMonthBalanceView:(IAEEditModeMonthBalanceView *)editModeMonthBalanceView
-                monthBalanceForMonthWithIndex:(NSUInteger)monthIndex
+- (NSDecimalNumber *)balanceForContextView:(IAEContextView *)contextView
 {
-    IAEMonth *month = [self findForOpenYearMonthAtIndex:monthIndex];
+    IAEMonth *month = [self findForOpenYearMonthAtIndex:contextView.valueIndex];
     NSDecimalNumber *monthBalance = [month balance];
     
     return monthBalance;
@@ -991,9 +989,9 @@ static NSUInteger indexInSegmentedControlForReportMode = 1;
 - (void)reloadMonthsBalanceWithAnimation:(BOOL)animation
 {
     for (UIView *view in self.monthsScrollView.subviews) {
-        if ([view isKindOfClass:[IAEEditModeMonthBalanceView class]]) {
-            IAEEditModeMonthBalanceView *monthBalance = (IAEEditModeMonthBalanceView *)(view);
-            [monthBalance reloadDataWithAnimation:animation];
+        if ([view isKindOfClass:[IAEContextView class]]) {
+            IAEContextView *contextView = (IAEContextView *)(view);
+            [contextView reloadDataWithAnimation:animation];
         }
     }
 }

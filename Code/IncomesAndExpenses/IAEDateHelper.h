@@ -17,7 +17,7 @@
 + (NSString *)findDayOfTheWeekNameStringWithDayOfTheWeekIndex:(NSUInteger)dayOfTheWeekIndex inShortForm:(BOOL)sortForm;
 + (NSUInteger)findDayOfTheWeekIndexFromYearDate:(NSUInteger)yearDate monthIndex:(NSUInteger)monthIndex andDayOfTheMonth:(NSUInteger)dayOfTheMonth;
 
-+ (NSString *)findMonthNameStringWithMonthIndex:(NSUInteger)monthIndex;
++ (NSString *)findMonthNameStringWithMonthIndex:(NSUInteger)monthIndex inShortForm:(BOOL)shortForm;
 
 + (NSUInteger)findNumberOfDaysFromYearDate:(NSUInteger)yearDate andMonthIndex:(NSUInteger)monthIndex;
 + (NSUInteger)findFirstDayWeekFromYearDate:(NSUInteger)yearDate andMonthIndex:(NSUInteger)monthIndex;

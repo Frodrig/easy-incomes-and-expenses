@@ -15,6 +15,8 @@
 #import "IAEDayCalendarSelectorViewControllerDelegate.h"
 #import "IAECalculatorViewControllerDelegate.h"
 #import "IAECalculatorViewControllerDataSource.h"
+#import "IAETextRawSelectorMenuViewDataSource.h"
+#import "IAETextRawSelectorMenuViewDelegate.h"
 
 @interface IAEEasyIncomesAndExpensesViewController : UIViewController<UIPopoverControllerDelegate,
                                                                       UIScrollViewDelegate,
@@ -27,7 +29,9 @@
                                                                       IAEContextViewDataSource,
                                                                       IAEDayCalendarSelectorViewControllerDelegate,
                                                                       IAECalculatorViewControllerDelegate,
-                                                                      IAECalculatorViewControllerDataSource>
+                                                                      IAECalculatorViewControllerDataSource,
+                                                                      IAETextRawSelectorMenuViewDataSource,
+IAETextRawSelectorMenuViewDelegate>
 
 - (IBAction)categoriesButtonPressed:(id)sender;
 - (IBAction)yearsButtonPressed:(id)sender;

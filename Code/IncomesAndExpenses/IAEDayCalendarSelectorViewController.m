@@ -74,7 +74,7 @@ static NSUInteger tagDaySelectedDecoratorView = 100;
 - (void)configureNavigationBarTitle
 {
     NSString *yearName = [NSString stringWithFormat:@"%d", self.yearDate];
-    NSString *monthName = [IAEDateHelper findMonthNameStringWithMonthIndex:self.monthIndex];
+    NSString *monthName = [IAEDateHelper findMonthNameStringWithMonthIndex:self.monthIndex inShortForm:NO];
 
     self.navigationBarTitle.title = [NSString stringWithFormat:NSLocalizedString(@"LTEXT_CALENDARDAYSELECTOR_TITLE", ""), monthName, yearName];
 }

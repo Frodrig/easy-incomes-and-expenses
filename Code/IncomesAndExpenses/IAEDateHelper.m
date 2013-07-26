@@ -29,7 +29,7 @@
     return currentCalendar;
 }
 
-+ (NSString *)findDayOfTheWeekNameStringWithDayOfTheWeekIndex:(NSUInteger)dayOfTheWeekIndex inShortForm:(BOOL)sortForm;
++ (NSString *)findDayOfTheWeekNameStringWithDayOfTheWeekIndex:(NSUInteger)dayOfTheWeekIndex inShortForm:(BOOL)shortForm;
 {
     static NSArray *dayOfTheWeekNames = nil;
     if (nil == dayOfTheWeekNames) {
@@ -47,15 +47,14 @@
     NSAssert(dayOfTheWeekIndex < 8, @"");
     NSString *name = [dayOfTheWeekNames objectAtIndex:dayOfTheWeekIndex - 1];
     
-    if (sortForm) {
-        name = [name substringWithRange:NSMakeRange(0, 3)];
-        name = [name lowercaseString];
+    if (shortForm) {
+        name = [self createShortFormOfName:name];
     }
     
     return name;
 }
 
-+ (NSString *)findMonthNameStringWithMonthIndex:(NSUInteger)monthIndex
++ (NSString *)findMonthNameStringWithMonthIndex:(NSUInteger)monthIndex inShortForm:(BOOL)shortForm
 {
     static NSArray *monthsNames = nil;
     if (nil == monthsNames) {
@@ -75,7 +74,20 @@
     
     NSAssert(monthIndex > 0, @"");
     NSAssert(monthIndex < 13, @"");
-    return [monthsNames objectAtIndex:monthIndex - 1];
+    NSString *name = [monthsNames objectAtIndex:monthIndex - 1];
+    if (shortForm) {
+        name = [self createShortFormOfName:name];
+    }
+    
+    return name;
+}
+
++ (NSString *)createShortFormOfName:(NSString *)name
+{
+    name = [name substringWithRange:NSMakeRange(0, 3)];
+    name = [name lowercaseString];
+    
+    return name;
 }
 
 + (NSUInteger)findDayOfTheWeekIndexFromYearDate:(NSUInteger)yearDate

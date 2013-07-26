@@ -27,6 +27,7 @@
 #import "IAEAboutAndOptionsViewController.h"
 #import "IAEDayCalendarSelectorViewController.h"
 #import "IAECalculatorViewController.h"
+#import "IAETextRawSelectorMenuView.h"
 #import "NSNumber+DefaultValues.h"
 #import "IAECategoryStore.h"
 #import "IAEDateHelper.h"
@@ -41,6 +42,7 @@
 @property (weak, nonatomic) IBOutlet UIView *conceptsContainerView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *modeSegmentedControl;
 @property (weak, nonatomic) IBOutlet UICollectionView *conceptsCollectionView;
+@property (nonatomic, strong) IAETextRawSelectorMenuView *contextMenuView;
 @property (nonatomic, strong) IAECalculatorViewController *calculatorViewController;
 @property (nonatomic, strong) UIPopoverController *popover;
 @property (nonatomic, strong) UITapGestureRecognizer *tapConceptsRecognizer;
@@ -71,6 +73,12 @@ static NSUInteger globalIndexForYearInContextScrollView = 0;
 static NSString * const nibConceptCellName = @"IAEEditModeConceptCollectionViewCell";
 static NSString * const idConceptCellName = @"EditModeConceptCell";
 
+static NSString * const contextMenuFontFamilyName = @"HelveticaNeue-Ultralight";
+static CGFloat contextMenuFontSizeOfOptions = 24;
+static CGFloat contextMenuDefaultKernOfOptions = 4;
+static CGFloat contextMenuYearKernOfOptions = 0;
+static NSUInteger contextMenuIndexOfYearOption = 0;
+
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
@@ -79,6 +87,7 @@ static NSString * const idConceptCellName = @"EditModeConceptCell";
         [self initDobleTapConceptsGestureRecognizer];
         [self initTapConceptsGestureRecognizer];
         [self initAsObserverOfNotificationCenter];
+        [self initContextMenuView];
         [self initCalculatorViewController];
     }
     
@@ -115,6 +124,12 @@ static NSString * const idConceptCellName = @"EditModeConceptCell";
                                              selector:@selector(notificationCenterOnDayModeOff:)
                                                  name:notificationDayModeOffName
                                                object:nil];
+}
+
+- (void)initContextMenuView
+{
+    _contextMenuView = [[IAETextRawSelectorMenuView alloc] init];
+    _contextMenuView.backgroundColor = [UIColor clearColor];
 }
 
 - (void)initCalculatorViewController
@@ -192,6 +207,7 @@ static NSString * const idConceptCellName = @"EditModeConceptCell";
     [super viewWillAppear:animated];
     
     [self vinculeContextScrollViewContent];
+    [self vinculeContextMenuView];
     [self vinculeCalculatorViewControllerView];
         
     [self gotoToTodayMonthWithoutTransitionEffect];
@@ -219,6 +235,17 @@ static NSString * const idConceptCellName = @"EditModeConceptCell";
                              self.contextScrollView.bounds.size.height);
     
     return rect;
+}
+
+#pragma mark - ConextMenuView(vincule)
+
+- (void)vinculeContextMenuView
+{
+    [self.view addSubview:_contextMenuView];
+    self.contextMenuView.delegate = self;
+    self.contextMenuView.dataSource = self;
+    self.contextMenuView.center = CGPointMake(self.view.center.x,
+                                              self.contextScrollView.center.y + self.contextScrollView.bounds.size.height / 2 + self.contextMenuView.bounds.size.height / 2);
 }
 
 #pragma mark - ControlEvents
@@ -442,12 +469,6 @@ static NSString * const idConceptCellName = @"EditModeConceptCell";
 
 - (void)vinculeCalculatorViewControllerView
 {
-    /*
-    self.calculatorViewController.view.frame = CGRectMake(206,
-                                                          660,
-                                                          self.calculatorViewController.view.bounds.size.width,
-                                                          self.calculatorViewController.view.bounds.size.height);
-    */
     self.calculatorViewController.view.frame = CGRectMake(0,
                                                           0,
                                                           self.calculatorViewController.view.bounds.size.width,
@@ -1244,5 +1265,64 @@ static NSString * const idConceptCellName = @"EditModeConceptCell";
     [self.conceptsCollectionView reloadData];
     [self updateBalancesWithAnimation:NO];
 }
+
+#pragma mark - IAETextRawSelectorMenuViewDataSource
+
+- (NSUInteger)numberOfOptionsInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
+{
+    return contentScrollViewNumberOfItems;
+}
+
+- (NSString *)textRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu optionStringNameAtIndex:(NSUInteger)optionIndex
+{
+    NSString *optionStringName = nil;
+    if (optionIndex == contextMenuIndexOfYearOption) {
+        optionStringName = [NSString stringWithFormat:@"%d", [self findOpenYear].yearDate];
+    } else {
+        optionStringName = [IAEDateHelper findMonthNameStringWithMonthIndex:optionIndex inShortForm:YES];
+    }
+    
+    return optionStringName;
+}
+
+- (UIColor *)colorForOptionsInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
+{
+    return [UIColor blackColor];
+}
+
+- (CGSize)sizeOfOptionsInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
+{
+    CGFloat width = self.view.bounds.size.width / contentScrollViewNumberOfItems;
+    return CGSizeMake(width, 44);
+}
+
+- (NSString *)fontFamilyNameOfOptionsInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
+{
+    return contextMenuFontFamilyName;
+}
+
+- (CGFloat)fontSizeOfOptionsInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
+{
+    return contextMenuFontSizeOfOptions;
+}
+
+- (CGFloat)textRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu kernOfOptionsAtIndex:(NSUInteger)optionIndex
+{
+    CGFloat kern = contextMenuDefaultKernOfOptions;
+    if (optionIndex == contextMenuIndexOfYearOption) {
+        kern = contextMenuYearKernOfOptions;
+    }
+    
+    return kern;
+}
+
+#pragma mark - IAETextRawSelectorMenuViewDelegate
+
+- (void)optionIndex:(NSUInteger)optionIndex wasSelectedInTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenuView
+{
+    // ...
+}
+
+
 
 @end

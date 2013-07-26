@@ -67,8 +67,8 @@
                         NSLocalizedString(@"LTEXT_MONTH_JULY", @""),
                         NSLocalizedString(@"LTEXT_MONTH_AUGUST", @""),
                         NSLocalizedString(@"LTEXT_MONTH_SEPTEMBER", @""),
-                        NSLocalizedString(@"LTEXT_MONTH_NOVEMBER", @""),
                         NSLocalizedString(@"LTEXT_MONTH_OCTOBER", @""),
+                        NSLocalizedString(@"LTEXT_MONTH_NOVEMBER", @""),
                         NSLocalizedString(@"LTEXT_MONTH_DECEMBER", @"")];
     }
     

@@ -71,6 +71,7 @@ static NSUInteger tagBaseValue = 100;
     [option setAttributedTitle:[self createAttributedStringForOptionAtIndex:optionIt] forState:UIControlStateNormal];
     option.backgroundColor = [UIColor clearColor];
     option.tag = [self createTagForButtonAtIndex:optionIt];
+    [option addTarget:self action:@selector(optionButtonPressed:) forControlEvents:UIControlEventTouchDown];
     
     return option;
 }
@@ -136,6 +137,14 @@ static NSUInteger tagBaseValue = 100;
         
         self.frame = frame;
     }
+}
+
+#pragma mark - UIControlEvents
+
+- (void)optionButtonPressed:(UIButton *)sender
+{
+    NSUInteger optionIndex = [self optionIndexFromTagOfOptionButton:sender];
+    [self.delegate optionIndex:optionIndex wasSelectedInTextRawSelectorMenuView:self];
 }
 
 @end

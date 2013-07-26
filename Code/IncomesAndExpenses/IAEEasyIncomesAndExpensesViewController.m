@@ -1320,7 +1320,10 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
 
 - (void)optionIndex:(NSUInteger)optionIndex wasSelectedInTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenuView
 {
-    // ...
+    // TODO: Hay que revisar como de bien o mal estan refactorizadas las funciones
+    // Falla actualizando la tabla de conceptos abajo
+    CGRect contextViewRect = [self rectInContextScrollViewForContextViewWithGlobalIndex:optionIndex];
+    [self.contextScrollView scrollRectToVisible:contextViewRect animated:YES];
 }
 
 

@@ -16,6 +16,8 @@
 @property (nonatomic, weak) id<IAETextRawSelectorMenuViewDelegate> delegate;
 @property (nonatomic, weak) id<IAETextRawSelectorMenuViewDataSource> dataSource;
 
+@property (nonatomic) NSUInteger currentOptionIndexSelected;
+
 - (void) reloadData;
 
 @end

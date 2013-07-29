@@ -38,7 +38,6 @@
 @interface IAEEasyIncomesAndExpensesViewController ()
 
 @property (weak, nonatomic) IBOutlet UIScrollView *contextScrollView;
-@property (weak, nonatomic) IBOutlet UIPageControl *contextScrollPageController;
 @property (weak, nonatomic) IBOutlet UIView *conceptsContainerView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *modeSegmentedControl;
 @property (weak, nonatomic) IBOutlet UICollectionView *conceptsCollectionView;
@@ -63,9 +62,6 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 
 static NSString * const ltextModeSegmentedControlEditMode = @"LTEXT_MODESEGMENTEDCONTROL_EDITMODE";
 static NSString * const ltextModeSegmentedControlReportmode = @"LTEXT_MODESEGMENTEDCONTROL_REPORTMODE";
-
-static NSUInteger indexInSegmentedControlForEditMode = 0;
-static NSUInteger indexInSegmentedControlForReportMode = 1;
 
 static NSUInteger contentScrollViewNumberOfItems = 13;
 static NSUInteger globalIndexForYearInContextScrollView = 0;
@@ -152,7 +148,6 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
     
 	// Do any additional setup after loading the view.
     [self configureContextScrollViewContent];
-    [self configureModeSegmentedControl];
     [self configureConceptsViews];
 }
 
@@ -164,15 +159,6 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
     self.contextScrollView.showsHorizontalScrollIndicator = NO;
     self.contextScrollView.showsVerticalScrollIndicator = NO;
     self.contextScrollView.bounces = YES;
-    self.contextScrollView.delegate = self;
-}
-
-- (void)configureModeSegmentedControl
-{
-    [self.modeSegmentedControl setTitle:NSLocalizedString(ltextModeSegmentedControlEditMode, @"")
-                      forSegmentAtIndex:indexInSegmentedControlForEditMode];
-    [self.modeSegmentedControl setTitle:NSLocalizedString(ltextModeSegmentedControlReportmode, @"")
-                      forSegmentAtIndex:indexInSegmentedControlForReportMode];
 }
 
 - (void)configureConceptsViews
@@ -197,9 +183,6 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
     
     [self.conceptsCollectionView addGestureRecognizer:self.tapConceptsRecognizer];
     [self.conceptsCollectionView addGestureRecognizer:self.dobleTapConceptsRecognizer];
- 
-    self.conceptsCollectionView.delegate = self;
-    self.conceptsCollectionView.dataSource = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -209,8 +192,18 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
     [self vinculeContextScrollViewContent];
     [self vinculeContextMenuView];
     [self vinculeCalculatorViewControllerView];
-        
+    
     [self gotoToTodayMonthWithoutTransitionEffect];
+
+    // Nota: En el momento en que se asigna un datasource al collection view se procede a la carga de informacion.
+    //       Antes de que ocurra eso, nos aseguramos de estar en el contexto adecuado.
+    [self vinculeConceptsCollectionView];
+}
+
+- (void)vinculeConceptsCollectionView
+{
+    self.conceptsCollectionView.delegate = self;
+    self.conceptsCollectionView.dataSource = self;
 }
 
 - (void)gotoToTodayMonthWithoutTransitionEffect
@@ -223,7 +216,16 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
 - (void)goToTodayMonth
 {
     NSUInteger globalContextViewIndex = [self findTodayMonthContextViewGlobalIndexInContextScrollView];
-    CGRect contextViewRect = [self rectInContextScrollViewForContextViewWithGlobalIndex:globalContextViewIndex];
+    [self gotoToContextViewWithIndex:globalContextViewIndex];
+}
+
+- (void)gotoToContextViewWithIndex:(NSUInteger)contextIndex
+{
+    if (!self.initialPositioning) {
+        [self setConceptsCollectionViewInTransitionAspect:YES];
+    }
+    
+    CGRect contextViewRect = [self rectInContextScrollViewForContextViewWithGlobalIndex:contextIndex];
     [self.contextScrollView scrollRectToVisible:contextViewRect animated:NO];
 }
 
@@ -318,8 +320,8 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
 - (IAEMonth *)findActualSelectedMonth
 {
     IAEMonth *month = nil;
-    if (self.contextScrollPageController.currentPage != globalIndexForYearInContextScrollView) {
-        NSUInteger actualMonthIndex = self.contextScrollPageController.currentPage - 1;
+    if (self.contextMenuView.currentOptionIndexSelected != globalIndexForYearInContextScrollView) {
+        NSUInteger actualMonthIndex = self.contextMenuView.currentOptionIndexSelected - 1;
         month = [self findMonthForOpenYearAtIndex:actualMonthIndex];
     }
     
@@ -338,6 +340,7 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
     if ([self isActualSelectedContextAMonth]) {
         IAEMonth *actualMonth = [self findActualSelectedMonth];
         allConcepts = [self isDayModeActiveForConcepts] ? [actualMonth  allConceptsSortedByDay] : [actualMonth allConceptsSortedByEntryInstant];
+        NSLog(@"all concepts number %d", allConcepts.count);
     } else {
         IAEYear *openYear = [self findOpenYear];
         allConcepts = [self isDayModeActiveForConcepts] ? [openYear findAllConceptsSortedByDay] : [openYear findAllConceptsSortedByEntryInstant];
@@ -354,6 +357,7 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
 - (IAEConcept *)findConceptAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray *concepts = [self allConceptsSortedAsAppropriateFromActualSelectedContext];
+    NSLog(@"row %d", indexPath.row);
     IAEConcept *concept = [concepts objectAtIndex:indexPath.row];
     
     return concept;
@@ -367,8 +371,8 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
 
 - (IAEContextView *)findActualSelectedMonthContextView
 {
-    NSAssert(self.contextScrollPageController.currentPage > 0, @"");
-    return [self findContextViewAtGlobalPosition:self.contextScrollPageController.currentPage];
+    NSAssert(self.contextMenuView.currentOptionIndexSelected > 0, @"");
+    return [self findContextViewAtGlobalPosition:self.contextMenuView.currentOptionIndexSelected];
 }
 
 - (IAEContextView *)findOpenYearContextView
@@ -417,7 +421,7 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
 
 - (BOOL)isActualSelectedContextTheYearOpen
 {
-    return self.contextScrollPageController.currentPage == globalIndexForYearInContextScrollView ? YES : NO;
+    return self.contextMenuView.currentOptionIndexSelected == globalIndexForYearInContextScrollView ? YES : NO;
 }
 
 - (BOOL)isActualSelectedContextAMonth
@@ -525,6 +529,8 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
     [self addToContextScrollViewContextWithGlobalPosition:10 contextType:CONTEXT_VIEW_MONTH andValueIndex:October];
     [self addToContextScrollViewContextWithGlobalPosition:11 contextType:CONTEXT_VIEW_MONTH andValueIndex:November];
     [self addToContextScrollViewContextWithGlobalPosition:12 contextType:CONTEXT_VIEW_MONTH andValueIndex:December];
+    
+    self.contextScrollView.delegate = self;
 }
 
 - (void)addToContextScrollViewContextWithGlobalPosition:(NSUInteger)globalPosition
@@ -574,24 +580,23 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
 
 #pragma mark - UIScrollView Delegate
 
+/*
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (scrollView == self.contextScrollView) {
         [self updateContextScrollViewAfterScroll];
     }
 }
+*/
 
-- (void)updateContextScrollViewAfterScroll
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self updateScrollPageController];
-    if (!self.initialPositioning) {
-        [self setConceptsCollectionViewInTransitionAspect:YES];
+    if (scrollView == self.contextScrollView) {
+        [self updateScrollPageController];
+        [self updateContentOfConceptsCollectionView];
+        [self setConceptsCollectionViewInTransitionAspect:NO];
+        [self updateCalculatorViewHideHalfState];
     }
-}
-
-- (void)updateScrollPageController
-{
-    self.contextScrollPageController.currentPage = floor((self.contextScrollView.contentOffset.x / self.contextScrollView.bounds.size.width) + 0.5);
 }
 
 - (void)setConceptsCollectionViewInTransitionAspect:(BOOL)transition
@@ -601,6 +606,13 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
     }];
 }
 
+- (void)updateScrollPageController
+{
+    CGFloat currentOptionIndex = (self.contextScrollView.contentOffset.x / self.contextScrollView.bounds.size.width) + 0.5;
+    self.contextMenuView.currentOptionIndexSelected = floor(currentOptionIndex);
+}
+
+/*
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     if (scrollView == self.contextScrollView) {
@@ -609,6 +621,7 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
         [self updateCalculatorViewHideHalfState];
     }
 }
+*/
 
 - (void)updateCalculatorViewHideHalfState
 {
@@ -683,7 +696,9 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [self findNumberOfConceptsOfActualSelectedContext];
+    NSUInteger numberOfItems = [self findNumberOfConceptsOfActualSelectedContext];
+    NSLog(@"number of items %d", numberOfItems);
+    return numberOfItems;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -1216,7 +1231,7 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
 {
     [UIView animateWithDuration:0.25 animations:^{
         [self updateFramePositionBeforeShowCalculatorForView:self.contextScrollView];
-        [self updateFramePositionBeforeShowCalculatorForView:self.contextScrollPageController];
+        [self updateFramePositionBeforeShowCalculatorForView:self.contextMenuView];
         [self updateFramePositionBeforeShowCalculatorForView:self.modeSegmentedControl];
         [self updateFramePositionBeforeShowCalculatorForView:self.conceptsContainerView];
     }];
@@ -1226,7 +1241,7 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
 {
     [UIView animateWithDuration:0.25 animations:^{
         [self updateFramePositionAfterShowCalculatorForView:self.contextScrollView];
-        [self updateFramePositionAfterShowCalculatorForView:self.contextScrollPageController];
+        [self updateFramePositionAfterShowCalculatorForView:self.contextMenuView];
         [self updateFramePositionAfterShowCalculatorForView:self.modeSegmentedControl];
         [self updateFramePositionAfterShowCalculatorForView:self.conceptsContainerView];
     }];
@@ -1320,10 +1335,13 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
 
 - (void)optionIndex:(NSUInteger)optionIndex wasSelectedInTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenuView
 {
+    [self gotoToContextViewWithIndex:optionIndex];
+    /*
     // TODO: Hay que revisar como de bien o mal estan refactorizadas las funciones
     // Falla actualizando la tabla de conceptos abajo
     CGRect contextViewRect = [self rectInContextScrollViewForContextViewWithGlobalIndex:optionIndex];
-    [self.contextScrollView scrollRectToVisible:contextViewRect animated:YES];
+    [self.contextScrollView scrollRectToVisible:contextViewRect animated:NO];
+     */
 }
 
 

@@ -24,6 +24,15 @@ static NSUInteger tagBaseValue = 100;
     }
 }
 
+- (void)setCurrentOptionIndexSelected:(NSUInteger)optionIndexSelected
+{
+    // Nota: No generaremos llamada a delegado desde aqui. Solo se generara por evento en controles
+    if (optionIndexSelected != _currentOptionIndexSelected && self.dataSource) {
+        [self changeIndicatorFromOptionIndex:_currentOptionIndexSelected toNewCurrentOptionIndex:optionIndexSelected];
+        _currentOptionIndexSelected = optionIndexSelected;
+    }
+}
+
 #pragma mark - reloadData
 
 - (void)reloadData
@@ -139,12 +148,49 @@ static NSUInteger tagBaseValue = 100;
     }
 }
 
+- (void)changeIndicatorFromOptionIndex:(NSUInteger)currentOptionIndex toNewCurrentOptionIndex:(NSUInteger)newCurrentOptionIndex
+{
+    [self deactiveSelectionOnOptionIndex:currentOptionIndex];
+    [self activeSelectionOnOptionIndex:newCurrentOptionIndex];
+}
+
+- (void)deactiveSelectionOnOptionIndex:(NSUInteger)optionIndex
+{
+    UIButton *option = [self findMenuOptionWithIndex:optionIndex];
+    option.backgroundColor = [UIColor clearColor];
+}
+
+- (void)activeSelectionOnOptionIndex:(NSUInteger)optionIndex
+{
+    UIButton *option = [self findMenuOptionWithIndex:optionIndex];
+    option.backgroundColor = [UIColor colorWithWhite:0.7 alpha:0.1];
+}
+
+- (UIButton *)findMenuOptionWithIndex:(NSUInteger)optionIndex
+{
+    UIButton *menuOption = nil;
+    
+    NSSet *options = [self findAllMenuOptions];
+    for (UIButton *buttonIt in options) {
+        NSUInteger indexOfButtonIt = [self optionIndexFromTagOfOptionButton:buttonIt];
+        if (indexOfButtonIt == optionIndex) {
+            menuOption = buttonIt;
+            break;
+        }
+    }
+    
+    return menuOption;
+}
+
 #pragma mark - UIControlEvents
 
 - (void)optionButtonPressed:(UIButton *)sender
 {
     NSUInteger optionIndex = [self optionIndexFromTagOfOptionButton:sender];
-    [self.delegate optionIndex:optionIndex wasSelectedInTextRawSelectorMenuView:self];
+    if (optionIndex != self.currentOptionIndexSelected) {
+        self.currentOptionIndexSelected = optionIndex;
+        [self.delegate optionIndex:optionIndex wasSelectedInTextRawSelectorMenuView:self];
+    }
 }
 
 @end

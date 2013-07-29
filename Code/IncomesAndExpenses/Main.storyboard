@@ -19,12 +19,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" red="0.97254908080000002" green="0.97254908080000002" blue="0.97254908080000002" alpha="1" colorSpace="deviceRGB"/>
                             </scrollView>
-                            <pageControl hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="13" id="E2H-b7-TjG">
-                                <rect key="frame" x="387" y="177" width="250" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="pageIndicatorTintColor" red="0.69803921570000005" green="0.69803921570000005" blue="0.69803921570000005" alpha="1" colorSpace="deviceRGB"/>
-                                <color key="currentPageIndicatorTintColor" red="0.9215686917" green="0.9215686917" blue="0.9215686917" alpha="1" colorSpace="deviceRGB"/>
-                            </pageControl>
                             <view contentMode="scaleToFill" id="G41-3w-8Uv">
                                 <rect key="frame" x="37" y="300" width="950" height="340"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -82,7 +76,6 @@
                     <connections>
                         <outlet property="conceptsCollectionView" destination="Ua3-PB-7Qf" id="Z3m-0j-JJI"/>
                         <outlet property="conceptsContainerView" destination="G41-3w-8Uv" id="ZM7-Tm-HwF"/>
-                        <outlet property="contextScrollPageController" destination="E2H-b7-TjG" id="IC6-MX-nHc"/>
                         <outlet property="contextScrollView" destination="gI2-Hy-nOR" id="kx0-Zc-Ssu"/>
                         <outlet property="modeSegmentedControl" destination="iQJ-fE-Ltz" id="wtQ-Ue-Syc"/>
                     </connections>

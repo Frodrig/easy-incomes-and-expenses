@@ -46,10 +46,11 @@ static NSUInteger tagBaseValue = 100;
 
 - (void)removeAllMenuOptions
 {
-    NSSet *menuOptions = [self findAllMenuOptions];
+    NSMutableSet *menuOptions = [[NSMutableSet alloc] initWithSet:[self findAllMenuOptions]];
     while (menuOptions.count > 0) {
         UIButton *optionToRemove = (UIButton *)[menuOptions anyObject];
         [optionToRemove removeFromSuperview];
+        [menuOptions removeObject:optionToRemove];
     }
 }
 

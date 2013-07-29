@@ -8,6 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+@class IAEReportAreaView;
+
 @protocol IAEReportAreaViewDataSource
+
+- (NSUInteger)numberOfItemsInReportAreaView:(IAEReportAreaView *)reportAreaView;
+- (CGFloat)maxValueOfItemsInReportAreaView:(IAEReportAreaView *)reportAreaView;
+- (UIColor *)colorRepresentationOfItemsInReportAreaView:(IAEReportAreaView *)reportAreaView;
+
+- (CGFloat)reportAreaView:(IAEReportAreaView *)reportAreaView valueOfItemWithIndex:(NSUInteger)itemIndex;
+- (NSString *)reportAreaView:(IAEReportAreaView *)reportAreaView titleOfItemWithIndex:(NSUInteger)itemIndex;
+- (NSString *)reportAreaView:(IAEReportAreaView *)reportAreaView subtitleOfItemWithIndex:(NSUInteger)itemIndex;
 
 @end

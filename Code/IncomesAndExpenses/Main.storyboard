@@ -56,6 +56,9 @@
                                     <segment title="Informes"/>
                                 </segments>
                                 <color key="tintColor" red="0.74509803921568629" green="0.74509803921568629" blue="0.74509803921568629" alpha="1" colorSpace="deviceRGB"/>
+                                <connections>
+                                    <action selector="segmentedControlPressed:" destination="7Ea-79-0mi" eventType="valueChanged" id="r94-ja-rs8"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -75,8 +78,8 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <outlet property="conceptsCollectionView" destination="Ua3-PB-7Qf" id="Z3m-0j-JJI"/>
-                        <outlet property="conceptsContainerView" destination="G41-3w-8Uv" id="ZM7-Tm-HwF"/>
                         <outlet property="contextScrollView" destination="gI2-Hy-nOR" id="kx0-Zc-Ssu"/>
+                        <outlet property="editAndReportModeContentContainerView" destination="G41-3w-8Uv" id="FNX-AU-fYg"/>
                         <outlet property="modeSegmentedControl" destination="iQJ-fE-Ltz" id="wtQ-Ue-Syc"/>
                     </connections>
                 </viewController>

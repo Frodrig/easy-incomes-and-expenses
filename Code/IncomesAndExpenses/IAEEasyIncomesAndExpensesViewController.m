@@ -38,7 +38,7 @@
 @interface IAEEasyIncomesAndExpensesViewController ()
 
 @property (weak, nonatomic) IBOutlet UIScrollView *contextScrollView;
-@property (weak, nonatomic) IBOutlet UIView *conceptsContainerView;
+@property (weak, nonatomic) IBOutlet UIView *editAndReportModeContentContainerView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *modeSegmentedControl;
 @property (weak, nonatomic) IBOutlet UICollectionView *conceptsCollectionView;
 @property (nonatomic, strong) IAETextRawSelectorMenuView *contextMenuView;
@@ -74,6 +74,9 @@ static CGFloat contextMenuFontSizeOfOptions = 24;
 static CGFloat contextMenuDefaultKernOfOptions = 4;
 static CGFloat contextMenuYearKernOfOptions = 0;
 static NSUInteger contextMenuIndexOfYearOption = 0;
+
+static NSUInteger segmentedControlIndexEditMode = 0;
+static NSUInteger segmentedControlIndexReportMode = 1;
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -163,13 +166,13 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
 
 - (void)configureConceptsViews
 {
-    [self configureConceptsContainerView];
+    [self configureEditAndReportModeContentContainerView];
     [self configureConceptsCollectionView];
 }
 
-- (void)configureConceptsContainerView
+- (void)configureEditAndReportModeContentContainerView
 {
-    [self.conceptsContainerView addRoundedCorners:UIRectCornerAllCorners withRadius:15];
+    [self.editAndReportModeContentContainerView addRoundedCorners:UIRectCornerAllCorners withRadius:15];
 }
 
 - (void)configureConceptsCollectionView
@@ -286,6 +289,44 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
     aboutAndOptionsViewController.modalPresentationStyle = UIModalPresentationFormSheet;
     
     [self presentViewController:aboutAndOptionsViewController animated:YES completion:nil];
+}
+
+- (IBAction)segmentedControlPressed:(UISegmentedControl *)sender
+{
+    if (sender.selectedSegmentIndex == segmentedControlIndexEditMode) {
+        [self updateAfterChangeToEditMode];
+    } else if (sender.selectedSegmentIndex == segmentedControlIndexReportMode) {
+        [self updateAfterChangeToReportMode];
+    }
+}
+
+- (BOOL)isEditModeActive
+{
+    BOOL isEditMode = self.modeSegmentedControl.selectedSegmentIndex == segmentedControlIndexEditMode;
+    
+    return isEditMode;
+}
+
+- (BOOL)isReportModeActive
+{
+    BOOL isReportMode = self.modeSegmentedControl.selectedSegmentIndex == segmentedControlIndexReportMode;
+    
+    return isReportMode;
+}
+
+- (void)updateAfterChangeToEditMode
+{
+    [self.conceptsCollectionView reloadData];
+    [self updateCalculatorViewHideHalfState];
+    
+    self.conceptsCollectionView.hidden = NO;
+    self.calculatorViewController.view.hidden = NO;
+}
+
+- (void)updateAfterChangeToReportMode
+{
+    self.conceptsCollectionView.hidden = YES;
+    self.calculatorViewController.view.hidden = YES;
 }
 
 #pragma mark - Obtainings
@@ -1231,7 +1272,7 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
         [self updateFramePositionBeforeShowCalculatorForView:self.contextScrollView];
         [self updateFramePositionBeforeShowCalculatorForView:self.contextMenuView];
         [self updateFramePositionBeforeShowCalculatorForView:self.modeSegmentedControl];
-        [self updateFramePositionBeforeShowCalculatorForView:self.conceptsContainerView];
+        [self updateFramePositionBeforeShowCalculatorForView:self.editAndReportModeContentContainerView];
     }];
 }
 
@@ -1241,7 +1282,7 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
         [self updateFramePositionAfterShowCalculatorForView:self.contextScrollView];
         [self updateFramePositionAfterShowCalculatorForView:self.contextMenuView];
         [self updateFramePositionAfterShowCalculatorForView:self.modeSegmentedControl];
-        [self updateFramePositionAfterShowCalculatorForView:self.conceptsContainerView];
+        [self updateFramePositionAfterShowCalculatorForView:self.editAndReportModeContentContainerView];
     }];
 }
 

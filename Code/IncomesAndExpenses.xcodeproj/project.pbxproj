@@ -235,6 +235,7 @@
 		5BE1F4C71637FE0C004E13C2 /* IAECategoryStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECategoryStore.m; sourceTree = "<group>"; };
 		5BE1F4CA1637FF83004E13C2 /* CategoryDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CategoryDefs.h; sourceTree = "<group>"; };
 		5BE1F4CF16380DF7004E13C2 /* MonthDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MonthDefs.h; sourceTree = "<group>"; };
+		5BEA607E17A66BB000520E09 /* IAETextRawSelectorMenuViewDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAETextRawSelectorMenuViewDefs.h; sourceTree = "<group>"; };
 		5BEA98A91793E3A500098AE0 /* IAECircleDecoratorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECircleDecoratorView.h; sourceTree = "<group>"; };
 		5BEA98AA1793E3A500098AE0 /* IAECircleDecoratorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECircleDecoratorView.m; sourceTree = "<group>"; };
 		5BF92534179544880002CF9F /* 14-gear_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-gear_gray.png"; sourceTree = "<group>"; };
@@ -686,6 +687,7 @@
 				5B8CD5D817A2C6DB00A353A5 /* IAETextRawSelectorMenuView.m */,
 				5B8CD5DA17A2C6EF00A353A5 /* IAETextRawSelectorMenuViewDelegate.h */,
 				5B8CD5DB17A2C6FE00A353A5 /* IAETextRawSelectorMenuViewDataSource.h */,
+				5BEA607E17A66BB000520E09 /* IAETextRawSelectorMenuViewDefs.h */,
 			);
 			name = "Text Raw Selector Menu";
 			sourceTree = "<group>";

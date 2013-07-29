@@ -156,14 +156,21 @@ static NSUInteger tagBaseValue = 100;
 
 - (void)deactiveSelectionOnOptionIndex:(NSUInteger)optionIndex
 {
+    IAETextRawSelectorMenuViewSelectorType selectorType = [self.dataSource selectorTypeInTextRawSelectorMenu:self];
     UIButton *option = [self findMenuOptionWithIndex:optionIndex];
-    option.backgroundColor = [UIColor clearColor];
+    if (selectorType == TEXTRAWMENUVIEW_SELECTOR_BACKGROUNDCOLOR) {
+        option.backgroundColor = [UIColor clearColor];
+    }
 }
 
 - (void)activeSelectionOnOptionIndex:(NSUInteger)optionIndex
 {
+    IAETextRawSelectorMenuViewSelectorType selectorType = [self.dataSource selectorTypeInTextRawSelectorMenu:self];
     UIButton *option = [self findMenuOptionWithIndex:optionIndex];
-    option.backgroundColor = [UIColor colorWithWhite:0.7 alpha:0.1];
+    if (selectorType == TEXTRAWMENUVIEW_SELECTOR_BACKGROUNDCOLOR) {
+        UIColor *backColor = [[self.dataSource colorForSelectorIndicatorInTextRawSelectorMenu:self] copy];
+        option.backgroundColor = backColor;
+    }
 }
 
 - (UIButton *)findMenuOptionWithIndex:(NSUInteger)optionIndex

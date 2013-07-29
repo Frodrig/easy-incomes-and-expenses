@@ -340,7 +340,6 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
     if ([self isActualSelectedContextAMonth]) {
         IAEMonth *actualMonth = [self findActualSelectedMonth];
         allConcepts = [self isDayModeActiveForConcepts] ? [actualMonth  allConceptsSortedByDay] : [actualMonth allConceptsSortedByEntryInstant];
-        NSLog(@"all concepts number %d", allConcepts.count);
     } else {
         IAEYear *openYear = [self findOpenYear];
         allConcepts = [self isDayModeActiveForConcepts] ? [openYear findAllConceptsSortedByDay] : [openYear findAllConceptsSortedByEntryInstant];
@@ -357,7 +356,6 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
 - (IAEConcept *)findConceptAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray *concepts = [self allConceptsSortedAsAppropriateFromActualSelectedContext];
-    NSLog(@"row %d", indexPath.row);
     IAEConcept *concept = [concepts objectAtIndex:indexPath.row];
     
     return concept;
@@ -697,7 +695,7 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     NSUInteger numberOfItems = [self findNumberOfConceptsOfActualSelectedContext];
-    NSLog(@"number of items %d", numberOfItems);
+
     return numberOfItems;
 }
 
@@ -1329,6 +1327,16 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
     }
     
     return kern;
+}
+
+- (IAETextRawSelectorMenuViewSelectorType)selectorTypeInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
+{
+    return TEXTRAWMENUVIEW_SELECTOR_BACKGROUNDCOLOR;
+}
+
+- (UIColor *)colorForSelectorIndicatorInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
+{
+    return [UIColor colorWithWhite:0.9 alpha:0.3];
 }
 
 #pragma mark - IAETextRawSelectorMenuViewDelegate

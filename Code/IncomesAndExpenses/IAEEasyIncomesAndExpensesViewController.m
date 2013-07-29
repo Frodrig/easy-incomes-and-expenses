@@ -592,7 +592,7 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (scrollView == self.contextScrollView) {
-        [self updateScrollPageController];
+        [self updateCurrentOptionIndexSelectedOfContextMenu];
         [self updateContentOfConceptsCollectionView];
         [self setConceptsCollectionViewInTransitionAspect:NO];
         [self updateCalculatorViewHideHalfState];
@@ -606,7 +606,7 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
     }];
 }
 
-- (void)updateScrollPageController
+- (void)updateCurrentOptionIndexSelectedOfContextMenu
 {
     CGFloat currentOptionIndex = (self.contextScrollView.contentOffset.x / self.contextScrollView.bounds.size.width) + 0.5;
     self.contextMenuView.currentOptionIndexSelected = floor(currentOptionIndex);

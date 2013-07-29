@@ -44,6 +44,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *conceptsCollectionView;
 @property (nonatomic, strong) IAEReportAreaView *reportAreaView;
 @property (nonatomic, strong) IAETextRawSelectorMenuView *contextMenuView;
+@property (nonatomic, strong) IAETextRawSelectorMenuView *reportMenuView;
 @property (nonatomic, strong) IAECalculatorViewController *calculatorViewController;
 @property (nonatomic, strong) UIPopoverController *popover;
 @property (nonatomic, strong) UITapGestureRecognizer *tapConceptsRecognizer;
@@ -83,6 +84,12 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
 static NSUInteger segmentedControlIndexEditMode = 0;
 static NSUInteger segmentedControlIndexReportMode = 1;
 
+static NSUInteger reportMenuNumberOfItems = 3;
+static NSString * const reportMenuFontFamilyName = @"HelveticaNeue-Ultralight";
+static CGFloat reportMenuFontSizeOfOptions = 28;
+static CGFloat reportMenuKernOfOptions = 4;
+static CGFloat reportMenuItemWidthSize = 200;
+
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
@@ -94,6 +101,7 @@ static NSUInteger segmentedControlIndexReportMode = 1;
         [self initContextMenuView];
         [self initCalculatorViewController];
         [self initReportAreaView];
+        [self initReportMenuView];
     }
     
     return self;
@@ -140,13 +148,16 @@ static NSUInteger segmentedControlIndexReportMode = 1;
 - (void)initCalculatorViewController
 {
     _calculatorViewController = [[IAECalculatorViewController alloc] init];
-    _calculatorViewController.delegate = self;
-    _calculatorViewController.dataSource = self;
 }
 
 - (void)initReportAreaView
 {
     _reportAreaView = [[IAEReportAreaView alloc] init];
+}
+
+- (void)initReportMenuView
+{
+    _reportMenuView = [[IAETextRawSelectorMenuView alloc] init];
 }
 
 - (void)dealloc
@@ -163,8 +174,10 @@ static NSUInteger segmentedControlIndexReportMode = 1;
 	// Do any additional setup after loading the view.
     [self configureEditAndReportModeContentContainerView];
     [self configureContextScrollViewContent];
+    [self configureCalculatorViewController];
     [self configureConceptsViews];
     [self configureReportAreaView];
+    [self configureReportMenuView];
 }
 
 - (void)configureContextScrollViewContent
@@ -175,6 +188,12 @@ static NSUInteger segmentedControlIndexReportMode = 1;
     self.contextScrollView.showsHorizontalScrollIndicator = NO;
     self.contextScrollView.showsVerticalScrollIndicator = NO;
     self.contextScrollView.bounces = YES;
+}
+
+- (void)configureCalculatorViewController
+{
+    _calculatorViewController.delegate = self;
+    _calculatorViewController.dataSource = self;
 }
 
 - (void)configureConceptsViews
@@ -208,6 +227,11 @@ static NSUInteger segmentedControlIndexReportMode = 1;
     self.reportAreaView.backgroundColor = [UIColor clearColor];
 }
 
+- (void)configureReportMenuView
+{
+    _reportMenuView.backgroundColor = [UIColor clearColor];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -216,6 +240,7 @@ static NSUInteger segmentedControlIndexReportMode = 1;
     [self vinculeContextMenuView];
     [self vinculeCalculatorViewControllerView];
     [self vinculeReportAreaView];
+    [self vinculeReportMenuView];
     
     [self gotoToTodayMonthWithoutTransitionEffect];
 
@@ -230,6 +255,15 @@ static NSUInteger segmentedControlIndexReportMode = 1;
     self.conceptsCollectionView.dataSource = self;
 }
 
+- (void)vinculeContextMenuView
+{
+    [self.view addSubview:_contextMenuView];
+    self.contextMenuView.delegate = self;
+    self.contextMenuView.dataSource = self;
+    self.contextMenuView.center = CGPointMake(self.view.center.x,
+                                              self.contextScrollView.center.y + self.contextScrollView.bounds.size.height / 2 + self.contextMenuView.bounds.size.height / 2);
+}
+
 - (void)vinculeReportAreaView
 {
     self.reportAreaView.frame = CGRectMake(self.editAndReportModeContentContainerView.frame.origin.x,
@@ -238,6 +272,16 @@ static NSUInteger segmentedControlIndexReportMode = 1;
                                            self.editAndReportModeContentContainerView.frame.size.height);
     [self.view addSubview:self.reportAreaView];
     self.reportAreaView.hidden = YES;
+}
+
+- (void)vinculeReportMenuView
+{
+    [self.view addSubview:self.reportMenuView];
+    self.reportMenuView.dataSource = self;
+    self.reportMenuView.delegate = self;
+    self.reportMenuView.center = CGPointMake(self.view.center.x,
+                                             self.reportAreaView.center.y + self.reportAreaView.bounds.size.height / 2 + self.reportMenuView.bounds.size.height / 1.35);
+    self.reportMenuView.hidden = YES;
 }
 
 - (void)gotoToTodayMonthWithoutTransitionEffect
@@ -271,17 +315,6 @@ static NSUInteger segmentedControlIndexReportMode = 1;
                              self.contextScrollView.bounds.size.height);
     
     return rect;
-}
-
-#pragma mark - ConextMenuView(vincule)
-
-- (void)vinculeContextMenuView
-{
-    [self.view addSubview:_contextMenuView];
-    self.contextMenuView.delegate = self;
-    self.contextMenuView.dataSource = self;
-    self.contextMenuView.center = CGPointMake(self.view.center.x,
-                                              self.contextScrollView.center.y + self.contextScrollView.bounds.size.height / 2 + self.contextMenuView.bounds.size.height / 2);
 }
 
 #pragma mark - ControlEvents
@@ -324,9 +357,9 @@ static NSUInteger segmentedControlIndexReportMode = 1;
 
 - (IBAction)segmentedControlPressed:(UISegmentedControl *)sender
 {
-    if (sender.selectedSegmentIndex == segmentedControlIndexEditMode) {
+    if ([self isEditModeActive]) {
         [self updateAfterChangeToEditMode];
-    } else if (sender.selectedSegmentIndex == segmentedControlIndexReportMode) {
+    } else if ([self isReportModeActive]) {
         [self updateAfterChangeToReportMode];
     }
 }
@@ -352,10 +385,12 @@ static NSUInteger segmentedControlIndexReportMode = 1;
     
     self.editAndReportModeContentContainerView.backgroundColor = [UIColor colorWithWhite:colorWithWhiteForEditAndReportModeContentContainerBackground
                                                                                    alpha:1.0];
-    
     self.conceptsCollectionView.hidden = NO;
     self.calculatorViewController.view.hidden = NO;
     self.reportAreaView.hidden = YES;
+    self.reportMenuView.hidden = YES;
+    self.reportAreaView.dataSource = nil;
+    self.reportAreaView.delegate = nil;
 }
 
 - (void)updateAfterChangeToReportMode
@@ -365,6 +400,9 @@ static NSUInteger segmentedControlIndexReportMode = 1;
     self.conceptsCollectionView.hidden = YES;
     self.calculatorViewController.view.hidden = YES;
     self.reportAreaView.hidden = NO;
+    self.reportMenuView.hidden = NO;
+    self.reportAreaView.dataSource = self;
+    self.reportAreaView.delegate = self;
 }
 
 #pragma mark - Obtainings
@@ -1359,17 +1397,28 @@ static NSUInteger segmentedControlIndexReportMode = 1;
 
 #pragma mark - IAETextRawSelectorMenuViewDataSource
 
-- (BOOL)isTheContextMenuTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenu
+- (BOOL)isTheContextMenuTextRawSelectorContextMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenu
 {
-    return textRawSelectorMenu == self.contextMenuView;
+    BOOL isContextMenu = textRawSelectorMenu == self.contextMenuView;
+    
+    return isContextMenu;
+}
+
+- (BOOL)isTheContextMenuTextRawSelectorReportMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenu
+{
+    BOOL isReportMenu = textRawSelectorMenu == self.reportMenuView;
+    
+    return isReportMenu;
 }
 
 - (NSUInteger)numberOfOptionsInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
 {
     NSUInteger numberOfOptions = 0;
     
-    if ([self isTheContextMenuTextRawSelectorMenuView:textRawSelectorMenu]) {
+    if ([self isTheContextMenuTextRawSelectorContextMenuView:textRawSelectorMenu]) {
         numberOfOptions = contentScrollViewNumberOfItems;
+    } else if ([self isTheContextMenuTextRawSelectorReportMenuView:textRawSelectorMenu]) {
+        numberOfOptions = reportMenuNumberOfItems;
     }
 
     return numberOfOptions;
@@ -1379,12 +1428,20 @@ static NSUInteger segmentedControlIndexReportMode = 1;
 {
     NSString *optionStringName = nil;
     
-    if ([self isTheContextMenuTextRawSelectorMenuView:textRawSelectorMenu]) {
+    if ([self isTheContextMenuTextRawSelectorContextMenuView:textRawSelectorMenu]) {
         if (optionIndex == contextMenuIndexOfYearOption) {
             optionStringName = [NSString stringWithFormat:@"%d", [self findOpenYear].yearDate];
         } else {
             optionStringName = [IAEDateHelper findMonthNameStringWithMonthIndex:optionIndex inShortForm:YES];
         }
+    } else if ([self isTheContextMenuTextRawSelectorReportMenuView:textRawSelectorMenu]) {
+        static NSArray *menuOptionsName = nil;
+        if (menuOptionsName == nil) {
+            menuOptionsName = @[NSLocalizedString(@"LTEXT_MENUOPTIONSREPORT_OPTIONBALANCE", @""),
+                                NSLocalizedString(@"LTEXT_MENUOPTIONSREPORT_OPTIONINCOMES", @""),
+                                NSLocalizedString(@"LTEXT_MENUOPTIONSREPORT_OPTIONEXPENSES", @"")];
+        }
+        optionStringName = [menuOptionsName objectAtIndex:optionIndex];
     }
     
     return optionStringName;
@@ -1399,9 +1456,11 @@ static NSUInteger segmentedControlIndexReportMode = 1;
 {
     CGSize size = CGSizeZero;
     
-    if ([self isTheContextMenuTextRawSelectorMenuView:textRawSelectorMenu]) {
+    if ([self isTheContextMenuTextRawSelectorContextMenuView:textRawSelectorMenu]) {
         CGFloat width = self.view.bounds.size.width / contentScrollViewNumberOfItems;
         size = CGSizeMake(width, 44);
+    } else if ([self isTheContextMenuTextRawSelectorReportMenuView:textRawSelectorMenu]) {
+        size = CGSizeMake(reportMenuItemWidthSize, 44);
     }
 
     return size;
@@ -1410,8 +1469,11 @@ static NSUInteger segmentedControlIndexReportMode = 1;
 - (NSString *)fontFamilyNameOfOptionsInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
 {
     NSString *fontFamily = nil;
-    if ([self isTheContextMenuTextRawSelectorMenuView:textRawSelectorMenu]) {
+    
+    if ([self isTheContextMenuTextRawSelectorContextMenuView:textRawSelectorMenu]) {
         fontFamily = contextMenuFontFamilyName;
+    } else if ([self isTheContextMenuTextRawSelectorReportMenuView:textRawSelectorMenu]) {
+        fontFamily = reportMenuFontFamilyName;
     }
 
     return fontFamily;
@@ -1421,8 +1483,10 @@ static NSUInteger segmentedControlIndexReportMode = 1;
 {
     CGFloat fontSize = 0;
     
-    if ([self isTheContextMenuTextRawSelectorMenuView:textRawSelectorMenu]) {
+    if ([self isTheContextMenuTextRawSelectorContextMenuView:textRawSelectorMenu]) {
         fontSize = contextMenuFontSizeOfOptions;
+    } else if ([self isTheContextMenuTextRawSelectorReportMenuView:textRawSelectorMenu]) {
+        fontSize = reportMenuFontSizeOfOptions;
     }
 
     return fontSize;
@@ -1431,11 +1495,14 @@ static NSUInteger segmentedControlIndexReportMode = 1;
 - (CGFloat)textRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu kernOfOptionsAtIndex:(NSUInteger)optionIndex
 {
     CGFloat kern = 0;
-    if ([self isTheContextMenuTextRawSelectorMenuView:textRawSelectorMenu]) {
+    
+    if ([self isTheContextMenuTextRawSelectorContextMenuView:textRawSelectorMenu]) {
         kern = contextMenuDefaultKernOfOptions;
         if (optionIndex == contextMenuIndexOfYearOption) {
             kern = contextMenuYearKernOfOptions;
         }
+    } else if ([self isTheContextMenuTextRawSelectorReportMenuView:textRawSelectorMenu]) {
+        kern = reportMenuKernOfOptions;
     }
     
     return kern;
@@ -1444,7 +1511,10 @@ static NSUInteger segmentedControlIndexReportMode = 1;
 - (IAETextRawSelectorMenuViewSelectorType)selectorTypeInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
 {
     IAETextRawSelectorMenuViewSelectorType selectorType = TEXTRAWMENUVIEW_SELECTOR_BACKGROUNDCOLOR;
-    if ([self isTheContextMenuTextRawSelectorMenuView:textRawSelectorMenu]) {
+    
+    if ([self isTheContextMenuTextRawSelectorContextMenuView:textRawSelectorMenu]) {
+        selectorType = TEXTRAWMENUVIEW_SELECTOR_BACKGROUNDCOLOR;
+    } else if ([self isTheContextMenuTextRawSelectorReportMenuView:textRawSelectorMenu]) {
         selectorType = TEXTRAWMENUVIEW_SELECTOR_BACKGROUNDCOLOR;
     }
 
@@ -1454,7 +1524,10 @@ static NSUInteger segmentedControlIndexReportMode = 1;
 - (UIColor *)colorForSelectorIndicatorInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
 {
     UIColor *color = nil;
-    if ([self isTheContextMenuTextRawSelectorMenuView:textRawSelectorMenu]) {
+    
+    if ([self isTheContextMenuTextRawSelectorContextMenuView:textRawSelectorMenu]) {
+        color = [UIColor colorWithWhite:0.9 alpha:0.3];
+    } else if ([self isTheContextMenuTextRawSelectorReportMenuView:textRawSelectorMenu]) {
         color = [UIColor colorWithWhite:0.9 alpha:0.3];
     }
     
@@ -1465,8 +1538,10 @@ static NSUInteger segmentedControlIndexReportMode = 1;
 
 - (void)optionIndex:(NSUInteger)optionIndex wasSelectedInTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenu
 {
-    if ([self isTheContextMenuTextRawSelectorMenuView:textRawSelectorMenu]) {
+    if ([self isTheContextMenuTextRawSelectorContextMenuView:textRawSelectorMenu]) {
         [self gotoToContextViewWithIndex:optionIndex];
+    } else if ([self isTheContextMenuTextRawSelectorReportMenuView:textRawSelectorMenu]) {
+        // ...
     }
 }
 

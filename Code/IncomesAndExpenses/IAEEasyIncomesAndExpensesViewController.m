@@ -657,23 +657,33 @@ static NSUInteger segmentedControlIndexReportMode = 1;
 
 #pragma mark - UIScrollView Delegate
 
-/*
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+- (BOOL)isContextScrollView:(UIScrollView *)scrollView
 {
-    if (scrollView == self.contextScrollView) {
-        [self updateContextScrollViewAfterScroll];
-    }
+    BOOL contextScrollView = scrollView == self.contextScrollView;
+    
+    return contextScrollView;
 }
-*/
+
+- (BOOL)isReportScrollView:(UIScrollView *)scrollView
+{
+    BOOL reportScrollView = scrollView == (UIScrollView *)self.reportAreaView;
+    
+    return reportScrollView;
+}
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (scrollView == self.contextScrollView) {
-        [self updateCurrentOptionIndexSelectedOfContextMenu];
-        [self updateContentOfConceptsCollectionView];
-        [self setConceptsCollectionViewInTransitionAspect:NO];
-        [self updateCalculatorViewHideHalfState];
+    if ([self isContextScrollView:scrollView]) {
+        [self contextScrollViewDidScroll];
     }
+}
+
+- (void)contextScrollViewDidScroll
+{
+    [self updateCurrentOptionIndexSelectedOfContextMenu];
+    [self updateContentOfConceptsCollectionView];
+    [self setConceptsCollectionViewInTransitionAspect:NO];
+    [self updateCalculatorViewHideHalfState];
 }
 
 - (void)setConceptsCollectionViewInTransitionAspect:(BOOL)transition
@@ -688,17 +698,6 @@ static NSUInteger segmentedControlIndexReportMode = 1;
     CGFloat currentOptionIndex = (self.contextScrollView.contentOffset.x / self.contextScrollView.bounds.size.width) + 0.5;
     self.contextMenuView.currentOptionIndexSelected = floor(currentOptionIndex);
 }
-
-/*
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    if (scrollView == self.contextScrollView) {
-        [self updateContentOfConceptsCollectionView];
-        [self setConceptsCollectionViewInTransitionAspect:NO];
-        [self updateCalculatorViewHideHalfState];
-    }
-}
-*/
 
 - (void)updateCalculatorViewHideHalfState
 {

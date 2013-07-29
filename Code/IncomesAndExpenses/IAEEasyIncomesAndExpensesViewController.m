@@ -1281,18 +1281,32 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
 
 #pragma mark - IAETextRawSelectorMenuViewDataSource
 
+- (BOOL)isTheContextMenuTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenu
+{
+    return textRawSelectorMenu == self.contextMenuView;
+}
+
 - (NSUInteger)numberOfOptionsInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
 {
-    return contentScrollViewNumberOfItems;
+    NSUInteger numberOfOptions = 0;
+    
+    if ([self isTheContextMenuTextRawSelectorMenuView:textRawSelectorMenu]) {
+        numberOfOptions = contentScrollViewNumberOfItems;
+    }
+
+    return numberOfOptions;
 }
 
 - (NSString *)textRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu optionStringNameAtIndex:(NSUInteger)optionIndex
 {
     NSString *optionStringName = nil;
-    if (optionIndex == contextMenuIndexOfYearOption) {
-        optionStringName = [NSString stringWithFormat:@"%d", [self findOpenYear].yearDate];
-    } else {
-        optionStringName = [IAEDateHelper findMonthNameStringWithMonthIndex:optionIndex inShortForm:YES];
+    
+    if ([self isTheContextMenuTextRawSelectorMenuView:textRawSelectorMenu]) {
+        if (optionIndex == contextMenuIndexOfYearOption) {
+            optionStringName = [NSString stringWithFormat:@"%d", [self findOpenYear].yearDate];
+        } else {
+            optionStringName = [IAEDateHelper findMonthNameStringWithMonthIndex:optionIndex inShortForm:YES];
+        }
     }
     
     return optionStringName;
@@ -1305,25 +1319,45 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
 
 - (CGSize)sizeOfOptionsInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
 {
-    CGFloat width = self.view.bounds.size.width / contentScrollViewNumberOfItems;
-    return CGSizeMake(width, 44);
+    CGSize size = CGSizeZero;
+    
+    if ([self isTheContextMenuTextRawSelectorMenuView:textRawSelectorMenu]) {
+        CGFloat width = self.view.bounds.size.width / contentScrollViewNumberOfItems;
+        size = CGSizeMake(width, 44);
+    }
+
+    return size;
 }
 
 - (NSString *)fontFamilyNameOfOptionsInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
 {
-    return contextMenuFontFamilyName;
+    NSString *fontFamily = nil;
+    if ([self isTheContextMenuTextRawSelectorMenuView:textRawSelectorMenu]) {
+        fontFamily = contextMenuFontFamilyName;
+    }
+
+    return fontFamily;
 }
 
 - (CGFloat)fontSizeOfOptionsInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
 {
-    return contextMenuFontSizeOfOptions;
+    CGFloat fontSize = 0;
+    
+    if ([self isTheContextMenuTextRawSelectorMenuView:textRawSelectorMenu]) {
+        fontSize = contextMenuFontSizeOfOptions;
+    }
+
+    return fontSize;
 }
 
 - (CGFloat)textRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu kernOfOptionsAtIndex:(NSUInteger)optionIndex
 {
-    CGFloat kern = contextMenuDefaultKernOfOptions;
-    if (optionIndex == contextMenuIndexOfYearOption) {
-        kern = contextMenuYearKernOfOptions;
+    CGFloat kern = 0;
+    if ([self isTheContextMenuTextRawSelectorMenuView:textRawSelectorMenu]) {
+        kern = contextMenuDefaultKernOfOptions;
+        if (optionIndex == contextMenuIndexOfYearOption) {
+            kern = contextMenuYearKernOfOptions;
+        }
     }
     
     return kern;
@@ -1331,25 +1365,31 @@ static NSUInteger contextMenuIndexOfYearOption = 0;
 
 - (IAETextRawSelectorMenuViewSelectorType)selectorTypeInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
 {
-    return TEXTRAWMENUVIEW_SELECTOR_BACKGROUNDCOLOR;
+    IAETextRawSelectorMenuViewSelectorType selectorType = TEXTRAWMENUVIEW_SELECTOR_BACKGROUNDCOLOR;
+    if ([self isTheContextMenuTextRawSelectorMenuView:textRawSelectorMenu]) {
+        selectorType = TEXTRAWMENUVIEW_SELECTOR_BACKGROUNDCOLOR;
+    }
+
+    return selectorType;
 }
 
 - (UIColor *)colorForSelectorIndicatorInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
 {
-    return [UIColor colorWithWhite:0.9 alpha:0.3];
+    UIColor *color = nil;
+    if ([self isTheContextMenuTextRawSelectorMenuView:textRawSelectorMenu]) {
+        color = [UIColor colorWithWhite:0.9 alpha:0.3];
+    }
+    
+    return color;
 }
 
 #pragma mark - IAETextRawSelectorMenuViewDelegate
 
-- (void)optionIndex:(NSUInteger)optionIndex wasSelectedInTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenuView
+- (void)optionIndex:(NSUInteger)optionIndex wasSelectedInTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenu
 {
-    [self gotoToContextViewWithIndex:optionIndex];
-    /*
-    // TODO: Hay que revisar como de bien o mal estan refactorizadas las funciones
-    // Falla actualizando la tabla de conceptos abajo
-    CGRect contextViewRect = [self rectInContextScrollViewForContextViewWithGlobalIndex:optionIndex];
-    [self.contextScrollView scrollRectToVisible:contextViewRect animated:NO];
-     */
+    if ([self isTheContextMenuTextRawSelectorMenuView:textRawSelectorMenu]) {
+        [self gotoToContextViewWithIndex:optionIndex];
+    }
 }
 
 

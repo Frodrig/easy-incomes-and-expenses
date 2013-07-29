@@ -83,6 +83,8 @@
 		5BDC867E1680D83500C761D5 /* IAEConcept.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BDC867D1680D83500C761D5 /* IAEConcept.m */; };
 		5BE1F4C01637EA4B004E13C2 /* IAEBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE1F4BF1637EA4B004E13C2 /* IAEBook.m */; };
 		5BE1F4C81637FE0C004E13C2 /* IAECategoryStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE1F4C71637FE0C004E13C2 /* IAECategoryStore.m */; };
+		5BEA608217A6A36600520E09 /* IAEReportAreaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA608117A6A36600520E09 /* IAEReportAreaView.m */; };
+		5BEA608717A6A39400520E09 /* IAEReportAreaItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA608617A6A39400520E09 /* IAEReportAreaItemView.m */; };
 		5BEA98AB1793E3A500098AE0 /* IAECircleDecoratorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA98AA1793E3A500098AE0 /* IAECircleDecoratorView.m */; };
 		5BF92536179544880002CF9F /* 14-gear_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BF92534179544880002CF9F /* 14-gear_gray.png */; };
 		5BF92537179544880002CF9F /* 14-gear_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BF92535179544880002CF9F /* 14-gear_gray@2x.png */; };
@@ -236,6 +238,12 @@
 		5BE1F4CA1637FF83004E13C2 /* CategoryDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CategoryDefs.h; sourceTree = "<group>"; };
 		5BE1F4CF16380DF7004E13C2 /* MonthDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MonthDefs.h; sourceTree = "<group>"; };
 		5BEA607E17A66BB000520E09 /* IAETextRawSelectorMenuViewDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAETextRawSelectorMenuViewDefs.h; sourceTree = "<group>"; };
+		5BEA608017A6A36600520E09 /* IAEReportAreaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEReportAreaView.h; sourceTree = "<group>"; };
+		5BEA608117A6A36600520E09 /* IAEReportAreaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEReportAreaView.m; sourceTree = "<group>"; };
+		5BEA608317A6A37400520E09 /* IAEReportAreaViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEReportAreaViewDataSource.h; sourceTree = "<group>"; };
+		5BEA608417A6A38100520E09 /* IAEReportAreaViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEReportAreaViewDelegate.h; sourceTree = "<group>"; };
+		5BEA608517A6A39400520E09 /* IAEReportAreaItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEReportAreaItemView.h; sourceTree = "<group>"; };
+		5BEA608617A6A39400520E09 /* IAEReportAreaItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEReportAreaItemView.m; sourceTree = "<group>"; };
 		5BEA98A91793E3A500098AE0 /* IAECircleDecoratorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECircleDecoratorView.h; sourceTree = "<group>"; };
 		5BEA98AA1793E3A500098AE0 /* IAECircleDecoratorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECircleDecoratorView.m; sourceTree = "<group>"; };
 		5BF92534179544880002CF9F /* 14-gear_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "14-gear_gray.png"; sourceTree = "<group>"; };
@@ -695,6 +703,7 @@
 		5B903BB91782DBAF00DBEFB2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5BEA607F17A6A31E00520E09 /* Report Area View */,
 				5B8CD5CE17A2623F00A353A5 /* Context View */,
 				5B1F0D3217841C7400D0B4F1 /* Concept Collection View Cell */,
 			);
@@ -856,6 +865,27 @@
 			name = IAEConcept;
 			sourceTree = "<group>";
 		};
+		5BEA607F17A6A31E00520E09 /* Report Area View */ = {
+			isa = PBXGroup;
+			children = (
+				5BEA608017A6A36600520E09 /* IAEReportAreaView.h */,
+				5BEA608117A6A36600520E09 /* IAEReportAreaView.m */,
+				5BEA608317A6A37400520E09 /* IAEReportAreaViewDataSource.h */,
+				5BEA608417A6A38100520E09 /* IAEReportAreaViewDelegate.h */,
+				5BEA608817A6A39800520E09 /* Report Area Item View */,
+			);
+			name = "Report Area View";
+			sourceTree = "<group>";
+		};
+		5BEA608817A6A39800520E09 /* Report Area Item View */ = {
+			isa = PBXGroup;
+			children = (
+				5BEA608517A6A39400520E09 /* IAEReportAreaItemView.h */,
+				5BEA608617A6A39400520E09 /* IAEReportAreaItemView.m */,
+			);
+			name = "Report Area Item View";
+			sourceTree = "<group>";
+		};
 		5BEA98A71793E36600098AE0 /* Value Decorator View */ = {
 			isa = PBXGroup;
 			children = (
@@ -1008,6 +1038,7 @@
 				5BD06174163A8D2B00A80BE3 /* IAEYear.m in Sources */,
 				5B26461A17969084006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.m in Sources */,
 				5B62D873178EC20E009879A6 /* IAECurrencyManager.m in Sources */,
+				5BEA608717A6A39400520E09 /* IAEReportAreaItemView.m in Sources */,
 				5BF92541179554800002CF9F /* IAEAboutAndOptionsViewController.m in Sources */,
 				5BEA98AB1793E3A500098AE0 /* IAECircleDecoratorView.m in Sources */,
 				5B36AFF71785BBF400132475 /* NSDecimalNumber+AbsoluteValue.m in Sources */,
@@ -1031,6 +1062,7 @@
 				5B36AFF11785874D00132475 /* IAEAdjustConceptAmountViewController.m in Sources */,
 				5B62D87D178EC27D009879A6 /* IAEDateHelper.m in Sources */,
 				5B90783C179D268000B2A0F7 /* IAEDisplayPanelCalculatorView.m in Sources */,
+				5BEA608217A6A36600520E09 /* IAEReportAreaView.m in Sources */,
 				5B32D654177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m in Sources */,
 				5B5C967F17816A13008CD851 /* UIView+RoundedCorners.m in Sources */,
 				5B62D85B178EA870009879A6 /* IAEYearSelectorCollectionViewCell.m in Sources */,

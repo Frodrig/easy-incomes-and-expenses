@@ -28,6 +28,7 @@
 #import "IAEDayCalendarSelectorViewController.h"
 #import "IAECalculatorViewController.h"
 #import "IAETextRawSelectorMenuView.h"
+#import "IAEReportAreaView.h"
 #import "NSNumber+DefaultValues.h"
 #import "IAECategoryStore.h"
 #import "IAEDateHelper.h"
@@ -41,6 +42,7 @@
 @property (weak, nonatomic) IBOutlet UIView *editAndReportModeContentContainerView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *modeSegmentedControl;
 @property (weak, nonatomic) IBOutlet UICollectionView *conceptsCollectionView;
+@property (nonatomic, strong) IAEReportAreaView *reportAreaView;
 @property (nonatomic, strong) IAETextRawSelectorMenuView *contextMenuView;
 @property (nonatomic, strong) IAECalculatorViewController *calculatorViewController;
 @property (nonatomic, strong) UIPopoverController *popover;
@@ -54,6 +56,9 @@
 @end
 
 @implementation IAEEasyIncomesAndExpensesViewController
+
+static CGFloat editAndReportModeContentContainerRadius = 15;
+static CGFloat colorWithWhiteForEditAndReportModeContentContainerBackground = 0.97;
 
 static NSString * const userDefaultsDayModeActive = @"dayModeActive";
 
@@ -88,6 +93,7 @@ static NSUInteger segmentedControlIndexReportMode = 1;
         [self initAsObserverOfNotificationCenter];
         [self initContextMenuView];
         [self initCalculatorViewController];
+        [self initReportAreaView];
     }
     
     return self;
@@ -138,6 +144,11 @@ static NSUInteger segmentedControlIndexReportMode = 1;
     _calculatorViewController.dataSource = self;
 }
 
+- (void)initReportAreaView
+{
+    _reportAreaView = [[IAEReportAreaView alloc] init];
+}
+
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -150,8 +161,10 @@ static NSUInteger segmentedControlIndexReportMode = 1;
     [super viewDidLoad];
     
 	// Do any additional setup after loading the view.
+    [self configureEditAndReportModeContentContainerView];
     [self configureContextScrollViewContent];
     [self configureConceptsViews];
+    [self configureReportAreaView];
 }
 
 - (void)configureContextScrollViewContent
@@ -172,7 +185,9 @@ static NSUInteger segmentedControlIndexReportMode = 1;
 
 - (void)configureEditAndReportModeContentContainerView
 {
-    [self.editAndReportModeContentContainerView addRoundedCorners:UIRectCornerAllCorners withRadius:15];
+    [self.editAndReportModeContentContainerView addRoundedCorners:UIRectCornerAllCorners withRadius:editAndReportModeContentContainerRadius];
+    self.editAndReportModeContentContainerView.backgroundColor = [UIColor colorWithWhite:colorWithWhiteForEditAndReportModeContentContainerBackground
+                                                                                   alpha:1.0];
 }
 
 - (void)configureConceptsCollectionView
@@ -188,6 +203,11 @@ static NSUInteger segmentedControlIndexReportMode = 1;
     [self.conceptsCollectionView addGestureRecognizer:self.dobleTapConceptsRecognizer];
 }
 
+- (void)configureReportAreaView
+{
+    self.reportAreaView.backgroundColor = [UIColor clearColor];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -195,6 +215,7 @@ static NSUInteger segmentedControlIndexReportMode = 1;
     [self vinculeContextScrollViewContent];
     [self vinculeContextMenuView];
     [self vinculeCalculatorViewControllerView];
+    [self vinculeReportAreaView];
     
     [self gotoToTodayMonthWithoutTransitionEffect];
 
@@ -207,6 +228,16 @@ static NSUInteger segmentedControlIndexReportMode = 1;
 {
     self.conceptsCollectionView.delegate = self;
     self.conceptsCollectionView.dataSource = self;
+}
+
+- (void)vinculeReportAreaView
+{
+    self.reportAreaView.frame = CGRectMake(self.editAndReportModeContentContainerView.frame.origin.x,
+                                           self.editAndReportModeContentContainerView.frame.origin.y,
+                                           self.editAndReportModeContentContainerView.frame.size.width,
+                                           self.editAndReportModeContentContainerView.frame.size.height);
+    [self.view addSubview:self.reportAreaView];
+    self.reportAreaView.hidden = YES;
 }
 
 - (void)gotoToTodayMonthWithoutTransitionEffect
@@ -319,14 +350,21 @@ static NSUInteger segmentedControlIndexReportMode = 1;
     [self.conceptsCollectionView reloadData];
     [self updateCalculatorViewHideHalfState];
     
+    self.editAndReportModeContentContainerView.backgroundColor = [UIColor colorWithWhite:colorWithWhiteForEditAndReportModeContentContainerBackground
+                                                                                   alpha:1.0];
+    
     self.conceptsCollectionView.hidden = NO;
     self.calculatorViewController.view.hidden = NO;
+    self.reportAreaView.hidden = YES;
 }
 
 - (void)updateAfterChangeToReportMode
 {
+    self.editAndReportModeContentContainerView.backgroundColor = [UIColor clearColor];
+
     self.conceptsCollectionView.hidden = YES;
     self.calculatorViewController.view.hidden = YES;
+    self.reportAreaView.hidden = NO;
 }
 
 #pragma mark - Obtainings
@@ -1432,6 +1470,10 @@ static NSUInteger segmentedControlIndexReportMode = 1;
         [self gotoToContextViewWithIndex:optionIndex];
     }
 }
+
+#pragma mark - IAEReportAreaViewDataSource
+
+#pragma mark - IAEReportAreaViewDelegate
 
 
 

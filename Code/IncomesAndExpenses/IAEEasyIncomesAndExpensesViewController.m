@@ -1668,17 +1668,37 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
         NSDecimalNumber *expenses = [self findExpensesOfActualSelectedContextView];
         maxValue = [[self maxValueOfNumber:incomes andNumber:expenses] floatValue];
     } else {
-        NSArray *categories = [self isTheIncomesOptionSelectedInReportMenu] ? [self findIncomesCategoriesOfActualSelectedContextView] :
-                                                                              [self findExpensesCategoriesOfActualSelectedContextView];
-        if (categories.count > 0) {
-            IAECategory *firstCategory = categories[0];
-            id modelObj = [self findModelObjectOfActualSelectedContextView];
-            NSDecimalNumber *balance = [modelObj balanceOfAllConceptsOfCategory:firstCategory];
-            maxValue = [balance floatValue];
+        NSDecimalNumber *maxDecimalValue = [self findMaxValueOfAllCategoriesForActualSelectedContext];
+        maxValue = maxDecimalValue.floatValue;
+    }
+    
+    return maxValue;
+}
+
+- (NSDecimalNumber *)findMaxValueOfAllCategoriesForActualSelectedContext
+{
+    NSDecimalNumber *maxValue = [NSDecimalNumber zero];
+    
+    id modelObject = [self findModelObjectOfActualSelectedContextView];
+    NSSet *allCategories = [self findAllCategoriesForActualSelectedContext];
+    for (IAECategory *category in allCategories) {
+        NSDecimalNumber *categoryValue = [modelObject balanceOfAllConceptsOfCategory:category];
+        if ([categoryValue compare:maxValue] == NSOrderedDescending) {
+            maxValue = categoryValue;
         }
     }
     
     return maxValue;
+}
+
+- (NSSet *)findAllCategoriesForActualSelectedContext
+{
+    NSArray *incomeCategories = [self findIncomesCategoriesOfActualSelectedContextView];
+    NSArray *expenseCategories = [self findExpensesCategoriesOfActualSelectedContextView];
+    NSSet *allCategories = [NSSet setWithArray:incomeCategories];
+    allCategories = [allCategories setByAddingObjectsFromArray:expenseCategories];
+    
+    return allCategories;
 }
 
 - (NSDecimalNumber *)maxValueOfNumber:(NSDecimalNumber *)numberOne andNumber:(NSDecimalNumber *)numberTwo

@@ -21,22 +21,22 @@
 
 @synthesize delegate = _delegate;
 
-static NSUInteger invalidDayOfTheMonth = 0;
+static const NSUInteger kInvalidDayOfTheMonth = 0;
 
-static NSString * const entityNameConcept = @"IAEConcept";
+static NSString * const kEntityNameConcept = @"IAEConcept";
 
-static NSString * const ltextJanuaryName = @"January";
-static NSString * const ltextFebruaryName = @"February";
-static NSString * const ltextMarchName = @"March";
-static NSString * const ltextAprilName = @"April";
-static NSString * const ltextMayName = @"May";
-static NSString * const ltextJuneName = @"June";
-static NSString * const ltextJulyName = @"July";
-static NSString * const ltextAugustName = @"August";
-static NSString * const ltextSeptemberName = @"September";
-static NSString * const ltextOctoberName = @"October";
-static NSString * const ltextNovemberName = @"November";
-static NSString * const ltextDecemberName = @"December";
+static NSString * const kLTextJanuaryName = @"January";
+static NSString * const kLTextFebruaryName = @"February";
+static NSString * const kLTextMarchName = @"March";
+static NSString * const kLTextAprilName = @"April";
+static NSString * const kLTextMayName = @"May";
+static NSString * const kLTextJuneName = @"June";
+static NSString * const kLTextJulyName = @"July";
+static NSString * const kLTextAugustName = @"August";
+static NSString * const kLTextSeptemberName = @"September";
+static NSString * const kLTextOctoberName = @"October";
+static NSString * const kLTextNovemberName = @"November";
+static NSString * const kLTextDecemberName = @"December";
 
 - (NSNumber *)daysOfTheMonth
 {
@@ -59,7 +59,7 @@ static NSString * const ltextDecemberName = @"December";
     return [self addConceptWithAmount:amount
                              category:category
                                  date:date
-                        dayOfTheMonth:invalidDayOfTheMonth
+                        dayOfTheMonth:kInvalidDayOfTheMonth
                        andDescription:description];
 }
 
@@ -71,7 +71,7 @@ static NSString * const ltextDecemberName = @"December";
 {
     IAEConcept *newConcept = nil;
     if ([amount compare:[NSDecimalNumber zero]] != NSOrderedSame) {
-        newConcept = [NSEntityDescription insertNewObjectForEntityForName:entityNameConcept inManagedObjectContext:[IAEBook sharedBook].context];
+        newConcept = [NSEntityDescription insertNewObjectForEntityForName:kEntityNameConcept inManagedObjectContext:[IAEBook sharedBook].context];
         [self addConceptsObject:newConcept];
         newConcept.category = category;
         newConcept.amount = amount;
@@ -251,18 +251,18 @@ static NSString * const ltextDecemberName = @"December";
 {
     static NSDictionary *monthsNames = nil;
     if (nil == monthsNames) {
-        monthsNames = @{[NSNumber numberWithInt:January]: ltextJanuaryName,
-                                  [NSNumber numberWithInt:February]: ltextFebruaryName,
-                                  [NSNumber numberWithInt:March]: ltextMarchName,
-                                  [NSNumber numberWithInt:April]: ltextAprilName,
-                                  [NSNumber numberWithInt:May]: ltextMayName,
-                                  [NSNumber numberWithInt:June]: ltextJuneName,
-                                  [NSNumber numberWithInt:July]: ltextJulyName,
-                                  [NSNumber numberWithInt:August]: ltextAugustName,
-                                  [NSNumber numberWithInt:September]: ltextSeptemberName,
-                                  [NSNumber numberWithInt:October]: ltextOctoberName,
-                                  [NSNumber numberWithInt:November]: ltextNovemberName,
-                                  [NSNumber numberWithInt:December]: ltextDecemberName,};
+        monthsNames = @{[NSNumber numberWithInt:January]: kLTextJanuaryName,
+                                  [NSNumber numberWithInt:February]: kLTextFebruaryName,
+                                  [NSNumber numberWithInt:March]: kLTextMarchName,
+                                  [NSNumber numberWithInt:April]: kLTextAprilName,
+                                  [NSNumber numberWithInt:May]: kLTextMayName,
+                                  [NSNumber numberWithInt:June]: kLTextJuneName,
+                                  [NSNumber numberWithInt:July]: kLTextJulyName,
+                                  [NSNumber numberWithInt:August]: kLTextAugustName,
+                                  [NSNumber numberWithInt:September]: kLTextSeptemberName,
+                                  [NSNumber numberWithInt:October]: kLTextOctoberName,
+                                  [NSNumber numberWithInt:November]: kLTextNovemberName,
+                                  [NSNumber numberWithInt:December]: kLTextDecemberName,};
     }
     
     NSString *retDescription = [monthsNames objectForKey:[NSNumber numberWithInt:self.month]];

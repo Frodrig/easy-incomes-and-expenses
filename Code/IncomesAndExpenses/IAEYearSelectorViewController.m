@@ -24,23 +24,23 @@
 
 @implementation IAEYearSelectorViewController
 
-static NSString * const titleTagActualYear = @"LTEXT_YEARSELECTOR_ACTUALYEAR";
-static NSString * const titleTagWithConceptsYears = @"LTEXT_YEARSELECTOR_WITHCONCEPTYEARS";
-static NSString * const titleTagAllYears = @"LTEXT_YEARSELECTOR_ALLYEARS";
-static NSString * const titleTagYearOpen = @"LTEXT_YEARSELECTOR_ACTUALOPENYEAR";
+static NSString * const kTitleTagActualYear = @"LTEXT_YEARSELECTOR_ACTUALYEAR";
+static NSString * const kTitleTagWithConceptsYears = @"LTEXT_YEARSELECTOR_WITHCONCEPTYEARS";
+static NSString * const kTitleTagAllYears = @"LTEXT_YEARSELECTOR_ALLYEARS";
+static NSString * const kTitleTagYearOpen = @"LTEXT_YEARSELECTOR_ACTUALOPENYEAR";
 
-static NSString * const nibNameForCollectionViewCell = @"IAEYearSelectorCollectionViewCell";
-static NSString * const collectionViewCellReuseIdentifier = @"YearSelectorCollectionViewCell";
+static NSString * const kNibNameForCollectionViewCell = @"IAEYearSelectorCollectionViewCell";
+static NSString * const kCollectionViewCellReuseIdentifier = @"YearSelectorCollectionViewCell";
 
-static NSString * const fontFamilyForActualYearOpenLabel = @"HelveticaNeue";
+static NSString * const kFontFamilyForActualYearOpenLabel = @"HelveticaNeue";
 
-static NSUInteger fontFamilySizeForActualYearOpenLabel = 17;
+static const NSUInteger kFontFamilySizeForActualYearOpenLabel = 17;
 
-static NSUInteger yearsSegmentedControlActualYearIndex = 0;
-static NSUInteger yearsSegmentedControlYearsWithConceptsIndex = 1;
-static NSUInteger yearsSegmentedControlAllYearsIndex = 2;
+static const NSUInteger kYearsSegmentedControlActualYearIndex = 0;
+static const NSUInteger kYearsSegmentedControlYearsWithConceptsIndex = 1;
+static const NSUInteger kYearsSegmentedControlAllYearsIndex = 2;
 
-static NSUInteger alertViewCleanButtonIndex = 1;
+static const NSUInteger kAlertViewCleanButtonIndex = 1;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -77,8 +77,8 @@ static NSUInteger alertViewCleanButtonIndex = 1;
 
 - (void)configureYearsCollectionView
 {
-    [self.yearsCollectionView registerNib:[UINib nibWithNibName:nibNameForCollectionViewCell bundle:[NSBundle mainBundle]]
-               forCellWithReuseIdentifier:collectionViewCellReuseIdentifier];
+    [self.yearsCollectionView registerNib:[UINib nibWithNibName:kNibNameForCollectionViewCell bundle:[NSBundle mainBundle]]
+               forCellWithReuseIdentifier:kCollectionViewCellReuseIdentifier];
 
     self.yearsCollectionView.allowsSelection = YES;
     [self.yearsCollectionView addGestureRecognizer:self.longPressGestureRecognizer];
@@ -97,24 +97,24 @@ static NSUInteger alertViewCleanButtonIndex = 1;
 
 - (void)vinculeYearsSegmentedControlLabels
 {
-    [self.yearsSegmentedControl setTitle:NSLocalizedString(titleTagActualYear, @"")
-                       forSegmentAtIndex:yearsSegmentedControlActualYearIndex];
-    [self.yearsSegmentedControl setTitle:NSLocalizedString(titleTagWithConceptsYears, @"")
-                       forSegmentAtIndex:yearsSegmentedControlYearsWithConceptsIndex];
-    [self.yearsSegmentedControl setTitle:NSLocalizedString(titleTagAllYears, @"")
-                       forSegmentAtIndex:yearsSegmentedControlAllYearsIndex];
+    [self.yearsSegmentedControl setTitle:NSLocalizedString(kTitleTagActualYear, @"")
+                       forSegmentAtIndex:kYearsSegmentedControlActualYearIndex];
+    [self.yearsSegmentedControl setTitle:NSLocalizedString(kTitleTagWithConceptsYears, @"")
+                       forSegmentAtIndex:kYearsSegmentedControlYearsWithConceptsIndex];
+    [self.yearsSegmentedControl setTitle:NSLocalizedString(kTitleTagAllYears, @"")
+                       forSegmentAtIndex:kYearsSegmentedControlAllYearsIndex];
 }
 
 - (void)vinculeActualYearOpenLabel
 {
-    NSString *textLabel = [NSString stringWithFormat:NSLocalizedString(titleTagYearOpen, @""), self.yearLoadedBeforeStart];
+    NSString *textLabel = [NSString stringWithFormat:NSLocalizedString(kTitleTagYearOpen, @""), self.yearLoadedBeforeStart];
     self.actualYearOpenLabel.attributedText = [[NSAttributedString alloc] initWithString:textLabel
                                                                               attributes:[self createAttributeDictionaryForActualYearOpenLabel]];
 }
 
 - (NSDictionary *)createAttributeDictionaryForActualYearOpenLabel
 {
-    NSDictionary *attributes =  @{NSFontAttributeName: [UIFont fontWithName:fontFamilyForActualYearOpenLabel size:fontFamilySizeForActualYearOpenLabel],
+    NSDictionary *attributes =  @{NSFontAttributeName: [UIFont fontWithName:kFontFamilyForActualYearOpenLabel size:kFontFamilySizeForActualYearOpenLabel],
                                   NSForegroundColorAttributeName: [UIColor darkGrayColor],
                                   NSKernAttributeName: [NSNumber numberWithInteger:0.0]};
     
@@ -151,7 +151,7 @@ static NSUInteger alertViewCleanButtonIndex = 1;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSAssert(collectionView == self.yearsCollectionView, @"");
-    IAEYearSelectorCollectionViewCell *cell = (IAEYearSelectorCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:collectionViewCellReuseIdentifier
+    IAEYearSelectorCollectionViewCell *cell = (IAEYearSelectorCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kCollectionViewCellReuseIdentifier
                                                                                                                              forIndexPath:indexPath];
     [self configureCell:cell WithIndexPath:indexPath];
     
@@ -212,17 +212,17 @@ static NSUInteger alertViewCleanButtonIndex = 1;
 
 - (BOOL)isSegmentedControlInPresentYearState
 {
-    return self.yearsSegmentedControl.selectedSegmentIndex == yearsSegmentedControlActualYearIndex;
+    return self.yearsSegmentedControl.selectedSegmentIndex == kYearsSegmentedControlActualYearIndex;
 }
 
 - (BOOL)isSegmentedControlInWithConceptsYearsState
 {
-    return self.yearsSegmentedControl.selectedSegmentIndex == yearsSegmentedControlYearsWithConceptsIndex;
+    return self.yearsSegmentedControl.selectedSegmentIndex == kYearsSegmentedControlYearsWithConceptsIndex;
 }
 
 - (BOOL)isSegmentedControlInAllYearsState
 {
-    return self.yearsSegmentedControl.selectedSegmentIndex == yearsSegmentedControlAllYearsIndex;
+    return self.yearsSegmentedControl.selectedSegmentIndex == kYearsSegmentedControlAllYearsIndex;
 }
 
 - (IAEYear *)findYearUsingYearDate:(NSUInteger)yearDate
@@ -432,7 +432,7 @@ static NSUInteger alertViewCleanButtonIndex = 1;
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == alertViewCleanButtonIndex) {
+    if (buttonIndex == kAlertViewCleanButtonIndex) {
         [self cleanYearSelectedWithActionMenu];
     }
     

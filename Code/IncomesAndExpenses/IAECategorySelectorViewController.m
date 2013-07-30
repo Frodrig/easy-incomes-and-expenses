@@ -14,9 +14,6 @@
 #import "IAEBook.h"
 #import "IAECategorySelectorViewControllerDelegate.h"
 
-const NSUInteger INCOME_SEGMENTED_INDEX = 0;
-const NSUInteger EXPENSE_SEGMENTED_INDEX = 1;
-
 @interface IAECategorySelectorViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *categoriesTableView;
@@ -29,6 +26,9 @@ const NSUInteger EXPENSE_SEGMENTED_INDEX = 1;
 @end
 
 @implementation IAECategorySelectorViewController
+
+static const NSUInteger kIncomeSegmentedIndex = 0;
+static const NSUInteger kExpenseSegmentedIndex = 1;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -159,7 +159,7 @@ const NSUInteger EXPENSE_SEGMENTED_INDEX = 1;
     CategoryType actualCategory = [self categoryTypeSelectedInCategorySegmentedControl];
     if (actualCategory != category) {
         NSAssert(category != InvalidCategory, @"");
-        self.categorySegmentedControl.selectedSegmentIndex = category == IncomeCategory ? INCOME_SEGMENTED_INDEX : EXPENSE_SEGMENTED_INDEX;
+        self.categorySegmentedControl.selectedSegmentIndex = category == IncomeCategory ? kIncomeSegmentedIndex : kExpenseSegmentedIndex;
         
         [self reloadData];
     }
@@ -242,7 +242,7 @@ const NSUInteger EXPENSE_SEGMENTED_INDEX = 1;
 - (CategoryType)categoryTypeSelectedInCategorySegmentedControl
 {
     CategoryType categoryType = IncomeCategory;
-    if (self.categorySegmentedControl.selectedSegmentIndex == EXPENSE_SEGMENTED_INDEX) {
+    if (self.categorySegmentedControl.selectedSegmentIndex == kExpenseSegmentedIndex) {
         categoryType = ExpenseCategory;
     }
     

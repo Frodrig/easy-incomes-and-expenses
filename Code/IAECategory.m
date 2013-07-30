@@ -19,10 +19,10 @@
 @dynamic categoryType;
 @dynamic tag;
 
-static NSString * const ltextGeneralIncome = @"General Income";
-static NSString * const ltextGeneralExpense = @"General Expense";
-static NSString * const ltextIncomeCategoryType = @"Income";
-static NSString * const ltextExpenseCategoryType = @"Expense";
+static NSString * const kLTextGeneralIncome = @"General Income";
+static NSString * const kLTextGeneralExpense = @"General Expense";
+static NSString * const kLTextIncomeCategoryType = @"Income";
+static NSString * const kLTextExpenseCategoryType = @"Expense";
 
 // Notas:
 // - No vacio
@@ -67,10 +67,10 @@ static NSString * const ltextExpenseCategoryType = @"Expense";
 - (NSString *)localizedTag
 {
     NSString *retTag = self.tag;
-    if ([self.tag compare:ltextGeneralIncome] == NSOrderedSame) {
-        retTag = NSLocalizedString(ltextGeneralIncome, @"");
-    } else if ([self.tag compare:ltextGeneralExpense] == NSOrderedSame) {
-        retTag = NSLocalizedString(ltextGeneralExpense, @"");
+    if ([self.tag compare:kLTextGeneralIncome] == NSOrderedSame) {
+        retTag = NSLocalizedString(kLTextGeneralIncome, @"");
+    } else if ([self.tag compare:kLTextGeneralExpense] == NSOrderedSame) {
+        retTag = NSLocalizedString(kLTextGeneralExpense, @"");
     }
     
     return retTag;
@@ -105,8 +105,8 @@ static NSString * const ltextExpenseCategoryType = @"Expense";
 
 - (NSString *)localizedCategoryTypeString
 {
-    return self.categoryType == IncomeCategory ? NSLocalizedString(ltextIncomeCategoryType, @"") :
-                                                 NSLocalizedString(ltextExpenseCategoryType, @"");
+    return self.categoryType == IncomeCategory ? NSLocalizedString(kLTextIncomeCategoryType, @"") :
+                                                 NSLocalizedString(kLTextExpenseCategoryType, @"");
 }
 
 @end

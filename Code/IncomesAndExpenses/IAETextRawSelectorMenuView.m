@@ -14,7 +14,7 @@
 
 #pragma mark - properties
 
-static NSUInteger tagBaseValue = 100;
+static const NSUInteger kTagBaseValue = 100;
 
 - (void)setDataSource:(id<IAETextRawSelectorMenuViewDataSource>)dataSource
 {
@@ -121,12 +121,12 @@ static NSUInteger tagBaseValue = 100;
 
 - (NSUInteger)createTagForButtonAtIndex:(NSUInteger)optionIt
 {
-    return tagBaseValue + optionIt;
+    return kTagBaseValue + optionIt;
 }
 
 - (NSUInteger)optionIndexFromTagOfOptionButton:(UIButton *)button
 {
-    return button.tag - tagBaseValue;
+    return button.tag - kTagBaseValue;
 }
 
 - (void)adjustFrameUsingMenuOptions

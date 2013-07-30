@@ -19,8 +19,8 @@
 
 @synthesize userDefinedCategories = _userDefinedCategories;
 
-static NSString * const entityNameCategory = @"IAECategory";
-static NSString * const categoryPropertyNameTag = @"tag";
+static NSString * const kEntityNameCategory = @"IAECategory";
+static NSString * const kCategoryPropertyNameTag = @"tag";
 
 #pragma mark - Singleton
 
@@ -60,7 +60,7 @@ static NSString * const categoryPropertyNameTag = @"tag";
 {
     if (_userDefinedCategories == nil) {
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
-        request.entity = [[[IAEBook sharedBook].model entitiesByName] objectForKey:entityNameCategory];
+        request.entity = [[[IAEBook sharedBook].model entitiesByName] objectForKey:kEntityNameCategory];
         request.predicate = [NSPredicate predicateWithFormat:@"(NOT tag MATCHES %@) AND (NOT tag MATCHES %@)",
                              tagGeneralIncomeCategory,
                              tagGeneralExpenseCategory];
@@ -80,7 +80,7 @@ static NSString * const categoryPropertyNameTag = @"tag";
 - (void)setAsObserverOfCategories:(NSArray *)categories
 {
     for (IAECategory *category in categories) {
-        [category addObserver:self forKeyPath:categoryPropertyNameTag
+        [category addObserver:self forKeyPath:kCategoryPropertyNameTag
                       options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
                       context:NULL];
     }
@@ -141,7 +141,7 @@ static NSString * const categoryPropertyNameTag = @"tag";
             concept.category = baseCategory;
         }
 
-        [category removeObserver:self forKeyPath:categoryPropertyNameTag context:NULL];
+        [category removeObserver:self forKeyPath:kCategoryPropertyNameTag context:NULL];
         [_userDefinedCategories removeObject:category];
         [[IAEBook sharedBook].context deleteObject:category];
     }
@@ -208,7 +208,7 @@ static NSString * const categoryPropertyNameTag = @"tag";
 - (IAECategory *)findCategoryByTag:(NSString *)tag
 {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    request.entity = [[[IAEBook sharedBook].model entitiesByName] objectForKey:entityNameCategory];
+    request.entity = [[[IAEBook sharedBook].model entitiesByName] objectForKey:kEntityNameCategory];
     request.predicate = [NSPredicate predicateWithFormat:@"tag like %@", [self normalizeCategoryTag:tag]];
     
     NSError *error = nil;
@@ -227,7 +227,7 @@ static NSString * const categoryPropertyNameTag = @"tag";
                         change:(NSDictionary *)change
                        context:(void *)context
 {    
-    if ([keyPath isEqualToString:categoryPropertyNameTag]) {
+    if ([keyPath isEqualToString:kCategoryPropertyNameTag]) {
         id oldValue = [change objectForKey:NSKeyValueChangeOldKey];
         id newValue = [change objectForKey:NSKeyValueChangeNewKey];
         if ([[change objectForKey:NSKeyValueChangeKindKey] intValue] == NSKeyValueChangeSetting && newValue != [NSNull null]) {

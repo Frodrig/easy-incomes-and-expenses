@@ -18,18 +18,18 @@
 
 @implementation IAEEditModeConceptCollectionViewCell
 
-static NSUInteger tagForEntryInstantLabelOfIdentifierContainerView = 10;
-static NSUInteger tagForDayIndexLabelOfIdentifierContainerView = 20;
-static NSUInteger tagForNoDayLabelOfIdentifierContainerVew = 30;
+static const NSUInteger kTagForEntryInstantLabelOfIdentifierContainerView = 10;
+static const NSUInteger kTagForDayIndexLabelOfIdentifierContainerView = 20;
+static const NSUInteger kTagForNoDayLabelOfIdentifierContainerVew = 30;
 
-static NSString  * const entryInstantFontFamilyName = @"HelveticaNeue-Bold";
-static CGFloat entryInstantFontFamilySize = 66;
-static NSString * const entryWithNoDayFontFamilyName = @"HelveticaNeue";
-static CGFloat entryWithNoDayFontFamilySize = 17;
-static NSString * const entryDayOfTheMonthFontFamilyName = @"HelveticaNeue";
-static CGFloat entryDayOfTheMonthFontFamilySize = 24;
+static NSString  * const kEntryInstantFontFamilyName = @"HelveticaNeue-Bold";
+static const CGFloat kEntryInstantFontFamilySize = 66;
+static NSString * const kEntryWithNoDayFontFamilyName = @"HelveticaNeue";
+static const CGFloat kEntryWithNoDayFontFamilySize = 17;
+static NSString * const kEntryDayOfTheMonthFontFamilyName = @"HelveticaNeue";
+static const CGFloat kEntryDayOfTheMonthFontFamilySize = 24;
 
-static NSString * const ltexForEntryWithNoDay = @"LTEXT_EDITMODECONCEPTCELL_ENTRYWITHNODAY";
+static NSString * const kLTexForEntryWithNoDay = @"LTEXT_EDITMODECONCEPTCELL_ENTRYWITHNODAY";
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -129,17 +129,17 @@ static NSString * const ltexForEntryWithNoDay = @"LTEXT_EDITMODECONCEPTCELL_ENTR
 
 - (BOOL)isContainerViewConfiguredWithEntryInstantIndex
 {
-    return [self.identifierContainerView viewWithTag:tagForEntryInstantLabelOfIdentifierContainerView] != nil;
+    return [self.identifierContainerView viewWithTag:kTagForEntryInstantLabelOfIdentifierContainerView] != nil;
 }
 
 - (BOOL)isContainerViewConfiguredWithDay
 {
-    return ([self.identifierContainerView viewWithTag:tagForDayIndexLabelOfIdentifierContainerView] != nil);
+    return ([self.identifierContainerView viewWithTag:kTagForDayIndexLabelOfIdentifierContainerView] != nil);
 }
 
 - (BOOL)isContainerViewConfiguredWithNoDay
 {
-    return ([self.identifierContainerView viewWithTag:tagForNoDayLabelOfIdentifierContainerVew] != nil);
+    return ([self.identifierContainerView viewWithTag:kTagForNoDayLabelOfIdentifierContainerVew] != nil);
 }
 
 - (void)removeIdentifierContainerViewSubviews
@@ -153,7 +153,7 @@ static NSString * const ltexForEntryWithNoDay = @"LTEXT_EDITMODECONCEPTCELL_ENTR
 - (void)createAndAddInIdentifierContainerViewEntryInstantLabel
 {
     UILabel *label = [self createEmptyDefaultLabelWithRect:self.identifierContainerView.bounds
-                                                       tag:tagForEntryInstantLabelOfIdentifierContainerView
+                                                       tag:kTagForEntryInstantLabelOfIdentifierContainerView
                                           andNumberOfLines:1];
     [self.identifierContainerView addSubview:label];
 }
@@ -173,12 +173,12 @@ static NSString * const ltexForEntryWithNoDay = @"LTEXT_EDITMODECONCEPTCELL_ENTR
 - (void)configureEntryInstantLabelWithIndex:(NSUInteger)index
 {
     NSString *text = [NSString stringWithFormat:@"%d", index];
-    UIFont *font = [UIFont fontWithName:entryInstantFontFamilyName size:entryInstantFontFamilySize];
+    UIFont *font = [UIFont fontWithName:kEntryInstantFontFamilyName size:kEntryInstantFontFamilySize];
     NSDictionary *attributes = @{NSFontAttributeName: font,
                                  NSForegroundColorAttributeName: [UIColor colorWithWhite:0.9 alpha:1.0],
                                  NSKernAttributeName: [NSNumber numberWithInteger:0]};
     
-    UILabel *label = (UILabel *)[self.identifierContainerView viewWithTag:tagForEntryInstantLabelOfIdentifierContainerView];
+    UILabel *label = (UILabel *)[self.identifierContainerView viewWithTag:kTagForEntryInstantLabelOfIdentifierContainerView];
     label.attributedText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
@@ -190,7 +190,7 @@ static NSString * const ltexForEntryWithNoDay = @"LTEXT_EDITMODECONCEPTCELL_ENTR
 - (void)createAndAddInIdentifierContainerViewDayOfTheMonthLabel
 {
     UILabel *dayOfTheMonthLabel = [self createEmptyDefaultLabelWithRect:self.identifierContainerView.bounds
-                                                                    tag:tagForDayIndexLabelOfIdentifierContainerView
+                                                                    tag:kTagForDayIndexLabelOfIdentifierContainerView
                                                        andNumberOfLines:2];
     [self.identifierContainerView addSubview:dayOfTheMonthLabel];
 }
@@ -202,12 +202,12 @@ static NSString * const ltexForEntryWithNoDay = @"LTEXT_EDITMODECONCEPTCELL_ENTR
 
 - (void)configureDayOfTheMonthAndWeekLabelWithIndex:(NSUInteger)dayOfTheMonthIndex andWeekdayName:(NSString *)dayOfTheWeekName
 {
-    UIFont *font = [UIFont fontWithName:entryWithNoDayFontFamilyName size:entryDayOfTheMonthFontFamilySize];
+    UIFont *font = [UIFont fontWithName:kEntryWithNoDayFontFamilyName size:kEntryDayOfTheMonthFontFamilySize];
     NSDictionary *attributes = @{NSFontAttributeName: font,
                                  NSForegroundColorAttributeName: [UIColor colorWithWhite:0.8 alpha:1.0],
                                  NSKernAttributeName: [NSNumber numberWithInt:2.0]};
     
-    UILabel *label = (UILabel *)[self.identifierContainerView viewWithTag:tagForDayIndexLabelOfIdentifierContainerView];
+    UILabel *label = (UILabel *)[self.identifierContainerView viewWithTag:kTagForDayIndexLabelOfIdentifierContainerView];
  
     NSString *dayOfTheMonth = [NSString stringWithAtLastTwoDigitFromNumber:[NSNumber numberWithUnsignedInteger:dayOfTheMonthIndex]];
     NSString *dayOfTheWeekNamePrepared = [dayOfTheWeekName substringWithRange:NSMakeRange(0, 3)];
@@ -220,20 +220,20 @@ static NSString * const ltexForEntryWithNoDay = @"LTEXT_EDITMODECONCEPTCELL_ENTR
 - (void)createAndAddIdentifierWithoutDay
 {
     UILabel *label = [self createEmptyDefaultLabelWithRect:self.identifierContainerView.bounds
-                                                       tag:tagForNoDayLabelOfIdentifierContainerVew
+                                                       tag:kTagForNoDayLabelOfIdentifierContainerVew
                                           andNumberOfLines:2];
     [self.identifierContainerView addSubview:label];
 }
 
 - (void)configureNoDayLabel
 {
-    NSString *text = NSLocalizedString(ltexForEntryWithNoDay, @"");
-    UIFont *font = [UIFont fontWithName:entryWithNoDayFontFamilyName size:entryWithNoDayFontFamilySize];
+    NSString *text = NSLocalizedString(kLTexForEntryWithNoDay, @"");
+    UIFont *font = [UIFont fontWithName:kEntryWithNoDayFontFamilyName size:kEntryWithNoDayFontFamilySize];
     NSDictionary *attributes = @{NSFontAttributeName: font,
                                  NSForegroundColorAttributeName: [UIColor colorWithWhite:0.8 alpha:1.0],
                                  NSKernAttributeName: [NSNumber numberWithInt:0]};
     
-    UILabel *label = (UILabel *)[self.identifierContainerView viewWithTag:tagForNoDayLabelOfIdentifierContainerVew];
+    UILabel *label = (UILabel *)[self.identifierContainerView viewWithTag:kTagForNoDayLabelOfIdentifierContainerVew];
     label.attributedText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 

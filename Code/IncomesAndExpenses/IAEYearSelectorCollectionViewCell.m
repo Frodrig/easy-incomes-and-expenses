@@ -26,10 +26,10 @@
 
 @implementation IAEYearSelectorCollectionViewCell
 
-static NSString * const fontFamilyForYearDateLabel = @"HelveticaNeue-UltraLight";
-static NSString * const fontFamilyForBalanceLabel = @"HelveticaNeue-Italic";
-static NSUInteger fontFamilySizeForYearDateLabel = 55;
-static NSUInteger fontFamilySizeForBalanceLabel = 21;
+static NSString * const kFontFamilyForYearDateLabel = @"HelveticaNeue-UltraLight";
+static NSString * const kFontFamilyForBalanceLabel = @"HelveticaNeue-Italic";
+static const NSUInteger kFontFamilySizeForYearDateLabel = 55;
+static const NSUInteger kFontFamilySizeForBalanceLabel = 21;
 
 static NSUInteger containerViewRoundRectSize = 10;
 
@@ -93,7 +93,7 @@ static NSUInteger containerViewRoundRectSize = 10;
 
 - (NSDictionary *)createAttributeDictionaryForYearLabelWithColor:(UIColor *)color
 {
-    NSDictionary *attributes =  @{NSFontAttributeName: [UIFont fontWithName:fontFamilyForYearDateLabel size:fontFamilySizeForYearDateLabel],
+    NSDictionary *attributes =  @{NSFontAttributeName: [UIFont fontWithName:kFontFamilyForYearDateLabel size:kFontFamilySizeForYearDateLabel],
                                   NSForegroundColorAttributeName: color,
                                   NSKernAttributeName: [NSNumber numberWithInteger:20.0]};
 
@@ -102,7 +102,7 @@ static NSUInteger containerViewRoundRectSize = 10;
 
 - (NSDictionary *)createAttributeDictionaryForBalanceYearLabel
 {
-    NSDictionary *attributes =  @{NSFontAttributeName: [UIFont fontWithName:fontFamilyForBalanceLabel size:fontFamilySizeForBalanceLabel],
+    NSDictionary *attributes =  @{NSFontAttributeName: [UIFont fontWithName:kFontFamilyForBalanceLabel size:kFontFamilySizeForBalanceLabel],
                                   NSForegroundColorAttributeName: [UIColor lightGrayColor],
                                   NSKernAttributeName: [NSNumber numberWithInteger:1.0]};
     

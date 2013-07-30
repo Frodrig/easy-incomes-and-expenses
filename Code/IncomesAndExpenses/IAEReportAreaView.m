@@ -13,11 +13,11 @@
 
 @implementation IAEReportAreaView
 
-static CGFloat widthForLines = 1.0;
-static CGFloat colorWithWhiteValueForLines = 0.5;
-static CGFloat alphaForColorWithWhiteValueForLines = 1.0;
+static const CGFloat kWidthForLines = 1.0;
+static const CGFloat kColorWithWhiteValueForLines = 0.5;
+static const CGFloat kAlphaForColorWithWhiteValueForLines = 1.0;
 
-static CGFloat maxNumberOfReportItemsInScreen = 3.0;
+static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
 
 @synthesize delegate = delegate__;
 
@@ -75,11 +75,11 @@ static CGFloat maxNumberOfReportItemsInScreen = 3.0;
 {
     CGContextSaveGState(contextRef);
     CGContextSetAllowsAntialiasing(contextRef, true);
-    CGContextSetLineWidth(contextRef, widthForLines);
+    CGContextSetLineWidth(contextRef, kWidthForLines);
     
     CGContextMoveToPoint(contextRef, fromPoint.x, fromPoint.y);
     CGContextAddLineToPoint(contextRef, destinationPoint.x, destinationPoint.y);
-    CGContextSetGrayStrokeColor(contextRef, colorWithWhiteValueForLines, alphaForColorWithWhiteValueForLines);
+    CGContextSetGrayStrokeColor(contextRef, kColorWithWhiteValueForLines, kAlphaForColorWithWhiteValueForLines);
     CGContextStrokePath(contextRef);
 
     CGContextRestoreGState(contextRef);
@@ -129,14 +129,14 @@ static CGFloat maxNumberOfReportItemsInScreen = 3.0;
                                                      andWidthOfReportAreaItemsView:widthOfReportAreaItems];
         
         IAEReportAreaItemView *reportAreaItem = [[IAEReportAreaItemView alloc] initWithFrame:frameOfReportAreaItem];
-        reportAreaItem.title = [self.dataSource reportAreaView:self titleOfItemWithIndex:reportAreaItemIt];
-        reportAreaItem.subtitle = [self.dataSource reportAreaView:self subtitleOfItemWithIndex:reportAreaItemIt];
+        //reportAreaItem.title = [self.dataSource reportAreaView:self titleOfItemWithIndex:reportAreaItemIt];
+        //reportAreaItem.subtitle = [self.dataSource reportAreaView:self subtitleOfItemWithIndex:reportAreaItemIt];
     }
 }
 
 - (CGFloat)calculeWidthOfReportAreaItemViews
 {
-    CGFloat width = self.bounds.size.width / maxNumberOfReportItemsInScreen;
+    CGFloat width = self.bounds.size.width / kMaxNumberOfReportItemsInScreen;
     
     return width;
 }
@@ -160,7 +160,7 @@ static CGFloat maxNumberOfReportItemsInScreen = 3.0;
 
 - (void)adjustContentSize
 {
-    CGFloat width = self.bounds.size.width * (self.subviews.count / maxNumberOfReportItemsInScreen);
+    CGFloat width = self.bounds.size.width * (self.subviews.count / kMaxNumberOfReportItemsInScreen);
     self.contentSize = CGSizeMake(width, self.bounds.size.height);
 }
 

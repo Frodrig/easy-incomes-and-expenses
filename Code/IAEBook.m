@@ -17,7 +17,7 @@
 @synthesize context = _context;
 @synthesize model = _model;
 
-static NSString * const fileNameForStoreData = @"incomeandexpenses.data";
+static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
 
 #pragma mark - Singleton
 
@@ -52,7 +52,7 @@ static NSString * const fileNameForStoreData = @"incomeandexpenses.data";
 {
     NSArray *documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirectory = [documentDirectories objectAtIndex:0];
-    NSURL* retURL = [NSURL fileURLWithPath:[documentDirectory stringByAppendingPathComponent:fileNameForStoreData]];
+    NSURL* retURL = [NSURL fileURLWithPath:[documentDirectory stringByAppendingPathComponent:kFileNameForStoreData]];
     
     return retURL;
 }

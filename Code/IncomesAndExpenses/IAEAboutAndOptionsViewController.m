@@ -19,20 +19,20 @@
 
 @implementation IAEAboutAndOptionsViewController
 
-static NSString * const collectionViewHeaderNibName = @"IAEHeaderAboutAndOptionsCollectionReusableView";
-static NSString * const collectionViewHeaderIdentifier = @"IAEHeaderAboutAndOptions";
-static NSString * const collectionViewSettingsCellNibName = @"IAESettingsAboutAndOptionsCollectionViewCell";
-static NSString * const collectionviewSettingsCellIdentifier = @"IAESettingsCell";
-static NSString * const collectionViewAboutCellNibName = @"IAEInfoAboutAndOptionsCollectionViewCell";
-static NSString * const collectionViewAboutCellIdentifier = @"IAEInfoCell";
+static NSString * const kCollectionViewHeaderNibName = @"IAEHeaderAboutAndOptionsCollectionReusableView";
+static NSString * const kCollectionViewHeaderIdentifier = @"IAEHeaderAboutAndOptions";
+static NSString * const kCollectionViewSettingsCellNibName = @"IAESettingsAboutAndOptionsCollectionViewCell";
+static NSString * const kCollectionviewSettingsCellIdentifier = @"IAESettingsCell";
+static NSString * const kCollectionViewAboutCellNibName = @"IAEInfoAboutAndOptionsCollectionViewCell";
+static NSString * const kCollectionViewAboutCellIdentifier = @"IAEInfoCell";
 
-static NSUInteger numberOfSectionsInCollectionView = 2;
+static const NSUInteger kNumberOfSectionsInCollectionView = 2;
 
-static NSUInteger settingsSectionIndex = 0;
-static NSUInteger aboutSectionIndex = 1;
+static const NSUInteger kSettingsSectionIndex = 0;
+static const NSUInteger kAboutSectionIndex = 1;
 
-static NSString * const settingsHeaderSectionTextTag = @"LTEXT_SETTINGS_HEADERSECTION_TEXT";
-static NSString * const aboutHeaderSectionTextTag = @"LTEXT_ABOUT_HEADERSECTION_TEXT";
+static NSString * const kSettingsHeaderSectionTextTag = @"LTEXT_SETTINGS_HEADERSECTION_TEXT";
+static NSString * const kAboutHeaderSectionTextTag = @"LTEXT_ABOUT_HEADERSECTION_TEXT";
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -53,15 +53,15 @@ static NSString * const aboutHeaderSectionTextTag = @"LTEXT_ABOUT_HEADERSECTION_
 
 - (void)configureCollectionView
 {
-    [self.collectionView registerNib:[UINib nibWithNibName:collectionViewSettingsCellNibName bundle:nil]
-          forCellWithReuseIdentifier:collectionviewSettingsCellIdentifier];
+    [self.collectionView registerNib:[UINib nibWithNibName:kCollectionViewSettingsCellNibName bundle:nil]
+          forCellWithReuseIdentifier:kCollectionviewSettingsCellIdentifier];
     
-    [self.collectionView registerNib:[UINib nibWithNibName:collectionViewAboutCellNibName bundle:nil]
-          forCellWithReuseIdentifier:collectionViewAboutCellIdentifier];
+    [self.collectionView registerNib:[UINib nibWithNibName:kCollectionViewAboutCellNibName bundle:nil]
+          forCellWithReuseIdentifier:kCollectionViewAboutCellIdentifier];
     
-    [self.collectionView registerNib:[UINib nibWithNibName:collectionViewHeaderNibName bundle:nil]
+    [self.collectionView registerNib:[UINib nibWithNibName:kCollectionViewHeaderNibName bundle:nil]
           forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-                  withReuseIdentifier:collectionViewHeaderIdentifier];
+                  withReuseIdentifier:kCollectionViewHeaderIdentifier];
     
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -104,12 +104,12 @@ static NSString * const aboutHeaderSectionTextTag = @"LTEXT_ABOUT_HEADERSECTION_
 
 - (BOOL)isSettingsSectionForIndex:(NSUInteger)index
 {
-    return index == settingsSectionIndex;
+    return index == kSettingsSectionIndex;
 }
 
 - (BOOL)isAboutSectionForIndex:(NSUInteger)index
 {
-    return index == aboutSectionIndex;
+    return index == kAboutSectionIndex;
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -118,10 +118,10 @@ static NSString * const aboutHeaderSectionTextTag = @"LTEXT_ABOUT_HEADERSECTION_
 {
     UICollectionViewCell *cell =  nil;
     if ([self isSettingsSectionForIndex:indexPath.section]) {
-        cell = [collectionView dequeueReusableCellWithReuseIdentifier:collectionviewSettingsCellIdentifier forIndexPath:indexPath];
+        cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCollectionviewSettingsCellIdentifier forIndexPath:indexPath];
         [self configureSettingsCell:(IAESettingsAboutAndOptionsCollectionViewCell *)cell];
     } else if ([self isAboutSectionForIndex:indexPath.section]) {
-        cell = [collectionView dequeueReusableCellWithReuseIdentifier:collectionViewAboutCellIdentifier forIndexPath:indexPath];
+        cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCollectionViewAboutCellIdentifier forIndexPath:indexPath];
         [self configureAboutCell:(IAEInfoAboutAndOptionsCollectionViewCell *)cell];
     }
     
@@ -143,7 +143,7 @@ static NSString * const aboutHeaderSectionTextTag = @"LTEXT_ABOUT_HEADERSECTION_
                                  atIndexPath:(NSIndexPath *)indexPath
 {
     IAEHeaderAboutAndOptionsCollectionReusableView *header = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-                                                                                          withReuseIdentifier:collectionViewHeaderIdentifier
+                                                                                          withReuseIdentifier:kCollectionViewHeaderIdentifier
                                                                                                  forIndexPath:indexPath];
     [self configureHeaderView:header forIndexPath:indexPath];
     
@@ -153,9 +153,9 @@ static NSString * const aboutHeaderSectionTextTag = @"LTEXT_ABOUT_HEADERSECTION_
 - (void)configureHeaderView:(IAEHeaderAboutAndOptionsCollectionReusableView *)header forIndexPath:(NSIndexPath *)indexPath
 {
     if ([self isSettingsSectionForIndex:indexPath.section]) {
-        [header configureHeaderLabelWithText:NSLocalizedString(settingsHeaderSectionTextTag, @"")];
+        [header configureHeaderLabelWithText:NSLocalizedString(kSettingsHeaderSectionTextTag, @"")];
     } else if ([self isAboutSectionForIndex:indexPath.section]) {
-        [header configureHeaderLabelWithText:NSLocalizedString(aboutHeaderSectionTextTag, @"")];
+        [header configureHeaderLabelWithText:NSLocalizedString(kAboutHeaderSectionTextTag, @"")];
     }
 }
 
@@ -173,7 +173,7 @@ static NSString * const aboutHeaderSectionTextTag = @"LTEXT_ABOUT_HEADERSECTION_
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return numberOfSectionsInCollectionView;
+    return kNumberOfSectionsInCollectionView;
 }
 
 #pragma mark - IAEAboutAndOptionsViewController

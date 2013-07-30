@@ -58,37 +58,41 @@
 
 @implementation IAEEasyIncomesAndExpensesViewController
 
-static CGFloat editAndReportModeContentContainerRadius = 15;
-static CGFloat colorWithWhiteForEditAndReportModeContentContainerBackground = 0.97;
+#pragma mark - Constants
 
-static NSString * const userDefaultsDayModeActive = @"dayModeActive";
+static const CGFloat kEditAndReportModeContentContainerRadius = 15;
+static const CGFloat kColorWithWhiteForEditAndReportModeContentContainerBackground = 0.97;
 
-static NSString * const notificationDayModeOnName = @"dayModeToOn";
-static NSString * const notificationDayModeOffName = @"dayModeToOff";
+static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 
-static NSString * const ltextModeSegmentedControlEditMode = @"LTEXT_MODESEGMENTEDCONTROL_EDITMODE";
-static NSString * const ltextModeSegmentedControlReportmode = @"LTEXT_MODESEGMENTEDCONTROL_REPORTMODE";
+static NSString * const kNotificationDayModeOnName = @"dayModeToOn";
+static NSString * const kNotificationDayModeOffName = @"dayModeToOff";
 
-static NSUInteger contentScrollViewNumberOfItems = 13;
-static NSUInteger globalIndexForYearInContextScrollView = 0;
+static NSString * const kLtextModeSegmentedControlEditMode = @"LTEXT_MODESEGMENTEDCONTROL_EDITMODE";
+static NSString * const kLtextModeSegmentedControlReportmode = @"LTEXT_MODESEGMENTEDCONTROL_REPORTMODE";
 
-static NSString * const nibConceptCellName = @"IAEEditModeConceptCollectionViewCell";
-static NSString * const idConceptCellName = @"EditModeConceptCell";
+static const NSUInteger kContentScrollViewNumberOfItems = 13;
+static const NSUInteger kGlobalIndexForYearInContextScrollView = 0;
 
-static NSString * const contextMenuFontFamilyName = @"HelveticaNeue-Ultralight";
-static CGFloat contextMenuFontSizeOfOptions = 24;
-static CGFloat contextMenuDefaultKernOfOptions = 4;
-static CGFloat contextMenuYearKernOfOptions = 0;
-static NSUInteger contextMenuIndexOfYearOption = 0;
+static NSString * const kNibConceptCellName = @"IAEEditModeConceptCollectionViewCell";
+static NSString * const kIdConceptCellName = @"EditModeConceptCell";
 
-static NSUInteger segmentedControlIndexEditMode = 0;
-static NSUInteger segmentedControlIndexReportMode = 1;
+static NSString * const kContextMenuFontFamilyName = @"HelveticaNeue-Ultralight";
+static const CGFloat kContextMenuFontSizeOfOptions = 24;
+static const CGFloat kContextMenuDefaultKernOfOptions = 4;
+static const CGFloat kContextMenuYearKernOfOptions = 0;
+static const NSUInteger kContextMenuIndexOfYearOption = 0;
 
-static NSUInteger reportMenuNumberOfItems = 3;
-static NSString * const reportMenuFontFamilyName = @"HelveticaNeue-Ultralight";
-static CGFloat reportMenuFontSizeOfOptions = 28;
-static CGFloat reportMenuKernOfOptions = 4;
-static CGFloat reportMenuItemWidthSize = 200;
+static const NSUInteger kSegmentedControlIndexEditMode = 0;
+static const NSUInteger kSegmentedControlIndexReportMode = 1;
+
+static const NSUInteger kReportMenuNumberOfItems = 3;
+static NSString * const kReportMenuFontFamilyName = @"HelveticaNeue-Ultralight";
+static const CGFloat kReportMenuFontSizeOfOptions = 28;
+static const CGFloat kReportMenuKernOfOptions = 4;
+static const CGFloat kReportMenuItemWidthSize = 200;
+
+#pragma mark - Init
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -130,12 +134,12 @@ static CGFloat reportMenuItemWidthSize = 200;
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(notificationCenterOnDayModeOn:)
-                                                 name:notificationDayModeOnName
+                                                 name:kNotificationDayModeOnName
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(notificationCenterOnDayModeOff:)
-                                                 name:notificationDayModeOffName
+                                                 name:kNotificationDayModeOffName
                                                object:nil];
 }
 
@@ -182,7 +186,7 @@ static CGFloat reportMenuItemWidthSize = 200;
 
 - (void)configureContextScrollViewContent
 {
-    self.contextScrollView.contentSize = CGSizeMake(contentScrollViewNumberOfItems * self.contextScrollView.bounds.size.width,
+    self.contextScrollView.contentSize = CGSizeMake(kContentScrollViewNumberOfItems * self.contextScrollView.bounds.size.width,
                                                     self.contextScrollView.bounds.size.height);
     self.contextScrollView.pagingEnabled = YES;
     self.contextScrollView.showsHorizontalScrollIndicator = NO;
@@ -204,15 +208,15 @@ static CGFloat reportMenuItemWidthSize = 200;
 
 - (void)configureEditAndReportModeContentContainerView
 {
-    [self.editAndReportModeContentContainerView addRoundedCorners:UIRectCornerAllCorners withRadius:editAndReportModeContentContainerRadius];
-    self.editAndReportModeContentContainerView.backgroundColor = [UIColor colorWithWhite:colorWithWhiteForEditAndReportModeContentContainerBackground
+    [self.editAndReportModeContentContainerView addRoundedCorners:UIRectCornerAllCorners withRadius:kEditAndReportModeContentContainerRadius];
+    self.editAndReportModeContentContainerView.backgroundColor = [UIColor colorWithWhite:kColorWithWhiteForEditAndReportModeContentContainerBackground
                                                                                    alpha:1.0];
 }
 
 - (void)configureConceptsCollectionView
 {
-    UINib *nibForConceptCell = [UINib nibWithNibName:nibConceptCellName bundle:[NSBundle mainBundle]];
-    [self.conceptsCollectionView registerNib:nibForConceptCell forCellWithReuseIdentifier:idConceptCellName];
+    UINib *nibForConceptCell = [UINib nibWithNibName:kNibConceptCellName bundle:[NSBundle mainBundle]];
+    [self.conceptsCollectionView registerNib:nibForConceptCell forCellWithReuseIdentifier:kIdConceptCellName];
     
     self.conceptsCollectionView.backgroundColor = [UIColor clearColor];
     self.conceptsCollectionView.showsHorizontalScrollIndicator = NO;
@@ -366,14 +370,14 @@ static CGFloat reportMenuItemWidthSize = 200;
 
 - (BOOL)isEditModeActive
 {
-    BOOL isEditMode = self.modeSegmentedControl.selectedSegmentIndex == segmentedControlIndexEditMode;
+    BOOL isEditMode = self.modeSegmentedControl.selectedSegmentIndex == kSegmentedControlIndexEditMode;
     
     return isEditMode;
 }
 
 - (BOOL)isReportModeActive
 {
-    BOOL isReportMode = self.modeSegmentedControl.selectedSegmentIndex == segmentedControlIndexReportMode;
+    BOOL isReportMode = self.modeSegmentedControl.selectedSegmentIndex == kSegmentedControlIndexReportMode;
     
     return isReportMode;
 }
@@ -383,7 +387,7 @@ static CGFloat reportMenuItemWidthSize = 200;
     [self.conceptsCollectionView reloadData];
     [self updateCalculatorViewHideHalfState];
     
-    self.editAndReportModeContentContainerView.backgroundColor = [UIColor colorWithWhite:colorWithWhiteForEditAndReportModeContentContainerBackground
+    self.editAndReportModeContentContainerView.backgroundColor = [UIColor colorWithWhite:kColorWithWhiteForEditAndReportModeContentContainerBackground
                                                                                    alpha:1.0];
     self.conceptsCollectionView.hidden = NO;
     self.calculatorViewController.view.hidden = NO;
@@ -437,7 +441,7 @@ static CGFloat reportMenuItemWidthSize = 200;
 - (IAEMonth *)findActualSelectedMonth
 {
     IAEMonth *month = nil;
-    if (self.contextMenuView.currentOptionIndexSelected != globalIndexForYearInContextScrollView) {
+    if (self.contextMenuView.currentOptionIndexSelected != kGlobalIndexForYearInContextScrollView) {
         NSUInteger actualMonthIndex = self.contextMenuView.currentOptionIndexSelected - 1;
         month = [self findMonthForOpenYearAtIndex:actualMonthIndex];
     }
@@ -467,7 +471,7 @@ static CGFloat reportMenuItemWidthSize = 200;
 
 - (BOOL)isDayModeActiveForConcepts
 {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:userDefaultsDayModeActive];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsDayModeActive];
 }
 
 - (IAEConcept *)findConceptAtIndexPath:(NSIndexPath *)indexPath
@@ -514,7 +518,7 @@ static CGFloat reportMenuItemWidthSize = 200;
     if ([self isActualSelectedContextAMonth]) {
         actualSelectedContext = [self findActualSelectedMonthContextView];
     } else {
-        actualSelectedContext = [self findContextViewAtGlobalPosition:globalIndexForYearInContextScrollView];
+        actualSelectedContext = [self findContextViewAtGlobalPosition:kGlobalIndexForYearInContextScrollView];
     }
     
     return actualSelectedContext;
@@ -536,7 +540,7 @@ static CGFloat reportMenuItemWidthSize = 200;
 
 - (BOOL)isActualSelectedContextTheYearOpen
 {
-    return self.contextMenuView.currentOptionIndexSelected == globalIndexForYearInContextScrollView ? YES : NO;
+    return self.contextMenuView.currentOptionIndexSelected == kGlobalIndexForYearInContextScrollView ? YES : NO;
 }
 
 - (BOOL)isActualSelectedContextAMonth
@@ -818,7 +822,7 @@ static CGFloat reportMenuItemWidthSize = 200;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSAssert(collectionView == self.conceptsCollectionView, @"Se ha recibido una collection view no esperada");
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:idConceptCellName forIndexPath:indexPath];
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kIdConceptCellName forIndexPath:indexPath];
     
     [self configureEditModeConceptCell:(IAEEditModeConceptCollectionViewCell *)cell withConceptAtIndexPath:indexPath];
     
@@ -1416,9 +1420,9 @@ static CGFloat reportMenuItemWidthSize = 200;
     NSUInteger numberOfOptions = 0;
     
     if ([self isTheContextMenuTextRawSelectorContextMenuView:textRawSelectorMenu]) {
-        numberOfOptions = contentScrollViewNumberOfItems;
+        numberOfOptions = kContentScrollViewNumberOfItems;
     } else if ([self isTheContextMenuTextRawSelectorReportMenuView:textRawSelectorMenu]) {
-        numberOfOptions = reportMenuNumberOfItems;
+        numberOfOptions = kReportMenuNumberOfItems;
     }
 
     return numberOfOptions;
@@ -1429,7 +1433,7 @@ static CGFloat reportMenuItemWidthSize = 200;
     NSString *optionStringName = nil;
     
     if ([self isTheContextMenuTextRawSelectorContextMenuView:textRawSelectorMenu]) {
-        if (optionIndex == contextMenuIndexOfYearOption) {
+        if (optionIndex == kContextMenuIndexOfYearOption) {
             optionStringName = [NSString stringWithFormat:@"%d", [self findOpenYear].yearDate];
         } else {
             optionStringName = [IAEDateHelper findMonthNameStringWithMonthIndex:optionIndex inShortForm:YES];
@@ -1457,10 +1461,10 @@ static CGFloat reportMenuItemWidthSize = 200;
     CGSize size = CGSizeZero;
     
     if ([self isTheContextMenuTextRawSelectorContextMenuView:textRawSelectorMenu]) {
-        CGFloat width = self.view.bounds.size.width / contentScrollViewNumberOfItems;
+        CGFloat width = self.view.bounds.size.width / kContentScrollViewNumberOfItems;
         size = CGSizeMake(width, 44);
     } else if ([self isTheContextMenuTextRawSelectorReportMenuView:textRawSelectorMenu]) {
-        size = CGSizeMake(reportMenuItemWidthSize, 44);
+        size = CGSizeMake(kReportMenuItemWidthSize, 44);
     }
 
     return size;
@@ -1471,9 +1475,9 @@ static CGFloat reportMenuItemWidthSize = 200;
     NSString *fontFamily = nil;
     
     if ([self isTheContextMenuTextRawSelectorContextMenuView:textRawSelectorMenu]) {
-        fontFamily = contextMenuFontFamilyName;
+        fontFamily = kContextMenuFontFamilyName;
     } else if ([self isTheContextMenuTextRawSelectorReportMenuView:textRawSelectorMenu]) {
-        fontFamily = reportMenuFontFamilyName;
+        fontFamily = kReportMenuFontFamilyName;
     }
 
     return fontFamily;
@@ -1484,9 +1488,9 @@ static CGFloat reportMenuItemWidthSize = 200;
     CGFloat fontSize = 0;
     
     if ([self isTheContextMenuTextRawSelectorContextMenuView:textRawSelectorMenu]) {
-        fontSize = contextMenuFontSizeOfOptions;
+        fontSize = kContextMenuFontSizeOfOptions;
     } else if ([self isTheContextMenuTextRawSelectorReportMenuView:textRawSelectorMenu]) {
-        fontSize = reportMenuFontSizeOfOptions;
+        fontSize = kReportMenuFontSizeOfOptions;
     }
 
     return fontSize;
@@ -1497,12 +1501,12 @@ static CGFloat reportMenuItemWidthSize = 200;
     CGFloat kern = 0;
     
     if ([self isTheContextMenuTextRawSelectorContextMenuView:textRawSelectorMenu]) {
-        kern = contextMenuDefaultKernOfOptions;
-        if (optionIndex == contextMenuIndexOfYearOption) {
-            kern = contextMenuYearKernOfOptions;
+        kern = kContextMenuDefaultKernOfOptions;
+        if (optionIndex == kContextMenuIndexOfYearOption) {
+            kern = kContextMenuYearKernOfOptions;
         }
     } else if ([self isTheContextMenuTextRawSelectorReportMenuView:textRawSelectorMenu]) {
-        kern = reportMenuKernOfOptions;
+        kern = kReportMenuKernOfOptions;
     }
     
     return kern;

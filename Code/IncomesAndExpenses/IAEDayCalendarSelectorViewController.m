@@ -27,13 +27,13 @@
 
 @implementation IAEDayCalendarSelectorViewController
 
-static NSString * const dayOfTheWeekFontFamilyName = @"HelveticaNeue";
-static NSUInteger dayOfTheWeekFontSize = 12;
+static NSString * const kDayOfTheWeekFontFamilyName = @"HelveticaNeue";
+static const NSUInteger kDayOfTheWeekFontSize = 12;
 
-static NSString * const dayOfTheMonthFontFamilyName = @"HelveticaNeue-Ultralight";
-static NSUInteger dayOfTheMonthFontSize = 19;
+static NSString * const kDayOfTheMonthFontFamilyName = @"HelveticaNeue-Ultralight";
+static const NSUInteger kDayOfTheMonthFontSize = 19;
 
-static NSUInteger tagDaySelectedDecoratorView = 100;
+static const NSUInteger kTagDaySelectedDecoratorView = 100;
 
 - (instancetype)initWithYearDate:(NSUInteger)yearDate monthIndex:(NSUInteger)monthIndex andDaySelected:(NSUInteger)daySelected
 {
@@ -88,7 +88,7 @@ static NSUInteger tagDaySelectedDecoratorView = 100;
     NSArray *dayOfTheWeekIndexes = [IAEVersionHelper isSpanishVersion] ? @[@2, @3, @4, @5, @6, @7, @1] : @[@1, @2, @3, @4, @5, @6, @7];
     for (NSNumber *dayIndexIt in dayOfTheWeekIndexes) {
         NSString *labelText = [IAEDateHelper findDayOfTheWeekNameStringWithDayOfTheWeekIndex:[dayIndexIt unsignedIntegerValue] inShortForm:YES];
-        NSDictionary *labelAttributes = @{NSFontAttributeName: [UIFont fontWithName:dayOfTheWeekFontFamilyName size:dayOfTheWeekFontSize],
+        NSDictionary *labelAttributes = @{NSFontAttributeName: [UIFont fontWithName:kDayOfTheWeekFontFamilyName size:kDayOfTheWeekFontSize],
                                           NSForegroundColorAttributeName: [UIColor darkTextColor],
                                           NSKernAttributeName: @0.0};
         
@@ -121,7 +121,7 @@ static NSUInteger tagDaySelectedDecoratorView = 100;
                                               dayOfTheMonthWidthSize,
                                               dayOfTheMonthHeightSize);
                 NSString *labelText = [NSString stringWithFormat:@"%d", dayIt];
-                NSDictionary *labelAttributes = @{NSFontAttributeName: [UIFont fontWithName:dayOfTheMonthFontFamilyName size:dayOfTheMonthFontSize],
+                NSDictionary *labelAttributes = @{NSFontAttributeName: [UIFont fontWithName:kDayOfTheMonthFontFamilyName size:kDayOfTheMonthFontSize],
                                                   NSForegroundColorAttributeName: [UIColor darkTextColor],
                                                   NSKernAttributeName: @0.0};
                 
@@ -150,7 +150,7 @@ static NSUInteger tagDaySelectedDecoratorView = 100;
         IAECircleDecoratorView *circleDecoratorView = [[IAECircleDecoratorView alloc] initWithFrame:circleFrame];
         circleDecoratorView.circleColor = [UIColor colorWithRed:255 green:0 blue:0 alpha:0.75];
         circleDecoratorView.backgroundColor = [UIColor clearColor];
-        circleDecoratorView.tag = tagDaySelectedDecoratorView;
+        circleDecoratorView.tag = kTagDaySelectedDecoratorView;
         
         [self.daysOfTheMonthContainerView insertSubview:circleDecoratorView belowSubview:dayLabel];
     }
@@ -164,7 +164,7 @@ static NSUInteger tagDaySelectedDecoratorView = 100;
 
 - (void)removeDaySelectedDecoratorView
 {
-    UIView *decorator = [self.daysOfTheMonthContainerView viewWithTag:tagDaySelectedDecoratorView];
+    UIView *decorator = [self.daysOfTheMonthContainerView viewWithTag:kTagDaySelectedDecoratorView];
     [decorator removeFromSuperview];
 }
 

@@ -18,7 +18,7 @@
 
 @synthesize ordererMonths = ordererMonths_;
 
-static NSString * const entityNameMonth = @"IAEMonth";
+static NSString * const kEntityNameMonth = @"IAEMonth";
 
 - (NSArray *)ordererMonths
 {
@@ -61,7 +61,7 @@ static NSString * const entityNameMonth = @"IAEMonth";
 
 - (IAEMonth *)createMonthInDB:(MonthType)month
 {
-    IAEMonth *newMonth = [NSEntityDescription insertNewObjectForEntityForName:entityNameMonth
+    IAEMonth *newMonth = [NSEntityDescription insertNewObjectForEntityForName:kEntityNameMonth
                                                        inManagedObjectContext:[IAEBook sharedBook].context];
     newMonth.month = month;
    

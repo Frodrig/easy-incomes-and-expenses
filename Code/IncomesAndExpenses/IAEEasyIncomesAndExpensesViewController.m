@@ -993,13 +993,17 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
 - (void)tapOnConceptsCollectionView:(UITapGestureRecognizer *)tapGestureRecognizer
 {
     NSAssert(tapGestureRecognizer == self.tapConceptsRecognizer, @"");
-    [self findCellOfConceptCollectionViewAndExecuteActionUnderTapGesture:tapGestureRecognizer];
+    if ([self isActualSelectedContextAMonth]) {
+        [self findCellOfConceptCollectionViewAndExecuteActionUnderTapGesture:tapGestureRecognizer];
+    }
 }
 
 - (void)dobleTapConceptsCollectionView:(UITapGestureRecognizer *)tapGestureRecognizer
 {
     NSAssert(tapGestureRecognizer == self.dobleTapConceptsRecognizer, @"");
-    [self findCellOfConceptsCollectionViewAndExecuteActionUnderDobleTapGesture:tapGestureRecognizer];
+    if ([self isActualSelectedContextAMonth]) {
+        [self findCellOfConceptsCollectionViewAndExecuteActionUnderDobleTapGesture:tapGestureRecognizer];
+    }
 }
 
 - (void)findCellOfConceptCollectionViewAndExecuteActionUnderTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer

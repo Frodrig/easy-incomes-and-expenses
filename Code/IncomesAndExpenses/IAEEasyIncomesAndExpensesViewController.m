@@ -595,9 +595,6 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
     return modelObject;
 }
 
-
-#pragma mark is
-
 - (BOOL)isActualSelectedContextTheYearOpen
 {
     return self.contextMenuView.currentOptionIndexSelected == kGlobalIndexForYearInContextScrollView ? YES : NO;
@@ -783,9 +780,13 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
 - (void)contextScrollViewDidScroll
 {
     [self updateCurrentOptionIndexSelectedOfContextMenu];
-    [self updateContentOfConceptsCollectionView];
-    [self setConceptsCollectionViewInTransitionAspect:NO];
-    [self updateCalculatorViewHideHalfState];
+    if ([self isEditModeActive]) {
+        [self updateContentOfConceptsCollectionView];
+        [self setConceptsCollectionViewInTransitionAspect:NO];
+        [self updateCalculatorViewHideHalfState];
+    } else if ([self isReportModeActive]) {
+        [self.reportAreaView reloadData];
+    }
 }
 
 - (void)setConceptsCollectionViewInTransitionAspect:(BOOL)transition

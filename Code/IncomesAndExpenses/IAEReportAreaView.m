@@ -227,7 +227,7 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
 
 - (CGFloat)calculeHeightOfReportAreaItemWithMaxValue:(CGFloat)maxValue andReportAreaItemValue:(CGFloat)valueOfAreaItem
  {
-     CGFloat height = (self.bounds.size.height * valueOfAreaItem) / maxValue;
+     CGFloat height = maxValue > 0 ? (self.bounds.size.height * valueOfAreaItem) / maxValue : 0;
      
      return height;
  }

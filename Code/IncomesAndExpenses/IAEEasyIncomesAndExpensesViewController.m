@@ -1684,16 +1684,16 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
     return maxValue;
 }
 
-- (UIColor *)colorRepresentationOfItemsInReportAreaView:(IAEReportAreaView *)reportAreaView
+- (UIColor *)reportAreaView:(IAEReportAreaView *)reportAreaView colorRepresentationOfItemWithIndex:(NSUInteger)itemIndex
 {
     UIColor *color = nil;
     
     if ([self isTheBalancesOptionSelectedInReportMenu]) {
-        color = [UIColor blueColor];
+        color = itemIndex == 0 ? [IAEColorHelper colorForEconomicIncomeValue] : [IAEColorHelper colorForEconomicExpenseValue];
     } else if ([self isTheIncomesOptionSelectedInReportMenu]) {
-        color = [UIColor blueColor];
+        color = [IAEColorHelper colorForEconomicIncomeValue];
     } else if ([self isTheExpensesOptionSelectedInReportMenu]) {
-        color = [UIColor blueColor];
+        color = [IAEColorHelper colorForEconomicExpenseValue];
     }
     
     return color;
@@ -1724,7 +1724,8 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
     NSString *title = nil;
     
     if ([self isTheBalancesOptionSelectedInReportMenu]) {
-        title = itemIndex == 0 ? [[self findIncomesOfActualSelectedContextView] stringValue] : [[self findExpensesOfActualSelectedContextView] stringValue];
+        NSDecimalNumber *value = itemIndex == 0 ? [self findIncomesOfActualSelectedContextView] : [self findExpensesOfActualSelectedContextView];
+        title = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:value];
     } else {
         NSArray *categories = [self isTheIncomesOptionSelectedInReportMenu] ? [self findIncomesCategoriesOfActualSelectedContextView] :
         [self findExpensesCategoriesOfActualSelectedContextView];
@@ -1740,7 +1741,7 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
     NSString *subtitle = nil;
     
     if ([self isTheBalancesOptionSelectedInReportMenu]) {
-        subtitle = itemIndex == 0 ? @"Ingresos tmp" : @"Gastos tmp";
+        subtitle = itemIndex == 0 ? NSLocalizedString(kLtextIncomeCategoryTypeName, @"") : NSLocalizedString(kLtextExpenseCategoryTypeName, @"");
     } else {
         NSArray *categories = [self isTheIncomesOptionSelectedInReportMenu] ? [self findIncomesCategoriesOfActualSelectedContextView] :
         [self findExpensesCategoriesOfActualSelectedContextView];

@@ -151,11 +151,11 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
                                                  andWidthOfReportAreaItemsView:[self calculeWidthOfReportAreaItemViews]];
     NSString *title = [self.dataSource reportAreaView:self titleOfItemWithIndex:reportAreaItemIndex];
     NSString *subtitle = [self.dataSource reportAreaView:self subtitleOfItemWithIndex:reportAreaItemIndex];
-    
+    UIColor *color = [self.dataSource reportAreaView:self colorRepresentationOfItemWithIndex:reportAreaItemIndex];
     IAEReportAreaItemView *reportAreaItem = [[IAEReportAreaItemView alloc] initWithFrame:frameOfReportAreaItem
                                                                                    title:title
                                                                                 subtitle:subtitle
-                                                                                andColor:[self.dataSource colorRepresentationOfItemsInReportAreaView:self]];
+                                                                                andColor:color];
     
     return reportAreaItem;
 }

@@ -91,6 +91,9 @@ static NSString * const kReportMenuFontFamilyName = @"HelveticaNeue-Ultralight";
 static const CGFloat kReportMenuFontSizeOfOptions = 28;
 static const CGFloat kReportMenuKernOfOptions = 4;
 static const CGFloat kReportMenuItemWidthSize = 200;
+static const NSUInteger kReportMenuIndexOfBalancesOption = 0;
+static const NSUInteger kReportMenuIndexOfIncomesOption = 1;
+static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
 
 #pragma mark - Init
 
@@ -1401,14 +1404,14 @@ static const CGFloat kReportMenuItemWidthSize = 200;
 
 #pragma mark - IAETextRawSelectorMenuViewDataSource
 
-- (BOOL)isTheContextMenuTextRawSelectorContextMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenu
+- (BOOL)isTheContextMenuTheTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenu
 {
     BOOL isContextMenu = textRawSelectorMenu == self.contextMenuView;
     
     return isContextMenu;
 }
 
-- (BOOL)isTheContextMenuTextRawSelectorReportMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenu
+- (BOOL)isTheReportMenuTheTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenu
 {
     BOOL isReportMenu = textRawSelectorMenu == self.reportMenuView;
     
@@ -1419,9 +1422,9 @@ static const CGFloat kReportMenuItemWidthSize = 200;
 {
     NSUInteger numberOfOptions = 0;
     
-    if ([self isTheContextMenuTextRawSelectorContextMenuView:textRawSelectorMenu]) {
+    if ([self isTheContextMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
         numberOfOptions = kContentScrollViewNumberOfItems;
-    } else if ([self isTheContextMenuTextRawSelectorReportMenuView:textRawSelectorMenu]) {
+    } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
         numberOfOptions = kReportMenuNumberOfItems;
     }
 
@@ -1432,13 +1435,13 @@ static const CGFloat kReportMenuItemWidthSize = 200;
 {
     NSString *optionStringName = nil;
     
-    if ([self isTheContextMenuTextRawSelectorContextMenuView:textRawSelectorMenu]) {
+    if ([self isTheContextMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
         if (optionIndex == kContextMenuIndexOfYearOption) {
             optionStringName = [NSString stringWithFormat:@"%d", [self findOpenYear].yearDate];
         } else {
             optionStringName = [IAEDateHelper findMonthNameStringWithMonthIndex:optionIndex inShortForm:YES];
         }
-    } else if ([self isTheContextMenuTextRawSelectorReportMenuView:textRawSelectorMenu]) {
+    } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
         static NSArray *menuOptionsName = nil;
         if (menuOptionsName == nil) {
             menuOptionsName = @[NSLocalizedString(@"LTEXT_MENUOPTIONSREPORT_OPTIONBALANCE", @""),
@@ -1460,10 +1463,10 @@ static const CGFloat kReportMenuItemWidthSize = 200;
 {
     CGSize size = CGSizeZero;
     
-    if ([self isTheContextMenuTextRawSelectorContextMenuView:textRawSelectorMenu]) {
+    if ([self isTheContextMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
         CGFloat width = self.view.bounds.size.width / kContentScrollViewNumberOfItems;
         size = CGSizeMake(width, 44);
-    } else if ([self isTheContextMenuTextRawSelectorReportMenuView:textRawSelectorMenu]) {
+    } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
         size = CGSizeMake(kReportMenuItemWidthSize, 44);
     }
 
@@ -1474,9 +1477,9 @@ static const CGFloat kReportMenuItemWidthSize = 200;
 {
     NSString *fontFamily = nil;
     
-    if ([self isTheContextMenuTextRawSelectorContextMenuView:textRawSelectorMenu]) {
+    if ([self isTheContextMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
         fontFamily = kContextMenuFontFamilyName;
-    } else if ([self isTheContextMenuTextRawSelectorReportMenuView:textRawSelectorMenu]) {
+    } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
         fontFamily = kReportMenuFontFamilyName;
     }
 
@@ -1487,9 +1490,9 @@ static const CGFloat kReportMenuItemWidthSize = 200;
 {
     CGFloat fontSize = 0;
     
-    if ([self isTheContextMenuTextRawSelectorContextMenuView:textRawSelectorMenu]) {
+    if ([self isTheContextMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
         fontSize = kContextMenuFontSizeOfOptions;
-    } else if ([self isTheContextMenuTextRawSelectorReportMenuView:textRawSelectorMenu]) {
+    } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
         fontSize = kReportMenuFontSizeOfOptions;
     }
 
@@ -1500,12 +1503,12 @@ static const CGFloat kReportMenuItemWidthSize = 200;
 {
     CGFloat kern = 0;
     
-    if ([self isTheContextMenuTextRawSelectorContextMenuView:textRawSelectorMenu]) {
+    if ([self isTheContextMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
         kern = kContextMenuDefaultKernOfOptions;
         if (optionIndex == kContextMenuIndexOfYearOption) {
             kern = kContextMenuYearKernOfOptions;
         }
-    } else if ([self isTheContextMenuTextRawSelectorReportMenuView:textRawSelectorMenu]) {
+    } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
         kern = kReportMenuKernOfOptions;
     }
     
@@ -1516,9 +1519,9 @@ static const CGFloat kReportMenuItemWidthSize = 200;
 {
     IAETextRawSelectorMenuViewSelectorType selectorType = TEXTRAWMENUVIEW_SELECTOR_BACKGROUNDCOLOR;
     
-    if ([self isTheContextMenuTextRawSelectorContextMenuView:textRawSelectorMenu]) {
+    if ([self isTheContextMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
         selectorType = TEXTRAWMENUVIEW_SELECTOR_BACKGROUNDCOLOR;
-    } else if ([self isTheContextMenuTextRawSelectorReportMenuView:textRawSelectorMenu]) {
+    } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
         selectorType = TEXTRAWMENUVIEW_SELECTOR_BACKGROUNDCOLOR;
     }
 
@@ -1529,9 +1532,9 @@ static const CGFloat kReportMenuItemWidthSize = 200;
 {
     UIColor *color = nil;
     
-    if ([self isTheContextMenuTextRawSelectorContextMenuView:textRawSelectorMenu]) {
+    if ([self isTheContextMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
         color = [UIColor colorWithWhite:0.9 alpha:0.3];
-    } else if ([self isTheContextMenuTextRawSelectorReportMenuView:textRawSelectorMenu]) {
+    } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
         color = [UIColor colorWithWhite:0.9 alpha:0.3];
     }
     
@@ -1542,14 +1545,171 @@ static const CGFloat kReportMenuItemWidthSize = 200;
 
 - (void)optionIndex:(NSUInteger)optionIndex wasSelectedInTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenu
 {
-    if ([self isTheContextMenuTextRawSelectorContextMenuView:textRawSelectorMenu]) {
+    if ([self isTheContextMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
         [self gotoToContextViewWithIndex:optionIndex];
-    } else if ([self isTheContextMenuTextRawSelectorReportMenuView:textRawSelectorMenu]) {
+    } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
         // ...
     }
 }
 
 #pragma mark - IAEReportAreaViewDataSource
+
+- (BOOL)isTheBalancesOptionSelectedInReportMenu
+{
+    BOOL isSelected = [self isReportMenuViewSelectedWithTheOptionIndex:kReportMenuIndexOfBalancesOption];
+    
+    return isSelected;
+}
+
+- (BOOL)isTheIncomesOptionSelectedInReportMenu
+{
+    BOOL isSelected = [self isReportMenuViewSelectedWithTheOptionIndex:kReportMenuIndexOfIncomesOption];
+    
+    return isSelected;
+}
+
+- (BOOL)isTheExpensesOptionSelectedInReportMenu
+{
+    BOOL isSelected = [self isReportMenuViewSelectedWithTheOptionIndex:kReportMenuIndexOfExpensesOption];
+    
+    return isSelected;
+}
+
+- (BOOL)isReportMenuViewSelectedWithTheOptionIndex:(NSUInteger)optionIndex
+{
+    BOOL isSelected = optionIndex == self.reportMenuView.currentOptionIndexSelected;
+    
+    return isSelected;
+}
+
+- (NSUInteger)numberOfItemsInReportAreaView:(IAEReportAreaView *)reportAreaView
+{
+    NSUInteger number = 0;
+    
+    if ([self isTheBalancesOptionSelectedInReportMenu]) {
+        return 2;
+    } else if ([self isTheIncomesOptionSelectedInReportMenu]) {
+        
+    } else if ([self isTheExpensesOptionSelectedInReportMenu]) {
+        
+    }
+    
+    return number;
+}
+
+- (CGFloat)maxValueOfItemsInReportAreaView:(IAEReportAreaView *)reportAreaView
+{
+    CGFloat maxValue = 0;
+    
+    if ([self isTheBalancesOptionSelectedInReportMenu]) {
+        NSDecimalNumber *incomes = [self incomesOfActualSelectedContextView];
+        NSDecimalNumber *expenses = [self expensesOfActualSelectedContextView];
+        maxValue = [[self maxValueOfNumber:incomes andNumber:expenses] floatValue];
+    } else if ([self isTheIncomesOptionSelectedInReportMenu]) {
+        
+    } else if ([self isTheExpensesOptionSelectedInReportMenu]) {
+        
+    }
+    
+    return maxValue;
+}
+
+- (NSDecimalNumber *)incomesOfActualSelectedContextView
+{
+    id modelObj = [self modelObjectOfActualSelectedContextView];
+    NSDecimalNumber *incomes = [modelObj incomes];
+    
+    return incomes;
+}
+
+- (NSDecimalNumber *)expensesOfActualSelectedContextView
+{
+    id modelObj = [self modelObjectOfActualSelectedContextView];
+    NSDecimalNumber *expenses = [modelObj expenses];
+    
+    return expenses;
+}
+
+- (id)modelObjectOfActualSelectedContextView
+{
+    id modelObject;
+    
+    if ([self isActualSelectedContextTheYearOpen]) {
+        modelObject = [self findOpenYear];
+    } else if ([self isActualSelectedContextAMonth]) {
+        modelObject = [self findActualSelectedMonth];
+    }
+    
+    return modelObject;
+}
+
+- (NSDecimalNumber *)maxValueOfNumber:(NSDecimalNumber *)numberOne andNumber:(NSDecimalNumber *)numberTwo
+{
+    NSDecimalNumber *maxValue = [numberOne compare:numberTwo] == NSOrderedDescending ? numberOne : numberTwo;
+    
+    return maxValue;
+}
+
+- (UIColor *)colorRepresentationOfItemsInReportAreaView:(IAEReportAreaView *)reportAreaView
+{
+    UIColor *color = nil;
+    
+    if ([self isTheBalancesOptionSelectedInReportMenu]) {
+        color = [UIColor blueColor];
+    } else if ([self isTheIncomesOptionSelectedInReportMenu]) {
+        
+    } else if ([self isTheExpensesOptionSelectedInReportMenu]) {
+        
+    }
+    
+    return color;
+}
+
+- (CGFloat)reportAreaView:(IAEReportAreaView *)reportAreaView valueOfItemWithIndex:(NSUInteger)itemIndex
+{
+    CGFloat valueOfItem = 0;
+    
+    if ([self isTheBalancesOptionSelectedInReportMenu]) {
+        NSDecimalNumber *decimalValue = itemIndex == 0 ? [self incomesOfActualSelectedContextView] : [self expensesOfActualSelectedContextView];
+        valueOfItem = [decimalValue floatValue];
+    } else if ([self isTheIncomesOptionSelectedInReportMenu]) {
+        
+    } else if ([self isTheExpensesOptionSelectedInReportMenu]) {
+        
+    }
+    
+    return valueOfItem;
+}
+
+- (NSString *)reportAreaView:(IAEReportAreaView *)reportAreaView titleOfItemWithIndex:(NSUInteger)itemIndex
+{
+    NSString *title = nil;
+    
+    if ([self isTheBalancesOptionSelectedInReportMenu]) {
+        title = itemIndex == 0 ? [[self incomesOfActualSelectedContextView] stringValue] : [[self expensesOfActualSelectedContextView] stringValue];
+    } else if ([self isTheIncomesOptionSelectedInReportMenu]) {
+        
+    } else if ([self isTheExpensesOptionSelectedInReportMenu]) {
+        
+    }
+    
+    return title;
+}
+
+- (NSString *)reportAreaView:(IAEReportAreaView *)reportAreaView subtitleOfItemWithIndex:(NSUInteger)itemIndex
+{
+    NSString *subtitle = nil;
+    
+    if ([self isTheBalancesOptionSelectedInReportMenu]) {
+        subtitle = itemIndex == 0 ? @"Ingresos tmp" : @"Gastos tmp";
+    } else if ([self isTheIncomesOptionSelectedInReportMenu]) {
+        
+    } else if ([self isTheExpensesOptionSelectedInReportMenu]) {
+        
+    }
+    
+    return subtitle;
+}
 
 #pragma mark - IAEReportAreaViewDelegate
 

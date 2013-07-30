@@ -53,7 +53,7 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
 - (void)drawRect:(CGRect)rect
 {
     CGContextRef contextRef = UIGraphicsGetCurrentContext();
-    [self drawHeightLine:contextRef];
+    //[self drawHeightLine:contextRef];
     [self drawWidthLine:contextRef];
 }
 
@@ -90,7 +90,7 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
 - (void)reloadData
 {
     [self removeAllReportAreaItems];
-    [self createAndAddReportAreaItems];
+    [self createAndAddAllReportAreaItems];
     [self adjustContentSize];
 }
 
@@ -116,22 +116,31 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
     return [NSSet setWithSet:allReportAreaItems];
 }
 
-- (void)createAndAddReportAreaItems
+- (void)createAndAddAllReportAreaItems
 {
-    CGFloat maxValueOfItemsInReportAreaView = [self.dataSource maxValueOfItemsInReportAreaView:self];
-    CGFloat widthOfReportAreaItems = [self calculeWidthOfReportAreaItemViews];
-    UIColor *colorRepresentationOfReportAreaItems = [self.dataSource colorRepresentationOfItemsInReportAreaView:self];
-    
     NSUInteger numberOfReportAreaItems = [self.dataSource numberOfItemsInReportAreaView:self];
     for (NSUInteger reportAreaItemIt = 0; reportAreaItemIt < numberOfReportAreaItems; reportAreaItemIt++) {
-        CGRect frameOfReportAreaItem = [self calculeFrameOfReportAreaItemWithIndex:reportAreaItemIt
-                                                                   maxValueOfItems:maxValueOfItemsInReportAreaView
-                                                     andWidthOfReportAreaItemsView:widthOfReportAreaItems];
-        
-        IAEReportAreaItemView *reportAreaItem = [[IAEReportAreaItemView alloc] initWithFrame:frameOfReportAreaItem];
-        //reportAreaItem.title = [self.dataSource reportAreaView:self titleOfItemWithIndex:reportAreaItemIt];
-        //reportAreaItem.subtitle = [self.dataSource reportAreaView:self subtitleOfItemWithIndex:reportAreaItemIt];
+        IAEReportAreaItemView *reportAreaItem = [self createReportAreaItemWithIndex:reportAreaItemIt ofTotalNumber:numberOfReportAreaItems];
+        [self addSubview:reportAreaItem];
     }
+}
+
+- (IAEReportAreaItemView *)createReportAreaItemWithIndex:(NSUInteger)reportAreaItemIndex ofTotalNumber:(NSUInteger)totalNumber
+{
+    CGRect frameOfReportAreaItem = [self calculeFrameOfReportAreaItemWithIndex:reportAreaItemIndex
+                                                                 ofTotalNumber:totalNumber
+                                                               maxValueOfItems:[self.dataSource maxValueOfItemsInReportAreaView:self]
+                                                 andWidthOfReportAreaItemsView:[self calculeWidthOfReportAreaItemViews]];
+    NSString *title = [self.dataSource reportAreaView:self titleOfItemWithIndex:reportAreaItemIndex];
+    NSString *subtitle = [self.dataSource reportAreaView:self subtitleOfItemWithIndex:reportAreaItemIndex];
+    
+    IAEReportAreaItemView *reportAreaItem = [[IAEReportAreaItemView alloc] initWithFrame:frameOfReportAreaItem
+                                                                                   title:title
+                                                                                subtitle:subtitle
+                                                                                andColor:[self.dataSource colorRepresentationOfItemsInReportAreaView:self]];
+    
+    NSLog(@"report area item created. Frame %@ title %@ subtitle %@", NSStringFromCGRect(frameOfReportAreaItem), title, subtitle);
+    return reportAreaItem;
 }
 
 - (CGFloat)calculeWidthOfReportAreaItemViews
@@ -142,20 +151,51 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
 }
 
 - (CGRect)calculeFrameOfReportAreaItemWithIndex:(NSUInteger)reportAreaItemIndex
+                                  ofTotalNumber:(NSUInteger)totalNumber
                                 maxValueOfItems:(CGFloat)maxValueOfItems
                   andWidthOfReportAreaItemsView:(CGFloat)widthOfReportAreaItemsView
 {
     CGFloat valueOfReportAreaItem = [self.dataSource reportAreaView:self valueOfItemWithIndex:reportAreaItemIndex];
-    CGSize sizeOfItem = [self calculeSizeOfReportAreaItemWithMaxValue:maxValueOfItems andReportAreaItemValue:valueOfReportAreaItem];
-    CGPoint positionOfItem = CGPointMake(reportAreaItemIndex * widthOfReportAreaItemsView, self.bounds.size.height - sizeOfItem.height);
+    CGSize sizeOfItem = CGSizeMake(widthOfReportAreaItemsView,
+                                   [self calculeHeightOfReportAreaItemWithMaxValue:maxValueOfItems andReportAreaItemValue:valueOfReportAreaItem]);
+    CGFloat xPosition = [self calculeXPositionOfReportAreaItemIndex:reportAreaItemIndex
+                                                      ofTotalNumber:totalNumber
+                                     withWidthOfReportAreaItemsView:widthOfReportAreaItemsView];
+    CGPoint positionOfItem = CGPointMake(xPosition,
+                                         self.bounds.size.height - sizeOfItem.height);
     CGRect frameOfReportAreaItem = CGRectMake(positionOfItem.x, positionOfItem.y, sizeOfItem.width, sizeOfItem.height);
     
     return frameOfReportAreaItem;
 }
 
-- (CGSize)calculeSizeOfReportAreaItemWithMaxValue:(CGFloat)maxValue andReportAreaItemValue:(CGFloat)valueOfAreaItem
+- (CGFloat)calculeXPositionOfReportAreaItemIndex:(NSUInteger)reportAreaItemIndex
+                                   ofTotalNumber:(NSUInteger)totalNumber
+                  withWidthOfReportAreaItemsView:(CGFloat)widthOfReportAreaItemsView
+{
+    CGFloat xPosition = 0;
+    
+    if (totalNumber >= kMaxNumberOfReportItemsInScreen) {
+        xPosition = reportAreaItemIndex * widthOfReportAreaItemsView;
+    } else {
+        const CGFloat xAbsoluteCenter = self.bounds.size.width / 2;
+        const CGFloat halfWidthOfReportAreaItem = widthOfReportAreaItemsView / 2;
+        if (totalNumber == 1) {
+            xPosition = xAbsoluteCenter - halfWidthOfReportAreaItem;
+        } else if (totalNumber == 2) {
+            const CGFloat halfCenterOfView = xAbsoluteCenter / 2;
+            xPosition = reportAreaItemIndex == 0 ? xAbsoluteCenter - halfCenterOfView - halfWidthOfReportAreaItem :
+            xAbsoluteCenter + halfCenterOfView - halfWidthOfReportAreaItem;
+        }
+    }
+
+    return xPosition;
+}
+
+- (CGFloat)calculeHeightOfReportAreaItemWithMaxValue:(CGFloat)maxValue andReportAreaItemValue:(CGFloat)valueOfAreaItem
  {
-     return CGSizeZero;
+     CGFloat height = (self.bounds.size.height * valueOfAreaItem) / maxValue;
+     
+     return height;
  }
 
 - (void)adjustContentSize

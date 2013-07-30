@@ -10,4 +10,6 @@
 
 @protocol IAEReportAreaViewDelegate <UIScrollViewDelegate>
 
+@optional
+
 @end

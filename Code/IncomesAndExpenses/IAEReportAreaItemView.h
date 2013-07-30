@@ -10,4 +10,6 @@
 
 @interface IAEReportAreaItemView : UIView
 
+- (id)initWithFrame:(CGRect)frame title:(NSString *)title subtitle:(NSString *)subtitle andColor:(UIColor *)color;
+
 @end

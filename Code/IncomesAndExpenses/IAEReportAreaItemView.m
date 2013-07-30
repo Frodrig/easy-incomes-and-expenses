@@ -12,10 +12,30 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
+    NSAssert(0, @"");
+    return nil;
+}
+
+- (id)init
+{
+    NSAssert(0, @"");
+    return nil;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    NSAssert(0, @"");
+    return nil;
+}
+
+- (id)initWithFrame:(CGRect)frame title:(NSString *)title subtitle:(NSString *)subtitle andColor:(UIColor *)color
+{
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        self.backgroundColor = [UIColor colorWithWhite:0.8 alpha:0.5];
+        
     }
+    
     return self;
 }
 

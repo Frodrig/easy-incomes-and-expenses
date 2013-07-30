@@ -33,7 +33,11 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
 {
     if (dataSource != _dataSource) {
         _dataSource = dataSource;
-        [self reloadData];
+        if (dataSource == nil) {
+            [self releaseData];
+        } else {
+            [self reloadData];
+        }
     }
 }
 
@@ -41,9 +45,19 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        [self initScrollViewProperties];
     }
     return self;
+}
+
+- (void)initScrollViewProperties
+{
+    self.bounces = YES;
+    self.alwaysBounceHorizontal = YES;
+    self.alwaysBounceVertical = NO;
+    self.scrollEnabled = YES;
+    self.showsHorizontalScrollIndicator = NO;
+    self.showsVerticalScrollIndicator = NO;
 }
 
 #pragma mark - Draw
@@ -85,13 +99,19 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
     CGContextRestoreGState(contextRef);
 }
 
-#pragma mark - Reload
+#pragma mark - Release & Reload
+
+- (void)releaseData
+{
+    [self removeAllReportAreaItems];
+    [self adjustContentSizeAndResetPosition];
+}
 
 - (void)reloadData
 {
     [self removeAllReportAreaItems];
     [self createAndAddAllReportAreaItems];
-    [self adjustContentSize];
+    [self adjustContentSizeAndResetPosition];
 }
 
 - (void)removeAllReportAreaItems
@@ -107,12 +127,10 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
 - (NSSet *)findAllReportAreaItems
 {
     NSMutableSet *allReportAreaItems = [[NSMutableSet alloc] initWithCapacity:self.subviews.count];
-    for (UIView *viewIt in self.subviews) {
-        if ([viewIt isKindOfClass:[IAEReportAreaItemView class]]) {
-            [allReportAreaItems addObject:viewIt];
-        }
+    for (IAEReportAreaItemView *viewIt in self.subviews) {
+        [allReportAreaItems addObject:viewIt];
     }
-    
+
     return [NSSet setWithSet:allReportAreaItems];
 }
 
@@ -139,7 +157,6 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
                                                                                 subtitle:subtitle
                                                                                 andColor:[self.dataSource colorRepresentationOfItemsInReportAreaView:self]];
     
-    NSLog(@"report area item created. Frame %@ title %@ subtitle %@", NSStringFromCGRect(frameOfReportAreaItem), title, subtitle);
     return reportAreaItem;
 }
 
@@ -198,10 +215,14 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
      return height;
  }
 
-- (void)adjustContentSize
+- (void)adjustContentSizeAndResetPosition
 {
-    CGFloat width = self.bounds.size.width * (self.subviews.count / kMaxNumberOfReportItemsInScreen);
+    CGFloat width = self.bounds.size.width;
+    if (self.subviews.count >= kMaxNumberOfReportItemsInScreen) {
+        width *= (self.subviews.count / kMaxNumberOfReportItemsInScreen);
+    }
     self.contentSize = CGSizeMake(width, self.bounds.size.height);
+    self.contentOffset = CGPointMake(0.0, 0.0);
 }
 
 @end

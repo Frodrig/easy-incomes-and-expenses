@@ -17,5 +17,6 @@
 @property (nonatomic, weak) id<IAEReportAreaViewDataSource> dataSource;
 
 - (void)reloadData;
+- (void)releaseData;
 
 @end

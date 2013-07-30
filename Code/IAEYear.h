@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "CategoryDefs.h"
 
 @class IAEMonth;
 @class IAECategory;
@@ -24,12 +25,13 @@
 - (NSDecimalNumber *)expenses;
 - (NSDecimalNumber *)incomes;
 - (NSDecimalNumber *)balance;
+- (NSDecimalNumber *)balanceOfAllConceptsOfCategory:(IAECategory *)category;
 
 - (NSArray *)findAllConceptsWithCategory:(IAECategory *)category;
 - (NSArray *)findAllConcepts;
 - (NSArray *)findAllConceptsSortedByEntryInstant;
 - (NSArray *)findAllConceptsSortedByDay;
-
+- (NSArray *)findAllCategoriesSortedByAbsoluteValueOfAmountsInConceptsOfType:(CategoryType)type;
 - (NSUInteger)findNumberOfConcepts;
 
 - (NSString *)yearDateAsString;

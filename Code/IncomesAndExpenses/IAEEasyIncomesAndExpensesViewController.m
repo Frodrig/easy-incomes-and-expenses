@@ -95,6 +95,9 @@ static const NSUInteger kReportMenuIndexOfBalancesOption = 0;
 static const NSUInteger kReportMenuIndexOfIncomesOption = 1;
 static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
 
+static NSString * const kLtextIncomeCategoryTypeName = @"LTEXT_CATEGORYTYPEINCOME_NAME";
+static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPENSE_NAME";
+
 #pragma mark - Init
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -412,7 +415,7 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
     self.reportAreaView.delegate = self;
 }
 
-#pragma mark - Obtainings
+#pragma mark - Finds
 
 - (NSUInteger)findTodayMonthContextViewGlobalIndexInContextScrollView
 {
@@ -540,6 +543,60 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
     
     return numberOfConcepts;
 }
+
+- (NSDecimalNumber *)findIncomesOfActualSelectedContextView
+{
+    id modelObj = [self findModelObjectOfActualSelectedContextView];
+    NSDecimalNumber *incomes = [modelObj incomes];
+    
+    return incomes;
+}
+
+- (NSDecimalNumber *)findExpensesOfActualSelectedContextView
+{
+    id modelObj = [self findModelObjectOfActualSelectedContextView];
+    NSDecimalNumber *expenses = [modelObj expenses];
+    
+    return expenses;
+}
+
+- (NSArray *)findIncomesCategoriesOfActualSelectedContextView
+{
+    NSArray *categories = [self findCategoriesOfActualSelectedContextViewWithType:IncomeCategory];
+
+    return categories;
+}
+
+- (NSArray *)findExpensesCategoriesOfActualSelectedContextView
+{
+    NSArray *categories = [self findCategoriesOfActualSelectedContextViewWithType:ExpenseCategory];
+    
+    return categories;
+}
+
+- (NSArray *)findCategoriesOfActualSelectedContextViewWithType:(CategoryType)type
+{
+    id modelObj = [self findModelObjectOfActualSelectedContextView];
+    NSArray *categories = [modelObj findAllCategoriesSortedByAbsoluteValueOfAmountsInConceptsOfType:type];
+
+    return categories;
+}
+
+- (id)findModelObjectOfActualSelectedContextView
+{
+    id modelObject;
+    
+    if ([self isActualSelectedContextTheYearOpen]) {
+        modelObject = [self findOpenYear];
+    } else if ([self isActualSelectedContextAMonth]) {
+        modelObject = [self findActualSelectedMonth];
+    }
+    
+    return modelObject;
+}
+
+
+#pragma mark is
 
 - (BOOL)isActualSelectedContextTheYearOpen
 {
@@ -1548,7 +1605,7 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
     if ([self isTheContextMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
         [self gotoToContextViewWithIndex:optionIndex];
     } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
-        // ...
+        [self.reportAreaView reloadData];
     }
 }
 
@@ -1589,9 +1646,9 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
     if ([self isTheBalancesOptionSelectedInReportMenu]) {
         return 2;
     } else if ([self isTheIncomesOptionSelectedInReportMenu]) {
-        
+        number = [self findIncomesCategoriesOfActualSelectedContextView].count;
     } else if ([self isTheExpensesOptionSelectedInReportMenu]) {
-        
+        number = [self findExpensesCategoriesOfActualSelectedContextView].count;
     }
     
     return number;
@@ -1599,48 +1656,25 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
 
 - (CGFloat)maxValueOfItemsInReportAreaView:(IAEReportAreaView *)reportAreaView
 {
+    // ToDo: Ojo, mas que float deberiamos de pensar en long long double
     CGFloat maxValue = 0;
     
     if ([self isTheBalancesOptionSelectedInReportMenu]) {
-        NSDecimalNumber *incomes = [self incomesOfActualSelectedContextView];
-        NSDecimalNumber *expenses = [self expensesOfActualSelectedContextView];
+        NSDecimalNumber *incomes = [self findIncomesOfActualSelectedContextView];
+        NSDecimalNumber *expenses = [self findExpensesOfActualSelectedContextView];
         maxValue = [[self maxValueOfNumber:incomes andNumber:expenses] floatValue];
-    } else if ([self isTheIncomesOptionSelectedInReportMenu]) {
-        
-    } else if ([self isTheExpensesOptionSelectedInReportMenu]) {
-        
+    } else {
+        NSArray *categories = [self isTheIncomesOptionSelectedInReportMenu] ? [self findIncomesCategoriesOfActualSelectedContextView] :
+                                                                              [self findExpensesCategoriesOfActualSelectedContextView];
+        if (categories.count > 0) {
+            IAECategory *firstCategory = categories[0];
+            id modelObj = [self findModelObjectOfActualSelectedContextView];
+            NSDecimalNumber *balance = [modelObj balanceOfAllConceptsOfCategory:firstCategory];
+            maxValue = [balance floatValue];
+        }
     }
     
     return maxValue;
-}
-
-- (NSDecimalNumber *)incomesOfActualSelectedContextView
-{
-    id modelObj = [self modelObjectOfActualSelectedContextView];
-    NSDecimalNumber *incomes = [modelObj incomes];
-    
-    return incomes;
-}
-
-- (NSDecimalNumber *)expensesOfActualSelectedContextView
-{
-    id modelObj = [self modelObjectOfActualSelectedContextView];
-    NSDecimalNumber *expenses = [modelObj expenses];
-    
-    return expenses;
-}
-
-- (id)modelObjectOfActualSelectedContextView
-{
-    id modelObject;
-    
-    if ([self isActualSelectedContextTheYearOpen]) {
-        modelObject = [self findOpenYear];
-    } else if ([self isActualSelectedContextAMonth]) {
-        modelObject = [self findActualSelectedMonth];
-    }
-    
-    return modelObject;
 }
 
 - (NSDecimalNumber *)maxValueOfNumber:(NSDecimalNumber *)numberOne andNumber:(NSDecimalNumber *)numberTwo
@@ -1657,9 +1691,9 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
     if ([self isTheBalancesOptionSelectedInReportMenu]) {
         color = [UIColor blueColor];
     } else if ([self isTheIncomesOptionSelectedInReportMenu]) {
-        
+        color = [UIColor blueColor];
     } else if ([self isTheExpensesOptionSelectedInReportMenu]) {
-        
+        color = [UIColor blueColor];
     }
     
     return color;
@@ -1667,15 +1701,19 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
 
 - (CGFloat)reportAreaView:(IAEReportAreaView *)reportAreaView valueOfItemWithIndex:(NSUInteger)itemIndex
 {
+    // ToDo: Ojo, mas que float deberiamos de pensar en long long double
     CGFloat valueOfItem = 0;
     
     if ([self isTheBalancesOptionSelectedInReportMenu]) {
-        NSDecimalNumber *decimalValue = itemIndex == 0 ? [self incomesOfActualSelectedContextView] : [self expensesOfActualSelectedContextView];
+        NSDecimalNumber *decimalValue = itemIndex == 0 ? [self findIncomesOfActualSelectedContextView] : [self findExpensesOfActualSelectedContextView];
         valueOfItem = [decimalValue floatValue];
-    } else if ([self isTheIncomesOptionSelectedInReportMenu]) {
-        
-    } else if ([self isTheExpensesOptionSelectedInReportMenu]) {
-        
+    } else {
+        NSArray *categories = [self isTheIncomesOptionSelectedInReportMenu] ? [self findIncomesCategoriesOfActualSelectedContextView] :
+                                                                              [self findExpensesCategoriesOfActualSelectedContextView];
+        IAECategory *category = categories[itemIndex];
+        id modelObj = [self findModelObjectOfActualSelectedContextView];
+        NSDecimalNumber *balance = [modelObj balanceOfAllConceptsOfCategory:category];
+        valueOfItem = [balance floatValue];
     }
     
     return valueOfItem;
@@ -1686,11 +1724,12 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
     NSString *title = nil;
     
     if ([self isTheBalancesOptionSelectedInReportMenu]) {
-        title = itemIndex == 0 ? [[self incomesOfActualSelectedContextView] stringValue] : [[self expensesOfActualSelectedContextView] stringValue];
-    } else if ([self isTheIncomesOptionSelectedInReportMenu]) {
-        
-    } else if ([self isTheExpensesOptionSelectedInReportMenu]) {
-        
+        title = itemIndex == 0 ? [[self findIncomesOfActualSelectedContextView] stringValue] : [[self findExpensesOfActualSelectedContextView] stringValue];
+    } else {
+        NSArray *categories = [self isTheIncomesOptionSelectedInReportMenu] ? [self findIncomesCategoriesOfActualSelectedContextView] :
+        [self findExpensesCategoriesOfActualSelectedContextView];
+        IAECategory *category = categories[itemIndex];
+        title = category.tag;
     }
     
     return title;
@@ -1702,10 +1741,12 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
     
     if ([self isTheBalancesOptionSelectedInReportMenu]) {
         subtitle = itemIndex == 0 ? @"Ingresos tmp" : @"Gastos tmp";
-    } else if ([self isTheIncomesOptionSelectedInReportMenu]) {
-        
-    } else if ([self isTheExpensesOptionSelectedInReportMenu]) {
-        
+    } else {
+        NSArray *categories = [self isTheIncomesOptionSelectedInReportMenu] ? [self findIncomesCategoriesOfActualSelectedContextView] :
+        [self findExpensesCategoriesOfActualSelectedContextView];
+        IAECategory *category = categories[itemIndex];
+        subtitle = category.categoryType == IncomeCategory ? NSLocalizedString(kLtextIncomeCategoryTypeName, @"") :
+                                                             NSLocalizedString(kLtextExpenseCategoryTypeName, @"");
     }
     
     return subtitle;

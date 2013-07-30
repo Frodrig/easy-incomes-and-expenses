@@ -117,6 +117,17 @@ static NSString * const kEntityNameMonth = @"IAEMonth";
     return sumBalance;
 }
 
+- (NSDecimalNumber *)balanceOfAllConceptsOfCategory:(IAECategory *)category
+{
+    NSDecimalNumber *sumBalance = [NSDecimalNumber zero];
+    for (IAEMonth *month in self.months) {
+        sumBalance = [sumBalance decimalNumberByAdding:[month balanceOfAllConceptsOfCategory:category]];
+    }
+    
+    return sumBalance;
+}
+
+
 - (NSArray *)findAllConceptsWithCategory:(IAECategory *)category
 {
     NSMutableArray *concepts = [[NSMutableArray alloc] initWithCapacity:self.months.count];
@@ -163,6 +174,17 @@ static NSString * const kEntityNameMonth = @"IAEMonth";
     
     return allConceptSorted;
 }
+
+- (NSArray *)findAllCategoriesSortedByAbsoluteValueOfAmountsInConceptsOfType:(CategoryType)type
+{
+    NSArray *allCategories = [NSArray array];
+    for (IAEMonth *months in self.months) {
+        allCategories = [allCategories arrayByAddingObjectsFromArray:[months findAllCategoriesSortedByAbsoluteValueOfAmountsInConceptsOfType:type]];
+    }
+    
+    return allCategories;
+}
+
 
 - (NSString *)yearDateAsString
 {

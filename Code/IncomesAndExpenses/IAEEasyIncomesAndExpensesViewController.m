@@ -1727,10 +1727,12 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
         NSDecimalNumber *value = itemIndex == 0 ? [self findIncomesOfActualSelectedContextView] : [self findExpensesOfActualSelectedContextView];
         title = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:value];
     } else {
-        NSArray *categories = [self isTheIncomesOptionSelectedInReportMenu] ? [self findIncomesCategoriesOfActualSelectedContextView] :
-        [self findExpensesCategoriesOfActualSelectedContextView];
+        id modelObj = [self findModelObjectOfActualSelectedContextView];
+        CategoryType categoryType = [self isTheIncomesOptionSelectedInReportMenu] ? IncomeCategory : ExpenseCategory;
+        NSArray *categories = [modelObj findAllCategoriesSortedByAbsoluteValueOfAmountsInConceptsOfType:categoryType];
         IAECategory *category = categories[itemIndex];
-        title = category.tag;
+        NSDecimalNumber *value = [modelObj sumAllAmountOfCategories:@[category]];
+        title = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:value];
     }
     
     return title;
@@ -1746,8 +1748,7 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
         NSArray *categories = [self isTheIncomesOptionSelectedInReportMenu] ? [self findIncomesCategoriesOfActualSelectedContextView] :
         [self findExpensesCategoriesOfActualSelectedContextView];
         IAECategory *category = categories[itemIndex];
-        subtitle = category.categoryType == IncomeCategory ? NSLocalizedString(kLtextIncomeCategoryTypeName, @"") :
-                                                             NSLocalizedString(kLtextExpenseCategoryTypeName, @"");
+        subtitle = category.tag;
     }
     
     return subtitle;

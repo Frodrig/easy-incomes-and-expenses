@@ -127,6 +127,15 @@ static NSString * const kEntityNameMonth = @"IAEMonth";
     return sumBalance;
 }
 
+- (NSDecimalNumber *)sumAllAmountOfCategories:(NSArray *)categories
+{
+    NSDecimalNumber *sumBalance = [NSDecimalNumber zero];
+    for (IAEMonth *month in self.months) {
+        sumBalance = [sumBalance decimalNumberByAdding:[month sumAllAmountOfCategories:categories]];
+    }
+    
+    return sumBalance;
+}
 
 - (NSArray *)findAllConceptsWithCategory:(IAECategory *)category
 {

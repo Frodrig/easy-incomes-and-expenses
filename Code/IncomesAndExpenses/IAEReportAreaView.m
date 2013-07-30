@@ -13,7 +13,7 @@
 
 @implementation IAEReportAreaView
 
-static const CGFloat kXOffsetToStartDrawingReportAreaItems = 40.0;
+static const CGFloat kXOffsetToStartDrawingReportAreaItems = 0;
 
 static const CGFloat kWidthForLines = 1.0;
 static const CGFloat kColorWithWhiteValueForLines = 0.5;

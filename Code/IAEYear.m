@@ -186,12 +186,25 @@ static NSString * const kEntityNameMonth = @"IAEMonth";
 
 - (NSArray *)findAllCategoriesSortedByAbsoluteValueOfAmountsInConceptsOfType:(CategoryType)type
 {
-    NSArray *allCategories = [NSArray array];
+    NSSet *allCategories = [NSSet set];
     for (IAEMonth *months in self.months) {
-        allCategories = [allCategories arrayByAddingObjectsFromArray:[months findAllCategoriesSortedByAbsoluteValueOfAmountsInConceptsOfType:type]];
+        NSArray *allCategoriesOfMonth = [months findAllCategoriesInConceptsOfType:type];
+        allCategories = [allCategories setByAddingObjectsFromArray:allCategoriesOfMonth];
     }
     
-    return allCategories;
+    NSArray *allCategoriesSorted = [allCategories allObjects];
+    allCategoriesSorted = [allCategoriesSorted sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        IAECategory *category1 = obj1;
+        IAECategory *category2 = obj2;
+        NSDecimalNumber *amountCategory1 = [self balanceOfAllConceptsOfCategory:category1];
+        NSDecimalNumber *amountCategory2 = [self balanceOfAllConceptsOfCategory:category2];
+        NSComparisonResult compareResult = [amountCategory2 compare:amountCategory1];
+        
+        return compareResult;
+    }];
+
+    
+    return allCategoriesSorted;
 }
 
 

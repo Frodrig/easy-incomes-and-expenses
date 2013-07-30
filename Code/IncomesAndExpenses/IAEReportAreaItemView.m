@@ -22,7 +22,7 @@
 
 static const NSUInteger kXMarginForLabels = 10;
 
-static const CGFloat kWidthForHeightLine = 1.0;
+static const CGFloat kWidthForHeightLine = 3.0;
 
 static const CGFloat kHeightForTitleLabel = 44;
 static const CGFloat kHeightForSubtitleLabel = 34;
@@ -30,13 +30,16 @@ static const CGFloat kMinimumHeightForItem = kHeightForTitleLabel + kHeightForSu
 
 static NSString * const kTitleFontFamilyName = @"HelveticaNeue-Ultralight";
 static const CGFloat kTitleFontSize = 36;
-static const CGFloat kTitleFontKern = 5;
+static const CGFloat kTitleFontKern = 3;
 static NSString * const kSubtitleFontFamilyName = @"HelveticaNeue-Ultralightitalic";
 static const CGFloat kSubtitleFontSize = 21;
 static const CGFloat kSubtitleFontKern = 2;
 
+static const CGFloat kBackgroundColorWhiteWhiteValue = 0.9;
+static const CGFloat kBackgroundColorWithWhiteAlpha = 0.15;
 static const CGFloat kTextColorWithWhiteValue = 0;
 static const CGFloat kTextColorWithWhiteAlpha = 1.0;
+
 
 #pragma mark - Init
 
@@ -85,7 +88,7 @@ static const CGFloat kTextColorWithWhiteAlpha = 1.0;
 
 - (void)configureBasicProperties
 {
-    self.backgroundColor = [UIColor clearColor];
+    self.backgroundColor = [UIColor colorWithWhite:kBackgroundColorWhiteWhiteValue alpha:kBackgroundColorWithWhiteAlpha];
 }
 
 - (void)initAndAddTitleLabel:(NSString *)titleString

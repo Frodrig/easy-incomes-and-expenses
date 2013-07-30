@@ -13,6 +13,8 @@
 
 @implementation IAEReportAreaView
 
+static const CGFloat kXOffsetToStartDrawingReportAreaItems = 40.0;
+
 static const CGFloat kWidthForLines = 1.0;
 static const CGFloat kColorWithWhiteValueForLines = 0.5;
 static const CGFloat kAlphaForColorWithWhiteValueForLines = 1.0;
@@ -69,6 +71,7 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
     CGContextRef contextRef = UIGraphicsGetCurrentContext();
     //[self drawHeightLine:contextRef];
     [self drawWidthLine:contextRef];
+    //[self drawDotInCenterWithContextRef:contextRef];
 }
 
 - (void)drawHeightLine:(CGContextRef)contextRef
@@ -96,6 +99,20 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
     CGContextSetGrayStrokeColor(contextRef, kColorWithWhiteValueForLines, kAlphaForColorWithWhiteValueForLines);
     CGContextStrokePath(contextRef);
 
+    CGContextRestoreGState(contextRef);
+}
+
+- (void)drawDotInCenterWithContextRef:(CGContextRef)contextRef
+{
+    CGContextSaveGState(contextRef);
+    CGContextSetAllowsAntialiasing(contextRef, true);
+    CGContextSetLineWidth(contextRef, 1);
+    
+    CGContextMoveToPoint(contextRef, self.bounds.size.width / 2, self.bounds.size.height - 44);
+    CGContextAddLineToPoint(contextRef, self.bounds.size.width / 2, self.bounds.size.height);
+    CGContextSetStrokeColorWithColor(contextRef, [UIColor blueColor].CGColor);
+    CGContextStrokePath(contextRef);
+    
     CGContextRestoreGState(contextRef);
 }
 
@@ -162,7 +179,7 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
 
 - (CGFloat)calculeWidthOfReportAreaItemViews
 {
-    CGFloat width = self.bounds.size.width / kMaxNumberOfReportItemsInScreen;
+    CGFloat width = (self.bounds.size.width - kXOffsetToStartDrawingReportAreaItems) / kMaxNumberOfReportItemsInScreen;
     
     return width;
 }
@@ -192,7 +209,7 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
     CGFloat xPosition = 0;
     
     if (totalNumber >= kMaxNumberOfReportItemsInScreen) {
-        xPosition = reportAreaItemIndex * widthOfReportAreaItemsView;
+        xPosition = kXOffsetToStartDrawingReportAreaItems + reportAreaItemIndex * widthOfReportAreaItemsView;
     } else {
         const CGFloat xAbsoluteCenter = self.bounds.size.width / 2;
         const CGFloat halfWidthOfReportAreaItem = widthOfReportAreaItemsView / 2;
@@ -201,7 +218,7 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
         } else if (totalNumber == 2) {
             const CGFloat halfCenterOfView = xAbsoluteCenter / 2;
             xPosition = reportAreaItemIndex == 0 ? xAbsoluteCenter - halfCenterOfView - halfWidthOfReportAreaItem :
-            xAbsoluteCenter + halfCenterOfView - halfWidthOfReportAreaItem;
+                                                   xAbsoluteCenter + halfCenterOfView - halfWidthOfReportAreaItem;
         }
     }
 

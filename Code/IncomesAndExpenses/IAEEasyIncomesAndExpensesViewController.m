@@ -411,6 +411,7 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
     self.calculatorViewController.view.hidden = YES;
     self.reportAreaView.hidden = NO;
     self.reportMenuView.hidden = NO;
+    self.reportMenuView.currentOptionIndexSelected = kReportMenuIndexOfBalancesOption;
     self.reportAreaView.dataSource = self;
     self.reportAreaView.delegate = self;
 }

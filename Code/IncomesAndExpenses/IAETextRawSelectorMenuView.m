@@ -27,7 +27,7 @@ static const NSUInteger kTagBaseValue = 100;
 - (void)setCurrentOptionIndexSelected:(NSUInteger)optionIndexSelected
 {
     // Nota: No generaremos llamada a delegado desde aqui. Solo se generara por evento en controles
-    if (optionIndexSelected != _currentOptionIndexSelected && self.dataSource) {
+    if (self.dataSource) {
         [self changeIndicatorFromOptionIndex:_currentOptionIndexSelected toNewCurrentOptionIndex:optionIndexSelected];
         _currentOptionIndexSelected = optionIndexSelected;
     }

@@ -31,6 +31,8 @@
 #import "IAETextRawSelectorMenuView.h"
 #import "IAEReportAreaView.h"
 #import "IAEHelperReportAreaViewDataSource.h"
+#import "IAEHelperContextTextRawMenuDataSource.h"
+#import "IAEHelperReportTextRawMenuDataSource.h"
 #import "NSNumber+DefaultValues.h"
 #import "IAECategoryStore.h"
 #import "IAEDateHelper.h"
@@ -50,6 +52,8 @@
 @property (nonatomic, strong) IAETextRawSelectorMenuView *reportMenuView;
 @property (nonatomic, strong) IAECalculatorViewController *calculatorViewController;
 @property (nonatomic, strong) IAEHelperReportAreaViewDataSource *helperReportAreaViewDataSource;
+@property (nonatomic, strong) IAEHelperContextTextRawMenuDataSource *helperContextTextRawMenuDataSource;
+@property (nonatomic, strong) IAEHelperReportTextRawMenuDataSource *helperReportTextRawMenuDataSource;
 @property (nonatomic, strong) UIPopoverController *popover;
 @property (nonatomic, strong) UITapGestureRecognizer *tapConceptsRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *dobleTapConceptsRecognizer;
@@ -87,20 +91,9 @@ static NSString * const kNibConceptCellHeaderInYearModeName = @"IAEEditModeConce
 static NSString * const kCollectionViewHeaderIdentifier = @"EditModeConceptHeader";
 static NSString * const kLtextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEADER_BASEINFO";
 
-static NSString * const kContextMenuFontFamilyName = @"HelveticaNeue-Ultralight";
-static const CGFloat kContextMenuFontSizeOfOptions = 24;
-static const CGFloat kContextMenuDefaultKernOfOptions = 4;
-static const CGFloat kContextMenuYearKernOfOptions = 0;
-static const NSUInteger kContextMenuIndexOfYearOption = 0;
-
 static const NSUInteger kSegmentedControlIndexEditMode = 0;
 static const NSUInteger kSegmentedControlIndexReportMode = 1;
 
-static const NSUInteger kReportMenuNumberOfItems = 3;
-static NSString * const kReportMenuFontFamilyName = @"HelveticaNeue-Ultralight";
-static const CGFloat kReportMenuFontSizeOfOptions = 28;
-static const CGFloat kReportMenuKernOfOptions = 4;
-static const CGFloat kReportMenuItemWidthSize = 200;
 static const NSUInteger kReportMenuIndexOfBalancesOption = 0;
 static const NSUInteger kReportMenuIndexOfIncomesOption = 1;
 static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
@@ -181,6 +174,8 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
 - (void)initHelpers
 {
     _helperReportAreaViewDataSource = [[IAEHelperReportAreaViewDataSource alloc] initWithEasyIncomesViewControllerQuery:self];
+    _helperContextTextRawMenuDataSource = [[IAEHelperContextTextRawMenuDataSource alloc] initWithEasyIncomesAndExpensesViewControllerQuery:self];
+    _helperReportTextRawMenuDataSource = [[IAEHelperReportTextRawMenuDataSource alloc] initWithEasyIncomesAndExpensesViewControllerQuery:self];
 }
 
 - (void)dealloc
@@ -287,7 +282,7 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
 {
     [self.view addSubview:_contextMenuView];
     self.contextMenuView.delegate = self;
-    self.contextMenuView.dataSource = self;
+    self.contextMenuView.dataSource = self.helperContextTextRawMenuDataSource;
     self.contextMenuView.center = CGPointMake(self.view.center.x,
                                               self.contextScrollView.center.y + self.contextScrollView.bounds.size.height / 2 + self.contextMenuView.bounds.size.height / 2);
 }
@@ -305,7 +300,7 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
 - (void)vinculeReportMenuView
 {
     [self.view addSubview:self.reportMenuView];
-    self.reportMenuView.dataSource = self;
+    self.reportMenuView.dataSource = self.helperReportTextRawMenuDataSource;
     self.reportMenuView.delegate = self;
     self.reportMenuView.center = CGPointMake(self.view.center.x,
                                              self.reportAreaView.center.y + self.reportAreaView.bounds.size.height / 2 + self.reportMenuView.bounds.size.height / 1.35);
@@ -436,6 +431,11 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
 
 #pragma mark - IAEEasyIncomesAndExpensesViewControllerQuery
 
+- (IAEYear *)findOpenYear
+{
+    return [[IAEBook sharedBook] findActualYear];
+}
+
 - (BOOL)isTheBalancesOptionSelectedInReportMenu
 {
     BOOL isSelected = [self isReportMenuViewSelectedWithTheOptionIndex:kReportMenuIndexOfBalancesOption];
@@ -548,6 +548,10 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
     return [self isActualSelectedContextTheYearOpen] ? NO : YES;
 }
 
+- (CGSize)findMainViewSize
+{
+    return self.view.bounds.size;
+}
 
 #pragma mark - Finds
 
@@ -565,11 +569,6 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
     NSDateComponents *monthComponents = [gregorian components:NSMonthCalendarUnit fromDate:today];
     
     return [monthComponents month] - 1;
-}
-
-- (IAEYear *)findOpenYear
-{
-    return [[IAEBook sharedBook] findActualYear];
 }
 
 - (IAEMonth *)findMonthOfPresentDay
@@ -1604,7 +1603,16 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
     [self updateBalancesWithAnimation:NO];
 }
 
-#pragma mark - IAETextRawSelectorMenuViewDataSource
+#pragma mark - IAETextRawSelectorMenuViewDelegate
+
+- (void)optionIndex:(NSUInteger)optionIndex wasSelectedInTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenu
+{
+    if ([self isTheContextMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
+        [self gotoToContextViewWithIndex:optionIndex];
+    } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
+        [self.reportAreaView reloadData];
+    }
+}
 
 - (BOOL)isTheContextMenuTheTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenu
 {
@@ -1619,143 +1627,6 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
     
     return isReportMenu;
 }
-
-- (NSUInteger)numberOfOptionsInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
-{
-    NSUInteger numberOfOptions = 0;
-    
-    if ([self isTheContextMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
-        numberOfOptions = kContentScrollViewNumberOfItems;
-    } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
-        numberOfOptions = kReportMenuNumberOfItems;
-    }
-
-    return numberOfOptions;
-}
-
-- (NSString *)textRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu optionStringNameAtIndex:(NSUInteger)optionIndex
-{
-    NSString *optionStringName = nil;
-    
-    if ([self isTheContextMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
-        if (optionIndex == kContextMenuIndexOfYearOption) {
-            optionStringName = [NSString stringWithFormat:@"%d", [self findOpenYear].yearDate];
-        } else {
-            optionStringName = [IAEDateHelper findMonthNameStringWithMonthIndex:optionIndex inShortForm:YES];
-        }
-    } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
-        static NSArray *menuOptionsName = nil;
-        if (menuOptionsName == nil) {
-            menuOptionsName = @[NSLocalizedString(@"LTEXT_MENUOPTIONSREPORT_OPTIONBALANCE", @""),
-                                NSLocalizedString(@"LTEXT_MENUOPTIONSREPORT_OPTIONINCOMES", @""),
-                                NSLocalizedString(@"LTEXT_MENUOPTIONSREPORT_OPTIONEXPENSES", @"")];
-        }
-        optionStringName = [menuOptionsName objectAtIndex:optionIndex];
-    }
-    
-    return optionStringName;
-}
-
-- (UIColor *)colorForOptionsInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
-{
-    return [UIColor blackColor];
-}
-
-- (CGSize)sizeOfOptionsInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
-{
-    CGSize size = CGSizeZero;
-    
-    if ([self isTheContextMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
-        CGFloat width = self.view.bounds.size.width / kContentScrollViewNumberOfItems;
-        size = CGSizeMake(width, 44);
-    } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
-        size = CGSizeMake(kReportMenuItemWidthSize, 44);
-    }
-
-    return size;
-}
-
-- (NSString *)fontFamilyNameOfOptionsInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
-{
-    NSString *fontFamily = nil;
-    
-    if ([self isTheContextMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
-        fontFamily = kContextMenuFontFamilyName;
-    } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
-        fontFamily = kReportMenuFontFamilyName;
-    }
-
-    return fontFamily;
-}
-
-- (CGFloat)fontSizeOfOptionsInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
-{
-    CGFloat fontSize = 0;
-    
-    if ([self isTheContextMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
-        fontSize = kContextMenuFontSizeOfOptions;
-    } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
-        fontSize = kReportMenuFontSizeOfOptions;
-    }
-
-    return fontSize;
-}
-
-- (CGFloat)textRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu kernOfOptionsAtIndex:(NSUInteger)optionIndex
-{
-    CGFloat kern = 0;
-    
-    if ([self isTheContextMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
-        kern = kContextMenuDefaultKernOfOptions;
-        if (optionIndex == kContextMenuIndexOfYearOption) {
-            kern = kContextMenuYearKernOfOptions;
-        }
-    } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
-        kern = kReportMenuKernOfOptions;
-    }
-    
-    return kern;
-}
-
-- (IAETextRawSelectorMenuViewSelectorType)selectorTypeInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
-{
-    IAETextRawSelectorMenuViewSelectorType selectorType = TEXTRAWMENUVIEW_SELECTOR_BACKGROUNDCOLOR;
-    
-    if ([self isTheContextMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
-        selectorType = TEXTRAWMENUVIEW_SELECTOR_BACKGROUNDCOLOR;
-    } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
-        selectorType = TEXTRAWMENUVIEW_SELECTOR_BACKGROUNDCOLOR;
-    }
-
-    return selectorType;
-}
-
-- (UIColor *)colorForSelectorIndicatorInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
-{
-    UIColor *color = nil;
-    
-    if ([self isTheContextMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
-        color = [UIColor colorWithWhite:0.9 alpha:0.3];
-    } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
-        color = [UIColor colorWithWhite:0.9 alpha:0.3];
-    }
-    
-    return color;
-}
-
-#pragma mark - IAETextRawSelectorMenuViewDelegate
-
-- (void)optionIndex:(NSUInteger)optionIndex wasSelectedInTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenu
-{
-    if ([self isTheContextMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
-        [self gotoToContextViewWithIndex:optionIndex];
-    } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
-        [self.reportAreaView reloadData];
-    }
-}
-
-#pragma mark - IAEReportAreaViewDelegate
-
 
 
 @end

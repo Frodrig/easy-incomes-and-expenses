@@ -15,7 +15,6 @@
 #import "IAEDayCalendarSelectorViewControllerDelegate.h"
 #import "IAECalculatorViewControllerDelegate.h"
 #import "IAECalculatorViewControllerDataSource.h"
-#import "IAETextRawSelectorMenuViewDataSource.h"
 #import "IAETextRawSelectorMenuViewDelegate.h"
 #import "IAEReportAreaViewDelegate.h"
 #import "IAEEasyIncomesAndExpensesViewControllerQuery.h"
@@ -32,7 +31,6 @@
                                                                       IAEDayCalendarSelectorViewControllerDelegate,
                                                                       IAECalculatorViewControllerDelegate,
                                                                       IAECalculatorViewControllerDataSource,
-                                                                      IAETextRawSelectorMenuViewDataSource,
                                                                       IAEReportAreaViewDelegate,
                                                                       IAETextRawSelectorMenuViewDelegate,
                                                                       IAEEasyIncomesAndExpensesViewControllerQuery>

@@ -8,7 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+@class IAEYear;
+@class IAETextRawSelectorMenuView;
+
 @protocol IAEEasyIncomesAndExpensesViewControllerQuery <NSObject>
+
+- (IAEYear *)findOpenYear;
 
 - (BOOL)isTheBalancesOptionSelectedInReportMenu;
 - (BOOL)isTheIncomesOptionSelectedInReportMenu;
@@ -26,5 +31,7 @@
 - (NSDecimalNumber *)findMaxValueOfAllCategoriesForActualSelectedContext;
 
 - (id)findModelObjectOfActualSelectedContextView;
+
+- (CGSize)findMainViewSize;
 
 @end

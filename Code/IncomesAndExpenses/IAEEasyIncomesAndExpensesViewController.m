@@ -18,6 +18,7 @@
 #import "IAEEconomicValueUpdater.h"
 #import "IAEContextView.h"
 #import "IAEEditModeConceptCollectionViewCell.h"
+#import "IAEEditModeConceptCollectionViewHeader.h"
 #import "IAEValueDecoratorView.h"
 #import "IAEAdjustConceptAmountViewController.h"
 #import "IAECategorySelectorViewController.h"
@@ -60,6 +61,8 @@
 
 #pragma mark - Constants
 
+static const NSUInteger kNumberOfMonths = 12;
+
 static const CGFloat kEditAndReportModeContentContainerRadius = 15;
 static const CGFloat kColorWithWhiteForEditAndReportModeContentContainerBackground = 0.97;
 
@@ -76,6 +79,8 @@ static const NSUInteger kGlobalIndexForYearInContextScrollView = 0;
 
 static NSString * const kNibConceptCellName = @"IAEEditModeConceptCollectionViewCell";
 static NSString * const kIdConceptCellName = @"EditModeConceptCell";
+static NSString * const kNibConceptCellHeaderInYearModeName = @"IAEEditModeConceptCollectionViewHeader";
+static NSString * const kCollectionViewHeaderIdentifier = @"EditModeConceptHeader";
 
 static NSString * const kContextMenuFontFamilyName = @"HelveticaNeue-Ultralight";
 static const CGFloat kContextMenuFontSizeOfOptions = 24;
@@ -223,6 +228,11 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
 {
     UINib *nibForConceptCell = [UINib nibWithNibName:kNibConceptCellName bundle:[NSBundle mainBundle]];
     [self.conceptsCollectionView registerNib:nibForConceptCell forCellWithReuseIdentifier:kIdConceptCellName];
+    
+    UINib *nibForConceptHeaderInYearMode = [UINib nibWithNibName:kNibConceptCellHeaderInYearModeName bundle:[NSBundle mainBundle]];
+    [self.conceptsCollectionView registerNib:nibForConceptHeaderInYearMode
+                  forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
+                         withReuseIdentifier:kCollectionViewHeaderIdentifier];
     
     self.conceptsCollectionView.backgroundColor = [UIColor clearColor];
     self.conceptsCollectionView.showsHorizontalScrollIndicator = NO;
@@ -462,15 +472,15 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
     return [year.ordererMonths objectAtIndex:index];
 }
 
-- (NSArray *)allConceptsSortedAsAppropriateFromActualSelectedContext
+- (NSArray *)allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath:(NSIndexPath *)indexPath
 {
     NSArray *allConcepts = nil;
     if ([self isActualSelectedContextAMonth]) {
         IAEMonth *actualMonth = [self findActualSelectedMonth];
         allConcepts = [self isDayModeActiveForConcepts] ? [actualMonth  allConceptsSortedByDay] : [actualMonth allConceptsSortedByEntryInstant];
     } else {
-        IAEYear *openYear = [self findOpenYear];
-        allConcepts = [self isDayModeActiveForConcepts] ? [openYear findAllConceptsSortedByDay] : [openYear findAllConceptsSortedByEntryInstant];
+        IAEMonth *month = [self findMonthForOpenYearAtIndex:indexPath.section];
+        allConcepts = [self isDayModeActiveForConcepts] ? [month allConceptsSortedByDay] : [month allConceptsSortedByEntryInstant];
     }
     
     return allConcepts;
@@ -483,7 +493,7 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
 
 - (IAEConcept *)findConceptAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray *concepts = [self allConceptsSortedAsAppropriateFromActualSelectedContext];
+    NSArray *concepts = [self allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath:indexPath];
     IAEConcept *concept = [concepts objectAtIndex:indexPath.row];
     
     return concept;
@@ -531,15 +541,15 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
     return actualSelectedContext;
 }
 
-- (NSUInteger)findNumberOfConceptsOfActualSelectedContext
+- (NSUInteger)findNumberOfConceptsOfActualSelectedContext:(NSInteger)section
 {
     NSUInteger numberOfConcepts = 0;
     if ([self isActualSelectedContextAMonth]) {
         IAEMonth *month = [self findActualSelectedMonth];
         numberOfConcepts = month.concepts.count;
     } else {
-        IAEYear *year = [self findOpenYear];
-        numberOfConcepts = [year findAllConcepts].count;
+        IAEMonth *month = [self findMonthForOpenYearAtIndex:section];
+        numberOfConcepts = month.concepts.count;
     }
     
     return numberOfConcepts;
@@ -860,25 +870,65 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
 - (IAEMonth *)findForOpenYearMonthAtIndex:(NSUInteger)monthIndex
 {
     NSAssert(monthIndex >= 0, @"");
-    NSAssert(monthIndex < 12, @"");
+    NSAssert(monthIndex < kNumberOfMonths, @"");
     IAEYear *year = [self findOpenYear];
     IAEMonth *month = [year.ordererMonths objectAtIndex:monthIndex];
 
     return month;
 }
 
+#pragma mark - UICollectionViewDelegateFlowLayout
+
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
+{
+    CGSize headerSize = CGSizeZero;
+    if ([self isActualSelectedContextTheYearOpen]) {
+        headerSize = CGSizeMake(910, 44);
+    }
+    
+    return headerSize;
+}
+
 #pragma mark - UICollectionView DataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return 1;
+    NSUInteger numberOfSections = 1;
+    if ([self isActualSelectedContextTheYearOpen]) {
+        numberOfSections = kNumberOfMonths;
+    }
+    
+    return numberOfSections;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    NSUInteger numberOfItems = [self findNumberOfConceptsOfActualSelectedContext];
+    NSUInteger numberOfItems = [self findNumberOfConceptsOfActualSelectedContext:section];
 
     return numberOfItems;
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
+           viewForSupplementaryElementOfKind:(NSString *)kind
+                                 atIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionReusableView *header = nil;
+    
+    if ([kind compare:UICollectionElementKindSectionHeader] == NSOrderedSame) {
+         header = [self.conceptsCollectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader
+                                                                  withReuseIdentifier:kCollectionViewHeaderIdentifier
+                                                                         forIndexPath:indexPath];
+        [self configureEditModeConceptHeader:(IAEEditModeConceptCollectionViewHeader *)header atIndexPath:indexPath];
+    }
+    
+    return header;
+}
+
+- (void)configureEditModeConceptHeader:(IAEEditModeConceptCollectionViewHeader *)header atIndexPath:(NSIndexPath *)indexPath
+{
+    IAEMonth *month = [self findMonthForOpenYearAtIndex:indexPath.section];
+    header.title = [IAEDateHelper findMonthNameStringWithMonthIndex:month.month inShortForm:NO];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -902,7 +952,7 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
     NSString *amountWithSignString = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:amountWithSign];
     EconomicValueType economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:amountWithSign];
     UIColor *colorForEconomicValueType = [IAEColorHelper colorForEconomicValueType:economicValueType];
-    NSUInteger instantEntryIndex = [self findNumberOfConceptsOfActualSelectedContext] - indexPath.row;
+    NSUInteger instantEntryIndex = [self findNumberOfConceptsOfActualSelectedContext:indexPath.section] - indexPath.row;
 
     cell.valueDecoratorView.economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:amountWithSign];
     [self configureCategoryLabelsOfConceptCell:cell withCategory:category];

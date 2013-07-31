@@ -73,6 +73,8 @@
 		5BA0131317983A9000337E84 /* IAEDayCalendarSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA0131117983A9000337E84 /* IAEDayCalendarSelectorViewController.xib */; };
 		5BA51A7C1796D81E00A3D923 /* IAEInfoAboutAndOptionsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA51A7B1796D81E00A3D923 /* IAEInfoAboutAndOptionsCollectionViewCell.m */; };
 		5BC31A8416651F1F009F23D6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BC31A8316651F1F009F23D6 /* QuartzCore.framework */; };
+		5BCE3A9F17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3A9E17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m */; };
+		5BCE3AA117A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BCE3AA017A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib */; };
 		5BD06157163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5BD06155163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld */; };
 		5BD06168163A8CFF00A80BE3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD06167163A8CFF00A80BE3 /* CoreData.framework */; };
 		5BD06171163A8D2B00A80BE3 /* IAEMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD06170163A8D2B00A80BE3 /* IAEMonth.m */; };
@@ -217,6 +219,9 @@
 		5BA51A7D1796DA2000A3D923 /* IAEInfoAboutAndOptionsCollectionViewCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEInfoAboutAndOptionsCollectionViewCellDelegate.h; sourceTree = "<group>"; };
 		5BAA5E46170988AC00B6B3F8 /* IncomesAndExpenses copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "IncomesAndExpenses copy-Info.plist"; path = "/Users/fernandorodriguezmartinez/Trabajo/Freelance/Git/Easy Incomes and Expenses/Code/IncomesAndExpenses copy-Info.plist"; sourceTree = "<absolute>"; };
 		5BC31A8316651F1F009F23D6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		5BCE3A9D17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEditModeConceptCollectionViewHeader.h; sourceTree = "<group>"; };
+		5BCE3A9E17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEditModeConceptCollectionViewHeader.m; sourceTree = "<group>"; };
+		5BCE3AA017A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEEditModeConceptCollectionViewHeader.xib; sourceTree = "<group>"; };
 		5BD06156163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = IncomesAndExpenses.xcdatamodel; sourceTree = "<group>"; };
 		5BD06167163A8CFF00A80BE3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		5BD0616F163A8D2B00A80BE3 /* IAEMonth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEMonth.h; sourceTree = "<group>"; };
@@ -279,14 +284,14 @@
 			name = Localizacion;
 			sourceTree = "<group>";
 		};
-		5B1F0D3217841C7400D0B4F1 /* Concept Collection View Cell */ = {
+		5B1F0D3217841C7400D0B4F1 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
 				5B1F0D3317841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.h */,
 				5B1F0D3417841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m */,
 				5B1F0D3617841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib */,
 			);
-			name = "Concept Collection View Cell";
+			name = Cell;
 			sourceTree = "<group>";
 		};
 		5B26460E17968383006F6E58 /* Collection View Cells & Views */ = {
@@ -703,9 +708,9 @@
 		5B903BB91782DBAF00DBEFB2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5BCE3A9C17A8FBBF00CD01E7 /* Concept Collection View */,
 				5BEA607F17A6A31E00520E09 /* Report Area View */,
 				5B8CD5CE17A2623F00A353A5 /* Context View */,
-				5B1F0D3217841C7400D0B4F1 /* Concept Collection View Cell */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -787,6 +792,25 @@
 				5B48BFFA1799425500BF0A68 /* IAEDayCalendarSelectorViewControllerDelegate.h */,
 			);
 			name = "Day Calendar Selector";
+			sourceTree = "<group>";
+		};
+		5BCE3A9B17A8FBB300CD01E7 /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				5BCE3A9D17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.h */,
+				5BCE3A9E17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m */,
+				5BCE3AA017A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib */,
+			);
+			name = Header;
+			sourceTree = "<group>";
+		};
+		5BCE3A9C17A8FBBF00CD01E7 /* Concept Collection View */ = {
+			isa = PBXGroup;
+			children = (
+				5BCE3A9B17A8FBB300CD01E7 /* Header */,
+				5B1F0D3217841C7400D0B4F1 /* Cell */,
+			);
+			name = "Concept Collection View";
 			sourceTree = "<group>";
 		};
 		5BD94C081786B83E009009B1 /* Views */ = {
@@ -1002,6 +1026,7 @@
 				5BD94C0F1786B896009009B1 /* IAECategoryTableViewCell.xib in Resources */,
 				5B55C407178AA8C20066F586 /* IAECategoryEditorViewController.xib in Resources */,
 				5B76116416C56C7300558D6D /* Default-Landscape~ipad.png in Resources */,
+				5BCE3AA117A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib in Resources */,
 				5B76116816C56C7A00558D6D /* Default-Landscape@2x~ipad.png in Resources */,
 				5B8A31CF16C9090E008731AD /* 72.png in Resources */,
 				5B8A31D116C90911008731AD /* 72@2x.png in Resources */,
@@ -1034,6 +1059,7 @@
 				5B62D874178EC20E009879A6 /* IAEOrientationHelper.m in Sources */,
 				5B36AFFC1785D73800132475 /* IAECategorySelectorViewController.m in Sources */,
 				5B55C406178AA8C20066F586 /* IAECategoryEditorViewController.m in Sources */,
+				5BCE3A9F17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m in Sources */,
 				5B5C968917816EE0008CD851 /* IAEValueDecoratorViewExpenseConfigurator.m in Sources */,
 				5BD06174163A8D2B00A80BE3 /* IAEYear.m in Sources */,
 				5B26461A17969084006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.m in Sources */,

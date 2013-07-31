@@ -75,6 +75,8 @@
 		5BC31A8416651F1F009F23D6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BC31A8316651F1F009F23D6 /* QuartzCore.framework */; };
 		5BCE3A9F17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3A9E17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m */; };
 		5BCE3AA117A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BCE3AA017A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib */; };
+		5BCE3AA817A95D5300CD01E7 /* IAENumberUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3AA717A95D5300CD01E7 /* IAENumberUtils.m */; };
+		5BCE3AAB17A95EDB00CD01E7 /* IAEHelperReportAreaViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3AAA17A95EDB00CD01E7 /* IAEHelperReportAreaViewDataSource.m */; };
 		5BD06157163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5BD06155163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld */; };
 		5BD06168163A8CFF00A80BE3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD06167163A8CFF00A80BE3 /* CoreData.framework */; };
 		5BD06171163A8D2B00A80BE3 /* IAEMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD06170163A8D2B00A80BE3 /* IAEMonth.m */; };
@@ -222,6 +224,11 @@
 		5BCE3A9D17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEditModeConceptCollectionViewHeader.h; sourceTree = "<group>"; };
 		5BCE3A9E17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEditModeConceptCollectionViewHeader.m; sourceTree = "<group>"; };
 		5BCE3AA017A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEEditModeConceptCollectionViewHeader.xib; sourceTree = "<group>"; };
+		5BCE3AA417A95B7600CD01E7 /* IAEEasyIncomesAndExpensesViewControllerQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEasyIncomesAndExpensesViewControllerQuery.h; sourceTree = "<group>"; };
+		5BCE3AA617A95D5300CD01E7 /* IAENumberUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAENumberUtils.h; sourceTree = "<group>"; };
+		5BCE3AA717A95D5300CD01E7 /* IAENumberUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAENumberUtils.m; sourceTree = "<group>"; };
+		5BCE3AA917A95EDB00CD01E7 /* IAEHelperReportAreaViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelperReportAreaViewDataSource.h; sourceTree = "<group>"; };
+		5BCE3AAA17A95EDB00CD01E7 /* IAEHelperReportAreaViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelperReportAreaViewDataSource.m; sourceTree = "<group>"; };
 		5BD06156163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = IncomesAndExpenses.xcdatamodel; sourceTree = "<group>"; };
 		5BD06167163A8CFF00A80BE3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		5BD0616F163A8D2B00A80BE3 /* IAEMonth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEMonth.h; sourceTree = "<group>"; };
@@ -373,7 +380,9 @@
 			children = (
 				5B32D652177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.h */,
 				5B32D653177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m */,
+				5BCE3AA317A95B4A00CD01E7 /* Protocols */,
 				5B903BB91782DBAF00DBEFB2 /* Views */,
+				5BCE3AA217A958A900CD01E7 /* Helpers */,
 			);
 			name = "Easy Incomes and Expenses";
 			sourceTree = "<group>";
@@ -501,6 +510,7 @@
 		5B62D861178EC1FA009879A6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5BCE3AA517A95D2A00CD01E7 /* Numbers Utils */,
 				5B2881311798580F006E4F9B /* Version Helper */,
 				5BA013091798007200337E84 /* String */,
 				5B5C967817816718008CD851 /* Views */,
@@ -813,6 +823,40 @@
 			name = "Concept Collection View";
 			sourceTree = "<group>";
 		};
+		5BCE3AA217A958A900CD01E7 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				5BCE3AAC17A95EDE00CD01E7 /* ReportAreaViewDataSource */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		5BCE3AA317A95B4A00CD01E7 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				5BCE3AA417A95B7600CD01E7 /* IAEEasyIncomesAndExpensesViewControllerQuery.h */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		5BCE3AA517A95D2A00CD01E7 /* Numbers Utils */ = {
+			isa = PBXGroup;
+			children = (
+				5BCE3AA617A95D5300CD01E7 /* IAENumberUtils.h */,
+				5BCE3AA717A95D5300CD01E7 /* IAENumberUtils.m */,
+			);
+			name = "Numbers Utils";
+			sourceTree = "<group>";
+		};
+		5BCE3AAC17A95EDE00CD01E7 /* ReportAreaViewDataSource */ = {
+			isa = PBXGroup;
+			children = (
+				5BCE3AA917A95EDB00CD01E7 /* IAEHelperReportAreaViewDataSource.h */,
+				5BCE3AAA17A95EDB00CD01E7 /* IAEHelperReportAreaViewDataSource.m */,
+			);
+			name = ReportAreaViewDataSource;
+			sourceTree = "<group>";
+		};
 		5BD94C081786B83E009009B1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1083,6 +1127,7 @@
 				5B5C967B1781673A008CD851 /* IAEValueDecoratorView.m in Sources */,
 				5B5C968217816D68008CD851 /* IAEValueDecoratorViewConfigurator.m in Sources */,
 				5B907838179D25BD00B2A0F7 /* IAEDragPanelCalculatorView.m in Sources */,
+				5BCE3AA817A95D5300CD01E7 /* IAENumberUtils.m in Sources */,
 				5B8CD5D917A2C6DB00A353A5 /* IAETextRawSelectorMenuView.m in Sources */,
 				5B62D881178EC3CB009879A6 /* IAECurrencyInfo.m in Sources */,
 				5B36AFF11785874D00132475 /* IAEAdjustConceptAmountViewController.m in Sources */,
@@ -1092,6 +1137,7 @@
 				5B32D654177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m in Sources */,
 				5B5C967F17816A13008CD851 /* UIView+RoundedCorners.m in Sources */,
 				5B62D85B178EA870009879A6 /* IAEYearSelectorCollectionViewCell.m in Sources */,
+				5BCE3AAB17A95EDB00CD01E7 /* IAEHelperReportAreaViewDataSource.m in Sources */,
 				5BA0130D179800AC00337E84 /* NSString+TwoDigitString.m in Sources */,
 				5B6E9FA7177D9C950072EE34 /* UIView+LoadFromXib.m in Sources */,
 			);

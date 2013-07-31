@@ -33,6 +33,7 @@
 #import "IAEHelperReportAreaViewDataSource.h"
 #import "IAEHelperContextTextRawMenuDataSource.h"
 #import "IAEHelperReportTextRawMenuDataSource.h"
+#import "IAEHelperCalculatorDataSource.h"
 #import "NSNumber+DefaultValues.h"
 #import "IAECategoryStore.h"
 #import "IAEDateHelper.h"
@@ -54,6 +55,7 @@
 @property (nonatomic, strong) IAEHelperReportAreaViewDataSource *helperReportAreaViewDataSource;
 @property (nonatomic, strong) IAEHelperContextTextRawMenuDataSource *helperContextTextRawMenuDataSource;
 @property (nonatomic, strong) IAEHelperReportTextRawMenuDataSource *helperReportTextRawMenuDataSource;
+@property (nonatomic, strong) IAEHelperCalculatorDataSource *helperCalculatorDataSource;
 @property (nonatomic, strong) UIPopoverController *popover;
 @property (nonatomic, strong) UITapGestureRecognizer *tapConceptsRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *dobleTapConceptsRecognizer;
@@ -176,6 +178,7 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
     _helperReportAreaViewDataSource = [[IAEHelperReportAreaViewDataSource alloc] initWithEasyIncomesViewControllerQuery:self];
     _helperContextTextRawMenuDataSource = [[IAEHelperContextTextRawMenuDataSource alloc] initWithEasyIncomesAndExpensesViewControllerQuery:self];
     _helperReportTextRawMenuDataSource = [[IAEHelperReportTextRawMenuDataSource alloc] initWithEasyIncomesAndExpensesViewControllerQuery:self];
+    _helperCalculatorDataSource = [[IAEHelperCalculatorDataSource alloc] initWithEasyIncomesAndExpensesViewControllerQuery:self];
 }
 
 - (void)dealloc
@@ -211,7 +214,7 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
 - (void)configureCalculatorViewController
 {
     _calculatorViewController.delegate = self;
-    _calculatorViewController.dataSource = self;
+    _calculatorViewController.dataSource = self.helperCalculatorDataSource;
 }
 
 - (void)configureConceptsViews
@@ -436,6 +439,17 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
     return [[IAEBook sharedBook] findActualYear];
 }
 
+- (IAEMonth *)findActualSelectedMonth
+{
+    IAEMonth *month = nil;
+    if (self.contextMenuView.currentOptionIndexSelected != kGlobalIndexForYearInContextScrollView) {
+        NSUInteger actualMonthIndex = self.contextMenuView.currentOptionIndexSelected - 1;
+        month = [self findMonthForOpenYearAtIndex:actualMonthIndex];
+    }
+    
+    return month;
+}
+
 - (BOOL)isTheBalancesOptionSelectedInReportMenu
 {
     BOOL isSelected = [self isReportMenuViewSelectedWithTheOptionIndex:kReportMenuIndexOfBalancesOption];
@@ -575,17 +589,6 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
 {
     NSUInteger todayMonthIndex = [self findTodayMonthIndex];
     return [self findMonthForOpenYearAtIndex:todayMonthIndex];
-}
-
-- (IAEMonth *)findActualSelectedMonth
-{
-    IAEMonth *month = nil;
-    if (self.contextMenuView.currentOptionIndexSelected != kGlobalIndexForYearInContextScrollView) {
-        NSUInteger actualMonthIndex = self.contextMenuView.currentOptionIndexSelected - 1;
-        month = [self findMonthForOpenYearAtIndex:actualMonthIndex];
-    }
-    
-    return month;
 }
 
 - (IAEMonth *)findMonthForOpenYearAtIndex:(NSUInteger)index
@@ -1585,17 +1588,7 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
                             view.frame.size.height);
 }
 
-#pragma mark - IAECalculatorViewControllerDataSource
-
-- (IAEYear *)yearForCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
-{
-    return [self findOpenYear];
-}
-
-- (IAEMonth *)monthForCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
-{
-    return [self findActualSelectedMonth];
-}
+#pragma mark - IAECalculatorViewControllerDelegate
 
 - (void)calculatorViewController:(IAECalculatorViewController *)calculatorViewController didCreateNewConcept:(IAEConcept *)concept
 {

@@ -9,11 +9,13 @@
 #import <Foundation/Foundation.h>
 
 @class IAEYear;
+@class IAEMonth;
 @class IAETextRawSelectorMenuView;
 
 @protocol IAEEasyIncomesAndExpensesViewControllerQuery <NSObject>
 
 - (IAEYear *)findOpenYear;
+- (IAEMonth *)findActualSelectedMonth;
 
 - (BOOL)isTheBalancesOptionSelectedInReportMenu;
 - (BOOL)isTheIncomesOptionSelectedInReportMenu;

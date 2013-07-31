@@ -79,6 +79,7 @@
 		5BCE3AAB17A95EDB00CD01E7 /* IAEHelperReportAreaViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3AAA17A95EDB00CD01E7 /* IAEHelperReportAreaViewDataSource.m */; };
 		5BCE3AB117A9688700CD01E7 /* IAEHelperContextTextRawMenuDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3AB017A9688700CD01E7 /* IAEHelperContextTextRawMenuDataSource.m */; };
 		5BCE3AB417A9689600CD01E7 /* IAEHelperReportTextRawMenuDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3AB317A9689600CD01E7 /* IAEHelperReportTextRawMenuDataSource.m */; };
+		5BCE3AB917A9703B00CD01E7 /* IAEHelperCalculatorDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3AB817A9703B00CD01E7 /* IAEHelperCalculatorDataSource.m */; };
 		5BD06157163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5BD06155163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld */; };
 		5BD06168163A8CFF00A80BE3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD06167163A8CFF00A80BE3 /* CoreData.framework */; };
 		5BD06171163A8D2B00A80BE3 /* IAEMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD06170163A8D2B00A80BE3 /* IAEMonth.m */; };
@@ -235,6 +236,8 @@
 		5BCE3AB017A9688700CD01E7 /* IAEHelperContextTextRawMenuDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelperContextTextRawMenuDataSource.m; sourceTree = "<group>"; };
 		5BCE3AB217A9689600CD01E7 /* IAEHelperReportTextRawMenuDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelperReportTextRawMenuDataSource.h; sourceTree = "<group>"; };
 		5BCE3AB317A9689600CD01E7 /* IAEHelperReportTextRawMenuDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelperReportTextRawMenuDataSource.m; sourceTree = "<group>"; };
+		5BCE3AB717A9703B00CD01E7 /* IAEHelperCalculatorDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelperCalculatorDataSource.h; sourceTree = "<group>"; };
+		5BCE3AB817A9703B00CD01E7 /* IAEHelperCalculatorDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelperCalculatorDataSource.m; sourceTree = "<group>"; };
 		5BD06156163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = IncomesAndExpenses.xcdatamodel; sourceTree = "<group>"; };
 		5BD06167163A8CFF00A80BE3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		5BD0616F163A8D2B00A80BE3 /* IAEMonth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEMonth.h; sourceTree = "<group>"; };
@@ -832,9 +835,7 @@
 		5BCE3AA217A958A900CD01E7 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				5BCE3AAE17A9686100CD01E7 /* ReportTextRawMenuDataSource */,
-				5BCE3AAD17A9685000CD01E7 /* ContextTextRawMenuDataSource */,
-				5BCE3AAC17A95EDE00CD01E7 /* ReportAreaViewDataSource */,
+				5BCE3AB517A9700800CD01E7 /* DataSources */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -856,31 +857,51 @@
 			name = "Numbers Utils";
 			sourceTree = "<group>";
 		};
-		5BCE3AAC17A95EDE00CD01E7 /* ReportAreaViewDataSource */ = {
+		5BCE3AAC17A95EDE00CD01E7 /* ReportAreaView */ = {
 			isa = PBXGroup;
 			children = (
 				5BCE3AA917A95EDB00CD01E7 /* IAEHelperReportAreaViewDataSource.h */,
 				5BCE3AAA17A95EDB00CD01E7 /* IAEHelperReportAreaViewDataSource.m */,
 			);
-			name = ReportAreaViewDataSource;
+			name = ReportAreaView;
 			sourceTree = "<group>";
 		};
-		5BCE3AAD17A9685000CD01E7 /* ContextTextRawMenuDataSource */ = {
+		5BCE3AAD17A9685000CD01E7 /* ContextTextRawMenu */ = {
 			isa = PBXGroup;
 			children = (
 				5BCE3AB217A9689600CD01E7 /* IAEHelperReportTextRawMenuDataSource.h */,
 				5BCE3AB317A9689600CD01E7 /* IAEHelperReportTextRawMenuDataSource.m */,
 			);
-			name = ContextTextRawMenuDataSource;
+			name = ContextTextRawMenu;
 			sourceTree = "<group>";
 		};
-		5BCE3AAE17A9686100CD01E7 /* ReportTextRawMenuDataSource */ = {
+		5BCE3AAE17A9686100CD01E7 /* ReportTextRawMenu */ = {
 			isa = PBXGroup;
 			children = (
 				5BCE3AAF17A9688700CD01E7 /* IAEHelperContextTextRawMenuDataSource.h */,
 				5BCE3AB017A9688700CD01E7 /* IAEHelperContextTextRawMenuDataSource.m */,
 			);
-			name = ReportTextRawMenuDataSource;
+			name = ReportTextRawMenu;
+			sourceTree = "<group>";
+		};
+		5BCE3AB517A9700800CD01E7 /* DataSources */ = {
+			isa = PBXGroup;
+			children = (
+				5BCE3AB617A9702600CD01E7 /* Calculator */,
+				5BCE3AAE17A9686100CD01E7 /* ReportTextRawMenu */,
+				5BCE3AAD17A9685000CD01E7 /* ContextTextRawMenu */,
+				5BCE3AAC17A95EDE00CD01E7 /* ReportAreaView */,
+			);
+			name = DataSources;
+			sourceTree = "<group>";
+		};
+		5BCE3AB617A9702600CD01E7 /* Calculator */ = {
+			isa = PBXGroup;
+			children = (
+				5BCE3AB717A9703B00CD01E7 /* IAEHelperCalculatorDataSource.h */,
+				5BCE3AB817A9703B00CD01E7 /* IAEHelperCalculatorDataSource.m */,
+			);
+			name = Calculator;
 			sourceTree = "<group>";
 		};
 		5BD94C081786B83E009009B1 /* Views */ = {
@@ -1151,6 +1172,7 @@
 				5B1F0D3517841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m in Sources */,
 				5BDC867E1680D83500C761D5 /* IAEConcept.m in Sources */,
 				5B907840179D269E00B2A0F7 /* IAEKeyboardPanelCalculatorView.m in Sources */,
+				5BCE3AB917A9703B00CD01E7 /* IAEHelperCalculatorDataSource.m in Sources */,
 				5B5C967B1781673A008CD851 /* IAEValueDecoratorView.m in Sources */,
 				5B5C968217816D68008CD851 /* IAEValueDecoratorViewConfigurator.m in Sources */,
 				5B907838179D25BD00B2A0F7 /* IAEDragPanelCalculatorView.m in Sources */,

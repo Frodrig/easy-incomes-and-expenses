@@ -843,7 +843,9 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
 {
     [self.conceptsCollectionView reloadData];
     if ([self.conceptsCollectionView numberOfItemsInSection:0] > 0) {
-        [self.conceptsCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+        [self.conceptsCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
+                                            atScrollPosition:UICollectionViewScrollPositionNone
+                                                    animated:NO];
     }
 }
 

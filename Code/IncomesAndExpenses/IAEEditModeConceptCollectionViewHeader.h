@@ -11,5 +11,6 @@
 @interface IAEEditModeConceptCollectionViewHeader : UICollectionReusableView
 
 @property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *info;
 
 @end

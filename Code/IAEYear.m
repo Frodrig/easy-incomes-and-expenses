@@ -137,6 +137,19 @@ static NSString * const kEntityNameMonth = @"IAEMonth";
     return sumBalance;
 }
 
+- (NSArray *)findAllOrdererMonthsWithConcepts
+{
+    NSMutableArray *ordererMonths = [[NSMutableArray alloc] initWithCapacity:self.ordererMonths.count];
+    for (IAEMonth *month in self.ordererMonths) {
+        if (month.concepts.count > 0) {
+            [ordererMonths addObject:month];
+        }
+    }
+    
+    return [NSArray arrayWithArray:ordererMonths];
+}
+
+
 - (NSArray *)findAllConceptsWithCategory:(IAECategory *)category
 {
     NSMutableArray *concepts = [[NSMutableArray alloc] initWithCapacity:self.months.count];

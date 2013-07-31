@@ -79,8 +79,10 @@ static const NSUInteger kGlobalIndexForYearInContextScrollView = 0;
 
 static NSString * const kNibConceptCellName = @"IAEEditModeConceptCollectionViewCell";
 static NSString * const kIdConceptCellName = @"EditModeConceptCell";
+
 static NSString * const kNibConceptCellHeaderInYearModeName = @"IAEEditModeConceptCollectionViewHeader";
 static NSString * const kCollectionViewHeaderIdentifier = @"EditModeConceptHeader";
+static NSString * const kLtextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEADER_BASEINFO";
 
 static NSString * const kContextMenuFontFamilyName = @"HelveticaNeue-Ultralight";
 static const CGFloat kContextMenuFontSizeOfOptions = 24;
@@ -479,7 +481,8 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
         IAEMonth *actualMonth = [self findActualSelectedMonth];
         allConcepts = [self isDayModeActiveForConcepts] ? [actualMonth  allConceptsSortedByDay] : [actualMonth allConceptsSortedByEntryInstant];
     } else {
-        IAEMonth *month = [self findMonthForOpenYearAtIndex:indexPath.section];
+        NSArray *months = [self findAllOrdererMonthsWithConceptsOfOpenYear];
+        IAEMonth *month = months[indexPath.section];
         allConcepts = [self isDayModeActiveForConcepts] ? [month allConceptsSortedByDay] : [month allConceptsSortedByEntryInstant];
     }
     
@@ -548,7 +551,8 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
         IAEMonth *month = [self findActualSelectedMonth];
         numberOfConcepts = month.concepts.count;
     } else {
-        IAEMonth *month = [self findMonthForOpenYearAtIndex:section];
+        NSArray *months = [self findAllOrdererMonthsWithConceptsOfOpenYear];
+        IAEMonth *month = months[section];
         numberOfConcepts = month.concepts.count;
     }
     
@@ -630,6 +634,14 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
 {
     IAEConcept *concept = [self findConceptOfCell:cell];
     return concept.dayOfTheMonth;
+}
+
+- (NSArray *)findAllOrdererMonthsWithConceptsOfOpenYear
+{
+    IAEYear *openYear = [self findOpenYear];
+    NSArray *months = [openYear findAllOrdererMonthsWithConcepts];
+    
+    return months;
 }
 
 #pragma mark - Update 
@@ -884,7 +896,8 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
 {
     CGSize headerSize = CGSizeZero;
     if ([self isActualSelectedContextTheYearOpen]) {
-        headerSize = CGSizeMake(910, 44);
+        // ToDo: Mal, esto deberia de cogerse directamente del xib
+        headerSize = CGSizeMake(910, 50);
     }
     
     return headerSize;
@@ -896,7 +909,8 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
 {
     NSUInteger numberOfSections = 1;
     if ([self isActualSelectedContextTheYearOpen]) {
-        numberOfSections = kNumberOfMonths;
+        NSArray *monthWithConcepts = [self findAllOrdererMonthsWithConceptsOfOpenYear];
+        numberOfSections = monthWithConcepts.count;
     }
     
     return numberOfSections;
@@ -927,8 +941,13 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
 
 - (void)configureEditModeConceptHeader:(IAEEditModeConceptCollectionViewHeader *)header atIndexPath:(NSIndexPath *)indexPath
 {
-    IAEMonth *month = [self findMonthForOpenYearAtIndex:indexPath.section];
-    header.title = [IAEDateHelper findMonthNameStringWithMonthIndex:month.month inShortForm:NO];
+    NSArray *months = [self findAllOrdererMonthsWithConceptsOfOpenYear];
+    IAEMonth *month = months[indexPath.section];
+    NSString *monthName = [IAEDateHelper findMonthNameStringWithMonthIndex:month.month inShortForm:NO];
+    NSString *monthBalance = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:[month balance]];
+    NSString *info = [NSString stringWithFormat:NSLocalizedString(kLtextBaseTextForHeaderInfo, @""), monthBalance, month.concepts.count];
+    header.title = monthName;
+    header.info = info;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath

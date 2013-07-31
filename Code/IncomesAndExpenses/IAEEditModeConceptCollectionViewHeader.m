@@ -11,6 +11,7 @@
 @interface IAEEditModeConceptCollectionViewHeader()
 
 @property (nonatomic, weak) UILabel *titleLabel;
+@property (nonatomic, weak) UILabel *infoLabel;
 
 @end
 
@@ -18,10 +19,15 @@
 
 #pragma mark - Constants
 
-static const NSUInteger kTagOfMonthLabel = 10;
-static NSString * const kfamilyFontName = @"HelveticaNeue-Ultralight";
-static const NSUInteger kfontSize = 34;
-static const NSUInteger kfontKern = 5;
+static const NSUInteger kTagOfMonthTitleLabel = 10;
+static NSString * const kFamilyFontNameForTitle = @"HelveticaNeue-Ultralight";
+static const NSUInteger kFontSizeForTitle = 34;
+static const NSUInteger kFontKernForTitle = 10;
+
+static const NSUInteger kTagOfMonthInfoLabel = 20;
+static NSString * const kFamilyFontNameForInfo = @"HelveticaNeue-Ultralightitalic";
+static const NSUInteger kFontSizeForInfo = 21;
+static const NSUInteger kFontKernForInfo = 1;
 
 #pragma mark - Properties
 
@@ -33,25 +39,41 @@ static const NSUInteger kfontKern = 5;
     }
 }
 
+- (void)setInfo:(NSString *)info
+{
+    if ([info  compare:_info] != NSOrderedSame) {
+        _info = [info copy];
+        [self reloadInfo];
+    }
+}
+
 #pragma mark - Init
 
 - (void)awakeFromNib
 {
-    _titleLabel = (UILabel *)[self viewWithTag:kTagOfMonthLabel];
+    _titleLabel = (UILabel *)[self viewWithTag:kTagOfMonthTitleLabel];
+    _infoLabel = (UILabel *)[self viewWithTag:kTagOfMonthInfoLabel];
 }
 
 #pragma mark - Reload
 
 - (void)reloadTitle
 {
-    _titleLabel.attributedText = [[NSAttributedString alloc] initWithString:self.title attributes:[self createAttributesForTitleAttributeText]];
+    NSDictionary *attributes = [self createTextAttributesWithfamilyfont:kFamilyFontNameForTitle size:kFontSizeForTitle andKern:kFontKernForTitle];
+    _titleLabel.attributedText = [[NSAttributedString alloc] initWithString:self.title attributes:attributes];
 }
 
-- (NSDictionary *)createAttributesForTitleAttributeText
+- (void)reloadInfo
 {
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:kfamilyFontName size:kfontSize],
+    NSDictionary *attributes = [self createTextAttributesWithfamilyfont:kFamilyFontNameForInfo size:kFontSizeForInfo andKern:kFontKernForInfo];
+    _infoLabel.attributedText = [[NSAttributedString alloc] initWithString:self.info attributes:attributes];
+}
+
+- (NSDictionary *)createTextAttributesWithfamilyfont:(NSString *)familyFont size:(NSUInteger)size andKern:(NSUInteger)kern
+{
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:familyFont size:size],
                                  NSForegroundColorAttributeName: [UIColor blackColor],
-                                 NSKernAttributeName: @(kfontKern)};
+                                 NSKernAttributeName: @(kern)};
     
     return attributes;
 }

@@ -404,7 +404,7 @@
 			children = (
 				5B32D65B177C41980070AC72 /* IAEYearSelectorViewController.h */,
 				5B32D65C177C41980070AC72 /* IAEYearSelectorViewController.m */,
-				5B94035C178FEA5C00F9C1D0 /* IAEYearSelectorViewControllerDelegate.h */,
+				5BCE3AC217A978A500CD01E7 /* Protocols */,
 				5B94035F17904C1400F9C1D0 /* IAEYearSelectorViewController.xib */,
 				5B62D85E178EAC66009879A6 /* Year Selector Collection View */,
 			);
@@ -417,7 +417,7 @@
 				5B36AFEE1785874D00132475 /* IAEAdjustConceptAmountViewController.h */,
 				5B36AFEF1785874D00132475 /* IAEAdjustConceptAmountViewController.m */,
 				5B36AFF01785874D00132475 /* IAEAdjustConceptAmountViewController.xib */,
-				5B36AFF31785906100132475 /* IAEAdjustConceptAmountViewControllerDelegate.h */,
+				5BCE3AC417A978D400CD01E7 /* Protocols */,
 			);
 			name = "Adjust Concept Amout";
 			sourceTree = "<group>";
@@ -434,7 +434,7 @@
 		5B36AFF81785D71F00132475 /* Category Selector */ = {
 			isa = PBXGroup;
 			children = (
-				5BD94C111786D051009009B1 /* IAECategorySelectorViewControllerDelegate.h */,
+				5BCE3AC017A9788E00CD01E7 /* Protocols */,
 				5B36AFF91785D73800132475 /* IAECategorySelectorViewController.h */,
 				5B36AFFA1785D73800132475 /* IAECategorySelectorViewController.m */,
 				5B36AFFB1785D73800132475 /* IAECategorySelectorViewController.xib */,
@@ -450,7 +450,7 @@
 				5B55C404178AA8C20066F586 /* IAECategoryEditorViewController.m */,
 				5B55C405178AA8C20066F586 /* IAECategoryEditorViewController.xib */,
 				5B8488F3178AB88C0001551F /* IAECategoryEditorDefs.h */,
-				5B8488F5178AB8B10001551F /* IAECategoryEditorViewControllerDelegate.h */,
+				5BCE3AC117A9789800CD01E7 /* Protocols */,
 			);
 			name = "Category Editor";
 			sourceTree = "<group>";
@@ -720,9 +720,8 @@
 			children = (
 				5B8CD5D717A2C6DB00A353A5 /* IAETextRawSelectorMenuView.h */,
 				5B8CD5D817A2C6DB00A353A5 /* IAETextRawSelectorMenuView.m */,
-				5B8CD5DA17A2C6EF00A353A5 /* IAETextRawSelectorMenuViewDelegate.h */,
-				5B8CD5DB17A2C6FE00A353A5 /* IAETextRawSelectorMenuViewDataSource.h */,
 				5BEA607E17A66BB000520E09 /* IAETextRawSelectorMenuViewDefs.h */,
+				5BCE3ABF17A9787000CD01E7 /* Protocols */,
 			);
 			name = "Text Raw Selector Menu";
 			sourceTree = "<group>";
@@ -740,12 +739,11 @@
 		5B90782E179D1A8B00B2A0F7 /* Calculator */ = {
 			isa = PBXGroup;
 			children = (
-				5B907835179D257300B2A0F7 /* Views */,
 				5B90782F179D1AA700B2A0F7 /* IAECalculatorViewController.h */,
 				5B907830179D1AA700B2A0F7 /* IAECalculatorViewController.m */,
 				5B907831179D1AA700B2A0F7 /* IAECalculatorViewController.xib */,
-				5B907834179D1AB900B2A0F7 /* IAECalculatorViewControllerDelegate.h */,
-				5B907842179D7FED00B2A0F7 /* IAECalculatorViewControllerDataSource.h */,
+				5B907835179D257300B2A0F7 /* Views */,
+				5BCE3ABE17A9786400CD01E7 /* Protocols */,
 			);
 			name = Calculator;
 			sourceTree = "<group>";
@@ -811,7 +809,7 @@
 				5BA0130F17983A9000337E84 /* IAEDayCalendarSelectorViewController.h */,
 				5BA0131017983A9000337E84 /* IAEDayCalendarSelectorViewController.m */,
 				5BA0131117983A9000337E84 /* IAEDayCalendarSelectorViewController.xib */,
-				5B48BFFA1799425500BF0A68 /* IAEDayCalendarSelectorViewControllerDelegate.h */,
+				5BCE3AC317A978CA00CD01E7 /* Protocols */,
 			);
 			name = "Day Calendar Selector";
 			sourceTree = "<group>";
@@ -915,6 +913,64 @@
 				5BCE3ABC17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.m */,
 			);
 			name = ConceptsCollectionView;
+			sourceTree = "<group>";
+		};
+		5BCE3ABE17A9786400CD01E7 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				5B907834179D1AB900B2A0F7 /* IAECalculatorViewControllerDelegate.h */,
+				5B907842179D7FED00B2A0F7 /* IAECalculatorViewControllerDataSource.h */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		5BCE3ABF17A9787000CD01E7 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				5B8CD5DA17A2C6EF00A353A5 /* IAETextRawSelectorMenuViewDelegate.h */,
+				5B8CD5DB17A2C6FE00A353A5 /* IAETextRawSelectorMenuViewDataSource.h */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		5BCE3AC017A9788E00CD01E7 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				5BD94C111786D051009009B1 /* IAECategorySelectorViewControllerDelegate.h */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		5BCE3AC117A9789800CD01E7 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				5B8488F5178AB8B10001551F /* IAECategoryEditorViewControllerDelegate.h */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		5BCE3AC217A978A500CD01E7 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				5B94035C178FEA5C00F9C1D0 /* IAEYearSelectorViewControllerDelegate.h */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		5BCE3AC317A978CA00CD01E7 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				5B48BFFA1799425500BF0A68 /* IAEDayCalendarSelectorViewControllerDelegate.h */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		5BCE3AC417A978D400CD01E7 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				5B36AFF31785906100132475 /* IAEAdjustConceptAmountViewControllerDelegate.h */,
+			);
+			name = Protocols;
 			sourceTree = "<group>";
 		};
 		5BD94C081786B83E009009B1 /* Views */ = {

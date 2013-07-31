@@ -93,7 +93,6 @@ static NSString * const kIdConceptCellName = @"EditModeConceptCell";
 
 static NSString * const kNibConceptCellHeaderInYearModeName = @"IAEEditModeConceptCollectionViewHeader";
 static NSString * const kCollectionViewHeaderIdentifier = @"EditModeConceptHeader";
-static NSString * const kLtextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEADER_BASEINFO";
 
 static const NSUInteger kSegmentedControlIndexEditMode = 0;
 static const NSUInteger kSegmentedControlIndexReportMode = 1;
@@ -1474,6 +1473,5 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
     
     return isReportMenu;
 }
-
 
 @end

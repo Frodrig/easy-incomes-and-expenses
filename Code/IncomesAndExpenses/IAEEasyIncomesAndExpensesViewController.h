@@ -20,7 +20,6 @@
 
 @interface IAEEasyIncomesAndExpensesViewController : UIViewController<UIPopoverControllerDelegate,
                                                                       UIScrollViewDelegate,
-                                                                      UICollectionViewDataSource,
                                                                       UICollectionViewDelegate,
                                                                       IAEAdjustConceptAmountViewControllerDelegate,
                                                                       IAECategorySelectorViewControllerDelegate,

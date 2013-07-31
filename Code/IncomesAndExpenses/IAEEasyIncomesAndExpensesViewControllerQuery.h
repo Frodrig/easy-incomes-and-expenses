@@ -10,12 +10,17 @@
 
 @class IAEYear;
 @class IAEMonth;
+@class IAEConcept;
 @class IAETextRawSelectorMenuView;
 
 @protocol IAEEasyIncomesAndExpensesViewControllerQuery <NSObject>
 
+- (UICollectionView *)findConceptsCollectionView;
+
 - (IAEYear *)findOpenYear;
 - (IAEMonth *)findActualSelectedMonth;
+
+- (BOOL)isActualSelectedContextTheYearOpen;
 
 - (BOOL)isTheBalancesOptionSelectedInReportMenu;
 - (BOOL)isTheIncomesOptionSelectedInReportMenu;
@@ -28,12 +33,21 @@
 - (NSArray *)findExpensesCategoriesOfActualSelectedContextView;
 - (NSSet *)findAllCategoriesForActualSelectedContext;
 
+- (NSArray *)findAllOrdererMonthsWithConceptsOfOpenYear;
+
+- (NSUInteger)findNumberOfConceptsOfActualSelectedContext:(NSInteger)section;
+- (IAEConcept *)findConceptAtIndexPath:(NSIndexPath *)indexPath;
+
 - (NSDecimalNumber *)findIncomesOfActualSelectedContextView;
 - (NSDecimalNumber *)findExpensesOfActualSelectedContextView;
 - (NSDecimalNumber *)findMaxValueOfAllCategoriesForActualSelectedContext;
 
 - (id)findModelObjectOfActualSelectedContextView;
 
+- (NSString *)findDayOfTheWeekNameFromConcept:(IAEConcept *)concept;
+
 - (CGSize)findMainViewSize;
+
+- (BOOL)isDayModeActiveForConcepts;
 
 @end

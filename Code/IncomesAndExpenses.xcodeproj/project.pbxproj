@@ -80,6 +80,7 @@
 		5BCE3AB117A9688700CD01E7 /* IAEHelperContextTextRawMenuDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3AB017A9688700CD01E7 /* IAEHelperContextTextRawMenuDataSource.m */; };
 		5BCE3AB417A9689600CD01E7 /* IAEHelperReportTextRawMenuDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3AB317A9689600CD01E7 /* IAEHelperReportTextRawMenuDataSource.m */; };
 		5BCE3AB917A9703B00CD01E7 /* IAEHelperCalculatorDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3AB817A9703B00CD01E7 /* IAEHelperCalculatorDataSource.m */; };
+		5BCE3ABD17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3ABC17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.m */; };
 		5BD06157163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5BD06155163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld */; };
 		5BD06168163A8CFF00A80BE3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD06167163A8CFF00A80BE3 /* CoreData.framework */; };
 		5BD06171163A8D2B00A80BE3 /* IAEMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD06170163A8D2B00A80BE3 /* IAEMonth.m */; };
@@ -238,6 +239,8 @@
 		5BCE3AB317A9689600CD01E7 /* IAEHelperReportTextRawMenuDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelperReportTextRawMenuDataSource.m; sourceTree = "<group>"; };
 		5BCE3AB717A9703B00CD01E7 /* IAEHelperCalculatorDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelperCalculatorDataSource.h; sourceTree = "<group>"; };
 		5BCE3AB817A9703B00CD01E7 /* IAEHelperCalculatorDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelperCalculatorDataSource.m; sourceTree = "<group>"; };
+		5BCE3ABB17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelperConceptsCollectionViewDataSource.h; sourceTree = "<group>"; };
+		5BCE3ABC17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelperConceptsCollectionViewDataSource.m; sourceTree = "<group>"; };
 		5BD06156163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = IncomesAndExpenses.xcdatamodel; sourceTree = "<group>"; };
 		5BD06167163A8CFF00A80BE3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		5BD0616F163A8D2B00A80BE3 /* IAEMonth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEMonth.h; sourceTree = "<group>"; };
@@ -887,6 +890,7 @@
 		5BCE3AB517A9700800CD01E7 /* DataSources */ = {
 			isa = PBXGroup;
 			children = (
+				5BCE3ABA17A9722200CD01E7 /* ConceptsCollectionView */,
 				5BCE3AB617A9702600CD01E7 /* Calculator */,
 				5BCE3AAE17A9686100CD01E7 /* ReportTextRawMenu */,
 				5BCE3AAD17A9685000CD01E7 /* ContextTextRawMenu */,
@@ -902,6 +906,15 @@
 				5BCE3AB817A9703B00CD01E7 /* IAEHelperCalculatorDataSource.m */,
 			);
 			name = Calculator;
+			sourceTree = "<group>";
+		};
+		5BCE3ABA17A9722200CD01E7 /* ConceptsCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				5BCE3ABB17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.h */,
+				5BCE3ABC17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.m */,
+			);
+			name = ConceptsCollectionView;
 			sourceTree = "<group>";
 		};
 		5BD94C081786B83E009009B1 /* Views */ = {
@@ -1139,6 +1152,7 @@
 				5B767E031636D7FC005315F8 /* main.m in Sources */,
 				5BCE3AB417A9689600CD01E7 /* IAEHelperReportTextRawMenuDataSource.m in Sources */,
 				5B767E071636D7FC005315F8 /* IAEAppDelegate.m in Sources */,
+				5BCE3ABD17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.m in Sources */,
 				5BA51A7C1796D81E00A3D923 /* IAEInfoAboutAndOptionsCollectionViewCell.m in Sources */,
 				5BE1F4C01637EA4B004E13C2 /* IAEBook.m in Sources */,
 				5B907832179D1AA700B2A0F7 /* IAECalculatorViewController.m in Sources */,

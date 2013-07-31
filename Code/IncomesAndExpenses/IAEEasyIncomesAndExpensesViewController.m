@@ -34,6 +34,7 @@
 #import "IAEHelperContextTextRawMenuDataSource.h"
 #import "IAEHelperReportTextRawMenuDataSource.h"
 #import "IAEHelperCalculatorDataSource.h"
+#import "IAEHelperConceptsCollectionViewDataSource.h"
 #import "NSNumber+DefaultValues.h"
 #import "IAECategoryStore.h"
 #import "IAEDateHelper.h"
@@ -56,6 +57,7 @@
 @property (nonatomic, strong) IAEHelperContextTextRawMenuDataSource *helperContextTextRawMenuDataSource;
 @property (nonatomic, strong) IAEHelperReportTextRawMenuDataSource *helperReportTextRawMenuDataSource;
 @property (nonatomic, strong) IAEHelperCalculatorDataSource *helperCalculatorDataSource;
+@property (nonatomic, strong) IAEHelperConceptsCollectionViewDataSource *helperConceptsCollectionViewDataSource;
 @property (nonatomic, strong) UIPopoverController *popover;
 @property (nonatomic, strong) UITapGestureRecognizer *tapConceptsRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *dobleTapConceptsRecognizer;
@@ -179,6 +181,7 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
     _helperContextTextRawMenuDataSource = [[IAEHelperContextTextRawMenuDataSource alloc] initWithEasyIncomesAndExpensesViewControllerQuery:self];
     _helperReportTextRawMenuDataSource = [[IAEHelperReportTextRawMenuDataSource alloc] initWithEasyIncomesAndExpensesViewControllerQuery:self];
     _helperCalculatorDataSource = [[IAEHelperCalculatorDataSource alloc] initWithEasyIncomesAndExpensesViewControllerQuery:self];
+    _helperConceptsCollectionViewDataSource = [[IAEHelperConceptsCollectionViewDataSource alloc] initWithEasyIncomesAndExpensesViewControllerQuery:self];
 }
 
 - (void)dealloc
@@ -278,7 +281,7 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
 - (void)vinculeConceptsCollectionView
 {
     self.conceptsCollectionView.delegate = self;
-    self.conceptsCollectionView.dataSource = self;
+    self.conceptsCollectionView.dataSource = self.helperConceptsCollectionViewDataSource;
 }
 
 - (void)vinculeContextMenuView
@@ -567,6 +570,57 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
     return self.view.bounds.size;
 }
 
+- (NSArray *)findAllOrdererMonthsWithConceptsOfOpenYear
+{
+    IAEYear *openYear = [self findOpenYear];
+    NSArray *months = [openYear findAllOrdererMonthsWithConcepts];
+    
+    return months;
+}
+
+- (UICollectionView *)findConceptsCollectionView
+{
+    return self.conceptsCollectionView;
+}
+
+- (IAEConcept *)findConceptAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray *concepts = [self allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath:indexPath];
+    IAEConcept *concept = [concepts objectAtIndex:indexPath.row];
+    
+    return concept;
+}
+
+- (NSUInteger)findNumberOfConceptsOfActualSelectedContext:(NSInteger)section
+{
+    NSUInteger numberOfConcepts = 0;
+    if ([self isActualSelectedContextAMonth]) {
+        IAEMonth *month = [self findActualSelectedMonth];
+        numberOfConcepts = month.concepts.count;
+    } else {
+        NSArray *months = [self findAllOrdererMonthsWithConceptsOfOpenYear];
+        IAEMonth *month = months[section];
+        numberOfConcepts = month.concepts.count;
+    }
+    
+    return numberOfConcepts;
+}
+
+- (BOOL)isDayModeActiveForConcepts
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsDayModeActive];
+}
+
+- (NSString *)findDayOfTheWeekNameFromConcept:(IAEConcept *)concept
+{
+    NSUInteger dayOfTheWeekIndex = [IAEDateHelper findDayOfTheWeekIndexFromYearDate:concept.month.year.yearDate
+                                                                         monthIndex:concept.month.month
+                                                                   andDayOfTheMonth:concept.dayOfTheMonth];
+    NSString *dayOfTheWeekName = [IAEDateHelper findDayOfTheWeekNameStringWithDayOfTheWeekIndex:dayOfTheWeekIndex inShortForm:NO];
+    
+    return dayOfTheWeekName;
+}
+
 #pragma mark - Finds
 
 - (NSUInteger)findTodayMonthContextViewGlobalIndexInContextScrollView
@@ -612,19 +666,6 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
     return allConcepts;
 }
 
-- (BOOL)isDayModeActiveForConcepts
-{
-    return [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsDayModeActive];
-}
-
-- (IAEConcept *)findConceptAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSArray *concepts = [self allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath:indexPath];
-    IAEConcept *concept = [concepts objectAtIndex:indexPath.row];
-    
-    return concept;
-}
-
 - (IAEConcept *)findConceptOfCell:(UICollectionViewCell *)cell
 {
     NSIndexPath *indexPathOfCell = [self.conceptsCollectionView indexPathForCell:cell];
@@ -667,21 +708,6 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
     return actualSelectedContext;
 }
 
-- (NSUInteger)findNumberOfConceptsOfActualSelectedContext:(NSInteger)section
-{
-    NSUInteger numberOfConcepts = 0;
-    if ([self isActualSelectedContextAMonth]) {
-        IAEMonth *month = [self findActualSelectedMonth];
-        numberOfConcepts = month.concepts.count;
-    } else {
-        NSArray *months = [self findAllOrdererMonthsWithConceptsOfOpenYear];
-        IAEMonth *month = months[section];
-        numberOfConcepts = month.concepts.count;
-    }
-    
-    return numberOfConcepts;
-}
-
 - (NSArray *)findCategoriesOfActualSelectedContextViewWithType:(CategoryType)type
 {
     id modelObj = [self findModelObjectOfActualSelectedContextView];
@@ -690,28 +716,10 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
     return categories;
 }
 
-- (NSString *)findDayOfTheWeekNameFromConcept:(IAEConcept *)concept
-{
-    NSUInteger dayOfTheWeekIndex = [IAEDateHelper findDayOfTheWeekIndexFromYearDate:concept.month.year.yearDate
-                                                                         monthIndex:concept.month.month
-                                                                   andDayOfTheMonth:concept.dayOfTheMonth];
-    NSString *dayOfTheWeekName = [IAEDateHelper findDayOfTheWeekNameStringWithDayOfTheWeekIndex:dayOfTheWeekIndex inShortForm:NO];
-    
-    return dayOfTheWeekName;
-}
-
 - (NSUInteger)findDayOfTheMonthForConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
     IAEConcept *concept = [self findConceptOfCell:cell];
     return concept.dayOfTheMonth;
-}
-
-- (NSArray *)findAllOrdererMonthsWithConceptsOfOpenYear
-{
-    IAEYear *openYear = [self findOpenYear];
-    NSArray *months = [openYear findAllOrdererMonthsWithConcepts];
-    
-    return months;
 }
 
 #pragma mark - Update 
@@ -975,160 +983,6 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
     return headerSize;
 }
 
-#pragma mark - UICollectionView DataSource
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    NSUInteger numberOfSections = 1;
-    if ([self isActualSelectedContextTheYearOpen]) {
-        NSArray *monthWithConcepts = [self findAllOrdererMonthsWithConceptsOfOpenYear];
-        numberOfSections = monthWithConcepts.count;
-    }
-    
-    return numberOfSections;
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    NSUInteger numberOfItems = [self findNumberOfConceptsOfActualSelectedContext:section];
-
-    return numberOfItems;
-}
-
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
-           viewForSupplementaryElementOfKind:(NSString *)kind
-                                 atIndexPath:(NSIndexPath *)indexPath
-{
-    UICollectionReusableView *header = nil;
-    
-    if ([kind compare:UICollectionElementKindSectionHeader] == NSOrderedSame) {
-         header = [self.conceptsCollectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-                                                                  withReuseIdentifier:kCollectionViewHeaderIdentifier
-                                                                         forIndexPath:indexPath];
-        [self configureEditModeConceptHeader:(IAEEditModeConceptCollectionViewHeader *)header atIndexPath:indexPath];
-    }
-    
-    return header;
-}
-
-- (void)configureEditModeConceptHeader:(IAEEditModeConceptCollectionViewHeader *)header atIndexPath:(NSIndexPath *)indexPath
-{
-    NSArray *months = [self findAllOrdererMonthsWithConceptsOfOpenYear];
-    IAEMonth *month = months[indexPath.section];
-    NSString *monthName = [IAEDateHelper findMonthNameStringWithMonthIndex:month.month inShortForm:NO];
-    NSString *monthBalance = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:[month balance]];
-    NSString *info = [NSString stringWithFormat:NSLocalizedString(kLtextBaseTextForHeaderInfo, @""), monthBalance, month.concepts.count];
-    header.title = monthName;
-    header.info = info;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSAssert(collectionView == self.conceptsCollectionView, @"Se ha recibido una collection view no esperada");
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kIdConceptCellName forIndexPath:indexPath];
-    
-    [self configureEditModeConceptCell:(IAEEditModeConceptCollectionViewCell *)cell withConceptAtIndexPath:indexPath];
-    
-    return cell;
-}
-
-- (void)configureEditModeConceptCell:(IAEEditModeConceptCollectionViewCell *)cell withConceptAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Nota: Por defecto los conceptos tienen el valor absoluto de la cantidad que almacenan de ahi el pedir la cantidad con signo si procede
-    IAEConcept *concept = [self findConceptAtIndexPath:indexPath];
-    NSAssert(concept, @"");
-    IAECategory *category = concept.category;
-    NSAssert(category, @"");
-    NSDecimalNumber *amountWithSign = [concept amountWithSign];
-    NSString *amountWithSignString = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:amountWithSign];
-    EconomicValueType economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:amountWithSign];
-    UIColor *colorForEconomicValueType = [IAEColorHelper colorForEconomicValueType:economicValueType];
-    NSUInteger instantEntryIndex = [self findNumberOfConceptsOfActualSelectedContext:indexPath.section] - indexPath.row;
-
-    cell.valueDecoratorView.economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:amountWithSign];
-    [self configureCategoryLabelsOfConceptCell:cell withCategory:category];
-    [self configureAmountLabelOfConceptCell:cell withAmountWithSignString:amountWithSignString andColor:colorForEconomicValueType];
-    [self configureIdentifierOfConceptCell:cell atIndexPath:indexPath withIndex:instantEntryIndex];
-}
-
-- (void)configureCategoryLabelsOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
-                                withCategory:(IAECategory *)category
-{
-    NSDictionary *categoryNameLabelAttributes = [self createAttributeDictionaryForConceptCellWithFont:[self createFontForCategoryConceptNameLabelInConceptCell]
-                                                                                              andColor:[UIColor blackColor]];
-    cell.categoryNameLabel.attributedText = [[NSAttributedString alloc] initWithString:[category localizedTag]
-                                                                            attributes:categoryNameLabelAttributes];
-    
-    NSDictionary *categoryTypeLabelAttributes = [self createAttributeDictionaryForConceptCellWithFont:[self createFontForCategoryConceptTypeLabelInConceptCell] andColor:[UIColor blackColor]];
-    cell.categoryTypeLabel.attributedText = [[NSAttributedString alloc] initWithString:[category localizedCategoryTypeString] attributes:categoryTypeLabelAttributes];
-    
-}
-
-- (void)configureAmountLabelOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
-                 withAmountWithSignString:(NSString *)amountSignedString
-                                 andColor:(UIColor *)color
-{
-    NSDictionary *amountLabelAttributes = [self createAttributeDictionaryForConceptCellWithFont:[self createFontForAmountLabelInConceptCell]
-                                                                                        andColor:color];
-    cell.amountLabel.attributedText = [[NSAttributedString alloc] initWithString:amountSignedString attributes:amountLabelAttributes];
-}
-
-- (NSDictionary *)createAttributeDictionaryForConceptCellWithFont:(UIFont *)font andColor:(UIColor *)color
-{
-    NSDictionary *attributes =  @{NSFontAttributeName: font,
-                                  NSForegroundColorAttributeName: color,
-                                  NSKernAttributeName: [NSNumber numberWithInteger:0.0]};
-    
-    return attributes;
-}
-
-- (UIFont *)createFontForAmountLabelInConceptCell
-{
-    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:52];
-    return font;
-}
-
-- (UIFont *)createFontForCategoryConceptNameLabelInConceptCell
-{
-    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:35];
-    return font;
-}
-
-- (UIFont *)createFontForCategoryConceptTypeLabelInConceptCell
-{
-    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:17];
-    return font;
-}
-
-- (void)configureIdentifierOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
-                             atIndexPath:(NSIndexPath *)indexPath
-                               withIndex:(NSUInteger)index
-{
-    if (![self isDayModeActiveForConcepts]) {
-        [cell setIdentifierWithEntryInstantIndex:index];
-    } else if ([self isDayOfTheMonthAssociatedWithConceptCell:cell atIndexPath:indexPath]) {
-        [self setIdentifierForDayOfTheMonthAndDayOfTheWeekNameForCell:cell atIndexPath:indexPath withIndex:index];
-    } else {
-        [cell setIdentifierWithoutDay];
-    }
-}
-
-- (BOOL)isDayOfTheMonthAssociatedWithConceptCell:(IAEEditModeConceptCollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
-{
-    IAEConcept *concept = [self findConceptAtIndexPath:indexPath];
-    return concept.dayOfTheMonth != 0;
-}
-
-- (void)setIdentifierForDayOfTheMonthAndDayOfTheWeekNameForCell:(IAEEditModeConceptCollectionViewCell *)cell
-                                                    atIndexPath:(NSIndexPath *)indexPath
-                                                      withIndex:(NSUInteger)index
-{
-    IAEConcept *concept = [self findConceptAtIndexPath:indexPath];
-    NSString *dayOfTheWeekName = [self findDayOfTheWeekNameFromConcept:concept];
-    
-    [cell setIdentifierWithDayOfTheMonthIndex:concept.dayOfTheMonth andDayOfTheWeekName:dayOfTheWeekName];
-}
-
 #pragma mark - UICollectionView Delegate
 
 #pragma mark - UITapGestureRecognizer
@@ -1273,7 +1127,7 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
     IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:cellIndexPath];
     
     if ([self updateWithNewAbsoluteValueOfConcept:concept byAdding:amount]) {
-        [self configureEditModeConceptCell:cell withConceptAtIndexPath:cellIndexPath];
+        [self.helperConceptsCollectionViewDataSource configureEditModeConceptCell:cell withConceptAtIndexPath:cellIndexPath];
         [[IAEBook sharedBook] saveAll];
     }
 }
@@ -1318,7 +1172,7 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
         [[IAEBook sharedBook] saveAll];
 
         IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:indexPath];
-        [self configureEditModeConceptCell:cell withConceptAtIndexPath:indexPath];
+        [self.helperConceptsCollectionViewDataSource configureEditModeConceptCell:cell withConceptAtIndexPath:indexPath];
 
         if (originalCategoryType != concept.category.categoryType) {
             [self updateBalancesWithAnimation:YES];

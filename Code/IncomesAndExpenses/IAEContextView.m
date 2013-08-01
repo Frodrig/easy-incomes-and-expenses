@@ -24,25 +24,27 @@
 
 @implementation IAEContextView
 
-static NSUInteger tagViewContentName = 10;
-static NSUInteger tagViewBalance = 20;
+static const NSUInteger kTagViewContentName = 10;
+static const NSUInteger kTagViewBalance = 20;
 
-static CGFloat timeAnimationBalanceUpdate = 1.55;
+static const CGFloat kTimeAnimationBalanceUpdate = 1.55;
 
-static NSString * const xibContentViewContentName = @"IAEContextViewContent";
+static NSString * const kXibContentViewContentName = @"IAEContextViewContent";
 
-static NSString * const fontFamilyName = @"HelveticaNeue-UltraLight";
-static NSUInteger sizeFontForNameLabel = 73;
-static NSUInteger sizeFontForBalanceLabel = 59;
+static NSString * const kFontFamilyName = @"HelveticaNeue-UltraLight";
+static const NSUInteger kSizeFontForNameLabel = 56;
+static const CGFloat kKernForNameLabel = 20;
+static const NSUInteger kSizeFontForBalanceLabel = 73;
+static const CGFloat kKernForBalanceLabel = 5;
 
 - (UILabel *)contentBalanceLabel
 {
-    return (UILabel *)[self viewWithTag:tagViewBalance];
+    return (UILabel *)[self viewWithTag:kTagViewBalance];
 }
 
 - (UILabel *)contentNameLabel
 {
-    return (UILabel *)[self viewWithTag:tagViewContentName];
+    return (UILabel *)[self viewWithTag:kTagViewContentName];
 }
 
 - (id)initWithFrame:(CGRect)frame type:(IAEContextViewType)contextViewType andValueIndex:(NSUInteger)valueIndex
@@ -71,7 +73,7 @@ static NSUInteger sizeFontForBalanceLabel = 59;
 
 - (void)loadAndAddEditModeBalanceItem
 {
-    _contentView = [UIView viewFromXib:xibContentViewContentName withOwner:self];
+    _contentView = [UIView viewFromXib:kXibContentViewContentName withOwner:self];
     [self addSubview:_contentView];
 }
 
@@ -82,8 +84,8 @@ static NSUInteger sizeFontForBalanceLabel = 59;
 
 - (void)vinculeLabelsOfBalanceItemAsProperties
 {
-    _contentNameLabel = (UILabel *)[_contentView viewWithTag:tagViewContentName];
-    _contentBalanceLabel = (UILabel *)[_contentView viewWithTag:tagViewBalance];
+    _contentNameLabel = (UILabel *)[_contentView viewWithTag:kTagViewContentName];
+    _contentBalanceLabel = (UILabel *)[_contentView viewWithTag:kTagViewBalance];
 }
 
 - (void)reloadDataWithAnimation:(BOOL)animation
@@ -95,7 +97,9 @@ static NSUInteger sizeFontForBalanceLabel = 59;
 - (void)configureContentNameLabelText:(BOOL)animation
 {
     NSString *contentName = [self contentName];
-    NSDictionary *attributes = [self createAttributeDictionaryForLabelsWithSize:sizeFontForNameLabel color:[UIColor blackColor] andKerning:15];
+    NSDictionary *attributes = [self createAttributeDictionaryForLabelsWithSize:kSizeFontForNameLabel
+                                                                          color:[UIColor blackColor]
+                                                                     andKerning:kKernForNameLabel];
     
     self.contentNameLabel.attributedText = [[NSAttributedString alloc] initWithString:contentName attributes:attributes];
 }
@@ -105,14 +109,16 @@ static NSUInteger sizeFontForBalanceLabel = 59;
     NSDecimalNumber *contentBalance = [self contentBalance];
     NSString *contentBalanceString = animation ? self.contentBalanceLabel.text : [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:contentBalance];
     UIColor *labelColor = [IAEColorHelper colorForEconomicValueType:[IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:contentBalance]];
-    NSDictionary *attributes = [self createAttributeDictionaryForLabelsWithSize:sizeFontForBalanceLabel color:labelColor andKerning:0];
+    NSDictionary *attributes = [self createAttributeDictionaryForLabelsWithSize:kSizeFontForBalanceLabel
+                                                                          color:labelColor
+                                                                     andKerning:kKernForBalanceLabel];
     
     self.contentBalanceLabel.attributedText = [[NSAttributedString alloc] initWithString:contentBalanceString attributes:attributes];
     
     if (animation) {
         [[IAEEconomicValueUpdater defaultEconomicValueUpdater] processEconomicLabel:self.contentBalanceLabel
                                                                             toValue:contentBalance
-                                                                       withDuration:timeAnimationBalanceUpdate];
+                                                                       withDuration:kTimeAnimationBalanceUpdate];
     }
 }
 
@@ -140,7 +146,7 @@ static NSUInteger sizeFontForBalanceLabel = 59;
 
 - (NSDictionary *)createAttributeDictionaryForLabelsWithSize:(CGFloat)size color:(UIColor *)color andKerning:(CGFloat)kerning
 {
-    NSDictionary *attributes =  @{NSFontAttributeName: [UIFont fontWithName:fontFamilyName size:size],
+    NSDictionary *attributes =  @{NSFontAttributeName: [UIFont fontWithName:kFontFamilyName size:size],
                                   NSForegroundColorAttributeName: color,
                                   NSKernAttributeName: [NSNumber numberWithInteger:kerning]};
     

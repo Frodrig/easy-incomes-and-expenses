@@ -455,6 +455,15 @@
 			name = "Category Editor";
 			sourceTree = "<group>";
 		};
+		5B58A48217AA635A00697C70 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				5B8CD5D417A262D100A353A5 /* IAEContextViewDataSource.h */,
+				5B8CD5D517A262F400A353A5 /* IAEContextViewDefs.h */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
 		5B5C967817816718008CD851 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -709,8 +718,7 @@
 				5B8CD5CF17A262A800A353A5 /* IAEContextView.h */,
 				5B8CD5D017A262A800A353A5 /* IAEContextView.m */,
 				5B8CD5D217A262BC00A353A5 /* IAEContextViewContent.xib */,
-				5B8CD5D417A262D100A353A5 /* IAEContextViewDataSource.h */,
-				5B8CD5D517A262F400A353A5 /* IAEContextViewDefs.h */,
+				5B58A48217AA635A00697C70 /* Protocols */,
 			);
 			name = "Context View";
 			sourceTree = "<group>";

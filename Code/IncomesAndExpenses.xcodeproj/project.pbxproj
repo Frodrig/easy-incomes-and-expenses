@@ -10,6 +10,7 @@
 		5B0F8BC416B94ADD002D62A5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5B0F8BC616B94ADD002D62A5 /* Localizable.strings */; };
 		5B1F0D3517841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1F0D3417841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m */; };
 		5B1F0D3717841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B1F0D3617841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib */; };
+		5B251FA117AACA71000957A5 /* IAEStrokeAnimatableLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B251FA017AACA71000957A5 /* IAEStrokeAnimatableLineView.m */; };
 		5B26461117968496006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B26461017968496006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.m */; };
 		5B264613179684A5006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B264612179684A5006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.xib */; };
 		5B26461617968F84006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B26461517968F84006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.xib */; };
@@ -107,6 +108,9 @@
 		5B1F0D3317841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEditModeConceptCollectionViewCell.h; sourceTree = "<group>"; };
 		5B1F0D3417841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEditModeConceptCollectionViewCell.m; sourceTree = "<group>"; };
 		5B1F0D3617841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEEditModeConceptCollectionViewCell.xib; sourceTree = "<group>"; };
+		5B251F9F17AACA71000957A5 /* IAEStrokeAnimatableLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEStrokeAnimatableLineView.h; sourceTree = "<group>"; };
+		5B251FA017AACA71000957A5 /* IAEStrokeAnimatableLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEStrokeAnimatableLineView.m; sourceTree = "<group>"; };
+		5B251FA317AACA8E000957A5 /* IAEStrokeAnimatableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEStrokeAnimatableViewDelegate.h; sourceTree = "<group>"; };
 		5B26460F17968496006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHeaderAboutAndOptionsCollectionReusableView.h; sourceTree = "<group>"; };
 		5B26461017968496006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHeaderAboutAndOptionsCollectionReusableView.m; sourceTree = "<group>"; };
 		5B264612179684A5006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEHeaderAboutAndOptionsCollectionReusableView.xib; sourceTree = "<group>"; };
@@ -313,6 +317,16 @@
 			name = Cell;
 			sourceTree = "<group>";
 		};
+		5B251FA217AACA76000957A5 /* Stroke Animatable View */ = {
+			isa = PBXGroup;
+			children = (
+				5B251F9F17AACA71000957A5 /* IAEStrokeAnimatableLineView.h */,
+				5B251FA017AACA71000957A5 /* IAEStrokeAnimatableLineView.m */,
+				5B251FA317AACA8E000957A5 /* IAEStrokeAnimatableViewDelegate.h */,
+			);
+			name = "Stroke Animatable View";
+			sourceTree = "<group>";
+		};
 		5B26460E17968383006F6E58 /* Collection View Cells & Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -469,6 +483,7 @@
 			children = (
 				5BEA98A81793E36E00098AE0 /* Circle Decorator View */,
 				5BEA98A71793E36600098AE0 /* Value Decorator View */,
+				5B251FA217AACA76000957A5 /* Stroke Animatable View */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1260,6 +1275,7 @@
 				5B36AFF11785874D00132475 /* IAEAdjustConceptAmountViewController.m in Sources */,
 				5B62D87D178EC27D009879A6 /* IAEDateHelper.m in Sources */,
 				5B90783C179D268000B2A0F7 /* IAEDisplayPanelCalculatorView.m in Sources */,
+				5B251FA117AACA71000957A5 /* IAEStrokeAnimatableLineView.m in Sources */,
 				5BEA608217A6A36600520E09 /* IAEReportAreaView.m in Sources */,
 				5B32D654177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m in Sources */,
 				5B5C967F17816A13008CD851 /* UIView+RoundedCorners.m in Sources */,

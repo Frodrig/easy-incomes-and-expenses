@@ -1,0 +1,34 @@
+//
+//  IAEStrokeAnimatableLine.h
+//  IncomesAndExpenses
+//
+//  Created by Fernando Rodríguez on 01/08/13.
+//  Copyright (c) 2013 Fernando Rodríguez Martínez. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@protocol IAEStrokeAnimatableViewDelegate;
+
+typedef NS_ENUM(NSInteger, StrokeType) {
+    STROKEANIMATABLE_TYPE_THIN,
+    STROKEANIMATABLE_TYPE_MEDIUM,
+    STROKEANIMATABLE_TYPE_STRONG
+};
+
+@interface IAEStrokeAnimatableLineView : UIView
+
+@property (nonatomic, weak) id<IAEStrokeAnimatableViewDelegate> delegate;
+
+@property (nonatomic, assign) CGFloat durationOfStrokeAnimation;
+@property (nonatomic, copy) UIColor *strokeColor;
+@property (nonatomic, assign) StrokeType strokeType;
+@property (nonatomic, assign) CGFloat lenght;
+@property (nonatomic, readonly) BOOL isAnimationActive;
+
+- (id)initWithPosition:(CGPoint)position;
+
+- (void)doStroke;
+- (void)resetStroke;
+
+@end

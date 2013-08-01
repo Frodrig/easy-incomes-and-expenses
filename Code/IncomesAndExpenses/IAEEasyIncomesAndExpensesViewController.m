@@ -43,6 +43,8 @@
 #import "UIView+RoundedCorners.h"
 #import "NSDecimalNumber+AbsoluteValue.h"
 
+#import "IAEStrokeAnimatableLineView.h"
+
 @interface IAEEasyIncomesAndExpensesViewController ()
 
 @property (weak, nonatomic) IBOutlet UIScrollView *contextScrollView;
@@ -65,6 +67,8 @@
 @property (nonatomic, weak) IAECategory *categoryRenaming;
 @property (nonatomic, weak) IAEConcept *conceptChangingDay;
 @property (nonatomic) BOOL reloadAllPendingFromYearSelectorIfReturnWithSameYearDate;
+
+@property (nonatomic, strong) IAEStrokeAnimatableLineView *strokeAnimatableLineView;
 
 @end
 
@@ -991,6 +995,20 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
     NSAssert(tapGestureRecognizer == self.tapConceptsRecognizer, @"");
     if ([self isActualSelectedContextAMonth]) {
         [self findCellOfConceptCollectionViewAndExecuteActionUnderTapGesture:tapGestureRecognizer];
+    } else {
+        if (nil == self.strokeAnimatableLineView) {
+            self.strokeAnimatableLineView = [[IAEStrokeAnimatableLineView alloc] initWithPosition:CGPointMake(0, self.view.center.y)];
+            [self.view addSubview:self.strokeAnimatableLineView];
+            self.strokeAnimatableLineView.lenght = self.view.bounds.size.width / 2;
+            self.strokeAnimatableLineView.durationOfStrokeAnimation = 0.5;
+            self.strokeAnimatableLineView.strokeType = STROKEANIMATABLE_TYPE_THIN;
+        }
+        if (!self.strokeAnimatableLineView.hidden) {
+            [self.strokeAnimatableLineView resetStroke];
+        } else {
+            [self.strokeAnimatableLineView doStroke];
+        }
+        
     }
 }
 

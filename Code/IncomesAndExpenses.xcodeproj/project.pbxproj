@@ -372,7 +372,7 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		5B32D651177C385A0070AC72 /* View - Controllers */ = {
+		5B32D651177C385A0070AC72 /* View, Controllers & ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				5B32D659177C41170070AC72 /* Easy Incomes and Expenses */,
@@ -384,7 +384,7 @@
 				5B94035D178FEE9700F9C1D0 /* Category Selector */,
 				5B32D65A177C417A0070AC72 /* Year Selector */,
 			);
-			name = "View - Controllers";
+			name = "View, Controllers & ViewControllers";
 			sourceTree = "<group>";
 		};
 		5B32D659177C41170070AC72 /* Easy Incomes and Expenses */ = {
@@ -404,8 +404,8 @@
 			children = (
 				5B32D65B177C41980070AC72 /* IAEYearSelectorViewController.h */,
 				5B32D65C177C41980070AC72 /* IAEYearSelectorViewController.m */,
-				5BCE3AC217A978A500CD01E7 /* Protocols */,
 				5B94035F17904C1400F9C1D0 /* IAEYearSelectorViewController.xib */,
+				5BCE3AC217A978A500CD01E7 /* Protocols */,
 				5B62D85E178EAC66009879A6 /* Year Selector Collection View */,
 			);
 			name = "Year Selector";
@@ -666,7 +666,7 @@
 				5B6E9FA3177D95770072EE34 /* Defs */,
 				5B6E9FA4177D9BAB0072EE34 /* Categories */,
 				5B767E231636E797005315F8 /* Model */,
-				5B32D651177C385A0070AC72 /* View - Controllers */,
+				5B32D651177C385A0070AC72 /* View, Controllers & ViewControllers */,
 				5B62D860178EC1EB009879A6 /* Story Boards */,
 				5B767DFD1636D7FC005315F8 /* Supporting Files */,
 				5B767E051636D7FC005315F8 /* IAEAppDelegate.h */,
@@ -867,22 +867,22 @@
 			name = ReportAreaView;
 			sourceTree = "<group>";
 		};
-		5BCE3AAD17A9685000CD01E7 /* ContextTextRawMenu */ = {
+		5BCE3AAD17A9685000CD01E7 /* ReportTextRawMenu */ = {
 			isa = PBXGroup;
 			children = (
 				5BCE3AB217A9689600CD01E7 /* IAEHelperReportTextRawMenuDataSource.h */,
 				5BCE3AB317A9689600CD01E7 /* IAEHelperReportTextRawMenuDataSource.m */,
 			);
-			name = ContextTextRawMenu;
+			name = ReportTextRawMenu;
 			sourceTree = "<group>";
 		};
-		5BCE3AAE17A9686100CD01E7 /* ReportTextRawMenu */ = {
+		5BCE3AAE17A9686100CD01E7 /* ContextTextRawMenu */ = {
 			isa = PBXGroup;
 			children = (
 				5BCE3AAF17A9688700CD01E7 /* IAEHelperContextTextRawMenuDataSource.h */,
 				5BCE3AB017A9688700CD01E7 /* IAEHelperContextTextRawMenuDataSource.m */,
 			);
-			name = ReportTextRawMenu;
+			name = ContextTextRawMenu;
 			sourceTree = "<group>";
 		};
 		5BCE3AB517A9700800CD01E7 /* DataSources */ = {
@@ -890,8 +890,8 @@
 			children = (
 				5BCE3ABA17A9722200CD01E7 /* ConceptsCollectionView */,
 				5BCE3AB617A9702600CD01E7 /* Calculator */,
-				5BCE3AAE17A9686100CD01E7 /* ReportTextRawMenu */,
-				5BCE3AAD17A9685000CD01E7 /* ContextTextRawMenu */,
+				5BCE3AAE17A9686100CD01E7 /* ContextTextRawMenu */,
+				5BCE3AAD17A9685000CD01E7 /* ReportTextRawMenu */,
 				5BCE3AAC17A95EDE00CD01E7 /* ReportAreaView */,
 			);
 			name = DataSources;

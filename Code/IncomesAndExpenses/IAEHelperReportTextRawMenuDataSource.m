@@ -107,14 +107,14 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
 
 - (IAETextRawSelectorMenuViewSelectorType)selectorTypeInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
 {
-    IAETextRawSelectorMenuViewSelectorType selectorType = TEXTRAWMENUVIEW_SELECTOR_BACKGROUNDCOLOR;
+    IAETextRawSelectorMenuViewSelectorType selectorType = TEXTRAWMENUVIEW_SELECTOR_BOTTOMLINE;
     
     return selectorType;
 }
 
 - (UIColor *)colorForSelectorIndicatorInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
 {
-    UIColor *color = [UIColor colorWithWhite:0.9 alpha:0.3];
+    UIColor *color = [UIColor colorWithWhite:0.9 alpha:1];
     
     return color;
 }

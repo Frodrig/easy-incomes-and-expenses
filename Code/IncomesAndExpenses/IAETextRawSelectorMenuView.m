@@ -10,11 +10,34 @@
 #import "IAETextRawSelectorMenuViewDataSource.h"
 #import "IAETextRawSelectorMenuViewDelegate.h"
 
+
+@interface IAETextRawSelectorMenuView()
+
+@property (nonatomic, strong) UIView *selectorLineView;
+
+@end
+
 @implementation IAETextRawSelectorMenuView
+
+#pragma mark - Constants
+
+static const NSUInteger kTagBaseValue = 100;
+static const CGFloat kHeightOfTheLineSelector = 2;
+static const CGFloat kYMarginOfTheLineSelector = 3;
 
 #pragma mark - properties
 
-static const NSUInteger kTagBaseValue = 100;
+- (UIView *)selectorLineView
+{
+    if (nil == _selectorLineView) {
+        CGSize sizeOfOptions = [self.dataSource sizeOfOptionsInTextRawSelectorMenu:self];
+        _selectorLineView = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                                     self.bounds.size.height - kHeightOfTheLineSelector - kYMarginOfTheLineSelector,
+                                                                     sizeOfOptions.width, kHeightOfTheLineSelector)];
+    }
+    
+    return _selectorLineView;
+}
 
 - (void)setDataSource:(id<IAETextRawSelectorMenuViewDataSource>)dataSource
 {
@@ -30,6 +53,10 @@ static const NSUInteger kTagBaseValue = 100;
     if (self.dataSource) {
         [self changeIndicatorFromOptionIndex:_currentOptionIndexSelected toNewCurrentOptionIndex:optionIndexSelected];
         _currentOptionIndexSelected = optionIndexSelected;
+        if ([self.dataSource selectorTypeInTextRawSelectorMenu:self] == TEXTRAWMENUVIEW_SELECTOR_BOTTOMLINE) {
+            UIButton *option = [self findMenuOptionWithIndex:optionIndexSelected];
+            self.selectorLineView.center = CGPointMake(option.center.x, self.selectorLineView.center.y);
+        }
     }
 }
 
@@ -42,6 +69,7 @@ static const NSUInteger kTagBaseValue = 100;
     [self removeAllMenuOptions];
     [self createAndAddMenuOptions];
     [self adjustFrameUsingMenuOptions];
+    [self prepareSelector];
 }
 
 - (void)removeAllMenuOptions
@@ -64,6 +92,15 @@ static const NSUInteger kTagBaseValue = 100;
     }
     
     return [NSSet setWithSet:menuOptions];
+}
+
+- (void)prepareSelector
+{
+    self.selectorLineView = nil;
+    if ([self.dataSource selectorTypeInTextRawSelectorMenu:self] == TEXTRAWMENUVIEW_SELECTOR_BOTTOMLINE) {
+        self.selectorLineView.backgroundColor = [[self.dataSource colorForSelectorIndicatorInTextRawSelectorMenu:self] copy];
+        [self addSubview:self.selectorLineView];
+    }
 }
 
 - (void)createAndAddMenuOptions
@@ -161,6 +198,8 @@ static const NSUInteger kTagBaseValue = 100;
     UIButton *option = [self findMenuOptionWithIndex:optionIndex];
     if (selectorType == TEXTRAWMENUVIEW_SELECTOR_BACKGROUNDCOLOR) {
         option.backgroundColor = [UIColor clearColor];
+    } else {
+        self.selectorLineView.hidden = YES;
     }
 }
 
@@ -169,8 +208,9 @@ static const NSUInteger kTagBaseValue = 100;
     IAETextRawSelectorMenuViewSelectorType selectorType = [self.dataSource selectorTypeInTextRawSelectorMenu:self];
     UIButton *option = [self findMenuOptionWithIndex:optionIndex];
     if (selectorType == TEXTRAWMENUVIEW_SELECTOR_BACKGROUNDCOLOR) {
-        UIColor *backColor = [[self.dataSource colorForSelectorIndicatorInTextRawSelectorMenu:self] copy];
-        option.backgroundColor = backColor;
+        option.backgroundColor = [[self.dataSource colorForSelectorIndicatorInTextRawSelectorMenu:self] copy];
+    } else {
+        self.selectorLineView.hidden = NO;
     }
 }
 

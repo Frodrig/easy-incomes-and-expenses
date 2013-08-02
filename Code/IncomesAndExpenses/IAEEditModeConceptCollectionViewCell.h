@@ -32,4 +32,6 @@
 - (void)goToStrokeState;
 - (void)exitFromStrokeState;
 
+- (NSString *)description;
+
 @end

@@ -1010,20 +1010,48 @@ static const CGFloat kDelayToExecuteRemoveConceptCell = 0.2;
 
 #pragma mark - UICollectionView Delegate
 
-// ...
+- (void)collectionView:(UICollectionView *)collectionView
+  didEndDisplayingCell:(UICollectionViewCell *)cell
+    forItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (cell == self.conceptCellToRemove) {
+        [self.strokeAnimatableLineView resetStroke];
+        self.conceptCellToRemove = nil;
+        //NSLog(@"Deleted path row %d cell description %@", indexPath.row, cell);
+        for (IAEEditModeConceptCollectionViewCell *cellVisible in self.conceptsCollectionView.visibleCells) {
+            NSIndexPath *indexPathOfVisibleCell = [self.conceptsCollectionView indexPathForCell:cellVisible];
+            //NSLog(@"Index path row %d cell description %@ deleted? %d", indexPathOfVisibleCell.row, cellVisible, cell == cellVisible);
+            if (indexPathOfVisibleCell.row < indexPath.row) {
+                NSUInteger instantEntryIndex = [self findNumberOfConceptsOfActualSelectedContext:indexPathOfVisibleCell.section] - indexPathOfVisibleCell.row;
+                [cellVisible setIdentifierWithEntryInstantIndex:instantEntryIndex];
+            }
+        }
+        
+        //[self.conceptsCollectionView performSelector:@selector(reloadData) withObject:nil afterDelay:0];
+        //[self.conceptsCollectionView reloadData];
+    }
+}
+
+- (NSArray *)findItemsAtIndexPathFromIndexPath:(NSIndexPath *)indexPath
+{
+    NSMutableArray *items = [NSMutableArray array];
+    for (NSInteger rowIt = indexPath.row - 1; rowIt > 0; rowIt--) {
+        [items addObject:[NSIndexPath indexPathForRow:rowIt inSection:indexPath.section]];
+    }
+    
+    return [NSArray arrayWithArray:items];
+}
 
 #pragma mark - IAEStrokeAnimatableLineViewDelegate
 
 - (void)strokeAnimatableView:(IAEStrokeAnimatableLineView *)strokeAnimatableView didStrokeOverTheView:(UIView *)view
 {
-    [self performSelector:@selector(doRemoveConceptCellToRemoveAndResetRemoveState) withObject:nil afterDelay:kDelayToExecuteRemoveConceptCell];
+    [self performSelector:@selector(doRemoveConceptCellToRemove) withObject:nil afterDelay:kDelayToExecuteRemoveConceptCell];
 }
 
-- (void)doRemoveConceptCellToRemoveAndResetRemoveState
+- (void)doRemoveConceptCellToRemove
 {
     [self removeConceptAndUpdateBalancesOfCell:self.conceptCellToRemove withAnimation:YES];
-    [self.strokeAnimatableLineView resetStroke];
-    self.conceptCellToRemove = nil;
 }
 
 #pragma mark - UISwipeGestureRecognizer
@@ -1135,18 +1163,8 @@ static const CGFloat kDelayToExecuteRemoveConceptCell = 0.2;
     [self createAndPresentPopoverForConceptCellView:cell.identifierContainerView withViewController:viewController];
 }
 
-- (void)findCellOfConceptsCollectionViewAndExecuteActionUnderDobleTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer
-{
-    IAEEditModeConceptCollectionViewCell *cell = [self findConceptCellUnderLocationOfGestureRecognizer:tapGestureRecognizer];
-    if (cell) {
-        [self removeConceptAndUpdateBalancesOfCell:cell withAnimation:YES];
-    }
-}
-
 - (void)removeConceptAndUpdateBalancesOfCell:(UICollectionViewCell *)cell withAnimation:(BOOL)animation
 {
-    NSAssert(cell, @"");
-    
     IAEConcept *concept = [self findConceptOfCell:cell];
     IAEMonth *month = [self findActualSelectedMonth];
     [month removeConcept:concept];

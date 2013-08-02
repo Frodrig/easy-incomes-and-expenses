@@ -51,6 +51,7 @@ static const CGFloat kAlphaValueForStrokeState = 0.3;
 - (void)prepareForReuse
 {
     [self setIndividualsInformationElementsWithAlpha:1.0];
+    [self removeIdentifierContainerViewSubviews];
     self.durationOfStrokeStateTransition = kDefaultDurationOfStrokeStateModeTransition;
 }
 
@@ -290,6 +291,12 @@ static const CGFloat kAlphaValueForStrokeState = 0.3;
     self.valueDecoratorView.alpha = alpha;
 }
 
+#pragma mark - Description
 
+- (NSString *)description
+{
+    UILabel *label = (UILabel *)[self.identifierContainerView viewWithTag:kTagForEntryInstantLabelOfIdentifierContainerView];
+    return label.text;
+}
 
 @end

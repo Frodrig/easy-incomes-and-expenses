@@ -11,7 +11,7 @@
 
 @interface IAEStrokeAnimatableLineView()
 
-@property (nonatomic, assign) CGPoint initPosition;
+@property (nonatomic, weak) UIView *theBelowView;
 
 @end
 
@@ -27,25 +27,25 @@ static const CGFloat kStrokeHeightForStrokeTypeThin = 1.0;
 static const CGFloat kStrokeHeightForStrokeTypeMedium = 2.0;
 static const CGFloat kStrokeHeightForStrokeTypeStrong = 4.0;
 
+#pragma mark - Factory
+
++ (instancetype)strokeAnimatableLineView
+{
+    return [[IAEStrokeAnimatableLineView alloc] init];
+}
+
 #pragma mark - Init
 
 - (id)initWithFrame:(CGRect)frame
 {
-    NSAssert(0, @"use initWithPosition:");
+    NSAssert(0, @"use init");
     return nil;
 }
 
 - (id)init
 {
-    NSAssert(0, @"use initWithPosition:");
-    return nil;
-}
-
-- (id)initWithPosition:(CGPoint)position
-{
-    self = [super initWithFrame:[self generateInitialFrameFromPosition:position]];
+    self = [super initWithFrame:CGRectZero];
     if (self) {
-        _initPosition = position;
         [self initDefaultValues];
     }
     
@@ -64,71 +64,59 @@ static const CGFloat kStrokeHeightForStrokeTypeStrong = 4.0;
     _durationOfStrokeAnimation = kDefaultDurationOfStrokeAnimation;
     _strokeColor = [UIColor colorWithWhite:kDefaultColorWithWhiteValue alpha:kDefaultColorWithWhiteAlphaValue];
     _strokeType = kDefaultStrokeType;
-    _lenght = 0;
     _isAnimationActive = NO;
 }
 
-- (void)doStroke
+- (void)doStrokeOverTheView:(UIView *)view
 {
-    if ([self canDoStrokeByConfiguration]) {
-        [self resetStroke];
-        [self makeVisible];
-        [self doAnimationStroke];
-    }
-}
-
-- (BOOL)canDoStrokeByConfiguration
-{
-    BOOL canDo = _lenght != 0;
-    
-    return canDo;
+    [self resetStroke];
+    [self vinculeTheStrokedView:view];
+    [self doAnimationStrokeOverTheView];
 }
 
 - (void)resetStroke
 {
-    if (!self.isHidden) {
-        [self resetToInitialFrame];
-        [self makeInvisible];
-    }
+    self.theBelowView = nil;
+    [self resetToInitialFrame];
 }
 
 - (void)resetToInitialFrame
 {
-    self.frame = [self generateInitialFrameFromPosition:self.initPosition];    
+    self.frame = CGRectZero;
 }
 
-- (void)makeVisible
+- (void)vinculeTheStrokedView:(UIView *)view
 {
-    self.hidden = NO;
+    if (self.theBelowView != view) {
+        self.theBelowView = view;
+        //[self.theBelowView insertSubview:self atIndex:self.theBelowView.subviews.count];
+        [self.theBelowView addSubview:self];
+    }
 }
 
-- (void)makeInvisible
+- (void)doAnimationStrokeOverTheView
 {
-    self.hidden = YES;
-}
-
-- (void)doAnimationStroke
-{
-    [self.delegate strokeWillStartInStrokeAnimatableView:self];
+    [self.delegate strokeAnmatableView:self willStartToStrokeOverTheView:self.theBelowView];
     
     self.backgroundColor = self.strokeColor;
-    CGRect endFrame = [self calculeEndStrokeFrameForView];
-    [UIView animateWithDuration:self.durationOfStrokeAnimation delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        self.frame = endFrame;
+    self.frame = [self calculeFrameToStartToStrokeTheView:self.theBelowView];
+    CGPoint endCenterPositionStroke = [self calculeCenterPositionAtTheEndOfTheStrokeTheView:self.theBelowView];
+    [UIView animateWithDuration:self.durationOfStrokeAnimation delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        self.center = endCenterPositionStroke;
     } completion:^(BOOL finished) {
-        [self.delegate strokeDidEndInStrokeAnimatableView:self];
+        [self.delegate strokeAnimatableView:self didStrokeOverTheView:self.theBelowView];
     }];
 }
 
-- (CGRect)calculeEndStrokeFrameForView
+- (CGRect)calculeFrameToStartToStrokeTheView:(UIView *)view
 {
     CGFloat strokeHeight = [self strokeHeightBasedInConfiguredStrokeType];
-    CGRect endStrokeFrame = CGRectMake(self.frame.origin.x,
-                                       self.frame.origin.y - strokeHeight,
-                                       self.frame.size.width + self.lenght,
-                                       strokeHeight);
+    CGRect frameToStartToStroke = CGRectMake(view.frame.origin.x - view.bounds.size.width,
+                                             view.center.y - strokeHeight / 2,
+                                             view.bounds.size.width,
+                                             strokeHeight);
     
-    return endStrokeFrame;
+    return frameToStartToStroke;
 }
 
 - (CGFloat)strokeHeightBasedInConfiguredStrokeType
@@ -148,6 +136,19 @@ static const CGFloat kStrokeHeightForStrokeTypeStrong = 4.0;
     }
     
     return strokeHeight;
+}
+
+- (CGPoint)calculeCenterPositionAtTheEndOfTheStrokeTheView:(UIView *)view
+{
+    CGFloat strokeHeight = [self strokeHeightBasedInConfiguredStrokeType];
+    CGPoint centerPosition = CGPointMake(view.center.x, self.center.y - strokeHeight / 2);
+    
+    return centerPosition;
+}
+
+- (BOOL)isStrokeActive
+{
+    return self.theBelowView != nil;
 }
 
 @end

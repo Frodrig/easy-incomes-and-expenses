@@ -23,12 +23,13 @@ typedef NS_ENUM(NSInteger, StrokeType) {
 @property (nonatomic, assign) CGFloat durationOfStrokeAnimation;
 @property (nonatomic, copy) UIColor *strokeColor;
 @property (nonatomic, assign) StrokeType strokeType;
-@property (nonatomic, assign) CGFloat lenght;
 @property (nonatomic, readonly) BOOL isAnimationActive;
 
-- (id)initWithPosition:(CGPoint)position;
++ (instancetype)strokeAnimatableLineView;
 
-- (void)doStroke;
+- (void)doStrokeOverTheView:(UIView *)view;
 - (void)resetStroke;
+
+- (BOOL)isStrokeActive;
 
 @end

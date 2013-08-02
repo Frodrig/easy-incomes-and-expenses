@@ -14,7 +14,7 @@
 
 @optional
 
-- (void)strokeWillStartInStrokeAnimatableView:(IAEStrokeAnimatableLineView *)strokeAnimatableView;
-- (void)strokeDidEndInStrokeAnimatableView:(IAEStrokeAnimatableLineView *)strokeAnimatableView;
+- (void)strokeAnmatableView:(IAEStrokeAnimatableLineView *)strokeAnimatableView willStartToStrokeOverTheView:(UIView *)view;
+- (void)strokeAnimatableView:(IAEStrokeAnimatableLineView *)strokeAnimatableView didStrokeOverTheView:(UIView *)view;
 
 @end

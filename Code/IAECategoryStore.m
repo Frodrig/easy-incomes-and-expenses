@@ -58,7 +58,7 @@ static NSString * const kCategoryPropertyNameTag = @"tag";
 
 - (NSMutableArray *)userDefinedCategories
 {
-    if (_userDefinedCategories == nil) {
+    if (!_userDefinedCategories) {
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
         request.entity = [[[IAEBook sharedBook].model entitiesByName] objectForKey:kEntityNameCategory];
         request.predicate = [NSPredicate predicateWithFormat:@"(NOT tag MATCHES %@) AND (NOT tag MATCHES %@)",

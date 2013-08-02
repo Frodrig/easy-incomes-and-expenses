@@ -53,13 +53,7 @@
 - (id)init
 {
     self = [super init];
-    if (self)
-    {
-        //[self createCurrencies];
-        
-        //[self setInitialCurrencyCodeOfUser];
-        
-        //[self initCurrencyFormatter];
+    if (self) {
     }
     
     return self;
@@ -85,7 +79,7 @@
 
 - (void)saveCurrencyFormatterFractionState
 {
-    NSAssert(self.maximumFractionDigitState == nil && self.minimumFractionDigitState == nil, @"");
+    NSAssert(!self.maximumFractionDigitState && !self.minimumFractionDigitState, @"");
     
     self.maximumFractionDigitState = [NSNumber numberWithUnsignedInteger:self.currencyFormatter.maximumFractionDigits];
     self.minimumFractionDigitState = [NSNumber numberWithUnsignedInteger:self.currencyFormatter.minimumFractionDigits];

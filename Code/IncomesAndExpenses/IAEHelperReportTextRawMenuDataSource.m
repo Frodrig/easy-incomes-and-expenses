@@ -61,7 +61,7 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
 - (NSString *)textRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu optionStringNameAtIndex:(NSUInteger)optionIndex
 {
     static NSArray *menuOptionsName = nil;
-    if (menuOptionsName == nil) {
+    if (!menuOptionsName) {
         menuOptionsName = @[NSLocalizedString(kLTextReportMenuOptionBalance, @""),
                             NSLocalizedString(kLTextReportMenuOptionIncomes, @""),
                             NSLocalizedString(kLTextReportMenuOptionExpenses, @"")];

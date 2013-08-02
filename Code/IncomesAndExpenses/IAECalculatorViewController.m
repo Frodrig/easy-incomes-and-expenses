@@ -64,7 +64,7 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
 
 - (NSString *)actualAmount
 {
-    if (_actualAmount == nil) {
+    if (!_actualAmount) {
         _actualAmount = [NSMutableString string];
     }
     
@@ -73,7 +73,7 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
 
 - (NSDecimalNumber *)maxDecimalNumberAllowed
 {
-    if (_maxDecimalNumberAllowed == nil) {
+    if (!_maxDecimalNumberAllowed) {
         _maxDecimalNumberAllowed = [NSDecimalNumber decimalNumberWithString:@"9999999999999" locale:[NSLocale currentLocale]];
     }
     

@@ -29,7 +29,7 @@ static CGFloat fontFamilyKernForAmountLabel = 0.0;
 
 - (UIButton *)categoryButton
 {
-    if (_categoryButton == nil) {
+    if (!_categoryButton) {
         _categoryButton = (UIButton *)[self viewWithTag:tagCategoryButton];
     }
     
@@ -38,7 +38,7 @@ static CGFloat fontFamilyKernForAmountLabel = 0.0;
 
 - (UIButton *)dayButton
 {
-    if (_dayButton == nil) {
+    if (!_dayButton) {
         _dayButton = (UIButton *)[self viewWithTag:tagDayButton];
     }
     
@@ -47,7 +47,7 @@ static CGFloat fontFamilyKernForAmountLabel = 0.0;
 
 - (UILabel *)amountLabel
 {
-    if (_amountLabel == nil) {
+    if (!_amountLabel) {
         _amountLabel = (UILabel *)[self viewWithTag:tagAmountLabel];
     }
     

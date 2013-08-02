@@ -35,7 +35,7 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
 {
     if (dataSource != _dataSource) {
         _dataSource = dataSource;
-        if (dataSource == nil) {
+        if (!dataSource) {
             [self releaseData];
         } else {
             [self reloadData];

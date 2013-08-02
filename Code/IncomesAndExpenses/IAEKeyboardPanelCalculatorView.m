@@ -21,7 +21,7 @@ static NSUInteger tagDecimalButton = 200;
 
 - (UIButton *)decimalButton
 {
-    if (_decimalButton == nil) {
+    if (!_decimalButton) {
         _decimalButton = (UIButton *)[self viewWithTag:tagDecimalButton];
     }
     

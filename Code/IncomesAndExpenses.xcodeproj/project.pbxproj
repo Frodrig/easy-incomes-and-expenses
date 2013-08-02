@@ -408,7 +408,7 @@
 				5B32D653177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m */,
 				5BCE3AA317A95B4A00CD01E7 /* Protocols */,
 				5B903BB91782DBAF00DBEFB2 /* Views */,
-				5BCE3AA217A958A900CD01E7 /* Helpers */,
+				5BCE3AB517A9700800CD01E7 /* DataSources */,
 			);
 			name = "Easy Incomes and Expenses";
 			sourceTree = "<group>";
@@ -854,14 +854,6 @@
 				5B1F0D3217841C7400D0B4F1 /* Cell */,
 			);
 			name = "Concept Collection View";
-			sourceTree = "<group>";
-		};
-		5BCE3AA217A958A900CD01E7 /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				5BCE3AB517A9700800CD01E7 /* DataSources */,
-			);
-			name = Helpers;
 			sourceTree = "<group>";
 		};
 		5BCE3AA317A95B4A00CD01E7 /* Protocols */ = {

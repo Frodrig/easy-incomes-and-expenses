@@ -78,6 +78,7 @@ static const CGFloat kStrokeHeightForStrokeTypeStrong = 4.0;
 - (void)resetStroke
 {
     self.theBelowView = nil;
+    [self removeFromSuperview];
     [self resetToInitialFrame];
 }
 
@@ -96,7 +97,9 @@ static const CGFloat kStrokeHeightForStrokeTypeStrong = 4.0;
 
 - (void)doAnimationStrokeOverTheView
 {
-    [self.delegate strokeAnmatableView:self willStartToStrokeOverTheView:self.theBelowView];
+    if ([self.delegate respondsToSelector:@selector(strokeAnimatableView:willStartToStrokeOverTheView:)]) {
+        [self.delegate strokeAnimatableView:self willStartToStrokeOverTheView:self.theBelowView];
+    }
     
     self.backgroundColor = self.strokeColor;
     self.frame = [self calculeFrameToStartToStroke];
@@ -105,7 +108,9 @@ static const CGFloat kStrokeHeightForStrokeTypeStrong = 4.0;
         self.center = endCenterPositionStroke;
     } completion:^(BOOL finished) {
         NSAssert(self.bounds.size.width == self.theBelowView.bounds.size.width, @"");
-        [self.delegate strokeAnimatableView:self didStrokeOverTheView:self.theBelowView];
+        if ([self.delegate respondsToSelector:@selector(strokeAnimatableView:didStrokeOverTheView:)]) {
+            [self.delegate strokeAnimatableView:self didStrokeOverTheView:self.theBelowView];
+        }
     }];
 }
 

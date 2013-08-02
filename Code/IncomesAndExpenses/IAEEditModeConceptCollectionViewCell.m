@@ -33,6 +33,9 @@ static const CGFloat kEntryDayOfTheMonthFontFamilySize = 24;
 
 static NSString * const kLTexForEntryWithNoDay = @"LTEXT_EDITMODECONCEPTCELL_ENTRYWITHNODAY";
 
+static const CGFloat kDefaultDurationOfStrokeStateModeTransition = 0.25;
+static const CGFloat kAlphaValueForStrokeState = 0.3;
+
 #pragma mark - Init
 
 - (id)initWithFrame:(CGRect)frame
@@ -40,10 +43,18 @@ static NSString * const kLTexForEntryWithNoDay = @"LTEXT_EDITMODECONCEPTCELL_ENT
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        self.durationOfStrokeStateTransition = kDefaultDurationOfStrokeStateModeTransition;
     }
     return self;
 }
 
+- (void)prepareForReuse
+{
+    [self setIndividualsInformationElementsWithAlpha:1.0];
+    self.durationOfStrokeStateTransition = kDefaultDurationOfStrokeStateModeTransition;
+}
+
+#pragma mark - Draw
 
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -246,9 +257,7 @@ static NSString * const kLTexForEntryWithNoDay = @"LTEXT_EDITMODECONCEPTCELL_ENT
 - (void)goToStrokeState
 {
     if (!self.isInStrokeState) {
-        [UIView animateWithDuration:0.25 animations:^{
-            [self setIndividualsInformationElementsWith:0.3];
-        } completion:^(BOOL finished) {
+        [self animateIndividualInformationWithAlpha:kAlphaValueForStrokeState andCompletionLogic:^(BOOL finished) {
             _strokeState = YES;
         }];
     }
@@ -257,15 +266,22 @@ static NSString * const kLTexForEntryWithNoDay = @"LTEXT_EDITMODECONCEPTCELL_ENT
 - (void)exitFromStrokeState
 {
     if (self.isInStrokeState) {
-        [UIView animateWithDuration:0.25 animations:^{
-            [self setIndividualsInformationElementsWith:1.0];
-        } completion:^(BOOL finished) {
+        [self animateIndividualInformationWithAlpha:1.0 andCompletionLogic:^(BOOL finished) {
             _strokeState = NO;
         }];
     }
 }
 
-- (void)setIndividualsInformationElementsWith:(CGFloat)alpha
+- (void)animateIndividualInformationWithAlpha:(CGFloat)alpha andCompletionLogic:(void (^)(BOOL finished))completionLogic
+{
+    [UIView animateWithDuration:self.durationOfStrokeStateTransition delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [self setIndividualsInformationElementsWithAlpha:alpha];
+    } completion:^(BOOL finished) {
+        completionLogic(finished);
+    }];
+}
+
+- (void)setIndividualsInformationElementsWithAlpha:(CGFloat)alpha
 {
     self.amountLabel.alpha = alpha;
     self.categoryNameLabel.alpha = alpha;

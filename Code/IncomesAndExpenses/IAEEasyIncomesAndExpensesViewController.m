@@ -62,9 +62,9 @@
 @property (nonatomic, strong) IAEHelperConceptsCollectionViewDataSource *helperConceptsCollectionViewDataSource;
 @property (nonatomic, strong) UIPopoverController *popover;
 @property (nonatomic, strong) UITapGestureRecognizer *tapConceptsRecognizer;
-@property (nonatomic, strong) UITapGestureRecognizer *dobleTapConceptsRecognizer;
 @property (nonatomic, strong) UISwipeGestureRecognizer *swipeConceptsGestureRecognizer;
 @property (nonatomic, strong) IAEStrokeAnimatableLineView *strokeAnimatableLineView;
+@property (nonatomic, weak) IAEEditModeConceptCollectionViewCell *conceptCellToRemove;
 @property (nonatomic) BOOL initialPositioning;
 @property (nonatomic, weak) IAECategory *categoryRenaming;
 @property (nonatomic, weak) IAEConcept *conceptChangingDay;
@@ -106,9 +106,26 @@ static const NSUInteger kReportMenuIndexOfIncomesOption = 1;
 static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
 
 static const CGFloat kDurationStrokeAnimationForConcepts = 0.25;
-static const CGFloat kColorWhiteComponentForStrokeAnimationForConcepts = 0.6;
+static const CGFloat kColorWhiteComponentForStrokeAnimationForConcepts = 0.8;
 static const CGFloat kColorWhiteAlphaComponentForStrokeAnimationForConcepts = 1.0;
 static const CGFloat kTypeStrokeAnimationForConcepts = STROKEANIMATABLE_TYPE_THIN;
+static const CGFloat kDelayToExecuteRemoveConceptCell = 0.2;
+
+#pragma mark - Properties
+
+- (IAEStrokeAnimatableLineView *)strokeAnimatableLineView
+{
+    if (!_strokeAnimatableLineView) {
+        _strokeAnimatableLineView = [IAEStrokeAnimatableLineView strokeAnimatableLineView];
+        _strokeAnimatableLineView.durationOfStrokeAnimation = kDurationStrokeAnimationForConcepts;
+        _strokeAnimatableLineView.strokeColor = [UIColor colorWithWhite:kColorWhiteComponentForStrokeAnimationForConcepts
+                                                                  alpha:kColorWhiteAlphaComponentForStrokeAnimationForConcepts];
+        _strokeAnimatableLineView.strokeType = kTypeStrokeAnimationForConcepts;
+        _strokeAnimatableLineView.delegate = self;
+    }
+    
+    return _strokeAnimatableLineView;
+}
 
 #pragma mark - dealloc
 
@@ -116,7 +133,7 @@ static const CGFloat kTypeStrokeAnimationForConcepts = STROKEANIMATABLE_TYPE_THI
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.conceptsCollectionView removeGestureRecognizer:self.tapConceptsRecognizer];
-    [self.conceptsCollectionView removeGestureRecognizer:self.dobleTapConceptsRecognizer];
+    [self.conceptsCollectionView removeGestureRecognizer:self.swipeConceptsGestureRecognizer];
 }
 
 #pragma mark - Init
@@ -126,7 +143,6 @@ static const CGFloat kTypeStrokeAnimationForConcepts = STROKEANIMATABLE_TYPE_THI
     self = [super initWithCoder:aDecoder];
     if (self) {
         [self initCommonProperties];
-        [self initDobleTapConceptsGestureRecognizer];
         [self initTapConceptsGestureRecognizer];
         [self initSwipeConceptsGestureRecognizer];
         [self initAsObserverOfNotificationCenter];
@@ -135,7 +151,6 @@ static const CGFloat kTypeStrokeAnimationForConcepts = STROKEANIMATABLE_TYPE_THI
         [self initReportAreaView];
         [self initReportMenuView];
         [self initHelpers];
-        [self initStrokeAnimatableLineView];
     }
     
     return self;
@@ -146,17 +161,10 @@ static const CGFloat kTypeStrokeAnimationForConcepts = STROKEANIMATABLE_TYPE_THI
     self.initialPositioning = YES;
 }
 
-- (void)initDobleTapConceptsGestureRecognizer
-{
-    _dobleTapConceptsRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dobleTapConceptsCollectionView:)];
-    _dobleTapConceptsRecognizer.numberOfTapsRequired = 2;
-}
-
 - (void)initTapConceptsGestureRecognizer
 {
     _tapConceptsRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnConceptsCollectionView:)];
     _tapConceptsRecognizer.numberOfTapsRequired = 1;
-    [_tapConceptsRecognizer requireGestureRecognizerToFail:_dobleTapConceptsRecognizer];
 }
 
 - (void)initSwipeConceptsGestureRecognizer
@@ -208,11 +216,6 @@ static const CGFloat kTypeStrokeAnimationForConcepts = STROKEANIMATABLE_TYPE_THI
     _helperConceptsCollectionViewDataSource = [[IAEHelperConceptsCollectionViewDataSource alloc] initWithEasyIncomesAndExpensesViewControllerQuery:self];
 }
 
-- (void)initStrokeAnimatableLineView
-{
-    _strokeAnimatableLineView = [IAEStrokeAnimatableLineView strokeAnimatableLineView];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -224,7 +227,6 @@ static const CGFloat kTypeStrokeAnimationForConcepts = STROKEANIMATABLE_TYPE_THI
     [self configureConceptsViews];
     [self configureReportAreaView];
     [self configureReportMenuView];
-    [self configureStrokeAnimatableLineView];
 }
 
 - (void)configureContextScrollViewContent
@@ -271,7 +273,6 @@ static const CGFloat kTypeStrokeAnimationForConcepts = STROKEANIMATABLE_TYPE_THI
     self.conceptsCollectionView.showsVerticalScrollIndicator = NO;
     
     [self.conceptsCollectionView addGestureRecognizer:self.tapConceptsRecognizer];
-    [self.conceptsCollectionView addGestureRecognizer:self.dobleTapConceptsRecognizer];
     [self.conceptsCollectionView addGestureRecognizer:self.swipeConceptsGestureRecognizer];
 }
 
@@ -283,14 +284,6 @@ static const CGFloat kTypeStrokeAnimationForConcepts = STROKEANIMATABLE_TYPE_THI
 - (void)configureReportMenuView
 {
     self.reportMenuView.backgroundColor = [UIColor clearColor];
-}
-
-- (void)configureStrokeAnimatableLineView
-{
-    self.strokeAnimatableLineView.durationOfStrokeAnimation = kDurationStrokeAnimationForConcepts;
-    self.strokeAnimatableLineView.strokeColor = [UIColor colorWithWhite:kColorWhiteComponentForStrokeAnimationForConcepts
-                                                                  alpha:kColorWhiteAlphaComponentForStrokeAnimationForConcepts];
-    self.strokeAnimatableLineView.strokeType = kTypeStrokeAnimationForConcepts;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -1019,19 +1012,29 @@ static const CGFloat kTypeStrokeAnimationForConcepts = STROKEANIMATABLE_TYPE_THI
 
 // ...
 
+#pragma mark - IAEStrokeAnimatableLineViewDelegate
+
+- (void)strokeAnimatableView:(IAEStrokeAnimatableLineView *)strokeAnimatableView didStrokeOverTheView:(UIView *)view
+{
+    [self performSelector:@selector(doRemoveConceptCellToRemoveAndResetRemoveState) withObject:nil afterDelay:kDelayToExecuteRemoveConceptCell];
+}
+
+- (void)doRemoveConceptCellToRemoveAndResetRemoveState
+{
+    [self removeConceptAndUpdateBalancesOfCell:self.conceptCellToRemove withAnimation:YES];
+    [self.strokeAnimatableLineView resetStroke];
+    self.conceptCellToRemove = nil;
+}
+
 #pragma mark - UISwipeGestureRecognizer
 
 - (void)swipeOnConceptsCollectionView:(UIGestureRecognizer *)swipeGestureRecognizer
 {
     if ([self isActualSelectedContextAMonth]) {
-        IAEEditModeConceptCollectionViewCell *cell = [self findConceptCellUnderLocationOfGestureRecognizer:swipeGestureRecognizer];
-        if (!cell.isInStrokeState) {
-            [self.strokeAnimatableLineView doStrokeOverTheView:cell.conceptInformationContainerView];
-            [cell goToStrokeState];
-        } else {
-            [cell exitFromStrokeState];
-            [self.strokeAnimatableLineView resetStroke];
-        }
+        self.conceptCellToRemove = [self findConceptCellUnderLocationOfGestureRecognizer:swipeGestureRecognizer];
+        self.conceptCellToRemove.durationOfStrokeStateTransition = self.strokeAnimatableLineView.durationOfStrokeAnimation;
+        [self.strokeAnimatableLineView doStrokeOverTheView:self.conceptCellToRemove.conceptInformationContainerView];
+        [self.conceptCellToRemove goToStrokeState];
     }
 }
 
@@ -1042,14 +1045,6 @@ static const CGFloat kTypeStrokeAnimationForConcepts = STROKEANIMATABLE_TYPE_THI
     NSAssert(tapGestureRecognizer == self.tapConceptsRecognizer, @"");
     if ([self isActualSelectedContextAMonth]) {
         [self findCellOfConceptCollectionViewAndExecuteActionUnderTapGesture:tapGestureRecognizer];
-    }
-}
-
-- (void)dobleTapConceptsCollectionView:(UITapGestureRecognizer *)tapGestureRecognizer
-{
-    NSAssert(tapGestureRecognizer == self.dobleTapConceptsRecognizer, @"");
-    if ([self isActualSelectedContextAMonth]) {
-        [self findCellOfConceptsCollectionViewAndExecuteActionUnderDobleTapGesture:tapGestureRecognizer];
     }
 }
 
@@ -1155,10 +1150,9 @@ static const CGFloat kTypeStrokeAnimationForConcepts = STROKEANIMATABLE_TYPE_THI
     IAEConcept *concept = [self findConceptOfCell:cell];
     IAEMonth *month = [self findActualSelectedMonth];
     [month removeConcept:concept];
-    
     [[IAEBook sharedBook] saveAll];
     
-    [self.conceptsCollectionView reloadData];
+    [self.conceptsCollectionView deleteItemsAtIndexPaths:@[[self.conceptsCollectionView indexPathForCell:cell]]];
     [self updateBalancesWithAnimation:YES];
 }
 

@@ -29,7 +29,7 @@ static const CGFloat kYMarginOfTheLineSelector = 3;
 
 - (UIView *)selectorLineView
 {
-    if (nil == _selectorLineView) {
+    if (!_selectorLineView) {
         CGSize sizeOfOptions = [self.dataSource sizeOfOptionsInTextRawSelectorMenu:self];
         _selectorLineView = [[UIView alloc] initWithFrame:CGRectMake(0,
                                                                      self.bounds.size.height - kHeightOfTheLineSelector - kYMarginOfTheLineSelector,
@@ -41,7 +41,7 @@ static const CGFloat kYMarginOfTheLineSelector = 3;
 
 - (void)setDataSource:(id<IAETextRawSelectorMenuViewDataSource>)dataSource
 {
-    if (nil == _dataSource) {
+    if (!_dataSource) {
         _dataSource = dataSource;
         [self reloadData];
     }

@@ -250,7 +250,7 @@ static NSString * const kLTextDecemberName = @"December";
 - (NSString *)description
 {
     static NSDictionary *monthsNames = nil;
-    if (nil == monthsNames) {
+    if (!monthsNames) {
         monthsNames = @{[NSNumber numberWithInt:January]: kLTextJanuaryName,
                                   [NSNumber numberWithInt:February]: kLTextFebruaryName,
                                   [NSNumber numberWithInt:March]: kLTextMarchName,

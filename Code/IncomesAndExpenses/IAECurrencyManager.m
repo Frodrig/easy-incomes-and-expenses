@@ -23,7 +23,7 @@
 
 - (NSNumberFormatter *)currencyFormatter
 {
-    if (nil == currencyFormatter_) {
+    if (!currencyFormatter_) {
         currencyFormatter_ = [[NSNumberFormatter alloc] init];
        [currencyFormatter_ setNumberStyle:NSNumberFormatterCurrencyStyle];
         currencyFormatter_.locale = [NSLocale currentLocale];

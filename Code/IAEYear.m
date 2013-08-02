@@ -22,7 +22,7 @@ static NSString * const kEntityNameMonth = @"IAEMonth";
 
 - (NSArray *)ordererMonths
 {
-    if (nil == ordererMonths_) {
+    if (!ordererMonths_) {
         ordererMonths_ = [self.months sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"month" ascending:YES]]];
     }
     

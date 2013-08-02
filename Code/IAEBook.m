@@ -24,7 +24,7 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
 + (IAEBook *)sharedBook
 {
     static IAEBook *sharedBook = nil;
-    if (nil == sharedBook) {
+    if (!sharedBook) {
         sharedBook = [[super allocWithZone:nil] init];
     }
     

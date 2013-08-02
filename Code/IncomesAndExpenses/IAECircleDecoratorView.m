@@ -25,7 +25,7 @@
 
 - (UIColor *)circleColor
 {
-    if (nil == _circleColor) {
+    if (!_circleColor) {
         _circleColor = [UIColor colorWithWhite:0.85 alpha:1.0];
     }
     

@@ -23,7 +23,7 @@
 
 - (NSMutableArray *)pendingLabelUpdates
 {
-    if (nil == _pendingLabelUpdates) {
+    if (!_pendingLabelUpdates) {
         _pendingLabelUpdates = [NSMutableArray array];
     }
     
@@ -32,7 +32,7 @@
 
 - (CADisplayLink *)displayLink
 {
-    if (nil == _displayLink) {
+    if (!_displayLink) {
         _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(processPendingLabels:)];
     }
     
@@ -42,7 +42,7 @@
 + (IAEEconomicValueUpdater *)defaultEconomicValueUpdater
 {
     static IAEEconomicValueUpdater *defaultEconomicValueUpdater = nil;
-    if (nil == defaultEconomicValueUpdater) {
+    if (!defaultEconomicValueUpdater) {
         defaultEconomicValueUpdater = [[IAEEconomicValueUpdater alloc] init];
     }
     

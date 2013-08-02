@@ -22,7 +22,7 @@
 + (NSCalendar *)findCurrentCalendar
 {
     static NSCalendar *currentCalendar = nil;
-    if (nil == currentCalendar) {
+    if (!currentCalendar) {
         currentCalendar = [NSCalendar currentCalendar];
     }
     
@@ -32,7 +32,7 @@
 + (NSString *)findDayOfTheWeekNameStringWithDayOfTheWeekIndex:(NSUInteger)dayOfTheWeekIndex inShortForm:(BOOL)shortForm;
 {
     static NSArray *dayOfTheWeekNames = nil;
-    if (nil == dayOfTheWeekNames) {
+    if (!dayOfTheWeekNames) {
         dayOfTheWeekNames = @[NSLocalizedString(@"LTEXT_WEEKDAY_SUNDAY", @""),
                               NSLocalizedString(@"LTEXT_WEEKDAY_MONDAY", @""),
                               NSLocalizedString(@"LTEXT_WEEKDAY_TUESDAY", @""),
@@ -57,7 +57,7 @@
 + (NSString *)findMonthNameStringWithMonthIndex:(NSUInteger)monthIndex inShortForm:(BOOL)shortForm
 {
     static NSArray *monthsNames = nil;
-    if (nil == monthsNames) {
+    if (!monthsNames) {
         monthsNames = @[NSLocalizedString(@"LTEXT_MONTH_JANUARY", @""),
                         NSLocalizedString(@"LTEXT_MONTH_FEBRUARY", @""),
                         NSLocalizedString(@"LTEXT_MONTH_MARCH", @""),

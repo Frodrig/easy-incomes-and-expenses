@@ -61,6 +61,7 @@ static const CGFloat kStrokeHeightForStrokeTypeStrong = 4.0;
 
 - (void)initDefaultValues
 {
+    _edgeInsetForHoriziontalCenterAndBottom = CGPointZero;
     _durationOfStrokeAnimation = kDefaultDurationOfStrokeAnimation;
     _strokeColor = [UIColor colorWithWhite:kDefaultColorWithWhiteValue alpha:kDefaultColorWithWhiteAlphaValue];
     _strokeType = kDefaultStrokeType;
@@ -89,7 +90,6 @@ static const CGFloat kStrokeHeightForStrokeTypeStrong = 4.0;
 {
     if (self.theBelowView != view) {
         self.theBelowView = view;
-        //[self.theBelowView insertSubview:self atIndex:self.theBelowView.subviews.count];
         [self.theBelowView addSubview:self];
     }
 }
@@ -99,21 +99,24 @@ static const CGFloat kStrokeHeightForStrokeTypeStrong = 4.0;
     [self.delegate strokeAnmatableView:self willStartToStrokeOverTheView:self.theBelowView];
     
     self.backgroundColor = self.strokeColor;
-    self.frame = [self calculeFrameToStartToStrokeTheView:self.theBelowView];
-    CGPoint endCenterPositionStroke = [self calculeCenterPositionAtTheEndOfTheStrokeTheView:self.theBelowView];
+    self.frame = [self calculeFrameToStartToStroke];
+    CGPoint endCenterPositionStroke = [self calculeCenterPositionAtTheEnd];
     [UIView animateWithDuration:self.durationOfStrokeAnimation delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         self.center = endCenterPositionStroke;
     } completion:^(BOOL finished) {
+        NSAssert(self.bounds.size.width == self.theBelowView.bounds.size.width, @"");
         [self.delegate strokeAnimatableView:self didStrokeOverTheView:self.theBelowView];
     }];
 }
 
-- (CGRect)calculeFrameToStartToStrokeTheView:(UIView *)view
+- (CGRect)calculeFrameToStartToStroke
 {
     CGFloat strokeHeight = [self strokeHeightBasedInConfiguredStrokeType];
-    CGRect frameToStartToStroke = CGRectMake(view.frame.origin.x - view.bounds.size.width,
-                                             view.center.y - strokeHeight / 2,
-                                             view.bounds.size.width,
+    CGFloat strokeWidth = [self strokeWidthBased];
+    CGFloat centerAtVerticalPosition = [self calculeCenterAtVerticalPosition];
+    CGRect frameToStartToStroke = CGRectMake(-strokeWidth,
+                                             centerAtVerticalPosition,
+                                             strokeWidth,
                                              strokeHeight);
     
     return frameToStartToStroke;
@@ -138,10 +141,26 @@ static const CGFloat kStrokeHeightForStrokeTypeStrong = 4.0;
     return strokeHeight;
 }
 
-- (CGPoint)calculeCenterPositionAtTheEndOfTheStrokeTheView:(UIView *)view
+- (CGFloat)strokeWidthBased
+{
+    CGFloat width = self.theBelowView.bounds.size.width - self.edgeInsetForHoriziontalCenterAndBottom.x;
+    
+    return width;
+}
+
+- (CGFloat)calculeCenterAtVerticalPosition
 {
     CGFloat strokeHeight = [self strokeHeightBasedInConfiguredStrokeType];
-    CGPoint centerPosition = CGPointMake(view.center.x, self.center.y - strokeHeight / 2);
+    CGFloat center = self.theBelowView.bounds.size.height / 2 - strokeHeight / 2 - self.edgeInsetForHoriziontalCenterAndBottom.y;
+    
+    return center;
+}
+
+- (CGPoint)calculeCenterPositionAtTheEnd
+{
+    CGFloat centerAtVerticalPosition = [self calculeCenterAtVerticalPosition];
+    CGPoint centerPosition = CGPointMake(self.theBelowView.bounds.size.width / 2 + self.edgeInsetForHoriziontalCenterAndBottom.x,
+                                         centerAtVerticalPosition);
     
     return centerPosition;
 }

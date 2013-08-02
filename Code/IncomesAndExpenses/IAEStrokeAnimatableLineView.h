@@ -20,9 +20,10 @@ typedef NS_ENUM(NSInteger, StrokeType) {
 
 @property (nonatomic, weak) id<IAEStrokeAnimatableViewDelegate> delegate;
 
-@property (nonatomic, assign) CGFloat durationOfStrokeAnimation;
+@property (nonatomic) CGPoint edgeInsetForHoriziontalCenterAndBottom;
+@property (nonatomic) CGFloat durationOfStrokeAnimation;
 @property (nonatomic, copy) UIColor *strokeColor;
-@property (nonatomic, assign) StrokeType strokeType;
+@property (nonatomic) StrokeType strokeType;
 @property (nonatomic, readonly) BOOL isAnimationActive;
 
 + (instancetype)strokeAnimatableLineView;

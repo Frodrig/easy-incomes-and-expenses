@@ -12,11 +12,13 @@
 
 @interface IAEEditModeConceptCollectionViewCell : UICollectionViewCell
 
+@property (weak, nonatomic) IBOutlet UIView *conceptInformationContainerView;
 @property (weak, nonatomic) IBOutlet IAEValueDecoratorView *valueDecoratorView;
 @property (weak, nonatomic) IBOutlet UILabel *amountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *categoryNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *categoryTypeLabel;
 @property (weak, nonatomic) IBOutlet UIView *identifierContainerView;
+@property (nonatomic, readonly, getter = isInStrokeState) BOOL strokeState;
 
 - (void)setIdentifierWithEntryInstantIndex:(NSUInteger)index;
 - (void)setIdentifierWithDayOfTheMonthIndex:(NSUInteger)index andDayOfTheWeekName:(NSString *)name;
@@ -26,5 +28,7 @@
 - (BOOL)isCategoryNameOrTypeContainingLocationPoint:(CGPoint)location;
 - (BOOL)isIdentifierOrDayContainingLocationPoint:(CGPoint)location;
 
+- (void)goToStrokeState;
+- (void)exitFromStrokeState;
 
 @end

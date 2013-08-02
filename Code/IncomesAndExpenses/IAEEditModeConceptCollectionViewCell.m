@@ -18,6 +18,8 @@
 
 @implementation IAEEditModeConceptCollectionViewCell
 
+#pragma mark - Constants
+
 static const NSUInteger kTagForEntryInstantLabelOfIdentifierContainerView = 10;
 static const NSUInteger kTagForDayIndexLabelOfIdentifierContainerView = 20;
 static const NSUInteger kTagForNoDayLabelOfIdentifierContainerVew = 30;
@@ -30,6 +32,8 @@ static NSString * const kEntryDayOfTheMonthFontFamilyName = @"HelveticaNeue";
 static const CGFloat kEntryDayOfTheMonthFontFamilySize = 24;
 
 static NSString * const kLTexForEntryWithNoDay = @"LTEXT_EDITMODECONCEPTCELL_ENTRYWITHNODAY";
+
+#pragma mark - Init
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -236,6 +240,40 @@ static NSString * const kLTexForEntryWithNoDay = @"LTEXT_EDITMODECONCEPTCELL_ENT
     UILabel *label = (UILabel *)[self.identifierContainerView viewWithTag:kTagForNoDayLabelOfIdentifierContainerVew];
     label.attributedText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
+
+#pragma mark - StrokeState
+
+- (void)goToStrokeState
+{
+    if (!self.isInStrokeState) {
+        [UIView animateWithDuration:0.25 animations:^{
+            [self setIndividualsInformationElementsWith:0.3];
+        } completion:^(BOOL finished) {
+            _strokeState = YES;
+        }];
+    }
+}
+
+- (void)exitFromStrokeState
+{
+    if (self.isInStrokeState) {
+        [UIView animateWithDuration:0.25 animations:^{
+            [self setIndividualsInformationElementsWith:1.0];
+        } completion:^(BOOL finished) {
+            _strokeState = NO;
+        }];
+    }
+}
+
+- (void)setIndividualsInformationElementsWith:(CGFloat)alpha
+{
+    self.amountLabel.alpha = alpha;
+    self.categoryNameLabel.alpha = alpha;
+    self.categoryTypeLabel.alpha = alpha;
+    self.identifierContainerView.alpha = alpha;
+    self.valueDecoratorView.alpha = alpha;
+}
+
 
 
 @end

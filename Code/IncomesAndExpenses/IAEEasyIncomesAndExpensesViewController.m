@@ -63,12 +63,12 @@
 @property (nonatomic, strong) UIPopoverController *popover;
 @property (nonatomic, strong) UITapGestureRecognizer *tapConceptsRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *dobleTapConceptsRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer *swipeConceptsGestureRecognizer;
+@property (nonatomic, strong) IAEStrokeAnimatableLineView *strokeAnimatableLineView;
 @property (nonatomic) BOOL initialPositioning;
 @property (nonatomic, weak) IAECategory *categoryRenaming;
 @property (nonatomic, weak) IAEConcept *conceptChangingDay;
 @property (nonatomic) BOOL reloadAllPendingFromYearSelectorIfReturnWithSameYearDate;
-
-@property (nonatomic, strong) IAEStrokeAnimatableLineView *strokeAnimatableLineView;
 
 @end
 
@@ -105,6 +105,20 @@ static const NSUInteger kReportMenuIndexOfBalancesOption = 0;
 static const NSUInteger kReportMenuIndexOfIncomesOption = 1;
 static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
 
+static const CGFloat kDurationStrokeAnimationForConcepts = 0.25;
+static const CGFloat kColorWhiteComponentForStrokeAnimationForConcepts = 0.6;
+static const CGFloat kColorWhiteAlphaComponentForStrokeAnimationForConcepts = 1.0;
+static const CGFloat kTypeStrokeAnimationForConcepts = STROKEANIMATABLE_TYPE_THIN;
+
+#pragma mark - dealloc
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.conceptsCollectionView removeGestureRecognizer:self.tapConceptsRecognizer];
+    [self.conceptsCollectionView removeGestureRecognizer:self.dobleTapConceptsRecognizer];
+}
+
 #pragma mark - Init
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -114,12 +128,14 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
         [self initCommonProperties];
         [self initDobleTapConceptsGestureRecognizer];
         [self initTapConceptsGestureRecognizer];
+        [self initSwipeConceptsGestureRecognizer];
         [self initAsObserverOfNotificationCenter];
         [self initContextMenuView];
         [self initCalculatorViewController];
         [self initReportAreaView];
         [self initReportMenuView];
         [self initHelpers];
+        [self initStrokeAnimatableLineView];
     }
     
     return self;
@@ -140,8 +156,13 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
 {
     _tapConceptsRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnConceptsCollectionView:)];
     _tapConceptsRecognizer.numberOfTapsRequired = 1;
-    
     [_tapConceptsRecognizer requireGestureRecognizerToFail:_dobleTapConceptsRecognizer];
+}
+
+- (void)initSwipeConceptsGestureRecognizer
+{
+    _swipeConceptsGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeOnConceptsCollectionView:)];
+    _swipeConceptsGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
 }
 
 - (void)initAsObserverOfNotificationCenter
@@ -187,11 +208,9 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
     _helperConceptsCollectionViewDataSource = [[IAEHelperConceptsCollectionViewDataSource alloc] initWithEasyIncomesAndExpensesViewControllerQuery:self];
 }
 
-- (void)dealloc
+- (void)initStrokeAnimatableLineView
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self.conceptsCollectionView removeGestureRecognizer:self.tapConceptsRecognizer];
-    [self.conceptsCollectionView removeGestureRecognizer:self.dobleTapConceptsRecognizer];
+    _strokeAnimatableLineView = [IAEStrokeAnimatableLineView strokeAnimatableLineView];
 }
 
 - (void)viewDidLoad
@@ -205,6 +224,7 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
     [self configureConceptsViews];
     [self configureReportAreaView];
     [self configureReportMenuView];
+    [self configureStrokeAnimatableLineView];
 }
 
 - (void)configureContextScrollViewContent
@@ -252,6 +272,7 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
     
     [self.conceptsCollectionView addGestureRecognizer:self.tapConceptsRecognizer];
     [self.conceptsCollectionView addGestureRecognizer:self.dobleTapConceptsRecognizer];
+    [self.conceptsCollectionView addGestureRecognizer:self.swipeConceptsGestureRecognizer];
 }
 
 - (void)configureReportAreaView
@@ -261,7 +282,15 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
 
 - (void)configureReportMenuView
 {
-    _reportMenuView.backgroundColor = [UIColor clearColor];
+    self.reportMenuView.backgroundColor = [UIColor clearColor];
+}
+
+- (void)configureStrokeAnimatableLineView
+{
+    self.strokeAnimatableLineView.durationOfStrokeAnimation = kDurationStrokeAnimationForConcepts;
+    self.strokeAnimatableLineView.strokeColor = [UIColor colorWithWhite:kColorWhiteComponentForStrokeAnimationForConcepts
+                                                                  alpha:kColorWhiteAlphaComponentForStrokeAnimationForConcepts];
+    self.strokeAnimatableLineView.strokeType = kTypeStrokeAnimationForConcepts;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -987,6 +1016,24 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
 }
 
 #pragma mark - UICollectionView Delegate
+
+// ...
+
+#pragma mark - UISwipeGestureRecognizer
+
+- (void)swipeOnConceptsCollectionView:(UIGestureRecognizer *)swipeGestureRecognizer
+{
+    if ([self isActualSelectedContextAMonth]) {
+        IAEEditModeConceptCollectionViewCell *cell = [self findConceptCellUnderLocationOfGestureRecognizer:swipeGestureRecognizer];
+        if (!cell.isInStrokeState) {
+            [self.strokeAnimatableLineView doStrokeOverTheView:cell.conceptInformationContainerView];
+            [cell goToStrokeState];
+        } else {
+            [cell exitFromStrokeState];
+            [self.strokeAnimatableLineView resetStroke];
+        }
+    }
+}
 
 #pragma mark - UITapGestureRecognizer
 

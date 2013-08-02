@@ -220,7 +220,6 @@ static NSString * const kEntityNameMonth = @"IAEMonth";
     return allCategoriesSorted;
 }
 
-
 - (NSString *)yearDateAsString
 {
     return [NSString stringWithFormat:@"%d", self.yearDate];

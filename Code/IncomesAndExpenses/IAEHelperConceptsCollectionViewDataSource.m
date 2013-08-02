@@ -185,7 +185,7 @@ static NSString * const kLtextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
                                withIndex:(NSUInteger)index
 {
     if (![self.iaeViewControllerQuery isDayModeActiveForConcepts]) {
-        [cell setIdentifierWithEntryInstantIndex:index];
+        [cell setIdentifierWithEntryInstantIndex:index withAnimationDuration:0];
     } else if ([self isDayOfTheMonthAssociatedWithConceptCell:cell atIndexPath:indexPath]) {
         [self setIdentifierForDayOfTheMonthAndDayOfTheWeekNameForCell:cell atIndexPath:indexPath withIndex:index];
     } else {

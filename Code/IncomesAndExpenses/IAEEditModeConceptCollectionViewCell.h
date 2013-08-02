@@ -21,7 +21,7 @@
 @property (nonatomic) CGFloat durationOfStrokeStateTransition;
 @property (nonatomic, readonly, getter = isInStrokeState) BOOL strokeState;
 
-- (void)setIdentifierWithEntryInstantIndex:(NSUInteger)index;
+- (void)setIdentifierWithEntryInstantIndex:(NSUInteger)index withAnimationDuration:(CGFloat)animationDuration;
 - (void)setIdentifierWithDayOfTheMonthIndex:(NSUInteger)index andDayOfTheWeekName:(NSString *)name;
 - (void)setIdentifierWithoutDay;
 

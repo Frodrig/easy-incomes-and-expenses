@@ -85,13 +85,13 @@ static const CGFloat kAlphaValueForStrokeState = 0.3;
 // Esto va en otra clase como, por ejemplo, un configurador
 #pragma mark - EntryIdentifierConfiguration
 
-- (void)setIdentifierWithEntryInstantIndex:(NSUInteger)index
+- (void)setIdentifierWithEntryInstantIndex:(NSUInteger)index withAnimationDuration:(CGFloat)animationDuration
 {
     if ([self removeIdentifierContainerViewSubviewsIfNotConfiguredWithEntryInstantIndex]) {
         [self createAndAddInIdentifierContainerViewEntryInstantLabel];
     }
     
-    [self configureEntryInstantLabelWithIndex:index];
+    [self configureEntryInstantLabelWithIndex:index withAnimationDuration:animationDuration];
 }
 
 - (void)setIdentifierWithDayOfTheMonthIndex:(NSUInteger)index andDayOfTheWeekName:(NSString *)name
@@ -186,7 +186,7 @@ static const CGFloat kAlphaValueForStrokeState = 0.3;
     return label;
 }
 
-- (void)configureEntryInstantLabelWithIndex:(NSUInteger)index
+- (void)configureEntryInstantLabelWithIndex:(NSUInteger)index withAnimationDuration:(CGFloat)animationDuration
 {
     NSString *text = [NSString stringWithFormat:@"%d", index];
     UIFont *font = [UIFont fontWithName:kEntryInstantFontFamilyName size:kEntryInstantFontFamilySize];
@@ -195,7 +195,18 @@ static const CGFloat kAlphaValueForStrokeState = 0.3;
                                  NSKernAttributeName: [NSNumber numberWithInteger:0]};
     
     UILabel *label = (UILabel *)[self.identifierContainerView viewWithTag:kTagForEntryInstantLabelOfIdentifierContainerView];
-    label.attributedText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    if (animationDuration > 0) {
+        [UIView animateWithDuration:animationDuration animations:^{
+            label.alpha = 0;
+        } completion:^(BOOL finished) {
+            label.attributedText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
+            [UIView animateWithDuration:animationDuration animations:^{
+                label.alpha = 1;
+            }];
+        }];
+    } else {
+        label.attributedText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    }
 }
 
 - (void)createAndAddInIdentifierContainerViewDayLabels

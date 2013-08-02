@@ -111,6 +111,8 @@ static const CGFloat kColorWhiteAlphaComponentForStrokeAnimationForConcepts = 1.
 static const CGFloat kTypeStrokeAnimationForConcepts = STROKEANIMATABLE_TYPE_THIN;
 static const CGFloat kDelayToExecuteRemoveConceptCell = 0.2;
 
+static const CGFloat KDurationOfAnimationUpdateForEntryInstantIndex = 0.15;
+
 #pragma mark - Properties
 
 - (IAEStrokeAnimatableLineView *)strokeAnimatableLineView
@@ -1030,12 +1032,14 @@ static const CGFloat kDelayToExecuteRemoveConceptCell = 0.2;
 
 - (void)updateIdentifierWithEntryInstanIndexForVisibleConceptViewCellsBeforeIndexPath:(NSIndexPath *)indexPathLimit
 {
+    NSInteger cellUpdateCounter = 0;
     NSUInteger numberOfItems = [self findNumberOfConceptsOfActualSelectedContext:indexPathLimit.section];
     for (IAEEditModeConceptCollectionViewCell *cellVisible in self.conceptsCollectionView.visibleCells) {
         NSIndexPath *indexPathOfVisibleCell = [self.conceptsCollectionView indexPathForCell:cellVisible];
         if (indexPathOfVisibleCell.row < indexPathLimit.row) {
             NSUInteger instantEntryIndex =  numberOfItems - indexPathOfVisibleCell.row;
-            [cellVisible setIdentifierWithEntryInstantIndex:instantEntryIndex];
+            CGFloat animationDuration = KDurationOfAnimationUpdateForEntryInstantIndex + 0.25 * cellUpdateCounter++;
+            [cellVisible setIdentifierWithEntryInstantIndex:instantEntryIndex withAnimationDuration:animationDuration];
         }
     }
 }

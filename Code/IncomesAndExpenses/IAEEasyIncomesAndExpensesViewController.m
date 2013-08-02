@@ -1017,18 +1017,26 @@ static const CGFloat kDelayToExecuteRemoveConceptCell = 0.2;
     if (cell == self.conceptCellToRemove) {
         [self.strokeAnimatableLineView resetStroke];
         self.conceptCellToRemove = nil;
-        //NSLog(@"Deleted path row %d cell description %@", indexPath.row, cell);
-        for (IAEEditModeConceptCollectionViewCell *cellVisible in self.conceptsCollectionView.visibleCells) {
-            NSIndexPath *indexPathOfVisibleCell = [self.conceptsCollectionView indexPathForCell:cellVisible];
-            //NSLog(@"Index path row %d cell description %@ deleted? %d", indexPathOfVisibleCell.row, cellVisible, cell == cellVisible);
-            if (indexPathOfVisibleCell.row < indexPath.row) {
-                NSUInteger instantEntryIndex = [self findNumberOfConceptsOfActualSelectedContext:indexPathOfVisibleCell.section] - indexPathOfVisibleCell.row;
-                [cellVisible setIdentifierWithEntryInstantIndex:instantEntryIndex];
-            }
+        [self updateIdentifierWithEntryInstanIndexForVisibleConceptViewCellsIfAppropriateBeforeIndexPath:indexPath];
+    }
+}
+
+- (void)updateIdentifierWithEntryInstanIndexForVisibleConceptViewCellsIfAppropriateBeforeIndexPath:(NSIndexPath *)indexPathLimit
+{
+    if (![self isDayModeActiveForConcepts]) {
+        [self updateIdentifierWithEntryInstanIndexForVisibleConceptViewCellsBeforeIndexPath:indexPathLimit];
+    }
+}
+
+- (void)updateIdentifierWithEntryInstanIndexForVisibleConceptViewCellsBeforeIndexPath:(NSIndexPath *)indexPathLimit
+{
+    NSUInteger numberOfItems = [self findNumberOfConceptsOfActualSelectedContext:indexPathLimit.section];
+    for (IAEEditModeConceptCollectionViewCell *cellVisible in self.conceptsCollectionView.visibleCells) {
+        NSIndexPath *indexPathOfVisibleCell = [self.conceptsCollectionView indexPathForCell:cellVisible];
+        if (indexPathOfVisibleCell.row < indexPathLimit.row) {
+            NSUInteger instantEntryIndex =  numberOfItems - indexPathOfVisibleCell.row;
+            [cellVisible setIdentifierWithEntryInstantIndex:instantEntryIndex];
         }
-        
-        //[self.conceptsCollectionView performSelector:@selector(reloadData) withObject:nil afterDelay:0];
-        //[self.conceptsCollectionView reloadData];
     }
 }
 

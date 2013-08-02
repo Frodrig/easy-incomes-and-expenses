@@ -184,8 +184,6 @@ static NSString * const kLtextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
                              atIndexPath:(NSIndexPath *)indexPath
                                withIndex:(NSUInteger)index
 {
-    NSLog(@"configure with index %d", index);
-
     if (![self.iaeViewControllerQuery isDayModeActiveForConcepts]) {
         [cell setIdentifierWithEntryInstantIndex:index];
     } else if ([self isDayOfTheMonthAssociatedWithConceptCell:cell atIndexPath:indexPath]) {

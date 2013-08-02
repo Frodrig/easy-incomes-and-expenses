@@ -25,4 +25,6 @@
 - (IAETextRawSelectorMenuViewSelectorType)selectorTypeInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu;
 - (UIColor *)colorForSelectorIndicatorInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu;
 
+//- (NSUInteger)borderMaskForOptionMenuViewInText
+
 @end

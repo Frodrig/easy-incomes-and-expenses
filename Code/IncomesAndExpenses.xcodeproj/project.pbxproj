@@ -16,6 +16,7 @@
 		5B26461617968F84006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B26461517968F84006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.xib */; };
 		5B26461A17969084006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B26461917969084006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.m */; };
 		5B28813417985822006E4F9B /* IAEVersionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B28813317985822006E4F9B /* IAEVersionHelper.m */; };
+		5B2D38B817AFA8CE0056488B /* IAEWithoutConceptsTextWarning.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B2D38B517AFA1B30056488B /* IAEWithoutConceptsTextWarning.xib */; };
 		5B32D654177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B32D653177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m */; };
 		5B32D65D177C41980070AC72 /* IAEYearSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B32D65C177C41980070AC72 /* IAEYearSelectorViewController.m */; };
 		5B36AFF11785874D00132475 /* IAEAdjustConceptAmountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B36AFEF1785874D00132475 /* IAEAdjustConceptAmountViewController.m */; };
@@ -120,6 +121,8 @@
 		5B26461C1796A1CA006F6E58 /* IAEInfoAboutAndOptionsCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEInfoAboutAndOptionsCollectionViewCell.xib; sourceTree = "<group>"; };
 		5B28813217985822006E4F9B /* IAEVersionHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEVersionHelper.h; sourceTree = "<group>"; };
 		5B28813317985822006E4F9B /* IAEVersionHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEVersionHelper.m; sourceTree = "<group>"; };
+		5B2D38B417AFA1B30056488B /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/IAEWithoutConceptsTextWarning.xib; sourceTree = "<group>"; };
+		5B2D38B617AFA1B90056488B /* es */ = {isa = PBXFileReference; lastKnownFileType = file; name = es; path = es.lproj/IAEWithoutConceptsTextWarning.xib; sourceTree = "<group>"; };
 		5B32D652177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEasyIncomesAndExpensesViewController.h; sourceTree = "<group>"; };
 		5B32D653177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEasyIncomesAndExpensesViewController.m; sourceTree = "<group>"; };
 		5B32D65B177C41980070AC72 /* IAEYearSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEYearSelectorViewController.h; sourceTree = "<group>"; };
@@ -308,14 +311,14 @@
 			name = Localizacion;
 			sourceTree = "<group>";
 		};
-		5B1F0D3217841C7400D0B4F1 /* Cell */ = {
+		5B1F0D3217841C7400D0B4F1 /* WithConceptCell */ = {
 			isa = PBXGroup;
 			children = (
 				5B1F0D3317841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.h */,
 				5B1F0D3417841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m */,
 				5B1F0D3617841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib */,
 			);
-			name = Cell;
+			name = WithConceptCell;
 			sourceTree = "<group>";
 		};
 		5B251FA217AACA76000957A5 /* Stroke Animatable View */ = {
@@ -412,6 +415,22 @@
 				5B62D883178F1516009879A6 /* UIView+DrawBottomLine.m */,
 			);
 			name = DrawBottomLine;
+			sourceTree = "<group>";
+		};
+		5B2D38B017AF9FB10056488B /* XIBs predefinidos */ = {
+			isa = PBXGroup;
+			children = (
+				5B2D38B117AF9FC00056488B /* Sin conceptos en contexto */,
+			);
+			name = "XIBs predefinidos";
+			sourceTree = "<group>";
+		};
+		5B2D38B117AF9FC00056488B /* Sin conceptos en contexto */ = {
+			isa = PBXGroup;
+			children = (
+				5B2D38B517AFA1B30056488B /* IAEWithoutConceptsTextWarning.xib */,
+			);
+			name = "Sin conceptos en contexto";
 			sourceTree = "<group>";
 		};
 		5B32D651177C385A0070AC72 /* View, Controllers & ViewControllers */ = {
@@ -777,6 +796,7 @@
 		5B903BB91782DBAF00DBEFB2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5B2D38B017AF9FB10056488B /* XIBs predefinidos */,
 				5BCE3A9C17A8FBBF00CD01E7 /* Concept Collection View */,
 				5BEA607F17A6A31E00520E09 /* Report Area View */,
 				5B8CD5CE17A2623F00A353A5 /* Context View */,
@@ -927,7 +947,7 @@
 			isa = PBXGroup;
 			children = (
 				5BCE3A9B17A8FBB300CD01E7 /* Header */,
-				5B1F0D3217841C7400D0B4F1 /* Cell */,
+				5B1F0D3217841C7400D0B4F1 /* WithConceptCell */,
 			);
 			name = "Concept Collection View";
 			sourceTree = "<group>";
@@ -1194,6 +1214,7 @@
 				5B767E011636D7FC005315F8 /* InfoPlist.strings in Resources */,
 				5B767E091636D7FC005315F8 /* Default.png in Resources */,
 				5B767E0B1636D7FC005315F8 /* Default@2x.png in Resources */,
+				5B2D38B817AFA8CE0056488B /* IAEWithoutConceptsTextWarning.xib in Resources */,
 				5B767E0D1636D7FC005315F8 /* Default-568h@2x.png in Resources */,
 				5BF92542179554800002CF9F /* IAEAboutAndOptionsViewController.xib in Resources */,
 				5B94036017904C1400F9C1D0 /* IAEYearSelectorViewController.xib in Resources */,
@@ -1299,6 +1320,15 @@
 				5B0F8BC716B94AE1002D62A5 /* es */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		5B2D38B517AFA1B30056488B /* IAEWithoutConceptsTextWarning.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5B2D38B417AFA1B30056488B /* en */,
+				5B2D38B617AFA1B90056488B /* es */,
+			);
+			name = IAEWithoutConceptsTextWarning.xib;
 			sourceTree = "<group>";
 		};
 		5B767DFF1636D7FC005315F8 /* InfoPlist.strings */ = {

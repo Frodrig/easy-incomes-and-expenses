@@ -60,6 +60,7 @@
 @property (nonatomic, strong) IAEHelperReportTextRawMenuDataSource *helperReportTextRawMenuDataSource;
 @property (nonatomic, strong) IAEHelperCalculatorDataSource *helperCalculatorDataSource;
 @property (nonatomic, strong) IAEHelperConceptsCollectionViewDataSource *helperConceptsCollectionViewDataSource;
+@property (nonatomic, strong) UIView *withoutConceptsWarningView;
 @property (nonatomic, strong) UIPopoverController *popover;
 @property (nonatomic, strong) UITapGestureRecognizer *tapConceptsRecognizer;
 @property (nonatomic, strong) UISwipeGestureRecognizer *swipeConceptsGestureRecognizer;
@@ -113,6 +114,10 @@ static const CGFloat kDelayToExecuteRemoveConceptCell = 0.2;
 
 static const CGFloat KDurationOfAnimationUpdateForEntryInstantIndex = 0.15;
 
+static const CGFloat kDurationOfEditConceptCollectionViewTransition = 0.35;
+
+static NSString * const kXibWithoutConceptsWarningViewName = @"IAEWithoutConceptsTextWarning";
+
 #pragma mark - Properties
 
 - (IAEStrokeAnimatableLineView *)strokeAnimatableLineView
@@ -127,6 +132,19 @@ static const CGFloat KDurationOfAnimationUpdateForEntryInstantIndex = 0.15;
     }
     
     return _strokeAnimatableLineView;
+}
+
+- (UIView *)withoutConceptsWarningView
+{
+    if (!_withoutConceptsWarningView) {
+        _withoutConceptsWarningView = [UIView viewFromXib:kXibWithoutConceptsWarningViewName withOwner:self];
+        [self.editAndReportModeContentContainerView addSubview:_withoutConceptsWarningView];
+        _withoutConceptsWarningView.center = CGPointMake(self.editAndReportModeContentContainerView.bounds.size.width / 2,
+                                                         self.editAndReportModeContentContainerView.bounds.size.height / 2);
+        _withoutConceptsWarningView.alpha = 0;
+    }
+    
+    return _withoutConceptsWarningView;
 }
 
 #pragma mark - dealloc
@@ -298,7 +316,7 @@ static const CGFloat KDurationOfAnimationUpdateForEntryInstantIndex = 0.15;
     [self vinculeReportAreaView];
     [self vinculeReportMenuView];
     
-    [self gotoToTodayMonthWithoutTransitionEffect];
+    [self gotoToTodayMonthByInitialPositioning];
 
     // Nota: En el momento en que se asigna un datasource al collection view se procede a la carga de informacion.
     //       Antes de que ocurra eso, nos aseguramos de estar en el contexto adecuado.
@@ -340,10 +358,12 @@ static const CGFloat KDurationOfAnimationUpdateForEntryInstantIndex = 0.15;
     self.reportMenuView.hidden = YES;
 }
 
-- (void)gotoToTodayMonthWithoutTransitionEffect
+- (void)gotoToTodayMonthByInitialPositioning
 {
     self.initialPositioning = YES;
+    
     [self goToTodayMonth];
+    
     self.initialPositioning = NO;
 }
 
@@ -355,12 +375,18 @@ static const CGFloat KDurationOfAnimationUpdateForEntryInstantIndex = 0.15;
 
 - (void)gotoToContextViewWithIndex:(NSUInteger)contextIndex
 {
-    if (!self.initialPositioning) {
-        [self setConceptsCollectionViewInTransitionAspect:YES];
-    }
+    void(^logicBlock)(void) = ^(void) {
+        CGRect contextViewRect = [self rectInContextScrollViewForContextViewWithGlobalIndex:contextIndex];
+        [self.contextScrollView scrollRectToVisible:contextViewRect animated:NO];
+    };
     
-    CGRect contextViewRect = [self rectInContextScrollViewForContextViewWithGlobalIndex:contextIndex];
-    [self.contextScrollView scrollRectToVisible:contextViewRect animated:NO];
+    if (!self.initialPositioning) {
+        [self setConceptsCollectionViewInTransitionAspect:YES withLogicBlockAfterFinish:logicBlock];
+    } else {
+        // Nota: El orden es importante para que showWithoutConceptsWarningViewIfAppropriateWithAnimation: tenga variables seteadas
+        logicBlock();
+        [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:NO];
+    }
 }
 
 - (CGRect)rectInContextScrollViewForContextViewWithGlobalIndex:(NSUInteger)globalIndex
@@ -626,11 +652,20 @@ static const CGFloat KDurationOfAnimationUpdateForEntryInstantIndex = 0.15;
         numberOfConcepts = month.concepts.count;
     } else {
         NSArray *months = [self findAllOrdererMonthsWithConceptsOfOpenYear];
-        IAEMonth *month = months[section];
-        numberOfConcepts = month.concepts.count;
+        if (months.count > 0) {
+            IAEMonth *month = months[section];
+            numberOfConcepts = month.concepts.count;
+        }
     }
     
     return numberOfConcepts;
+}
+
+- (BOOL)existConceptsInActualSelectedContext
+{
+    NSUInteger numberOfConcepts = [self findNumberOfConceptsOfActualSelectedContext:0];
+    
+    return numberOfConcepts > 0;
 }
 
 - (BOOL)isDayModeActiveForConcepts
@@ -901,26 +936,53 @@ static const CGFloat KDurationOfAnimationUpdateForEntryInstantIndex = 0.15;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if ([self isContextScrollView:scrollView]) {
-        [self contextScrollViewDidScroll];
+        [self updateContentInformationBasedInCurrentContext];
     }
 }
 
-- (void)contextScrollViewDidScroll
+- (void)updateContentInformationBasedInCurrentContext
 {
     [self updateCurrentOptionIndexSelectedOfContextMenu];
     if ([self isEditModeActive]) {
         [self updateContentOfConceptsCollectionView];
-        [self setConceptsCollectionViewInTransitionAspect:NO];
         [self updateCalculatorViewHideHalfState];
+        if (!self.initialPositioning) {
+            [self setConceptsCollectionViewInTransitionAspect:NO withLogicBlockAfterFinish:nil];
+        }
     } else if ([self isReportModeActive]) {
         [self.reportAreaView reloadData];
     }
 }
 
-- (void)setConceptsCollectionViewInTransitionAspect:(BOOL)transition
+- (void)setConceptsCollectionViewInTransitionAspect:(BOOL)transition withLogicBlockAfterFinish:(void(^)(void))logicBlock
 {
-    [UIView animateWithDuration:0.25 animations:^{
-        self.conceptsCollectionView.alpha = transition ? 0.15 : 1.0;
+    [UIView animateWithDuration:kDurationOfEditConceptCollectionViewTransition animations:^{
+        if (transition) {
+            self.conceptsCollectionView.alpha = 0.0;
+        } else {
+            self.conceptsCollectionView.alpha = 1.0;
+        }
+    } completion:^(BOOL finished) {
+        [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES];
+        if (logicBlock) {
+            logicBlock();
+        }
+    }];
+}
+
+- (void)showWithoutConceptsWarningViewIfAppropriateWithAnimation:(BOOL)animation
+{
+    [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:animation andExecuteAfterAnimationTheLogicBlock:nil];
+}
+
+- (void)showWithoutConceptsWarningViewIfAppropriateWithAnimation:(BOOL)animation andExecuteAfterAnimationTheLogicBlock:(void(^)(void))logicBlock
+{
+    [UIView animateWithDuration:animation ?  kDurationOfEditConceptCollectionViewTransition : 0 animations:^{
+        self.withoutConceptsWarningView.alpha = [self existConceptsInActualSelectedContext] ? 0.0 : 1.0;
+    } completion:^(BOOL finished) {
+        if (logicBlock) {
+            logicBlock();
+        }
     }];
 }
 
@@ -947,11 +1009,14 @@ static const CGFloat KDurationOfAnimationUpdateForEntryInstantIndex = 0.15;
 - (void)updateContentOfConceptsCollectionView
 {
     [self.conceptsCollectionView reloadData];
+    /*
     if ([self.conceptsCollectionView numberOfItemsInSection:0] > 0) {
+        // ToDo: Este codigo NUNCA se ejecuta tras el reload anterior. Probado el perform batch y falla al pasar a año
         [self.conceptsCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
                                             atScrollPosition:UICollectionViewScrollPositionNone
                                                     animated:NO];
     }
+     */
 }
 
 #pragma mark - IAEContextViewDataSource
@@ -1020,6 +1085,7 @@ static const CGFloat KDurationOfAnimationUpdateForEntryInstantIndex = 0.15;
         [self.strokeAnimatableLineView resetStroke];
         self.conceptCellToRemove = nil;
         [self updateIdentifierWithEntryInstanIndexForVisibleConceptViewCellsIfAppropriateBeforeIndexPath:indexPath];
+        [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES];
     }
 }
 
@@ -1520,8 +1586,10 @@ static const CGFloat KDurationOfAnimationUpdateForEntryInstantIndex = 0.15;
 
 - (void)calculatorViewController:(IAECalculatorViewController *)calculatorViewController didCreateNewConcept:(IAEConcept *)concept
 {
-    [self.conceptsCollectionView reloadData];
-    [self updateBalancesWithAnimation:NO];
+    [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES andExecuteAfterAnimationTheLogicBlock:^{
+        [self.conceptsCollectionView reloadData];
+        [self updateBalancesWithAnimation:NO];
+    }];
 }
 
 #pragma mark - IAETextRawSelectorMenuViewDelegate

@@ -42,10 +42,8 @@ static const CGFloat kYMarginOfTheLineSelector = 3;
 
 - (void)setDataSource:(id<IAETextRawSelectorMenuViewDataSource>)dataSource
 {
-    if (!_dataSource) {
-        _dataSource = dataSource;
-        [self reloadData];
-    }
+    _dataSource = dataSource;
+    [self reloadData];
 }
 
 - (void)setCurrentOptionIndexSelected:(NSUInteger)optionIndexSelected
@@ -61,6 +59,47 @@ static const CGFloat kYMarginOfTheLineSelector = 3;
     }
 }
 
+- (void)setOptionsEnabled:(BOOL)optionsEnabled
+{
+    // ToDo: Problema conocido al cambiar de seccion permanece el selector de menu pese a que no hay conceptos
+    if (optionsEnabled != _optionsEnabled) {
+        [self enableOptions:optionsEnabled];
+        [self enableSelectorLine:optionsEnabled];
+        _optionsEnabled = optionsEnabled;
+    }
+}
+
+- (void)enableOptions:(BOOL)enable
+{
+    NSSet *options = [self findAllMenuOptions];
+    [options enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        UIButton *option = (UIButton *)obj;
+        option.enabled = enable;
+    }];
+}
+
+- (void)enableSelectorLine:(BOOL)enable
+{
+    self.selectorLineView.hidden = !enable;
+}
+
+#pragma mark - Init
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        [self setInitialValues];
+    }
+    
+    return self;
+}
+
+- (void)setInitialValues
+{
+    _optionsEnabled = YES;
+}
+
 #pragma mark - reloadData
 
 - (void)reloadData
@@ -68,6 +107,7 @@ static const CGFloat kYMarginOfTheLineSelector = 3;
     NSAssert(self.dataSource, @"");
     
     [self removeAllMenuOptions];
+    [self setInitialValues];
     [self createAndAddMenuOptions];
     [self adjustFrameUsingMenuOptions];
     [self prepareSelector];

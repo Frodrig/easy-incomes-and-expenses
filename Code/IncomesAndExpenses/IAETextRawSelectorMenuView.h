@@ -17,6 +17,7 @@
 @property (nonatomic, weak) id<IAETextRawSelectorMenuViewDataSource> dataSource;
 
 @property (nonatomic) NSUInteger currentOptionIndexSelected;
+@property (nonatomic) BOOL optionsEnabled;
 
 - (void) reloadData;
 

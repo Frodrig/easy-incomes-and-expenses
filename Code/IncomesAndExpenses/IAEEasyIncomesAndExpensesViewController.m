@@ -60,7 +60,8 @@
 @property (nonatomic, strong) IAEHelperReportTextRawMenuDataSource *helperReportTextRawMenuDataSource;
 @property (nonatomic, strong) IAEHelperCalculatorDataSource *helperCalculatorDataSource;
 @property (nonatomic, strong) IAEHelperConceptsCollectionViewDataSource *helperConceptsCollectionViewDataSource;
-@property (nonatomic, strong) UIView *withoutConceptsWarningView;
+@property (nonatomic, strong) UIView *withoutConceptsWarningInMonthEditModeView;
+@property (nonatomic, strong) UIView *withoutConceptsWarningInMonthReportModeView;
 @property (nonatomic, strong) UIPopoverController *popover;
 @property (nonatomic, strong) UITapGestureRecognizer *tapConceptsRecognizer;
 @property (nonatomic, strong) UISwipeGestureRecognizer *swipeConceptsGestureRecognizer;
@@ -116,7 +117,9 @@ static const CGFloat KDurationOfAnimationUpdateForEntryInstantIndex = 0.15;
 
 static const CGFloat kDurationOfEditConceptCollectionViewTransition = 0.35;
 
-static NSString * const kXibWithoutConceptsWarningViewName = @"IAEWithoutConceptsTextWarning";
+static NSString * const kXibWithoutConceptsWarningInEditModeViewName = @"IAEWithoutConceptsTextWarning";
+static NSString * const kXibWithoutConceptsWarningInReportModeViewName = @"IAEWithoutConceptsTextWarningReportMode";
+static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
 
 #pragma mark - Properties
 
@@ -134,17 +137,32 @@ static NSString * const kXibWithoutConceptsWarningViewName = @"IAEWithoutConcept
     return _strokeAnimatableLineView;
 }
 
-- (UIView *)withoutConceptsWarningView
+- (UIView *)withoutConceptsWarningInMonthEditModeView
 {
-    if (!_withoutConceptsWarningView) {
-        _withoutConceptsWarningView = [UIView viewFromXib:kXibWithoutConceptsWarningViewName withOwner:self];
-        [self.editAndReportModeContentContainerView addSubview:_withoutConceptsWarningView];
-        _withoutConceptsWarningView.center = CGPointMake(self.editAndReportModeContentContainerView.bounds.size.width / 2,
-                                                         self.editAndReportModeContentContainerView.bounds.size.height / 2);
-        _withoutConceptsWarningView.alpha = 0;
+    if (!_withoutConceptsWarningInMonthEditModeView) {
+        _withoutConceptsWarningInMonthEditModeView = [UIView viewFromXib:kXibWithoutConceptsWarningInEditModeViewName withOwner:self];
+        [self configureInitialValuesOfWithoutConceptWarningView:_withoutConceptsWarningInMonthEditModeView];
     }
     
-    return _withoutConceptsWarningView;
+    return _withoutConceptsWarningInMonthEditModeView;
+}
+
+- (UIView *)withoutConceptsWarningInMonthReportModeView
+{
+    if (!_withoutConceptsWarningInMonthReportModeView) {
+        _withoutConceptsWarningInMonthReportModeView = [UIView viewFromXib:kXibWithoutConceptsWarningInReportModeViewName withOwner:self];
+        [self configureInitialValuesOfWithoutConceptWarningView:_withoutConceptsWarningInMonthReportModeView];
+    }
+    
+    return _withoutConceptsWarningInMonthReportModeView;
+}
+
+- (void)configureInitialValuesOfWithoutConceptWarningView:(UIView *)withoutConceptWarningView
+{
+    [self.editAndReportModeContentContainerView addSubview:withoutConceptWarningView];
+    withoutConceptWarningView.center = CGPointMake(self.editAndReportModeContentContainerView.bounds.size.width / 2,
+                                                   self.editAndReportModeContentContainerView.bounds.size.height / 2);
+    withoutConceptWarningView.alpha = 0;
 }
 
 #pragma mark - dealloc
@@ -378,6 +396,7 @@ static NSString * const kXibWithoutConceptsWarningViewName = @"IAEWithoutConcept
     void(^logicBlock)(void) = ^(void) {
         CGRect contextViewRect = [self rectInContextScrollViewForContextViewWithGlobalIndex:contextIndex];
         [self.contextScrollView scrollRectToVisible:contextViewRect animated:NO];
+        self.reportMenuView.optionsEnabled = [self existConceptsInActualSelectedContext];
     };
     
     if (!self.initialPositioning) {
@@ -462,9 +481,11 @@ static NSString * const kXibWithoutConceptsWarningViewName = @"IAEWithoutConcept
 
 - (void)updateAfterChangeToEditMode
 {
+    [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES];
+    
     [self.conceptsCollectionView reloadData];
     [self updateCalculatorViewHideHalfState];
-    
+        
     self.editAndReportModeContentContainerView.backgroundColor = [UIColor colorWithWhite:kColorWithWhiteForEditAndReportModeContentContainerBackground
                                                                                    alpha:1.0];
     self.conceptsCollectionView.hidden = NO;
@@ -477,8 +498,10 @@ static NSString * const kXibWithoutConceptsWarningViewName = @"IAEWithoutConcept
 
 - (void)updateAfterChangeToReportMode
 {
+    [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES];
+    
+    self.reportMenuView.optionsEnabled = [self existConceptsInActualSelectedContext];
     self.editAndReportModeContentContainerView.backgroundColor = [UIColor clearColor];
-
     self.conceptsCollectionView.hidden = YES;
     self.calculatorViewController.view.hidden = YES;
     self.reportAreaView.hidden = NO;
@@ -977,10 +1000,19 @@ static NSString * const kXibWithoutConceptsWarningViewName = @"IAEWithoutConcept
     [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:animation andExecuteAfterAnimationTheLogicBlock:nil];
 }
 
-- (void)showWithoutConceptsWarningViewIfAppropriateWithAnimation:(BOOL)animation andExecuteAfterAnimationTheLogicBlock:(void(^)(void))logicBlock
+- (void)showWithoutConceptsWarningViewIfAppropriateWithAnimation:(BOOL)animation
+                           andExecuteAfterAnimationTheLogicBlock:(void(^)(void))logicBlock
 {
-    [UIView animateWithDuration:animation ?  kDurationOfEditConceptCollectionViewTransition : 0 animations:^{
-        self.withoutConceptsWarningView.alpha = [self existConceptsInActualSelectedContext] ? 0.0 : 1.0;
+    BOOL show = [self existConceptsInActualSelectedContext] == 0;
+    [UIView animateWithDuration:animation ? kDurationOfWithoutConceptsWarningVieTransition : 0 animations:^{
+        CGFloat alpha = show ? 1.0 : 0.0;
+        if ([self isEditModeActive]) {
+            self.withoutConceptsWarningInMonthEditModeView.alpha = alpha;
+            self.withoutConceptsWarningInMonthReportModeView.alpha = 0;
+        } else if ([self isReportModeActive]) {
+            self.withoutConceptsWarningInMonthReportModeView.alpha = alpha;
+            self.withoutConceptsWarningInMonthEditModeView.alpha = 0;
+        }
     } completion:^(BOOL finished) {
         if (logicBlock) {
             logicBlock();
@@ -1611,9 +1643,9 @@ static NSString * const kXibWithoutConceptsWarningViewName = @"IAEWithoutConcept
     
     [self.conceptsCollectionView performBatchUpdates:^{
         [self.conceptsCollectionView insertItemsAtIndexPaths:@[indexPathOfInsertion]];
-        [self.conceptsCollectionView scrollToItemAtIndexPath:indexPathOfInsertion atScrollPosition:UIScrollViewIndicatorStyleDefault animated:YES];
     } completion:^(BOOL finished) {
         // Aquí debería de haber algún tipo de efecto especial para indicar la celda añadida
+        [self.conceptsCollectionView scrollToItemAtIndexPath:indexPathOfInsertion atScrollPosition:UIScrollViewIndicatorStyleDefault animated:YES];
     }];
 }
 

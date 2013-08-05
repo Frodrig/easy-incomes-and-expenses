@@ -53,7 +53,7 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
     NSUInteger number = 0;
     
     if ([self.iaeViewControllerQuery isTheBalancesOptionSelectedInReportMenu]) {
-        return 2;
+        number = [self.iaeViewControllerQuery findNumberOfConceptsOfActualSelectedContext:0] > 0 ? 2 : 0;
     } else if ([self.iaeViewControllerQuery isTheIncomesOptionSelectedInReportMenu]) {
         number = [self.iaeViewControllerQuery findIncomesCategoriesOfActualSelectedContextView].count;
     } else if ([self.iaeViewControllerQuery isTheExpensesOptionSelectedInReportMenu]) {

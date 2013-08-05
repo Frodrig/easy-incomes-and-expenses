@@ -387,6 +387,33 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		5B2D38A617AF84620056488B /* RoundedCorners */ = {
+			isa = PBXGroup;
+			children = (
+				5B5C967D17816A13008CD851 /* UIView+RoundedCorners.h */,
+				5B5C967E17816A13008CD851 /* UIView+RoundedCorners.m */,
+			);
+			name = RoundedCorners;
+			sourceTree = "<group>";
+		};
+		5B2D38A717AF846A0056488B /* LoadFromXib */ = {
+			isa = PBXGroup;
+			children = (
+				5B6E9FA5177D9C950072EE34 /* UIView+LoadFromXib.h */,
+				5B6E9FA6177D9C950072EE34 /* UIView+LoadFromXib.m */,
+			);
+			name = LoadFromXib;
+			sourceTree = "<group>";
+		};
+		5B2D38A817AF84730056488B /* DrawBottomLine */ = {
+			isa = PBXGroup;
+			children = (
+				5B62D882178F1516009879A6 /* UIView+DrawBottomLine.h */,
+				5B62D883178F1516009879A6 /* UIView+DrawBottomLine.m */,
+			);
+			name = DrawBottomLine;
+			sourceTree = "<group>";
+		};
 		5B32D651177C385A0070AC72 /* View, Controllers & ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -492,12 +519,9 @@
 		5B5C967C17816A01008CD851 /* UIView */ = {
 			isa = PBXGroup;
 			children = (
-				5B6E9FA5177D9C950072EE34 /* UIView+LoadFromXib.h */,
-				5B6E9FA6177D9C950072EE34 /* UIView+LoadFromXib.m */,
-				5B5C967D17816A13008CD851 /* UIView+RoundedCorners.h */,
-				5B5C967E17816A13008CD851 /* UIView+RoundedCorners.m */,
-				5B62D882178F1516009879A6 /* UIView+DrawBottomLine.h */,
-				5B62D883178F1516009879A6 /* UIView+DrawBottomLine.m */,
+				5B2D38A717AF846A0056488B /* LoadFromXib */,
+				5B2D38A617AF84620056488B /* RoundedCorners */,
+				5B2D38A817AF84730056488B /* DrawBottomLine */,
 			);
 			name = UIView;
 			sourceTree = "<group>";

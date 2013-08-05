@@ -30,6 +30,8 @@ static const CGFloat kReportMenuItemWidthSize = 200;
 static const NSUInteger kReportMenuIndexOfBalancesOption = 0;
 static const NSUInteger kReportMenuIndexOfIncomesOption = 1;
 static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
+static const NSUInteger kBorderMaskForOptions = 0;
+static const CGFloat kRadiusOfBorderForOptions = 0;
 
 #pragma mark - Init
 
@@ -117,6 +119,16 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
     UIColor *color = [UIColor colorWithWhite:0.9 alpha:1];
     
     return color;
+}
+
+- (NSUInteger)borderMaskForOptionsInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
+{
+    return kBorderMaskForOptions;
+}
+
+- (CGFloat)radiusForOptionsInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
+{
+    return kRadiusOfBorderForOptions;
 }
 
 

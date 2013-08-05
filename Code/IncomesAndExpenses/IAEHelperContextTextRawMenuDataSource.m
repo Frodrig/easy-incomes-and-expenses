@@ -26,8 +26,10 @@ static const NSUInteger kGlobalIndexForYearInContextScrollView = 0;
 static const NSUInteger kContextMenuIndexOfYearOption = 0;
 static NSString * const kContextMenuFontFamilyName = @"HelveticaNeue-Ultralight";
 static const CGFloat kContextMenuFontSizeOfOptions = 24;
-static const CGFloat kContextMenuDefaultKernOfOptions = 4;
+static const CGFloat kContextMenuDefaultKernOfOptions = 1;
 static const CGFloat kContextMenuYearKernOfOptions = 0;
+static const NSUInteger kBorderMaskForOptions = UIRectCornerBottomLeft | UIRectCornerBottomRight;
+static const CGFloat kRadiusOfBorderForOptions = 15;
 
 #pragma mark - Init
 
@@ -118,6 +120,16 @@ static const CGFloat kContextMenuYearKernOfOptions = 0;
     UIColor *color = [UIColor colorWithWhite:0.9 alpha:0.3];
     
     return color;
+}
+
+- (NSUInteger)borderMaskForOptionsInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
+{
+    return kBorderMaskForOptions;
+}
+
+- (CGFloat)radiusForOptionsInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
+{
+    return kRadiusOfBorderForOptions;
 }
 
 @end

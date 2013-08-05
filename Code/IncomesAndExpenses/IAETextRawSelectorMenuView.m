@@ -9,6 +9,7 @@
 #import "IAETextRawSelectorMenuView.h"
 #import "IAETextRawSelectorMenuViewDataSource.h"
 #import "IAETextRawSelectorMenuViewDelegate.h"
+#import "UIView+RoundedCorners.h"
 
 
 @interface IAETextRawSelectorMenuView()
@@ -118,6 +119,8 @@ static const CGFloat kYMarginOfTheLineSelector = 3;
     [option setAttributedTitle:[self createAttributedStringForOptionAtIndex:optionIt] forState:UIControlStateNormal];
     option.backgroundColor = [UIColor clearColor];
     option.tag = [self createTagForButtonAtIndex:optionIt];
+    [option addRoundedCorners:[self.dataSource borderMaskForOptionsInTextRawSelectorMenu:self]
+                   withRadius:[self.dataSource radiusForOptionsInTextRawSelectorMenu:self]];
     [option addTarget:self action:@selector(optionButtonPressed:) forControlEvents:UIControlEventTouchDown];
     
     return option;

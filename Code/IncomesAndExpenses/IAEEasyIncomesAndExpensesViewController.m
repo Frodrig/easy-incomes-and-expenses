@@ -646,6 +646,7 @@ static NSString * const kXibWithoutConceptsWarningViewName = @"IAEWithoutConcept
 
 - (NSUInteger)findNumberOfConceptsOfActualSelectedContext:(NSInteger)section
 {
+    // ToDo: Este metodo está fatalmente nombrado por culpa de ese parametro que se usa solo si hay año
     NSUInteger numberOfConcepts = 0;
     if ([self isActualSelectedContextAMonth]) {
         IAEMonth *month = [self findActualSelectedMonth];
@@ -720,6 +721,7 @@ static NSString * const kXibWithoutConceptsWarningViewName = @"IAEWithoutConcept
         IAEMonth *actualMonth = [self findActualSelectedMonth];
         allConcepts = [self isDayModeActiveForConcepts] ? [actualMonth  allConceptsSortedByDay] : [actualMonth allConceptsSortedByEntryInstant];
     } else {
+        NSAssert(indexPath, @"");
         NSArray *months = [self findAllOrdererMonthsWithConceptsOfOpenYear];
         IAEMonth *month = months[indexPath.section];
         allConcepts = [self isDayModeActiveForConcepts] ? [month allConceptsSortedByDay] : [month allConceptsSortedByEntryInstant];
@@ -1587,8 +1589,44 @@ static NSString * const kXibWithoutConceptsWarningViewName = @"IAEWithoutConcept
 - (void)calculatorViewController:(IAECalculatorViewController *)calculatorViewController didCreateNewConcept:(IAEConcept *)concept
 {
     [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES andExecuteAfterAnimationTheLogicBlock:^{
-        [self.conceptsCollectionView reloadData];
+        [self reloadConceptsCollectionViewAfterCreateNewConcept:concept];
         [self updateBalancesWithAnimation:NO];
+    }];
+}
+
+- (void)reloadConceptsCollectionViewAfterCreateNewConcept:(IAEConcept *)concept
+{
+    if ([self isDayModeActiveForConcepts]) {
+        [self reloadConceptsCollectionViewWithDayModeAfterCreateNewConcept:concept];
+    } else {
+        [self reloadConceptsCollectionViewWithoutDayModeAfterCreateNewConcept];
+    }
+}
+
+- (void)reloadConceptsCollectionViewWithDayModeAfterCreateNewConcept:(IAEConcept *)concept
+{
+    NSArray *concepts = [self allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath:nil];
+    NSUInteger indexOfConcept = [concepts indexOfObject:concept];
+    NSIndexPath *indexPathOfInsertion = [NSIndexPath indexPathForRow:indexOfConcept inSection:0];
+    
+    [self.conceptsCollectionView performBatchUpdates:^{
+        [self.conceptsCollectionView insertItemsAtIndexPaths:@[indexPathOfInsertion]];
+        [self.conceptsCollectionView scrollToItemAtIndexPath:indexPathOfInsertion atScrollPosition:UIScrollViewIndicatorStyleDefault animated:YES];
+    } completion:^(BOOL finished) {
+        // Aquí debería de haber algún tipo de efecto especial para indicar la celda añadida
+    }];
+}
+
+- (void)reloadConceptsCollectionViewWithoutDayModeAfterCreateNewConcept
+{
+    NSUInteger numberOfConceptsForActualContext = [self findNumberOfConceptsOfActualSelectedContext:0];
+    NSIndexPath *indexPathOfInsertion = [NSIndexPath indexPathForRow:numberOfConceptsForActualContext - 1 inSection:0];
+    
+    [self.conceptsCollectionView performBatchUpdates:^{
+        [self.conceptsCollectionView insertItemsAtIndexPaths:@[indexPathOfInsertion]];
+        [self.conceptsCollectionView reloadItemsAtIndexPaths:self.conceptsCollectionView.indexPathsForVisibleItems];
+    } completion:^(BOOL finished) {
+        
     }];
 }
 

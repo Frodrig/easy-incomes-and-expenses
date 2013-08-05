@@ -74,7 +74,7 @@ static const CGFloat kAlphaValueForStrokeState = 0.3;
 
 - (BOOL)isCategoryNameOrTypeContainingLocationPoint:(CGPoint)location
 {
-    return CGRectContainsPoint(self.categoryNameLabel.frame, location) || CGRectContainsPoint(self.categoryTypeLabel.frame, location);
+    return CGRectContainsPoint(self.categoryNameLabel.frame, location);
 }
 
 - (BOOL)isIdentifierOrDayContainingLocationPoint:(CGPoint)location
@@ -297,7 +297,6 @@ static const CGFloat kAlphaValueForStrokeState = 0.3;
 {
     self.amountLabel.alpha = alpha;
     self.categoryNameLabel.alpha = alpha;
-    self.categoryTypeLabel.alpha = alpha;
     self.identifierContainerView.alpha = alpha;
     self.valueDecoratorView.alpha = alpha;
 }

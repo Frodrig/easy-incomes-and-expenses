@@ -138,10 +138,7 @@ static NSString * const kLtextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
                                                                                              andColor:[UIColor blackColor]];
     cell.categoryNameLabel.attributedText = [[NSAttributedString alloc] initWithString:[category localizedTag]
                                                                             attributes:categoryNameLabelAttributes];
-    
-    NSDictionary *categoryTypeLabelAttributes = [self createAttributeDictionaryForConceptCellWithFont:[self createFontForCategoryConceptTypeLabelInConceptCell] andColor:[UIColor blackColor]];
-    cell.categoryTypeLabel.attributedText = [[NSAttributedString alloc] initWithString:[category localizedCategoryTypeString] attributes:categoryTypeLabelAttributes];
-    
+    cell.categoryNameLabel.numberOfLines = 2;
 }
 
 - (void)configureAmountLabelOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
@@ -170,7 +167,7 @@ static NSString * const kLtextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
 
 - (UIFont *)createFontForCategoryConceptNameLabelInConceptCell
 {
-    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:35];
+    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:30];
     return font;
 }
 

@@ -1231,7 +1231,7 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
     viewController.delegate = self;
     viewController.conceptCellIndexPath = [self.conceptsCollectionView indexPathForCell:cell];
 
-    [self createAndPresentPopoverForConceptCellView:cell.amountLabel withViewController:viewController];
+    [self createAndPresentPopoverForConceptCellView:[cell findAmountLabel] withViewController:viewController];
 }
 
 - (void)openPopoverForEditCategoryOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
@@ -1240,7 +1240,7 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
     viewController.delegate = self;
     viewController.conceptCellIndexPath = [self.conceptsCollectionView indexPathForCell:cell];
     
-    [self createAndPresentPopoverForConceptCellView:cell.categoryNameLabel withViewController:viewController];
+    [self createAndPresentPopoverForConceptCellView:[cell findCategoryLabel] withViewController:viewController];
 }
 
 - (void)createAndPresentPopoverForConceptCellView:(UIView *)view withViewController:(UIViewController *)viewController

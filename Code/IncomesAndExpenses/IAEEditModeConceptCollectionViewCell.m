@@ -14,6 +14,9 @@
 
 @interface IAEEditModeConceptCollectionViewCell()
 
+@property (weak, nonatomic) IBOutlet UILabel *amountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
+
 @end
 
 @implementation IAEEditModeConceptCollectionViewCell
@@ -23,6 +26,11 @@
 static const NSUInteger kTagForEntryInstantLabelOfIdentifierContainerView = 10;
 static const NSUInteger kTagForDayIndexLabelOfIdentifierContainerView = 20;
 static const NSUInteger kTagForNoDayLabelOfIdentifierContainerVew = 30;
+
+static NSString * const kCategoryLabelFontFamilyName = @"HelveticaNeue-UltraLight";
+static const CGFloat kCategoryLabelFontSize = 28;
+static NSString * const kConceptAmountLabelFontFamilyName = @"HelveticaNeue-UltraLight";
+static const CGFloat kConceptAmountLabelFontFamilySize = 58;
 
 static NSString  * const kEntryInstantFontFamilyName = @"HelveticaNeue-Bold";
 static const CGFloat kEntryInstantFontFamilySize = 66;
@@ -65,6 +73,45 @@ static const CGFloat kAlphaValueForStrokeState = 0.3;
     [self drawBottomDotLine];
 }
 
+#pragma mark - Configuration labels
+
+- (void)configureCategoryLabelWithName:(NSString *)name
+{
+    NSDictionary *categoryNameLabelAttributes = [self createAttributeDictionaryForConceptCellWithFontName:kCategoryLabelFontFamilyName
+                                                                                                     size:kCategoryLabelFontSize
+                                                                                             andColor:[UIColor blackColor]];
+    self.categoryLabel.attributedText = [[NSAttributedString alloc] initWithString:name
+                                                                            attributes:categoryNameLabelAttributes];
+    self.categoryLabel.numberOfLines = 2;
+}
+
+- (void)configureAmountLabelWithValue:(NSString *)valueString andColor:(UIColor *)color
+{
+    NSDictionary *amountLabelAttributes = [self createAttributeDictionaryForConceptCellWithFontName:kConceptAmountLabelFontFamilyName
+                                                                                               size:kConceptAmountLabelFontFamilySize
+                                                                                           andColor:color];
+    self.amountLabel.attributedText = [[NSAttributedString alloc] initWithString:valueString attributes:amountLabelAttributes];
+}
+
+- (NSDictionary *)createAttributeDictionaryForConceptCellWithFontName:(NSString *)fontFamily
+                                                                 size:(CGFloat)size
+                                                             andColor:(UIColor *)color
+{
+    UIFont *font = [UIFont fontWithName:fontFamily size:size];
+    NSDictionary *attributes =  @{NSFontAttributeName: font,
+                                  NSForegroundColorAttributeName: color,
+                                  NSKernAttributeName: [NSNumber numberWithInteger:0.0]};
+    
+    return attributes;
+}
+
+- (UIFont *)createFontForCategoryConceptNameLabelInConceptCell
+{
+    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:28];
+    return font;
+}
+
+
 #pragma mark - Location Test
 
 - (BOOL)isAmountLabelContainingLocationPoint:(CGPoint)location
@@ -74,7 +121,7 @@ static const CGFloat kAlphaValueForStrokeState = 0.3;
 
 - (BOOL)isCategoryNameOrTypeContainingLocationPoint:(CGPoint)location
 {
-    return CGRectContainsPoint(self.categoryNameLabel.frame, location);
+    return CGRectContainsPoint(self.categoryLabel.frame, location);
 }
 
 - (BOOL)isIdentifierOrDayContainingLocationPoint:(CGPoint)location
@@ -296,7 +343,7 @@ static const CGFloat kAlphaValueForStrokeState = 0.3;
 - (void)setIndividualsInformationElementsWithAlpha:(CGFloat)alpha
 {
     self.amountLabel.alpha = alpha;
-    self.categoryNameLabel.alpha = alpha;
+    self.categoryLabel.alpha = alpha;
     self.identifierContainerView.alpha = alpha;
     self.valueDecoratorView.alpha = alpha;
 }
@@ -308,5 +355,18 @@ static const CGFloat kAlphaValueForStrokeState = 0.3;
     UILabel *label = (UILabel *)[self.identifierContainerView viewWithTag:kTagForEntryInstantLabelOfIdentifierContainerView];
     return label.text;
 }
+
+#pragma mark - Find controls
+
+- (UILabel *)findCategoryLabel
+{
+    return self.categoryLabel;
+}
+
+- (UILabel *)findAmountLabel
+{
+    return self.amountLabel;
+}
+
 
 @end

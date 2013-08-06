@@ -49,7 +49,7 @@
             <color key="backgroundColor" red="0.97254908080000002" green="0.97254908080000002" blue="0.97254908080000002" alpha="1" colorSpace="deviceRGB"/>
             <connections>
                 <outlet property="amountLabel" destination="HqS-Bo-sDV" id="0eP-4g-Hm4"/>
-                <outlet property="categoryNameLabel" destination="FwU-Ko-eR6" id="56P-4K-kcL"/>
+                <outlet property="categoryLabel" destination="FwU-Ko-eR6" id="Hh5-4l-DIc"/>
                 <outlet property="conceptInformationContainerView" destination="XdT-BY-TUN" id="6wF-SQ-rdo"/>
                 <outlet property="identifierContainerView" destination="0jx-Qr-cEo" id="e3U-B0-Uj6"/>
                 <outlet property="valueDecoratorView" destination="L7q-OU-jlD" id="C88-Rr-fh6"/>

@@ -14,11 +14,15 @@
 
 @property (weak, nonatomic) IBOutlet UIView *conceptInformationContainerView;
 @property (weak, nonatomic) IBOutlet IAEValueDecoratorView *valueDecoratorView;
-@property (weak, nonatomic) IBOutlet UILabel *amountLabel;
-@property (weak, nonatomic) IBOutlet UILabel *categoryNameLabel;
 @property (weak, nonatomic) IBOutlet UIView *identifierContainerView;
 @property (nonatomic) CGFloat durationOfStrokeStateTransition;
 @property (nonatomic, readonly, getter = isInStrokeState) BOOL strokeState;
+
+- (UILabel *)findCategoryLabel;
+- (UILabel *)findAmountLabel;
+
+- (void)configureCategoryLabelWithName:(NSString *)name;
+- (void)configureAmountLabelWithValue:(NSString *)valueString andColor:(UIColor *)color;
 
 - (void)setIdentifierWithEntryInstantIndex:(NSUInteger)index withAnimationDuration:(CGFloat)animationDuration;
 - (void)setIdentifierWithDayOfTheMonthIndex:(NSUInteger)index andDayOfTheWeekName:(NSString *)name;

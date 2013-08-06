@@ -126,55 +126,9 @@ static NSString * const kLtextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
     NSUInteger instantEntryIndex = [self.iaeViewControllerQuery findNumberOfConceptsOfActualSelectedContext:indexPath.section] - indexPath.row;
     
     cell.valueDecoratorView.economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:amountWithSign];
-    [self configureCategoryLabelsOfConceptCell:cell withCategory:category];
-    [self configureAmountLabelOfConceptCell:cell withAmountWithSignString:amountWithSignString andColor:colorForEconomicValueType];
+    [cell configureCategoryLabelWithName:[category localizedTag]];
+    [cell configureAmountLabelWithValue:amountWithSignString andColor:colorForEconomicValueType];
     [self configureIdentifierOfConceptCell:cell atIndexPath:indexPath withIndex:instantEntryIndex];
-}
-
-- (void)configureCategoryLabelsOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
-                                withCategory:(IAECategory *)category
-{
-    NSDictionary *categoryNameLabelAttributes = [self createAttributeDictionaryForConceptCellWithFont:[self createFontForCategoryConceptNameLabelInConceptCell]
-                                                                                             andColor:[UIColor blackColor]];
-    cell.categoryNameLabel.attributedText = [[NSAttributedString alloc] initWithString:[category localizedTag]
-                                                                            attributes:categoryNameLabelAttributes];
-    cell.categoryNameLabel.numberOfLines = 2;
-}
-
-- (void)configureAmountLabelOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
-                 withAmountWithSignString:(NSString *)amountSignedString
-                                 andColor:(UIColor *)color
-{
-    NSDictionary *amountLabelAttributes = [self createAttributeDictionaryForConceptCellWithFont:[self createFontForAmountLabelInConceptCell]
-                                                                                       andColor:color];
-    cell.amountLabel.attributedText = [[NSAttributedString alloc] initWithString:amountSignedString attributes:amountLabelAttributes];
-}
-
-- (NSDictionary *)createAttributeDictionaryForConceptCellWithFont:(UIFont *)font andColor:(UIColor *)color
-{
-    NSDictionary *attributes =  @{NSFontAttributeName: font,
-                                  NSForegroundColorAttributeName: color,
-                                  NSKernAttributeName: [NSNumber numberWithInteger:0.0]};
-    
-    return attributes;
-}
-
-- (UIFont *)createFontForAmountLabelInConceptCell
-{
-    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:58];
-    return font;
-}
-
-- (UIFont *)createFontForCategoryConceptNameLabelInConceptCell
-{
-    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:28];
-    return font;
-}
-
-- (UIFont *)createFontForCategoryConceptTypeLabelInConceptCell
-{
-    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:17];
-    return font;
 }
 
 - (void)configureIdentifierOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell

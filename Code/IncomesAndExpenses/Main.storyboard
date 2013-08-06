@@ -6,16 +6,16 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3715.3"/>
     </dependencies>
     <scenes>
-        <!--Easy Incomes And Expenses View Controller - Edit-->
+        <!--Easy Incomes And Expenses View Controller-->
         <scene sceneID="ZOc-zz-2EG">
             <objects>
                 <viewController storyboardIdentifier="EasyIncomesAndExpensesViewControllerID" id="7Ea-79-0mi" customClass="IAEEasyIncomesAndExpensesViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JJO-TL-5Gw">
-                        <rect key="frame" x="0.0" y="64" width="1024" height="704"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" directionalLockEnabled="YES" bounces="NO" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="gI2-Hy-nOR">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="166"/>
+                                <rect key="frame" x="0.0" y="64" width="1024" height="166"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" red="0.97254908080000002" green="0.97254908080000002" blue="0.97254908080000002" alpha="1" colorSpace="deviceRGB"/>
                             </scrollView>
@@ -65,14 +65,40 @@
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Edit" id="keZ-vo-FzI">
+                    <navigationItem key="navigationItem" id="keZ-vo-FzI">
+                        <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" title="Años" id="Dot-VC-q0a">
+                            <connections>
+                                <action selector="yearsButtonPressed:" destination="7Ea-79-0mi" id="wH5-lY-nyw"/>
+                            </connections>
+                        </barButtonItem>
+                        <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Yxn-Dz-OEd">
+                            <rect key="frame" x="337" y="0.0" width="350" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="21"/>
+                            <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="Easy Incomes and Expenses" image="14-gear_gray.png">
+                                <color key="titleColor" red="0.69803923368453979" green="0.69803923368453979" blue="0.69803923368453979" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="settingsOptionPressed:" destination="7Ea-79-0mi" eventType="touchUpInside" id="Grq-ff-sYt"/>
+                            </connections>
+                        </button>
+                        <barButtonItem key="rightBarButtonItem" title="Categorías" id="AgY-ym-Q0h">
+                            <connections>
+                                <action selector="categoriesButtonPressed:" destination="7Ea-79-0mi" id="ZZC-xV-ey1"/>
+                            </connections>
+                        </barButtonItem>
                         <connections>
                             <outlet property="leftBarButtonItem" destination="Dot-VC-q0a" id="Bpz-2o-rrO"/>
                             <outlet property="rightBarButtonItem" destination="AgY-ym-Q0h" id="BRz-hc-pNT"/>
                             <outlet property="titleView" destination="Yxn-Dz-OEd" id="AdG-Gr-a2n"/>
                         </connections>
                     </navigationItem>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
@@ -83,34 +109,8 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nSe-iv-lCf" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <barButtonItem title="Categorías" id="AgY-ym-Q0h">
-                    <connections>
-                        <action selector="categoriesButtonPressed:" destination="7Ea-79-0mi" id="ZZC-xV-ey1"/>
-                    </connections>
-                </barButtonItem>
-                <barButtonItem title="Años" id="Dot-VC-q0a">
-                    <connections>
-                        <action selector="yearsButtonPressed:" destination="7Ea-79-0mi" id="wH5-lY-nyw"/>
-                    </connections>
-                </barButtonItem>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Yxn-Dz-OEd">
-                    <rect key="frame" x="0.0" y="0.0" width="350" height="44"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="21"/>
-                    <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    <state key="normal" title="Easy Incomes and Expenses" image="14-gear_gray.png">
-                        <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <state key="highlighted">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="settingsOptionPressed:" destination="7Ea-79-0mi" eventType="touchUpInside" id="Grq-ff-sYt"/>
-                    </connections>
-                </button>
             </objects>
-            <point key="canvasLocation" x="-709" y="571"/>
+            <point key="canvasLocation" x="-74" y="36"/>
         </scene>
     </scenes>
     <resources>

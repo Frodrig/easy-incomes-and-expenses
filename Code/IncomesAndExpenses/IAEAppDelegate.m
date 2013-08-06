@@ -21,6 +21,8 @@ static NSString * const easyIncomesAndExpensesViewControllerID = @"EasyIncomesAn
 
 static NSString * const userDefaultsDayModeActive = @"dayModeActive";
 
+static CGFloat kNavigationBarTintColorWhiteComponents = 0.7;
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [self processProcessInfoEnvironment];
@@ -32,6 +34,7 @@ static NSString * const userDefaultsDayModeActive = @"dayModeActive";
     self.window.backgroundColor = [UIColor whiteColor];
     UIViewController *rootViewController = [self instantiateFromStoryBoardEasyIncomesViewController];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:rootViewController];
+    navigationController.navigationBar.tintColor = [UIColor colorWithWhite:kNavigationBarTintColorWhiteComponents alpha:1.0];
     self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
     

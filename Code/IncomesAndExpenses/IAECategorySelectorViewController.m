@@ -22,6 +22,7 @@
 @property (nonatomic, weak) IAECategoryTableViewCell *cellSelectedForContextualMenu;
 @property (nonatomic) NSUInteger actions;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationToolBar;
+@property (nonatomic) CategoryType initialCategoryType;
 
 @end
 
@@ -39,20 +40,21 @@ static const NSUInteger kExpenseSegmentedIndex = 1;
 }
 
 // Designated
-- (id)initWithExtraActions:(NSUInteger)actions
+- (id)initWithExtraActions:(NSUInteger)actions andSelectedCategoryType:(CategoryType)category
 {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         [self initActions:actions];
         [self initLongTapGestureRecognizer];
+        _initialCategoryType = category;
     }
     
     return self;
 }
 
-- (id)initWithAllExtraActions;
+- (id)initWithAllExtraActionsAndSelectedCategoryType:(CategoryType)category;
 {
-    self = [self initWithExtraActions:CATEGORYSELECTOR_EXTRAACTION_ALL_ACTIONS];
+    self = [self initWithExtraActions:CATEGORYSELECTOR_EXTRAACTION_ALL_ACTIONS andSelectedCategoryType:category];
     if (self) {
         // ...
     }
@@ -60,12 +62,13 @@ static const NSUInteger kExpenseSegmentedIndex = 1;
     return self;
 }
 
-- (id)initWithAllExtraActionsExceptSelection
+- (id)initWithAllExtraActionsExceptSelectionAndSelectedCategoryType:(CategoryType)category
 {
-    self = [self initWithExtraActions:CATEGORYSELECTOR_EXTRAACTION_ADD |
-                                      CATEGORYSELECTOR_EXTRAACTION_DONE |
-                                      CATEGORYSELECTOR_EXTRAACTION_DELETE |
-                                      CATEGORYSELECTOR_EXTRAACTION_RENAME];
+    NSUInteger categoryActions = CATEGORYSELECTOR_EXTRAACTION_ADD |
+                                 CATEGORYSELECTOR_EXTRAACTION_DONE |
+                                 CATEGORYSELECTOR_EXTRAACTION_DELETE |
+                                 CATEGORYSELECTOR_EXTRAACTION_RENAME;
+    self = [self initWithExtraActions:categoryActions andSelectedCategoryType:category];
     if (self) {
         // ...
     }
@@ -93,6 +96,7 @@ static const NSUInteger kExpenseSegmentedIndex = 1;
     
     [self configureNavigationItem];
     [self configureCategoriesTableView];
+    [self changeToCategory:self.initialCategoryType];
 }
 
 - (void)configureNavigationItem
@@ -159,10 +163,17 @@ static const NSUInteger kExpenseSegmentedIndex = 1;
     CategoryType actualCategory = [self categoryTypeSelectedInCategorySegmentedControl];
     if (actualCategory != category) {
         NSAssert(category != InvalidCategory, @"");
-        self.categorySegmentedControl.selectedSegmentIndex = category == IncomeCategory ? kIncomeSegmentedIndex : kExpenseSegmentedIndex;
+        self.categorySegmentedControl.selectedSegmentIndex = [self segmentedIndexForCategoryType:category];
         
         [self reloadData];
     }
+}
+
+- (NSInteger)segmentedIndexForCategoryType:(CategoryType)category
+{
+    NSInteger segmentedIndex = category == IncomeCategory ? kIncomeSegmentedIndex : kExpenseSegmentedIndex;
+    
+    return segmentedIndex;
 }
 
 #pragma mark - Control Events

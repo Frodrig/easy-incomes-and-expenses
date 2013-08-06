@@ -26,9 +26,9 @@ typedef NS_ENUM(NSUInteger, CategorySelectorActionFlags) {
 @property(nonatomic, weak)id<IAECategorySelectorViewControllerDelegate> delegate;
 @property(nonatomic, strong) NSIndexPath *conceptCellIndexPath;
 
-- (id)initWithExtraActions:(NSUInteger)actions;
-- (id)initWithAllExtraActions;
-- (id)initWithAllExtraActionsExceptSelection;
+- (id)initWithExtraActions:(NSUInteger)actions andSelectedCategoryType:(CategoryType)category;
+- (id)initWithAllExtraActionsAndSelectedCategoryType:(CategoryType)category;
+- (id)initWithAllExtraActionsExceptSelectionAndSelectedCategoryType:(CategoryType)category;
 
 - (void)reloadData;
 

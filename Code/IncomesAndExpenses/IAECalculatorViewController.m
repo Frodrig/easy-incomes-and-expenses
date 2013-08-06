@@ -311,7 +311,8 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
 - (void)launchPopoverForSelectCategoryFromRect:(CGRect)rect
 {
     NSUInteger categorySelectorOptions = CATEGORYSELECTOR_EXTRAACTION_CATEGORYSELECTION | CATEGORYSELECTOR_EXTRAACTION_ADD;
-    IAECategorySelectorViewController *viewController = [[IAECategorySelectorViewController alloc] initWithExtraActions:categorySelectorOptions];
+    IAECategorySelectorViewController *viewController = [[IAECategorySelectorViewController alloc] initWithExtraActions:categorySelectorOptions
+                                                                                                andSelectedCategoryType:self.actualCategory.categoryType];
     viewController.delegate = self;
 
     self.popover = [[UIPopoverController alloc] initWithContentViewController:viewController];
@@ -322,8 +323,6 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
                                   inView:self.displayPanel
                 permittedArrowDirections:UIPopoverArrowDirectionDown
                                 animated:YES];
-    
-    [viewController changeToCategory:self.actualCategory.categoryType];
 }
 
 - (IBAction)dayButtonPressed:(UIButton *)button

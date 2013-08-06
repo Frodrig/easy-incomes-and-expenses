@@ -228,7 +228,7 @@ static const NSUInteger kSizeRoundedRectCorners = 10;
 
 - (BOOL)categoryInputShouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    static const NSUInteger MAX_LENGHT = 36;
+    static const NSUInteger MAX_LENGHT = 56;
     
     BOOL should = self.categoryInputTextField.text.length < MAX_LENGHT;
     if (!should) {

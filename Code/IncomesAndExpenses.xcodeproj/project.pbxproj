@@ -105,8 +105,8 @@
 
 /* Begin PBXFileReference section */
 		5B021D3716B8363F000B8D4F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		5B0574C217AFE2F600B95D50 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/IAEWithoutConceptsTextWarningReportMode.xib; sourceTree = "<group>"; };
-		5B0574C417AFE2F900B95D50 /* es */ = {isa = PBXFileReference; lastKnownFileType = file; name = es; path = es.lproj/IAEWithoutConceptsTextWarningReportMode.xib; sourceTree = "<group>"; };
+		5B0574C217AFE2F600B95D50 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/IAEWithoutConceptsTextWarningReportMode.xib; sourceTree = "<group>"; };
+		5B0574C417AFE2F900B95D50 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/IAEWithoutConceptsTextWarningReportMode.xib; sourceTree = "<group>"; };
 		5B0F8BC516B94ADD002D62A5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5B0F8BC716B94AE1002D62A5 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5B1F0D3317841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEditModeConceptCollectionViewCell.h; sourceTree = "<group>"; };
@@ -428,13 +428,13 @@
 			name = DrawBottomLine;
 			sourceTree = "<group>";
 		};
-		5B2D38B017AF9FB10056488B /* XIBs predefinidos */ = {
+		5B2D38B017AF9FB10056488B /* XIBs */ = {
 			isa = PBXGroup;
 			children = (
 				5B0574BE17AFE0CA00B95D50 /* SinConceptosEnModoReporte */,
 				5B2D38B117AF9FC00056488B /* SinConceptosEnModoEdicion */,
 			);
-			name = "XIBs predefinidos";
+			name = XIBs;
 			sourceTree = "<group>";
 		};
 		5B2D38B117AF9FC00056488B /* SinConceptosEnModoEdicion */ = {
@@ -808,7 +808,7 @@
 		5B903BB91782DBAF00DBEFB2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5B2D38B017AF9FB10056488B /* XIBs predefinidos */,
+				5B2D38B017AF9FB10056488B /* XIBs */,
 				5BCE3A9C17A8FBBF00CD01E7 /* Concept Collection View */,
 				5BEA607F17A6A31E00520E09 /* Report Area View */,
 				5B8CD5CE17A2623F00A353A5 /* Context View */,

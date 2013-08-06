@@ -161,13 +161,13 @@ static NSString * const kLtextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
 
 - (UIFont *)createFontForAmountLabelInConceptCell
 {
-    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:52];
+    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:58];
     return font;
 }
 
 - (UIFont *)createFontForCategoryConceptNameLabelInConceptCell
 {
-    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:30];
+    UIFont *font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:28];
     return font;
 }
 

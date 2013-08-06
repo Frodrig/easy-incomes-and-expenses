@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "CategoryDefs.h"
 
+@class IAECategory;
+
 @protocol IAECategorySelectorViewControllerDelegate;
 
 typedef NS_ENUM(NSUInteger, CategorySelectorActionFlags) {
@@ -26,9 +28,9 @@ typedef NS_ENUM(NSUInteger, CategorySelectorActionFlags) {
 @property(nonatomic, weak)id<IAECategorySelectorViewControllerDelegate> delegate;
 @property(nonatomic, strong) NSIndexPath *conceptCellIndexPath;
 
-- (id)initWithExtraActions:(NSUInteger)actions andSelectedCategoryType:(CategoryType)category;
-- (id)initWithAllExtraActionsAndSelectedCategoryType:(CategoryType)category;
-- (id)initWithAllExtraActionsExceptSelectionAndSelectedCategoryType:(CategoryType)category;
+- (id)initWithExtraActions:(NSUInteger)actions withSelectedCategory:(IAECategory *)category;
+- (id)initWithAllExtraActionsWithSelectedCategory:(IAECategory *)category;
+- (id)initWithAllExtraActionsExceptSelectionWithSelectedCategory:(IAECategory *)category;
 
 - (void)reloadData;
 
@@ -36,6 +38,7 @@ typedef NS_ENUM(NSUInteger, CategorySelectorActionFlags) {
 - (IBAction)addCategoryButtonPressed:(id)sender;
 - (IBAction)categorySegmentedControlPressed:(id)sender;
 
-- (void)changeToCategory:(CategoryType)category;
+- (void)changeToSectionOfCategoryType:(CategoryType)category;
+- (void)scrollToCategory:(IAECategory *)category withAnimation:(BOOL)animation;
 
 @end

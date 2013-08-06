@@ -22,7 +22,7 @@
 @property (nonatomic, weak) IAECategoryTableViewCell *cellSelectedForContextualMenu;
 @property (nonatomic) NSUInteger actions;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationToolBar;
-@property (nonatomic) CategoryType initialCategoryType;
+@property (nonatomic, weak) IAECategory* initialCategory;
 
 @end
 
@@ -40,21 +40,21 @@ static const NSUInteger kExpenseSegmentedIndex = 1;
 }
 
 // Designated
-- (id)initWithExtraActions:(NSUInteger)actions andSelectedCategoryType:(CategoryType)category
+- (id)initWithExtraActions:(NSUInteger)actions withSelectedCategory:(IAECategory *)category
 {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         [self initActions:actions];
         [self initLongTapGestureRecognizer];
-        _initialCategoryType = category;
+        _initialCategory = category;
     }
     
     return self;
 }
 
-- (id)initWithAllExtraActionsAndSelectedCategoryType:(CategoryType)category;
+- (id)initWithAllExtraActionsWithSelectedCategory:(IAECategory *)category;
 {
-    self = [self initWithExtraActions:CATEGORYSELECTOR_EXTRAACTION_ALL_ACTIONS andSelectedCategoryType:category];
+    self = [self initWithExtraActions:CATEGORYSELECTOR_EXTRAACTION_ALL_ACTIONS withSelectedCategory:category];
     if (self) {
         // ...
     }
@@ -62,13 +62,13 @@ static const NSUInteger kExpenseSegmentedIndex = 1;
     return self;
 }
 
-- (id)initWithAllExtraActionsExceptSelectionAndSelectedCategoryType:(CategoryType)category
+- (id)initWithAllExtraActionsExceptSelectionWithSelectedCategory:(IAECategory *)category
 {
     NSUInteger categoryActions = CATEGORYSELECTOR_EXTRAACTION_ADD |
                                  CATEGORYSELECTOR_EXTRAACTION_DONE |
                                  CATEGORYSELECTOR_EXTRAACTION_DELETE |
                                  CATEGORYSELECTOR_EXTRAACTION_RENAME;
-    self = [self initWithExtraActions:categoryActions andSelectedCategoryType:category];
+    self = [self initWithExtraActions:categoryActions withSelectedCategory:category];
     if (self) {
         // ...
     }
@@ -96,7 +96,6 @@ static const NSUInteger kExpenseSegmentedIndex = 1;
     
     [self configureNavigationItem];
     [self configureCategoriesTableView];
-    [self changeToCategory:self.initialCategoryType];
 }
 
 - (void)configureNavigationItem
@@ -107,6 +106,24 @@ static const NSUInteger kExpenseSegmentedIndex = 1;
     
     if (![self doneActionFlagEnabled]) {
         self.navigationToolBar.leftBarButtonItem = nil;
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self prepareWithInitialCategory];
+}
+
+- (void)prepareWithInitialCategory
+{
+    if (self.initialCategory) {
+        [self changeToSectionOfCategoryType:self.initialCategory.categoryType];
+        [self scrollToCategory:self.initialCategory withAnimation:NO];
+        self.initialCategory = nil;
+    } else {
+        [self changeToSectionOfCategoryType:IncomeCategory];
     }
 }
 
@@ -158,7 +175,7 @@ static const NSUInteger kExpenseSegmentedIndex = 1;
     return YES;
 }
 
-- (void)changeToCategory:(CategoryType)category
+- (void)changeToSectionOfCategoryType:(CategoryType)category
 {
     CategoryType actualCategory = [self categoryTypeSelectedInCategorySegmentedControl];
     if (actualCategory != category) {
@@ -174,6 +191,23 @@ static const NSUInteger kExpenseSegmentedIndex = 1;
     NSInteger segmentedIndex = category == IncomeCategory ? kIncomeSegmentedIndex : kExpenseSegmentedIndex;
     
     return segmentedIndex;
+}
+
+- (void)scrollToCategory:(IAECategory *)category withAnimation:(BOOL)animation
+{
+    NSIndexPath *indexPathOfCategory = [self findIndexPathOfCategory:category];
+    [self.categoriesTableView scrollToRowAtIndexPath:indexPathOfCategory
+                                    atScrollPosition:UITableViewScrollPositionMiddle
+                                            animated:animation];
+}
+
+- (NSIndexPath *)findIndexPathOfCategory:(IAECategory *)category
+{
+    NSArray *categories = [self findCategoriesOfSelectedCategoryType];
+    NSUInteger indexOfCategory = [categories indexOfObject:category];
+    NSIndexPath *indexPathOfCategory = indexOfCategory != NSNotFound ? [NSIndexPath indexPathForRow:indexOfCategory inSection:0]: nil;
+    
+    return indexPathOfCategory;
 }
 
 #pragma mark - Control Events
@@ -198,27 +232,35 @@ static const NSUInteger kExpenseSegmentedIndex = 1;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.delegate categorySelectorViewController:self didSelectCategory:[self categoryOfCellAtIndexPath:indexPath]];
+    IAECategory *category = [self findCategoryOfCellAtIndexPath:indexPath];
+    [self.delegate categorySelectorViewController:self didSelectCategory:category];
 }
 
 #pragma mark - UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    IAECategoryTableViewCell *cell = (IAECategoryTableViewCell *)[self.categoriesTableView dequeueReusableCellWithIdentifier:@"CategoryTableViewCell"
-                                                                                                                forIndexPath:indexPath];
-    [self configureTableViewCell:cell withCategory:[self categoryOfCellAtIndexPath:indexPath]];
+    IAECategoryTableViewCell *cell = (IAECategoryTableViewCell *)[self.categoriesTableView dequeueReusableCellWithIdentifier:@"CategoryTableViewCell" forIndexPath:indexPath];
+    IAECategory *category = [self findCategoryOfCellAtIndexPath:indexPath];
+    [self configureTableViewCell:cell withCategory:category];
     
     return cell;
 }
 
-- (IAECategory *)categoryOfCellAtIndexPath:(NSIndexPath *)indexPath
+- (IAECategory *)findCategoryOfCellAtIndexPath:(NSIndexPath *)indexPath
 {
-    CategoryType categoryTypeSelected = [self categoryTypeSelectedInCategorySegmentedControl];
-    NSArray *categories = [[IAECategoryStore sharedCategoryStore] generalCategoryAndAllUserCategoriesOfType:categoryTypeSelected];
+    NSArray *categories = [self findCategoriesOfSelectedCategoryType];
     IAECategory *category = [categories objectAtIndex:indexPath.row];
     
     return category;
+}
+
+- (NSArray *)findCategoriesOfSelectedCategoryType
+{
+    CategoryType categoryTypeSelected = [self categoryTypeSelectedInCategorySegmentedControl];
+    NSArray *categories = [[IAECategoryStore sharedCategoryStore] generalCategoryAndAllUserCategoriesOfType:categoryTypeSelected];
+    
+    return categories;
 }
 
 - (void)configureTableViewCell:(IAECategoryTableViewCell *)cell withCategory:(IAECategory *)category

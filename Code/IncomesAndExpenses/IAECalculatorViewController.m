@@ -312,7 +312,7 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
 {
     NSUInteger categorySelectorOptions = CATEGORYSELECTOR_EXTRAACTION_CATEGORYSELECTION | CATEGORYSELECTOR_EXTRAACTION_ADD;
     IAECategorySelectorViewController *viewController = [[IAECategorySelectorViewController alloc] initWithExtraActions:categorySelectorOptions
-                                                                                                andSelectedCategoryType:self.actualCategory.categoryType];
+                                                                                                withSelectedCategory:self.actualCategory];
     viewController.delegate = self;
 
     self.popover = [[UIPopoverController alloc] initWithContentViewController:viewController];

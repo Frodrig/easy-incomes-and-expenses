@@ -427,7 +427,7 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
 
 - (void)openModalForPresentCategorySelectorViewController
 {
-    IAECategorySelectorViewController *categorySelectorViewController = [[IAECategorySelectorViewController alloc] initWithAllExtraActionsExceptSelectionAndSelectedCategoryType:IncomeCategory];
+    IAECategorySelectorViewController *categorySelectorViewController = [[IAECategorySelectorViewController alloc] initWithAllExtraActionsExceptSelectionWithSelectedCategory:nil];
     categorySelectorViewController.delegate = self;
     categorySelectorViewController.modalPresentationStyle = UIModalPresentationFormSheet;
     
@@ -708,6 +708,14 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
 }
 
 #pragma mark - Finds
+
+- (IAECategory *)findCategoryOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
+{
+    IAEConcept *concept = [self findConceptOfCell:cell];
+    IAECategory *categoryOfConcept = concept.category;
+    
+    return categoryOfConcept;
+}
 
 - (CategoryType)findCategoryTypeOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
@@ -1244,10 +1252,10 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
 
 - (void)openPopoverForEditCategoryOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
-    CategoryType categoryOfCell = [self findCategoryTypeOfConceptCell:cell];
+    IAECategory *categoryOfCell = [self findCategoryOfConceptCell:cell];
     IAECategorySelectorViewController *viewController = [[IAECategorySelectorViewController alloc]
                                                          initWithExtraActions:CATEGORYSELECTOR_EXTRAACTION_CATEGORYSELECTION
-                                                         andSelectedCategoryType:categoryOfCell];
+                                                         withSelectedCategory:categoryOfCell];
     viewController.delegate = self;
     viewController.conceptCellIndexPath = [self.conceptsCollectionView indexPathForCell:cell];
     

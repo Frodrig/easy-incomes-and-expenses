@@ -65,6 +65,7 @@
 		5B8CD5D117A262A800A353A5 /* IAEContextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8CD5D017A262A800A353A5 /* IAEContextView.m */; };
 		5B8CD5D317A262BC00A353A5 /* IAEContextViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B8CD5D217A262BC00A353A5 /* IAEContextViewContent.xib */; };
 		5B8CD5D917A2C6DB00A353A5 /* IAETextRawSelectorMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8CD5D817A2C6DB00A353A5 /* IAETextRawSelectorMenuView.m */; };
+		5B8F843417B1002200C17020 /* IAEGlobalConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8F843317B1002200C17020 /* IAEGlobalConstants.m */; };
 		5B907832179D1AA700B2A0F7 /* IAECalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B907830179D1AA700B2A0F7 /* IAECalculatorViewController.m */; };
 		5B907833179D1AA700B2A0F7 /* IAECalculatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B907831179D1AA700B2A0F7 /* IAECalculatorViewController.xib */; };
 		5B907838179D25BD00B2A0F7 /* IAEDragPanelCalculatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B907837179D25BD00B2A0F7 /* IAEDragPanelCalculatorView.m */; };
@@ -212,6 +213,8 @@
 		5B8CD5D817A2C6DB00A353A5 /* IAETextRawSelectorMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAETextRawSelectorMenuView.m; sourceTree = "<group>"; };
 		5B8CD5DA17A2C6EF00A353A5 /* IAETextRawSelectorMenuViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAETextRawSelectorMenuViewDelegate.h; sourceTree = "<group>"; };
 		5B8CD5DB17A2C6FE00A353A5 /* IAETextRawSelectorMenuViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAETextRawSelectorMenuViewDataSource.h; sourceTree = "<group>"; };
+		5B8F843017B0FF2800C17020 /* IAEGlobalConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IAEGlobalConstants.h; sourceTree = "<group>"; };
+		5B8F843317B1002200C17020 /* IAEGlobalConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEGlobalConstants.m; sourceTree = "<group>"; };
 		5B90782F179D1AA700B2A0F7 /* IAECalculatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECalculatorViewController.h; sourceTree = "<group>"; };
 		5B907830179D1AA700B2A0F7 /* IAECalculatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECalculatorViewController.m; sourceTree = "<group>"; };
 		5B907831179D1AA700B2A0F7 /* IAECalculatorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAECalculatorViewController.xib; sourceTree = "<group>"; };
@@ -740,6 +743,7 @@
 		5B767DFC1636D7FC005315F8 /* IncomesAndExpenses */ = {
 			isa = PBXGroup;
 			children = (
+				5B8F842F17B0FEA800C17020 /* Global constants */,
 				5B29ED30179FC2C300FCC5C6 /* Resources */,
 				5BF925331795447D0002CF9F /* Assets */,
 				5B62D861178EC1FA009879A6 /* Utils */,
@@ -803,6 +807,15 @@
 				5BCE3ABF17A9787000CD01E7 /* Protocols */,
 			);
 			name = "Text Raw Selector Menu";
+			sourceTree = "<group>";
+		};
+		5B8F842F17B0FEA800C17020 /* Global constants */ = {
+			isa = PBXGroup;
+			children = (
+				5B8F843317B1002200C17020 /* IAEGlobalConstants.m */,
+				5B8F843017B0FF2800C17020 /* IAEGlobalConstants.h */,
+			);
+			name = "Global constants";
 			sourceTree = "<group>";
 		};
 		5B903BB91782DBAF00DBEFB2 /* Views */ = {
@@ -1277,6 +1290,7 @@
 				5BD94C0B1786B864009009B1 /* IAECategoryTableViewCell.m in Sources */,
 				5B62D874178EC20E009879A6 /* IAEOrientationHelper.m in Sources */,
 				5B36AFFC1785D73800132475 /* IAECategorySelectorViewController.m in Sources */,
+				5B8F843417B1002200C17020 /* IAEGlobalConstants.m in Sources */,
 				5B55C406178AA8C20066F586 /* IAECategoryEditorViewController.m in Sources */,
 				5BCE3A9F17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m in Sources */,
 				5B5C968917816EE0008CD851 /* IAEValueDecoratorViewExpenseConfigurator.m in Sources */,

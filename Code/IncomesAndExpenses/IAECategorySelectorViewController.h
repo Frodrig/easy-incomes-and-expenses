@@ -39,6 +39,6 @@ typedef NS_ENUM(NSUInteger, CategorySelectorActionFlags) {
 - (IBAction)categorySegmentedControlPressed:(id)sender;
 
 - (void)changeToSectionOfCategoryType:(CategoryType)category;
-- (void)scrollToCategory:(IAECategory *)category withAnimation:(BOOL)animation;
+- (void)selectAndScrollToCategory:(IAECategory *)category withAnimation:(BOOL)animation;
 
 @end

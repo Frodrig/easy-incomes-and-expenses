@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class IAECircleDecoratorView;
+
 @interface IAECategoryTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
+@property (weak, nonatomic) IBOutlet IAECircleDecoratorView *openDecoratorView;
 
 @end

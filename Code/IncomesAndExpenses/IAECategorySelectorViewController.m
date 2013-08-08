@@ -13,6 +13,7 @@
 #import "IAECategoryStore.h"
 #import "IAEBook.h"
 #import "IAECategorySelectorViewControllerDelegate.h"
+#import "IAECircleDecoratorView.h"
 
 @interface IAECategorySelectorViewController ()
 
@@ -23,6 +24,7 @@
 @property (nonatomic) NSUInteger actions;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationToolBar;
 @property (nonatomic, weak) IAECategory* initialCategory;
+@property (nonatomic, strong) NSIndexPath *selectedCategoryIndexPath;
 
 @end
 
@@ -30,6 +32,13 @@
 
 static const NSUInteger kIncomeSegmentedIndex = 0;
 static const NSUInteger kExpenseSegmentedIndex = 1;
+
+static NSString * const kFontOfGeneralCategoryLabel = @"HelveticaNeue-UltraLightitalic";
+static NSString * const kFontOfUserCategoryLabel = @"HelveticaNeue-UltraLight";
+static const CGFloat kSizeOfCategoryNameLabel = 32;
+static const CGFloat kHeightOfCategoriesCell = 58;
+
+static const CGFloat kDurationOfAnimationOfOpenDecoratorView = 0.1;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -120,7 +129,9 @@ static const NSUInteger kExpenseSegmentedIndex = 1;
 {
     if (self.initialCategory) {
         [self changeToSectionOfCategoryType:self.initialCategory.categoryType];
-        [self scrollToCategory:self.initialCategory withAnimation:NO];
+        [self selectAndScrollToCategory:self.initialCategory withAnimation:NO];
+        // Nota: Al seleccionarse manualmente la celda no se ejecuta el delegado y hay que llamar manualmente a changeToNewSelectedIndexPath:
+        [self changeToSelectedIndexPath:[self findIndexPathOfCategory:self.initialCategory] withAnimation:NO andLogicBlockWhenFinish:nil];
         self.initialCategory = nil;
     } else {
         [self changeToSectionOfCategoryType:IncomeCategory];
@@ -193,12 +204,46 @@ static const NSUInteger kExpenseSegmentedIndex = 1;
     return segmentedIndex;
 }
 
-- (void)scrollToCategory:(IAECategory *)category withAnimation:(BOOL)animation
+- (void)selectAndScrollToCategory:(IAECategory *)category withAnimation:(BOOL)animation
 {
     NSIndexPath *indexPathOfCategory = [self findIndexPathOfCategory:category];
-    [self.categoriesTableView scrollToRowAtIndexPath:indexPathOfCategory
-                                    atScrollPosition:UITableViewScrollPositionMiddle
-                                            animated:animation];
+    [self changeToSelectedIndexPath:indexPathOfCategory withAnimation:animation andLogicBlockWhenFinish:nil];
+    [self.categoriesTableView selectRowAtIndexPath:indexPathOfCategory animated:animation scrollPosition:UITableViewScrollPositionMiddle];
+}
+
+- (void)changeToSelectedIndexPath:(NSIndexPath *)newSelectedIndexPath withAnimation:(BOOL)animation andLogicBlockWhenFinish:(void(^)(void))logicBlock
+{
+    void(^animationCoordinationBlock)(void) = ^(void) {
+        self.selectedCategoryIndexPath = newSelectedIndexPath;
+        [self makeOpenDecoratorViewAtIndexPath:self.selectedCategoryIndexPath
+                                       visible:YES
+                                 withAnimation:animation
+                                 andLogicBlock:logicBlock];
+    };
+    
+    [self makeOpenDecoratorViewAtIndexPath:self.selectedCategoryIndexPath
+                                   visible:NO
+                             withAnimation:animation
+                             andLogicBlock:animationCoordinationBlock];
+}
+
+- (void)makeOpenDecoratorViewAtIndexPath:(NSIndexPath *)indexPath
+                                 visible:(BOOL)visible
+                           withAnimation:(BOOL)animation
+                           andLogicBlock:(void(^)(void))logicBlock
+{
+    IAECategoryTableViewCell *cell = (IAECategoryTableViewCell *)[self.categoriesTableView cellForRowAtIndexPath:indexPath];
+    cell.openDecoratorView.alpha = visible ? 0.0 : 1.0;
+    cell.openDecoratorView.hidden = NO;
+    [UIView animateWithDuration:animation ? kDurationOfAnimationOfOpenDecoratorView : 0 animations:^{
+        cell.openDecoratorView.alpha = visible ? 1.0 : 0.0;
+    } completion:^(BOOL finished) {
+        cell.openDecoratorView.hidden = !visible;
+        cell.openDecoratorView.alpha = 1.0;
+        if (logicBlock) {
+            logicBlock();
+        }
+    }];
 }
 
 - (NSIndexPath *)findIndexPathOfCategory:(IAECategory *)category
@@ -232,8 +277,15 @@ static const NSUInteger kExpenseSegmentedIndex = 1;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    IAECategory *category = [self findCategoryOfCellAtIndexPath:indexPath];
-    [self.delegate categorySelectorViewController:self didSelectCategory:category];
+    [self changeToSelectedIndexPath:indexPath withAnimation:YES andLogicBlockWhenFinish:^{
+        //[self selectAndScrollToCategory:[self findCategoryOfCellAtIndexPath:indexPath] withAnimation:YES];
+        [self.delegate categorySelectorViewController:self didSelectCategory:[self findCategoryOfCellAtIndexPath:indexPath]];
+    }];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return kHeightOfCategoriesCell;
 }
 
 #pragma mark - UITableViewDataSource
@@ -265,23 +317,24 @@ static const NSUInteger kExpenseSegmentedIndex = 1;
 
 - (void)configureTableViewCell:(IAECategoryTableViewCell *)cell withCategory:(IAECategory *)category
 {
-    NSDictionary *attributes = [self createAttributeDictionaryForCategoryNameAttributeText];
+    NSDictionary *attributes = [self createAttributeDictionaryForCategoryNameAttributeTextWithCategory:category];
     cell.categoryLabel.attributedText = [[NSAttributedString alloc] initWithString:[category description]
                                                                         attributes:attributes];
 }
 
-- (NSDictionary *)createAttributeDictionaryForCategoryNameAttributeText
+- (NSDictionary *)createAttributeDictionaryForCategoryNameAttributeTextWithCategory:(IAECategory *)category
 {
-    NSDictionary *attributes =  @{NSFontAttributeName: [self createFontForCategoryName],
+    NSDictionary *attributes =  @{NSFontAttributeName: [self createFontForCategoryNameWithCategory:category],
                                   NSForegroundColorAttributeName: [UIColor blackColor],
                                   NSKernAttributeName: [NSNumber numberWithInteger:0.0]};
     
     return attributes;
 }
 
-- (UIFont *)createFontForCategoryName
+- (UIFont *)createFontForCategoryNameWithCategory:(IAECategory *)category
 {
-    return [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:31];
+    BOOL generalCategory = [[IAECategoryStore sharedCategoryStore] isGeneralCategory:category];
+    return [UIFont fontWithName:generalCategory ? kFontOfGeneralCategoryLabel : kFontOfUserCategoryLabel size:kSizeOfCategoryNameLabel];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

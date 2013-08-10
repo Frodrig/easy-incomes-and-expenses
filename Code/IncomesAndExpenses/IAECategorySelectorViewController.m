@@ -35,8 +35,8 @@ static const NSUInteger kExpenseSegmentedIndex = 1;
 
 static NSString * const kFontOfGeneralCategoryLabel = @"HelveticaNeue-UltraLightitalic";
 static NSString * const kFontOfUserCategoryLabel = @"HelveticaNeue-UltraLight";
-static const CGFloat kSizeOfCategoryNameLabel = 32;
-static const CGFloat kHeightOfCategoriesCell = 58;
+static const CGFloat kSizeOfCategoryNameLabel = 28;
+static const CGFloat kHeightOfCategoriesCell = 51;
 
 static const CGFloat kDurationOfAnimationOfOpenDecoratorView = 0.1;
 

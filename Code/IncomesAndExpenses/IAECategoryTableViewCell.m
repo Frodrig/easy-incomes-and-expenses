@@ -7,6 +7,13 @@
 //
 
 #import "IAECategoryTableViewCell.h"
+#import "UIView+RoundedCorners.h"
+
+@interface IAECategoryTableViewCell()
+
+@property (weak, nonatomic) IBOutlet UIView *backgroundContainerView;
+
+@end
 
 @implementation IAECategoryTableViewCell
 
@@ -24,6 +31,11 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)awakeFromNib
+{
+    [self.backgroundContainerView addRoundedCorners:UIRectCornerAllCorners withRadius:8.0];
 }
 
 @end

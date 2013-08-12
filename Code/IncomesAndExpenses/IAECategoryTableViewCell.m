@@ -35,7 +35,7 @@
 
 - (void)awakeFromNib
 {
-    [self.backgroundContainerView addRoundedCorners:UIRectCornerAllCorners withRadius:8.0];
+    //[self.backgroundContainerView addRoundedCorners:UIRectCornerAllCorners withRadius:8.0];
 }
 
 @end

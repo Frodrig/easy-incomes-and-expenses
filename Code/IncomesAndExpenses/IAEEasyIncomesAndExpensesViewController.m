@@ -1264,11 +1264,11 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
 
 - (void)createAndPresentPopoverForConceptCellView:(UIView *)view withViewController:(UIViewController *)viewController
 {
-    CGRect traslateViewFrameToGlobalCoordination = [view.superview convertRect:view.frame toView:view.superview];
-    CGRect presentPopoverFrame = CGRectMake(traslateViewFrameToGlobalCoordination.origin.x,
-                                            traslateViewFrameToGlobalCoordination.origin.y + 10.0,
-                                            traslateViewFrameToGlobalCoordination.size.width,
-                                            traslateViewFrameToGlobalCoordination.size.height - 10.0);
+    CGRect translateViewFrameToGlobalCoordination = [view.superview convertRect:view.frame toView:view.superview];
+    CGRect presentPopoverFrame = CGRectMake(translateViewFrameToGlobalCoordination.origin.x,
+                                            translateViewFrameToGlobalCoordination.origin.y + 10.0,
+                                            translateViewFrameToGlobalCoordination.size.width,
+                                            translateViewFrameToGlobalCoordination.size.height - 10.0);
     
     self.popover = [[UIPopoverController alloc] initWithContentViewController:viewController];
     self.popover.delegate = self;

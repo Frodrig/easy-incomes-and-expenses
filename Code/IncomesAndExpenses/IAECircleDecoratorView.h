@@ -11,5 +11,6 @@
 @interface IAECircleDecoratorView : UIView
 
 @property (nonatomic, copy) UIColor *circleColor;
+@property (nonatomic) CGFloat radiusScale;
 
 @end

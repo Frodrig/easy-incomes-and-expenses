@@ -31,9 +31,12 @@ static NSString * const kDayOfTheWeekFontFamilyName = @"HelveticaNeue";
 static const NSUInteger kDayOfTheWeekFontSize = 12;
 
 static NSString * const kDayOfTheMonthFontFamilyName = @"HelveticaNeue-Ultralight";
-static const NSUInteger kDayOfTheMonthFontSize = 19;
+static const NSUInteger kDayOfTheMonthFontSize = 17;
 
 static const NSUInteger kTagDaySelectedDecoratorView = 100;
+static const CGFloat kRadiousCircleDecoratorScale = 0.85;
+static const CGFloat kWhiteColorComponentForCircle = 0.9;
+static const CGFloat kWhiteAlphaComponentForCircle = 1.0;
 
 - (instancetype)initWithYearDate:(NSUInteger)yearDate monthIndex:(NSUInteger)monthIndex andDaySelected:(NSUInteger)daySelected
 {
@@ -122,8 +125,7 @@ static const NSUInteger kTagDaySelectedDecoratorView = 100;
                                               dayOfTheMonthHeightSize);
                 NSString *labelText = [NSString stringWithFormat:@"%d", dayIt];
                 NSDictionary *labelAttributes = @{NSFontAttributeName: [UIFont fontWithName:kDayOfTheMonthFontFamilyName size:kDayOfTheMonthFontSize],
-                                                  NSForegroundColorAttributeName: [UIColor darkTextColor],
-                                                  NSKernAttributeName: @0.0};
+                                                  NSForegroundColorAttributeName: [UIColor darkTextColor]};
                 
                 UILabel *dayLabel = [[UILabel alloc] initWithFrame:labelRect];
                 dayLabel.textAlignment = NSTextAlignmentCenter;
@@ -148,9 +150,11 @@ static const NSUInteger kTagDaySelectedDecoratorView = 100;
                                         dayLabel.frame.size.width,
                                         dayLabel.frame.size.height);
         IAECircleDecoratorView *circleDecoratorView = [[IAECircleDecoratorView alloc] initWithFrame:circleFrame];
-        circleDecoratorView.circleColor = [UIColor colorWithRed:255 green:0 blue:0 alpha:0.75];
         circleDecoratorView.backgroundColor = [UIColor clearColor];
+        circleDecoratorView.circleColor = [UIColor colorWithWhite:kWhiteColorComponentForCircle
+                                                            alpha:kWhiteAlphaComponentForCircle];
         circleDecoratorView.tag = kTagDaySelectedDecoratorView;
+        circleDecoratorView.radiusScale = kRadiousCircleDecoratorScale;
         
         [self.daysOfTheMonthContainerView insertSubview:circleDecoratorView belowSubview:dayLabel];
     }
@@ -182,7 +186,7 @@ static const NSUInteger kTagDaySelectedDecoratorView = 100;
     if ([self findLabelForActualDaySelected] != selectedDayLabelAtLocation) {
         [self removeDaySelectedDecoratorView];
         self.daySelected = selectedDayLabelAtLocation.tag;
-        [self configureDaySelectedDecoratorView];;
+        [self configureDaySelectedDecoratorView];
         
         [self.delegate dayCalendarSelectorViewController:self didSelectDay:self.daySelected];
     }

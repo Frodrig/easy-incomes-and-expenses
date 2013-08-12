@@ -12,6 +12,9 @@
 
 #pragma mark - Setters
 
+static const CGFloat kWhiteColorComponentForCircle = 0.85;
+static const CGFloat kWhiteAlphaComponentForCircle = 1.0;
+
 // Nota: Extraño que no haga el synthesize automaticamente al sobreescribir los getters y setters
 @synthesize circleColor = _circleColor;
 
@@ -26,7 +29,8 @@
 - (UIColor *)circleColor
 {
     if (!_circleColor) {
-        _circleColor = [UIColor colorWithWhite:0.85 alpha:1.0];
+        _circleColor = [UIColor colorWithWhite:kWhiteColorComponentForCircle
+                                         alpha:kWhiteAlphaComponentForCircle];
     }
     
     return _circleColor;
@@ -36,9 +40,24 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        [self initValues];
     }
     return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self initValues];
+    }
+    
+    return self;
+}
+
+- (void)initValues
+{
+    _radiusScale = 1.0;
 }
 
 // Only override drawRect: if you perform custom drawing.
@@ -55,7 +74,7 @@
     CGContextRef contextRef = UIGraphicsGetCurrentContext();
     CGContextSaveGState(contextRef);
     
-    const CGFloat radius = MIN(self.bounds.size.width, self.bounds.size.height) / 3.0;
+    const CGFloat radius = (MIN(self.bounds.size.width, self.bounds.size.height) / 2) * self.radiusScale;
     const CGFloat twoPiRadians = 6.28318531;
     const CGPoint center = CGPointMake(self.bounds.size.width / 2.0, self.bounds.size.height / 2.0);
 

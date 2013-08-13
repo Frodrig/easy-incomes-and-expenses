@@ -10,6 +10,8 @@
 #import "IAECurrencyManager.h"
 
 @interface IAEDisplayPanelCalculatorView()
+@property (nonatomic, weak) UIView *categoryContainerView;
+@property (nonatomic, weak) UIView *dayContainerView;
 @property (nonatomic, weak) UIButton *categoryButton;
 @property (nonatomic, weak) UIButton *dayButton;
 @property (nonatomic, weak) UILabel *amountLabel;
@@ -17,15 +19,26 @@
 
 @implementation IAEDisplayPanelCalculatorView
 
-static NSUInteger tagCategoryButton = 10;
-static NSUInteger tagDayButton = 20;
-static NSUInteger tagAmountLabel = 30;
+static const NSUInteger tagCategoryContainerView = 5;
+static const NSUInteger tagCategoryButton = 10;
+static const NSUInteger tagDayContainerView = 15;
+static const NSUInteger tagDayButton = 20;
+static const NSUInteger tagAmountLabel = 30;
 
-static NSString * const fontFamilyNameForAmountLabel = @"HelveticaNeue-Light";
-static NSUInteger fontFamilySizeForAmountLabel = 17;
-static CGFloat fontFamilyKernForAmountLabel = 0.0;
+static NSString * const fontFamilyNameForAmountLabel = @"HelveticaNeue-Ultralight";
+static const NSUInteger fontFamilySizeForAmountLabel = 42;
+static const CGFloat fontFamilyKernForAmountLabel = 0.0;
 
 #pragma mark - Init
+
+- (UIView *)categoryContainerView
+{
+    if (!_categoryContainerView) {
+        _categoryContainerView = (UIView *)[self viewWithTag:tagCategoryContainerView];
+    }
+    
+    return _categoryContainerView;
+}
 
 - (UIButton *)categoryButton
 {
@@ -34,6 +47,15 @@ static CGFloat fontFamilyKernForAmountLabel = 0.0;
     }
     
     return _categoryButton;
+}
+
+- (UIView *)dayContainerView
+{
+    if (!_dayContainerView) {
+        _dayContainerView = (UIButton *)[self viewWithTag:tagDayContainerView];
+    }
+    
+    return _dayContainerView;
 }
 
 - (UIButton *)dayButton

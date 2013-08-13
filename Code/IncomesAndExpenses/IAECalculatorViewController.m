@@ -46,7 +46,6 @@ typedef NS_ENUM(NSUInteger, CalculatorMode) {
 
 @implementation IAECalculatorViewController
 
-
 @synthesize sizeHeightOfDragPanel = _sizeHeightOfDragPanel;
 
 static CGFloat animationDurationShowHideAction = 0.25;

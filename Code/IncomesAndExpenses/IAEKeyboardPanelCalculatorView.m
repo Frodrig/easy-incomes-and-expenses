@@ -8,24 +8,38 @@
 
 #import "IAEKeyboardPanelCalculatorView.h"
 #import "IAECurrencyManager.h"
+#import "UIView+RoundedCorners.h"
 
 @interface IAEKeyboardPanelCalculatorView()
 
 @property (nonatomic, weak) UIButton *decimalButton;
+@property (nonatomic, weak) UIView *keyboardContainerView;
 
 @end
 
 @implementation IAEKeyboardPanelCalculatorView
 
-static NSUInteger tagDecimalButton = 200;
+static const NSUInteger kTagDecimalButton = 200;
+static const NSUInteger kTagKeyboardContainerView = 300;
+
+static const CGFloat kRadiusOfKeyboardContainerView = 15;
 
 - (UIButton *)decimalButton
 {
     if (!_decimalButton) {
-        _decimalButton = (UIButton *)[self viewWithTag:tagDecimalButton];
+        _decimalButton = (UIButton *)[self viewWithTag:kTagDecimalButton];
     }
     
     return _decimalButton;
+}
+
+- (UIView *)keyboardContainerView
+{
+    if (!_keyboardContainerView) {
+        _keyboardContainerView = (UIView *)[self viewWithTag:kTagKeyboardContainerView];
+    }
+    
+    return _keyboardContainerView;
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -39,7 +53,13 @@ static NSUInteger tagDecimalButton = 200;
 
 - (void)awakeFromNib
 {
+    [self configureVisualAspect];
     [self configureDecimalButton];
+}
+
+- (void)configureVisualAspect
+{
+    [self.keyboardContainerView addRoundedCorners:UIRectCornerAllCorners withRadius:kRadiusOfKeyboardContainerView];
 }
 
 - (void)configureDecimalButton

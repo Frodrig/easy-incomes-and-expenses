@@ -29,6 +29,8 @@ static NSString * const fontFamilyNameForAmountLabel = @"HelveticaNeue-Ultraligh
 static const NSUInteger fontFamilySizeForAmountLabel = 42;
 static const CGFloat fontFamilyKernForAmountLabel = 0.0;
 
+static const CGFloat kDurationOfTransitionWhenDayActive = 0.25;
+
 #pragma mark - Init
 
 - (UIView *)categoryContainerView
@@ -114,12 +116,28 @@ static const CGFloat fontFamilyKernForAmountLabel = 0.0;
 
 - (void)showDayButton
 {
-    self.dayButton.hidden = NO;
+    self.dayContainerView.hidden = NO;
+    [UIView animateWithDuration:kDurationOfTransitionWhenDayActive animations:^{
+        self.dayContainerView.alpha = 1.0;
+        self.categoryContainerView.frame = CGRectMake(self.categoryContainerView.frame.origin.x,
+                                                      0,
+                                                      self.categoryContainerView.frame.size.width,
+                                                      self.categoryContainerView.frame.size.height);
+    } completion:^(BOOL finished) {
+    }];
 }
 
 - (void)hideDayButton
 {
-    self.dayButton.hidden = YES;
+    [UIView animateWithDuration:kDurationOfTransitionWhenDayActive animations:^{
+        self.dayContainerView.alpha = 0.0;
+        self.categoryContainerView.frame = CGRectMake(self.categoryContainerView.frame.origin.x,
+                                                      self.frame.size.height / 4.0,
+                                                      self.categoryContainerView.frame.size.width,
+                                                      self.categoryContainerView.frame.size.height);
+    } completion:^(BOOL finished) {
+        self.dayContainerView.hidden = YES;
+    }];
 }
 
 - (BOOL)isDayButtonVisible

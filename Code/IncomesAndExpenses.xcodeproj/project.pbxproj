@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5B0574C117AFE2F600B95D50 /* IAEWithoutConceptsTextWarningReportMode.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B0574C317AFE2F600B95D50 /* IAEWithoutConceptsTextWarningReportMode.xib */; };
 		5B0F8BC416B94ADD002D62A5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5B0F8BC616B94ADD002D62A5 /* Localizable.strings */; };
+		5B18053317BBC93500EB8ABF /* ToDo.md in Resources */ = {isa = PBXBuildFile; fileRef = 5B18053217BBC93500EB8ABF /* ToDo.md */; };
 		5B1F0D3517841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1F0D3417841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m */; };
 		5B1F0D3717841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B1F0D3617841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib */; };
 		5B251FA117AACA71000957A5 /* IAEStrokeAnimatableLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B251FA017AACA71000957A5 /* IAEStrokeAnimatableLineView.m */; };
@@ -110,6 +111,7 @@
 		5B0574C417AFE2F900B95D50 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/IAEWithoutConceptsTextWarningReportMode.xib; sourceTree = "<group>"; };
 		5B0F8BC516B94ADD002D62A5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5B0F8BC716B94AE1002D62A5 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5B18053217BBC93500EB8ABF /* ToDo.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ToDo.md; sourceTree = "<group>"; };
 		5B1F0D3317841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEditModeConceptCollectionViewCell.h; sourceTree = "<group>"; };
 		5B1F0D3417841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEditModeConceptCollectionViewCell.m; sourceTree = "<group>"; };
 		5B1F0D3617841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEEditModeConceptCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -323,6 +325,14 @@
 				5B0F8BC616B94ADD002D62A5 /* Localizable.strings */,
 			);
 			name = Localizacion;
+			sourceTree = "<group>";
+		};
+		5B18053117BBC92C00EB8ABF /* ToDo */ = {
+			isa = PBXGroup;
+			children = (
+				5B18053217BBC93500EB8ABF /* ToDo.md */,
+			);
+			name = ToDo;
 			sourceTree = "<group>";
 		};
 		5B1F0D3217841C7400D0B4F1 /* WithConceptCell */ = {
@@ -704,6 +714,7 @@
 		5B767DE71636D7FC005315F8 = {
 			isa = PBXGroup;
 			children = (
+				5B18053117BBC92C00EB8ABF /* ToDo */,
 				5B55449C17745EA2009CFC84 /* Media.xcassets */,
 				5B8A31D016C90911008731AD /* 72@2x.png */,
 				5B8A31CD16C90901008731AD /* 72.png */,
@@ -1239,6 +1250,7 @@
 				5B767E011636D7FC005315F8 /* InfoPlist.strings in Resources */,
 				5B767E091636D7FC005315F8 /* Default.png in Resources */,
 				5B767E0B1636D7FC005315F8 /* Default@2x.png in Resources */,
+				5B18053317BBC93500EB8ABF /* ToDo.md in Resources */,
 				5B2D38B817AFA8CE0056488B /* IAEWithoutConceptsTextWarning.xib in Resources */,
 				5B767E0D1636D7FC005315F8 /* Default-568h@2x.png in Resources */,
 				5BF92542179554800002CF9F /* IAEAboutAndOptionsViewController.xib in Resources */,

@@ -97,7 +97,7 @@ static const CGFloat kDurationOfTransitionWhenDayActive = 0.25;
 
 - (void)configureDay
 {
-    [self setDay:0];
+    [self setDay:0 withDayweekName:nil inMonthName:nil];
 }
 
 - (void)configureAmount
@@ -145,10 +145,12 @@ static const CGFloat kDurationOfTransitionWhenDayActive = 0.25;
     return !self.dayButton.hidden;
 }
 
-- (void)setDay:(NSUInteger)day
+- (void)setDay:(NSUInteger)day withDayweekName:(NSString *)dayWeekName inMonthName:(NSString *)monthName
 {
-    NSString *dayName = day < 1 ? NSLocalizedString(@"LTEXT_CALCULATOR_NODAYSELECTED", @"") : [NSNumber numberWithUnsignedInteger:day].stringValue;
-    [self.dayButton setTitle:dayName forState:UIControlStateNormal];
+    NSString *dayName = day < 1 ? NSLocalizedString(@"LTEXT_CALCULATOR_NODAYSELECTED", @"") :
+                                  [NSString stringWithFormat:NSLocalizedString(@"LTEXT_CALCULATOR_DAYSELECTED", @""), day, dayWeekName];
+    NSString *titleButton = [NSString stringWithFormat:@"%@. %@", monthName, dayName];
+    [self.dayButton setTitle:titleButton forState:UIControlStateNormal];
 }
 
 #pragma mark - Ammount

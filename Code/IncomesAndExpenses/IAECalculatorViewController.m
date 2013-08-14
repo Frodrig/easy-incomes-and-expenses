@@ -20,6 +20,7 @@
 #import "IAEDayCalendarSelectorViewController.h"
 #import "IAECategoryEditorViewController.h"
 #import "IAECurrencyManager.h"
+#import "IAEDateHelper.h"
 
 @interface IAECalculatorViewController ()
 
@@ -246,10 +247,30 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
 {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:userDefaultsDayModeActive]) {
         [self.displayPanel showDayButton];
-        [self.displayPanel setDay:self.actualDay];
+        [self.displayPanel setDay:self.actualDay
+                    withDayweekName:[self findDayOfTheWeekName]
+                      inMonthName:[self findMonthName]];
     } else {
         [self.displayPanel hideDayButton];
     }
+}
+
+- (NSString *)findMonthName
+{
+    IAEMonth *actualMonth = [self.dataSource monthForCalculatorViewController:self];
+    
+    return actualMonth.description;
+}
+
+- (NSString *)findDayOfTheWeekName
+{
+    IAEMonth *actualMonth = [self.dataSource monthForCalculatorViewController:self];
+    NSUInteger dayOfTheWeekIndex = [IAEDateHelper findDayOfTheWeekIndexFromYearDate:actualMonth.year.yearDate
+                                                                         monthIndex:actualMonth.month
+                                                                   andDayOfTheMonth:self.actualDay];
+    NSString *dayOfTheWeekName = [IAEDateHelper findDayOfTheWeekNameStringWithDayOfTheWeekIndex:dayOfTheWeekIndex inShortForm:NO];
+    
+    return dayOfTheWeekName;
 }
 
 - (BOOL)isDragPannelModeEqualToMode:(CalculatorMode)mode
@@ -687,7 +708,5 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
     self.actualDay = 0;
     [self configureDisplayPanelWithActualDay];
 }
-
-
 
 @end

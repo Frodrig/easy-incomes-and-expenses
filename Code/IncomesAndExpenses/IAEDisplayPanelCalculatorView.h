@@ -11,7 +11,7 @@
 @interface IAEDisplayPanelCalculatorView : UIView
 
 - (void)setCategoryName:(NSString *)categoryName;
-- (void)setDay:(NSUInteger)day;
+- (void)setDay:(NSUInteger)day withDayweekName:(NSString *)dayWeekName inMonthName:(NSString *)monthName;
 - (void)setAmountString:(NSString *)amount;
 
 - (void)showDayButton;

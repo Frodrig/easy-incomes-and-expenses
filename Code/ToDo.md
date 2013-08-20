@@ -4,15 +4,15 @@
 ** Hay que sustituir el ScrollView por otro elemento en el que podamos hacer algún tipo de transición especial. Lo ideal para empezar sería una view con dos subviews a modo de contenedores dentro de las cuales hubiera una label para el mes y otra para el balance.
 
 * Selector de categorías
-** -Tenemos pequeño problema: hemos supuesto en la clase principal, IAEEasyIncomesAndExpensesViewController, que la selección de una categoría sucede solo cuando hemos pulsado sobre un concepto, pero también puede ocurrir cuando desplegamos el selector tras pulsar en el botón de categorías. En este último caso, lo que ha de suceder es entrar en modo edición o renombrado de la misma. Hay que generalizar todo este funcionamiento.-
+** Meter el número de conceptos asociados a la categoría de forma global (para todos los años).
 ** Reforzar de alguna manera adicional qué es una categoría general.
-** -Al borrar, recarga solo de la celda vinculada y con efecto fade en desaparición.-
-*** Fondo.
-*** -Permitir los gestos de acciones como renombrar o borrar.-
-*** Mostrar alertviews o similares que indiquen el motivo por el cual no se puede manipular una categoría general.
+** Mostrar alertviews o similares que indiquen el motivo por el cual no se puede manipular una categoría general.
 ** Considerar volver a poner rallas separatorias entre categorías.
+** -Tenemos pequeño problema: hemos supuesto en la clase principal, IAEEasyIncomesAndExpensesViewController, que la selección de una categoría sucede solo cuando hemos pulsado sobre un concepto, pero también puede ocurrir cuando desplegamos el selector tras pulsar en el botón de categorías. En este último caso, lo que ha de suceder es entrar en modo edición o renombrado de la misma. Hay que generalizar todo este funcionamiento.-
+** -Al borrar, recarga solo de la celda vinculada y con efecto fade en desaparición.-
+** -Permitir los gestos de acciones como renombrar o borrar.-
 ** -Eliminar cualquier rastro de menú contextual.- 
-*** -Para borrar una categoría, implementar el gesto asociado a la eliminación de un concepto. Duda sobre si se debería de permitir el borrado en modo popover.-
+** -Para borrar una categoría, implementar el gesto asociado a la eliminación de un concepto. Duda sobre si se debería de permitir el borrado en modo popover.-
 *** -Para seleccionar una categoría para renombrar, simplemente selección de la celda.-
 
 * Calculadora
@@ -27,7 +27,7 @@
 ** Cuando estemos en modo NO día deberíamos de aprovechar la zona destinada para mostrar el mes y día de la semana para indicar el mes y el número de concepto que vamos a introducir. Del mismo modo, valorar incluir en ese punto el año en el que nos encontramos.
 
 * Años
-** El color sigue siendo azul para los controles fundamentales.
+** -El color sigue siendo azul para los controles fundamentales.-
 ** Considerar que los años que no tengan conceptos sean más pequeños como celda.
 ** Estudiar cuál será el color cuando el balance sea cero.
 ** Considerar un botón que cambie de orden los años de menor a mayor. Al menos, quizás, para cuando estamos en modo años con conceptos.

@@ -27,8 +27,9 @@ typedef NS_ENUM(NSUInteger, CategorySelectorActionFlags) {
                                                                 UITableViewDelegate,
                                                                 IAEStrokeAnimatableViewDelegate>
 
-@property(nonatomic, weak)id<IAECategorySelectorViewControllerDelegate> delegate;
+@property(nonatomic, weak) id<IAECategorySelectorViewControllerDelegate> delegate;
 @property(nonatomic, strong) NSIndexPath *conceptCellIndexPath;
+@property(nonatomic) BOOL showNumberOfConcepts;
 
 - (id)initWithExtraActions:(NSUInteger)actions withSelectedCategory:(IAECategory *)category;
 - (id)initWithAllExtraActionsWithSelectedCategory:(IAECategory *)category;

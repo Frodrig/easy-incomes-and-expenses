@@ -432,6 +432,7 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
                               CATEGORYSELECTOR_EXTRAACTION_DELETE;
     IAECategorySelectorViewController *categorySelectorViewController = [[IAECategorySelectorViewController alloc] initWithExtraActions:extraActions
                                                                                                                    withSelectedCategory:nil];
+    categorySelectorViewController.showNumberOfConcepts = YES;
     categorySelectorViewController.delegate = self;
     categorySelectorViewController.modalPresentationStyle = UIModalPresentationFormSheet;
     
@@ -1265,6 +1266,7 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
     IAECategorySelectorViewController *viewController = [[IAECategorySelectorViewController alloc]
                                                          initWithExtraActions:CATEGORYSELECTOR_EXTRAACTION_CATEGORYSELECTION
                                                          withSelectedCategory:categoryOfCell];
+    viewController.showNumberOfConcepts = NO;
     viewController.delegate = self;
     viewController.conceptCellIndexPath = [self.conceptsCollectionView indexPathForCell:cell];
     

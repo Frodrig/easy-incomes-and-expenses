@@ -49,6 +49,7 @@
 		5B62D884178F1516009879A6 /* UIView+DrawBottomLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B62D883178F1516009879A6 /* UIView+DrawBottomLine.m */; };
 		5B6E9FA7177D9C950072EE34 /* UIView+LoadFromXib.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6E9FA6177D9C950072EE34 /* UIView+LoadFromXib.m */; };
 		5B7319F31796A8AB00FAF632 /* IAEInfoAboutAndOptionsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B26461C1796A1CA006F6E58 /* IAEInfoAboutAndOptionsCollectionViewCell.xib */; };
+		5B7602B617C3CC9E009920CD /* IAECategoryWithNumberOfConceptsTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B7602B517C3CC9E009920CD /* IAECategoryWithNumberOfConceptsTableView.xib */; };
 		5B76116416C56C7300558D6D /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B76116316C56C7300558D6D /* Default-Landscape~ipad.png */; };
 		5B76116816C56C7A00558D6D /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B76116716C56C7A00558D6D /* Default-Landscape@2x~ipad.png */; };
 		5B767DF71636D7FC005315F8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B767DF61636D7FC005315F8 /* UIKit.framework */; };
@@ -184,6 +185,7 @@
 		5B62D883178F1516009879A6 /* UIView+DrawBottomLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+DrawBottomLine.m"; sourceTree = "<group>"; };
 		5B6E9FA5177D9C950072EE34 /* UIView+LoadFromXib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+LoadFromXib.h"; sourceTree = "<group>"; };
 		5B6E9FA6177D9C950072EE34 /* UIView+LoadFromXib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+LoadFromXib.m"; sourceTree = "<group>"; };
+		5B7602B517C3CC9E009920CD /* IAECategoryWithNumberOfConceptsTableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAECategoryWithNumberOfConceptsTableView.xib; sourceTree = "<group>"; };
 		5B76116316C56C7300558D6D /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		5B76116716C56C7A00558D6D /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
 		5B767DF21636D7FC005315F8 /* Easy Inc & Exp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Easy Inc & Exp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -523,8 +525,8 @@
 				5B36AFF91785D73800132475 /* IAECategorySelectorViewController.h */,
 				5B36AFFA1785D73800132475 /* IAECategorySelectorViewController.m */,
 				5B36AFFB1785D73800132475 /* IAECategorySelectorViewController.xib */,
+				5BD94C081786B83E009009B1 /* Cell */,
 				5BCE3AC017A9788E00CD01E7 /* Protocols */,
-				5BD94C081786B83E009009B1 /* Views */,
 			);
 			name = "Category Selector";
 			sourceTree = "<group>";
@@ -709,6 +711,15 @@
 				5B5C967C17816A01008CD851 /* UIView */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		5B7602B417C3CC7A009920CD /* Xibs */ = {
+			isa = PBXGroup;
+			children = (
+				5BD94C0E1786B896009009B1 /* IAECategoryTableViewCell.xib */,
+				5B7602B517C3CC9E009920CD /* IAECategoryWithNumberOfConceptsTableView.xib */,
+			);
+			name = Xibs;
 			sourceTree = "<group>";
 		};
 		5B767DE71636D7FC005315F8 = {
@@ -1120,14 +1131,14 @@
 			name = Protocols;
 			sourceTree = "<group>";
 		};
-		5BD94C081786B83E009009B1 /* Views */ = {
+		5BD94C081786B83E009009B1 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
 				5BD94C091786B864009009B1 /* IAECategoryTableViewCell.h */,
 				5BD94C0A1786B864009009B1 /* IAECategoryTableViewCell.m */,
-				5BD94C0E1786B896009009B1 /* IAECategoryTableViewCell.xib */,
+				5B7602B417C3CC7A009920CD /* Xibs */,
 			);
-			name = Views;
+			name = Cell;
 			sourceTree = "<group>";
 		};
 		5BEA607F17A6A31E00520E09 /* Report Area View */ = {
@@ -1252,6 +1263,7 @@
 				5B767E0B1636D7FC005315F8 /* Default@2x.png in Resources */,
 				5B18053317BBC93500EB8ABF /* ToDo.md in Resources */,
 				5B2D38B817AFA8CE0056488B /* IAEWithoutConceptsTextWarning.xib in Resources */,
+				5B7602B617C3CC9E009920CD /* IAECategoryWithNumberOfConceptsTableView.xib in Resources */,
 				5B767E0D1636D7FC005315F8 /* Default-568h@2x.png in Resources */,
 				5BF92542179554800002CF9F /* IAEAboutAndOptionsViewController.xib in Resources */,
 				5B94036017904C1400F9C1D0 /* IAEYearSelectorViewController.xib in Resources */,

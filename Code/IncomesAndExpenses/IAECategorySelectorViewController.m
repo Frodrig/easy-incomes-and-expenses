@@ -35,10 +35,15 @@
 static const NSUInteger kIncomeSegmentedIndex = 0;
 static const NSUInteger kExpenseSegmentedIndex = 1;
 
+static NSString * const kXibOfCategoryTableViewCellWithoutNumberOfConcepts = @"IAECategoryTableViewCell";
+static NSString * const kXibOfCategoryTableViewCellWithNumberOfConcepts = @"IAECategoryWithNumberOfConceptsTableView";
+static NSString * const kIDOfCategoryTableViewCell = @"CategoryTableViewCell";
+
 static NSString * const kFontOfGeneralCategoryLabel = @"HelveticaNeue-UltraLightitalic";
 static NSString * const kFontOfUserCategoryLabel = @"HelveticaNeue-UltraLight";
 static const CGFloat kSizeOfCategoryNameLabel = 28;
-static const CGFloat kHeightOfCategoriesCell = 51;
+static const CGFloat kHeightOfCategoriesWithoutNumberOfConceptsCell = 51;
+static const CGFloat kHeightOfCategoriesWithNumberOfConceptsCell = 78;
 
 static const CGFloat kDurationOfAnimationOfOpenDecoratorView = 0.1;
 
@@ -199,8 +204,9 @@ static const NSInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
 
 - (void)configureCategoriesTableView
 {
-    [self.categoriesTableView registerNib:[UINib nibWithNibName:@"IAECategoryTableViewCell" bundle:[NSBundle mainBundle]]
-                   forCellReuseIdentifier:@"CategoryTableViewCell"];
+    NSString *xibName = [self xibNameBasedInShowNumberOfConcepts];
+    [self.categoriesTableView registerNib:[UINib nibWithNibName:xibName bundle:[NSBundle mainBundle]]
+                   forCellReuseIdentifier:kIDOfCategoryTableViewCell];
     self.categoriesTableView.allowsSelection = [self categorySelectionFlagEnabled];
     self.categoriesTableView.delegate = self;
     self.categoriesTableView.dataSource = self;
@@ -208,6 +214,11 @@ static const NSInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
     if (self.swipeGestureRecognizer) {
         [self.categoriesTableView addGestureRecognizer:self.swipeGestureRecognizer];
     }
+}
+
+- (NSString *)xibNameBasedInShowNumberOfConcepts
+{
+    return self.showNumberOfConcepts ? kXibOfCategoryTableViewCellWithNumberOfConcepts : kXibOfCategoryTableViewCellWithoutNumberOfConcepts;
 }
 
 - (void)reloadData
@@ -335,7 +346,7 @@ static const NSInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return kHeightOfCategoriesCell;
+    return self.showNumberOfConcepts ? kHeightOfCategoriesWithNumberOfConceptsCell : kHeightOfCategoriesWithoutNumberOfConceptsCell;
 }
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath

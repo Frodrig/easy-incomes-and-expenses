@@ -23,6 +23,7 @@
 static const NSUInteger kTagOfBackgroundContainerView = 10;
 static const NSUInteger kTagOfCategoryLabel = 20;
 static const NSUInteger kTagOfOpenDecoratorView = 30;
+static const NSUInteger kTagOfNumberOfConceptsLabel = 40;
 
 static const CGFloat kDurationOfStrokeStateAnimation = 0.25;
 static const CGFloat kAlphaInStrokeState = 0.25;
@@ -54,6 +55,15 @@ static const CGFloat kAlphaInStrokeState = 0.25;
     }
     
     return _openDecoratorView;
+}
+
+- (UILabel *)numberOfConceptsLabel
+{
+    if (!_numberOfConceptsLabel) {
+        _numberOfConceptsLabel = (UILabel *)[self viewWithTag:kTagOfNumberOfConceptsLabel];
+    }
+    
+    return _numberOfConceptsLabel;
 }
 
 #pragma mark - Init

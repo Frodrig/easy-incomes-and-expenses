@@ -416,15 +416,18 @@ static const NSInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
 
 - (void)swipeGestureRecognizerEvent:(UISwipeGestureRecognizer *)swipeGestureRecognizer
 {
-    [self deleteCategoryOfCellUnderLocation:[swipeGestureRecognizer locationInView:self.categoriesTableView]];
+    [self deleteIfAppropiateCategoryOfCellUnderLocation:[swipeGestureRecognizer locationInView:self.categoriesTableView]];
 }
 
-- (void)deleteCategoryOfCellUnderLocation:(CGPoint)location
+- (void)deleteIfAppropiateCategoryOfCellUnderLocation:(CGPoint)location
 {
     IAECategoryTableViewCell *cell = [self findCellUnderLocation:location];
-    self.categoryOfCellSelectedToRemove = [self findCategoryOfCell:cell];
-    [self.strokeAnimatableView doStrokeOverTheView:cell.contentView];
-    [cell goToStrokeStateWithAnimation:YES];
+    IAECategory *category = [self findCategoryOfCell:cell];
+    if (![[IAECategoryStore sharedCategoryStore] isGeneralCategory:category]) {
+        self.categoryOfCellSelectedToRemove = category;
+        [self.strokeAnimatableView doStrokeOverTheView:cell.contentView];
+        [cell goToStrokeStateWithAnimation:YES];
+    }
 }
 
 - (IAECategory *)findCategoryOfCellSelectedUnderLocation:(CGPoint)location

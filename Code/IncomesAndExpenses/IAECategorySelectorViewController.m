@@ -19,8 +19,8 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *categoriesTableView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *categorySegmentedControl;
-@property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureRecognizer;
-@property (nonatomic, weak) IAECategoryTableViewCell *cellSelectedForContextualMenu;
+@property (nonatomic, strong) UISwipeGestureRecognizer *swipeGestureRecognizer;
+@property (nonatomic, weak) IAECategory *categoryOfCellSelectedToRemove;
 @property (nonatomic) NSUInteger actions;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationToolBar;
 @property (nonatomic, weak) IAECategory* initialCategory;
@@ -40,6 +40,8 @@ static const CGFloat kHeightOfCategoriesCell = 51;
 
 static const CGFloat kDurationOfAnimationOfOpenDecoratorView = 0.1;
 
+static const NSUInteger kButtonIndexOfRemoveConfirmationAlertView = 1;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     NSAssert(0, @"No deberia de instanciarse este init");
@@ -54,7 +56,7 @@ static const CGFloat kDurationOfAnimationOfOpenDecoratorView = 0.1;
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         [self initActions:actions];
-        [self initLongTapGestureRecognizer];
+        [self initSwipeGestureRecognizer];
         _initialCategory = category;
     }
     
@@ -89,13 +91,16 @@ static const CGFloat kDurationOfAnimationOfOpenDecoratorView = 0.1;
     _actions = actions;
 }
 
-- (void)initLongTapGestureRecognizer
+- (void)initSwipeGestureRecognizer
 {
     if ([self deleteActionFlagEnabled]) {
-        _longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureRecogzinerEvent:)];
-        _longPressGestureRecognizer.numberOfTapsRequired = 0;
-        _longPressGestureRecognizer.numberOfTouchesRequired = 1;
+        _swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGestureRecognizerEvent:)];
     }
+}
+
+- (void)dealloc
+{
+    [self.categoriesTableView removeGestureRecognizer:self.swipeGestureRecognizer];
 }
 
 - (void)viewDidLoad
@@ -175,8 +180,8 @@ static const CGFloat kDurationOfAnimationOfOpenDecoratorView = 0.1;
     self.categoriesTableView.delegate = self;
     self.categoriesTableView.dataSource = self;
     
-    if (self.longPressGestureRecognizer) {
-        [self.categoriesTableView addGestureRecognizer:self.longPressGestureRecognizer];
+    if (self.swipeGestureRecognizer) {
+        [self.categoriesTableView addGestureRecognizer:self.swipeGestureRecognizer];
     }
 }
 
@@ -369,115 +374,49 @@ static const CGFloat kDurationOfAnimationOfOpenDecoratorView = 0.1;
     return categoryType;
 }
 
-#pragma mark - LongTapGestureRecognizer
+#pragma mark - SwipeGestureRecognizer
 
-- (void)longPressGestureRecogzinerEvent:(UILongPressGestureRecognizer *)longPressGestureRecognizer
+- (void)swipeGestureRecognizerEvent:(UISwipeGestureRecognizer *)swipeGestureRecognizer
 {
-    [self launchContextualMenuOnCellUnderLongPressGestureRecognizer:longPressGestureRecognizer];
+    [self deleteCategoryOfCellUnderLocation:[swipeGestureRecognizer locationInView:self.categoriesTableView]];
 }
 
-- (void)launchContextualMenuOnCellUnderLongPressGestureRecognizer:(UILongPressGestureRecognizer *)longPressGestureRecognizer
+- (void)deleteCategoryOfCellUnderLocation:(CGPoint)location
 {
-    self.cellSelectedForContextualMenu = [self findCellUnderLongTapGestureRecognizer:longPressGestureRecognizer];
-    if (self.cellSelectedForContextualMenu) {
-        [self launchContextualMenuOnCellSelectedForContextualMenuIfCategoryOfCellIsNotGeneral];
-    }
+    self.categoryOfCellSelectedToRemove = [self findCategoryOfCellSelectedUnderLocation:location];
+    [self removeCategoryOfCellSelectedIfAppropiateLaunchingConfirmation];
 }
 
-- (IAECategoryTableViewCell *)findCellUnderLongTapGestureRecognizer:(UILongPressGestureRecognizer *)longPressGestureRecognizer
+- (IAECategory *)findCategoryOfCellSelectedUnderLocation:(CGPoint)location
 {
-    CGPoint longPressLocation = [longPressGestureRecognizer locationInView:self.categoriesTableView];
-    NSIndexPath *cellIndexPath = [self.categoriesTableView indexPathForRowAtPoint:longPressLocation];
+    IAECategoryTableViewCell *cell = (IAECategoryTableViewCell *)[self findCellUnderLocation:location];
+    IAECategory *category = [self findCategoryOfCell:cell];
+
+    return category;
+}
+
+- (IAECategoryTableViewCell *)findCellUnderLocation:(CGPoint)location
+{
+    NSIndexPath *cellIndexPath = [self.categoriesTableView indexPathForRowAtPoint:location];
     IAECategoryTableViewCell *cell = (IAECategoryTableViewCell *)[self.categoriesTableView cellForRowAtIndexPath:cellIndexPath];
     
     return cell;
 }
 
-- (void)launchContextualMenuOnCellSelectedForContextualMenuIfCategoryOfCellIsNotGeneral
+- (IAECategory *)findCategoryOfCell:(IAECategoryTableViewCell *)cell
 {
-    NSAssert(self.cellSelectedForContextualMenu, @"");
-    
-    if (![self isCellSelectedForContextualMenuGeneralCategory]) {
-        [self becomeFirstResponder];
-        
-        UIMenuController *menu = [UIMenuController sharedMenuController];
-        menu.menuItems = [self createMenuItemContainerForMenuAction];
-        [menu setTargetRect:self.cellSelectedForContextualMenu.frame inView:self.cellSelectedForContextualMenu];
-        [menu setMenuVisible:YES animated:YES];
-    }
+    IAECategory *category = [[IAECategoryStore sharedCategoryStore] findCategoryByTag:cell.categoryLabel.text];
+    return category;
 }
 
-- (NSArray *)createMenuItemContainerForMenuAction
+- (void)removeCategoryOfCellSelectedIfAppropiateLaunchingConfirmation
 {
-    NSArray *menuItems = [NSArray array];
-    menuItems = [self addMenuItemAction:[self createMenuItemForRenameActionIfProceed] usingMenuItems:menuItems];
-    menuItems = [self addMenuItemAction:[self createMenuItemForDeleteActionIfProceed] usingMenuItems:menuItems];
-    
-    return menuItems;
-}
-
-- (UIMenuItem *)createMenuItemForRenameActionIfProceed
-{
-    UIMenuItem *menuItem = nil;
-
-    return menuItem;
-}
-
-- (NSArray *)addMenuItemAction:(UIMenuItem *)menuItem usingMenuItems:(NSArray *)menuItems
-{
-    NSAssert(menuItems, @"");
-    if (menuItem) {
-        menuItems = [menuItems arrayByAddingObject:menuItem];
-    }
-    
-    return [menuItems copy];
-}
-
-- (UIMenuItem *)createMenuItemForDeleteActionIfProceed
-{
-    UIMenuItem *menuItem = nil;
-    if ([self deleteActionFlagEnabled]) {
-        menuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Delete", @"") action:@selector(deleteCategoryMenuSelected:)];
-    }
-    
-    return menuItem;
-}
-
-- (BOOL)isCellSelectedForContextualMenuGeneralCategory
-{
-    IAECategory *category = [self categoryOfCellSelectedForContextualMenu];
-    return [[IAECategoryStore sharedCategoryStore] isGeneralCategory:category];
-}
-
-#pragma mark - MenuController
-
-- (void)deleteCategoryMenuSelected:(id)sender
-{
-    if ([self categoryOfCellSelectedHaveConcepts]) {
+    BOOL categoryOfCellSelectedHaveConcepts = [[IAEBook sharedBook] findAllConceptsWithCategory:self.categoryOfCellSelectedToRemove].count > 0;
+    if (categoryOfCellSelectedHaveConcepts) {
         [self launchAlertViewBeforeDeleteCategory];
     } else {
         [self removeCategoryOfCellSelected];
     }
-}
-
-- (BOOL)categoryOfCellSelectedHaveConcepts
-{
-    NSUInteger numberOfConceptsOfCategory = [self findNumberOfConceptsOfCategoryOfCellSelected];
-    return numberOfConceptsOfCategory > 0;
-}
-
-- (NSUInteger)findNumberOfConceptsOfCategoryOfCellSelected
-{
-    IAECategory *category = [self categoryOfCellSelectedForContextualMenu];
-    NSUInteger numConceptsOfCategory = [[IAEBook sharedBook] findAllConceptsWithCategory:category].count;
-    
-    return numConceptsOfCategory;
-}
-
-- (IAECategory *)categoryOfCellSelectedForContextualMenu
-{
-    IAECategory *category = [[IAECategoryStore sharedCategoryStore] findCategoryByTag:self.cellSelectedForContextualMenu.categoryLabel.text];
-    return category;
 }
 
 - (void)launchAlertViewBeforeDeleteCategory
@@ -494,15 +433,15 @@ static const CGFloat kDurationOfAnimationOfOpenDecoratorView = 0.1;
 
 - (void)removeCategoryOfCellSelected
 {
-    IAECategory *category = [self categoryOfCellSelectedForContextualMenu];
-    [self.delegate categorySelectorViewController:self didSelectRemoveCategory:category];
+    NSAssert(self.categoryOfCellSelectedToRemove, @"");
+    [self.delegate categorySelectorViewController:self didSelectRemoveCategory:self.categoryOfCellSelectedToRemove];
 }
 
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 1) {
+    if (buttonIndex == kButtonIndexOfRemoveConfirmationAlertView) {
         [self removeCategoryOfCellSelected];
     }
 }

@@ -429,20 +429,10 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
 {
     NSUInteger extraActions = CATEGORYSELECTOR_EXTRAACTION_CATEGORYSELECTIONWITHOUTDECORATOR |
                               CATEGORYSELECTOR_EXTRAACTION_ADD |
-                              CATEGORYSELECTOR_EXTRAACTION_DONE;
+                              CATEGORYSELECTOR_EXTRAACTION_DONE |
+                              CATEGORYSELECTOR_EXTRAACTION_DELETE;
     IAECategorySelectorViewController *categorySelectorViewController = [[IAECategorySelectorViewController alloc] initWithExtraActions:extraActions
                                                                                                                    withSelectedCategory:nil];
-
-    /*
-    - (id)initWithExtraActions:(NSUInteger)actions withSelectedCategory:(IAECategory *)category;
-    CATEGORYSELECTOR_EXTRAACTION_CATEGORYSELECTION = 0x0001,
-    CATEGORYSELECTOR_EXTRAACTION_ADD = 0x0001 << 1,
-    CATEGORYSELECTOR_EXTRAACTION_RENAME = 0x0001 << 2,
-    CATEGORYSELECTOR_EXTRAACTION_DELETE = 0x0001 << 3,
-    CATEGORYSELECTOR_EXTRAACTION_DONE = 0x0001 << 4,
-    CATEGORYSELECTOR_EXTRAACTION_ALL_ACTIONS = 0xFFFF
-    */
-    
     categorySelectorViewController.delegate = self;
     categorySelectorViewController.modalPresentationStyle = UIModalPresentationFormSheet;
     

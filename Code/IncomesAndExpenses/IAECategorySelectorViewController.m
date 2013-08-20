@@ -465,11 +465,11 @@ static const NSInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
 - (void)launchAlertViewBeforeDeleteCategory
 {
     UIAlertView *alertView = [[UIAlertView alloc]
-                              initWithTitle:NSLocalizedString(@"Confirm remove", @"Advertenciai para confirmar el borrado de una categoria")
-                              message:NSLocalizedString(@"There are one or more items with this category. If you remove this category the items will change to the general category associated.", @"Descripcion de lo que ocurrira al borrar una categoria")
+                              initWithTitle:NSLocalizedString(@"LTEXT_ALERTVIEW_REMOVECATEGORY_TITLE", @"")
+                              message:NSLocalizedString(@"LTEXT_ALERTVIEW_REMOVECATEGORY_MESSAGE", @"")
                               delegate:self
-                              cancelButtonTitle:NSLocalizedString(@"Cancel", @"Opcion para cancelar el borrado de una categoria")
-                              otherButtonTitles:NSLocalizedString(@"Remove", @"Opcion para confirmar el borrado de una categoria"), nil];
+                              cancelButtonTitle:NSLocalizedString(@"LTEXT_ALERTVIEW_REMOVECATEGORY_CANCELOPTION", @"")
+                              otherButtonTitles:NSLocalizedString(@"LTEXT_ALERTVIEW_REMOVECATEGORY_REMOVEOPTION", @""), nil];
     
     [alertView show];
 }

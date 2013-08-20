@@ -12,14 +12,51 @@
 
 @interface IAECategoryTableViewCell()
 
-@property (weak, nonatomic) IBOutlet UIView *backgroundContainerView;
+@property (weak, nonatomic) UIView *backgroundContainerView;
 
 @end
 
 @implementation IAECategoryTableViewCell
 
+#pragma mark - Const
+
+static const NSUInteger kTagOfBackgroundContainerView = 10;
+static const NSUInteger kTagOfCategoryLabel = 20;
+static const NSUInteger kTagOfOpenDecoratorView = 30;
+
 static const CGFloat kDurationOfStrokeStateAnimation = 0.25;
 static const CGFloat kAlphaInStrokeState = 0.25;
+
+#pragma mark - Properties
+
+- (UIView *)backgroundContainerView
+{
+    if (!_backgroundContainerView) {
+        _backgroundContainerView = [self viewWithTag:kTagOfBackgroundContainerView];
+    }
+    
+    return _backgroundContainerView;
+}
+
+- (UILabel *)categoryLabel
+{
+    if (!_categoryLabel) {
+        _categoryLabel = (UILabel *)[self viewWithTag:kTagOfCategoryLabel];
+    }
+    
+    return _categoryLabel;
+}
+
+- (IAECircleDecoratorView *)openDecoratorView
+{
+    if (!_openDecoratorView) {
+        _openDecoratorView = (IAECircleDecoratorView *)[self viewWithTag:kTagOfOpenDecoratorView];
+    }
+    
+    return _openDecoratorView;
+}
+
+#pragma mark - Init
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

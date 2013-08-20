@@ -12,8 +12,8 @@
 
 @interface IAECategoryTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
-@property (weak, nonatomic) IBOutlet IAECircleDecoratorView *openDecoratorView;
+@property (weak, nonatomic) UILabel *categoryLabel;
+@property (weak, nonatomic) IAECircleDecoratorView *openDecoratorView;
 @property (nonatomic, readonly) BOOL isInStrokeState;
 
 - (void)goToStrokeStateWithAnimation:(BOOL)animation;

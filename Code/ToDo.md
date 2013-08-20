@@ -4,14 +4,16 @@
 ** Hay que sustituir el ScrollView por otro elemento en el que podamos hacer algún tipo de transición especial. Lo ideal para empezar sería una view con dos subviews a modo de contenedores dentro de las cuales hubiera una label para el mes y otra para el balance.
 
 * Selector de categorías
-** Tenemos pequeño problema: hemos supuesto en la clase principal, IAEEasyIncomesAndExpensesViewController, que la selección de una categoría sucede solo cuando hemos pulsado sobre un concepto, pero también puede ocurrir cuando desplegamos el selector tras pulsar en el botón de categorías. En este último caso, lo que ha de suceder es entrar en modo edición o renombrado de la misma. Hay que generalizar todo este funcionamiento.
+** -Tenemos pequeño problema: hemos supuesto en la clase principal, IAEEasyIncomesAndExpensesViewController, que la selección de una categoría sucede solo cuando hemos pulsado sobre un concepto, pero también puede ocurrir cuando desplegamos el selector tras pulsar en el botón de categorías. En este último caso, lo que ha de suceder es entrar en modo edición o renombrado de la misma. Hay que generalizar todo este funcionamiento.-
 ** Reforzar de alguna manera adicional qué es una categoría general.
+** -Al borrar, recarga solo de la celda vinculada y con efecto fade en desaparición.-
 *** Fondo.
-*** Permitir los gestos de acciones como renombrar o borrar pero mostrar alertviews o similares que indiquen el motivo por el cual no se puede manipular.
+*** -Permitir los gestos de acciones como renombrar o borrar.-
+*** Mostrar alertviews o similares que indiquen el motivo por el cual no se puede manipular una categoría general.
 ** Considerar volver a poner rallas separatorias entre categorías.
-** Eliminar cualquier rastro de menú contextual. 
-*** Para borrar una categoría, implementar el gesto asociado a la eliminación de un concepto. Duda sobre si se debería de permitir el borrado en modo popover.
-*** Para seleccionar una categoría para renombrar, simplemente selección de la celda.
+** -Eliminar cualquier rastro de menú contextual.- 
+*** -Para borrar una categoría, implementar el gesto asociado a la eliminación de un concepto. Duda sobre si se debería de permitir el borrado en modo popover.-
+*** -Para seleccionar una categoría para renombrar, simplemente selección de la celda.-
 
 * Calculadora
 ** Hay que implementar arrastre. Cuando arrastramos hacia arriba el resto de elementos suben pero usando dynamics.

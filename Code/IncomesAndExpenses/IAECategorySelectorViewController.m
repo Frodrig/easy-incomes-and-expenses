@@ -490,14 +490,13 @@ static const NSInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
     } else {
         [self exitOfStrokeStateInCellOfSelectedCategory];
     }
-    
-    [self.strokeAnimatableView resetStroke];
 }
 
 - (void)exitOfStrokeStateInCellOfSelectedCategory
 {
     IAECategoryTableViewCell *cell = [self findCellOfCategorySelected];
     [cell exitOfStrokeStateWithAnimation:YES];
+    [self.strokeAnimatableView resetStroke];
 }
 
 - (IAECategoryTableViewCell *)findCellOfCategorySelected

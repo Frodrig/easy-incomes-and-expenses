@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CategoryDefs.h"
+#import "IAEStrokeAnimatableViewDelegate.h"
 
 @class IAECategory;
 
@@ -23,7 +24,8 @@ typedef NS_ENUM(NSUInteger, CategorySelectorActionFlags) {
 };
 
 @interface IAECategorySelectorViewController : UIViewController<UITableViewDataSource,
-                                                                UITableViewDelegate>
+                                                                UITableViewDelegate,
+                                                                IAEStrokeAnimatableViewDelegate>
 
 @property(nonatomic, weak)id<IAECategorySelectorViewControllerDelegate> delegate;
 @property(nonatomic, strong) NSIndexPath *conceptCellIndexPath;
@@ -33,6 +35,7 @@ typedef NS_ENUM(NSUInteger, CategorySelectorActionFlags) {
 - (id)initWithAllExtraActionsExceptSelectionWithSelectedCategory:(IAECategory *)category;
 
 - (void)reloadData;
+- (void)reloadAfterRemoveCellWithCategoryTag:(NSString *)categoryTag;
 
 - (IBAction)doneButtonPressed:(id)sender;
 - (IBAction)addCategoryButtonPressed:(id)sender;

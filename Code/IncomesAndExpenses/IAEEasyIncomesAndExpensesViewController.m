@@ -42,7 +42,6 @@
 #import "UIView+LoadFromXib.h"
 #import "UIView+RoundedCorners.h"
 #import "NSDecimalNumber+AbsoluteValue.h"
-
 #import "IAEStrokeAnimatableLineView.h"
 
 @interface IAEEasyIncomesAndExpensesViewController ()
@@ -110,7 +109,7 @@ static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
 static const CGFloat kDurationStrokeAnimationForConcepts = 0.25;
 static const CGFloat kColorWhiteComponentForStrokeAnimationForConcepts = 0.8;
 static const CGFloat kColorWhiteAlphaComponentForStrokeAnimationForConcepts = 1.0;
-static const CGFloat kTypeStrokeAnimationForConcepts = STROKEANIMATABLE_TYPE_THIN;
+static const NSInteger kTypeStrokeAnimationForConcepts = STROKEANIMATABLE_TYPE_THIN;
 static const CGFloat kDelayToExecuteRemoveConceptCell = 0.2;
 
 static const CGFloat KDurationOfAnimationUpdateForEntryInstantIndex = 0.15;
@@ -1444,12 +1443,13 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
 - (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
                didSelectRemoveCategory:(IAECategory *)category
 {
-    [[IAECategoryStore sharedCategoryStore] removeCategoryByTag:category.tag];
+    NSString *tagOfCategory = [category.tag copy];
+    [[IAECategoryStore sharedCategoryStore] removeCategoryByTag:tagOfCategory];
     [[IAEBook sharedBook] saveAll];
     
     [self.conceptsCollectionView reloadData];
     NSAssert([self categorySelectorViewControllerWasLaunchedFromCategoryButton], @"");
-    [categorySelectorViewController reloadData];
+    [categorySelectorViewController reloadAfterRemoveCellWithCategoryTag:tagOfCategory];
 }
 
 #pragma mark - IAECategoryEditorViewControllerDelegate

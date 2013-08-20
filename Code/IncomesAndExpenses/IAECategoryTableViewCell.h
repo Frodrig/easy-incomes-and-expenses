@@ -14,5 +14,9 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
 @property (weak, nonatomic) IBOutlet IAECircleDecoratorView *openDecoratorView;
+@property (nonatomic, readonly) BOOL isInStrokeState;
+
+- (void)goToStrokeStateWithAnimation:(BOOL)animation;
+- (void)exitOfStrokeStateWithAnimation:(BOOL)animation;
 
 @end

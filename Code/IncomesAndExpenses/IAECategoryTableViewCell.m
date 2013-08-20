@@ -8,6 +8,7 @@
 
 #import "IAECategoryTableViewCell.h"
 #import "UIView+RoundedCorners.h"
+#import "IAECircleDecoratorView.h"
 
 @interface IAECategoryTableViewCell()
 
@@ -16,6 +17,9 @@
 @end
 
 @implementation IAECategoryTableViewCell
+
+static const CGFloat kDurationOfStrokeStateAnimation = 0.25;
+static const CGFloat kAlphaInStrokeState = 0.25;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -37,5 +41,30 @@
 {
     //[self.backgroundContainerView addRoundedCorners:UIRectCornerAllCorners withRadius:8.0];
 }
+
+#pragma mark - StrokeState
+
+- (void)goToStrokeStateWithAnimation:(BOOL)animation
+{
+    [self changeToStrokeState:YES withAnimation:animation];
+}
+
+- (void)exitOfStrokeStateWithAnimation:(BOOL)animation
+{
+    [self changeToStrokeState:NO withAnimation:animation];
+}
+
+- (void)changeToStrokeState:(BOOL)strokeState withAnimation:(BOOL)animation
+{
+    if (strokeState != self.isInStrokeState) {
+        _isInStrokeState = strokeState;
+        CGFloat alphaValue = strokeState ? kAlphaInStrokeState : 1.0;
+        [UIView animateWithDuration:animation ? kDurationOfStrokeStateAnimation : 0 animations:^{
+            self.categoryLabel.alpha = alphaValue;
+            self.openDecoratorView.alpha = alphaValue;
+        }];
+    }
+}
+
 
 @end

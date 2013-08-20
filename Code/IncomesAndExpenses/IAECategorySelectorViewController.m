@@ -14,6 +14,7 @@
 #import "IAEBook.h"
 #import "IAECategorySelectorViewControllerDelegate.h"
 #import "IAECircleDecoratorView.h"
+#import "IAEStrokeAnimatableLineView.h"
 
 @interface IAECategorySelectorViewController ()
 
@@ -25,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationToolBar;
 @property (nonatomic, weak) IAECategory* initialCategory;
 @property (nonatomic, strong) NSIndexPath *selectedCategoryIndexPath;
+@property (nonatomic, strong) IAEStrokeAnimatableLineView *strokeAnimatableView;
 
 @end
 
@@ -41,6 +43,29 @@ static const CGFloat kHeightOfCategoriesCell = 51;
 static const CGFloat kDurationOfAnimationOfOpenDecoratorView = 0.1;
 
 static const NSUInteger kButtonIndexOfRemoveConfirmationAlertView = 1;
+
+static const CGFloat kDurationStrokeAnimation = 0.25;
+static const CGFloat kColorWhiteComponentForStrokeAnimation = 0.8;
+static const CGFloat kColorWhiteAlphaComponentForStrokeAnimation = 1.0;
+static const NSInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
+
+#pragma mark - Properties
+
+- (IAEStrokeAnimatableLineView *)strokeAnimatableView
+{
+    if (nil == _strokeAnimatableView) {
+        _strokeAnimatableView = [[IAEStrokeAnimatableLineView alloc] init];
+        _strokeAnimatableView.durationOfStrokeAnimation = kDurationStrokeAnimation;
+        _strokeAnimatableView.strokeColor = [UIColor colorWithWhite:kColorWhiteComponentForStrokeAnimation
+                                                              alpha:kColorWhiteAlphaComponentForStrokeAnimation];
+        _strokeAnimatableView.strokeType = kTypeStrokeAnimation;
+        _strokeAnimatableView.delegate = self;
+    }
+    
+    return _strokeAnimatableView;
+}
+
+#pragma mark - Init
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -190,6 +215,13 @@ static const NSUInteger kButtonIndexOfRemoveConfirmationAlertView = 1;
     [self.categoriesTableView reloadData];
 }
 
+- (void)reloadAfterRemoveCellWithCategoryTag:(NSString *)categoryTag
+{
+    IAECategoryTableViewCell *cell = [self findVisibleCellOfCategoryWithTag:categoryTag];
+    NSIndexPath *indexPathOfCell = [self.categoriesTableView indexPathForCell:cell];
+    [self.categoriesTableView deleteRowsAtIndexPaths:@[indexPathOfCell] withRowAnimation:UITableViewRowAnimationFade];
+}
+
 - (BOOL)canBecomeFirstResponder
 {
     return YES;
@@ -297,7 +329,6 @@ static const NSUInteger kButtonIndexOfRemoveConfirmationAlertView = 1;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self changeToSelectedIndexPath:indexPath withAnimation:YES andLogicBlockWhenFinish:^{
-        //[self selectAndScrollToCategory:[self findCategoryOfCellAtIndexPath:indexPath] withAnimation:YES];
         [self.delegate categorySelectorViewController:self didSelectCategory:[self findCategoryOfCellAtIndexPath:indexPath]];
     }];
 }
@@ -305,6 +336,13 @@ static const NSUInteger kButtonIndexOfRemoveConfirmationAlertView = 1;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return kHeightOfCategoriesCell;
+}
+
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    IAECategoryTableViewCell *categoryTableViewCell = (IAECategoryTableViewCell *)cell;
+    [categoryTableViewCell exitOfStrokeStateWithAnimation:NO];
+    [self.strokeAnimatableView resetStroke];
 }
 
 #pragma mark - UITableViewDataSource
@@ -383,8 +421,10 @@ static const NSUInteger kButtonIndexOfRemoveConfirmationAlertView = 1;
 
 - (void)deleteCategoryOfCellUnderLocation:(CGPoint)location
 {
-    self.categoryOfCellSelectedToRemove = [self findCategoryOfCellSelectedUnderLocation:location];
-    [self removeCategoryOfCellSelectedIfAppropiateLaunchingConfirmation];
+    IAECategoryTableViewCell *cell = [self findCellUnderLocation:location];
+    self.categoryOfCellSelectedToRemove = [self findCategoryOfCell:cell];
+    [self.strokeAnimatableView doStrokeOverTheView:cell.contentView];
+    [cell goToStrokeStateWithAnimation:YES];
 }
 
 - (IAECategory *)findCategoryOfCellSelectedUnderLocation:(CGPoint)location
@@ -415,7 +455,7 @@ static const NSUInteger kButtonIndexOfRemoveConfirmationAlertView = 1;
     if (categoryOfCellSelectedHaveConcepts) {
         [self launchAlertViewBeforeDeleteCategory];
     } else {
-        [self removeCategoryOfCellSelected];
+        [self sendRemoveCategoryOfCellSelectedActionExecuted];
     }
 }
 
@@ -431,10 +471,11 @@ static const NSUInteger kButtonIndexOfRemoveConfirmationAlertView = 1;
     [alertView show];
 }
 
-- (void)removeCategoryOfCellSelected
+- (void)sendRemoveCategoryOfCellSelectedActionExecuted
 {
     NSAssert(self.categoryOfCellSelectedToRemove, @"");
     [self.delegate categorySelectorViewController:self didSelectRemoveCategory:self.categoryOfCellSelectedToRemove];
+    self.categoryOfCellSelectedToRemove = nil;
 }
 
 #pragma mark - UIAlertViewDelegate
@@ -442,8 +483,45 @@ static const NSUInteger kButtonIndexOfRemoveConfirmationAlertView = 1;
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == kButtonIndexOfRemoveConfirmationAlertView) {
-        [self removeCategoryOfCellSelected];
+        [self sendRemoveCategoryOfCellSelectedActionExecuted];
+    } else {
+        [self exitOfStrokeStateInCellOfSelectedCategory];
     }
+    
+    [self.strokeAnimatableView resetStroke];
+}
+
+- (void)exitOfStrokeStateInCellOfSelectedCategory
+{
+    IAECategoryTableViewCell *cell = [self findCellOfCategorySelected];
+    [cell exitOfStrokeStateWithAnimation:YES];
+}
+
+- (IAECategoryTableViewCell *)findCellOfCategorySelected
+{
+    IAECategoryTableViewCell *cellOfCategorySelected = [self findVisibleCellOfCategoryWithTag:self.categoryOfCellSelectedToRemove.tag];
+    
+    return cellOfCategorySelected;
+}
+
+- (IAECategoryTableViewCell *)findVisibleCellOfCategoryWithTag:(NSString *)categoryTag
+{
+    IAECategoryTableViewCell *retCell = nil;
+    for (IAECategoryTableViewCell *cell in self.categoriesTableView.visibleCells) {
+        if ([categoryTag isEqualToString:cell.categoryLabel.text]) {
+            retCell = cell;
+            break;
+        }
+    }
+    
+    return retCell;
+}
+
+#pragma mark - IAEStrokeAnimatableViewDelegate
+
+- (void)strokeAnimatableView:(IAEStrokeAnimatableLineView *)strokeAnimatableView didStrokeOverTheView:(UIView *)view
+{
+    [self removeCategoryOfCellSelectedIfAppropiateLaunchingConfirmation];
 }
 
 @end

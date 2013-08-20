@@ -520,10 +520,10 @@
 		5B36AFF81785D71F00132475 /* Category Selector */ = {
 			isa = PBXGroup;
 			children = (
-				5BCE3AC017A9788E00CD01E7 /* Protocols */,
 				5B36AFF91785D73800132475 /* IAECategorySelectorViewController.h */,
 				5B36AFFA1785D73800132475 /* IAECategorySelectorViewController.m */,
 				5B36AFFB1785D73800132475 /* IAECategorySelectorViewController.xib */,
+				5BCE3AC017A9788E00CD01E7 /* Protocols */,
 				5BD94C081786B83E009009B1 /* Views */,
 			);
 			name = "Category Selector";

@@ -427,7 +427,22 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
 
 - (void)openModalForPresentCategorySelectorViewController
 {
-    IAECategorySelectorViewController *categorySelectorViewController = [[IAECategorySelectorViewController alloc] initWithAllExtraActionsExceptSelectionWithSelectedCategory:nil];
+    NSUInteger extraActions = CATEGORYSELECTOR_EXTRAACTION_CATEGORYSELECTIONWITHOUTDECORATOR |
+                              CATEGORYSELECTOR_EXTRAACTION_ADD |
+                              CATEGORYSELECTOR_EXTRAACTION_DONE;
+    IAECategorySelectorViewController *categorySelectorViewController = [[IAECategorySelectorViewController alloc] initWithExtraActions:extraActions
+                                                                                                                   withSelectedCategory:nil];
+
+    /*
+    - (id)initWithExtraActions:(NSUInteger)actions withSelectedCategory:(IAECategory *)category;
+    CATEGORYSELECTOR_EXTRAACTION_CATEGORYSELECTION = 0x0001,
+    CATEGORYSELECTOR_EXTRAACTION_ADD = 0x0001 << 1,
+    CATEGORYSELECTOR_EXTRAACTION_RENAME = 0x0001 << 2,
+    CATEGORYSELECTOR_EXTRAACTION_DELETE = 0x0001 << 3,
+    CATEGORYSELECTOR_EXTRAACTION_DONE = 0x0001 << 4,
+    CATEGORYSELECTOR_EXTRAACTION_ALL_ACTIONS = 0xFFFF
+    */
+    
     categorySelectorViewController.delegate = self;
     categorySelectorViewController.modalPresentationStyle = UIModalPresentationFormSheet;
     
@@ -797,6 +812,11 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
 {
     // Nota: Solo tendra sentido si realmente se ha lanzado
     return self.popover == nil;
+}
+
+- (BOOL)categorySelectorViewControllerWasLaunchedFromConcept
+{
+    return self.popover != nil && [self.calculatorViewController isClosed];
 }
 
 - (IAEContextView *)findActualSelectedContext
@@ -1350,9 +1370,19 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
 - (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
                      didSelectCategory:(IAECategory *)category
 {
-    NSAssert(![self categorySelectorViewControllerWasLaunchedFromCategoryButton], @"");
+    if ([self categorySelectorViewControllerWasLaunchedFromCategoryButton]) {
+        [self launchCategoryEditorViewControllerModalFromCategorySelectorViewController:categorySelectorViewController ToRenameCategory:category];
+    } else if ([self categorySelectorViewControllerWasLaunchedFromConcept]) {
+        [self dismissPopoverAndChangeCategoryOfConceptAtIndexPath:categorySelectorViewController.conceptCellIndexPath toCategory:category];
+    } else {
+        NSAssert(0, @"Nunca se deberia de llegar a este punto");
+    }
+}
+
+- (void)dismissPopoverAndChangeCategoryOfConceptAtIndexPath:(NSIndexPath *)indexPath toCategory:(IAECategory *)category
+{
     [self dismisPopover];
-    [self changeCategoryOfConceptAtIndexPath:categorySelectorViewController.conceptCellIndexPath toCategory:category];
+    [self changeCategoryOfConceptAtIndexPath:indexPath toCategory:category];
 }
 
 - (void)changeCategoryOfConceptAtIndexPath:(NSIndexPath *)indexPath toCategory:(IAECategory *)category
@@ -1407,13 +1437,6 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
     categoryEditorViewController.delegate = self;
     
     [self presentViewController:categoryEditorViewController animated:YES completion:nil];
-}
-
-- (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewControler
-             didSelectedRenameCategory:(IAECategory *)category
-{
-    NSAssert([self categorySelectorViewControllerWasLaunchedFromCategoryButton], @"");
-    [self launchCategoryEditorViewControllerModalFromCategorySelectorViewController:categorySelectorViewControler ToRenameCategory:category];
 }
 
 - (void)launchCategoryEditorViewControllerModalFromCategorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController

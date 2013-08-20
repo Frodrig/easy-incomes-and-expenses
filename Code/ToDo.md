@@ -4,7 +4,7 @@
 ** Hay que sustituir el ScrollView por otro elemento en el que podamos hacer algún tipo de transición especial. Lo ideal para empezar sería una view con dos subviews a modo de contenedores dentro de las cuales hubiera una label para el mes y otra para el balance.
 
 * Selector de categorías
-** Tenemos pequeño problema: hemos supuesto que la selección de una categoría sucede solo cuando estamos en modo calculadora pero también puede ocurrir, cuando vengamos del pulsar en el botón de categorías. Hay que generalizar todo este funcionamiento.
+** Tenemos pequeño problema: hemos supuesto en la clase principal, IAEEasyIncomesAndExpensesViewController, que la selección de una categoría sucede solo cuando hemos pulsado sobre un concepto, pero también puede ocurrir cuando desplegamos el selector tras pulsar en el botón de categorías. En este último caso, lo que ha de suceder es entrar en modo edición o renombrado de la misma. Hay que generalizar todo este funcionamiento.
 ** Reforzar de alguna manera adicional qué es una categoría general.
 *** Fondo.
 *** Permitir los gestos de acciones como renombrar o borrar pero mostrar alertviews o similares que indiquen el motivo por el cual no se puede manipular.

@@ -194,6 +194,16 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
     return self.mode == CM_EXPENSE;
 }
 
+- (BOOL)isOpen
+{
+    return [self isInExpenseMode] || [self isInIncomeMode];
+}
+
+- (BOOL)isClosed
+{
+    return ![self isOpen];
+}
+
 #pragma mark - Drag Panel View Events
 
 - (IBAction)incomeButtonPressed:(id)sender

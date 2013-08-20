@@ -22,8 +22,6 @@
                      didSelectCategory:(IAECategory *)category;
 - (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
             didSelectAddCategoryOfType:(CategoryType)categoryType;
-- (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewControler
-             didSelectedRenameCategory:(IAECategory *)category;
 
 - (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
                didSelectRemoveCategory:(IAECategory *)category;

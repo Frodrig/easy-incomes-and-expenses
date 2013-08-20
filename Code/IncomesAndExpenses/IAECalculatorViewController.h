@@ -40,6 +40,8 @@
 - (BOOL)isInVisibleMode;
 - (BOOL)isInIncomeMode;
 - (BOOL)isInExpenseMode;
+- (BOOL)isOpen;
+- (BOOL)isClosed;
 
 - (void)disable;
 - (void)enable;

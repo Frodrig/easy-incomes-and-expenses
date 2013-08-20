@@ -75,8 +75,7 @@ static const CGFloat kDurationOfAnimationOfOpenDecoratorView = 0.1;
 {
     NSUInteger categoryActions = CATEGORYSELECTOR_EXTRAACTION_ADD |
                                  CATEGORYSELECTOR_EXTRAACTION_DONE |
-                                 CATEGORYSELECTOR_EXTRAACTION_DELETE |
-                                 CATEGORYSELECTOR_EXTRAACTION_RENAME;
+                                 CATEGORYSELECTOR_EXTRAACTION_DELETE;
     self = [self initWithExtraActions:categoryActions withSelectedCategory:category];
     if (self) {
         // ...
@@ -92,7 +91,7 @@ static const CGFloat kDurationOfAnimationOfOpenDecoratorView = 0.1;
 
 - (void)initLongTapGestureRecognizer
 {
-    if ([self renameActionFlagEnabled] || [self deleteActionFlagEnabled]) {
+    if ([self deleteActionFlagEnabled]) {
         _longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureRecogzinerEvent:)];
         _longPressGestureRecognizer.numberOfTapsRequired = 0;
         _longPressGestureRecognizer.numberOfTouchesRequired = 1;
@@ -140,7 +139,17 @@ static const CGFloat kDurationOfAnimationOfOpenDecoratorView = 0.1;
 
 - (BOOL)categorySelectionFlagEnabled
 {
+    return [self isCategorySelectionWithDecoratorFlagEnabled] || [self isCategorySelectionWithoutDecoratorFlagEnabled];
+}
+
+- (BOOL)isCategorySelectionWithDecoratorFlagEnabled
+{
     return self.actions & CATEGORYSELECTOR_EXTRAACTION_CATEGORYSELECTION;
+}
+
+- (BOOL)isCategorySelectionWithoutDecoratorFlagEnabled
+{
+    return self.actions & CATEGORYSELECTOR_EXTRAACTION_CATEGORYSELECTIONWITHOUTDECORATOR;
 }
 
 - (BOOL)addActionFlagEnabled
@@ -151,11 +160,6 @@ static const CGFloat kDurationOfAnimationOfOpenDecoratorView = 0.1;
 - (BOOL)doneActionFlagEnabled
 {
     return self.actions & CATEGORYSELECTOR_EXTRAACTION_DONE;
-}
-
-- (BOOL)renameActionFlagEnabled
-{
-    return self.actions & CATEGORYSELECTOR_EXTRAACTION_RENAME;
 }
 
 - (BOOL)deleteActionFlagEnabled
@@ -211,20 +215,30 @@ static const CGFloat kDurationOfAnimationOfOpenDecoratorView = 0.1;
     [self.categoriesTableView selectRowAtIndexPath:indexPathOfCategory animated:animation scrollPosition:UITableViewScrollPositionMiddle];
 }
 
-- (void)changeToSelectedIndexPath:(NSIndexPath *)newSelectedIndexPath withAnimation:(BOOL)animation andLogicBlockWhenFinish:(void(^)(void))logicBlock
+- (void)changeToSelectedIndexPath:(NSIndexPath *)newSelectedIndexPath
+                    withAnimation:(BOOL)animation
+          andLogicBlockWhenFinish:(void(^)(void))logicBlock
 {
-    void(^animationCoordinationBlock)(void) = ^(void) {
+    if ([self isCategorySelectionWithoutDecoratorFlagEnabled]) {
         self.selectedCategoryIndexPath = newSelectedIndexPath;
+        if (logicBlock) {
+            logicBlock();
+        }
+    } else {
+        void(^animationCoordinationBlock)(void) = ^(void) {
+            self.selectedCategoryIndexPath = newSelectedIndexPath;
+            [self makeOpenDecoratorViewAtIndexPath:self.selectedCategoryIndexPath
+                                           visible:YES
+                                     withAnimation:animation
+                                     andLogicBlock:logicBlock];
+                
+        };
+        
         [self makeOpenDecoratorViewAtIndexPath:self.selectedCategoryIndexPath
-                                       visible:YES
+                                       visible:NO
                                  withAnimation:animation
-                                 andLogicBlock:logicBlock];
-    };
-    
-    [self makeOpenDecoratorViewAtIndexPath:self.selectedCategoryIndexPath
-                                   visible:NO
-                             withAnimation:animation
-                             andLogicBlock:animationCoordinationBlock];
+                                 andLogicBlock:animationCoordinationBlock];
+    }
 }
 
 - (void)makeOpenDecoratorViewAtIndexPath:(NSIndexPath *)indexPath
@@ -405,10 +419,7 @@ static const CGFloat kDurationOfAnimationOfOpenDecoratorView = 0.1;
 - (UIMenuItem *)createMenuItemForRenameActionIfProceed
 {
     UIMenuItem *menuItem = nil;
-    if ([self renameActionFlagEnabled]) {
-        menuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"Rename", @"") action:@selector(renameCategoryMenuSelected:)];
-    }
-    
+
     return menuItem;
 }
 
@@ -485,12 +496,6 @@ static const CGFloat kDurationOfAnimationOfOpenDecoratorView = 0.1;
 {
     IAECategory *category = [self categoryOfCellSelectedForContextualMenu];
     [self.delegate categorySelectorViewController:self didSelectRemoveCategory:category];
-}
-
-- (void)renameCategoryMenuSelected:(id)sender
-{
-    IAECategory *category = [self categoryOfCellSelectedForContextualMenu];
-    [self.delegate categorySelectorViewController:self didSelectedRenameCategory:category];
 }
 
 #pragma mark - UIAlertViewDelegate

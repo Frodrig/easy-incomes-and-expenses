@@ -54,6 +54,10 @@ static const CGFloat kColorWhiteComponentForStrokeAnimation = 0.8;
 static const CGFloat kColorWhiteAlphaComponentForStrokeAnimation = 1.0;
 static const NSInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
 
+static NSString * const kLtextNoConcepts = @"LTEXT_CATEGORYSELECTORCELL_NOCONCEPTS";
+static NSString * const kLtextOneConcept = @"LTEXT_CATEGORYSELECTORCELL_ONECONCEPT";
+static NSString * const kLtextTwoOrMoreConcepts = @"LTEXT_CATEGORYSELECTORCELL_TWOORMORECONCEPTS";
+
 #pragma mark - Properties
 
 - (IAEStrokeAnimatableLineView *)strokeAnimatableView
@@ -388,6 +392,16 @@ static const NSInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
     NSDictionary *attributes = [self createAttributeDictionaryForCategoryNameAttributeTextWithCategory:category];
     cell.categoryLabel.attributedText = [[NSAttributedString alloc] initWithString:[category description]
                                                                         attributes:attributes];
+    if (self.showNumberOfConcepts) {
+        NSUInteger numberOfConcepts = [[IAEBook sharedBook] findAllConceptsWithCategory:category].count;
+        if (numberOfConcepts == 0) {
+            cell.numberOfConceptsLabel.text = NSLocalizedString(kLtextNoConcepts, @"");
+        } else if (numberOfConcepts == 1) {
+            cell.numberOfConceptsLabel.text = NSLocalizedString(kLtextOneConcept, @"");
+        } else {
+            cell.numberOfConceptsLabel.text = [NSString stringWithFormat:NSLocalizedString(kLtextTwoOrMoreConcepts, @""), numberOfConcepts];
+        }
+    }
 }
 
 - (NSDictionary *)createAttributeDictionaryForCategoryNameAttributeTextWithCategory:(IAECategory *)category

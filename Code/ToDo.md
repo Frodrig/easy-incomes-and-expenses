@@ -4,10 +4,11 @@
 ** Hay que sustituir el ScrollView por otro elemento en el que podamos hacer algún tipo de transición especial. Lo ideal para empezar sería una view con dos subviews a modo de contenedores dentro de las cuales hubiera una label para el mes y otra para el balance.
 
 * Selector de categorías
-** Meter el número de conceptos asociados a la categoría de forma global (para todos los años).
+** -Meter el número de conceptos asociados a la categoría de forma global (para todos los años).-
 ** Reforzar de alguna manera adicional qué es una categoría general.
 ** Mostrar alertviews o similares que indiquen el motivo por el cual no se puede manipular una categoría general.
 ** Considerar volver a poner rallas separatorias entre categorías.
+** El stroke al borrar debería de tener márgenes al empezar y finalizar.
 ** -Tenemos pequeño problema: hemos supuesto en la clase principal, IAEEasyIncomesAndExpensesViewController, que la selección de una categoría sucede solo cuando hemos pulsado sobre un concepto, pero también puede ocurrir cuando desplegamos el selector tras pulsar en el botón de categorías. En este último caso, lo que ha de suceder es entrar en modo edición o renombrado de la misma. Hay que generalizar todo este funcionamiento.-
 ** -Al borrar, recarga solo de la celda vinculada y con efecto fade en desaparición.-
 ** -Permitir los gestos de acciones como renombrar o borrar.-
@@ -47,6 +48,7 @@
 
 * Otros
 ** Comprar los nuevos glyphs e introducirlos.
+** En todos los sitios donde vuelvo a recrear la fuente y su tamaño… simplemente cambiar el campo text para la label asociada. Esto es válido a no ser que tenga que poner kern.
 
 * Ideas
 ** Representar en modo reporte o informe una gráfica de puntos en la zona donde está el nombre del mes y el balance reflejando de manera diferenciada el mes en el que estamos. Esto serviría para contrastar el balance, el total de ingresos o el total de gastos del mes con respecto al resto.

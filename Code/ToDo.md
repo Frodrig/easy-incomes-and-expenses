@@ -49,6 +49,7 @@
 * Otros
 ** Comprar los nuevos glyphs e introducirlos.
 ** En todos los sitios donde vuelvo a recrear la fuente y su tamaño… simplemente cambiar el campo text para la label asociada. Esto es válido a no ser que tenga que poner kern.
+** ¿Tiene sentido permitir pulsar en categorías cuando está la calculadora abierta?
 
 * Ideas
 ** Representar en modo reporte o informe una gráfica de puntos en la zona donde está el nombre del mes y el balance reflejando de manera diferenciada el mes en el que estamos. Esto serviría para contrastar el balance, el total de ingresos o el total de gastos del mes con respecto al resto.

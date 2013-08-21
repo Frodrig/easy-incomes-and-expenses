@@ -24,7 +24,7 @@
             break;
             
         default:
-            NSAssert(economicValueType == ECONOMIC_ZERO_VALUE, @"Valor economico invalido");
+            NSAssert(economicValueType == ECONOMIC_ZERO_VALUE, @"");
             return [UIColor colorWithWhite:0.55 alpha:1];
             break;
     }

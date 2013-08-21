@@ -29,8 +29,11 @@
 
 * Años
 ** -El color sigue siendo azul para los controles fundamentales.-
-** Estudiar cuál será el color cuando el balance sea cero.
-** Cuando se abra el modal, deberíamos de irnos a la sección que contenga el año y además mostrar la celda asociada en pantalla.
+** -Definir cuál será el color cuando el balance sea cero.-
+** Hay que incluir el número de conceptos que tiene el año.
+** Quitar el menú contextual para ir a un año
+** Implementar el borrado o vaciado del año mediante gesto
+** Cuando se abra el modal, deberíamos de irnos a la sección que contenga el año y además mostrar la celda asociada en pantalla. Probar qué ocurre cuando abrimos el modal desde un año sin conceptos y con conceptos. Probarlo con el cuadro de diálogo con información que rebase el área de visión y viceversa.
 
 * Modo informe
 ** Al ir haciendo scroll, ir haciendo desaparecer lo que queda más fuera de la pantalla.
@@ -49,6 +52,9 @@
 ** En todos los sitios donde vuelvo a recrear la fuente y su tamaño… simplemente cambiar el campo text para la label asociada. Esto es válido a no ser que tenga que poner kern.
 ** ¿Tiene sentido permitir pulsar en categorías cuando está la calculadora abierta?
 ** El stroke hace alguna cosa rara aún: en el selector de categorías el view que contiene el label con el nombre hemos tenido que poner que haga clip de sus subviews y, además, al terminar de hacerse el stroke (esto para todos), se produce un pequeño glich que hace que se eleve un poco.
+
+* Problemas conocidos
+** Al ir a insertar un concepto habiendo cambiado de año, éste no aparecía en el panel de conceptos hasta que cambiaba de mes y volvía.
 
 * Ideas
 ** Años

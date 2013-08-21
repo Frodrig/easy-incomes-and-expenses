@@ -619,7 +619,6 @@
 			children = (
 				5BCE3AA517A95D2A00CD01E7 /* Numbers Utils */,
 				5B2881311798580F006E4F9B /* Version Helper */,
-				5BA013091798007200337E84 /* String */,
 				5B5C967817816718008CD851 /* Views */,
 				5B62D87E178EC3C0009879A6 /* Currency Info */,
 				5B62D87A178EC24B009879A6 /* Date Helper */,
@@ -706,6 +705,7 @@
 		5B6E9FA4177D9BAB0072EE34 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				5BA013091798007200337E84 /* String */,
 				5B36AFF41785BBC500132475 /* NSDecimalNumber */,
 				5B5C96A61781E861008CD851 /* NSNumber */,
 				5B5C967C17816A01008CD851 /* UIView */,

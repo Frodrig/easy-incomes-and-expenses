@@ -160,7 +160,7 @@ static const NSUInteger kAlertViewCleanButtonIndex = 1;
     BOOL isAValidYearAndHaveConcepts = year && [year findNumberOfConcepts] > 0;
     
     if (isAValidYearAndHaveConcepts) {
-        [cell configureWithYearDate:year.yearDate andBalance:[year balance]];
+        [cell configureWithYearDate:year.yearDate balance:[year balance] andNumberOfConcepts:[year findNumberOfConcepts]];
     } else {
         [cell configureWithYearDate:[self yearDateFromIndexPath:indexPath]];
     }

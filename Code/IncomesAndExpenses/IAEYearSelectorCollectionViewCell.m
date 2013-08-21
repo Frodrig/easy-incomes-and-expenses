@@ -12,6 +12,7 @@
 #import "UIView+RoundedCorners.h"
 #import "IAECurrencyManager.h"
 #import "IAECircleDecoratorView.h"
+#import "IAELocalizerPhraseComposer.h"
 
 @interface IAEYearSelectorCollectionViewCell()
 
@@ -20,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet IAEValueDecoratorView *economicDecoratorView;
 @property (weak, nonatomic) IBOutlet UILabel *yearLabel;
 @property (weak, nonatomic) IBOutlet UILabel *balanceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *numberOfConceptsLabel;
 @property (weak, nonatomic) IBOutlet IAECircleDecoratorView *openYearDecoratorView;
 
 @end
@@ -27,9 +29,10 @@
 @implementation IAEYearSelectorCollectionViewCell
 
 static NSString * const kFontFamilyForYearDateLabel = @"HelveticaNeue-UltraLight";
-static NSString * const kFontFamilyForBalanceLabel = @"HelveticaNeue-Italic";
+static const CGFloat kKernForYearDateLabel = 10.0;
 static const NSUInteger kFontFamilySizeForYearDateLabel = 55;
-static const NSUInteger kFontFamilySizeForBalanceLabel = 21;
+static const CGFloat kColorWhiteValueForYearDateLabel = 0.0;
+static const CGFloat kColorAlphaValueForYearDateLabel = 1.0;
 
 static NSUInteger containerViewRoundRectSize = 10;
 
@@ -50,30 +53,27 @@ static NSUInteger containerViewRoundRectSize = 10;
 
 #pragma mark - Public Methods
 
-- (void)configureWithYearDate:(NSUInteger)yearDate andBalance:(NSDecimalNumber *)balance
+- (void)configureWithYearDate:(NSUInteger)yearDate balance:(NSDecimalNumber *)balance andNumberOfConcepts:(NSUInteger)numberOfConcepts
 {
-    NSAssert(yearDate > 0, @"");
-    
-    [self configureContainerViewRoundRects];
-
-    [self showControlsAssociatedWithConcepts:YES];
-    self.yearLabel.attributedText = [[NSAttributedString alloc] initWithString:[self yearStringFromYearDate:yearDate]
-                                                                    attributes:[self createAttributeDictionaryForYearLabelWithColor:[UIColor blackColor]]];
+    [self configureBasicInformationWithYearDate:yearDate andShowingControlsAssociatedWithConcepts:YES];
     self.economicDecoratorView.economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:balance];
-    NSString *balanceString = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:balance];
-    self.balanceLabel.attributedText = [[NSAttributedString alloc] initWithString:balanceString
-                                                                       attributes:[self createAttributeDictionaryForBalanceYearLabel]];
+    self.balanceLabel.text = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:balance];
+    self.numberOfConceptsLabel.text = [IAELocalizerPhraseComposer stringPhraseWithNumberOfConcepts:numberOfConcepts];
 }
 
 - (void)configureWithYearDate:(NSUInteger)yearDate
 {
-    NSAssert(yearDate > 0, @"");
-    
-    [self configureContainerViewRoundRects];
+    [self configureBasicInformationWithYearDate:yearDate andShowingControlsAssociatedWithConcepts:NO];
+}
 
-    [self showControlsAssociatedWithConcepts:NO];
+- (void)configureBasicInformationWithYearDate:(NSUInteger)yearDate andShowingControlsAssociatedWithConcepts:(BOOL)showControlsForConcepts
+{
+    NSAssert(yearDate > 0, @"");
+
+    [self configureContainerViewRoundRects];
+    [self showControlsAssociatedWithConcepts:showControlsForConcepts];
     self.yearLabel.attributedText = [[NSAttributedString alloc] initWithString:[self yearStringFromYearDate:yearDate]
-                                                                    attributes:[self createAttributeDictionaryForYearLabelWithColor:[UIColor blackColor]]];
+                                                                    attributes:[self createAttributeDictionaryForYearLabel]];
 }
 
 - (void)showControlsAssociatedWithConcepts:(BOOL)show
@@ -82,6 +82,7 @@ static NSUInteger containerViewRoundRectSize = 10;
     
     self.economicDecoratorView.hidden = hide;
     self.balanceLabel.hidden = hide;
+    self.numberOfConceptsLabel.hidden = hide;
 }
 
 - (NSString *)yearStringFromYearDate:(NSUInteger)yearDate
@@ -91,22 +92,13 @@ static NSUInteger containerViewRoundRectSize = 10;
     return yearString;
 }
 
-- (NSDictionary *)createAttributeDictionaryForYearLabelWithColor:(UIColor *)color
+- (NSDictionary *)createAttributeDictionaryForYearLabel
 {
     NSDictionary *attributes =  @{NSFontAttributeName: [UIFont fontWithName:kFontFamilyForYearDateLabel size:kFontFamilySizeForYearDateLabel],
-                                  NSForegroundColorAttributeName: color,
-                                  NSKernAttributeName: [NSNumber numberWithInteger:20.0]};
+                                  NSForegroundColorAttributeName: [UIColor colorWithWhite:kColorWhiteValueForYearDateLabel alpha:kColorAlphaValueForYearDateLabel],
+                                  NSKernAttributeName: [NSNumber numberWithInteger:kKernForYearDateLabel]};
 
     return attributes;
-}
-
-- (NSDictionary *)createAttributeDictionaryForBalanceYearLabel
-{
-    NSDictionary *attributes =  @{NSFontAttributeName: [UIFont fontWithName:kFontFamilyForBalanceLabel size:kFontFamilySizeForBalanceLabel],
-                                  NSForegroundColorAttributeName: [UIColor lightGrayColor],
-                                  NSKernAttributeName: [NSNumber numberWithInteger:1.0]};
-    
-    return attributes;    
 }
 
 @end

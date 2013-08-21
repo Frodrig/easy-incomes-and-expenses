@@ -22,7 +22,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2011" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="shA-Ps-YAj">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2011" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="shA-Ps-YAj">
                                 <rect key="frame" x="20" y="0.0" width="240" height="65"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="55"/>
@@ -32,6 +32,7 @@
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="6.000 €" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kdm-9n-jJx">
                                 <rect key="frame" x="260" y="3" width="212" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Italic" family="Helvetica Neue" pointSize="21"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -59,6 +60,7 @@
                 <outlet property="balanceLabel" destination="kdm-9n-jJx" id="hEb-12-cM9"/>
                 <outlet property="cellContainerView" destination="GF8-Ce-LrS" id="e17-0c-g7Q"/>
                 <outlet property="economicDecoratorView" destination="AYA-LM-uxa" id="HGg-rH-5Nu"/>
+                <outlet property="numberOfConceptsLabel" destination="7TR-H3-MiX" id="eAR-uQ-axG"/>
                 <outlet property="openYearDecoratorView" destination="Cug-cX-R0d" id="p0A-Jc-G4q"/>
                 <outlet property="yearLabel" destination="shA-Ps-YAj" id="M1N-Ok-122"/>
             </connections>

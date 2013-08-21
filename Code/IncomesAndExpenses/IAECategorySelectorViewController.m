@@ -390,7 +390,8 @@ static const NSInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
     cell.categoryLabel.attributedText = [[NSAttributedString alloc] initWithString:[category description]
                                                                         attributes:attributes];
     if (self.showNumberOfConcepts) {
-        cell.numberOfConceptsLabel.text = [IAELocalizerPhraseComposer stringPhraseNumberOfConceptsOfCategory:category];
+        NSUInteger numberOfConceptsOfCategory = [[IAEBook sharedBook] findAllConceptsWithCategory:category].count;
+        cell.numberOfConceptsLabel.text = [IAELocalizerPhraseComposer stringPhraseWithNumberOfConcepts:numberOfConceptsOfCategory];
     }
 }
 

@@ -7,7 +7,6 @@
 //
 
 #import "IAELocalizerPhraseComposer.h"
-#import "IAEBook.h"
 
 @implementation IAELocalizerPhraseComposer
 
@@ -19,10 +18,9 @@ static NSString * const kLtextTwoOrMoreConcepts = @"LTEXT_PHRASE_TWOORMORECONCEP
 
 #pragma mark - Phrases
 
-+ (NSString *)stringPhraseNumberOfConceptsOfCategory:(IAECategory *)category
++ (NSString *)stringPhraseWithNumberOfConcepts:(NSUInteger)numberOfConcepts;
 {
     NSString *phrase = nil;
-    NSUInteger numberOfConcepts = [[IAEBook sharedBook] findAllConceptsWithCategory:category].count;
     if (numberOfConcepts == 0) {
         phrase = NSLocalizedString(kLtextNoConcepts, @"");
     } else if (numberOfConcepts == 1) {

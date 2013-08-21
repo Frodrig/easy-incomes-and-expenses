@@ -14,7 +14,7 @@
 
 @property(nonatomic) BOOL showOpenYearDecorator;
 
-- (void)configureWithYearDate:(NSUInteger)yearDate andBalance:(NSDecimalNumber *)balance;
+- (void)configureWithYearDate:(NSUInteger)yearDate balance:(NSDecimalNumber *)balance andNumberOfConcepts:(NSUInteger)numberOfConcepts;
 - (void)configureWithYearDate:(NSUInteger)yearDate;
 
 @end

@@ -8,10 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@class IAECategory;
-
 @interface IAELocalizerPhraseComposer : NSObject
 
-+ (NSString *)stringPhraseNumberOfConceptsOfCategory:(IAECategory *)category;
++ (NSString *)stringPhraseWithNumberOfConcepts:(NSUInteger)numberOfConcepts;
 
 @end

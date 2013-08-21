@@ -28,12 +28,13 @@
 ** Cuando estemos en modo NO día deberíamos de aprovechar la zona destinada para mostrar el mes y día de la semana para indicar el mes y el número de concepto que vamos a introducir. Del mismo modo, valorar incluir en ese punto el año en el que nos encontramos.
 
 * Años
+** Quitar el menú contextual para ir a un año
+*** El año se abre pulsando en la celda
+*** Implementar el borrado o vaciado del año mediante gesto
 ** -El color sigue siendo azul para los controles fundamentales.-
 ** -Definir cuál será el color cuando el balance sea cero.-
 ** -Hay que incluir el número de conceptos que tiene el año.-
-** Quitar el menú contextual para ir a un año
-** Implementar el borrado o vaciado del año mediante gesto
-** Cuando se abra el modal, deberíamos de irnos a la sección que contenga el año y además mostrar la celda asociada en pantalla. Probar qué ocurre cuando abrimos el modal desde un año sin conceptos y con conceptos. Probarlo con el cuadro de diálogo con información que rebase el área de visión y viceversa.
+** -Cuando se abra el modal, deberíamos de irnos a la sección que contenga el año y además mostrar la celda asociada en pantalla. Probar qué ocurre cuando abrimos el modal desde un año sin conceptos y con conceptos. Probarlo con el cuadro de diálogo con información que rebase el área de visión y viceversa.-
 
 * Modo informe
 ** Al ir haciendo scroll, ir haciendo desaparecer lo que queda más fuera de la pantalla.

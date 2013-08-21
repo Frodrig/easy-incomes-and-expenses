@@ -319,33 +319,36 @@ static const NSUInteger kAlertViewCleanButtonIndex = 1;
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self launchMenuOfOptionsAtYearCellIndexPathIfProceed:indexPath];
+    [self sendToDelegateTheChosenActionAfterSelectCellWithYearDate:[self yearDateBasedInSegmentedControlStateUsingIndexPath:indexPath]];
+    [self dismissViewControllerAnimated:YES completion:nil];
+
+    //[self launchMenuOfOptionsAtYearCellIndexPathIfProceed:indexPath];
 }
 
-- (void)chooseActionAfterSelectCellWithYearDate:(NSUInteger)yearDateSelected
+- (void)sendToDelegateTheChosenActionAfterSelectCellWithYearDate:(NSUInteger)yearDateSelected
 {
     if (yearDateSelected == self.yearLoadedBeforeStart) {
-        [self actionSelectedActualYear];
+        [self sendToDelegateActionChosenSelectedActualYear];
     } else if ([[IAEBook sharedBook] findYearWithDate:[NSNumber numberWithUnsignedInteger:yearDateSelected]]) {
-        [self actionSelectedYearWithConceptsWithDate:yearDateSelected];
+        [self sendToDelegateActionChosenSelectedYearWithConceptsWithDate:yearDateSelected];
     } else {
-        [self actionSelectedYearWithoutConceptsWithDate:yearDateSelected];
+        [self sendToDelegateActionChosenSelectedYearWithoutConceptsWithDate:yearDateSelected];
     }
 }
 
-- (void)actionSelectedActualYear
+- (void)sendToDelegateActionChosenSelectedActualYear
 {
     [[IAEBook sharedBook] loadYear:self.yearLoadedBeforeStart];
     [self.delegate openYearSelectedWasSelectedInYearSelectorViewController:self];
 }
 
-- (void)actionSelectedYearWithConceptsWithDate:(NSUInteger)yearDate
+- (void)sendToDelegateActionChosenSelectedYearWithConceptsWithDate:(NSUInteger)yearDate
 {
     [[IAEBook sharedBook] loadYear:yearDate];
     [self.delegate yearSelectorViewController:self didLoadSelectedYearDate:yearDate];
 }
 
-- (void)actionSelectedYearWithoutConceptsWithDate:(NSUInteger)yearDate
+- (void)sendToDelegateActionChosenSelectedYearWithoutConceptsWithDate:(NSUInteger)yearDate
 {
     [[IAEBook sharedBook] createYear:[NSNumber numberWithUnsignedInteger:yearDate]];
     [[IAEBook sharedBook] saveAll];
@@ -421,7 +424,7 @@ static const NSUInteger kAlertViewCleanButtonIndex = 1;
 - (void)openActionMenuSelected:(id)sender
 {
     NSUInteger yearDateOfSelectedCellWithActionMenu = [self yearDateBasedInSegmentedControlStateUsingCell:self.selectedCellWithActionMenu];
-    [self chooseActionAfterSelectCellWithYearDate:yearDateOfSelectedCellWithActionMenu];
+    [self sendToDelegateTheChosenActionAfterSelectCellWithYearDate:yearDateOfSelectedCellWithActionMenu];
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }

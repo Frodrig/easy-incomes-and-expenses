@@ -109,6 +109,7 @@ static const CGFloat kAlphaInStrokeState = 0.25;
         [UIView animateWithDuration:animation ? kDurationOfStrokeStateAnimation : 0 animations:^{
             self.categoryLabel.alpha = alphaValue;
             self.openDecoratorView.alpha = alphaValue;
+            self.numberOfConceptsLabel.alpha = alphaValue;
         }];
     }
 }

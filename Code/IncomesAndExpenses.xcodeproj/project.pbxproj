@@ -37,6 +37,7 @@
 		5B5C968917816EE0008CD851 /* IAEValueDecoratorViewExpenseConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C968817816EE0008CD851 /* IAEValueDecoratorViewExpenseConfigurator.m */; };
 		5B5C968C17816EF0008CD851 /* IAEValueDecoratorViewZeroConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C968B17816EF0008CD851 /* IAEValueDecoratorViewZeroConfigurator.m */; };
 		5B5C96A91781E877008CD851 /* NSNumber+DefaultValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C96A81781E877008CD851 /* NSNumber+DefaultValues.m */; };
+		5B60EB5A17C4A3D5004E3D81 /* IAELocalizerPhraseComposer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B60EB5917C4A3D5004E3D81 /* IAELocalizerPhraseComposer.m */; };
 		5B62D85B178EA870009879A6 /* IAEYearSelectorCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B62D85A178EA870009879A6 /* IAEYearSelectorCollectionViewCell.m */; };
 		5B62D85D178EA8A2009879A6 /* IAEYearSelectorCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B62D85C178EA8A2009879A6 /* IAEYearSelectorCollectionViewCell.xib */; };
 		5B62D86E178EC20E009879A6 /* IAEEconomicValueTypeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B62D862178EC20E009879A6 /* IAEEconomicValueTypeHelper.m */; };
@@ -164,6 +165,8 @@
 		5B5C968B17816EF0008CD851 /* IAEValueDecoratorViewZeroConfigurator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEValueDecoratorViewZeroConfigurator.m; sourceTree = "<group>"; };
 		5B5C96A71781E877008CD851 /* NSNumber+DefaultValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+DefaultValues.h"; sourceTree = "<group>"; };
 		5B5C96A81781E877008CD851 /* NSNumber+DefaultValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+DefaultValues.m"; sourceTree = "<group>"; };
+		5B60EB5817C4A3D5004E3D81 /* IAELocalizerPhraseComposer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAELocalizerPhraseComposer.h; sourceTree = "<group>"; };
+		5B60EB5917C4A3D5004E3D81 /* IAELocalizerPhraseComposer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAELocalizerPhraseComposer.m; sourceTree = "<group>"; };
 		5B62D859178EA870009879A6 /* IAEYearSelectorCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEYearSelectorCollectionViewCell.h; sourceTree = "<group>"; };
 		5B62D85A178EA870009879A6 /* IAEYearSelectorCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEYearSelectorCollectionViewCell.m; sourceTree = "<group>"; };
 		5B62D85C178EA8A2009879A6 /* IAEYearSelectorCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEYearSelectorCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -596,6 +599,15 @@
 			name = NSNumber;
 			sourceTree = "<group>";
 		};
+		5B60EB5717C4A39E004E3D81 /* Localizer Phrase Composer */ = {
+			isa = PBXGroup;
+			children = (
+				5B60EB5817C4A3D5004E3D81 /* IAELocalizerPhraseComposer.h */,
+				5B60EB5917C4A3D5004E3D81 /* IAELocalizerPhraseComposer.m */,
+			);
+			name = "Localizer Phrase Composer";
+			sourceTree = "<group>";
+		};
 		5B62D85E178EAC66009879A6 /* Year Selector Collection View */ = {
 			isa = PBXGroup;
 			children = (
@@ -617,6 +629,7 @@
 		5B62D861178EC1FA009879A6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5B60EB5717C4A39E004E3D81 /* Localizer Phrase Composer */,
 				5BCE3AA517A95D2A00CD01E7 /* Numbers Utils */,
 				5B2881311798580F006E4F9B /* Version Helper */,
 				5B5C967817816718008CD851 /* Views */,
@@ -1337,6 +1350,7 @@
 				5B907840179D269E00B2A0F7 /* IAEKeyboardPanelCalculatorView.m in Sources */,
 				5BCE3AB917A9703B00CD01E7 /* IAEHelperCalculatorDataSource.m in Sources */,
 				5B5C967B1781673A008CD851 /* IAEValueDecoratorView.m in Sources */,
+				5B60EB5A17C4A3D5004E3D81 /* IAELocalizerPhraseComposer.m in Sources */,
 				5B5C968217816D68008CD851 /* IAEValueDecoratorViewConfigurator.m in Sources */,
 				5B907838179D25BD00B2A0F7 /* IAEDragPanelCalculatorView.m in Sources */,
 				5BCE3AA817A95D5300CD01E7 /* IAENumberUtils.m in Sources */,

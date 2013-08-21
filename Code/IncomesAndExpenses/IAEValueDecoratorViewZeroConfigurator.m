@@ -16,7 +16,7 @@
 {
     [super configure:decoratorView];
     
-    decoratorView.backgroundColor = [IAEColorHelper colorForEconomicInvalidValue];
+    decoratorView.backgroundColor = [IAEColorHelper colorForEconomicZeroValue];
 }
 
 @end

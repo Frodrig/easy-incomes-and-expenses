@@ -15,6 +15,6 @@
 
 + (UIColor *)colorForEconomicIncomeValue;
 + (UIColor *)colorForEconomicExpenseValue;
-+ (UIColor *)colorForEconomicInvalidValue;
++ (UIColor *)colorForEconomicZeroValue;
 
 @end

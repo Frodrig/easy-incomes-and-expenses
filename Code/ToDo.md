@@ -4,11 +4,11 @@
 ** Hay que sustituir el ScrollView por otro elemento en el que podamos hacer algún tipo de transición especial. Lo ideal para empezar sería una view con dos subviews a modo de contenedores dentro de las cuales hubiera una label para el mes y otra para el balance.
 
 * Selector de categorías
-** -Meter el número de conceptos asociados a la categoría de forma global (para todos los años).-
 ** Reforzar de alguna manera adicional qué es una categoría general.
 ** Mostrar alertviews o similares que indiquen el motivo por el cual no se puede manipular una categoría general.
 ** Considerar volver a poner rallas separatorias entre categorías.
-** El stroke al borrar debería de tener márgenes al empezar y finalizar.
+** -Meter el número de conceptos asociados a la categoría de forma global (para todos los años).-
+** -El stroke al borrar debería de tener márgenes al empezar y finalizar.-
 ** -Tenemos pequeño problema: hemos supuesto en la clase principal, IAEEasyIncomesAndExpensesViewController, que la selección de una categoría sucede solo cuando hemos pulsado sobre un concepto, pero también puede ocurrir cuando desplegamos el selector tras pulsar en el botón de categorías. En este último caso, lo que ha de suceder es entrar en modo edición o renombrado de la misma. Hay que generalizar todo este funcionamiento.-
 ** -Al borrar, recarga solo de la celda vinculada y con efecto fade en desaparición.-
 ** -Permitir los gestos de acciones como renombrar o borrar.-
@@ -29,9 +29,7 @@
 
 * Años
 ** -El color sigue siendo azul para los controles fundamentales.-
-** Considerar que los años que no tengan conceptos sean más pequeños como celda.
 ** Estudiar cuál será el color cuando el balance sea cero.
-** Considerar un botón que cambie de orden los años de menor a mayor. Al menos, quizás, para cuando estamos en modo años con conceptos.
 ** Cuando se abra el modal, deberíamos de irnos a la sección que contenga el año y además mostrar la celda asociada en pantalla.
 
 * Modo informe
@@ -53,4 +51,8 @@
 ** El stroke hace alguna cosa rara aún: en el selector de categorías el view que contiene el label con el nombre hemos tenido que poner que haga clip de sus subviews y, además, al terminar de hacerse el stroke (esto para todos), se produce un pequeño glich que hace que se eleve un poco.
 
 * Ideas
-** Representar en modo reporte o informe una gráfica de puntos en la zona donde está el nombre del mes y el balance reflejando de manera diferenciada el mes en el que estamos. Esto serviría para contrastar el balance, el total de ingresos o el total de gastos del mes con respecto al resto.
+** Años
+*** Considerar que los años que no tengan conceptos sean más pequeños como celda.
+*** Considerar un botón que cambie de orden los años de menor a mayor. Al menos, quizás, para cuando estamos en modo años con conceptos.
+** Informes
+*** Representar en modo reporte o informe una gráfica de puntos en la zona donde está el nombre del mes y el balance reflejando de manera diferenciada el mes en el que estamos. Esto serviría para contrastar el balance, el total de ingresos o el total de gastos del mes con respecto al resto.

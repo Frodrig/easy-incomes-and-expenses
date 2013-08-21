@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IAEStrokeAnimatableViewDelegate.h"
 
 @protocol IAEYearSelectorViewControllerDelegate;
 
 @interface IAEYearSelectorViewController : UIViewController<UICollectionViewDataSource,
-                                                            UICollectionViewDelegate>
+                                                            UICollectionViewDelegate,
+                                                            IAEStrokeAnimatableViewDelegate>
 
-@property(nonatomic, weak) id<IAEYearSelectorViewControllerDelegate> delegate;
+@property (nonatomic, weak) id<IAEYearSelectorViewControllerDelegate> delegate;
 
 - (IBAction)closeButtonPressed:(id)sender;
 - (IBAction)yearSegmentedControlPressed:(id)sender;

@@ -12,14 +12,16 @@
 #import "IAEDateHelper.h"
 #import "IAEBook.h"
 #import "IAEYear.h"
+#import "IAEStrokeAnimatableLineView.h"
 
 @interface IAEYearSelectorViewController ()
 @property (weak, nonatomic) IBOutlet UISegmentedControl *yearsSegmentedControl;
 @property (weak, nonatomic) IBOutlet UICollectionView *yearsCollectionView;
 @property (nonatomic) NSUInteger yearLoadedBeforeStart;
 @property (weak, nonatomic) IBOutlet UILabel *actualYearOpenLabel;
-@property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureRecognizer;
-@property (nonatomic, weak) IAEYearSelectorCollectionViewCell *selectedCellWithActionMenu;
+@property (nonatomic, weak) IAEYearSelectorCollectionViewCell *selectedCellToClean;
+@property (nonatomic, strong) UISwipeGestureRecognizer *swipeGestureRecognizer;
+@property (nonatomic, strong) IAEStrokeAnimatableLineView *strokeAnimatableLineView;
 @end
 
 @implementation IAEYearSelectorViewController
@@ -40,18 +42,53 @@ static const NSUInteger kYearsSegmentedControlAllYearsIndex = 1;
 
 static const NSUInteger kAlertViewCleanButtonIndex = 1;
 
+static const CGFloat kDurationStrokeAnimation = 0.25;
+static const CGFloat kColorWhiteComponentForStrokeAnimation = 0.8;
+static const CGFloat kColorWhiteAlphaComponentForStrokeAnimation = 1.0;
+static const NSUInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
+
+static NSString * const kLtextAlertViewConfirmCleanTitle = @"LTEXT_CONFIRM_CLEANYEARCONCEPTS_TITLE";
+static NSString * const kLtextAlertViewConfirmCleanMessage = @"LTEXT_CONFIRM_CLEANYEARCONCEPTS_TEXT";
+static NSString * const kLtextAlertViewConfirmCancelOption = @"LTEXT_ALERTVIEW_CANCEL";
+static NSString * const kLtextAlertViewConfirmCleanOption = @"LTEXT_ALERTVIEW_CLEAN";
+
+#pragma mark - Properties
+
+- (IAEStrokeAnimatableLineView *)strokeAnimatableLineView
+{
+    if (!_strokeAnimatableLineView) {
+        _strokeAnimatableLineView = [[IAEStrokeAnimatableLineView alloc] init];
+        _strokeAnimatableLineView.durationOfStrokeAnimation = kDurationStrokeAnimation;
+        _strokeAnimatableLineView.strokeColor = [UIColor colorWithWhite:kColorWhiteComponentForStrokeAnimation
+                                                                  alpha:kColorWhiteAlphaComponentForStrokeAnimation];
+        _strokeAnimatableLineView.strokeType = kTypeStrokeAnimation;
+        _strokeAnimatableLineView.delegate = self;
+    }
+    
+    return _strokeAnimatableLineView;
+}
+
+#pragma mark - Dealloc
+
+- (void)dealloc
+{
+    [self.yearsCollectionView removeGestureRecognizer:self.swipeGestureRecognizer];
+}
+
+#pragma mark - Init
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        [self initLongPressGestureRecognizer];
+        [self initSwipeGestureRecognizer];
     }
     return self;
 }
 
-- (void)initLongPressGestureRecognizer
+- (void)initSwipeGestureRecognizer
 {
-    _longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureRecognizerAction:)];
+    _swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGestureRecognizerAction:)];
 }
 
 - (void)viewDidLoad
@@ -71,7 +108,7 @@ static const NSUInteger kAlertViewCleanButtonIndex = 1;
                forCellWithReuseIdentifier:kCollectionViewCellReuseIdentifier];
     
     self.yearsCollectionView.allowsSelection = YES;
-    [self.yearsCollectionView addGestureRecognizer:self.longPressGestureRecognizer];
+    [self.yearsCollectionView addGestureRecognizer:self.swipeGestureRecognizer];
     
     self.yearsCollectionView.dataSource = self;
     self.yearsCollectionView.delegate = self;
@@ -113,13 +150,26 @@ static const NSUInteger kAlertViewCleanButtonIndex = 1;
 {
     [super viewWillAppear:animated];
     
-    [self vinculeInitialScrollPositionForYears];
+    [self goToOpenYearScrollPosition];
 }
 
-- (void)vinculeInitialScrollPositionForYears
+- (void)goToOpenYearScrollPosition
 {
-    NSIndexPath *indexPath = [self findIndexPathBasedInSegmentedControlIndexUsingYearDate:self.yearLoadedBeforeStart];
-    [self.yearsCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
+    if ([self canGoToOpenYearScrollPosition]) {
+        NSIndexPath *indexPath = [self findIndexPathBasedInSegmentedControlIndexUsingYearDate:self.yearLoadedBeforeStart];
+        [self.yearsCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
+    }
+}
+
+- (BOOL)canGoToOpenYearScrollPosition
+{
+    BOOL can = [self isSegmentedControlInAllYearsState];
+    if (!can) {
+        IAEYear *year = [[IAEBook sharedBook] findYearWithDate:@(self.yearLoadedBeforeStart)];
+        can = [self isSegmentedControlInWithConceptsYearsState] && [year findNumberOfConcepts] > 0;
+    }
+    
+    return can;
 }
 
 - (NSIndexPath *)findIndexPathBasedInSegmentedControlIndexUsingYearDate:(NSUInteger)yearDate
@@ -144,11 +194,6 @@ static const NSUInteger kAlertViewCleanButtonIndex = 1;
     return attributes;
 }
 
-- (void)dealloc
-{
-    [self.yearsCollectionView removeGestureRecognizer:self.longPressGestureRecognizer];
-}
-
 - (BOOL)canBecomeFirstResponder
 {
     return YES;
@@ -166,7 +211,20 @@ static const NSUInteger kAlertViewCleanButtonIndex = 1;
 
 - (IBAction)yearSegmentedControlPressed:(id)sender
 {
-    [self.yearsCollectionView reloadData];
+    if ([self canChangeTheSelectedSegmentIndex]) {
+        [self.yearsCollectionView reloadData];
+        [self goToOpenYearScrollPosition];
+    }
+}
+
+- (BOOL)canChangeTheSelectedSegmentIndex
+{
+    return ![self inCleanYearStateAfterSwipeGesture];
+}
+
+- (BOOL)inCleanYearStateAfterSwipeGesture
+{
+    return self.selectedCellToClean != nil;
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -317,6 +375,13 @@ static const NSUInteger kAlertViewCleanButtonIndex = 1;
 
 #pragma mark - UICollectionViewDelegate
 
+- (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    IAEYearSelectorCollectionViewCell *yearCell = (IAEYearSelectorCollectionViewCell *)cell;
+    [yearCell exitFromStrokeModeWithAnimation:NO];
+    [self.strokeAnimatableLineView resetStroke];
+}
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     [self sendToDelegateTheChosenActionAfterSelectCellWithYearDate:[self yearDateBasedInSegmentedControlStateUsingIndexPath:indexPath]];
@@ -359,105 +424,60 @@ static const NSUInteger kAlertViewCleanButtonIndex = 1;
 
 #pragma mark - UIGestureRecognizer
 
-- (void)longPressGestureRecognizerAction:(UILongPressGestureRecognizer *)longPressGestureRecognizer
+- (void)swipeGestureRecognizerAction:(UIGestureRecognizer *)gestureRecognizer
 {
-    [self findCellOfYearAndLaunchMenuOfOptionsUnderLongPressGestureRecognizer:longPressGestureRecognizer];
+    NSIndexPath *locationIndexPath = [self findIndexPathOfCellUnderGestureRecognizer:gestureRecognizer];
+    if ([self canCleanYearAtIndexPath:locationIndexPath]) {
+        self.selectedCellToClean = (IAEYearSelectorCollectionViewCell *)[self.yearsCollectionView cellForItemAtIndexPath:locationIndexPath];
+        [self.strokeAnimatableLineView doStrokeOverTheView:self.selectedCellToClean.containerForStrokeView];
+        [self.selectedCellToClean goToStrokeModeWithAnimation:YES];
+    }
 }
 
-- (void)findCellOfYearAndLaunchMenuOfOptionsUnderLongPressGestureRecognizer:(UILongPressGestureRecognizer *)longPressGestureRecognizer
+- (NSIndexPath *)findIndexPathOfCellUnderGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
 {
-    NSIndexPath *locationIndexPath = [self findIndexPathOfCellUnderLongPressGestureRecognizer:longPressGestureRecognizer];
-    [self launchMenuOfOptionsAtYearCellIndexPathIfProceed:locationIndexPath];
-}
-
-- (NSIndexPath *)findIndexPathOfCellUnderLongPressGestureRecognizer:(UILongPressGestureRecognizer *)longPressGestureRecognizer
-{
-    CGPoint location = [longPressGestureRecognizer locationInView:self.yearsCollectionView];
+    CGPoint location = [gestureRecognizer locationInView:self.yearsCollectionView];
     NSIndexPath *locationIndexPath = [self.yearsCollectionView indexPathForItemAtPoint:location];
 
     return locationIndexPath;
 }
 
-- (void)launchMenuOfOptionsAtYearCellIndexPathIfProceed:(NSIndexPath *)cellIndexPath
+- (BOOL)canCleanYearAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.selectedCellWithActionMenu = nil;
-    if (cellIndexPath) {
-        [self becomeFirstResponder];
-            
-        self.selectedCellWithActionMenu = (IAEYearSelectorCollectionViewCell *)[self.yearsCollectionView cellForItemAtIndexPath:cellIndexPath];
-            
-        UIMenuController *menu = [UIMenuController sharedMenuController];
-        BOOL menuWithOpenAndCleanActions = [self yearBasedInSegmentedControlStateUsingIndexPath:cellIndexPath] != nil;
-        menu.menuItems = menuWithOpenAndCleanActions ? [self createMenuItemsContainerForOpenAndCleanActions] :
-                                                       [self createMenuItemContainerForOpenAction];
-        [menu setTargetRect:self.selectedCellWithActionMenu.frame inView:self.yearsCollectionView];
-        [menu setMenuVisible:YES animated:YES];
-    }
-}
-
-- (NSArray *)createMenuItemsContainerForOpenAndCleanActions
-{
-    return [NSArray arrayWithObjects:[self createMenuItemForOpenAction], [self createMenuItemForCleanAction], nil];
-}
-
-- (NSArray *)createMenuItemContainerForOpenAction
-{
-    return [NSArray arrayWithObject:[self createMenuItemForOpenAction]];
-}
-
-- (UIMenuItem *)createMenuItemForOpenAction
-{
-    UIMenuItem *menuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"LTEXT_YEARSELECTOR_OPENACTION", @"")
-                                                      action:@selector(openActionMenuSelected:)];
+    IAEYear *year = [self yearBasedInSegmentedControlStateUsingIndexPath:indexPath];
     
-    return menuItem;
+    return [year findNumberOfConcepts] > 0;
 }
 
-- (UIMenuItem *)createMenuItemForCleanAction
+- (void)launchCleanConfirmationAlertView
 {
-    UIMenuItem *menuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"LTEXT_YEARSELECTOR_CLEANACTION", @"")
-                                                      action:@selector(cleanActionMenuSelected:)];
-    
-    return menuItem;
-}
-
-- (void)openActionMenuSelected:(id)sender
-{
-    NSUInteger yearDateOfSelectedCellWithActionMenu = [self yearDateBasedInSegmentedControlStateUsingCell:self.selectedCellWithActionMenu];
-    [self sendToDelegateTheChosenActionAfterSelectCellWithYearDate:yearDateOfSelectedCellWithActionMenu];
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)cleanActionMenuSelected:(id)sender
-{
-    IAEYear *yearOfSelectedCellWithActionMenu = [self yearBasedInSegmentedControlStateUsingCell:self.selectedCellWithActionMenu];
-    NSAssert(yearOfSelectedCellWithActionMenu, @"");
-    if ([yearOfSelectedCellWithActionMenu findNumberOfConcepts] > 0) {
-        UIAlertView *alertView = [[UIAlertView alloc]
-                                  initWithTitle:NSLocalizedString(@"LTEXT_CONFIRM_CLEANYEARCONCEPTS_TITLE", @"")
-                                  message:NSLocalizedString(@"LTEXT_CONFIRM_CLEANYEARCONCEPTS_TEXT", @"")
-                                  delegate:self
-                                  cancelButtonTitle:NSLocalizedString(@"LTEXT_ALERTVIEW_CANCEL", @"")
-                                  otherButtonTitles:NSLocalizedString(@"LTEXT_ALERTVIEW_CLEAN", @""), nil];
+    UIAlertView *alertView = [[UIAlertView alloc]
+                                initWithTitle:NSLocalizedString(kLtextAlertViewConfirmCleanTitle, @"")
+                                message:NSLocalizedString(kLtextAlertViewConfirmCleanMessage, @"")
+                                delegate:self
+                                cancelButtonTitle:NSLocalizedString(kLtextAlertViewConfirmCancelOption, @"")
+                                otherButtonTitles:NSLocalizedString(kLtextAlertViewConfirmCleanOption, @""), nil];
         
-        [alertView show];
-    }
+    [alertView show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == kAlertViewCleanButtonIndex) {
-        [self cleanYearSelectedWithActionMenu];
+        [self cleanYearSelected];
+    } else {
+        [self.selectedCellToClean exitFromStrokeModeWithAnimation:YES];
+        [self.strokeAnimatableLineView resetStroke];
     }
     
-    self.selectedCellWithActionMenu = nil;
+    self.selectedCellToClean = nil;
 }
 
-- (void)cleanYearSelectedWithActionMenu
+- (void)cleanYearSelected
 {
-    NSUInteger yearDateSelectedForClean = [self yearDateBasedInSegmentedControlStateFromCell:self.selectedCellWithActionMenu];
-    IAEYear *yearSelectedForClean = [self yearBasedInSegmentedControlStateUsingCell:self.selectedCellWithActionMenu];
+    NSIndexPath *indexPathOfSelectedCellToClean = [self.yearsCollectionView indexPathForCell:self.selectedCellToClean];
+    NSUInteger yearDateSelectedForClean = [self yearDateBasedInSegmentedControlStateFromCell:self.selectedCellToClean];
+    IAEYear *yearSelectedForClean = [self yearBasedInSegmentedControlStateUsingCell:self.selectedCellToClean];
     [[IAEBook sharedBook] deleteAllConceptsOfYear:yearSelectedForClean];
     [[IAEBook sharedBook] saveAll];
     
@@ -465,7 +485,20 @@ static const NSUInteger kAlertViewCleanButtonIndex = 1;
         [self.delegate yearSelectorViewController:self didCleanOpenYearDate:yearDateSelectedForClean];
     }
     
-    [self.yearsCollectionView reloadData];
+    if ([self isSegmentedControlInWithConceptsYearsState]) {
+        [self.yearsCollectionView deleteItemsAtIndexPaths:@[indexPathOfSelectedCellToClean]];
+    } else {
+        [self.selectedCellToClean exitFromStrokeModeWithAnimation:NO];
+        [self.strokeAnimatableLineView resetStroke];
+        [self.yearsCollectionView reloadItemsAtIndexPaths:@[indexPathOfSelectedCellToClean]];
+    }
+}
+
+#pragma mark - IAEStrokeAnimatableViewDelegate
+
+- (void)strokeAnimatableView:(IAEStrokeAnimatableLineView *)strokeAnimatableView didStrokeOverTheView:(UIView *)view
+{
+    [self launchCleanConfirmationAlertView];
 }
 
 @end

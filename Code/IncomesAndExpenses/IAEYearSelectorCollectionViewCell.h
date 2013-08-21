@@ -12,9 +12,14 @@
 
 @interface IAEYearSelectorCollectionViewCell : UICollectionViewCell
 
-@property(nonatomic) BOOL showOpenYearDecorator;
+@property (weak, nonatomic) IBOutlet UIView *containerForStrokeView;
+@property (nonatomic) BOOL showOpenYearDecorator;
+@property (nonatomic, readonly) BOOL inStrokeMode;
 
 - (void)configureWithYearDate:(NSUInteger)yearDate balance:(NSDecimalNumber *)balance andNumberOfConcepts:(NSUInteger)numberOfConcepts;
 - (void)configureWithYearDate:(NSUInteger)yearDate;
+
+- (void)goToStrokeModeWithAnimation:(BOOL)animation;
+- (void)exitFromStrokeModeWithAnimation:(BOOL)animation;
 
 @end

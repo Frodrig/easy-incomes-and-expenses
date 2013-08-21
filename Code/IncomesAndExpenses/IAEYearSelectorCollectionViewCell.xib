@@ -49,6 +49,11 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" id="k4r-pS-Nzf">
+                                <rect key="frame" x="9" y="0.0" width="482" height="65"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
@@ -59,6 +64,7 @@
             <connections>
                 <outlet property="balanceLabel" destination="kdm-9n-jJx" id="hEb-12-cM9"/>
                 <outlet property="cellContainerView" destination="GF8-Ce-LrS" id="e17-0c-g7Q"/>
+                <outlet property="containerForStrokeView" destination="k4r-pS-Nzf" id="iyw-2W-taZ"/>
                 <outlet property="economicDecoratorView" destination="AYA-LM-uxa" id="HGg-rH-5Nu"/>
                 <outlet property="numberOfConceptsLabel" destination="7TR-H3-MiX" id="eAR-uQ-axG"/>
                 <outlet property="openYearDecoratorView" destination="Cug-cX-R0d" id="p0A-Jc-G4q"/>

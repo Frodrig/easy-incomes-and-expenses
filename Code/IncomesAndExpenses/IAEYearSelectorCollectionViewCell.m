@@ -34,7 +34,10 @@ static const NSUInteger kFontFamilySizeForYearDateLabel = 55;
 static const CGFloat kColorWhiteValueForYearDateLabel = 0.0;
 static const CGFloat kColorAlphaValueForYearDateLabel = 1.0;
 
-static NSUInteger containerViewRoundRectSize = 10;
+static const CGFloat kDurationOfStrokeAnimation = 0.20;
+static const CGFloat kAlphaOfStrokeAnimation = 0.25;
+
+static const NSUInteger kContainerViewRoundRectSize = 10;
 
 - (void)setShowOpenYearDecorator:(BOOL)showOpenYearDecorator
 {
@@ -48,7 +51,7 @@ static NSUInteger containerViewRoundRectSize = 10;
 
 - (void)configureContainerViewRoundRects
 {
-    [self addRoundedCorners:UIRectCornerAllCorners withRadius:containerViewRoundRectSize];
+    [self addRoundedCorners:UIRectCornerAllCorners withRadius:kContainerViewRoundRectSize];
 }
 
 #pragma mark - Public Methods
@@ -99,6 +102,36 @@ static NSUInteger containerViewRoundRectSize = 10;
                                   NSKernAttributeName: [NSNumber numberWithInteger:kKernForYearDateLabel]};
 
     return attributes;
+}
+
+- (void)goToStrokeModeWithAnimation:(BOOL)animation
+{
+    if (![self inStrokeMode]) {
+        _inStrokeMode = YES;
+        [self strokeModeActive:YES withAnimation:animation];
+    }
+}
+
+- (void)exitFromStrokeModeWithAnimation:(BOOL)animation
+{
+    if ([self inStrokeMode]) {
+        _inStrokeMode = NO;
+        [self strokeModeActive:NO withAnimation:animation];
+    }
+}
+
+- (void)strokeModeActive:(BOOL)active withAnimation:(BOOL)animation
+{
+    CGFloat alphaValue = active ? kAlphaOfStrokeAnimation : 1;
+    [UIView animateWithDuration:animation ? kDurationOfStrokeAnimation : 0 animations:^{
+        self.yearLabel.alpha = alphaValue;
+        self.balanceLabel.alpha = alphaValue;
+        self.numberOfConceptsLabel.alpha = alphaValue;
+        self.openYearDecoratorView.alpha = alphaValue;
+        self.economicDecoratorView.alpha = alphaValue;
+    } completion:^(BOOL finished) {
+        
+    }];
 }
 
 @end

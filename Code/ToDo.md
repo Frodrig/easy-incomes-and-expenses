@@ -30,7 +30,7 @@
 * Años
 ** -El color sigue siendo azul para los controles fundamentales.-
 ** -Definir cuál será el color cuando el balance sea cero.-
-** Hay que incluir el número de conceptos que tiene el año.
+** -Hay que incluir el número de conceptos que tiene el año.-
 ** Quitar el menú contextual para ir a un año
 ** Implementar el borrado o vaciado del año mediante gesto
 ** Cuando se abra el modal, deberíamos de irnos a la sección que contenga el año y además mostrar la celda asociada en pantalla. Probar qué ocurre cuando abrimos el modal desde un año sin conceptos y con conceptos. Probarlo con el cuadro de diálogo con información que rebase el área de visión y viceversa.
@@ -55,6 +55,7 @@
 
 * Problemas conocidos
 ** Al ir a insertar un concepto habiendo cambiado de año, éste no aparecía en el panel de conceptos hasta que cambiaba de mes y volvía.
+** Al abrir un año, no recargamos el menú de texto inferior.
 
 * Ideas
 ** Años

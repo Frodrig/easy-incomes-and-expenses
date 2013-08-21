@@ -60,6 +60,21 @@ static const NSUInteger kAlertViewCleanButtonIndex = 1;
     
     [self configureYearsCollectionView];
     [self configureYearBookAndSaveYearLoadedBeforeStart];
+    [self configureActualYearOpenLabel];
+    [self configureYearsSegmentedControlLabels];
+    [self configureYearsSegmentedControlInitialState];
+}
+
+- (void)configureYearsCollectionView
+{
+    [self.yearsCollectionView registerNib:[UINib nibWithNibName:kNibNameForCollectionViewCell bundle:[NSBundle mainBundle]]
+               forCellWithReuseIdentifier:kCollectionViewCellReuseIdentifier];
+    
+    self.yearsCollectionView.allowsSelection = YES;
+    [self.yearsCollectionView addGestureRecognizer:self.longPressGestureRecognizer];
+    
+    self.yearsCollectionView.dataSource = self;
+    self.yearsCollectionView.delegate = self;
 }
 
 - (void)configureYearBookAndSaveYearLoadedBeforeStart
@@ -73,27 +88,14 @@ static const NSUInteger kAlertViewCleanButtonIndex = 1;
     [[IAEBook sharedBook] loadAll];
 }
 
-- (void)configureYearsCollectionView
+- (void)configureActualYearOpenLabel
 {
-    [self.yearsCollectionView registerNib:[UINib nibWithNibName:kNibNameForCollectionViewCell bundle:[NSBundle mainBundle]]
-               forCellWithReuseIdentifier:kCollectionViewCellReuseIdentifier];
-
-    self.yearsCollectionView.allowsSelection = YES;
-    [self.yearsCollectionView addGestureRecognizer:self.longPressGestureRecognizer];
-
-    self.yearsCollectionView.dataSource = self;
-    self.yearsCollectionView.delegate = self;
+    NSString *textLabel = [NSString stringWithFormat:NSLocalizedString(kTitleTagYearOpen, @""), self.yearLoadedBeforeStart];
+    self.actualYearOpenLabel.attributedText = [[NSAttributedString alloc] initWithString:textLabel
+                                                                              attributes:[self createAttributeDictionaryForActualYearOpenLabel]];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    [self vinculeYearsSegmentedControlLabels];
-    [self vinculeActualYearOpenLabel];
-}
-
-- (void)vinculeYearsSegmentedControlLabels
+- (void)configureYearsSegmentedControlLabels
 {
     [self.yearsSegmentedControl setTitle:NSLocalizedString(kTitleTagWithConceptsYears, @"")
                        forSegmentAtIndex:kYearsSegmentedControlYearsWithConceptsIndex];
@@ -101,11 +103,36 @@ static const NSUInteger kAlertViewCleanButtonIndex = 1;
                        forSegmentAtIndex:kYearsSegmentedControlAllYearsIndex];
 }
 
-- (void)vinculeActualYearOpenLabel
+- (void)configureYearsSegmentedControlInitialState
 {
-    NSString *textLabel = [NSString stringWithFormat:NSLocalizedString(kTitleTagYearOpen, @""), self.yearLoadedBeforeStart];
-    self.actualYearOpenLabel.attributedText = [[NSAttributedString alloc] initWithString:textLabel
-                                                                              attributes:[self createAttributeDictionaryForActualYearOpenLabel]];
+    IAEYear *year = [[IAEBook sharedBook] findYearWithDate:[NSNumber numberWithUnsignedInteger:self.yearLoadedBeforeStart]];
+    self.yearsSegmentedControl.selectedSegmentIndex = [year findNumberOfConcepts] > 0 ? kYearsSegmentedControlYearsWithConceptsIndex : kYearsSegmentedControlAllYearsIndex;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self vinculeInitialScrollPositionForYears];
+}
+
+- (void)vinculeInitialScrollPositionForYears
+{
+    NSIndexPath *indexPath = [self findIndexPathBasedInSegmentedControlIndexUsingYearDate:self.yearLoadedBeforeStart];
+    [self.yearsCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
+}
+
+- (NSIndexPath *)findIndexPathBasedInSegmentedControlIndexUsingYearDate:(NSUInteger)yearDate
+{
+    NSIndexPath *indexPath = nil;
+    if ([self isSegmentedControlInWithConceptsYearsState]) {
+        IAEYear *year = [[IAEBook sharedBook] findYearWithDate:[NSNumber numberWithUnsignedInteger:yearDate]];
+        indexPath = [NSIndexPath indexPathForRow:[[[IAEBook sharedBook] findAllYearWithConcepts] indexOfObject:year] inSection:0];
+    } else if ([self isSegmentedControlInAllYearsState]) {
+        indexPath = [NSIndexPath indexPathForRow:[IAEDateHelper findActualYearDate] - yearDate inSection:0];
+    }
+    
+    return indexPath;
 }
 
 - (NSDictionary *)createAttributeDictionaryForActualYearOpenLabel

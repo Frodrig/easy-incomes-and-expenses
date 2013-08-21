@@ -22,6 +22,7 @@
 
 static const NSUInteger kTagOfBackgroundContainerView = 10;
 static const NSUInteger kTagOfCategoryLabel = 20;
+static const NSUInteger kTagOfContainerForStrokeCategoryLabelView = 25;
 static const NSUInteger kTagOfOpenDecoratorView = 30;
 static const NSUInteger kTagOfNumberOfConceptsLabel = 40;
 
@@ -46,6 +47,15 @@ static const CGFloat kAlphaInStrokeState = 0.25;
     }
     
     return _categoryLabel;
+}
+
+- (UIView *)containerForStrokeCategoryLabelView
+{
+    if (!_containerForStrokeCategoryLabelView) {
+        _containerForStrokeCategoryLabelView = [self viewWithTag:kTagOfContainerForStrokeCategoryLabelView];
+    }
+    
+    return _containerForStrokeCategoryLabelView;
 }
 
 - (IAECircleDecoratorView *)openDecoratorView

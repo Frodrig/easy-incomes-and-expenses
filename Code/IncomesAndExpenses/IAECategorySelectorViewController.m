@@ -450,7 +450,7 @@ static NSString * const kLtextTwoOrMoreConcepts = @"LTEXT_CATEGORYSELECTORCELL_T
     IAECategory *category = [self findCategoryOfCell:cell];
     if (![[IAECategoryStore sharedCategoryStore] isGeneralCategory:category]) {
         self.categoryOfCellSelectedToRemove = category;
-        [self.strokeAnimatableView doStrokeOverTheView:cell.contentView];
+        [self.strokeAnimatableView doStrokeOverTheView:cell.containerForStrokeCategoryLabelView];
         [cell goToStrokeStateWithAnimation:YES];
     }
 }

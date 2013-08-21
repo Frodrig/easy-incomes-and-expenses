@@ -12,6 +12,7 @@
 
 @interface IAECategoryTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) UIView *containerForStrokeCategoryLabelView;
 @property (weak, nonatomic) UILabel *categoryLabel;
 @property (weak, nonatomic) IAECircleDecoratorView *openDecoratorView;
 @property (weak, nonatomic) UILabel *numberOfConceptsLabel;

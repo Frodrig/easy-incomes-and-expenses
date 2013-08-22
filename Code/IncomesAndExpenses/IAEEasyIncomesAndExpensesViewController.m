@@ -391,18 +391,9 @@ static CGFloat kDurationOfFrameUpdateWhenShowOrHideCalculator = 0.25;
 
 - (void)gotoToContextViewWithIndex:(NSUInteger)contextIndex
 {
-    void(^logicBlock)(void) = ^(void) {
-        [self.selectorContextView changeToContextViewOfIndex:contextIndex withAnimation:!self.initialPositioning];
-        self.reportMenuView.optionsEnabled = [self existConceptsInActualSelectedContext];
-    };
-
-    if (!self.initialPositioning) {
-        [self setConceptsCollectionViewInTransitionAspect:YES withLogicBlockAfterFinish:logicBlock];
-    } else {
-        // Nota: El orden es importante para que showWithoutConceptsWarningViewIfAppropriateWithAnimation: tenga variables seteadas
-        logicBlock();
-        [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:NO];
-    }
+    [self.selectorContextView changeToContextViewOfIndex:contextIndex withAnimation:!self.initialPositioning];
+    self.reportMenuView.optionsEnabled = [self existConceptsInActualSelectedContext];
+    [self setConceptsCollectionViewInTransitionAspect:YES withAnimation:!self.initialPositioning];
 }
 
 #pragma mark - ControlEvents
@@ -967,26 +958,19 @@ static CGFloat kDurationOfFrameUpdateWhenShowOrHideCalculator = 0.25;
         [self updateContentOfConceptsCollectionView];
         [self updateCalculatorViewHideHalfState];
         if (!self.initialPositioning) {
-            [self setConceptsCollectionViewInTransitionAspect:NO withLogicBlockAfterFinish:nil];
+            [self setConceptsCollectionViewInTransitionAspect:NO withAnimation:YES];
         }
     } else if ([self isReportModeActive]) {
         [self.reportAreaView reloadData];
     }
 }
 
-- (void)setConceptsCollectionViewInTransitionAspect:(BOOL)transition withLogicBlockAfterFinish:(void(^)(void))logicBlock
+- (void)setConceptsCollectionViewInTransitionAspect:(BOOL)transition withAnimation:(BOOL)animation
 {
-    [UIView animateWithDuration:kDurationOfEditConceptCollectionViewTransition animations:^{
-        if (transition) {
-            self.conceptsCollectionView.alpha = 0.0;
-        } else {
-            self.conceptsCollectionView.alpha = 1.0;
-        }
+    [UIView animateWithDuration:animation ? kDurationOfEditConceptCollectionViewTransition : 0.0 animations:^{
+        self.conceptsCollectionView.alpha = transition ? 0.0 : 1.0;
     } completion:^(BOOL finished) {
-        [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES];
-        if (logicBlock) {
-            logicBlock();
-        }
+        [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:animation];
     }];
 }
 

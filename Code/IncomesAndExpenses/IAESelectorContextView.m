@@ -112,6 +112,7 @@ static const CGFloat kDurationOfAnimationOfChangeContextIn = 0.5;
             contextViewToShow.hidden = NO;
             self.actualContextViewIndex = index;
             logicEndBlock();
+            NSLog(@"procesado");
         }
     }
 }

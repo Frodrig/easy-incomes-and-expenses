@@ -49,7 +49,7 @@ static const CGFloat kYMarginOfTheLineSelector = 3;
 - (void)setCurrentOptionIndexSelected:(NSUInteger)optionIndexSelected
 {
     // Nota: No generaremos llamada a delegado desde aqui. Solo se generara por evento en controles
-    if (self.dataSource) {
+    if (self.dataSource && optionIndexSelected != _currentOptionIndexSelected) {
         [self changeIndicatorFromOptionIndex:_currentOptionIndexSelected toNewCurrentOptionIndex:optionIndexSelected];
         _currentOptionIndexSelected = optionIndexSelected;
         if ([self.dataSource selectorTypeInTextRawSelectorMenu:self] == TEXTRAWMENUVIEW_SELECTOR_BOTTOMLINE) {

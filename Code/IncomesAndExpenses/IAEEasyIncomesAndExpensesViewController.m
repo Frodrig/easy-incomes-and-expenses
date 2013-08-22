@@ -972,11 +972,17 @@ static const NSInteger kInvalidOptionIndex = -1;
 
 - (void)setConceptsCollectionViewInTransitionAspect:(BOOL)transition withAnimation:(BOOL)animation
 {
-    [UIView animateWithDuration:animation ? kDurationOfEditConceptCollectionViewTransition : 0.0 animations:^{
-        self.conceptsCollectionView.alpha = transition ? 0.0 : 1.0;
-    } completion:^(BOOL finished) {
+    CGFloat alphaValue = transition ? 0.0 : 1.0;
+    if (animation) {
+        [UIView animateWithDuration:kDurationOfEditConceptCollectionViewTransition animations:^{
+            self.conceptsCollectionView.alpha = alphaValue;
+        } completion:^(BOOL finished) {
+            [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:animation];
+        }];
+    } else {
+        self.conceptsCollectionView.alpha = alphaValue;
         [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:animation];
-    }];
+    }
 }
 
 - (void)showWithoutConceptsWarningViewIfAppropriateWithAnimation:(BOOL)animation
@@ -988,8 +994,9 @@ static const NSInteger kInvalidOptionIndex = -1;
                            andExecuteAfterAnimationTheLogicBlock:(void(^)(void))logicBlock
 {
     BOOL show = [self existConceptsInActualSelectedContext] == 0;
-    [UIView animateWithDuration:animation ? kDurationOfWithoutConceptsWarningVieTransition : 0 animations:^{
-        CGFloat alpha = show ? 1.0 : 0.0;
+    CGFloat alpha = show ? 1.0 : 0.0;
+    
+    void(^ alphaChanges)(void) = ^(void) {
         if ([self isEditModeActive]) {
             self.withoutConceptsWarningInMonthEditModeView.alpha = alpha;
             self.withoutConceptsWarningInMonthReportModeView.alpha = 0;
@@ -997,11 +1004,24 @@ static const NSInteger kInvalidOptionIndex = -1;
             self.withoutConceptsWarningInMonthReportModeView.alpha = alpha;
             self.withoutConceptsWarningInMonthEditModeView.alpha = 0;
         }
-    } completion:^(BOOL finished) {
+    };
+    
+    void(^ logicBlockExecuteChecker)(void) = ^(void) {
         if (logicBlock) {
             logicBlock();
         }
-    }];
+    };
+    
+    if (animation) {
+        [UIView animateWithDuration:animation ? kDurationOfWithoutConceptsWarningVieTransition : 0 animations:^{
+            alphaChanges();
+        } completion:^(BOOL finished) {
+            logicBlockExecuteChecker();
+        }];
+    } else {
+        alphaChanges();
+        logicBlockExecuteChecker();
+    }
 }
 
 - (void)updateCurrentOptionIndexSelectedOfContextMenu

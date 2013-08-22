@@ -20,8 +20,7 @@
 
 #pragma mark - Constants
 
-static const CGFloat kDurationOfAnimationOfChangeContextOut = 0.65;
-static const CGFloat kDurationOfAnimationOfChangeContextIn = 0.5;
+static const CGFloat kDurationOfAnimationOfChangeContext = 0.65;;
 
 #pragma mark - Properties
 
@@ -68,6 +67,9 @@ static const CGFloat kDurationOfAnimationOfChangeContextIn = 0.5;
         
         IAEContextView *contextViewToHide = [self findContextViewAtIndex:self.actualContextViewIndex];
         IAEContextView *contextViewToShow = [self findContextViewAtIndex:index];
+        
+        self.actualContextViewIndex = index;
+
         if (animation) {
             _animationInProgress = YES;
             
@@ -75,31 +77,22 @@ static const CGFloat kDurationOfAnimationOfChangeContextIn = 0.5;
             contextViewToShow.hidden = NO;
             contextViewToShow.alpha = 0;
             contextViewToShow.center = CGPointMake(contextViewToShow.center.x, contextViewToShow.center.y * 2);
-            const CGFloat durationOut = animation ? kDurationOfAnimationOfChangeContextOut : 0;
-            const CGFloat durationIn = animation ? kDurationOfAnimationOfChangeContextIn : 0;
+            const CGFloat duration = animation ? kDurationOfAnimationOfChangeContext : 0;
             
             [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
-            [UIView animateWithDuration:durationOut animations:^{
+            [UIView animateWithDuration:duration animations:^{
                 contextViewToHide.alpha = 0;
-            } completion:^(BOOL finished) {
-                contextViewToHide.alpha = 1.0;
-                contextViewToHide.hidden = YES;
-            }];
-            
-            [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-            [UIView animateWithDuration:durationIn animations:^{
                 contextViewToShow.alpha = 1.0;
                 contextViewToShow.center = self.center;
             } completion:^(BOOL finished) {
+                contextViewToHide.alpha = 1.0;
+                contextViewToHide.hidden = YES;
                 _animationInProgress = NO;
                 logicEndBlock();
             }];
-
-            self.actualContextViewIndex = index;
         } else {
             contextViewToHide.hidden = YES;
             contextViewToShow.hidden = NO;
-            self.actualContextViewIndex = index;
             logicEndBlock();
         }
     }

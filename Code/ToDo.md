@@ -1,7 +1,12 @@
 # ToDo: Easy Incomes and Expenses.
 
 * Zona del mes y balance.
-** Hay que sustituir el ScrollView por otro elemento en el que podamos hacer algún tipo de transición especial. Lo ideal para empezar sería una view con dos subviews a modo de contenedores dentro de las cuales hubiera una label para el mes y otra para el balance.
+** -Hay que sustituir el ScrollView por otro elemento en el que podamos hacer algún tipo de transición especial. Lo ideal para empezar sería una view con dos subviews a modo de contenedores dentro de las cuales hubiera una label para el mes y otra para el balance.-
+
+* Transiciones al pulsar en un contexto
+** Al arrancar hay transición brusca en la zona de conceptos y reportes
+** Al transicionar en conceptos, se ha perdido la transición con fade
+** Hal pulsar en la opción de reportes, no se esconde la de conceptos
 
 * Selector de categorías
 ** Reforzar de alguna manera adicional qué es una categoría general.

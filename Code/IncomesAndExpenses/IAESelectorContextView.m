@@ -20,7 +20,7 @@
 
 #pragma mark - Constants
 
-static const CGFloat kDurationOfAnimationOfChangeContext = 0.65;;
+static const CGFloat kDurationOfAnimationOfChangeContext = 0.65;
 
 #pragma mark - Properties
 
@@ -59,42 +59,52 @@ static const CGFloat kDurationOfAnimationOfChangeContext = 0.65;;
 - (void)changeToContextViewOfIndex:(NSUInteger)index withAnimation:(BOOL)animation
 {
     if ([self findActualContextViewIndex] != index && !self.animationInProgress) {
-        void(^logicEndBlock)(void) = ^(void) {
-            if ([self.delegate respondsToSelector:@selector(selectorContextView:didChangeToContextViewAtIndex:)]) {
-                [self.delegate selectorContextView:self didChangeToContextViewAtIndex:index];
-            }
-        };
-        
         IAEContextView *contextViewToHide = [self findContextViewAtIndex:self.actualContextViewIndex];
         IAEContextView *contextViewToShow = [self findContextViewAtIndex:index];
-        
         self.actualContextViewIndex = index;
-
         if (animation) {
-            _animationInProgress = YES;
-            
-            contextViewToHide.hidden = NO;
-            contextViewToShow.hidden = NO;
-            contextViewToShow.alpha = 0;
-            contextViewToShow.center = CGPointMake(contextViewToShow.center.x, contextViewToShow.center.y * 2);
-            const CGFloat duration = animation ? kDurationOfAnimationOfChangeContext : 0;
-            
-            [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
-            [UIView animateWithDuration:duration animations:^{
-                contextViewToHide.alpha = 0;
-                contextViewToShow.alpha = 1.0;
-                contextViewToShow.center = self.center;
-            } completion:^(BOOL finished) {
-                contextViewToHide.alpha = 1.0;
-                contextViewToHide.hidden = YES;
-                _animationInProgress = NO;
-                logicEndBlock();
-            }];
+            [self doAnimationToHideContextView:contextViewToHide andShowContextView:contextViewToShow];
         } else {
-            contextViewToHide.hidden = YES;
-            contextViewToShow.hidden = NO;
-            logicEndBlock();
+            [self hideWithoutAnimationTheContextView:contextViewToHide andShowTheContextView:contextViewToShow];
         }
+    }
+}
+
+- (void)doAnimationToHideContextView:(IAEContextView *)contextViewToHide andShowContextView:(IAEContextView *)contextViewToShow
+{
+    _animationInProgress = YES;
+    
+    contextViewToHide.hidden = NO;
+    contextViewToShow.hidden = NO;
+    contextViewToShow.alpha = 0;
+    contextViewToShow.center = CGPointMake(contextViewToShow.center.x, contextViewToShow.center.y * 2);
+   
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+    [UIView animateWithDuration:kDurationOfAnimationOfChangeContext animations:^{
+        contextViewToHide.alpha = 0;
+        contextViewToShow.alpha = 1.0;
+        contextViewToShow.center = self.center;
+    } completion:^(BOOL finished) {
+        contextViewToHide.alpha = 1.0;
+        contextViewToHide.hidden = YES;
+        _animationInProgress = NO;
+        [self sendToDelegateChangeToContextViewAtIndex:index];
+    }];
+}
+
+- (void)hideWithoutAnimationTheContextView:(IAEContextView *)contextViewToHide andShowTheContextView:(IAEContextView *)contextViewToShow
+{
+    contextViewToHide.alpha = 1.0;
+    contextViewToHide.hidden = YES;
+    contextViewToShow.hidden = NO;
+    _animationInProgress = NO;
+    [self sendToDelegateChangeToContextViewAtIndex:index];
+}
+
+- (void)sendToDelegateChangeToContextViewAtIndex:(NSUInteger)index
+{
+    if ([self.delegate respondsToSelector:@selector(selectorContextView:didChangeToContextViewAtIndex:)]) {
+        [self.delegate selectorContextView:self didChangeToContextViewAtIndex:index];
     }
 }
 

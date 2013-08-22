@@ -117,7 +117,7 @@ static const CGFloat kDelayToExecuteRemoveConceptCell = 0.2;
 
 static const CGFloat KDurationOfAnimationUpdateForEntryInstantIndex = 0.15;
 
-static const CGFloat kDurationOfEditConceptCollectionViewTransition = 0.35;
+static const CGFloat kDurationOfEditConceptCollectionViewTransition = 0.25;
 
 static NSString * const kXibWithoutConceptsWarningInEditModeViewName = @"IAEWithoutConceptsTextWarning";
 static NSString * const kXibWithoutConceptsWarningInReportModeViewName = @"IAEWithoutConceptsTextWarningReportMode";
@@ -961,10 +961,12 @@ static const NSInteger kInvalidOptionIndex = -1;
     } else {
         [self updateCurrentOptionIndexSelectedOfContextMenu];
         if ([self isEditModeActive]) {
+            [self setConceptsCollectionViewInTransitionAspect:YES withAnimation:!self.initialPositioning];
             [self updateContentOfConceptsCollectionView];
-            [self updateCalculatorViewHideHalfState];
             [self setConceptsCollectionViewInTransitionAspect:NO withAnimation:!self.initialPositioning];
+            [self updateCalculatorViewHideHalfState];
         } else if ([self isReportModeActive]) {
+            [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:!self.initialPositioning];
             [self.reportAreaView reloadData];
         }
     }
@@ -972,16 +974,24 @@ static const NSInteger kInvalidOptionIndex = -1;
 
 - (void)setConceptsCollectionViewInTransitionAspect:(BOOL)transition withAnimation:(BOOL)animation
 {
-    CGFloat alphaValue = transition ? 0.0 : 1.0;
+    void(^ alphaChangesBlock)(void) = ^(void) {
+        CGFloat alphaValue = transition ? 0.0 : 1.0;
+        self.conceptsCollectionView.alpha = alphaValue;
+    };
+    
+    void(^ logicBlock)(void) = ^(void) {
+            [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:animation];
+    };
+    
     if (animation) {
         [UIView animateWithDuration:kDurationOfEditConceptCollectionViewTransition animations:^{
-            self.conceptsCollectionView.alpha = alphaValue;
+            alphaChangesBlock();
         } completion:^(BOOL finished) {
-            [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:animation];
+            logicBlock();
         }];
     } else {
-        self.conceptsCollectionView.alpha = alphaValue;
-        [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:animation];
+        alphaChangesBlock();
+        logicBlock();
     }
 }
 

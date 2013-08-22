@@ -16,6 +16,7 @@
 #import "IAEColorHelper.h"
 #import "IAEEconomicValueTypeHelper.h"
 #import "IAEEconomicValueUpdater.h"
+#import "IAESelectorContextView.h"
 #import "IAEContextView.h"
 #import "IAEEditModeConceptCollectionViewCell.h"
 #import "IAEEditModeConceptCollectionViewHeader.h"
@@ -46,7 +47,8 @@
 
 @interface IAEEasyIncomesAndExpensesViewController ()
 
-@property (weak, nonatomic) IBOutlet UIScrollView *contextScrollView;
+//@property (weak, nonatomic) IBOutlet UIScrollView *contextScrollView;
+@property (weak, nonatomic) IBOutlet IAESelectorContextView *selectorContextView;
 @property (weak, nonatomic) IBOutlet UIView *editAndReportModeContentContainerView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *modeSegmentedControl;
 @property (weak, nonatomic) IBOutlet UICollectionView *conceptsCollectionView;
@@ -119,6 +121,8 @@ static const CGFloat kDurationOfEditConceptCollectionViewTransition = 0.35;
 static NSString * const kXibWithoutConceptsWarningInEditModeViewName = @"IAEWithoutConceptsTextWarning";
 static NSString * const kXibWithoutConceptsWarningInReportModeViewName = @"IAEWithoutConceptsTextWarningReportMode";
 static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
+
+static CGFloat kDurationOfFrameUpdateWhenShowOrHideCalculator = 0.25;
 
 #pragma mark - Properties
 
@@ -258,22 +262,17 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
     [super viewDidLoad];
     
 	// Do any additional setup after loading the view.
+    [self configureSelectorContextView];
     [self configureEditAndReportModeContentContainerView];
-    [self configureContextScrollViewContent];
     [self configureCalculatorViewController];
     [self configureConceptsViews];
     [self configureReportAreaView];
     [self configureReportMenuView];
 }
 
-- (void)configureContextScrollViewContent
+- (void)configureSelectorContextView
 {
-    self.contextScrollView.contentSize = CGSizeMake(kContentScrollViewNumberOfItems * self.contextScrollView.bounds.size.width,
-                                                    self.contextScrollView.bounds.size.height);
-    self.contextScrollView.pagingEnabled = YES;
-    self.contextScrollView.showsHorizontalScrollIndicator = NO;
-    self.contextScrollView.showsVerticalScrollIndicator = NO;
-    self.contextScrollView.bounces = YES;
+    self.selectorContextView.delegate = self;
 }
 
 - (void)configureCalculatorViewController
@@ -327,7 +326,7 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
 {
     [super viewWillAppear:animated];
     
-    [self vinculeContextScrollViewContent];
+    [self vinculeSelectorContextViewContent];
     [self vinculeContextMenuView];
     [self vinculeCalculatorViewControllerView];
     [self vinculeReportAreaView];
@@ -352,7 +351,7 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
     self.contextMenuView.delegate = self;
     self.contextMenuView.dataSource = self.helperContextTextRawMenuDataSource;
     self.contextMenuView.center = CGPointMake(self.view.center.x,
-                                              self.contextScrollView.center.y + self.contextScrollView.bounds.size.height / 2 + self.contextMenuView.bounds.size.height / 2);
+                                              self.selectorContextView.center.y + self.selectorContextView.bounds.size.height / 2 + self.contextMenuView.bounds.size.height / 2);
 }
 
 - (void)vinculeReportAreaView
@@ -393,11 +392,10 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
 - (void)gotoToContextViewWithIndex:(NSUInteger)contextIndex
 {
     void(^logicBlock)(void) = ^(void) {
-        CGRect contextViewRect = [self rectInContextScrollViewForContextViewWithGlobalIndex:contextIndex];
-        [self.contextScrollView scrollRectToVisible:contextViewRect animated:NO];
+        [self.selectorContextView changeToContextViewOfIndex:contextIndex withAnimation:YES];
         self.reportMenuView.optionsEnabled = [self existConceptsInActualSelectedContext];
     };
-    
+
     if (!self.initialPositioning) {
         [self setConceptsCollectionViewInTransitionAspect:YES withLogicBlockAfterFinish:logicBlock];
     } else {
@@ -405,16 +403,6 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
         logicBlock();
         [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:NO];
     }
-}
-
-- (CGRect)rectInContextScrollViewForContextViewWithGlobalIndex:(NSUInteger)globalIndex
-{
-    CGRect rect = CGRectMake(globalIndex * self.contextScrollView.bounds.size.width,
-                             0,
-                             self.contextScrollView.bounds.size.width,
-                             self.contextScrollView.bounds.size.height);
-    
-    return rect;
 }
 
 #pragma mark - ControlEvents
@@ -793,9 +781,9 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
 
 - (IAEContextView *)findContextViewAtGlobalPosition:(NSUInteger)globalPosition
 {
-    UIView *contextView = [self.contextScrollView.subviews objectAtIndex:globalPosition];
+    IAEContextView *contextView = [self.selectorContextView findContextViewAtIndex:globalPosition];
     
-    return (IAEContextView *)contextView;
+    return contextView;
 }
 
 - (BOOL)categorySelectorViewControllerWasLaunchedFromCategoryButton
@@ -904,38 +892,28 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
 
 #pragma mark - ScrollViewMonths (vincule)
 
-- (void)vinculeContextScrollViewContent
+- (void)vinculeSelectorContextViewContent
 {
-    [self addToContextScrollViewContextWithGlobalPosition:0 contextType:CONTEXT_VIEW_YEAR andValueIndex:[self findOpenYear].yearDate];
-    [self addToContextScrollViewContextWithGlobalPosition:1 contextType:CONTEXT_VIEW_MONTH andValueIndex:January];
-    [self addToContextScrollViewContextWithGlobalPosition:2 contextType:CONTEXT_VIEW_MONTH andValueIndex:February];
-    [self addToContextScrollViewContextWithGlobalPosition:3 contextType:CONTEXT_VIEW_MONTH andValueIndex:March];
-    [self addToContextScrollViewContextWithGlobalPosition:4 contextType:CONTEXT_VIEW_MONTH andValueIndex:April];
-    [self addToContextScrollViewContextWithGlobalPosition:5 contextType:CONTEXT_VIEW_MONTH andValueIndex:May];
-    [self addToContextScrollViewContextWithGlobalPosition:6 contextType:CONTEXT_VIEW_MONTH andValueIndex:June];
-    [self addToContextScrollViewContextWithGlobalPosition:7 contextType:CONTEXT_VIEW_MONTH andValueIndex:July];
-    [self addToContextScrollViewContextWithGlobalPosition:8 contextType:CONTEXT_VIEW_MONTH andValueIndex:August];
-    [self addToContextScrollViewContextWithGlobalPosition:9 contextType:CONTEXT_VIEW_MONTH andValueIndex:September];
-    [self addToContextScrollViewContextWithGlobalPosition:10 contextType:CONTEXT_VIEW_MONTH andValueIndex:October];
-    [self addToContextScrollViewContextWithGlobalPosition:11 contextType:CONTEXT_VIEW_MONTH andValueIndex:November];
-    [self addToContextScrollViewContextWithGlobalPosition:12 contextType:CONTEXT_VIEW_MONTH andValueIndex:December];
-    
-    self.contextScrollView.delegate = self;
+    const NSUInteger numberOfContextView = 1 + 12; // 1 año y 12 meses
+    const NSUInteger yearIndex = 0;
+    for (NSUInteger index = 0; index < numberOfContextView; ++index) {
+        IAEContextViewType contextViewType = index == yearIndex ? CONTEXT_VIEW_YEAR : CONTEXT_VIEW_MONTH;
+        NSUInteger valueIndex = index == yearIndex ? [self findOpenYear].yearDate : January + index - 1;
+        [self addToSelectorContextViewWithGlobalPosition:index contextType:contextViewType andValueIndex:valueIndex];
+    }
 }
 
-- (void)addToContextScrollViewContextWithGlobalPosition:(NSUInteger)globalPosition
+- (void)addToSelectorContextViewWithGlobalPosition:(NSUInteger)globalPosition
                                             contextType:(IAEContextViewType)contextType
                                           andValueIndex:(NSUInteger)contextValueIndex
 {
-    CGRect frame = CGRectMake(self.contextScrollView.bounds.size.width * globalPosition,
-                              0,
-                              self.contextScrollView.bounds.size.width,
-                              self.contextScrollView.bounds.size.height);
+    // ToDo: La definicion de las dimensiones se podria hacer en el propio selector
+    CGRect frame = CGRectMake(0, 0, self.selectorContextView.bounds.size.width, self.selectorContextView.bounds.size.height);
     IAEContextView *contextView = [[IAEContextView alloc] initWithFrame:frame type:contextType andValueIndex:contextValueIndex];
     contextView.dataSource = self;
     [contextView reloadDataWithAnimation:NO];
     
-    [self.contextScrollView addSubview:contextView];
+    [self.selectorContextView addContextView:contextView withIndex:globalPosition];
 }
 
 #pragma mark - UIPopoverControllerViewDelegate
@@ -968,14 +946,7 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
     self.conceptChangingDay = nil;
 }
 
-#pragma mark - UIScrollView Delegate
-
-- (BOOL)isContextScrollView:(UIScrollView *)scrollView
-{
-    BOOL contextScrollView = scrollView == self.contextScrollView;
-    
-    return contextScrollView;
-}
+#pragma mark - IAESelectorContextView Delegate
 
 - (BOOL)isReportScrollView:(UIScrollView *)scrollView
 {
@@ -984,11 +955,9 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
     return reportScrollView;
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+- (void)selectorContextView:(IAESelectorContextView *)selectorContextView didChangeToContextViewAtIndex:(NSUInteger)index
 {
-    if ([self isContextScrollView:scrollView]) {
-        [self updateContentInformationBasedInCurrentContext];
-    }
+    [self updateContentInformationBasedInCurrentContext];
 }
 
 - (void)updateContentInformationBasedInCurrentContext
@@ -1048,8 +1017,7 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
 
 - (void)updateCurrentOptionIndexSelectedOfContextMenu
 {
-    CGFloat currentOptionIndex = (self.contextScrollView.contentOffset.x / self.contextScrollView.bounds.size.width) + 0.5;
-    self.contextMenuView.currentOptionIndexSelected = floor(currentOptionIndex);
+    self.contextMenuView.currentOptionIndexSelected = [self.selectorContextView findActualContextViewIndex];
 }
 
 - (void)updateCalculatorViewHideHalfState
@@ -1069,14 +1037,6 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
 - (void)updateContentOfConceptsCollectionView
 {
     [self.conceptsCollectionView reloadData];
-    /*
-    if ([self.conceptsCollectionView numberOfItemsInSection:0] > 0) {
-        // ToDo: Este codigo NUNCA se ejecuta tras el reload anterior. Probado el perform batch y falla al pasar a año
-        [self.conceptsCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
-                                            atScrollPosition:UICollectionViewScrollPositionNone
-                                                    animated:NO];
-    }
-     */
 }
 
 #pragma mark - IAEContextViewDataSource
@@ -1533,12 +1493,9 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
 
 - (void)reloadBalancesOfContextViewsWithAnimation:(BOOL)animation
 {
-    for (UIView *view in self.contextScrollView.subviews) {
-        if ([view isKindOfClass:[IAEContextView class]]) {
-            IAEContextView *contextView = (IAEContextView *)(view);
-            [contextView reloadDataWithAnimation:animation];
-        }
-    }
+    [self.selectorContextView enumerateContextViewsUsingBlock:^(NSUInteger index, IAEContextView *contextView) {
+        [contextView reloadDataWithAnimation:animation];
+    }];
 }
 
 - (void)reloadConceptsOfActualSelectedContextView
@@ -1616,8 +1573,8 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
 
 - (void)showButtonWasPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
 {
-    [UIView animateWithDuration:0.25 animations:^{
-        [self updateFramePositionBeforeShowCalculatorForView:self.contextScrollView];
+    [UIView animateWithDuration:kDurationOfFrameUpdateWhenShowOrHideCalculator animations:^{
+        [self updateFramePositionBeforeShowCalculatorForView:self.selectorContextView];
         [self updateFramePositionBeforeShowCalculatorForView:self.contextMenuView];
         [self updateFramePositionBeforeShowCalculatorForView:self.modeSegmentedControl];
         [self updateFramePositionBeforeShowCalculatorForView:self.editAndReportModeContentContainerView];
@@ -1626,8 +1583,8 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
 
 - (void)hideButtonWasPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
 {
-    [UIView animateWithDuration:0.25 animations:^{
-        [self updateFramePositionAfterShowCalculatorForView:self.contextScrollView];
+    [UIView animateWithDuration:kDurationOfFrameUpdateWhenShowOrHideCalculator animations:^{
+        [self updateFramePositionAfterShowCalculatorForView:self.selectorContextView];
         [self updateFramePositionAfterShowCalculatorForView:self.contextMenuView];
         [self updateFramePositionAfterShowCalculatorForView:self.modeSegmentedControl];
         [self updateFramePositionAfterShowCalculatorForView:self.editAndReportModeContentContainerView];
@@ -1636,16 +1593,18 @@ static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
 
 - (void)updateFramePositionBeforeShowCalculatorForView:(UIView *)view
 {
-    view.frame = CGRectMake(view.frame.origin.x,
-                            view.frame.origin.y - self.calculatorViewController.sizeHeightOffsetWhenShowed,
-                            view.frame.size.width,
-                            view.frame.size.height);
+    [self updateFramePositionChangingVisibilityOfCalculatorForView:view withYOffset:-self.calculatorViewController.sizeHeightOffsetWhenShowed];
 }
 
 - (void)updateFramePositionAfterShowCalculatorForView:(UIView *)view
 {
+    [self updateFramePositionChangingVisibilityOfCalculatorForView:view withYOffset:self.calculatorViewController.sizeHeightOffsetWhenShowed];
+}
+
+- (void)updateFramePositionChangingVisibilityOfCalculatorForView:(UIView *)view withYOffset:(CGFloat)offset
+{
     view.frame = CGRectMake(view.frame.origin.x,
-                            view.frame.origin.y + self.calculatorViewController.sizeHeightOffsetWhenShowed,
+                            view.frame.origin.y + offset,
                             view.frame.size.width,
                             view.frame.size.height);
 }

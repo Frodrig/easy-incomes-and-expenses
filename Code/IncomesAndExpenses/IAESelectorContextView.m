@@ -18,17 +18,39 @@
 
 @implementation IAESelectorContextView
 
+#pragma mark - Properties
+
+- (NSMutableDictionary *)contextViews
+{
+    if (!_contextViews) {
+        _contextViews = [[NSMutableDictionary alloc] init];
+    }
+    
+    return _contextViews;
+}
+
+#pragma mark - Add
+
 - (BOOL)addContextView:(IAEContextView *)contextView withIndex:(NSUInteger)index
 {
-    return NO;
+    BOOL canAdd = [self canAddContextViewWithIndex:index];
+    if (canAdd) {
+        self.contextViews[[NSNumber numberWithInt:index]] = contextView;
+        [self addSubview:contextView];
+        contextView.hidden = YES;
+    }
+    
+    return canAdd;
 }
 
 - (BOOL)canAddContextViewWithIndex:(NSUInteger)index
 {
-    BOOL can = [self findContextViewAtIndex:index] != nil;
+    BOOL can = [self findContextViewAtIndex:index] == nil;
     
     return can;
 }
+
+#pragma mark - Change Index
 
 - (void)changeToContextViewOfIndex:(NSUInteger)index withAnimation:(BOOL)animation
 {
@@ -45,6 +67,8 @@
     }
 }
 
+#pragma mark - Find
+
 - (NSUInteger)findActualContextViewIndex
 {
     return self.actualContextViewIndex;
@@ -52,7 +76,7 @@
 
 - (IAEContextView *)findContextViewAtIndex:(NSUInteger)index
 {
-    IAEContextView *contextView = [self.contextViews objectForKey:@(index)];
+    IAEContextView *contextView = [self.contextViews objectForKey:[NSNumber numberWithInt:index]];
     
     return contextView;
 }
@@ -65,6 +89,8 @@
     
     return contextViewObjects;
 }
+
+#pragma mark - Perform actions
 
 - (void)enumerateContextViewsUsingBlock:(void(^)(NSUInteger index, IAEContextView *contextView))block
 {

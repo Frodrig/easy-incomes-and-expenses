@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IAESelectorContextViewDelegate.h"
 #import "IAEAdjustConceptAmountViewControllerDelegate.h"
 #import "IAECategorySelectorViewControllerDelegate.h"
 #import "IAECategoryEditorViewControllerDelegate.h"
@@ -20,7 +21,7 @@
 #import "IAEEasyIncomesAndExpensesViewControllerQuery.h"
 
 @interface IAEEasyIncomesAndExpensesViewController : UIViewController<UIPopoverControllerDelegate,
-                                                                      UIScrollViewDelegate,
+                                                                      IAESelectorContextViewDelegate,
                                                                       UICollectionViewDelegate,
                                                                       IAEAdjustConceptAmountViewControllerDelegate,
                                                                       IAECategorySelectorViewControllerDelegate,

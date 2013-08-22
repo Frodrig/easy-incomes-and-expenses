@@ -14,6 +14,7 @@
 @interface IAESelectorContextView : UIView
 
 @property (nonatomic, weak) id<IAESelectorContextViewDelegate> delegate;
+@property (nonatomic, readonly, getter = isAnimationInProgress) BOOL animationInProgress;
 
 - (BOOL)addContextView:(IAEContextView *)contextView withIndex:(NSUInteger)index;
 

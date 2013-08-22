@@ -13,8 +13,6 @@
 
 @property (nonatomic, strong) NSMutableDictionary *contextViews;
 @property (nonatomic) NSUInteger actualContextViewIndex;
-@property (nonatomic) BOOL animationInProgress;
-@property (nonatomic, strong) NSMutableArray *pendingChangesToContext;
 
 @end
 
@@ -34,15 +32,6 @@ static const CGFloat kDurationOfAnimationOfChangeContextIn = 0.5;
     }
     
     return _contextViews;
-}
-
-- (NSMutableArray *)pendingChangesToContext
-{
-    if (!_pendingChangesToContext) {
-        _pendingChangesToContext = [NSMutableArray array];
-    }
-    
-    return _pendingChangesToContext;
 }
 
 #pragma mark - Add
@@ -70,19 +59,18 @@ static const CGFloat kDurationOfAnimationOfChangeContextIn = 0.5;
 
 - (void)changeToContextViewOfIndex:(NSUInteger)index withAnimation:(BOOL)animation
 {
-    if (self.animationInProgress) {
-        [self addToPendingChangesToContextWithViewIndex:index andAnimation:animation];
-    } else if ([self findActualContextViewIndex] != index) {
+    if ([self findActualContextViewIndex] != index && !self.animationInProgress) {
         void(^logicEndBlock)(void) = ^(void) {
             if ([self.delegate respondsToSelector:@selector(selectorContextView:didChangeToContextViewAtIndex:)]) {
                 [self.delegate selectorContextView:self didChangeToContextViewAtIndex:index];
             }
-            self.animationInProgress = [self processNextPendingChangeToContextIfAppropiate];
         };
         
         IAEContextView *contextViewToHide = [self findContextViewAtIndex:self.actualContextViewIndex];
         IAEContextView *contextViewToShow = [self findContextViewAtIndex:index];
         if (animation) {
+            _animationInProgress = YES;
+            
             contextViewToHide.hidden = NO;
             contextViewToShow.hidden = NO;
             contextViewToShow.alpha = 0;
@@ -103,6 +91,7 @@ static const CGFloat kDurationOfAnimationOfChangeContextIn = 0.5;
                 contextViewToShow.alpha = 1.0;
                 contextViewToShow.center = self.center;
             } completion:^(BOOL finished) {
+                _animationInProgress = NO;
                 logicEndBlock();
             }];
 
@@ -112,29 +101,8 @@ static const CGFloat kDurationOfAnimationOfChangeContextIn = 0.5;
             contextViewToShow.hidden = NO;
             self.actualContextViewIndex = index;
             logicEndBlock();
-            NSLog(@"procesado");
         }
     }
-}
-
-- (void)addToPendingChangesToContextWithViewIndex:(NSUInteger)index andAnimation:(BOOL)animation
-{
-    [self.pendingChangesToContext addObject:@{@"index" : [NSNumber numberWithUnsignedInteger:index],
-                                              @"animation" : [NSNumber numberWithBool:animation]}];
-}
-
-- (BOOL)processNextPendingChangeToContextIfAppropiate
-{
-    BOOL processNextPendingChangeToContext = self.pendingChangesToContext.count > 0;
-    if (processNextPendingChangeToContext){
-        NSDictionary *pending = [self.pendingChangesToContext objectAtIndex:0];
-        [self.pendingChangesToContext removeObject:pending];
-        NSNumber *index = pending[@"index"];
-        NSNumber *animation = pending[@"animation"];
-        [self changeToContextViewOfIndex:[index unsignedIntegerValue] withAnimation:[animation boolValue]];
-    }
-    
-    return processNextPendingChangeToContext;
 }
 
 #pragma mark - Find

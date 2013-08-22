@@ -72,6 +72,7 @@
 @property (nonatomic, weak) IAECategory *categoryRenaming;
 @property (nonatomic, weak) IAEConcept *conceptChangingDay;
 @property (nonatomic) BOOL reloadAllPendingFromYearSelectorIfReturnWithSameYearDate;
+@property (nonatomic) NSInteger lastContextIndexMenuPressed;
 
 @end
 
@@ -120,9 +121,11 @@ static const CGFloat kDurationOfEditConceptCollectionViewTransition = 0.35;
 
 static NSString * const kXibWithoutConceptsWarningInEditModeViewName = @"IAEWithoutConceptsTextWarning";
 static NSString * const kXibWithoutConceptsWarningInReportModeViewName = @"IAEWithoutConceptsTextWarningReportMode";
-static CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
+static const CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
 
-static CGFloat kDurationOfFrameUpdateWhenShowOrHideCalculator = 0.25;
+static const CGFloat kDurationOfFrameUpdateWhenShowOrHideCalculator = 0.25;
+
+static const NSInteger kInvalidOptionIndex = -1;
 
 #pragma mark - Properties
 
@@ -199,7 +202,8 @@ static CGFloat kDurationOfFrameUpdateWhenShowOrHideCalculator = 0.25;
 
 - (void)initCommonProperties
 {
-    self.initialPositioning = YES;
+    _initialPositioning = YES;
+    _lastContextIndexMenuPressed = -1;
 }
 
 - (void)initTapConceptsGestureRecognizer
@@ -392,8 +396,6 @@ static CGFloat kDurationOfFrameUpdateWhenShowOrHideCalculator = 0.25;
 - (void)gotoToContextViewWithIndex:(NSUInteger)contextIndex
 {
     [self.selectorContextView changeToContextViewOfIndex:contextIndex withAnimation:!self.initialPositioning];
-    self.reportMenuView.optionsEnabled = [self existConceptsInActualSelectedContext];
-    [self setConceptsCollectionViewInTransitionAspect:YES withAnimation:!self.initialPositioning];
 }
 
 #pragma mark - ControlEvents
@@ -953,15 +955,18 @@ static CGFloat kDurationOfFrameUpdateWhenShowOrHideCalculator = 0.25;
 
 - (void)updateContentInformationBasedInCurrentContext
 {
-    [self updateCurrentOptionIndexSelectedOfContextMenu];
-    if ([self isEditModeActive]) {
-        [self updateContentOfConceptsCollectionView];
-        [self updateCalculatorViewHideHalfState];
-        if (!self.initialPositioning) {
-            [self setConceptsCollectionViewInTransitionAspect:NO withAnimation:YES];
+    if (self.lastContextIndexMenuPressed != kInvalidOptionIndex) {
+        [self.selectorContextView changeToContextViewOfIndex:self.lastContextIndexMenuPressed withAnimation:YES];
+        self.lastContextIndexMenuPressed = kInvalidOptionIndex;
+    } else {
+        [self updateCurrentOptionIndexSelectedOfContextMenu];
+        if ([self isEditModeActive]) {
+            [self updateContentOfConceptsCollectionView];
+            [self updateCalculatorViewHideHalfState];
+            [self setConceptsCollectionViewInTransitionAspect:NO withAnimation:!self.initialPositioning];
+        } else if ([self isReportModeActive]) {
+            [self.reportAreaView reloadData];
         }
-    } else if ([self isReportModeActive]) {
-        [self.reportAreaView reloadData];
     }
 }
 
@@ -1644,10 +1649,19 @@ static CGFloat kDurationOfFrameUpdateWhenShowOrHideCalculator = 0.25;
 - (void)optionIndex:(NSUInteger)optionIndex wasSelectedInTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenu
 {
     if ([self isTheContextMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
-        [self gotoToContextViewWithIndex:optionIndex];
+        if ([self isChangeOfContextRunning]) {
+            self.lastContextIndexMenuPressed = optionIndex;
+        } else {
+            [self gotoToContextViewWithIndex:optionIndex];
+        }
     } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
         [self.reportAreaView reloadData];
     }
+}
+
+- (BOOL)isChangeOfContextRunning
+{
+    return [self.selectorContextView isAnimationInProgress];
 }
 
 - (BOOL)isTheContextMenuTheTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenu

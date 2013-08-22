@@ -17,8 +17,6 @@
 @interface IAEContextView()
 
 @property(nonatomic, weak) UIView *contentView;
-@property(nonatomic, weak) UILabel *contentNameLabel;
-@property(nonatomic, weak) UILabel *contentBalanceLabel;
 
 @end
 
@@ -33,9 +31,9 @@ static NSString * const kXibContentViewContentName = @"IAEContextViewContent";
 
 static NSString * const kFontFamilyName = @"HelveticaNeue-UltraLight";
 static const NSUInteger kSizeFontForNameLabel = 56;
-static const CGFloat kKernForNameLabel = 20;
+static const CGFloat kKernForNameLabel = 10;
 static const NSUInteger kSizeFontForBalanceLabel = 73;
-static const CGFloat kKernForBalanceLabel = 5;
+static const CGFloat kKernForBalanceLabel = 4;
 
 - (UILabel *)contentBalanceLabel
 {

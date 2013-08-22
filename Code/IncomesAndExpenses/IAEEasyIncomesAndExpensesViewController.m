@@ -385,14 +385,14 @@ static CGFloat kDurationOfFrameUpdateWhenShowOrHideCalculator = 0.25;
 
 - (void)goToTodayMonth
 {
-    NSUInteger globalContextViewIndex = [self findTodayMonthContextViewGlobalIndexInContextScrollView];
+    NSUInteger globalContextViewIndex = [self findTodayMonthContextViewGlobalIndexInSelectorContextView];
     [self gotoToContextViewWithIndex:globalContextViewIndex];
 }
 
 - (void)gotoToContextViewWithIndex:(NSUInteger)contextIndex
 {
     void(^logicBlock)(void) = ^(void) {
-        [self.selectorContextView changeToContextViewOfIndex:contextIndex withAnimation:YES];
+        [self.selectorContextView changeToContextViewOfIndex:contextIndex withAnimation:!self.initialPositioning];
         self.reportMenuView.optionsEnabled = [self existConceptsInActualSelectedContext];
     };
 
@@ -718,7 +718,7 @@ static CGFloat kDurationOfFrameUpdateWhenShowOrHideCalculator = 0.25;
     return categoryOfConcept.categoryType;
 }
 
-- (NSUInteger)findTodayMonthContextViewGlobalIndexInContextScrollView
+- (NSUInteger)findTodayMonthContextViewGlobalIndexInSelectorContextView
 {
     NSUInteger todayMonthContextViewGlobalIndex = [self findTodayMonthIndex] + 1;
   

@@ -17,6 +17,8 @@
 
 @property(nonatomic, readonly) NSUInteger valueIndex;
 @property(nonatomic, readonly) IAEContextViewType contextType;
+@property(nonatomic, weak) UILabel *contentNameLabel;
+@property(nonatomic, weak) UILabel *contentBalanceLabel;
 
 - (id)initWithFrame:(CGRect)frame type:(IAEContextViewType)contextViewType andValueIndex:(NSUInteger)valueIndex;
 

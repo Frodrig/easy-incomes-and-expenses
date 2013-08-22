@@ -105,6 +105,7 @@
 		5BF92537179544880002CF9F /* 14-gear_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BF92535179544880002CF9F /* 14-gear_gray@2x.png */; };
 		5BF92541179554800002CF9F /* IAEAboutAndOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF9253F179554800002CF9F /* IAEAboutAndOptionsViewController.m */; };
 		5BF92542179554800002CF9F /* IAEAboutAndOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BF92540179554800002CF9F /* IAEAboutAndOptionsViewController.xib */; };
+		5BFDE72A17C5E27500DF884B /* IAESelectorContextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFDE72917C5E27500DF884B /* IAESelectorContextView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -297,6 +298,8 @@
 		5BF9253E179554800002CF9F /* IAEAboutAndOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEAboutAndOptionsViewController.h; sourceTree = "<group>"; };
 		5BF9253F179554800002CF9F /* IAEAboutAndOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEAboutAndOptionsViewController.m; sourceTree = "<group>"; };
 		5BF92540179554800002CF9F /* IAEAboutAndOptionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEAboutAndOptionsViewController.xib; sourceTree = "<group>"; };
+		5BFDE72817C5E27500DF884B /* IAESelectorContextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAESelectorContextView.h; sourceTree = "<group>"; };
+		5BFDE72917C5E27500DF884B /* IAESelectorContextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAESelectorContextView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -857,7 +860,7 @@
 			isa = PBXGroup;
 			children = (
 				5B2D38B017AF9FB10056488B /* XIBs */,
-				5BCE3A9C17A8FBBF00CD01E7 /* Concept Collection View */,
+				5BFDE72B17C5E6F900DF884B /* Context Views */,
 				5BEA607F17A6A31E00520E09 /* Report Area View */,
 				5B8CD5CE17A2623F00A353A5 /* Context View */,
 			);
@@ -1212,6 +1215,24 @@
 			name = "About and Options";
 			sourceTree = "<group>";
 		};
+		5BFDE72717C5E25A00DF884B /* Selector Context View */ = {
+			isa = PBXGroup;
+			children = (
+				5BFDE72817C5E27500DF884B /* IAESelectorContextView.h */,
+				5BFDE72917C5E27500DF884B /* IAESelectorContextView.m */,
+			);
+			name = "Selector Context View";
+			sourceTree = "<group>";
+		};
+		5BFDE72B17C5E6F900DF884B /* Context Views */ = {
+			isa = PBXGroup;
+			children = (
+				5BCE3A9C17A8FBBF00CD01E7 /* Concept Collection View */,
+				5BFDE72717C5E25A00DF884B /* Selector Context View */,
+			);
+			name = "Context Views";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1334,6 +1355,7 @@
 				5BC7101817AC29F600E12953 /* IAECategory.m in Sources */,
 				5B26461A17969084006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.m in Sources */,
 				5B62D873178EC20E009879A6 /* IAECurrencyManager.m in Sources */,
+				5BFDE72A17C5E27500DF884B /* IAESelectorContextView.m in Sources */,
 				5BEA608717A6A39400520E09 /* IAEReportAreaItemView.m in Sources */,
 				5BF92541179554800002CF9F /* IAEAboutAndOptionsViewController.m in Sources */,
 				5BEA98AB1793E3A500098AE0 /* IAECircleDecoratorView.m in Sources */,

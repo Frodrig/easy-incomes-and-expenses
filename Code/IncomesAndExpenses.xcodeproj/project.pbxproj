@@ -300,6 +300,7 @@
 		5BF92540179554800002CF9F /* IAEAboutAndOptionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEAboutAndOptionsViewController.xib; sourceTree = "<group>"; };
 		5BFDE72817C5E27500DF884B /* IAESelectorContextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAESelectorContextView.h; sourceTree = "<group>"; };
 		5BFDE72917C5E27500DF884B /* IAESelectorContextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAESelectorContextView.m; sourceTree = "<group>"; };
+		5BFDE72D17C5F07A00DF884B /* IAESelectorContextViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAESelectorContextViewDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -860,9 +861,9 @@
 			isa = PBXGroup;
 			children = (
 				5B2D38B017AF9FB10056488B /* XIBs */,
+				5BCE3A9C17A8FBBF00CD01E7 /* Concept Collection View */,
 				5BFDE72B17C5E6F900DF884B /* Context Views */,
 				5BEA607F17A6A31E00520E09 /* Report Area View */,
-				5B8CD5CE17A2623F00A353A5 /* Context View */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1220,6 +1221,7 @@
 			children = (
 				5BFDE72817C5E27500DF884B /* IAESelectorContextView.h */,
 				5BFDE72917C5E27500DF884B /* IAESelectorContextView.m */,
+				5BFDE72C17C5F05100DF884B /* Protocols */,
 			);
 			name = "Selector Context View";
 			sourceTree = "<group>";
@@ -1227,10 +1229,18 @@
 		5BFDE72B17C5E6F900DF884B /* Context Views */ = {
 			isa = PBXGroup;
 			children = (
-				5BCE3A9C17A8FBBF00CD01E7 /* Concept Collection View */,
+				5B8CD5CE17A2623F00A353A5 /* Context View */,
 				5BFDE72717C5E25A00DF884B /* Selector Context View */,
 			);
 			name = "Context Views";
+			sourceTree = "<group>";
+		};
+		5BFDE72C17C5F05100DF884B /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				5BFDE72D17C5F07A00DF884B /* IAESelectorContextViewDelegate.h */,
+			);
+			name = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

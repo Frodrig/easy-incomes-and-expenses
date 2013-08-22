@@ -38,6 +38,10 @@
         contextViewToHide.hidden = YES;
         contextViewToShow.hidden = NO;
         self.actualContextViewIndex = index;
+        
+        if ([self.delegate respondsToSelector:@selector("selectorContextView:didChangeToContextViewAtIndex:"]) {
+            [self.delegate selectorContextView:self didChangeToContextViewAtIndex:index];
+        }
     }
 }
 

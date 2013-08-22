@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IAESelectorContextViewDelegate.h"
 
 @class IAEContextView;
 
 @interface IAESelectorContextView : UIView
+
+@property (nonatomic, weak) id<IAESelectorContextViewDelegate> delegate;
 
 - (BOOL)addContextView:(IAEContextView *)contextView withIndex:(NSUInteger)index;
 

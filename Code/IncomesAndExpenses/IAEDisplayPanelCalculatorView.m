@@ -33,7 +33,7 @@ static const NSUInteger kTagDayButton = 20;
 static const NSUInteger kTagAmountLabel = 30;
 static const NSUInteger kTagStrokeHelperView = 100;
 
-static NSString * const kFontFamilyNameForAmountLabel = @"HelveticaNeue-Ultralight";
+static NSString * const kFontFamilyNameForAmountLabel = @"HelveticaNeue-Thin";
 static const NSUInteger kFontFamilySizeForAmountLabel = 42;
 static const CGFloat kFontFamilyKernForAmountLabel = 0.0;
 
@@ -46,7 +46,7 @@ static const StrokeType kTypeStrokeAnimationForConcepts = STROKEANIMATABLE_TYPE_
 
 static const CGFloat kAlphaValueForAmountLabelInStrokeState = 0.1;
 static const CGFloat kDelayBeforePerformActionsAfterStroke = 0.05;
-static const CGFloat kDurationOfOpaqueTransitionOfAmountValueAfterStroke = 0.25;
+static const CGFloat kDurationOfOpaqueTransitionOfAmountValueAfterStroke = 0.45;
 
 #pragma mark - Init
 

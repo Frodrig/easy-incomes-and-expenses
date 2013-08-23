@@ -42,7 +42,10 @@ typedef NS_ENUM(NSUInteger, CalculatorMode) {
 @property (nonatomic, strong) NSDecimalNumber *maxDecimalNumberAllowed;
 @property (nonatomic) NSUInteger numberConceptsCreatedInSession;
 @property (nonatomic) CGPoint centerPositionBeforeDisable;
-
+@property (nonatomic, strong) UIColor *validActionBaseColor;
+@property (nonatomic, strong) UIColor *validActionTransitionColor;
+@property (nonatomic, strong) UIColor *invalidActionBaseColor;
+@property (nonatomic, strong) UIColor *invalidActionTransitionColor;
 @end
 
 @implementation IAECalculatorViewController
@@ -61,6 +64,8 @@ static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
 
 static CGFloat animationDurationForDisableAction = 0.25;
 static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
+
+#pragma mark - Properties
 
 - (NSString *)actualAmount
 {
@@ -93,6 +98,44 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
     
     return _sizeHeightOfDragPanel;
 }
+
+- (UIColor *)invalidActionBaseColor
+{
+    if (!_invalidActionBaseColor) {
+        _invalidActionBaseColor = [UIColor colorWithRed:1 green:0.0 blue:0.0 alpha:0.05];
+    }
+    
+    return _invalidActionBaseColor;
+}
+
+- (UIColor *)invalidActionTransitionColor
+{
+    if (!_invalidActionTransitionColor) {
+        _invalidActionTransitionColor = [UIColor colorWithRed:1 green:0.0 blue:0.0 alpha:0.15];
+    }
+    
+    return _invalidActionTransitionColor;
+}
+
+- (UIColor *)validActionBaseColor
+{
+    if (!_validActionBaseColor) {
+        _validActionBaseColor = [UIColor colorWithWhite:0.8 alpha:0.0];
+    }
+    
+    return _validActionBaseColor;
+}
+
+- (UIColor *)validActionTransitionColor
+{
+    if (!_validActionTransitionColor) {
+        _validActionTransitionColor = [UIColor colorWithWhite:0.8 alpha:0.5];
+    }
+    
+    return _validActionTransitionColor;
+}
+
+#pragma mark - Init
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -389,14 +432,17 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
 
 - (IBAction)keyboardNumberPressed:(UIButton *)button
 {
-    [self numberPressedWithValue:button.tag];
+    BOOL validAction = [self numberPressedWithValue:button.tag];
+    [self applyPressedAnimationOverButton:button withValidAction:validAction];
 }
 
 - (IBAction)keyboardDeletePressed:(UIButton *)button
 {
-    if ([self deleteOneValueInAmount]) {
+    BOOL validAction = [self deleteOneValueInAmount];
+    if (validAction) {
         [self configureDisplayPanelWithActualAmount];
     }
+    [self applyPressedAnimationOverButton:button withValidAction:validAction];
 }
 
 - (BOOL)deleteOneValueInAmount
@@ -438,9 +484,11 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
 
 - (IBAction)keyboardDecimalPressed:(UIButton *)button
 {
-    if ([self appendDecimalSeparatorInAmount]) {
+    BOOL validAction = [self appendDecimalSeparatorInAmount];
+    if (validAction) {
         [self configureDisplayPanelWithActualAmount];
     }
+    [self applyPressedAnimationOverButton:button withValidAction:validAction];
 }
 
 - (BOOL)appendDecimalSeparatorInAmount
@@ -456,19 +504,26 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
 
 - (BOOL)canAppendDecimalSeparator
 {
-    BOOL decimalSymbolPresent = [self findDecimalRangeLocationInAmountString:self.actualAmount].location == NSNotFound ? NO : YES;
+    BOOL decimalSymbolPresent = [self isDecimalPresent];
     
     return decimalSymbolPresent ? NO : self.actualAmount.length <= amountMaxNumbersLenght - 1;
 }
 
-- (IBAction)keyboardEnterPressed:(UIButton *)button
+- (BOOL)isDecimalPresent
 {
-    [self createNewConcept];
+    return [self findDecimalRangeLocationInAmountString:self.actualAmount].location == NSNotFound ? NO : YES;
 }
 
-- (void)createNewConcept
+- (IBAction)keyboardEnterPressed:(UIButton *)button
 {
-    if (self.actualAmount.length > 0) {
+    BOOL validAction = [self createNewConcept];
+    [self applyPressedAnimationOverButton:button withValidAction:validAction];
+}
+
+- (BOOL)createNewConcept
+{
+    BOOL validAction = self.actualAmount.length > 0;
+    if (validAction) {
         IAEMonth *month = [self.dataSource monthForCalculatorViewController:self];
         IAEConcept *newConcept = [month addConceptWithAmount:[self convertToDecimalNumberKeyboardAmountValue:self.actualAmount]
                                                     category:self.actualCategory
@@ -482,15 +537,35 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
         
         [self.delegate calculatorViewController:self didCreateNewConcept:newConcept];
     }
+    
+    return validAction;
+}
+
+- (void)applyPressedAnimationOverButton:(UIButton *)button withValidAction:(BOOL)validAction
+{
+    button.backgroundColor = validAction ? self.validActionBaseColor : self.invalidActionTransitionColor;
+    [UIView animateWithDuration:0.05 animations:^{
+        button.backgroundColor = validAction ? self.validActionTransitionColor : self.invalidActionTransitionColor;
+    } completion:^(BOOL finished) {
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+        [UIView animateWithDuration:0.15 animations:^{
+            button.backgroundColor = validAction ? self.validActionBaseColor : self.invalidActionBaseColor;
+        } completion:^(BOOL finished) {
+            button.backgroundColor = [UIColor clearColor];
+        }];
+    }];
 }
 
 #pragma mark - Keyboard
 
-- (void)numberPressedWithValue:(NSUInteger)value
+- (BOOL)numberPressedWithValue:(NSUInteger)value
 {
-    if ([self appendNewNumberToAmountWithValue:value]) {
+    BOOL validAction = [self appendNewNumberToAmountWithValue:value];
+    if (validAction) {
         [self configureDisplayPanelWithActualAmount];
     }
+    
+    return validAction;
 }
 
 - (BOOL)appendNewNumberToAmountWithValue:(NSUInteger)value
@@ -510,11 +585,17 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
 {
     NSAssert(value >= 0 && value < 10, @"");
 
+    BOOL withValueValidForActualState = (value > 0 || (value == 0 && [self isActualAmountOverZero])) || [self isDecimalPresent];
     BOOL withSpaceForNewNumber = [self isActualAmountWithSpaceForNewValue];
     BOOL withSpaceForDecimalNumber = [self isActualAmountWithSpaceForNewDecimalNumber];
     BOOL withValueUnderMaxAllowed = [self isActualAmountUnderMaxDecimalNumberAllowedWithNewValue:value];
 
-    return withSpaceForNewNumber && withSpaceForDecimalNumber && withValueUnderMaxAllowed;
+    return withValueValidForActualState && withSpaceForNewNumber && withSpaceForDecimalNumber && withValueUnderMaxAllowed;
+}
+
+- (BOOL)isActualAmountOverZero
+{
+    return self.actualAmount.floatValue > 0;
 }
 
 - (BOOL)isActualAmountWithSpaceForNewValue

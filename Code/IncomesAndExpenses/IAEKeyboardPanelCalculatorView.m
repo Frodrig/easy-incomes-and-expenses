@@ -59,7 +59,7 @@ static const CGFloat kRadiusOfKeyboardContainerView = 15;
 
 - (void)configureVisualAspect
 {
-    [self.keyboardContainerView addRoundedCorners:UIRectCornerAllCorners withRadius:kRadiusOfKeyboardContainerView];
+    //[self.keyboardContainerView addRoundedCorners:UIRectCornerAllCorners withRadius:kRadiusOfKeyboardContainerView];
 }
 
 - (void)configureDecimalButton

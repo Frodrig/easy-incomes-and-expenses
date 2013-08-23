@@ -294,12 +294,12 @@
                                         <action selector="keyboardNumberPressed:" destination="-1" eventType="touchUpInside" id="lOC-rb-Yny"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="Gen-Te-pdY">
-                                    <rect key="frame" x="594" y="0.0" width="178" height="44"/>
+                                <button opaque="NO" tag="100" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="Gen-Te-pdY">
+                                    <rect key="frame" x="594" y="2" width="178" height="42"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="34"/>
-                                    <state key="normal" title="&lt;">
+                                    <state key="normal" image="765-arrow-left.png">
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <state key="highlighted">
@@ -309,12 +309,12 @@
                                         <action selector="keyboardDeletePressed:" destination="-1" eventType="touchUpInside" id="4V5-5E-fjo"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" tag="300" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="IFp-Kj-z1C">
+                                <button opaque="NO" tag="400" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="IFp-Kj-z1C">
                                     <rect key="frame" x="594" y="88" width="178" height="88"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="34"/>
-                                    <state key="normal" title=" Enter">
+                                    <state key="normal" title="Añadir">
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <state key="highlighted">
@@ -339,5 +339,6 @@
     <resources>
         <image name="746-minus-circle.png" width="28" height="28"/>
         <image name="746-plus-circle.png" width="28" height="28"/>
+        <image name="765-arrow-left.png" width="14" height="28"/>
     </resources>
 </document>

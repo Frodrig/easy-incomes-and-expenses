@@ -32,7 +32,7 @@
 ** -Comprobar que aguantamos las cantidades numéricas máximas que aguantábamos en la versión previa.-
 ** Hay que mejorar el aspecto visual del teclado.
 *** Incorporar una rejilla
-*** Incorporar iconos
+*** -Incorporar iconos-
 *** -Al pulsarse en los botones el fondo se tinta de color teniendo en cuenta si la acción es permitida o no-
 *** Color diferenciador quizás
 ** Considerar que el display se tinte dependiendo de si estamos en modo ingreso o en modo gasto.

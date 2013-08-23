@@ -13,6 +13,7 @@
 @interface IAEKeyboardPanelCalculatorView()
 
 @property (nonatomic, weak) UIButton *decimalButton;
+@property (nonatomic, weak) UIButton *addButton;
 @property (nonatomic, weak) UIView *keyboardContainerView;
 
 @end
@@ -20,9 +21,12 @@
 @implementation IAEKeyboardPanelCalculatorView
 
 static const NSUInteger kTagDecimalButton = 200;
+static const NSUInteger kTagAddButton = 400;
 static const NSUInteger kTagKeyboardContainerView = 300;
 
 static const CGFloat kRadiusOfKeyboardContainerView = 15;
+    
+static NSString * const kLtextAddButtonTitle = @"LTEXT_CALCULATOR_BUTTON_ADD";
 
 - (UIButton *)decimalButton
 {
@@ -31,6 +35,15 @@ static const CGFloat kRadiusOfKeyboardContainerView = 15;
     }
     
     return _decimalButton;
+}
+    
+- (UIButton *)addButton
+{
+    if (!_addButton) {
+        _addButton = (UIButton *)[self viewWithTag:kTagAddButton];
+    }
+    
+    return _addButton;
 }
 
 - (UIView *)keyboardContainerView
@@ -55,6 +68,7 @@ static const CGFloat kRadiusOfKeyboardContainerView = 15;
 {
     [self configureVisualAspect];
     [self configureDecimalButton];
+    [self configureAddButton];
 }
 
 - (void)configureVisualAspect
@@ -66,6 +80,11 @@ static const CGFloat kRadiusOfKeyboardContainerView = 15;
 {
     NSString *decimalSymbol = [[IAECurrencyManager sharedManager] decimalSeparator];
     [self.decimalButton setTitle:decimalSymbol forState:UIControlStateNormal];
+}
+    
+- (void)configureAddButton
+{
+    [self.addButton setTitle:NSLocalizedString(kLtextAddButtonTitle, @"") forState:UIControlStateNormal];
 }
 
 @end

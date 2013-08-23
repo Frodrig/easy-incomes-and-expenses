@@ -33,6 +33,7 @@
 ** Hay que mejorar el aspecto visual del teclado.
 *** Incorporar una rejilla
 *** Incorporar iconos
+*** -Al pulsarse en los botones el fondo se tinta de color teniendo en cuenta si la acción es permitida o no-
 *** Color diferenciador quizás
 ** Considerar que el display se tinte dependiendo de si estamos en modo ingreso o en modo gasto.
 ** Intentar ganar dos píxeles de alto para dárselos a los botones de categoría y día y pasen de ser de 43 a 44.

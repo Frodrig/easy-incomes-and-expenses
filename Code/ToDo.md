@@ -25,9 +25,10 @@
 
 * Calculadora
 ** Hay que implementar arrastre. Cuando arrastramos hacia arriba el resto de elementos suben pero usando dynamics.
+** -Error en la etiqueta que se muestra al seleccionar un día.-
 ** -Las categorías están condenadas a que no se vean enteras. Considerar meter el label en un scrollview y poder hacer pan para verla en su totalidad.-
 *** -No hace falta pues se ajusta por escalado y al hacer crop por el medio se entiende.-
-** Gesto de borrado sobre la cantidad económica para borrarla completamente.
+** -Gesto de borrado sobre la cantidad económica para borrarla completamente.-
 ** -Comprobar que aguantamos las cantidades numéricas máximas que aguantábamos en la versión previa.-
 ** Hay que mejorar el aspecto visual del teclado.
 *** Incorporar una rejilla

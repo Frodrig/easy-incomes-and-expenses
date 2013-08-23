@@ -265,7 +265,7 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
     if ([[NSUserDefaults standardUserDefaults] boolForKey:userDefaultsDayModeActive]) {
         [self.displayPanel showDayButton];
         [self.displayPanel setDay:self.actualDay
-                    withDayweekName:[self findDayOfTheWeekName]
+                  withDayweekName:[self findDayOfTheWeekName]
                       inMonthName:[self findMonthName]];
     } else {
         [self.displayPanel hideDayButton];

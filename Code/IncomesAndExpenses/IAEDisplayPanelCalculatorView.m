@@ -8,6 +8,8 @@
 
 #import "IAEDisplayPanelCalculatorView.h"
 #import "IAECurrencyManager.h"
+#import "IAEStrokeAnimatableLineView.h"
+#import "IAEDisplayPanelCalculatorViewDelegate.h"
 
 @interface IAEDisplayPanelCalculatorView()
 @property (nonatomic, weak) UIView *categoryContainerView;
@@ -15,28 +17,43 @@
 @property (nonatomic, weak) UIButton *categoryButton;
 @property (nonatomic, weak) UIButton *dayButton;
 @property (nonatomic, weak) UILabel *amountLabel;
+@property (nonatomic, weak) UIView *helperForStrokeView;
+@property (nonatomic, strong) UISwipeGestureRecognizer *swipeGestureForAmountClear;
+@property (nonatomic, strong) IAEStrokeAnimatableLineView *strokeAnimatableLineView;
 @end
 
 @implementation IAEDisplayPanelCalculatorView
 
-static const NSUInteger tagCategoryContainerView = 5;
-static const NSUInteger tagCategoryButton = 10;
-static const NSUInteger tagDayContainerView = 15;
-static const NSUInteger tagDayButton = 20;
-static const NSUInteger tagAmountLabel = 30;
+#pragma mark - Constants
 
-static NSString * const fontFamilyNameForAmountLabel = @"HelveticaNeue-Ultralight";
-static const NSUInteger fontFamilySizeForAmountLabel = 42;
-static const CGFloat fontFamilyKernForAmountLabel = 0.0;
+static const NSUInteger kTagCategoryContainerView = 5;
+static const NSUInteger kTagCategoryButton = 10;
+static const NSUInteger kTagDayContainerView = 15;
+static const NSUInteger kTagDayButton = 20;
+static const NSUInteger kTagAmountLabel = 30;
+static const NSUInteger kTagStrokeHelperView = 100;
+
+static NSString * const kFontFamilyNameForAmountLabel = @"HelveticaNeue-Ultralight";
+static const NSUInteger kFontFamilySizeForAmountLabel = 42;
+static const CGFloat kFontFamilyKernForAmountLabel = 0.0;
 
 static const CGFloat kDurationOfTransitionWhenDayActive = 0.25;
+
+static const CGFloat kDurationOfStrokeAnimation = 0.25;
+static const CGFloat kColorWhiteComponentForStrokeAnimationForConcepts = 0.8;
+static const CGFloat kColorWhiteAlphaComponentForStrokeAnimationForConcepts = 1.0;
+static const StrokeType kTypeStrokeAnimationForConcepts = STROKEANIMATABLE_TYPE_THIN;
+
+static const CGFloat kAlphaValueForAmountLabelInStrokeState = 0.1;
+static const CGFloat kDelayBeforePerformActionsAfterStroke = 0.05;
+static const CGFloat kDurationOfOpaqueTransitionOfAmountValueAfterStroke = 0.25;
 
 #pragma mark - Init
 
 - (UIView *)categoryContainerView
 {
     if (!_categoryContainerView) {
-        _categoryContainerView = (UIView *)[self viewWithTag:tagCategoryContainerView];
+        _categoryContainerView = (UIView *)[self viewWithTag:kTagCategoryContainerView];
     }
     
     return _categoryContainerView;
@@ -45,7 +62,7 @@ static const CGFloat kDurationOfTransitionWhenDayActive = 0.25;
 - (UIButton *)categoryButton
 {
     if (!_categoryButton) {
-        _categoryButton = (UIButton *)[self viewWithTag:tagCategoryButton];
+        _categoryButton = (UIButton *)[self viewWithTag:kTagCategoryButton];
     }
     
     return _categoryButton;
@@ -54,7 +71,7 @@ static const CGFloat kDurationOfTransitionWhenDayActive = 0.25;
 - (UIView *)dayContainerView
 {
     if (!_dayContainerView) {
-        _dayContainerView = (UIButton *)[self viewWithTag:tagDayContainerView];
+        _dayContainerView = (UIButton *)[self viewWithTag:kTagDayContainerView];
     }
     
     return _dayContainerView;
@@ -63,7 +80,7 @@ static const CGFloat kDurationOfTransitionWhenDayActive = 0.25;
 - (UIButton *)dayButton
 {
     if (!_dayButton) {
-        _dayButton = (UIButton *)[self viewWithTag:tagDayButton];
+        _dayButton = (UIButton *)[self viewWithTag:kTagDayButton];
     }
     
     return _dayButton;
@@ -72,11 +89,34 @@ static const CGFloat kDurationOfTransitionWhenDayActive = 0.25;
 - (UILabel *)amountLabel
 {
     if (!_amountLabel) {
-        _amountLabel = (UILabel *)[self viewWithTag:tagAmountLabel];
+        _amountLabel = (UILabel *)[self viewWithTag:kTagAmountLabel];
     }
     
     return _amountLabel;
 }
+
+- (IAEStrokeAnimatableLineView *)strokeAnimatableLineView
+{
+    if (!_strokeAnimatableLineView) {
+        _strokeAnimatableLineView = [[IAEStrokeAnimatableLineView alloc] init];
+        _strokeAnimatableLineView.durationOfStrokeAnimation = kDurationOfStrokeAnimation;
+        _strokeAnimatableLineView.strokeColor = [UIColor colorWithWhite:kColorWhiteComponentForStrokeAnimationForConcepts
+                                                                  alpha:kColorWhiteAlphaComponentForStrokeAnimationForConcepts];
+        _strokeAnimatableLineView.strokeType = kTypeStrokeAnimationForConcepts;
+        _strokeAnimatableLineView.delegate = self;
+    }
+    
+    return _strokeAnimatableLineView;
+}
+
+#pragma mark - Dealloc
+
+- (void)dealloc
+{
+    [self.amountLabel removeGestureRecognizer:self.swipeGestureForAmountClear];
+}
+
+#pragma mark - Configuration
 
 - (void)awakeFromNib
 {
@@ -88,6 +128,7 @@ static const CGFloat kDurationOfTransitionWhenDayActive = 0.25;
     [self configureCategory];
     [self configureDay];
     [self configureAmount];
+    [self createAndconfigureSwipeGestureForAmountClear];
 }
 
 - (void)configureCategory
@@ -103,6 +144,13 @@ static const CGFloat kDurationOfTransitionWhenDayActive = 0.25;
 - (void)configureAmount
 {
     // ...
+}
+
+- (void)createAndconfigureSwipeGestureForAmountClear
+{
+    self.swipeGestureForAmountClear = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGestureForAmountClearAction:)];
+    self.swipeGestureForAmountClear.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.amountLabel addGestureRecognizer:self.swipeGestureForAmountClear];
 }
 
 #pragma mark - Category
@@ -164,18 +212,81 @@ static const CGFloat kDurationOfTransitionWhenDayActive = 0.25;
 
 - (NSDictionary *)createAttributesForAmountLabel
 {
-    UIFont *font = [UIFont fontWithName:fontFamilyNameForAmountLabel size:fontFamilySizeForAmountLabel];
+    UIFont *font = [UIFont fontWithName:kFontFamilyNameForAmountLabel size:kFontFamilySizeForAmountLabel];
     NSDictionary *attributes = @{NSFontAttributeName: font,
                                  NSForegroundColorAttributeName: [UIColor blackColor],
-                                 NSKernAttributeName: [NSNumber numberWithFloat:fontFamilyKernForAmountLabel]};
+                                 NSKernAttributeName: [NSNumber numberWithFloat:kFontFamilyKernForAmountLabel]};
     
     return attributes;
 }
 
 - (void)clearAmountString
 {
-    
+    [self setAmountString:nil];
 }
+
+#pragma mark - Swipe Gesture
+
+- (void)swipeGestureForAmountClearAction:(UISwipeGestureRecognizer *)swipeGesture
+{
+    [self applyStrokeToAmountLabel];
+}
+
+- (BOOL)canApplyStrokeToAmountLabel
+{
+    BOOL canApply = ![self.amountLabel.text isEqualToString:@"0"];
+    
+    return canApply;
+}
+
+- (void)applyStrokeToAmountLabel
+{
+    if ([self canApplyStrokeToAmountLabel]) {
+        [self makeAndVinculeHelperViewToStrokeLabel];
+        [self.strokeAnimatableLineView doStrokeOverTheView:self.helperForStrokeView];
+        [UIView animateWithDuration:kDurationOfStrokeAnimation animations:^{
+            self.amountLabel.alpha = kAlphaValueForAmountLabelInStrokeState;
+        }];
+    }
+}
+
+- (void)makeAndVinculeHelperViewToStrokeLabel
+{
+    CGSize textSize = [self.amountLabel.text sizeWithAttributes:[self.amountLabel.attributedText attributesAtIndex:0 effectiveRange:NULL]];
+    CGRect frameOfHelperView = CGRectMake(self.amountLabel.frame.origin.x + self.amountLabel.bounds.size.width - textSize.width,
+                                          self.amountLabel.frame.origin.y,
+                                          textSize.width,
+                                          self.amountLabel.bounds.size.height);
+    UIView *helperView = [[UIView alloc] initWithFrame:frameOfHelperView];
+    helperView.clipsToBounds = YES;
+    helperView.backgroundColor = [UIColor clearColor];
+    [self addSubview:helperView];
+    self.helperForStrokeView = helperView;
+}
+
+#pragma mark - StrokeAnimatableView
+
+- (void)strokeAnimatableView:(IAEStrokeAnimatableLineView *)strokeAnimatableView didStrokeOverTheView:(UIView *)view
+{
+    [self performSelector:@selector(resetStatesAndNotifyToDelegateAfterStrokeTheAmountValue)
+               withObject:nil
+               afterDelay:kDelayBeforePerformActionsAfterStroke];
+}
+
+- (void)resetStatesAndNotifyToDelegateAfterStrokeTheAmountValue
+{
+    [self.helperForStrokeView removeFromSuperview];
+    [self.strokeAnimatableLineView resetStroke];
+    self.strokeAnimatableLineView.alpha = 1;
+    if ([self.delegate respondsToSelector:@selector(amountLabelWasCleanInDisplayPanelCalculatorView:)]) {
+        [self.delegate amountLabelWasCleanInDisplayPanelCalculatorView:self];
+    }
+    
+    [UIView animateWithDuration:kDurationOfOpaqueTransitionOfAmountValueAfterStroke animations:^{
+        self.amountLabel.alpha = 1;
+    }];
+}
+
 
 
 @end

@@ -127,6 +127,13 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self configureDisplayPanelCalculatorView];
+}
+
+- (void)configureDisplayPanelCalculatorView
+{
+    self.displayPanel.delegate = self;
 }
 
 - (void)dismissPopover
@@ -719,5 +726,13 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
     self.actualDay = 0;
     [self configureDisplayPanelWithActualDay];
 }
+
+#pragma mark - IAEDisplayCalculatorViewDelegate
+
+- (void)amountLabelWasCleanInDisplayPanelCalculatorView:(IAEDisplayPanelCalculatorView *)displayPanelCalculatorView
+{
+    [self resetAmountPannel];
+}
+
 
 @end

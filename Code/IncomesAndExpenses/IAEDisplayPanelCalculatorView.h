@@ -7,8 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IAEStrokeAnimatableViewDelegate.h"
 
-@interface IAEDisplayPanelCalculatorView : UIView
+@protocol IAEDisplayPanelCalculatorViewDelegate;
+
+@interface IAEDisplayPanelCalculatorView : UIView<IAEStrokeAnimatableViewDelegate>
+
+@property (nonatomic, weak) id<IAEDisplayPanelCalculatorViewDelegate> delegate;
 
 - (void)setCategoryName:(NSString *)categoryName;
 - (void)setDay:(NSUInteger)day withDayweekName:(NSString *)dayWeekName inMonthName:(NSString *)monthName;

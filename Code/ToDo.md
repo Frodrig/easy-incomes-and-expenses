@@ -6,7 +6,7 @@
 * Transiciones al pulsar en un contexto
 ** Al transicionar en conceptos, se ha perdido la transición con fade. Sin embargo, si lo que hay es un warning, sí que se produce esa transición.
 *** Ya se realiza pero el código es MUY MEJORABLE Y OPTIMIZABLE habría que volver. Mirar el método updateContentInformationBasedInCurrentContext
-** Al mostrar el siguiente mes, deberíamos de hacerlo mediante animación de contador sobre la cantidad a representar.
+** -Al mostrar el siguiente mes, deberíamos de hacerlo mediante animación de contador sobre la cantidad a representar.-
 ** -Al arrancar hay transición brusca en la zona de conceptos y reportes-
 ** -Al pulsar en la opción de reportes, no se esconde la de conceptos-
 
@@ -25,10 +25,14 @@
 
 * Calculadora
 ** Hay que implementar arrastre. Cuando arrastramos hacia arriba el resto de elementos suben pero usando dynamics.
-** Las categorías están condenadas a que no se vean enteras. Considerar meter el label en un scrollview y poder hacer pan para verla en su totalidad.
+** -Las categorías están condenadas a que no se vean enteras. Considerar meter el label en un scrollview y poder hacer pan para verla en su totalidad.-
+*** -No hace falta pues se ajusta por escalado y al hacer crop por el medio se entiende.-
 ** Gesto de borrado sobre la cantidad económica para borrarla completamente.
-** Comprobar que aguantamos las cantidades numéricas máximas que aguantábamos en la versión previa.
-** Hay que mejorar el aspecto visual del teclado. Hay que estudiar que usemos un color uniforme, rejilla y similares.
+** -Comprobar que aguantamos las cantidades numéricas máximas que aguantábamos en la versión previa.-
+** Hay que mejorar el aspecto visual del teclado.
+*** Incorporar una rejilla
+*** Incorporar iconos
+*** Color diferenciador quizás
 ** Considerar que el display se tinte dependiendo de si estamos en modo ingreso o en modo gasto.
 ** Intentar ganar dos píxeles de alto para dárselos a los botones de categoría y día y pasen de ser de 43 a 44.
 ** Considerar usar símbolo ^ e inverso en el panel de draga que cambie a medida que hacemos el arrastre. Considerar si, entonces, tiene sentido poner "Inserción".
@@ -57,7 +61,7 @@
 ** Usar dynamics para desplazar la raya inferior con cierto rebote.
 
 * Otros
-** Cuando se esconde la calculadora, no se recarga el valor presente ya que se ha ido actualizando a medida que se añadían o borraban elementos con la calculadora activa. Se debería de guardar el valor original y actualizar una vez se muestre la calculadora.
+** -Cuando se esconde la calculadora, no se recarga el valor presente ya que se ha ido actualizando a medida que se añadían o borraban elementos con la calculadora activa. Se debería de guardar el valor original y actualizar una vez se muestre la calculadora.-
 ** Comprar los nuevos glyphs e introducirlos.
 ** En todos los sitios donde vuelvo a recrear la fuente y su tamaño… simplemente cambiar el campo text para la label asociada. Esto es válido a no ser que tenga que poner kern.
 ** ¿Tiene sentido permitir pulsar en categorías cuando está la calculadora abierta?

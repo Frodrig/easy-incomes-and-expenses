@@ -78,7 +78,8 @@ static const CGFloat kDurationOfAnimationOfChangeContext = 0.65;
     contextViewToShow.hidden = NO;
     contextViewToShow.alpha = 0;
     contextViewToShow.center = CGPointMake(contextViewToShow.center.x, contextViewToShow.center.y * 2);
-   
+    [contextViewToShow reloadDataWithAnimationFromUsingZeroValue:YES];
+
     [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
     [UIView animateWithDuration:kDurationOfAnimationOfChangeContext animations:^{
         contextViewToHide.alpha = 0;
@@ -90,6 +91,7 @@ static const CGFloat kDurationOfAnimationOfChangeContext = 0.65;
         _animationInProgress = NO;
         [self sendToDelegateChangeToContextViewAtIndex:index];
     }];
+    
 }
 
 - (void)hideWithoutAnimationTheContextView:(IAEContextView *)contextViewToHide andShowTheContextView:(IAEContextView *)contextViewToShow
@@ -97,6 +99,9 @@ static const CGFloat kDurationOfAnimationOfChangeContext = 0.65;
     contextViewToHide.alpha = 1.0;
     contextViewToHide.hidden = YES;
     contextViewToShow.hidden = NO;
+    
+    [contextViewToShow reloadDataWithoutAnimation];
+
     _animationInProgress = NO;
     [self sendToDelegateChangeToContextViewAtIndex:index];
 }

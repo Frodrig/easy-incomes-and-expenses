@@ -22,7 +22,8 @@
 
 - (id)initWithFrame:(CGRect)frame type:(IAEContextViewType)contextViewType andValueIndex:(NSUInteger)valueIndex;
 
-- (void)reloadDataWithAnimation:(BOOL)animation;
+- (void)reloadDataWithoutAnimation;
+- (void)reloadDataWithAnimationFromUsingZeroValue:(BOOL)fromZero;
 
 
 @end

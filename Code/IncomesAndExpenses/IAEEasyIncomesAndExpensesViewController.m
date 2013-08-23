@@ -820,24 +820,26 @@ static const NSInteger kInvalidOptionIndex = -1;
 
 - (void)updateBalancesWithAnimation:(BOOL)animation
 {
-    [self updateSelectedMonthBalanceWithAnimation:animation];
-    [self updateOpenYearBalance];
+    if (![self.calculatorViewController isOpen]) {
+        [self updateSelectedMonthBalanceWithAnimation:animation];
+        [self updateOpenYearBalance];
+    }
 }
 
 - (void)updateSelectedMonthBalanceWithAnimation:(BOOL)animation
 {
     IAEContextView *contextView = [self findActualSelectedMonthContextView];
-    [contextView reloadDataWithAnimation:animation];
+    if (animation) {
+        [contextView reloadDataWithAnimationFromUsingZeroValue:NO];
+    } else {
+        [contextView reloadDataWithoutAnimation];
+    }
 }
 
 - (void)updateOpenYearBalance
 {
     IAEContextView *contextView = [self findOpenYearContextView];
-    [contextView reloadDataWithAnimation:NO];
-}
-
-- (void)processEconomicLabel:(UILabel *)label toValue:(NSDecimalNumber *)destinationValue withDuration:(CGFloat)duration
-{
+    [contextView reloadDataWithoutAnimation];
 }
 
 #pragma mark - CalculatorViewController (vincule)
@@ -904,7 +906,7 @@ static const NSInteger kInvalidOptionIndex = -1;
     CGRect frame = CGRectMake(0, 0, self.selectorContextView.bounds.size.width, self.selectorContextView.bounds.size.height);
     IAEContextView *contextView = [[IAEContextView alloc] initWithFrame:frame type:contextType andValueIndex:contextValueIndex];
     contextView.dataSource = self;
-    [contextView reloadDataWithAnimation:NO];
+    [contextView reloadDataWithoutAnimation];
     
     [self.selectorContextView addContextView:contextView withIndex:globalPosition];
 }
@@ -1513,7 +1515,11 @@ static const NSInteger kInvalidOptionIndex = -1;
 - (void)reloadBalancesOfContextViewsWithAnimation:(BOOL)animation
 {
     [self.selectorContextView enumerateContextViewsUsingBlock:^(NSUInteger index, IAEContextView *contextView) {
-        [contextView reloadDataWithAnimation:animation];
+        if (animation) {
+            [contextView reloadDataWithAnimationFromUsingZeroValue:NO];
+        } else {
+            [contextView reloadDataWithoutAnimation];
+        }
     }];
 }
 
@@ -1608,6 +1614,8 @@ static const NSInteger kInvalidOptionIndex = -1;
         [self updateFramePositionAfterShowCalculatorForView:self.modeSegmentedControl];
         [self updateFramePositionAfterShowCalculatorForView:self.editAndReportModeContentContainerView];
     }];
+    
+    [self updateBalancesWithAnimation:YES];
 }
 
 - (void)updateFramePositionBeforeShowCalculatorForView:(UIView *)view

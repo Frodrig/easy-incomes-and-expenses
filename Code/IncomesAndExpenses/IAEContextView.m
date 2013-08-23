@@ -86,10 +86,33 @@ static const CGFloat kKernForBalanceLabel = 4;
     _contentBalanceLabel = (UILabel *)[_contentView viewWithTag:kTagViewBalance];
 }
 
-- (void)reloadDataWithAnimation:(BOOL)animation
+- (void)reloadDataWithoutAnimation
 {
-    [self configureContentNameLabelText:animation];
-    [self configureContentBalanceLabelText:animation];
+    [self configureContentNameLabelText:NO];
+    NSString *balanceString = [self balanceStringValueForUpdateWithoutUsingAnimation];
+    [self configureContentBalanceLabelText:NO fromBalanceStringValue:balanceString];
+}
+
+- (NSString *)balanceStringValueForUpdateWithoutUsingAnimation
+{
+    NSString *balanceString = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:[self contentBalance]];
+    
+    return balanceString;
+}
+
+- (void)reloadDataWithAnimationFromUsingZeroValue:(BOOL)fromZero
+{
+    [self configureContentNameLabelText:YES];
+    NSString *balanceString = [self balanceStringValueForUpdateUsingAnimationFromZeroValue:fromZero];
+    [self configureContentBalanceLabelText:YES fromBalanceStringValue:balanceString];
+}
+
+- (NSString *)balanceStringValueForUpdateUsingAnimationFromZeroValue:(BOOL)fromZero
+{
+    NSString *balanceString = fromZero ? [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:[NSDecimalNumber zero]] :
+                                         self.contentBalanceLabel.text;
+
+    return balanceString;
 }
 
 - (void)configureContentNameLabelText:(BOOL)animation
@@ -102,16 +125,15 @@ static const CGFloat kKernForBalanceLabel = 4;
     self.contentNameLabel.attributedText = [[NSAttributedString alloc] initWithString:contentName attributes:attributes];
 }
 
-- (void)configureContentBalanceLabelText:(BOOL)animation
+- (void)configureContentBalanceLabelText:(BOOL)animation fromBalanceStringValue:(NSString *)balanceStringValue
 {
     NSDecimalNumber *contentBalance = [self contentBalance];
-    NSString *contentBalanceString = animation ? self.contentBalanceLabel.text : [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:contentBalance];
+    
     UIColor *labelColor = [IAEColorHelper colorForEconomicValueType:[IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:contentBalance]];
     NSDictionary *attributes = [self createAttributeDictionaryForLabelsWithSize:kSizeFontForBalanceLabel
                                                                           color:labelColor
                                                                      andKerning:kKernForBalanceLabel];
-    
-    self.contentBalanceLabel.attributedText = [[NSAttributedString alloc] initWithString:contentBalanceString attributes:attributes];
+    self.contentBalanceLabel.attributedText = [[NSAttributedString alloc] initWithString:balanceStringValue attributes:attributes];
     
     if (animation) {
         [[IAEEconomicValueUpdater defaultEconomicValueUpdater] processEconomicLabel:self.contentBalanceLabel

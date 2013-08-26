@@ -296,6 +296,7 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
     [self configureDisplayPanelWithActualCategory];
     [self configureDisplayPanelWithActualDay];
     [self configureDisplayPanelWithActualAmount];
+    [self configureDisplayPanelWithAppropiateColorWithAnimation:NO];
 }
 
 - (void)configureDisplayPanelWithActualCategory
@@ -356,6 +357,7 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
     
     [self setDefaultCategoryForActualMode];
     [self configureDisplayPanelWithActualCategory];
+    [self configureDisplayPanelWithAppropiateColorWithAnimation:YES];
 }
 
 - (void)hide
@@ -707,6 +709,15 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
 {
     NSRange decimalRange = [self findDecimalRangeLocationInAmountString:amountString];
     return decimalRange.location == NSNotFound ? NO : YES;
+}
+
+- (void)configureDisplayPanelWithAppropiateColorWithAnimation:(BOOL)animation
+{
+    if ([self isInIncomeMode]) {
+        [self.displayPanel setDisplayWithIncomeColorUsingAnimation:animation];
+    } else if ([self isInExpenseMode]) {
+        [self.displayPanel setDisplayExpenseColorUsingAnimation:animation];
+    }
 }
 
 - (void)resetAmountPannel

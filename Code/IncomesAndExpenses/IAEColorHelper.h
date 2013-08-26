@@ -12,9 +12,14 @@
 @interface IAEColorHelper : NSObject
 
 + (UIColor *)colorForEconomicValueType:(EconomicValueType)economicValueType;
++ (UIColor *)colorForEconomicValueType:(EconomicValueType)economicValueType withAlpha:(CGFloat)alpha;
 
 + (UIColor *)colorForEconomicIncomeValue;
 + (UIColor *)colorForEconomicExpenseValue;
 + (UIColor *)colorForEconomicZeroValue;
+
++ (UIColor *)colorForEconomicIncomeValueWithAlpha:(CGFloat)alha;
++ (UIColor *)colorForEconomicExpenseValueWithAlpha:(CGFloat)alpha;
++ (UIColor *)colorForEconomicZeroValueWithAlpha:(CGFloat)alpha;
 
 @end

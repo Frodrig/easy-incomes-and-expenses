@@ -1,54 +1,22 @@
 # ToDo: Easy Incomes and Expenses.
 
-* Zona del mes y balance.
-** -Hay que sustituir el ScrollView por otro elemento en el que podamos hacer algún tipo de transición especial. Lo ideal para empezar sería una view con dos subviews a modo de contenedores dentro de las cuales hubiera una label para el mes y otra para el balance.-
-
 * Transiciones al pulsar en un contexto
 ** Al transicionar en conceptos, se ha perdido la transición con fade. Sin embargo, si lo que hay es un warning, sí que se produce esa transición.
 *** Ya se realiza pero el código es MUY MEJORABLE Y OPTIMIZABLE habría que volver. Mirar el método updateContentInformationBasedInCurrentContext
-** -Al mostrar el siguiente mes, deberíamos de hacerlo mediante animación de contador sobre la cantidad a representar.-
-** -Al arrancar hay transición brusca en la zona de conceptos y reportes-
-** -Al pulsar en la opción de reportes, no se esconde la de conceptos-
 
 * Selector de categorías
 ** Reforzar de alguna manera adicional qué es una categoría general.
 ** Mostrar alertviews o similares que indiquen el motivo por el cual no se puede manipular una categoría general.
 ** Considerar volver a poner rallas separatorias entre categorías.
-** -Meter el número de conceptos asociados a la categoría de forma global (para todos los años).-
-** -El stroke al borrar debería de tener márgenes al empezar y finalizar.-
-** -Tenemos pequeño problema: hemos supuesto en la clase principal, IAEEasyIncomesAndExpensesViewController, que la selección de una categoría sucede solo cuando hemos pulsado sobre un concepto, pero también puede ocurrir cuando desplegamos el selector tras pulsar en el botón de categorías. En este último caso, lo que ha de suceder es entrar en modo edición o renombrado de la misma. Hay que generalizar todo este funcionamiento.-
-** -Al borrar, recarga solo de la celda vinculada y con efecto fade en desaparición.-
-** -Permitir los gestos de acciones como renombrar o borrar.-
-** -Eliminar cualquier rastro de menú contextual.- 
-** -Para borrar una categoría, implementar el gesto asociado a la eliminación de un concepto. Duda sobre si se debería de permitir el borrado en modo popover.-
-*** -Para seleccionar una categoría para renombrar, simplemente selección de la celda.-
 
 * Calculadora
 ** Hay que implementar arrastre. Cuando arrastramos hacia arriba el resto de elementos suben pero usando dynamics.
-** -Error en la etiqueta que se muestra al seleccionar un día.-
-** -Las categorías están condenadas a que no se vean enteras. Considerar meter el label en un scrollview y poder hacer pan para verla en su totalidad.-
-*** -No hace falta pues se ajusta por escalado y al hacer crop por el medio se entiende.-
-** -Gesto de borrado sobre la cantidad económica para borrarla completamente.-
-** -Comprobar que aguantamos las cantidades numéricas máximas que aguantábamos en la versión previa.-
 ** Hay que mejorar el aspecto visual del teclado.
 *** Incorporar una rejilla
-*** -Incorporar iconos-
-*** -Al pulsarse en los botones el fondo se tinta de color teniendo en cuenta si la acción es permitida o no-
 *** Color diferenciador quizás
-** Considerar que el display se tinte dependiendo de si estamos en modo ingreso o en modo gasto.
+*** Considerar que el display se tinte dependiendo de si estamos en modo ingreso o en modo gasto.
 ** Intentar ganar dos píxeles de alto para dárselos a los botones de categoría y día y pasen de ser de 43 a 44.
 ** Considerar usar símbolo ^ e inverso en el panel de draga que cambie a medida que hacemos el arrastre. Considerar si, entonces, tiene sentido poner "Inserción".
-** Cuando estemos en modo NO día deberíamos de aprovechar la zona destinada para mostrar el mes y día de la semana para indicar el mes y el número de concepto que vamos a introducir. Del mismo modo, valorar incluir en ese punto el año en el que nos encontramos.
-
-* Años
-** -Cuando cambio de sección, siempre me posiciono donde se halle el año abierto.-
-** -Quitar el menú contextual para ir a un año-
-*** -El año se abre pulsando en la celda-
-*** -Implementar el borrado o vaciado del año mediante gesto-
-** -El color sigue siendo azul para los controles fundamentales.-
-** -Definir cuál será el color cuando el balance sea cero.-
-** -Hay que incluir el número de conceptos que tiene el año.-
-** -Cuando se abra el modal, deberíamos de irnos a la sección que contenga el año y además mostrar la celda asociada en pantalla. Probar qué ocurre cuando abrimos el modal desde un año sin conceptos y con conceptos. Probarlo con el cuadro de diálogo con información que rebase el área de visión y viceversa.-
 
 * Modo informe
 ** Al ir haciendo scroll, ir haciendo desaparecer lo que queda más fuera de la pantalla.
@@ -58,13 +26,16 @@
 * Settings
 ** Localizar.
 ** Enlace a web.
+** Información sobre la siguiente versión
 
 * Menú de texto
 ** Usar dynamics para desplazar la raya inferior con cierto rebote.
 
+* Inicio e iconos
+** Pantalla de inicio
+** Icono
+
 * Otros
-** -Cuando se esconde la calculadora, no se recarga el valor presente ya que se ha ido actualizando a medida que se añadían o borraban elementos con la calculadora activa. Se debería de guardar el valor original y actualizar una vez se muestre la calculadora.-
-** Comprar los nuevos glyphs e introducirlos.
 ** En todos los sitios donde vuelvo a recrear la fuente y su tamaño… simplemente cambiar el campo text para la label asociada. Esto es válido a no ser que tenga que poner kern.
 ** ¿Tiene sentido permitir pulsar en categorías cuando está la calculadora abierta?
 ** El stroke hace alguna cosa rara aún: en el selector de categorías el view que contiene el label con el nombre hemos tenido que poner que haga clip de sus subviews y, además, al terminar de hacerse el stroke (esto para todos), se produce un pequeño glich que hace que se eleve un poco.

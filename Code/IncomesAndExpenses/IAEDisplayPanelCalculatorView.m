@@ -8,6 +8,7 @@
 
 #import "IAEDisplayPanelCalculatorView.h"
 #import "IAECurrencyManager.h"
+#import "IAEColorHelper.h"
 #import "IAEStrokeAnimatableLineView.h"
 #import "IAEDisplayPanelCalculatorViewDelegate.h"
 
@@ -47,6 +48,9 @@ static const StrokeType kTypeStrokeAnimationForConcepts = STROKEANIMATABLE_TYPE_
 static const CGFloat kAlphaValueForAmountLabelInStrokeState = 0.1;
 static const CGFloat kDelayBeforePerformActionsAfterStroke = 0.05;
 static const CGFloat kDurationOfOpaqueTransitionOfAmountValueAfterStroke = 0.45;
+
+static const CGFloat kDurationOfColorTransitionChange = 0.75;
+static const CGFloat kAlphaValueForColorDisplay = 0.5;
 
 #pragma mark - Init
 
@@ -223,6 +227,35 @@ static const CGFloat kDurationOfOpaqueTransitionOfAmountValueAfterStroke = 0.45;
 - (void)clearAmountString
 {
     [self setAmountString:nil];
+}
+
+- (void)setDisplayWithIncomeColorUsingAnimation:(BOOL)animation
+{
+    [self setDisplayColor:[IAEColorHelper colorForEconomicIncomeValueWithAlpha:kAlphaValueForColorDisplay]
+    withTransitionToColor:[IAEColorHelper colorForEconomicIncomeValue]
+           usingAnimation:animation];
+}
+
+- (void)setDisplayExpenseColorUsingAnimation:(BOOL)animation
+{
+    [self setDisplayColor:[IAEColorHelper colorForEconomicExpenseValueWithAlpha:kAlphaValueForColorDisplay]
+    withTransitionToColor:[IAEColorHelper colorForEconomicExpenseValue]
+           usingAnimation:animation];
+}
+
+- (void)setDisplayColor:(UIColor *)color withTransitionToColor:(UIColor *)transitionColor usingAnimation:(BOOL)animation
+{
+    if (![self.backgroundColor isEqual:color]) {
+        if (animation) {
+            self.backgroundColor = transitionColor;
+            [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+            [UIView animateWithDuration:kDurationOfColorTransitionChange animations:^{
+                self.backgroundColor = color;
+            }];
+        } else {
+            self.backgroundColor = color;
+        }
+    }
 }
 
 #pragma mark - Swipe Gesture

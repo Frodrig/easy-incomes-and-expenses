@@ -30,6 +30,7 @@ typedef NS_ENUM(NSUInteger, CalculatorMode) {
     CM_EXPENSE
 };
 
+@property (weak, nonatomic) IBOutlet UIView *gratePanel;
 @property (weak, nonatomic) IBOutlet IAEDragPanelCalculatorView *dragPanel;
 @property (weak, nonatomic) IBOutlet IAEDisplayPanelCalculatorView *displayPanel;
 @property (weak, nonatomic) IBOutlet UIButton *incomeButton;
@@ -64,6 +65,8 @@ static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
 
 static CGFloat animationDurationForDisableAction = 0.25;
 static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
+
+static CGFloat kDurationGratePanelDissolve = 10.0;
 
 #pragma mark - Properties
 
@@ -435,7 +438,7 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
 - (IBAction)keyboardNumberPressed:(UIButton *)button
 {
     BOOL validAction = [self numberPressedWithValue:button.tag];
-    [self applyPressedAnimationOverButton:button withValidAction:validAction];
+    [self doFXAfterPressedButton:button withVaidAction:validAction];
 }
 
 - (IBAction)keyboardDeletePressed:(UIButton *)button
@@ -444,7 +447,7 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
     if (validAction) {
         [self configureDisplayPanelWithActualAmount];
     }
-    [self applyPressedAnimationOverButton:button withValidAction:validAction];
+    [self doFXAfterPressedButton:button withVaidAction:validAction];
 }
 
 - (BOOL)deleteOneValueInAmount
@@ -490,7 +493,8 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
     if (validAction) {
         [self configureDisplayPanelWithActualAmount];
     }
-    [self applyPressedAnimationOverButton:button withValidAction:validAction];
+    
+    [self doFXAfterPressedButton:button withVaidAction:validAction];
 }
 
 - (BOOL)appendDecimalSeparatorInAmount
@@ -519,7 +523,7 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
 - (IBAction)keyboardEnterPressed:(UIButton *)button
 {
     BOOL validAction = [self createNewConcept];
-    [self applyPressedAnimationOverButton:button withValidAction:validAction];
+    [self doFXAfterPressedButton:button withVaidAction:validAction];
 }
 
 - (BOOL)createNewConcept
@@ -543,6 +547,12 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
     return validAction;
 }
 
+- (void)doFXAfterPressedButton:(UIButton *)button withVaidAction:(BOOL)action
+{
+    [self applyPressedAnimationOverButton:button withValidAction:action];
+    [self applyGratePanelAnimateAfterButtonPress];
+}
+
 - (void)applyPressedAnimationOverButton:(UIButton *)button withValidAction:(BOOL)validAction
 {
     button.backgroundColor = validAction ? self.validActionBaseColor : self.invalidActionTransitionColor;
@@ -555,6 +565,20 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
         } completion:^(BOOL finished) {
             button.backgroundColor = [UIColor clearColor];
         }];
+    }];
+}
+
+- (void)applyGratePanelAnimateAfterButtonPress
+{
+    self.gratePanel.hidden = NO;
+    self.gratePanel.alpha = 1;
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    [UIView animateWithDuration:kDurationGratePanelDissolve animations:^{
+        self.gratePanel.alpha = 0;
+    } completion:^(BOOL finished) {
+        if (finished) {
+            self.gratePanel.hidden = YES;
+        }
     }];
 }
 

@@ -85,7 +85,6 @@ static NSString * const kLtextAddButtonTitle = @"LTEXT_CALCULATOR_BUTTON_ADD";
     [self configureKeyboardButtons];
     [self configureDecimalButton];
     [self configureAddButton];
-    [self configureDeleteButton];
 }
 
 - (void)configureKeyboardButtons
@@ -93,6 +92,7 @@ static NSString * const kLtextAddButtonTitle = @"LTEXT_CALCULATOR_BUTTON_ADD";
     for (UIView *viewIt in self.keyboardContainerView.subviews) {
         if ([viewIt isKindOfClass:[UIButton class]]) {
             [viewIt addRoundedCorners:UIRectCornerAllCorners withRadius:kRadiusForButtons];
+            //viewIt.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.1];
         }
     }
 }
@@ -100,26 +100,62 @@ static NSString * const kLtextAddButtonTitle = @"LTEXT_CALCULATOR_BUTTON_ADD";
 - (void)configureDecimalButton
 {
     NSString *decimalSymbol = [[IAECurrencyManager sharedManager] decimalSeparator];
-    [self.decimalButton addRoundedCorners:UIRectCornerAllCorners withRadius:kRadiusForButtons];
     [self.decimalButton setTitle:decimalSymbol forState:UIControlStateNormal];
 }
     
 - (void)configureAddButton
 {
     [self.addButton setTitle:NSLocalizedString(kLtextAddButtonTitle, @"") forState:UIControlStateNormal];
-    [self.addButton addRoundedCorners:UIRectCornerAllCorners withRadius:kRadiusForButtons];
-}
-
-- (void)configureDeleteButton
-{
-    [self.deleteButton addRoundedCorners:UIRectCornerAllCorners withRadius:kRadiusForButtons];
 }
 
 #pragma mark - Draw
 
 - (void)drawRect:(CGRect)rect
 {
+    CGContextRef contextRef = UIGraphicsGetCurrentContext();
+    //[self drawPanelWireWithContextRef:contextRef];
+    //[self drawLeftVerticalLineWithContextRef:contextRef];
+    //[self drawRightVerticalLine:contextRef];
+}
+
+- (void)drawPanelWireWithContextRef:(CGContextRef)contextRef
+{
+    NSArray *tagOfReferenceButtons = @[@7, @8, @9, @100];
+    for (NSNumber *referenceButtonTagIt in tagOfReferenceButtons) {
+        UIView *viewOfTag = [self viewWithTag:referenceButtonTagIt.unsignedIntegerValue];
+        CGPoint startPosition = CGPointMake(viewOfTag.frame.origin.x, self.keyboardContainerView.frame.origin.y);
+        CGPoint endPosition = CGPointMake(startPosition.x, startPosition.y + self.keyboardContainerView.bounds.size.height);
+        [self drawLineWithContextRef:contextRef fromStartPosition:startPosition toEndPosition:endPosition];
+    }
+}
+
+- (void)drawLeftVerticalLineWithContextRef:(CGContextRef)contextRef
+{
+    CGPoint startPosition = CGPointMake(self.keyboardContainerView.frame.origin.x, self.keyboardContainerView.frame.origin.y);
+    CGPoint endPosition = CGPointMake(startPosition.x, startPosition.y + self.keyboardContainerView.bounds.size.height);
+    [self drawLineWithContextRef:contextRef fromStartPosition:startPosition toEndPosition:endPosition];
+}
+
+- (void)drawRightVerticalLine:(CGContextRef)contextRef
+{
+    CGFloat xPosition = self.keyboardContainerView.frame.origin.x + self.keyboardContainerView.bounds.size.width;
+    CGPoint startPosition = CGPointMake(xPosition, self.keyboardContainerView.frame.origin.y);
+    CGPoint endPosition = CGPointMake(xPosition, startPosition.y + self.keyboardContainerView.bounds.size.height);
+    [self drawLineWithContextRef:contextRef fromStartPosition:startPosition toEndPosition:endPosition];
+}
+
+- (void)drawLineWithContextRef:(CGContextRef)contextRef fromStartPosition:(CGPoint)startPosition toEndPosition:(CGPoint)endPosition
+{
+    CGContextSaveGState(contextRef);
     
+    CGContextSetAllowsAntialiasing(contextRef, false);
+    CGContextSetLineWidth(contextRef, 1.0);
+    CGContextSetRGBStrokeColor(contextRef, 0.0, 0.0, 0.0, 0.1);
+    CGContextMoveToPoint(contextRef, startPosition.x, startPosition.y);
+    CGContextAddLineToPoint(contextRef, endPosition.x, endPosition.y);
+    CGContextStrokePath(contextRef);
+    
+    CGContextRestoreGState(contextRef);
 }
 
 @end

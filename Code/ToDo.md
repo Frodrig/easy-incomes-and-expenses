@@ -20,11 +20,12 @@
 *** Considerar usar símbolo ^ e inverso en el panel de draga que cambie a medida que hacemos el arrastre. Considerar si, entonces, tiene sentido poner "Inserción".
 ** Hay que mejorar el aspecto visual del teclado.
 *** -Incorporar una rejilla-
+**** -Se dejan siempre visible la zona más externa izquierda y derecha de la rejilla.-
 **** Añadida usando views en el editor. Habría que utilizar drawRect:
 
 * Modo informe
-** Mostrar resultados en orden alfabético, poniendo al principio siempre el general. Al igual que cuando sacamos la tableview.
 ** Aunque los gastos sean de 0, mostrarlos.
+*** Ya lo mostramos. El problema es cuando no hay contenido en un determinado tipo de categoría (ingresos o gastos).
 ** Al ir haciendo scroll, ir haciendo desaparecer lo que queda más fuera de la pantalla.
 ** Cuando pasamos a este modo, animación haciendo crecer las barras y/o números asociados. Esto lo haríamos en TODAS las barras, independientemente de si están en pantalla o no.
 ** Considerar que las esquinas superiores derecha estén redondeadas en las gráficas.
@@ -58,5 +59,6 @@
 *** Considerar un botón que cambie de orden los años de menor a mayor. Al menos, quizás, para cuando estamos en modo años con conceptos.
 ** Informes
 *** Representar en modo reporte o informe una gráfica de puntos en la zona donde está el nombre del mes y el balance reflejando de manera diferenciada el mes en el que estamos. Esto serviría para contrastar el balance, el total de ingresos o el total de gastos del mes con respecto al resto.
+*** Posibilidad de mostrar la información usando diferentes parámetros (orden alfabético en lugar de tamaño)
 ** Selector de categorías
 *** Incluir la posibilidad de trabajar con TableView indexada.

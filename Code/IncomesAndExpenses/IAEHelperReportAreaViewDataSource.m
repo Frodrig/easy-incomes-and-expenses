@@ -48,6 +48,13 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
 
 #pragma mark - IAEReportAreaViewDataSource
 
+- (BOOL)showNoItemsLabelIfAppropiateInReportAreaView:(IAEReportAreaView *)reportAreaView
+{
+    BOOL anyConceptForActualContextView = [self.iaeViewControllerQuery findNumberOfConceptsOfActualSelectedContext:0] > 0;
+    
+    return anyConceptForActualContextView;
+}
+
 - (NSUInteger)numberOfItemsInReportAreaView:(IAEReportAreaView *)reportAreaView
 {
     NSUInteger number = 0;

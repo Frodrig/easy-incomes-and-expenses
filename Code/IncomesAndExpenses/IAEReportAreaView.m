@@ -11,9 +11,22 @@
 #import "IAEReportAreaViewDelegate.h"
 #import "IAEReportAreaItemView.h"
 
+@interface IAEReportAreaView()
+
+@property (nonatomic, strong) UILabel *noItemsLabel;
+
+@end
+
 @implementation IAEReportAreaView
 
-static const CGFloat kXOffsetToStartDrawingReportAreaItems = 0;
+#pragma mark - Constants
+
+static NSString * const kLtextReportAreaItemsNoItemsWarning = @"LTEXT_REPORTAREAITEMS_NOITEMSWARNING";
+static NSString * const kReportAreaItemsNoItemsWarningFontName = @"HelveticaNeue-Ultralight";
+static const CGFloat kReportAreaItemsNoItemsFontSize = 36;
+static const CGFloat kReportAreaItemsNoItemsWarningKern = 0;
+
+static const CGFloat kXOffsetToStartDrawingReportAreaItems =0;
 
 static const CGFloat kWidthForLines = 1.0;
 static const CGFloat kColorWithWhiteValueForLines = 0.5;
@@ -22,6 +35,25 @@ static const CGFloat kAlphaForColorWithWhiteValueForLines = 1.0;
 static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
 
 @synthesize delegate = delegate__;
+
+#pragma mark - Properties
+
+- (UILabel *)noItemsLabel
+{
+    if (!_noItemsLabel) {
+        _noItemsLabel = [[UILabel alloc] initWithFrame:self.bounds];
+        UIFont *fontForText = [UIFont fontWithName:kReportAreaItemsNoItemsWarningFontName size:kReportAreaItemsNoItemsFontSize];
+        NSDictionary *attributesForText = @{NSFontAttributeName: fontForText,
+                                            NSForegroundColorAttributeName: [UIColor blackColor],
+                                            NSKernAttributeName: @(kReportAreaItemsNoItemsWarningKern)};
+        _noItemsLabel.attributedText = [[NSAttributedString alloc] initWithString:NSLocalizedString(kLtextReportAreaItemsNoItemsWarning, @"")
+                                                                       attributes:attributesForText];
+        _noItemsLabel.textAlignment = NSTextAlignmentCenter;
+        _noItemsLabel.backgroundColor = [UIColor clearColor];
+    }
+    
+    return _noItemsLabel;
+}
 
 - (void)setDelegate:(id<IAEReportAreaViewDelegate>)delegate
 {
@@ -42,6 +74,8 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
         }
     }
 }
+
+#pragma mark - Init
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -126,9 +160,15 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
 
 - (void)reloadData
 {
+    [self desvinculeNoItemsLabels];
     [self removeAllReportAreaItems];
     [self createAndAddAllReportAreaItems];
     [self adjustContentSizeAndResetPosition];
+}
+
+- (void)desvinculeNoItemsLabels
+{
+    [self.noItemsLabel removeFromSuperview];
 }
 
 - (void)removeAllReportAreaItems
@@ -154,9 +194,13 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
 - (void)createAndAddAllReportAreaItems
 {
     NSUInteger numberOfReportAreaItems = [self.dataSource numberOfItemsInReportAreaView:self];
-    for (NSUInteger reportAreaItemIt = 0; reportAreaItemIt < numberOfReportAreaItems; reportAreaItemIt++) {
-        IAEReportAreaItemView *reportAreaItem = [self createReportAreaItemWithIndex:reportAreaItemIt ofTotalNumber:numberOfReportAreaItems];
-        [self addSubview:reportAreaItem];
+    if (numberOfReportAreaItems > 0) {
+        for (NSUInteger reportAreaItemIt = 0; reportAreaItemIt < numberOfReportAreaItems; reportAreaItemIt++) {
+            IAEReportAreaItemView *reportAreaItem = [self createReportAreaItemWithIndex:reportAreaItemIt ofTotalNumber:numberOfReportAreaItems];
+            [self addSubview:reportAreaItem];
+        }
+    } else if ([self.dataSource showNoItemsLabelIfAppropiateInReportAreaView:self]) {
+        [self addSubview:self.noItemsLabel];
     }
 }
 

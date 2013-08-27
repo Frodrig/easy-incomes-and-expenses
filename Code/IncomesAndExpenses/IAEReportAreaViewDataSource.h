@@ -12,6 +12,8 @@
 
 @protocol IAEReportAreaViewDataSource
 
+- (BOOL)showNoItemsLabelIfAppropiateInReportAreaView:(IAEReportAreaView *)reportAreaView;
+
 - (NSUInteger)numberOfItemsInReportAreaView:(IAEReportAreaView *)reportAreaView;
 - (CGFloat)maxValueOfItemsInReportAreaView:(IAEReportAreaView *)reportAreaView;
 - (UIColor *)reportAreaView:(IAEReportAreaView *)reportAreaView colorRepresentationOfItemWithIndex:(NSUInteger)itemIndex;

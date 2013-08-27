@@ -1,7 +1,7 @@
 # ToDo: Easy Incomes and Expenses.
 
 * Color
-** Los conceptos con valor positivo tienen el mismo color que en negativo.
+** -Los conceptos con valor positivo tienen el mismo color que en negativo.-
 
 * Contextos
 ** Transiciones al pulsar en un contexto
@@ -9,11 +9,12 @@
 **** Ya se realiza pero el código es MUY MEJORABLE Y OPTIMIZABLE habría que volver. Mirar el método updateContentInformationBasedInCurrentContext
 
 * Selector de categorías
+** Repasar aspecto visual.
 ** Reforzar de alguna manera adicional qué es una categoría general.
 ** Mostrar alertviews o similares que indiquen el motivo por el cual no se puede manipular una categoría general.
-** Considerar volver a poner rayas separatorias entre categorías.
 
 * Calculadora
+** Los PopOver se posicionan de manera inexacta sobre la categoría actual y la fecha.
 ** Hay que implementar arrastre. Cuando arrastramos hacia arriba el resto de elementos suben pero usando dynamics.
 *** Considerar usar símbolo ^ e inverso en el panel de draga que cambie a medida que hacemos el arrastre. Considerar si, entonces, tiene sentido poner "Inserción".
 ** Hay que mejorar el aspecto visual del teclado.
@@ -56,3 +57,5 @@
 *** Considerar un botón que cambie de orden los años de menor a mayor. Al menos, quizás, para cuando estamos en modo años con conceptos.
 ** Informes
 *** Representar en modo reporte o informe una gráfica de puntos en la zona donde está el nombre del mes y el balance reflejando de manera diferenciada el mes en el que estamos. Esto serviría para contrastar el balance, el total de ingresos o el total de gastos del mes con respecto al resto.
+** Selector de categorías
+*** Incluir la posibilidad de trabajar con TableView indexada.

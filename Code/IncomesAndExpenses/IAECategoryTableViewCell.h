@@ -10,12 +10,13 @@
 
 @class IAECircleDecoratorView;
 
-@interface IAECategoryTableViewCell : UITableViewCell
+@interface IAECategoryTableViewCell : UITableViewCell<UIAlertViewDelegate>
 
 @property (weak, nonatomic) UIView *containerForStrokeCategoryLabelView;
 @property (weak, nonatomic) UILabel *categoryLabel;
 @property (weak, nonatomic) IAECircleDecoratorView *openDecoratorView;
 @property (weak, nonatomic) UILabel *numberOfConceptsLabel;
+@property (weak, nonatomic) UIButton *questionButton;
 @property (nonatomic, readonly) BOOL isInStrokeState;
 
 - (void)goToStrokeStateWithAnimation:(BOOL)animation;

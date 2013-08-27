@@ -89,6 +89,8 @@
 		5BA0131217983A9000337E84 /* IAEDayCalendarSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA0131017983A9000337E84 /* IAEDayCalendarSelectorViewController.m */; };
 		5BA0131317983A9000337E84 /* IAEDayCalendarSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA0131117983A9000337E84 /* IAEDayCalendarSelectorViewController.xib */; };
 		5BA51A7C1796D81E00A3D923 /* IAEInfoAboutAndOptionsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA51A7B1796D81E00A3D923 /* IAEInfoAboutAndOptionsCollectionViewCell.m */; };
+		5BC110FC17CCD88A00FF6D6B /* 739-question.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BC110FA17CCD88A00FF6D6B /* 739-question.png */; };
+		5BC110FD17CCD88A00FF6D6B /* 739-question@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BC110FB17CCD88A00FF6D6B /* 739-question@2x.png */; };
 		5BC31A8416651F1F009F23D6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BC31A8316651F1F009F23D6 /* QuartzCore.framework */; };
 		5BC7101717AC29F600E12953 /* IAEBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC7101117AC29F600E12953 /* IAEBook.m */; };
 		5BC7101817AC29F600E12953 /* IAECategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC7101217AC29F600E12953 /* IAECategory.m */; };
@@ -264,6 +266,8 @@
 		5BA51A7B1796D81E00A3D923 /* IAEInfoAboutAndOptionsCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEInfoAboutAndOptionsCollectionViewCell.m; sourceTree = "<group>"; };
 		5BA51A7D1796DA2000A3D923 /* IAEInfoAboutAndOptionsCollectionViewCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEInfoAboutAndOptionsCollectionViewCellDelegate.h; sourceTree = "<group>"; };
 		5BAA5E46170988AC00B6B3F8 /* IncomesAndExpenses copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "IncomesAndExpenses copy-Info.plist"; path = "/Users/fernandorodriguezmartinez/Trabajo/Freelance/Git/Easy Incomes and Expenses/Code/IncomesAndExpenses copy-Info.plist"; sourceTree = "<absolute>"; };
+		5BC110FA17CCD88A00FF6D6B /* 739-question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "739-question.png"; sourceTree = "<group>"; };
+		5BC110FB17CCD88A00FF6D6B /* 739-question@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "739-question@2x.png"; sourceTree = "<group>"; };
 		5BC31A8316651F1F009F23D6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5BC7100917AC29F600E12953 /* IAEBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IAEBook.h; path = IncomesAndExpenses/IAEBook.h; sourceTree = "<group>"; };
 		5BC7100A17AC29F600E12953 /* IAECategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IAECategory.h; path = IncomesAndExpenses/IAECategory.h; sourceTree = "<group>"; };
@@ -440,6 +444,8 @@
 				5B2AAA2917C773C500E7C7A5 /* 746-plus-circle.png */,
 				5B2A41AE17C77C8100C29036 /* 765-arrow-left.png */,
 				5B2A41AF17C77C8100C29036 /* 765-arrow-left@2x.png */,
+				5BC110FA17CCD88A00FF6D6B /* 739-question.png */,
+				5BC110FB17CCD88A00FF6D6B /* 739-question@2x.png */,
 				5B2A41AA17C77B6200C29036 /* 740-gear.png */,
 				5B2A41AB17C77B6200C29036 /* 740-gear@2x.png */,
 				5B2AAA2A17C773C500E7C7A5 /* 746-plus-circle@2x.png */,
@@ -1327,6 +1333,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BC110FD17CCD88A00FF6D6B /* 739-question@2x.png in Resources */,
 				5B7319F31796A8AB00FAF632 /* IAEInfoAboutAndOptionsCollectionViewCell.xib in Resources */,
 				5B767E011636D7FC005315F8 /* InfoPlist.strings in Resources */,
 				5B2A41B017C77C8100C29036 /* 765-arrow-left.png in Resources */,
@@ -1363,6 +1370,7 @@
 				5B2AAA2B17C773C500E7C7A5 /* 746-plus-circle.png in Resources */,
 				5B76116816C56C7A00558D6D /* Default-Landscape@2x~ipad.png in Resources */,
 				5B8A31CF16C9090E008731AD /* 72.png in Resources */,
+				5BC110FC17CCD88A00FF6D6B /* 739-question.png in Resources */,
 				5B8A31D116C90911008731AD /* 72@2x.png in Resources */,
 				5B62D85D178EA8A2009879A6 /* IAEYearSelectorCollectionViewCell.xib in Resources */,
 				5BA0131317983A9000337E84 /* IAEDayCalendarSelectorViewController.xib in Resources */,

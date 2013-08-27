@@ -1414,13 +1414,15 @@ static const NSInteger kInvalidOptionIndex = -1;
 - (void)launchCategoryEditorViewControllerModalFromCategorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
                                                                  ToRenameCategory:(IAECategory *)category
 {
-    self.categoryRenaming = category;
-    
-    IAECategoryEditorViewController *categoryEditorViewController = [[IAECategoryEditorViewController alloc] initToRenameCategory:category];
-    categoryEditorViewController.delegate = self;
-    categoryEditorViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    
-    [categorySelectorViewController presentViewController:categoryEditorViewController animated:YES completion:nil];
+    if (![[IAECategoryStore sharedCategoryStore] isGeneralCategory:category]) {
+        self.categoryRenaming = category;
+        
+        IAECategoryEditorViewController *categoryEditorViewController = [[IAECategoryEditorViewController alloc] initToRenameCategory:category];
+        categoryEditorViewController.delegate = self;
+        categoryEditorViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        
+        [categorySelectorViewController presentViewController:categoryEditorViewController animated:YES completion:nil];
+    }
 }
 
 - (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController

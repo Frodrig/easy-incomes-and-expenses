@@ -9,9 +9,10 @@
 **** Ya se realiza pero el código es MUY MEJORABLE Y OPTIMIZABLE habría que volver. Mirar el método updateContentInformationBasedInCurrentContext
 
 * Selector de categorías
-** Repasar aspecto visual.
-** Reforzar de alguna manera adicional qué es una categoría general.
-** Mostrar alertviews o similares que indiquen el motivo por el cual no se puede manipular una categoría general.
+** -Repasar aspecto visual.-
+** -Reforzar de alguna manera adicional qué es una categoría general.-
+** -Mostrar alertviews o similares que indiquen el motivo por el cual no se puede manipular una categoría general.-
+*** Se ha añadido un botón de información sobre la categoría. Considerar cambiar alertview por popover y además crear en settings una sección de ayuda con el flag para activar o desactivar dicho botón.
 
 * Calculadora
 ** Los PopOver se posicionan de manera inexacta sobre la categoría actual y la fecha.

@@ -134,11 +134,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="772" height="176"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" id="lvM-69-8fh">
-                                            <rect key="frame" x="0.0" y="0.0" width="1" height="176"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <color key="backgroundColor" red="0.90196084976196289" green="0.90196084976196289" blue="0.90196084976196289" alpha="1" colorSpace="deviceRGB"/>
-                                        </view>
                                         <view contentMode="scaleToFill" id="LJU-Ge-Pd8">
                                             <rect key="frame" x="193" y="0.0" width="1" height="125"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -151,11 +146,6 @@
                                         </view>
                                         <view contentMode="scaleToFill" id="RZ7-bp-RiQ">
                                             <rect key="frame" x="579" y="0.0" width="1" height="176"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <color key="backgroundColor" red="0.90196084976196289" green="0.90196084976196289" blue="0.90196084976196289" alpha="1" colorSpace="deviceRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" id="b0p-zT-iBw">
-                                            <rect key="frame" x="771" y="0.0" width="1" height="176"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" red="0.90196084976196289" green="0.90196084976196289" blue="0.90196084976196289" alpha="1" colorSpace="deviceRGB"/>
                                         </view>

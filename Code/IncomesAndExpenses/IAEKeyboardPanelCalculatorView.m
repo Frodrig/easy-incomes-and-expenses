@@ -28,6 +28,9 @@ static const NSUInteger kTagKeyboardContainerView = 300;
 
 static const CGFloat kRadiusOfKeyboardContainerView = 5;
 static const CGFloat kRadiusForButtons = 15;
+
+static const CGFloat kWhiteColorComponentForExternalGratePanel = 0.8;
+static const CGFloat kWhiteColorAlphaComponentForExternalGratePanel = 1.0;
     
 static NSString * const kLtextAddButtonTitle = @"LTEXT_CALCULATOR_BUTTON_ADD";
 
@@ -92,7 +95,6 @@ static NSString * const kLtextAddButtonTitle = @"LTEXT_CALCULATOR_BUTTON_ADD";
     for (UIView *viewIt in self.keyboardContainerView.subviews) {
         if ([viewIt isKindOfClass:[UIButton class]]) {
             [viewIt addRoundedCorners:UIRectCornerAllCorners withRadius:kRadiusForButtons];
-            //viewIt.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.1];
         }
     }
 }
@@ -113,20 +115,8 @@ static NSString * const kLtextAddButtonTitle = @"LTEXT_CALCULATOR_BUTTON_ADD";
 - (void)drawRect:(CGRect)rect
 {
     CGContextRef contextRef = UIGraphicsGetCurrentContext();
-    //[self drawPanelWireWithContextRef:contextRef];
-    //[self drawLeftVerticalLineWithContextRef:contextRef];
-    //[self drawRightVerticalLine:contextRef];
-}
-
-- (void)drawPanelWireWithContextRef:(CGContextRef)contextRef
-{
-    NSArray *tagOfReferenceButtons = @[@7, @8, @9, @100];
-    for (NSNumber *referenceButtonTagIt in tagOfReferenceButtons) {
-        UIView *viewOfTag = [self viewWithTag:referenceButtonTagIt.unsignedIntegerValue];
-        CGPoint startPosition = CGPointMake(viewOfTag.frame.origin.x, self.keyboardContainerView.frame.origin.y);
-        CGPoint endPosition = CGPointMake(startPosition.x, startPosition.y + self.keyboardContainerView.bounds.size.height);
-        [self drawLineWithContextRef:contextRef fromStartPosition:startPosition toEndPosition:endPosition];
-    }
+    [self drawLeftVerticalLineWithContextRef:contextRef];
+    [self drawRightVerticalLine:contextRef];
 }
 
 - (void)drawLeftVerticalLineWithContextRef:(CGContextRef)contextRef
@@ -150,7 +140,8 @@ static NSString * const kLtextAddButtonTitle = @"LTEXT_CALCULATOR_BUTTON_ADD";
     
     CGContextSetAllowsAntialiasing(contextRef, false);
     CGContextSetLineWidth(contextRef, 1.0);
-    CGContextSetRGBStrokeColor(contextRef, 0.0, 0.0, 0.0, 0.1);
+    UIColor *color = [UIColor colorWithWhite:kWhiteColorComponentForExternalGratePanel alpha:kWhiteColorAlphaComponentForExternalGratePanel];
+    CGContextSetStrokeColorWithColor(contextRef, color.CGColor);
     CGContextMoveToPoint(contextRef, startPosition.x, startPosition.y);
     CGContextAddLineToPoint(contextRef, endPosition.x, endPosition.y);
     CGContextStrokePath(contextRef);

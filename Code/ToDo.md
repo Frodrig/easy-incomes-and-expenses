@@ -15,7 +15,7 @@
 *** Se ha añadido un botón de información sobre la categoría. Considerar cambiar alertview por popover y además crear en settings una sección de ayuda con el flag para activar o desactivar dicho botón.
 
 * Calculadora
-** Los PopOver se posicionan de manera inexacta sobre la categoría actual y la fecha.
+** -Los PopOver se posicionan de manera inexacta sobre la categoría actual y la fecha.-
 ** Hay que implementar arrastre. Cuando arrastramos hacia arriba el resto de elementos suben pero usando dynamics.
 *** Considerar usar símbolo ^ e inverso en el panel de draga que cambie a medida que hacemos el arrastre. Considerar si, entonces, tiene sentido poner "Inserción".
 ** Hay que mejorar el aspecto visual del teclado.

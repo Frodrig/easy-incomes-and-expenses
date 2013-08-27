@@ -1,5 +1,11 @@
 # ToDo: Easy Incomes and Expenses.
 
+* Ajuste de la cantidad
+** Repasar visualmente
+
+* Conceptos
+** En modo anual y cuando tengamos el día activado, habrá que activar barras de scroll
+
 * Contextos
 ** Transiciones al pulsar en un contexto
 *** Al transicionar en conceptos, se ha perdido la transición con fade. Sin embargo, si lo que hay es un warning, sí que se produce esa transición.
@@ -9,6 +15,7 @@
 ** Se ha añadido un botón de información sobre la categoría. Considerar cambiar alertview por popover y además crear en settings una sección de ayuda con el flag para activar o desactivar dicho botón.
 
 * Calculadora
+** Meter el título por código
 ** Hay que implementar arrastre. Cuando arrastramos hacia arriba el resto de elementos suben pero usando dynamics.
 *** Considerar usar símbolo ^ e inverso en el panel de draga que cambie a medida que hacemos el arrastre. Considerar si, entonces, tiene sentido poner "Inserción".
 ** Hay que mejorar el aspecto visual del teclado.
@@ -18,6 +25,10 @@
 ** Al ir haciendo scroll, ir haciendo desaparecer lo que queda más fuera de la pantalla.
 ** Error conocido al ir cambiado rápidamente de tipo de informe: se descorona el área interna del scrollview. Habría que implementar soluciones para evitar el malfuncionamiento.
 ** Hay que afinar mejor la proporcionalidad de los valores. A veces vemos un valor numérico y que no se corresponde con la representación gráfica como nos gustaría.
+** Si no hay conceptos no deberíamos de poder seleccionar el tipo de informe. Debería de estar desactivado. He logrado poder seleccionarlo.
+
+* Transiciones modo edición - informe
+** Hay que hacerlo más bonito.
 
 * Settings
 ** Localizar.
@@ -38,6 +49,8 @@
 ** Las properties readonly se pueden redefinir en .m para que sean readwrite. Hay casos en los que debería de hacerlo.
 
 * Problemas conocidos
+** He logrado, cambiando de mes rápidamente y en modo reporte, hacer desaparecer el cursor sobre el tipo de informe elegido y no poder cambiarlo.
+** En modo anual, hay situaciones en donde no cabe el numero de conceptos asociados a un mes.
 ** Al ir a insertar un concepto habiendo cambiado de año, éste no aparecía en el panel de conceptos hasta que cambiaba de mes y volvía.
 ** Al abrir un año, no recargamos el menú de texto inferior.
 
@@ -51,3 +64,5 @@
 *** Posibilidad de mostrar la información usando diferentes parámetros (orden alfabético en lugar de tamaño)
 ** Selector de categorías
 *** Incluir la posibilidad de trabajar con TableView indexada.
+** Contextos:
+*** En versión pro, considerar el permitir cambiar de año deslizando sobre el panel de contexto.

@@ -66,7 +66,7 @@ static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
 static CGFloat animationDurationForDisableAction = 0.25;
 static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
 
-static CGFloat kDurationGratePanelDissolve = 10.0;
+static CGFloat kDurationGratePanelDissolve = 7.0;
 
 #pragma mark - Properties
 

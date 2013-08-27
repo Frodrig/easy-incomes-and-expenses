@@ -1,35 +1,23 @@
 # ToDo: Easy Incomes and Expenses.
 
-* Color
-** -Los conceptos con valor positivo tienen el mismo color que en negativo.-
-
 * Contextos
 ** Transiciones al pulsar en un contexto
 *** Al transicionar en conceptos, se ha perdido la transición con fade. Sin embargo, si lo que hay es un warning, sí que se produce esa transición.
 **** Ya se realiza pero el código es MUY MEJORABLE Y OPTIMIZABLE habría que volver. Mirar el método updateContentInformationBasedInCurrentContext
 
 * Selector de categorías
-** -Repasar aspecto visual.-
-** -Reforzar de alguna manera adicional qué es una categoría general.-
-** -Mostrar alertviews o similares que indiquen el motivo por el cual no se puede manipular una categoría general.-
-*** Se ha añadido un botón de información sobre la categoría. Considerar cambiar alertview por popover y además crear en settings una sección de ayuda con el flag para activar o desactivar dicho botón.
+** Se ha añadido un botón de información sobre la categoría. Considerar cambiar alertview por popover y además crear en settings una sección de ayuda con el flag para activar o desactivar dicho botón.
 
 * Calculadora
-** -Los PopOver se posicionan de manera inexacta sobre la categoría actual y la fecha.-
 ** Hay que implementar arrastre. Cuando arrastramos hacia arriba el resto de elementos suben pero usando dynamics.
 *** Considerar usar símbolo ^ e inverso en el panel de draga que cambie a medida que hacemos el arrastre. Considerar si, entonces, tiene sentido poner "Inserción".
 ** Hay que mejorar el aspecto visual del teclado.
-*** -Incorporar una rejilla-
-**** -Se dejan siempre visible la zona más externa izquierda y derecha de la rejilla.-
 **** Añadida usando views en el editor. Habría que utilizar drawRect:
 
 * Modo informe
-** -Aunque los gastos sean de 0, mostrarlos.-
-*** -Ya lo mostramos. El problema es cuando no hay contenido en un determinado tipo de categoría (ingresos o gastos).-
-**** -Mostrar label explicativa-
 ** Al ir haciendo scroll, ir haciendo desaparecer lo que queda más fuera de la pantalla.
-** -Cuando pasamos a este modo, animación haciendo crecer las barras y/o números asociados. Esto lo haríamos en TODAS las barras, independientemente de si están en pantalla o no.-
 ** Error conocido al ir cambiado rápidamente de tipo de informe: se descorona el área interna del scrollview. Habría que implementar soluciones para evitar el malfuncionamiento.
+** Hay que afinar mejor la proporcionalidad de los valores. A veces vemos un valor numérico y que no se corresponde con la representación gráfica como nos gustaría.
 
 * Settings
 ** Localizar.

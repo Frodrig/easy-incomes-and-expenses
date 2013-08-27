@@ -16,7 +16,10 @@
 @property (nonatomic, weak) id<IAEReportAreaViewDelegate> reportDelegate;
 @property (nonatomic, weak) id<IAEReportAreaViewDataSource> dataSource;
 
-- (void)reloadData;
+//- (void)reloadData;
+- (void)reloadDataWithAnimation:(BOOL)animation;
 - (void)releaseData;
+
+- (void)playShowAnimationOverActualLoadedData;
 
 @end

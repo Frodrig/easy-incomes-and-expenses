@@ -11,7 +11,6 @@
 @interface IAEReportAreaItemView()
 
 @property (nonatomic, copy) UIColor *lineColor;
-@property (nonatomic, strong) UILabel *title;
 @property (nonatomic, strong) UILabel *subtitle;
 
 @end
@@ -31,7 +30,7 @@ static const CGFloat kMinimumHeightForItem = kHeightForTitleLabel + kHeightForSu
 static NSString * const kTitleFontFamilyName = @"HelveticaNeue-Ultralight";
 static const CGFloat kTitleFontSize = 36;
 static const CGFloat kTitleFontKern = 3;
-static NSString * const kSubtitleFontFamilyName = @"HelveticaNeue-Ultralightitalic";
+static NSString * const kSubtitleFontFamilyName = @"HelveticaNeue-Ultralight";
 static const CGFloat kSubtitleFontSize = 21;
 static const CGFloat kSubtitleFontKern = 2;
 
@@ -146,6 +145,13 @@ static const CGFloat kTextColorWithWhiteAlpha = 1.0;
     CGContextStrokePath(contextRef);
 
     CGContextRestoreGState(contextRef);
+}
+
+- (void)changeTitleLabel:(NSString *)title
+{
+    NSDictionary *attributes = [self createLabelAttributesWithFont:kTitleFontFamilyName size:kTitleFontSize andKern:kTitleFontKern];
+    _title.attributedText = [[NSAttributedString alloc] initWithString:title attributes:attributes];
+    
 }
 
 @end

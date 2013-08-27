@@ -10,6 +10,8 @@
 #import "IAEReportAreaViewDataSource.h"
 #import "IAEReportAreaViewDelegate.h"
 #import "IAEReportAreaItemView.h"
+#import "IAEEconomicValueUpdater.h"
+#import "IAECurrencyManager.h"
 
 @interface IAEReportAreaView()
 
@@ -33,6 +35,9 @@ static const CGFloat kColorWithWhiteValueForLines = 0.5;
 static const CGFloat kAlphaForColorWithWhiteValueForLines = 1.0;
 
 static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
+
+static const CGFloat kDurationOfReportItemViewAppear = 0.75;
+static const CGFloat kDurationOfReportItemViewDisappear = 0.75;
 
 @synthesize delegate = delegate__;
 
@@ -70,7 +75,7 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
         if (!dataSource) {
             [self releaseData];
         } else {
-            [self reloadData];
+            [self reloadDataWithAnimation:NO];
         }
     }
 }
@@ -154,16 +159,17 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
 
 - (void)releaseData
 {
-    [self removeAllReportAreaItems];
+    [self removeAllReportAreaItemsWithAnimation:NO andExecuteBlockAtCompletion:nil];
     [self adjustContentSizeAndResetPosition];
 }
 
-- (void)reloadData
+- (void)reloadDataWithAnimation:(BOOL)animation
 {
     [self desvinculeNoItemsLabels];
-    [self removeAllReportAreaItems];
-    [self createAndAddAllReportAreaItems];
-    [self adjustContentSizeAndResetPosition];
+    [self removeAllReportAreaItemsWithAnimation:animation andExecuteBlockAtCompletion:^(void) {
+        [self createAndAddAllReportAreaItemsWithAnimation:animation];
+        [self adjustContentSizeAndResetPosition];
+    }];
 }
 
 - (void)desvinculeNoItemsLabels
@@ -171,13 +177,39 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
     [self.noItemsLabel removeFromSuperview];
 }
 
-- (void)removeAllReportAreaItems
+- (void)removeAllReportAreaItemsWithAnimation:(BOOL)animation andExecuteBlockAtCompletion:(void(^)(void))block
 {
     NSMutableSet *allReportAreaItems = [[NSMutableSet alloc] initWithSet:[self findAllReportAreaItems]];
-    while (allReportAreaItems.count > 0) {
-        IAEReportAreaItemView *reportAreaItemView = [allReportAreaItems anyObject];
-        [reportAreaItemView removeFromSuperview];
-        [allReportAreaItems removeObject:reportAreaItemView];
+    __block NSUInteger numberOfAreaItemsToRemove = allReportAreaItems.count;
+    if (numberOfAreaItemsToRemove > 0) {
+        for (IAEReportAreaItemView *reportAreaItemView in allReportAreaItems) {
+            if (animation) {
+                [[IAEEconomicValueUpdater defaultEconomicValueUpdater] processEconomicLabel:reportAreaItemView.title
+                                                                                    toValue:[NSDecimalNumber zero]
+                                                                               withDuration:kDurationOfReportItemViewDisappear];
+                [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+                [UIView animateWithDuration:kDurationOfReportItemViewAppear animations:^{
+                    reportAreaItemView.frame = CGRectMake(reportAreaItemView.frame.origin.x, reportAreaItemView.frame.origin.y + reportAreaItemView.frame.size.height, reportAreaItemView.frame.size.width, 0.0);
+                } completion:^(BOOL finished) {
+                    [reportAreaItemView removeFromSuperview];
+                    --numberOfAreaItemsToRemove;
+                    if (0 == numberOfAreaItemsToRemove) {
+                        if (block) {
+                            block();
+                        }
+                    }
+                }];
+            } else {
+                [reportAreaItemView removeFromSuperview];
+                if (block) {
+                    block();
+                }
+            }
+        }
+    } else {
+        if (block) {
+            block();
+        }
     }
 }
 
@@ -191,7 +223,7 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
     return [NSSet setWithSet:allReportAreaItems];
 }
 
-- (void)createAndAddAllReportAreaItems
+- (void)createAndAddAllReportAreaItemsWithAnimation:(BOOL)animation
 {
     NSUInteger numberOfReportAreaItems = [self.dataSource numberOfItemsInReportAreaView:self];
     if (numberOfReportAreaItems > 0) {
@@ -199,10 +231,35 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
             IAEReportAreaItemView *reportAreaItem = [self createReportAreaItemWithIndex:reportAreaItemIt ofTotalNumber:numberOfReportAreaItems];
             [self addSubview:reportAreaItem];
         }
+        if (animation) {
+            [self playShowAnimationOverActualLoadedData];
+        }
     } else if ([self.dataSource showNoItemsLabelIfAppropiateInReportAreaView:self]) {
         [self addSubview:self.noItemsLabel];
     }
 }
+
+- (void)playShowAnimationOverActualLoadedData
+{
+    NSMutableSet *allReportAreaItems = [[NSMutableSet alloc] initWithSet:[self findAllReportAreaItems]];
+    for (IAEReportAreaItemView *reportAreaItemView in allReportAreaItems) {
+        CGRect frameOfAreaItem = reportAreaItemView.frame;
+        reportAreaItemView.frame = CGRectMake(frameOfAreaItem.origin.x, frameOfAreaItem.origin.y + frameOfAreaItem.size.height, frameOfAreaItem.size.width, 0.0);
+        
+        NSNumber *numberValueOfItem = [[IAECurrencyManager sharedManager].currencyFormatter numberFromString:reportAreaItemView.title.text];
+        NSDecimalNumber *decimalNumberOfItem = [NSDecimalNumber decimalNumberWithString:numberValueOfItem.stringValue];
+        [reportAreaItemView changeTitleLabel:[[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:[NSDecimalNumber zero]]];
+        [[IAEEconomicValueUpdater defaultEconomicValueUpdater] processEconomicLabel:reportAreaItemView.title
+                                                                            toValue:decimalNumberOfItem
+                                                                       withDuration:kDurationOfReportItemViewAppear];
+    
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+        [UIView animateWithDuration:kDurationOfReportItemViewDisappear animations:^{
+            reportAreaItemView.frame = frameOfAreaItem;
+        }];
+    }
+}
+
 
 - (IAEReportAreaItemView *)createReportAreaItemWithIndex:(NSUInteger)reportAreaItemIndex ofTotalNumber:(NSUInteger)totalNumber
 {

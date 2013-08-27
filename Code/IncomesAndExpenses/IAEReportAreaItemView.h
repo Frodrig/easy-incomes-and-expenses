@@ -10,6 +10,10 @@
 
 @interface IAEReportAreaItemView : UIView
 
+@property (nonatomic, strong) UILabel *title;
+
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title subtitle:(NSString *)subtitle andColor:(UIColor *)color;
+
+- (void)changeTitleLabel:(NSString *)title;
 
 @end

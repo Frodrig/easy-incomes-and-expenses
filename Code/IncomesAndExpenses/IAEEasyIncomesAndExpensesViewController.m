@@ -495,6 +495,8 @@ static const NSInteger kInvalidOptionIndex = -1;
     self.reportMenuView.currentOptionIndexSelected = kReportMenuIndexOfBalancesOption;
     self.reportAreaView.dataSource = self.helperReportAreaViewDataSource;
     self.reportAreaView.delegate = self;
+    
+    [self.reportAreaView playShowAnimationOverActualLoadedData];
 }
 
 #pragma mark - IAEEasyIncomesAndExpensesViewControllerQuery
@@ -969,7 +971,7 @@ static const NSInteger kInvalidOptionIndex = -1;
             [self updateCalculatorViewHideHalfState];
         } else if ([self isReportModeActive]) {
             [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:!self.initialPositioning];
-            [self.reportAreaView reloadData];
+            [self.reportAreaView reloadDataWithAnimation:YES];
         }
     }
 }
@@ -1695,7 +1697,8 @@ static const NSInteger kInvalidOptionIndex = -1;
             [self gotoToContextViewWithIndex:optionIndex];
         }
     } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
-        [self.reportAreaView reloadData];
+        //[self.reportAreaView reloadData];
+        [self.reportAreaView reloadDataWithAnimation:YES];
     }
 }
 

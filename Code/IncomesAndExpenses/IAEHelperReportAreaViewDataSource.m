@@ -102,7 +102,7 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
     return color;
 }
 
-- (CGFloat)reportAreaView:(IAEReportAreaView *)reportAreaView valueOfItemWithIndex:(NSUInteger)itemIndex
+- (CGFloat)reportAreaView:(IAEReportAreaView *)reportAreaView valueOfItemWithIndex:(NSUInteger)itemIndex 
 {
     // ToDo: Ojo, mas que float deberiamos de pensar en long long double
     CGFloat valueOfItem = 0;
@@ -112,7 +112,8 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
                                                          [self.iaeViewControllerQuery findExpensesOfActualSelectedContextView];
         valueOfItem = [decimalValue floatValue];
     } else {
-        NSArray *categories = [self.iaeViewControllerQuery isTheIncomesOptionSelectedInReportMenu] ?
+        BOOL incomesOptionSelected = [self.iaeViewControllerQuery isTheIncomesOptionSelectedInReportMenu];
+        NSArray *categories = incomesOptionSelected ?
                               [self.iaeViewControllerQuery findIncomesCategoriesOfActualSelectedContextView] :
                               [self.iaeViewControllerQuery findExpensesCategoriesOfActualSelectedContextView];
         IAECategory *category = categories[itemIndex];
@@ -127,20 +128,29 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
 - (NSString *)reportAreaView:(IAEReportAreaView *)reportAreaView titleOfItemWithIndex:(NSUInteger)itemIndex
 {
     NSString *title = nil;
+    BOOL incomeValue =  NO;
+    NSDecimalNumber *value = nil;
     
     if ([self.iaeViewControllerQuery isTheBalancesOptionSelectedInReportMenu]) {
-        NSDecimalNumber *value = itemIndex == 0 ? [self.iaeViewControllerQuery findIncomesOfActualSelectedContextView] :
-                                                  [self.iaeViewControllerQuery findExpensesOfActualSelectedContextView];
-        title = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:value];
+        incomeValue = itemIndex == 0;
+        value = incomeValue ? [self.iaeViewControllerQuery findIncomesOfActualSelectedContextView] :
+                              [self.iaeViewControllerQuery findExpensesOfActualSelectedContextView];
     } else {
         id modelObj = [self.iaeViewControllerQuery findModelObjectOfActualSelectedContextView];
         CategoryType categoryType = [self.iaeViewControllerQuery isTheIncomesOptionSelectedInReportMenu] ? IncomeCategory : ExpenseCategory;
+        incomeValue = categoryType == IncomeCategory;
         NSArray *categories = [modelObj findAllCategoriesSortedByAbsoluteValueOfAmountsInConceptsOfType:categoryType];
         IAECategory *category = categories[itemIndex];
-        NSDecimalNumber *value = [modelObj sumAllAmountOfCategories:@[category]];
-        title = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:value];
+        value = [modelObj sumAllAmountOfCategories:@[category]];
     }
     
+    if (!incomeValue) {
+        NSString *minusOne = [NSNumber numberWithFloat:-1].stringValue;
+        value = [value decimalNumberByMultiplyingBy:[NSDecimalNumber decimalNumberWithString:minusOne]];
+    }
+    
+    title = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:value];
+
     return title;
 }
 

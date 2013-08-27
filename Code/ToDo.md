@@ -24,11 +24,12 @@
 **** Añadida usando views en el editor. Habría que utilizar drawRect:
 
 * Modo informe
-** Aunque los gastos sean de 0, mostrarlos.
-*** Ya lo mostramos. El problema es cuando no hay contenido en un determinado tipo de categoría (ingresos o gastos).
+** -Aunque los gastos sean de 0, mostrarlos.-
+*** -Ya lo mostramos. El problema es cuando no hay contenido en un determinado tipo de categoría (ingresos o gastos).-
+**** -Mostrar label explicativa-
 ** Al ir haciendo scroll, ir haciendo desaparecer lo que queda más fuera de la pantalla.
-** Cuando pasamos a este modo, animación haciendo crecer las barras y/o números asociados. Esto lo haríamos en TODAS las barras, independientemente de si están en pantalla o no.
-** Considerar que las esquinas superiores derecha estén redondeadas en las gráficas.
+** -Cuando pasamos a este modo, animación haciendo crecer las barras y/o números asociados. Esto lo haríamos en TODAS las barras, independientemente de si están en pantalla o no.-
+** Error conocido al ir cambiado rápidamente de tipo de informe: se descorona el área interna del scrollview. Habría que implementar soluciones para evitar el malfuncionamiento.
 
 * Settings
 ** Localizar.

@@ -129,7 +129,8 @@ static const CGFloat kKernForBalanceLabel = 4;
 {
     NSDecimalNumber *contentBalance = [self contentBalance];
     
-    UIColor *labelColor = [IAEColorHelper colorForEconomicValueType:[IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:contentBalance]];
+    EconomicValueType economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:contentBalance];
+    UIColor *labelColor = [IAEColorHelper colorForEconomicValueType:economicValueType];
     NSDictionary *attributes = [self createAttributeDictionaryForLabelsWithSize:kSizeFontForBalanceLabel
                                                                           color:labelColor
                                                                      andKerning:kKernForBalanceLabel];

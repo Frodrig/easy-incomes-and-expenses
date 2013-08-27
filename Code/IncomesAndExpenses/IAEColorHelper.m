@@ -12,7 +12,7 @@
 
 + (UIColor *)colorForEconomicValueType:(EconomicValueType)economicValueType
 {
-    return [self colorForEconomicExpenseValueWithAlpha:1.0];
+    return [self colorForEconomicValueType:economicValueType withAlpha:1.0];
 }
 
 + (UIColor *)colorForEconomicValueType:(EconomicValueType)economicValueType withAlpha:(CGFloat)alpha

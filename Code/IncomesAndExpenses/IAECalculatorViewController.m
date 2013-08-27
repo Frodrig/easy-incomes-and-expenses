@@ -390,7 +390,8 @@ static CGFloat kDurationGratePanelDissolve = 10.0;
 
 - (IBAction)categoryButtonPressed:(UIButton *)button
 {
-    [self launchPopoverForSelectCategoryFromRect:button.frame];
+    CGRect rect = [button convertRect:button.frame toView:self.displayPanel];
+    [self launchPopoverForSelectCategoryFromRect:rect];
 }
 
 - (void)launchPopoverForSelectCategoryFromRect:(CGRect)rect
@@ -413,7 +414,8 @@ static CGFloat kDurationGratePanelDissolve = 10.0;
 
 - (IBAction)dayButtonPressed:(UIButton *)button
 {
-    [self launchPopoverForSelectDayFromRect:button.frame];
+    CGRect rect = [button convertRect:button.frame toView:self.displayPanel];
+    [self launchPopoverForSelectDayFromRect:rect];
 }
 
 - (void)launchPopoverForSelectDayFromRect:(CGRect)rect

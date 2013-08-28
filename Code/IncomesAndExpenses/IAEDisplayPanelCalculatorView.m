@@ -34,6 +34,10 @@ static const NSUInteger kTagDayButton = 20;
 static const NSUInteger kTagAmountLabel = 30;
 static const NSUInteger kTagStrokeHelperView = 100;
 
+static NSString * const kLtextNoCategorySelected = @"LTEXT_CALCULATOR_NOCATEGORYSELECTED";
+static NSString * const kLtextNoDaySelected = @"LTEXT_CALCULATOR_NODAYSELECTED";
+static NSString * const kLtextDaySelected = @"LTEXT_CALCULATOR_DAYSELECTED";
+
 static NSString * const kFontFamilyNameForAmountLabel = @"HelveticaNeue-Thin";
 static const NSUInteger kFontFamilySizeForAmountLabel = 42;
 static const CGFloat kFontFamilyKernForAmountLabel = 0.0;
@@ -137,7 +141,7 @@ static const CGFloat kAlphaValueForColorDisplay = 0.5;
 
 - (void)configureCategory
 {
-    [self setCategoryName:NSLocalizedString(@"LTEXT_CALCULATOR_NOCATEGORYSELECTED", @"")];
+    [self setCategoryName:NSLocalizedString(kLtextNoCategorySelected, @"")];
 }
 
 - (void)configureDay
@@ -199,8 +203,8 @@ static const CGFloat kAlphaValueForColorDisplay = 0.5;
 
 - (void)setDay:(NSUInteger)day withDayweekName:(NSString *)dayWeekName inMonthName:(NSString *)monthName
 {
-    NSString *dayName = day < 1 ? NSLocalizedString(@"LTEXT_CALCULATOR_NODAYSELECTED", @"") :
-                                  [NSString stringWithFormat:NSLocalizedString(@"LTEXT_CALCULATOR_DAYSELECTED", @""), day, dayWeekName];
+    NSString *dayName = day < 1 ? NSLocalizedString(kLtextNoDaySelected, @"") :
+                                  [NSString stringWithFormat:NSLocalizedString(kLtextDaySelected, @""), day, [dayWeekName lowercaseString]];
     NSString *titleButton = [NSString stringWithFormat:@"%@. %@", monthName, dayName];
     [self.dayButton setTitle:titleButton forState:UIControlStateNormal];
 }

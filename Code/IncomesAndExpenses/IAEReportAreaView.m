@@ -38,6 +38,8 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
 static const CGFloat kDurationOfReportItemViewAppear = 0.75;
 static const CGFloat kDurationOfReportItemViewDisappear = 0.75;
 
+static const CGFloat kMinAlphaValueForScrolledReportAreaItems = 0.15;
+
 #pragma mark - Properties
 
 - (UILabel *)noItemsLabel
@@ -344,69 +346,40 @@ static const CGFloat kDurationOfReportItemViewDisappear = 0.75;
     self.contentOffset = CGPointMake(0.0, 0.0);
 }
 
-#pragma mark - 
+#pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if ([self findAllReportAreaItems].count > (scrollView.bounds.size.width / [self calculeWidthOfReportAreaItemViews])) {
-        CGFloat normalizedIndex = scrollView.contentOffset.x / [self calculeWidthOfReportAreaItemViews];
-        CGFloat normalizedOffset = ceilf(normalizedIndex) - MAX(normalizedIndex, 0);
-        NSUInteger leftIndexView = floorf(MAX(normalizedIndex, 0));
-        NSUInteger rightIndexView = leftIndexView + 3;
-        
-        if (normalizedOffset != 0) {
-            [self viewWithTag:[self createReportAreaItemTagForIndex:leftIndexView]].alpha = MAX(normalizedOffset, 0.15);
-            if (rightIndexView < [self findAllReportAreaItems].count) {
-                [self viewWithTag:[self createReportAreaItemTagForIndex:rightIndexView]].alpha = MAX(1 - normalizedOffset, 0.15);
-            }
-        } else {
-            [self viewWithTag:[self createReportAreaItemTagForIndex:leftIndexView]].alpha = MAX(normalizedOffset, 1);
-            if (rightIndexView < [self findAllReportAreaItems].count) {
-                [self viewWithTag:[self createReportAreaItemTagForIndex:rightIndexView]].alpha = MAX(1 - normalizedOffset, 0);
-            }
-        }
-        
-        for (NSUInteger transparentViewIt = 0; transparentViewIt < MAX(leftIndexView, 0); ++transparentViewIt) {
-            [self viewWithTag:[self createReportAreaItemTagForIndex:transparentViewIt]].alpha = 0.15;
-        }
-        for (NSUInteger visibleViewIt = MAX(leftIndexView, 0) + 1; visibleViewIt < MAX([self findAllReportAreaItems].count, 0); ++visibleViewIt) {
-            if (visibleViewIt != rightIndexView) {
-                [self viewWithTag:[self createReportAreaItemTagForIndex:visibleViewIt]].alpha = 1;
-            }
-        }
-    }
-   }
-
-/*
-{
     const NSUInteger numberOfReportAreaItems = [self findAllReportAreaItems].count;
     const CGFloat widthOfAreaItemsView = [self calculeWidthOfReportAreaItemViews];
-    const CGFloat maxNumberOfAreaItemsViewFullPresented = self.contentSize.width / widthOfAreaItemsView;
-    const CGFloat normalizedIndex = scrollView.contentOffset.x / widthOfAreaItemsView;
-    const CGFloat positiveNormalizedIndex = MAX(normalizedIndex, 0);
-    const CGFloat normalizedOffset = ceilf(normalizedIndex) - positiveNormalizedIndex;
-    const NSUInteger leftViewIndex = MAX(floorf(positiveNormalizedIndex), 0);
-    const NSUInteger rightViewIndex = leftViewIndex + MIN(maxNumberOfAreaItemsViewFullPresented, numberOfReportAreaItems - 1);
-    const BOOL onlyMaxNumberOfAreaIemsViewFullyPresented = normalizedOffset == 0;
+    const CGFloat maxNumberOfAreaItemsViewFullPresented = scrollView.frame.size.width / widthOfAreaItemsView;
+    const BOOL performScrollDissolveFx = numberOfReportAreaItems > maxNumberOfAreaItemsViewFullPresented;
     
-    // Extremos
-    const CGFloat alphaForLeftReportAreaItemView = onlyMaxNumberOfAreaIemsViewFullyPresented ? 1.0 : MAX(normalizedOffset, kMinAlphaValueForScrolledReportAreaItems);
-    [self viewWithTag:[self createReportAreaItemTagForIndex:leftViewIndex]].alpha = alphaForLeftReportAreaItemView;
-    if (rightViewIndex < numberOfReportAreaItems) {
-        const CGFloat alphaForRightReportAreaItemView = onlyMaxNumberOfAreaIemsViewFullyPresented ? 0.0 : MAX(1 - normalizedOffset, kMinAlphaValueForScrolledReportAreaItems);
-        [self viewWithTag:[self createReportAreaItemTagForIndex:rightViewIndex]].alpha = alphaForRightReportAreaItemView;
-    }
-    
-    // izquierda extremo izquierdo, medio, derecha extremo derecho
-    for (NSUInteger restOfAreaItemsViewIt = 0; restOfAreaItemsViewIt < numberOfReportAreaItems; ++restOfAreaItemsViewIt) {
-        if (restOfAreaItemsViewIt < leftViewIndex || restOfAreaItemsViewIt > rightViewIndex) {
-            [self viewWithTag:[self createReportAreaItemTagForIndex:restOfAreaItemsViewIt]].alpha = kMinAlphaValueForScrolledReportAreaItems;
-        } else if (restOfAreaItemsViewIt > leftViewIndex && restOfAreaItemsViewIt < rightViewIndex) {
-            [self viewWithTag:[self createReportAreaItemTagForIndex:restOfAreaItemsViewIt]].alpha = 1.0;
+    if (performScrollDissolveFx) {
+        const CGFloat normalizedIndex = scrollView.contentOffset.x / widthOfAreaItemsView;
+        const CGFloat positiveNormalizedIndex = MAX(normalizedIndex, 0);
+        const CGFloat normalizedOffset = ceilf(normalizedIndex) - positiveNormalizedIndex;
+        const NSUInteger leftViewIndex = MAX(floorf(positiveNormalizedIndex), 0);
+        const NSUInteger rightViewIndex = leftViewIndex + MIN(maxNumberOfAreaItemsViewFullPresented, numberOfReportAreaItems - 1);
+        const BOOL onlyMaxNumberOfAreaIemsViewFullyPresented = normalizedOffset == 0;
+        
+        // Extremos
+        const CGFloat alphaForLeftReportAreaItemView = onlyMaxNumberOfAreaIemsViewFullyPresented ? 1.0 : MAX(normalizedOffset, kMinAlphaValueForScrolledReportAreaItems);
+        [self viewWithTag:[self createReportAreaItemTagForIndex:leftViewIndex]].alpha = alphaForLeftReportAreaItemView;
+        if (rightViewIndex < numberOfReportAreaItems) {
+            const CGFloat alphaForRightReportAreaItemView = onlyMaxNumberOfAreaIemsViewFullyPresented ? 0.0 : MAX(1 - normalizedOffset, kMinAlphaValueForScrolledReportAreaItems);
+            [self viewWithTag:[self createReportAreaItemTagForIndex:rightViewIndex]].alpha = alphaForRightReportAreaItemView;
+        }
+        
+        // izquierda extremo izquierdo, medio, derecha extremo derecho
+        for (NSUInteger restOfAreaItemsViewIt = 0; restOfAreaItemsViewIt < numberOfReportAreaItems; ++restOfAreaItemsViewIt) {
+            if (restOfAreaItemsViewIt < leftViewIndex || restOfAreaItemsViewIt > rightViewIndex) {
+                [self viewWithTag:[self createReportAreaItemTagForIndex:restOfAreaItemsViewIt]].alpha = kMinAlphaValueForScrolledReportAreaItems;
+            } else if (restOfAreaItemsViewIt > leftViewIndex && restOfAreaItemsViewIt < rightViewIndex) {
+                [self viewWithTag:[self createReportAreaItemTagForIndex:restOfAreaItemsViewIt]].alpha = 1.0;
+            }
         }
     }
-    
 }
-*/
 
 @end

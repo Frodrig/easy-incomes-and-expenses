@@ -33,8 +33,6 @@
 
 @implementation IAECategorySelectorViewController
 
-static NSString * const kUserDefaultsQuestionButtonForGeneralCategory = @"questionButtonForGeneralCategory";
-
 static const NSUInteger kIncomeSegmentedIndex = 0;
 static const NSUInteger kExpenseSegmentedIndex = 1;
 
@@ -391,21 +389,10 @@ static const NSInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
     NSDictionary *attributes = [self createAttributeDictionaryForCategoryNameAttributeTextWithCategory:category];
     cell.categoryLabel.attributedText = [[NSAttributedString alloc] initWithString:[category description]
                                                                         attributes:attributes];
-    cell.questionButton.hidden =  [self isQuestionButtonActivableForCell:cell withCategory:category] ? NO : YES;
-
     if (self.showNumberOfConcepts) {
         NSUInteger numberOfConceptsOfCategory = [[IAEBook sharedBook] findAllConceptsWithCategory:category].count;
         cell.numberOfConceptsLabel.text = [IAELocalizerPhraseComposer stringPhraseWithNumberOfConcepts:numberOfConceptsOfCategory];
     }
-}
-
-- (BOOL)isQuestionButtonActivableForCell:(IAECategoryTableViewCell *)cell withCategory:(IAECategory *)category
-{
-    NSNumber *userDefaults = [[NSUserDefaults standardUserDefaults] valueForKey:kUserDefaultsQuestionButtonForGeneralCategory];
-    BOOL isGeneralCategory = [[IAECategoryStore sharedCategoryStore] isGeneralCategory:category];
-    BOOL isActivable = userDefaults.boolValue && isGeneralCategory;
-    
-    return isActivable;
 }
 
 - (NSDictionary *)createAttributeDictionaryForCategoryNameAttributeTextWithCategory:(IAECategory *)category

@@ -20,14 +20,11 @@
 
 #pragma mark - Const
 
-static NSString * const kUserDefaultsQuestionButtonForGeneralCategory = @"questionButtonForGeneralCategory";
-
 static const NSUInteger kTagOfBackgroundContainerView = 10;
 static const NSUInteger kTagOfCategoryLabel = 20;
 static const NSUInteger kTagOfContainerForStrokeCategoryLabelView = 25;
 static const NSUInteger kTagOfOpenDecoratorView = 30;
 static const NSUInteger kTagOfNumberOfConceptsLabel = 40;
-static const NSUInteger kTagOfQuestionButton = 100;
 
 static const CGFloat kDurationOfStrokeStateAnimation = 0.25;
 static const CGFloat kAlphaInStrokeState = 0.25;
@@ -79,15 +76,6 @@ static const CGFloat kAlphaInStrokeState = 0.25;
     return _numberOfConceptsLabel;
 }
 
-- (UIButton *)questionButton
-{
-    if (!_questionButton) {
-        _questionButton = (UIButton *)[self viewWithTag:kTagOfQuestionButton];
-    }
-    
-    return _questionButton;
-}
-
 #pragma mark - Init
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -134,35 +122,6 @@ static const CGFloat kAlphaInStrokeState = 0.25;
             self.numberOfConceptsLabel.alpha = alphaValue;
         }];
     }
-}
-
-- (void)questionButtonPressed:(UIButton *)button
-{
-    [self deactiveQuestionButtonFlagInUserDefaults];
-    [self launchAndShowAlertViewForQuestionButton];
-}
-
-- (void)deactiveQuestionButtonFlagInUserDefaults
-{
-    [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:NO] forKey:kUserDefaultsQuestionButtonForGeneralCategory];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (void)launchAndShowAlertViewForQuestionButton
-{
-    UIAlertView *alertView = [[UIAlertView alloc]
-                              initWithTitle:NSLocalizedString(@"LTEXT_CATEGORYSELECTOR_ALERTVIEW_QUESTIONBUTTON_TITLE", @"")
-                              message:NSLocalizedString(@"LTEXT_CATEGORYSELECTOR_ALERTVIEW_QUESTIONBUTTON_MESSAGE", @"")
-                              delegate:self
-                              cancelButtonTitle:NSLocalizedString(@"LTEXT_CATEGORYSELECTOR_ALERTVIEW_QUESTIONBUTTON_OK", @"")
-                              otherButtonTitles:nil];
-
-    [alertView show];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    self.questionButton.hidden = YES;
 }
 
 @end

@@ -31,15 +31,6 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <button opaque="NO" tag="100" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="HuN-dU-pYy">
-                                <rect key="frame" x="390" y="15" width="44" height="44"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" image="739-question.png">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
                             <view hidden="YES" tag="30" contentMode="scaleToFill" id="qW6-aX-utr" customClass="IAECircleDecoratorView">
                                 <rect key="frame" x="414" y="0.0" width="20" height="71"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
@@ -60,7 +51,4 @@
             <color key="tintColor" red="0.74509803919999995" green="0.74509803919999995" blue="0.74509803919999995" alpha="1" colorSpace="deviceRGB"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="739-question.png" width="28" height="28"/>
-    </resources>
 </document>

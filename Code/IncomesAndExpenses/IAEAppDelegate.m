@@ -20,7 +20,6 @@ static NSString * const mainStoryBoardName = @"Main";
 static NSString * const easyIncomesAndExpensesViewControllerID = @"EasyIncomesAndExpensesViewControllerID";
 
 static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
-static NSString * const kUserDefaultsQuestionButtonForGeneralCategory = @"questionButtonForGeneralCategory";
 
 //static CGFloat kNavigationBarTintColorWhiteComponents = 0.6;
 
@@ -73,8 +72,7 @@ static NSString * const kUserDefaultsQuestionButtonForGeneralCategory = @"questi
 - (void)prepareDefaults
 {
     // Defaults del registration  domain
-    NSDictionary *defaults = @{kUserDefaultsDayModeActiveKey: [NSNumber numberWithBool:NO],
-                               kUserDefaultsQuestionButtonForGeneralCategory: [NSNumber numberWithBool:YES]};
+    NSDictionary *defaults = @{kUserDefaultsDayModeActiveKey: [NSNumber numberWithBool:NO]};
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 }
 

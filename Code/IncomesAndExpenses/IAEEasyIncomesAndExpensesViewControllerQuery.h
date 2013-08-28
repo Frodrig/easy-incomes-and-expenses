@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CategoryDefs.h"
 
 @class IAEYear;
 @class IAEMonth;
@@ -31,7 +32,7 @@
 
 - (NSArray *)findIncomesCategoriesOfActualSelectedContextView;
 - (NSArray *)findExpensesCategoriesOfActualSelectedContextView;
-- (NSSet *)findAllCategoriesForActualSelectedContext;
+- (NSArray *)findAllCategoriesForActualSelectedContext;
 
 - (NSArray *)findAllOrdererMonthsWithConceptsOfOpenYear;
 
@@ -41,6 +42,7 @@
 - (NSDecimalNumber *)findIncomesOfActualSelectedContextView;
 - (NSDecimalNumber *)findExpensesOfActualSelectedContextView;
 - (NSDecimalNumber *)findMaxValueOfAllCategoriesForActualSelectedContext;
+- (NSDecimalNumber *)findMaxValueForActualSelectedContextForCategoryType:(CategoryType)categoryType;
 
 - (id)findModelObjectOfActualSelectedContextView;
 

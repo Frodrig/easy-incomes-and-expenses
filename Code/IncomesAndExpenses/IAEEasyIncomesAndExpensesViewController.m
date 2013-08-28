@@ -548,13 +548,31 @@ static const NSInteger kInvalidOptionIndex = -1;
     return self.reportMenuView.currentOptionIndexSelected;
 }
 
+- (NSDecimalNumber *)findMaxValueForActualSelectedContextForCategoryType:(CategoryType)categoryType
+{
+    NSAssert(categoryType != InvalidCategory, @"");
+
+    id modelObject = [self findModelObjectOfActualSelectedContextView];
+    NSArray *allCategories = categoryType == IncomeCategory ? [self findIncomesCategoriesOfActualSelectedContextView] : [self findExpensesCategoriesOfActualSelectedContextView];
+    NSDecimalNumber *maxValue = [self findForModelObject:modelObject maxBalanceValueOfCategories:allCategories];
+    
+    return maxValue;
+}
+
 - (NSDecimalNumber *)findMaxValueOfAllCategoriesForActualSelectedContext
 {
-    NSDecimalNumber *maxValue = [NSDecimalNumber zero];
-    
     id modelObject = [self findModelObjectOfActualSelectedContextView];
-    NSSet *allCategories = [self findAllCategoriesForActualSelectedContext];
-    for (IAECategory *category in allCategories) {
+    NSArray *allCategories = [self findAllCategoriesForActualSelectedContext];
+    NSDecimalNumber *maxValue = [self findForModelObject:modelObject maxBalanceValueOfCategories:allCategories];
+    
+    return maxValue;
+}
+
+- (NSDecimalNumber *)findForModelObject:(id)modelObject maxBalanceValueOfCategories:(NSArray *)categories
+{
+    NSDecimalNumber *maxValue = [NSDecimalNumber zero];
+
+    for (IAECategory *category in categories) {
         NSDecimalNumber *categoryValue = [modelObject balanceOfAllConceptsOfCategory:category];
         if ([categoryValue compare:maxValue] == NSOrderedDescending) {
             maxValue = categoryValue;
@@ -564,14 +582,14 @@ static const NSInteger kInvalidOptionIndex = -1;
     return maxValue;
 }
 
-- (NSSet *)findAllCategoriesForActualSelectedContext
+- (NSArray *)findAllCategoriesForActualSelectedContext
 {
     NSArray *incomeCategories = [self findIncomesCategoriesOfActualSelectedContextView];
     NSArray *expenseCategories = [self findExpensesCategoriesOfActualSelectedContextView];
     NSSet *allCategories = [NSSet setWithArray:incomeCategories];
     allCategories = [allCategories setByAddingObjectsFromArray:expenseCategories];
     
-    return allCategories;
+    return [allCategories sortedArrayUsingDescriptors:[NSSortDescriptor sortDescriptorWithKey:@"categoryType" ascending:YES]];
 }
 
 - (NSDecimalNumber *)findIncomesOfActualSelectedContextView

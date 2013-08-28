@@ -80,7 +80,8 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
         NSDecimalNumber *expenses = [self.iaeViewControllerQuery findExpensesOfActualSelectedContextView];
         maxValue = [[IAENumberUtils maxValueOfNumber:incomes andNumber:expenses] floatValue];
     } else {
-        NSDecimalNumber *maxDecimalValue = [self.iaeViewControllerQuery findMaxValueOfAllCategoriesForActualSelectedContext];
+        CategoryType categoryType = [self.iaeViewControllerQuery isTheIncomesOptionSelectedInReportMenu] ? IncomeCategory : ExpenseCategory;
+        NSDecimalNumber *maxDecimalValue = [self.iaeViewControllerQuery findMaxValueForActualSelectedContextForCategoryType:categoryType];
         maxValue = maxDecimalValue.floatValue;
     }
     

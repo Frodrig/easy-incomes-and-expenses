@@ -331,7 +331,7 @@ static const CGFloat kMinAlphaValueForScrolledReportAreaItems = 0.15;
 
 - (CGFloat)calculeHeightOfReportAreaItemWithMaxValue:(CGFloat)maxValue andReportAreaItemValue:(CGFloat)valueOfAreaItem
  {
-     CGFloat height = maxValue > 0 ? (self.bounds.size.height * valueOfAreaItem) / maxValue : 0;
+     CGFloat height = maxValue > 0 ? (self.bounds.size.height * (valueOfAreaItem / maxValue)) : 0;
      
      return height;
  }

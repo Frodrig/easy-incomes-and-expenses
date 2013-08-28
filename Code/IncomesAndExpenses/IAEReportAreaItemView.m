@@ -23,15 +23,15 @@ static const NSUInteger kXMarginForLabels = 10;
 
 static const CGFloat kWidthForHeightLine = 3.0;
 
-static const CGFloat kHeightForTitleLabel = 44;
-static const CGFloat kHeightForSubtitleLabel = 34;
+static const CGFloat kHeightForTitleLabel = 24;
+static const CGFloat kHeightForSubtitleLabel = 21;
 static const CGFloat kMinimumHeightForItem = kHeightForTitleLabel + kHeightForSubtitleLabel;
 
-static NSString * const kTitleFontFamilyName = @"HelveticaNeue-Ultralight";
-static const CGFloat kTitleFontSize = 36;
+static NSString * const kTitleFontFamilyName = @"HelveticaNeue-Thin";
+static const CGFloat kTitleFontSize = 24;
 static const CGFloat kTitleFontKern = 3;
-static NSString * const kSubtitleFontFamilyName = @"HelveticaNeue-Ultralight";
-static const CGFloat kSubtitleFontSize = 21;
+static NSString * const kSubtitleFontFamilyName = @"HelveticaNeue-Thin";
+static const CGFloat kSubtitleFontSize = 16;
 static const CGFloat kSubtitleFontKern = 2;
 
 static const CGFloat kBackgroundColorWhiteWhiteValue = 0.8;
@@ -88,6 +88,7 @@ static const CGFloat kTextColorWithWhiteAlpha = 1.0;
 - (void)configureBasicProperties
 {
     self.backgroundColor = [UIColor colorWithWhite:kBackgroundColorWhiteWhiteValue alpha:kBackgroundColorWithWhiteAlpha];
+    self.clipsToBounds = NO;
 }
 
 - (void)initAndAddTitleLabel:(NSString *)titleString
@@ -109,7 +110,8 @@ static const CGFloat kTextColorWithWhiteAlpha = 1.0;
     NSDictionary *attributes = [self createLabelAttributesWithFont:kSubtitleFontFamilyName size:kSubtitleFontSize andKern:kSubtitleFontKern];
     _subtitle.attributedText = [[NSAttributedString alloc] initWithString:subtitleString attributes:attributes];
     _subtitle.backgroundColor = [UIColor clearColor];
-    _title.adjustsFontSizeToFitWidth = YES;
+    _subtitle.adjustsFontSizeToFitWidth = YES;
+    _subtitle.clipsToBounds = NO;
     
     [self addSubview:_subtitle];
 }

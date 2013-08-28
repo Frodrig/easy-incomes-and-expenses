@@ -10,7 +10,6 @@
                 <outlet property="displayPanel" destination="xJU-jx-OgO" id="AaF-Do-jyx"/>
                 <outlet property="dragPanel" destination="dms-eI-2KD" id="gqm-Is-eUm"/>
                 <outlet property="expenseButton" destination="3on-F9-yD1" id="fZy-HM-fE5"/>
-                <outlet property="gratePanel" destination="oVs-mA-dr7" id="v8N-Ll-M6w"/>
                 <outlet property="incomeButton" destination="PjF-me-0zt" id="Vly-DB-zTN"/>
                 <outlet property="view" destination="uGo-IA-Aba" id="119-QN-C61"/>
             </connections>
@@ -130,7 +129,7 @@
                             <rect key="frame" x="20" y="10" width="772" height="176"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
-                                <view hidden="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" id="oVs-mA-dr7">
+                                <view userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="scaleToFill" id="oVs-mA-dr7">
                                     <rect key="frame" x="0.0" y="0.0" width="772" height="176"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>

@@ -30,7 +30,6 @@ typedef NS_ENUM(NSUInteger, CalculatorMode) {
     CM_EXPENSE
 };
 
-@property (weak, nonatomic) IBOutlet UIView *gratePanel;
 @property (weak, nonatomic) IBOutlet IAEDragPanelCalculatorView *dragPanel;
 @property (weak, nonatomic) IBOutlet IAEDisplayPanelCalculatorView *displayPanel;
 @property (weak, nonatomic) IBOutlet UIButton *incomeButton;
@@ -65,8 +64,6 @@ static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
 
 static CGFloat animationDurationForDisableAction = 0.25;
 static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
-
-static CGFloat kDurationGratePanelDissolve = 7.0;
 
 #pragma mark - Properties
 
@@ -552,7 +549,6 @@ static CGFloat kDurationGratePanelDissolve = 7.0;
 - (void)doFXAfterPressedButton:(UIButton *)button withVaidAction:(BOOL)action
 {
     [self applyPressedAnimationOverButton:button withValidAction:action];
-    [self applyGratePanelAnimateAfterButtonPress];
 }
 
 - (void)applyPressedAnimationOverButton:(UIButton *)button withValidAction:(BOOL)validAction
@@ -567,20 +563,6 @@ static CGFloat kDurationGratePanelDissolve = 7.0;
         } completion:^(BOOL finished) {
             button.backgroundColor = [UIColor clearColor];
         }];
-    }];
-}
-
-- (void)applyGratePanelAnimateAfterButtonPress
-{
-    self.gratePanel.hidden = NO;
-    self.gratePanel.alpha = 1;
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-    [UIView animateWithDuration:kDurationGratePanelDissolve animations:^{
-        self.gratePanel.alpha = 0;
-    } completion:^(BOOL finished) {
-        if (finished) {
-            self.gratePanel.hidden = YES;
-        }
     }];
 }
 

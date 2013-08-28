@@ -12,23 +12,11 @@
 **** Ya se realiza pero el código es MUY MEJORABLE Y OPTIMIZABLE habría que volver. Mirar el método updateContentInformationBasedInCurrentContext
 
 * Selector de categorías
-** -Se ha añadido un botón de información sobre la categoría. Considerar cambiar alertview por popover y además crear en settings una sección de ayuda con el flag para activar o desactivar dicho botón.-
-*** -Valorar eliminarlo también.-
 
 * Calculadora
 ** Hay que implementar arrastre. Cuando arrastramos hacia arriba el resto de elementos suben pero usando dynamics.
-** -Meter el título por código-
-*** -"calculadora"-
-** -Cuando se está en modo día, la palabra "Día" ha de ir en minúscula.-
-*** -Dejar la rejilla siempre visible pero semitransparente-*** -Considerar usar símbolo ^ e inverso en el panel de draga que cambie a medida que hacemos el arrastre. Considerar si, entonces, tiene sentido poner "Inserción".-
-**** -Descartado-
 
 * Modo informe
-** -Al ir haciendo scroll, ir haciendo desaparecer lo que queda más fuera de la pantalla.-
-** -Error conocido al ir cambiado rápidamente de tipo de informe: se descojona el área interna del scrollview. Habría que implementar soluciones para evitar el malfuncionamiento.-
-** -Subtítulos largos truncados por el final.-
-** -Hay que afinar mejor la proporcionalidad de los valores. A veces vemos un valor numérico y que no se corresponde con la representación gráfica como nos gustaría.-
-** -Si no hay conceptos no deberíamos de poder seleccionar el tipo de informe. Debería de estar desactivado. He logrado poder seleccionarlo.-
 
 * Transiciones modo edición - informe
 ** Hay que hacerlo más bonito.
@@ -48,8 +36,6 @@
 * Problemas conocidos
 ** He logrado, cambiando de mes rápidamente y en modo reporte, hacer desaparecer el cursor sobre el tipo de informe elegido y no poder cambiarlo.
 ** En modo anual, hay situaciones en donde no cabe el numero de conceptos asociados a un mes.
-** -Al ir a insertar un concepto habiendo cambiado de año, éste no aparecía en el panel de conceptos hasta que cambiaba de mes y volvía.-
-** -Al abrir un año, no recargamos el menú de texto inferior.-
 
 * Otros
 ** En todos los sitios donde vuelvo a recrear la fuente y su tamaño… simplemente cambiar el campo text para la label asociada. Esto es válido a no ser que tenga que poner kern.

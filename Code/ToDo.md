@@ -16,14 +16,12 @@
 *** Valorar eliminarlo también.
 
 * Calculadora
+** Hay que implementar arrastre. Cuando arrastramos hacia arriba el resto de elementos suben pero usando dynamics.
 ** -Meter el título por código-
 *** -"calculadora"-
-** Cuando se está en modo día, la palabra "Día" ha de ir en minúscula.
-** Hay que implementar arrastre. Cuando arrastramos hacia arriba el resto de elementos suben pero usando dynamics.
-*** Considerar usar símbolo ^ e inverso en el panel de draga que cambie a medida que hacemos el arrastre. Considerar si, entonces, tiene sentido poner "Inserción".
-** Hay que mejorar el aspecto visual del teclado.
-*** Añadida usando views en el editor. Habría que utilizar drawRect:
-*** -Dejar la rejilla siempre visible pero semitransparente-
+** -Cuando se está en modo día, la palabra "Día" ha de ir en minúscula.-
+*** -Dejar la rejilla siempre visible pero semitransparente-*** -Considerar usar símbolo ^ e inverso en el panel de draga que cambie a medida que hacemos el arrastre. Considerar si, entonces, tiene sentido poner "Inserción".-
+**** -Descartado-
 
 * Modo informe
 ** Al ir haciendo scroll, ir haciendo desaparecer lo que queda más fuera de la pantalla.
@@ -46,6 +44,12 @@
 ** Pantalla de inicio
 ** Icono
 
+* Problemas conocidos
+** He logrado, cambiando de mes rápidamente y en modo reporte, hacer desaparecer el cursor sobre el tipo de informe elegido y no poder cambiarlo.
+** En modo anual, hay situaciones en donde no cabe el numero de conceptos asociados a un mes.
+** Al ir a insertar un concepto habiendo cambiado de año, éste no aparecía en el panel de conceptos hasta que cambiaba de mes y volvía.
+** -Al abrir un año, no recargamos el menú de texto inferior.-
+
 * Otros
 ** En todos los sitios donde vuelvo a recrear la fuente y su tamaño… simplemente cambiar el campo text para la label asociada. Esto es válido a no ser que tenga que poner kern.
 *** En el caso de poner kern, la otra opción es obtener el diccionario de atributos, setear el kern y volver a recrear con esos atributos y el título que proceda.
@@ -53,12 +57,7 @@
 *** Probablemente no.
 ** El stroke hace alguna cosa rara aún: en el selector de categorías el view que contiene el label con el nombre hemos tenido que poner que haga clip de sus subviews y, además, al terminar de hacerse el stroke (esto para todos), se produce un pequeño glich que hace que se eleve un poco.
 ** Las properties readonly se pueden redefinir en .m para que sean readwrite. Hay casos en los que debería de hacerlo.
-
-* Problemas conocidos
-** He logrado, cambiando de mes rápidamente y en modo reporte, hacer desaparecer el cursor sobre el tipo de informe elegido y no poder cambiarlo.
-** En modo anual, hay situaciones en donde no cabe el numero de conceptos asociados a un mes.
-** Al ir a insertar un concepto habiendo cambiado de año, éste no aparecía en el panel de conceptos hasta que cambiaba de mes y volvía.
-** Al abrir un año, no recargamos el menú de texto inferior.
+** En la calculadora, implementar la rejilla usando drawRect: en lugar de disponer de varias UIViews en el Xib
 
 * Ideas
 ** Años

@@ -113,6 +113,19 @@ static const CGFloat kYMarginOfTheLineSelector = 3;
     [self prepareSelector];
 }
 
+- (void)reloadOptionsStringNames
+{
+    NSAssert(self.dataSource, @"");
+    
+    NSUInteger numberOfItems = [self.dataSource numberOfOptionsInTextRawSelectorMenu:self];
+    for (NSUInteger itemIt = 0; itemIt < numberOfItems; ++itemIt) {
+        NSString *newTitle = [self.dataSource textRawSelectorMenu:self optionStringNameAtIndex:itemIt];
+        NSUInteger tagOfItemIt = [self createTagForButtonAtIndex:itemIt];
+        UIButton *option = (UIButton *)[self viewWithTag:tagOfItemIt];
+        [option setAttributedTitle:[self createAttributedStringForOptionAtIndex:itemIt withString:newTitle] forState:UIControlStateNormal];
+    }
+}
+
 - (void)removeAllMenuOptions
 {
     NSMutableSet *menuOptions = [[NSMutableSet alloc] initWithSet:[self findAllMenuOptions]];
@@ -180,9 +193,14 @@ static const CGFloat kYMarginOfTheLineSelector = 3;
 - (NSAttributedString *)createAttributedStringForOptionAtIndex:(NSUInteger)optionIt
 {
     NSString *optionStringName = [self.dataSource textRawSelectorMenu:self optionStringNameAtIndex:optionIt];
+    NSAttributedString *attributedString = [self createAttributedStringForOptionAtIndex:optionIt withString:optionStringName];
+    
+    return attributedString;
+}
+- (NSAttributedString *)createAttributedStringForOptionAtIndex:(NSUInteger)optionIt withString:(NSString *)string
+{
     NSDictionary *optionStringProperties = [self createPropertiesForOptionStringAtIndex:optionIt];
-    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:optionStringName
-                                                                           attributes:optionStringProperties];
+    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:string attributes:optionStringProperties];
     
     return attributedString;
 }

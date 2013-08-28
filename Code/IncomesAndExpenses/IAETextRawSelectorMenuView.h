@@ -20,5 +20,6 @@
 @property (nonatomic) BOOL optionsEnabled;
 
 - (void) reloadData;
+- (void) reloadOptionsStringNames;
 
 @end

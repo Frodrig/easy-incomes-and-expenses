@@ -1506,6 +1506,7 @@ static const NSInteger kInvalidOptionIndex = -1;
 
 - (void)reloadAllWithAnimation:(BOOL)animation
 {
+    [self.contextMenuView reloadOptionsStringNames];
     [self reloadBalancesOfContextViewsWithAnimation:animation];
     [self reloadConceptsOfActualSelectedContextView];
 }

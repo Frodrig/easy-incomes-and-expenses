@@ -376,4 +376,36 @@ static const CGFloat kDurationOfReportItemViewDisappear = 0.75;
     }
 }
 
+/*
+{
+    const NSUInteger numberOfReportAreaItems = [self findAllReportAreaItems].count;
+    const CGFloat widthOfAreaItemsView = [self calculeWidthOfReportAreaItemViews];
+    const CGFloat maxNumberOfAreaItemsViewFullPresented = self.contentSize.width / widthOfAreaItemsView;
+    const CGFloat normalizedIndex = scrollView.contentOffset.x / widthOfAreaItemsView;
+    const CGFloat positiveNormalizedIndex = MAX(normalizedIndex, 0);
+    const CGFloat normalizedOffset = ceilf(normalizedIndex) - positiveNormalizedIndex;
+    const NSUInteger leftViewIndex = MAX(floorf(positiveNormalizedIndex), 0);
+    const NSUInteger rightViewIndex = leftViewIndex + MIN(maxNumberOfAreaItemsViewFullPresented, numberOfReportAreaItems - 1);
+    const BOOL onlyMaxNumberOfAreaIemsViewFullyPresented = normalizedOffset == 0;
+    
+    // Extremos
+    const CGFloat alphaForLeftReportAreaItemView = onlyMaxNumberOfAreaIemsViewFullyPresented ? 1.0 : MAX(normalizedOffset, kMinAlphaValueForScrolledReportAreaItems);
+    [self viewWithTag:[self createReportAreaItemTagForIndex:leftViewIndex]].alpha = alphaForLeftReportAreaItemView;
+    if (rightViewIndex < numberOfReportAreaItems) {
+        const CGFloat alphaForRightReportAreaItemView = onlyMaxNumberOfAreaIemsViewFullyPresented ? 0.0 : MAX(1 - normalizedOffset, kMinAlphaValueForScrolledReportAreaItems);
+        [self viewWithTag:[self createReportAreaItemTagForIndex:rightViewIndex]].alpha = alphaForRightReportAreaItemView;
+    }
+    
+    // izquierda extremo izquierdo, medio, derecha extremo derecho
+    for (NSUInteger restOfAreaItemsViewIt = 0; restOfAreaItemsViewIt < numberOfReportAreaItems; ++restOfAreaItemsViewIt) {
+        if (restOfAreaItemsViewIt < leftViewIndex || restOfAreaItemsViewIt > rightViewIndex) {
+            [self viewWithTag:[self createReportAreaItemTagForIndex:restOfAreaItemsViewIt]].alpha = kMinAlphaValueForScrolledReportAreaItems;
+        } else if (restOfAreaItemsViewIt > leftViewIndex && restOfAreaItemsViewIt < rightViewIndex) {
+            [self viewWithTag:[self createReportAreaItemTagForIndex:restOfAreaItemsViewIt]].alpha = 1.0;
+        }
+    }
+    
+}
+*/
+
 @end

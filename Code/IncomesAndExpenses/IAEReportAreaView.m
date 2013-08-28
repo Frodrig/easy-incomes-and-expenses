@@ -348,33 +348,34 @@ static const CGFloat kDurationOfReportItemViewDisappear = 0.75;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    CGFloat normalizedIndex = scrollView.contentOffset.x / [self calculeWidthOfReportAreaItemViews];
-    CGFloat normalizedOffset = ceilf(normalizedIndex) - MAX(normalizedIndex, 0);
-    NSUInteger leftIndexView = floorf(MAX(normalizedIndex, 0));
-    NSUInteger rightIndexView = leftIndexView + 3;
-    
-    
-    if (normalizedOffset != 0) {
-        [self viewWithTag:[self createReportAreaItemTagForIndex:leftIndexView]].alpha = MAX(normalizedOffset, 0.15);
-        if (rightIndexView < [self findAllReportAreaItems].count) {
-            [self viewWithTag:[self createReportAreaItemTagForIndex:rightIndexView]].alpha = MAX(1 - normalizedOffset, 0.15);
+    if ([self findAllReportAreaItems].count > (scrollView.bounds.size.width / [self calculeWidthOfReportAreaItemViews])) {
+        CGFloat normalizedIndex = scrollView.contentOffset.x / [self calculeWidthOfReportAreaItemViews];
+        CGFloat normalizedOffset = ceilf(normalizedIndex) - MAX(normalizedIndex, 0);
+        NSUInteger leftIndexView = floorf(MAX(normalizedIndex, 0));
+        NSUInteger rightIndexView = leftIndexView + 3;
+        
+        if (normalizedOffset != 0) {
+            [self viewWithTag:[self createReportAreaItemTagForIndex:leftIndexView]].alpha = MAX(normalizedOffset, 0.15);
+            if (rightIndexView < [self findAllReportAreaItems].count) {
+                [self viewWithTag:[self createReportAreaItemTagForIndex:rightIndexView]].alpha = MAX(1 - normalizedOffset, 0.15);
+            }
+        } else {
+            [self viewWithTag:[self createReportAreaItemTagForIndex:leftIndexView]].alpha = MAX(normalizedOffset, 1);
+            if (rightIndexView < [self findAllReportAreaItems].count) {
+                [self viewWithTag:[self createReportAreaItemTagForIndex:rightIndexView]].alpha = MAX(1 - normalizedOffset, 0);
+            }
         }
-    } else {
-        [self viewWithTag:[self createReportAreaItemTagForIndex:leftIndexView]].alpha = MAX(normalizedOffset, 1);
-        if (rightIndexView < [self findAllReportAreaItems].count) {
-            [self viewWithTag:[self createReportAreaItemTagForIndex:rightIndexView]].alpha = MAX(1 - normalizedOffset, 0);
+        
+        for (NSUInteger transparentViewIt = 0; transparentViewIt < MAX(leftIndexView, 0); ++transparentViewIt) {
+            [self viewWithTag:[self createReportAreaItemTagForIndex:transparentViewIt]].alpha = 0.15;
+        }
+        for (NSUInteger visibleViewIt = MAX(leftIndexView, 0) + 1; visibleViewIt < MAX([self findAllReportAreaItems].count, 0); ++visibleViewIt) {
+            if (visibleViewIt != rightIndexView) {
+                [self viewWithTag:[self createReportAreaItemTagForIndex:visibleViewIt]].alpha = 1;
+            }
         }
     }
-
-    for (NSUInteger transparentViewIt = 0; transparentViewIt < MAX(leftIndexView, 0); ++transparentViewIt) {
-        [self viewWithTag:[self createReportAreaItemTagForIndex:transparentViewIt]].alpha = 0.15;
-    }
-    for (NSUInteger visibleViewIt = MAX(leftIndexView, 0) + 1; visibleViewIt < MAX([self findAllReportAreaItems].count, 0); ++visibleViewIt) {
-        if (visibleViewIt != rightIndexView) {
-            [self viewWithTag:[self createReportAreaItemTagForIndex:visibleViewIt]].alpha = 1;
-        }
-    }
-}
+   }
 
 /*
 {

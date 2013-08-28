@@ -31,7 +31,7 @@ static NSString * const kTitleFontFamilyName = @"HelveticaNeue-Thin";
 static const CGFloat kTitleFontSize = 24;
 static const CGFloat kTitleFontKern = 3;
 static NSString * const kSubtitleFontFamilyName = @"HelveticaNeue-Thin";
-static const CGFloat kSubtitleFontSize = 16;
+static const CGFloat kSubtitleFontSize = 18;
 static const CGFloat kSubtitleFontKern = 2;
 
 static const CGFloat kBackgroundColorWhiteWhiteValue = 0.8;
@@ -110,8 +110,7 @@ static const CGFloat kTextColorWithWhiteAlpha = 1.0;
     NSDictionary *attributes = [self createLabelAttributesWithFont:kSubtitleFontFamilyName size:kSubtitleFontSize andKern:kSubtitleFontKern];
     _subtitle.attributedText = [[NSAttributedString alloc] initWithString:subtitleString attributes:attributes];
     _subtitle.backgroundColor = [UIColor clearColor];
-    _subtitle.adjustsFontSizeToFitWidth = YES;
-    _subtitle.clipsToBounds = NO;
+    _subtitle.lineBreakMode = NSLineBreakByTruncatingTail;
     
     [self addSubview:_subtitle];
 }

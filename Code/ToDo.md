@@ -27,7 +27,6 @@
 ** -Al ir haciendo scroll, ir haciendo desaparecer lo que queda más fuera de la pantalla.-
 ** Error conocido al ir cambiado rápidamente de tipo de informe: se descojona el área interna del scrollview. Habría que implementar soluciones para evitar el malfuncionamiento.
 ** -Hay que afinar mejor la proporcionalidad de los valores. A veces vemos un valor numérico y que no se corresponde con la representación gráfica como nos gustaría.-
-** Cuando haya scroll posible, mostrar indicadores en los laterales.
 ** -Si no hay conceptos no deberíamos de poder seleccionar el tipo de informe. Debería de estar desactivado. He logrado poder seleccionarlo.-
 
 * Transiciones modo edición - informe
@@ -66,6 +65,7 @@
 *** Considerar que cuando nos ponemos sobre la celda de año actual, las entradas sean muy pequeñas para poder ver más elementos
 *** Considerar un botón que cambie de orden los años de menor a mayor. Al menos, quizás, para cuando estamos en modo años con conceptos.
 ** Informes
+*** Cuando haya scroll posible, mostrar indicadores en los laterales.
 *** Representar en modo reporte o informe una gráfica de puntos en la zona donde está el nombre del mes y el balance reflejando de manera diferenciada el mes en el que estamos. Esto serviría para contrastar el balance, el total de ingresos o el total de gastos del mes con respecto al resto.
 *** Poder variar la cantidad de elementos mostrados a la vez en pantalla evitando scroll.
 *** Posibilidad de mostrar la información usando diferentes parámetros (orden alfabético en lugar de tamaño)

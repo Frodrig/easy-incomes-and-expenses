@@ -457,6 +457,7 @@
 				5B2AAA3117C7747100E7C7A5 /* 746-minus-circle.png */,
 			);
 			name = Resources;
+			path = IncomesAndExpenses;
 			sourceTree = "<group>";
 		};
 		5B2D38A617AF84620056488B /* RoundedCorners */ = {
@@ -787,6 +788,7 @@
 				5B76116716C56C7A00558D6D /* Default-Landscape@2x~ipad.png */,
 				5B76116316C56C7300558D6D /* Default-Landscape~ipad.png */,
 				5B0F8BC116B94A7B002D62A5 /* Localizacion */,
+				5B29ED30179FC2C300FCC5C6 /* Resources */,
 				5B767DFC1636D7FC005315F8 /* IncomesAndExpenses */,
 				5B767DF51636D7FC005315F8 /* Frameworks */,
 				5B767DF31636D7FC005315F8 /* Products */,
@@ -819,7 +821,6 @@
 			isa = PBXGroup;
 			children = (
 				5B8F842F17B0FEA800C17020 /* Global constants */,
-				5B29ED30179FC2C300FCC5C6 /* Resources */,
 				5BF925331795447D0002CF9F /* Assets */,
 				5B62D861178EC1FA009879A6 /* Utils */,
 				5B6E9FA3177D95770072EE34 /* Defs */,

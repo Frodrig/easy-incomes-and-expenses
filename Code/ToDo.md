@@ -27,7 +27,7 @@
 ** Al ir haciendo scroll, ir haciendo desaparecer lo que queda más fuera de la pantalla.
 ** Error conocido al ir cambiado rápidamente de tipo de informe: se descorona el área interna del scrollview. Habría que implementar soluciones para evitar el malfuncionamiento.
 ** Hay que afinar mejor la proporcionalidad de los valores. A veces vemos un valor numérico y que no se corresponde con la representación gráfica como nos gustaría.
-** Si no hay conceptos no deberíamos de poder seleccionar el tipo de informe. Debería de estar desactivado. He logrado poder seleccionarlo.
+** -Si no hay conceptos no deberíamos de poder seleccionar el tipo de informe. Debería de estar desactivado. He logrado poder seleccionarlo.-
 
 * Transiciones modo edición - informe
 ** Hay que hacerlo más bonito.
@@ -47,7 +47,7 @@
 * Problemas conocidos
 ** He logrado, cambiando de mes rápidamente y en modo reporte, hacer desaparecer el cursor sobre el tipo de informe elegido y no poder cambiarlo.
 ** En modo anual, hay situaciones en donde no cabe el numero de conceptos asociados a un mes.
-** Al ir a insertar un concepto habiendo cambiado de año, éste no aparecía en el panel de conceptos hasta que cambiaba de mes y volvía.
+** -Al ir a insertar un concepto habiendo cambiado de año, éste no aparecía en el panel de conceptos hasta que cambiaba de mes y volvía.-
 ** -Al abrir un año, no recargamos el menú de texto inferior.-
 
 * Otros

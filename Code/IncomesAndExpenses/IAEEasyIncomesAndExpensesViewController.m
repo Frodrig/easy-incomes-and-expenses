@@ -971,6 +971,7 @@ static const NSInteger kInvalidOptionIndex = -1;
             [self updateCalculatorViewHideHalfState];
         } else if ([self isReportModeActive]) {
             [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:!self.initialPositioning];
+            [self disableOrEnableReportMenuIfAppropiate];
             [self.reportAreaView reloadDataWithAnimation:YES];
         }
     }
@@ -997,6 +998,11 @@ static const NSInteger kInvalidOptionIndex = -1;
         alphaChangesBlock();
         logicBlock();
     }
+}
+
+- (void)disableOrEnableReportMenuIfAppropiate
+{
+    self.reportMenuView.optionsEnabled = [self existConceptsInActualSelectedContext];
 }
 
 - (void)showWithoutConceptsWarningViewIfAppropriateWithAnimation:(BOOL)animation
@@ -1698,7 +1704,6 @@ static const NSInteger kInvalidOptionIndex = -1;
             [self gotoToContextViewWithIndex:optionIndex];
         }
     } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
-        //[self.reportAreaView reloadData];
         [self.reportAreaView reloadDataWithAnimation:YES];
     }
 }

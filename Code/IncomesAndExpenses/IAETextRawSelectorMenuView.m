@@ -14,6 +14,7 @@
 
 @interface IAETextRawSelectorMenuView()
 
+@property (nonatomic, strong) UIView *containerView;
 @property (nonatomic, strong) UIView *selectorLineView;
 
 @end
@@ -23,10 +24,25 @@
 #pragma mark - Constants
 
 static const NSUInteger kTagBaseValue = 100;
+
 static const CGFloat kHeightOfTheLineSelector = 2;
 static const CGFloat kYMarginOfTheLineSelector = 3;
 
+static const CGFloat kDurationOfContainerViewEnableDisableEffect = 0.5;
+static const CGFloat kAlphaValueOfContainerViewInDisabledMode = 0.25;
+
 #pragma mark - properties
+
+- (UIView *)containerView
+{
+    if (!_containerView) {
+        _containerView = [[UIView alloc] initWithFrame:CGRectZero];
+        _containerView.backgroundColor = [UIColor clearColor];
+        [self addSubview:_containerView];
+    }
+    
+    return _containerView;
+}
 
 - (UIView *)selectorLineView
 {
@@ -65,6 +81,7 @@ static const CGFloat kYMarginOfTheLineSelector = 3;
     if (optionsEnabled != _optionsEnabled) {
         [self enableOptions:optionsEnabled];
         [self enableSelectorLine:optionsEnabled];
+        [self enableContainerView:optionsEnabled];
         _optionsEnabled = optionsEnabled;
     }
 }
@@ -81,6 +98,13 @@ static const CGFloat kYMarginOfTheLineSelector = 3;
 - (void)enableSelectorLine:(BOOL)enable
 {
     self.selectorLineView.hidden = !enable;
+}
+
+- (void)enableContainerView:(BOOL)enable
+{
+    [UIView animateWithDuration:kDurationOfContainerViewEnableDisableEffect animations:^{
+        self.containerView.alpha = enable ? 1.0 : kAlphaValueOfContainerViewInDisabledMode;
+    }];
 }
 
 #pragma mark - Init
@@ -107,7 +131,7 @@ static const CGFloat kYMarginOfTheLineSelector = 3;
     NSAssert(self.dataSource, @"");
     
     [self removeAllMenuOptions];
-    [self setInitialValues];
+    [self adjustContainerViewSize];
     [self createAndAddMenuOptions];
     [self adjustFrameUsingMenuOptions];
     [self prepareSelector];
@@ -139,7 +163,7 @@ static const CGFloat kYMarginOfTheLineSelector = 3;
 - (NSSet *)findAllMenuOptions
 {
     NSMutableSet *menuOptions = [[NSMutableSet alloc] initWithCapacity:self.subviews.count];
-    for (UIView *viewIt in self.subviews) {
+    for (UIView *viewIt in self.containerView.subviews) {
         if ([viewIt isKindOfClass:[UIButton class]]) {
             [menuOptions addObject:viewIt];
         }
@@ -153,8 +177,15 @@ static const CGFloat kYMarginOfTheLineSelector = 3;
     self.selectorLineView = nil;
     if ([self.dataSource selectorTypeInTextRawSelectorMenu:self] == TEXTRAWMENUVIEW_SELECTOR_BOTTOMLINE) {
         self.selectorLineView.backgroundColor = [[self.dataSource colorForSelectorIndicatorInTextRawSelectorMenu:self] copy];
-        [self addSubview:self.selectorLineView];
+        [self.containerView addSubview:self.selectorLineView];
     }
+}
+
+- (void)adjustContainerViewSize
+{
+    CGSize sizeOfOption = [self.dataSource sizeOfOptionsInTextRawSelectorMenu:self];
+    NSUInteger numberOfOptions = [self.dataSource numberOfOptionsInTextRawSelectorMenu:self];
+    self.containerView.frame = CGRectMake(0, 0, sizeOfOption.width * numberOfOptions, sizeOfOption.height);
 }
 
 - (void)createAndAddMenuOptions
@@ -162,7 +193,7 @@ static const CGFloat kYMarginOfTheLineSelector = 3;
     NSUInteger numberOfOptions = [self.dataSource numberOfOptionsInTextRawSelectorMenu:self];
     for (int optionIt = 0; optionIt < numberOfOptions; optionIt++) {
         UIButton *button = [self createOptionButtonAtIndex:optionIt];
-        [self addSubview:button];
+        [self.containerView addSubview:button];
     }
 }
 

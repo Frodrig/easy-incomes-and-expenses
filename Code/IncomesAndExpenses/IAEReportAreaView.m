@@ -8,7 +8,6 @@
 
 #import "IAEReportAreaView.h"
 #import "IAEReportAreaViewDataSource.h"
-#import "IAEReportAreaViewDelegate.h"
 #import "IAEReportAreaItemView.h"
 #import "IAEEconomicValueUpdater.h"
 #import "IAECurrencyManager.h"
@@ -39,8 +38,6 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
 static const CGFloat kDurationOfReportItemViewAppear = 0.75;
 static const CGFloat kDurationOfReportItemViewDisappear = 0.75;
 
-@synthesize delegate = delegate__;
-
 #pragma mark - Properties
 
 - (UILabel *)noItemsLabel
@@ -58,14 +55,6 @@ static const CGFloat kDurationOfReportItemViewDisappear = 0.75;
     }
     
     return _noItemsLabel;
-}
-
-- (void)setDelegate:(id<IAEReportAreaViewDelegate>)delegate
-{
-    if (delegate != delegate__) {
-        [super setDelegate:delegate];
-        delegate__ = delegate;
-    }
 }
 
 - (void)setDataSource:(id<IAEReportAreaViewDataSource>)dataSource
@@ -87,12 +76,14 @@ static const CGFloat kDurationOfReportItemViewDisappear = 0.75;
     self = [super initWithFrame:frame];
     if (self) {
         [self initScrollViewProperties];
+        self.delegate = self;
     }
     return self;
 }
 
 - (void)initScrollViewProperties
 {
+    self.pagingEnabled = NO;
     self.bounces = YES;
     self.alwaysBounceHorizontal = YES;
     self.alwaysBounceVertical = NO;
@@ -274,8 +265,18 @@ static const CGFloat kDurationOfReportItemViewDisappear = 0.75;
                                                                                    title:title
                                                                                 subtitle:subtitle
                                                                                 andColor:color];
+    reportAreaItem.tag = [self createReportAreaItemTagForIndex:reportAreaItemIndex];
     
     return reportAreaItem;
+}
+
+- (NSUInteger)createReportAreaItemTagForIndex:(NSUInteger)index
+{
+    static const NSUInteger kBaseTag = 699;
+    const NSUInteger tag = kBaseTag + index;
+    
+    return tag;
+    
 }
 
 - (CGFloat)calculeWidthOfReportAreaItemViews
@@ -341,6 +342,38 @@ static const CGFloat kDurationOfReportItemViewDisappear = 0.75;
     }
     self.contentSize = CGSizeMake(width, self.bounds.size.height);
     self.contentOffset = CGPointMake(0.0, 0.0);
+}
+
+#pragma mark - 
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat normalizedIndex = scrollView.contentOffset.x / [self calculeWidthOfReportAreaItemViews];
+    CGFloat normalizedOffset = ceilf(normalizedIndex) - MAX(normalizedIndex, 0);
+    NSUInteger leftIndexView = floorf(MAX(normalizedIndex, 0));
+    NSUInteger rightIndexView = leftIndexView + 3;
+    
+    
+    if (normalizedOffset != 0) {
+        [self viewWithTag:[self createReportAreaItemTagForIndex:leftIndexView]].alpha = MAX(normalizedOffset, 0.15);
+        if (rightIndexView < [self findAllReportAreaItems].count) {
+            [self viewWithTag:[self createReportAreaItemTagForIndex:rightIndexView]].alpha = MAX(1 - normalizedOffset, 0.15);
+        }
+    } else {
+        [self viewWithTag:[self createReportAreaItemTagForIndex:leftIndexView]].alpha = MAX(normalizedOffset, 1);
+        if (rightIndexView < [self findAllReportAreaItems].count) {
+            [self viewWithTag:[self createReportAreaItemTagForIndex:rightIndexView]].alpha = MAX(1 - normalizedOffset, 0);
+        }
+    }
+
+    for (NSUInteger transparentViewIt = 0; transparentViewIt < MAX(leftIndexView, 0); ++transparentViewIt) {
+        [self viewWithTag:[self createReportAreaItemTagForIndex:transparentViewIt]].alpha = 0.15;
+    }
+    for (NSUInteger visibleViewIt = MAX(leftIndexView, 0) + 1; visibleViewIt < MAX([self findAllReportAreaItems].count, 0); ++visibleViewIt) {
+        if (visibleViewIt != rightIndexView) {
+            [self viewWithTag:[self createReportAreaItemTagForIndex:visibleViewIt]].alpha = 1;
+        }
+    }
 }
 
 @end

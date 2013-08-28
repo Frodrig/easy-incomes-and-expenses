@@ -11,12 +11,11 @@
 @protocol IAEReportAreaViewDelegate;
 @protocol IAEReportAreaViewDataSource;
 
-@interface IAEReportAreaView : UIScrollView
+// Nota: IAEReportAreaView hereda de UIScrollView y es delegado de si mismo para gestionar FX al hacer scroll
+@interface IAEReportAreaView : UIScrollView<UIScrollViewDelegate>
 
-@property (nonatomic, weak) id<IAEReportAreaViewDelegate> reportDelegate;
 @property (nonatomic, weak) id<IAEReportAreaViewDataSource> dataSource;
 
-//- (void)reloadData;
 - (void)reloadDataWithAnimation:(BOOL)animation;
 - (void)releaseData;
 

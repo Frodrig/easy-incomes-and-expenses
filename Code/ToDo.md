@@ -25,7 +25,7 @@
 
 * Modo informe
 ** Al ir haciendo scroll, ir haciendo desaparecer lo que queda más fuera de la pantalla.
-** Error conocido al ir cambiado rápidamente de tipo de informe: se descorona el área interna del scrollview. Habría que implementar soluciones para evitar el malfuncionamiento.
+** Error conocido al ir cambiado rápidamente de tipo de informe: se descojona el área interna del scrollview. Habría que implementar soluciones para evitar el malfuncionamiento.
 ** Hay que afinar mejor la proporcionalidad de los valores. A veces vemos un valor numérico y que no se corresponde con la representación gráfica como nos gustaría.
 ** -Si no hay conceptos no deberíamos de poder seleccionar el tipo de informe. Debería de estar desactivado. He logrado poder seleccionarlo.-
 

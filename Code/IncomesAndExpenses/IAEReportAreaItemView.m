@@ -34,7 +34,7 @@ static NSString * const kSubtitleFontFamilyName = @"HelveticaNeue-Ultralight";
 static const CGFloat kSubtitleFontSize = 21;
 static const CGFloat kSubtitleFontKern = 2;
 
-static const CGFloat kBackgroundColorWhiteWhiteValue = 0.9;
+static const CGFloat kBackgroundColorWhiteWhiteValue = 0.8;
 static const CGFloat kBackgroundColorWithWhiteAlpha = 0.15;
 static const CGFloat kTextColorWithWhiteValue = 0;
 static const CGFloat kTextColorWithWhiteAlpha = 1.0;

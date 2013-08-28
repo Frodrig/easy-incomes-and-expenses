@@ -479,7 +479,6 @@ static const NSInteger kInvalidOptionIndex = -1;
     self.reportAreaView.hidden = YES;
     self.reportMenuView.hidden = YES;
     self.reportAreaView.dataSource = nil;
-    self.reportAreaView.delegate = nil;
 }
 
 - (void)updateAfterChangeToReportMode
@@ -494,7 +493,6 @@ static const NSInteger kInvalidOptionIndex = -1;
     self.reportMenuView.hidden = NO;
     self.reportMenuView.currentOptionIndexSelected = kReportMenuIndexOfBalancesOption;
     self.reportAreaView.dataSource = self.helperReportAreaViewDataSource;
-    self.reportAreaView.delegate = self;
     
     [self.reportAreaView playShowAnimationOverActualLoadedData];
 }

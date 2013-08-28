@@ -16,6 +16,8 @@
 
 @property (nonatomic, weak) id<IAEReportAreaViewDataSource> dataSource;
 
+@property (nonatomic, readonly) BOOL reloadInProgress;
+
 - (void)reloadDataWithAnimation:(BOOL)animation;
 - (void)releaseData;
 

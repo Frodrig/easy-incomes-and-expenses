@@ -15,6 +15,8 @@
 @interface IAEReportAreaView()
 
 @property (nonatomic, strong) UILabel *noItemsLabel;
+@property (nonatomic, strong) NSMutableDictionary *reloadPendingInformation;
+@property (nonatomic, readonly) BOOL showingAllReportAreaItems;
 
 @end
 
@@ -40,7 +42,18 @@ static const CGFloat kDurationOfReportItemViewDisappear = 0.75;
 
 static const CGFloat kMinAlphaValueForScrolledReportAreaItems = 0.15;
 
+static NSString * const kReloadPendingKey = @"ReloadPending";
+
 #pragma mark - Properties
+
+- (NSDictionary *)reloadPendingInformation
+{
+    if (!_reloadPendingInformation) {
+        _reloadPendingInformation = [[NSMutableDictionary alloc] init];
+    }
+    
+    return _reloadPendingInformation;
+}
 
 - (UILabel *)noItemsLabel
 {
@@ -152,22 +165,50 @@ static const CGFloat kMinAlphaValueForScrolledReportAreaItems = 0.15;
 
 - (void)releaseData
 {
-    [self removeAllReportAreaItemsWithAnimation:NO andExecuteBlockAtCompletion:nil];
-    [self adjustContentSizeAndResetPosition];
+    if (!self.reloadInProgress) {
+        [self removeAllReportAreaItemsWithAnimation:NO andExecuteBlockAtCompletion:nil];
+        [self adjustContentSizeAndResetPosition];
+    }
 }
 
 - (void)reloadDataWithAnimation:(BOOL)animation
 {
-    [self desvinculeNoItemsLabels];
-    [self removeAllReportAreaItemsWithAnimation:animation andExecuteBlockAtCompletion:^(void) {
-        [self createAndAddAllReportAreaItemsWithAnimation:animation];
-        [self adjustContentSizeAndResetPosition];
-    }];
+    if (!self.reloadInProgress && !self.showingAllReportAreaItems) {
+        [self beginReloadDataWithAnimation];
+        [self desvinculeNoItemsLabels];
+        [self removeAllReportAreaItemsWithAnimation:animation andExecuteBlockAtCompletion:^(void) {
+            [self createAndAddAllReportAreaItemsWithAnimation:animation];
+            [self adjustContentSizeAndResetPosition];
+        }];
+    } else if (self.showingAllReportAreaItems) {
+        self.reloadPendingInformation[kReloadPendingKey] = [NSNumber numberWithBool:animation];
+    }
 }
 
 - (void)desvinculeNoItemsLabels
 {
     [self.noItemsLabel removeFromSuperview];
+}
+
+- (void)beginReloadDataWithAnimation
+{
+    _reloadInProgress = YES;
+    self.scrollEnabled = NO;
+}
+
+- (void)endReloadDataWithAnimation
+{
+    _reloadInProgress = NO;
+    self.scrollEnabled = !_showingAllReportAreaItems;
+}
+
+- (void)processPendingReloads
+{
+    NSNumber *pendingReloadDataWithAnimationValue = self.reloadPendingInformation[kReloadPendingKey];
+    if (pendingReloadDataWithAnimationValue) {
+        [self.reloadPendingInformation removeAllObjects];
+        [self reloadDataWithAnimation:pendingReloadDataWithAnimationValue.boolValue];
+    }
 }
 
 - (void)removeAllReportAreaItemsWithAnimation:(BOOL)animation andExecuteBlockAtCompletion:(void(^)(void))block
@@ -224,32 +265,61 @@ static const CGFloat kMinAlphaValueForScrolledReportAreaItems = 0.15;
             IAEReportAreaItemView *reportAreaItem = [self createReportAreaItemWithIndex:reportAreaItemIt ofTotalNumber:numberOfReportAreaItems];
             [self addSubview:reportAreaItem];
         }
+        
+        [self endReloadDataWithAnimation];
+        
         if (animation) {
             [self playShowAnimationOverActualLoadedData];
         }
     } else if ([self.dataSource showNoItemsLabelIfAppropiateInReportAreaView:self]) {
         [self addSubview:self.noItemsLabel];
+        [self endReloadDataWithAnimation];
     }
+}
+
+- (void)beginShowingAllReportAreaItems
+{
+    _showingAllReportAreaItems = YES;
+    self.scrollEnabled = NO;
+}
+
+- (void)endShowingAllReportAreaItems
+{
+    _showingAllReportAreaItems = NO;
+    self.scrollEnabled = !_reloadInProgress;
 }
 
 - (void)playShowAnimationOverActualLoadedData
 {
     NSMutableSet *allReportAreaItems = [[NSMutableSet alloc] initWithSet:[self findAllReportAreaItems]];
-    for (IAEReportAreaItemView *reportAreaItemView in allReportAreaItems) {
-        CGRect frameOfAreaItem = reportAreaItemView.frame;
-        reportAreaItemView.frame = CGRectMake(frameOfAreaItem.origin.x, frameOfAreaItem.origin.y + frameOfAreaItem.size.height, frameOfAreaItem.size.width, 0.0);
+    __block NSUInteger numberOfReportAreaItemsPending = allReportAreaItems.count;
+    if (numberOfReportAreaItemsPending > 0) {
+        [self beginShowingAllReportAreaItems];
         
-        NSNumber *numberValueOfItem = [[IAECurrencyManager sharedManager].currencyFormatter numberFromString:reportAreaItemView.title.text];
-        NSDecimalNumber *decimalNumberOfItem = [NSDecimalNumber decimalNumberWithString:numberValueOfItem.stringValue];
-        [reportAreaItemView changeTitleLabel:[[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:[NSDecimalNumber zero]]];
-        [[IAEEconomicValueUpdater defaultEconomicValueUpdater] processEconomicLabel:reportAreaItemView.title
-                                                                            toValue:decimalNumberOfItem
-                                                                       withDuration:kDurationOfReportItemViewAppear];
-    
-        [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-        [UIView animateWithDuration:kDurationOfReportItemViewDisappear animations:^{
-            reportAreaItemView.frame = frameOfAreaItem;
-        }];
+        for (IAEReportAreaItemView *reportAreaItemView in allReportAreaItems) {
+            CGRect frameOfAreaItem = reportAreaItemView.frame;
+            reportAreaItemView.frame = CGRectMake(frameOfAreaItem.origin.x, frameOfAreaItem.origin.y + frameOfAreaItem.size.height, frameOfAreaItem.size.width, 0.0);
+            
+            NSNumber *numberValueOfItem = [[IAECurrencyManager sharedManager].currencyFormatter numberFromString:reportAreaItemView.title.text];
+            NSDecimalNumber *decimalNumberOfItem = [NSDecimalNumber decimalNumberWithString:numberValueOfItem.stringValue];
+            [reportAreaItemView changeTitleLabel:[[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:[NSDecimalNumber zero]]];
+            [[IAEEconomicValueUpdater defaultEconomicValueUpdater] processEconomicLabel:reportAreaItemView.title
+                                                                                toValue:decimalNumberOfItem
+                                                                           withDuration:kDurationOfReportItemViewAppear];
+            
+            [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+            [UIView animateWithDuration:kDurationOfReportItemViewDisappear animations:^{
+                reportAreaItemView.frame = frameOfAreaItem;
+            } completion:^(BOOL finished) {
+                --numberOfReportAreaItemsPending;
+                if (0 == numberOfReportAreaItemsPending) {
+                    [self endShowingAllReportAreaItems];
+                    [self processPendingReloads];
+                }
+            }];
+        }
+    } else {
+        [self endReloadDataWithAnimation];
     }
 }
 

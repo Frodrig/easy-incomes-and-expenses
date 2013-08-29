@@ -146,7 +146,7 @@ static const CGFloat kAlphaValueForColorDisplay = 0.5;
 
 - (void)configureDay
 {
-    [self setDay:0 withDayweekName:nil inMonthName:nil];
+    [self setDay:0 withDayweekName:nil inMonthName:nil ofYearName:nil];
 }
 
 - (void)configureAmount
@@ -201,11 +201,11 @@ static const CGFloat kAlphaValueForColorDisplay = 0.5;
     return !self.dayButton.hidden;
 }
 
-- (void)setDay:(NSUInteger)day withDayweekName:(NSString *)dayWeekName inMonthName:(NSString *)monthName
+- (void)setDay:(NSUInteger)day withDayweekName:(NSString *)dayWeekName inMonthName:(NSString *)monthName ofYearName:(NSString *)yearName
 {
     NSString *dayName = day < 1 ? NSLocalizedString(kLtextNoDaySelected, @"") :
                                   [NSString stringWithFormat:NSLocalizedString(kLtextDaySelected, @""), day, [dayWeekName lowercaseString]];
-    NSString *titleButton = [NSString stringWithFormat:@"%@. %@", monthName, dayName];
+    NSString *titleButton = [NSString stringWithFormat:@"%@ %@. %@", monthName, yearName, dayName];
     [self.dayButton setTitle:titleButton forState:UIControlStateNormal];
 }
 

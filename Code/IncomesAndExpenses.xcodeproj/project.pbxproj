@@ -1013,9 +1013,9 @@
 			isa = PBXGroup;
 			children = (
 				5BC7100D17AC29F600E12953 /* IAEMonth.h */,
+				5BC7101517AC29F600E12953 /* IAEMonth.m */,
 				5BC7100E17AC29F600E12953 /* IAEMonthDelegate.h */,
 				5BC7101017AC29F600E12953 /* MonthDefs.h */,
-				5BC7101517AC29F600E12953 /* IAEMonth.m */,
 			);
 			name = Month;
 			sourceTree = "<group>";

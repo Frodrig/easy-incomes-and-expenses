@@ -310,7 +310,8 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
         [self.displayPanel showDayButton];
         [self.displayPanel setDay:self.actualDay
                   withDayweekName:[self findDayOfTheWeekName]
-                      inMonthName:[self findMonthName]];
+                      inMonthName:[self findMonthName]
+                       ofYearName:[self findYearName]];
     } else {
         [self.displayPanel hideDayButton];
     }
@@ -320,7 +321,14 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
 {
     IAEMonth *actualMonth = [self.dataSource monthForCalculatorViewController:self];
     
-    return actualMonth.description;
+    return [actualMonth monthAsString];
+}
+
+- (NSString *)findYearName
+{
+    IAEYear *actualYear = [self.dataSource yearForCalculatorViewController:self];
+    
+    return [actualYear yearDateAsString];
 }
 
 - (NSString *)findDayOfTheWeekName

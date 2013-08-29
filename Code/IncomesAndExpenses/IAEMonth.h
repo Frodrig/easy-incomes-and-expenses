@@ -51,6 +51,8 @@
 - (NSArray *)findAllCategoriesInConceptsOfType:(CategoryType)type;
 - (NSArray *)findAllCategoriesSortedByAbsoluteValueOfAmountsInConceptsOfType:(CategoryType)type;
 
+- (NSString *)monthAsString;
+
 - (NSString *)description;
 
 @end

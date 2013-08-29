@@ -12,6 +12,7 @@
 #import "IAECategory.h"
 #import "IAECategoryStore.h"
 #import "IAEBook.h"
+#import "IAEDateHelper.h"
 
 @implementation IAEMonth
 
@@ -247,6 +248,11 @@ static NSString * const kLTextDecemberName = @"December";
     return balance;
 }
 
+- (NSString *)monthAsString
+{
+    return [IAEDateHelper findMonthNameStringWithMonthIndex:self.month inShortForm:NO];
+    
+}
 - (NSString *)description
 {
     static NSDictionary *monthsNames = nil;

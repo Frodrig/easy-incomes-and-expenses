@@ -16,7 +16,7 @@
 @property (nonatomic, weak) id<IAEDisplayPanelCalculatorViewDelegate> delegate;
 
 - (void)setCategoryName:(NSString *)categoryName;
-- (void)setDay:(NSUInteger)day withDayweekName:(NSString *)dayWeekName inMonthName:(NSString *)monthName;
+- (void)setDay:(NSUInteger)day withDayweekName:(NSString *)dayWeekName inMonthName:(NSString *)monthName ofYearName:(NSString *)yearName;
 - (void)setAmountString:(NSString *)amount;
 - (void)setDisplayWithIncomeColorUsingAnimation:(BOOL)animation;
 - (void)setDisplayExpenseColorUsingAnimation:(BOOL)animation;

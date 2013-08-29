@@ -5,6 +5,8 @@
 
 * Conceptos
 ** En modo anual y cuando tengamos el día activado, habrá que activar barras de scroll
+** El último que no saque línea separadora
+** La línea separadora no está correctamente centrada
 
 * Contextos
 ** Transiciones al pulsar en un contexto
@@ -61,3 +63,5 @@
 *** Incluir la posibilidad de trabajar con TableView indexada.
 ** Contextos:
 *** En versión pro, considerar el permitir cambiar de año deslizando sobre el panel de contexto.
+** Conceptos
+*** En el anual introducción de un índice para ir rápido.

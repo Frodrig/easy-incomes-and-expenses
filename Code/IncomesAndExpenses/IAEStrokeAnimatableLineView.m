@@ -156,7 +156,15 @@ static const CGFloat kStrokeHeightForStrokeTypeStrong = 4.0;
 - (CGFloat)calculeCenterAtVerticalPosition
 {
     CGFloat strokeHeight = [self strokeHeightBasedInConfiguredStrokeType];
-    CGFloat center = self.theBelowView.bounds.size.height / 2 - strokeHeight / 2 - self.edgeInsetForHoriziontalCenterAndBottom.y;
+    CGFloat halfStrokeHeight = strokeHeight / 2.0;
+    CGFloat halfHeightOfTheBelowView = self.theBelowView.bounds.size.height / 2.0;
+    CGFloat center = halfHeightOfTheBelowView - halfStrokeHeight - self.edgeInsetForHoriziontalCenterAndBottom.y;
+
+    // Nota: Por algun motivo, centrar sobre una posicion entera produce un glitch. Si tal es el caso restamos 0.5
+    //       Usamos fmod porque el operador % no funciona sobre floats o doubles
+    if (fmod(center, 2.0) == 0) {
+        center -= 0.5;
+    }
     
     return center;
 }

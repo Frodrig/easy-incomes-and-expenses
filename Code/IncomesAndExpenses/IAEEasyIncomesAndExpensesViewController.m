@@ -311,6 +311,8 @@ static const NSInteger kInvalidOptionIndex = -1;
     self.conceptsCollectionView.backgroundColor = [UIColor clearColor];
     self.conceptsCollectionView.showsHorizontalScrollIndicator = NO;
     self.conceptsCollectionView.showsVerticalScrollIndicator = NO;
+    self.conceptsCollectionView.indicatorStyle = UIScrollViewIndicatorStyleBlack;
+    self.conceptsCollectionView.bounces = YES;
     
     [self.conceptsCollectionView addGestureRecognizer:self.tapConceptsRecognizer];
     [self.conceptsCollectionView addGestureRecognizer:self.swipeConceptsGestureRecognizer];

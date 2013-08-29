@@ -99,10 +99,12 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
+                        <outlet property="categoriesButton" destination="AgY-ym-Q0h" id="u32-2A-3IE"/>
                         <outlet property="conceptsCollectionView" destination="Ua3-PB-7Qf" id="Z3m-0j-JJI"/>
                         <outlet property="editAndReportModeContentContainerView" destination="G41-3w-8Uv" id="FNX-AU-fYg"/>
                         <outlet property="modeSegmentedControl" destination="iQJ-fE-Ltz" id="wtQ-Ue-Syc"/>
                         <outlet property="selectorContextView" destination="Dio-MI-59n" id="qfS-89-4Iz"/>
+                        <outlet property="yearsButton" destination="Dot-VC-q0a" id="DrA-Pm-J0F"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nSe-iv-lCf" userLabel="First Responder" sceneMemberID="firstResponder"/>

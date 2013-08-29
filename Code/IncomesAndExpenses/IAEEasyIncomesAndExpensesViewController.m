@@ -46,6 +46,8 @@
 #import "IAEStrokeAnimatableLineView.h"
 
 @interface IAEEasyIncomesAndExpensesViewController ()
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *yearsButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *categoriesButton;
 
 //@property (weak, nonatomic) IBOutlet UIScrollView *contextScrollView;
 @property (weak, nonatomic) IBOutlet IAESelectorContextView *selectorContextView;
@@ -1625,8 +1627,16 @@ static const NSInteger kInvalidOptionIndex = -1;
 
 #pragma mark - IAECalculatorViewControllerDelegate
 
+- (void)setNavigationButtonsEnabled:(BOOL)enabled
+{
+    self.yearsButton.enabled = enabled;
+    self.categoriesButton.enabled = enabled;
+}
+
 - (void)showButtonWasPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
 {
+    [self setNavigationButtonsEnabled:NO];
+    
     [UIView animateWithDuration:kDurationOfFrameUpdateWhenShowOrHideCalculator animations:^{
         [self updateFramePositionBeforeShowCalculatorForView:self.selectorContextView];
         [self updateFramePositionBeforeShowCalculatorForView:self.contextMenuView];
@@ -1637,14 +1647,16 @@ static const NSInteger kInvalidOptionIndex = -1;
 
 - (void)hideButtonWasPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
 {
+    [self updateBalancesWithAnimation:YES];
+
     [UIView animateWithDuration:kDurationOfFrameUpdateWhenShowOrHideCalculator animations:^{
         [self updateFramePositionAfterShowCalculatorForView:self.selectorContextView];
         [self updateFramePositionAfterShowCalculatorForView:self.contextMenuView];
         [self updateFramePositionAfterShowCalculatorForView:self.modeSegmentedControl];
         [self updateFramePositionAfterShowCalculatorForView:self.editAndReportModeContentContainerView];
+    } completion:^(BOOL finished) {
+        [self setNavigationButtonsEnabled:YES];
     }];
-    
-    [self updateBalancesWithAnimation:YES];
 }
 
 - (void)updateFramePositionBeforeShowCalculatorForView:(UIView *)view

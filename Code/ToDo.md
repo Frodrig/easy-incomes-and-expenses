@@ -1,26 +1,17 @@
 # ToDo: Easy Incomes and Expenses.
 
-* Ajuste de la cantidad
-** -Repasar visualmente-
-
-* Conceptos
-** En modo anual y cuando tengamos el día activado, habrá que activar barras de scroll
-** -El último que no saque línea separadora-
-** -La línea separadora no está correctamente centrada-
-
 * Contextos
 ** Transiciones al pulsar en un contexto
 *** Al transicionar en conceptos, se ha perdido la transición con fade. Sin embargo, si lo que hay es un warning, sí que se produce esa transición.
 **** Ya se realiza pero el código es MUY MEJORABLE Y OPTIMIZABLE habría que volver. Mirar el método updateContentInformationBasedInCurrentContext
 
-* Selector de categorías
-
 * Calculadora
+** Hay que implementar arrastre. Cuando arrastramos hacia arriba el resto de elementos suben pero usando dynamics.
+** -¿Tiene sentido permitir pulsar en categorías cuando está la calculadora abierta? ¿y en año?-
+*** -Probablemente no. En caso de permitirlo, hay que trabajar en el cambio del año como posible opción pulsable.-
+**** -Definitivamente NO.-
 ** -En modo día, incluir el año en el que estamos tras el mes "July 2012".-
 ** -En modo NO día, considerar que aparezca el mes y el año. Adicionalmente, considerar si tiene sentido incluir el número de concepto siguiente. Esto último probablemente no sea necesario.-
-** Hay que implementar arrastre. Cuando arrastramos hacia arriba el resto de elementos suben pero usando dynamics.
-
-* Modo informe
 
 * Transiciones modo edición - informe
 ** Hay que hacerlo más bonito.
@@ -37,19 +28,33 @@
 ** Pantalla de inicio
 ** Icono
 
+* Ajuste de la cantidad
+** -Repasar visualmente-
+
+* Conceptos
+** -En modo anual y cuando tengamos el día activado, habrá que activar barras de scroll-
+*** -Aunque puede ser útil, no queda estéticamente muy bien. Por ahora desactivado.-
+*** -Se ha activado el bounce-
+** -El último que no saque línea separadora-
+** -La línea separadora no está correctamente centrada-
+
+* Selector de categorías
+
+* Modo informe
+
 * Problemas conocidos
+** El stroke hace alguna cosa rara aún: en el selector de categorías el view que contiene el label con el nombre hemos tenido que poner que haga clip de sus subviews y, además, al terminar de hacerse el stroke (esto para todos), se produce un pequeño glich que hace que se eleve un poco.
 ** -He logrado, cambiando de mes rápidamente y en modo reporte, hacer desaparecer el cursor sobre el tipo de informe elegido y no poder cambiarlo.-
 ** -En modo anual, hay situaciones en donde no cabe el numero de conceptos asociados a un mes.-
 
-* Otros
-** -Limpiar etiquetas no usadas-
+* Refactorización
 ** En todos los sitios donde vuelvo a recrear la fuente y su tamaño… simplemente cambiar el campo text para la label asociada. Esto es válido a no ser que tenga que poner kern.
 *** En el caso de poner kern, la otra opción es obtener el diccionario de atributos, setear el kern y volver a recrear con esos atributos y el título que proceda.
-** ¿Tiene sentido permitir pulsar en categorías cuando está la calculadora abierta? ¿y en año?
-*** Probablemente no. En caso de permitirlo, hay que trabajar en el cambio del año como posible opción pulsable.
-** El stroke hace alguna cosa rara aún: en el selector de categorías el view que contiene el label con el nombre hemos tenido que poner que haga clip de sus subviews y, además, al terminar de hacerse el stroke (esto para todos), se produce un pequeño glich que hace que se eleve un poco.
 ** Las properties readonly se pueden redefinir en .m para que sean readwrite. Hay casos en los que debería de hacerlo.
 ** En la calculadora, implementar la rejilla usando drawRect: en lugar de disponer de varias UIViews en el Xib
+
+* Otros
+** -Limpiar etiquetas no usadas-
 
 * Ideas
 ** Años
@@ -67,3 +72,5 @@
 *** En versión pro, considerar el permitir cambiar de año deslizando sobre el panel de contexto.
 ** Conceptos
 *** En el anual introducción de un índice para ir rápido.
+*** En la zona de conceptos anuales, permitir contraer o desplegar los meses a fin de ver su contenido. Bastaría con pulsar en el header.
+

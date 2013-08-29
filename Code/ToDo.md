@@ -6,7 +6,7 @@
 * Conceptos
 ** En modo anual y cuando tengamos el día activado, habrá que activar barras de scroll
 ** El último que no saque línea separadora
-** La línea separadora no está correctamente centrada
+** -La línea separadora no está correctamente centrada-
 
 * Contextos
 ** Transiciones al pulsar en un contexto
@@ -38,7 +38,7 @@
 ** Icono
 
 * Problemas conocidos
-** He logrado, cambiando de mes rápidamente y en modo reporte, hacer desaparecer el cursor sobre el tipo de informe elegido y no poder cambiarlo.
+** -He logrado, cambiando de mes rápidamente y en modo reporte, hacer desaparecer el cursor sobre el tipo de informe elegido y no poder cambiarlo.-
 ** -En modo anual, hay situaciones en donde no cabe el numero de conceptos asociados a un mes.-
 
 * Otros

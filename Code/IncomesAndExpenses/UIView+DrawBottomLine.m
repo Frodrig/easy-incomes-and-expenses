@@ -20,7 +20,7 @@
     CGFloat marginY = 0;
     CGFloat originInX = marginX + 0;
     CGPoint startPointDraw = CGPointMake(originInX, self.bounds.origin.y + self.bounds.size.height - marginY);
-    CGPoint endPointDraw = CGPointMake(originInX + self.bounds.size.width - marginX, startPointDraw.y);
+    CGPoint endPointDraw = CGPointMake(originInX + self.bounds.size.width - marginX * 2, startPointDraw.y);
     
     const CGFloat dashPattern[] = {1.0, 6.0};
     

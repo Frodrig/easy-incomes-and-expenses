@@ -17,11 +17,11 @@
 ** Hay que hacerlo más bonito.
 
 * Settings
+** Información sobre la versión pro
+** Si se compra dominio, poner el enlace definitivo.
 ** -Localizar.-
 ** -Enlace a web.-
-** Si se compra dominio, poner el enlace definitivo.
-** Introducir segmented control para gestionar tres páginas (ajustes, Acerca de... y versión pro)
-** Información sobre la siguiente versión
+** -Introducir segmented control para gestionar tres páginas (ajustes, Acerca de… y versión pro)-
 
 * Menú de texto
 ** Usar dynamics para desplazar la raya inferior con cierto rebote.

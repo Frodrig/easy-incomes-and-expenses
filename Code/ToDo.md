@@ -17,7 +17,8 @@
 ** Hay que hacerlo más bonito.
 
 * Settings
-** Información sobre la versión pro
+** -Información sobre la versión pro-
+*** -Finalmente eliminada la sección nueva e integrado en un pequeño apartado al final. No estaba seguro de si ponerlo tan explícito podría provocar que Apple rechazara la aplicación-
 ** Si se compra dominio, poner el enlace definitivo.
 ** -Localizar.-
 ** -Enlace a web.-
@@ -45,7 +46,7 @@
 * Modo informe
 
 * Problemas conocidos
-** El stroke hace alguna cosa rara aún: en el selector de categorías el view que contiene el label con el nombre hemos tenido que poner que haga clip de sus subviews y, además, al terminar de hacerse el stroke (esto para todos), se produce un pequeño glich que hace que se eleve un poco.
+** -El stroke hace alguna cosa rara aún: en el selector de categorías el view que contiene el label con el nombre hemos tenido que poner que haga clip de sus subviews y, además, al terminar de hacerse el stroke (esto para todos), se produce un pequeño glich que hace que se eleve un poco.-
 ** -He logrado, cambiando de mes rápidamente y en modo reporte, hacer desaparecer el cursor sobre el tipo de informe elegido y no poder cambiarlo.-
 ** -En modo anual, hay situaciones en donde no cabe el numero de conceptos asociados a un mes.-
 
@@ -58,6 +59,11 @@
 
 * Otros
 ** -Limpiar etiquetas no usadas-
+
+* Funcionalidades seguras versión pro:
+** Sincronización iCloud
+** Impresión
+** Contraseña
 
 * Ideas
 ** Años

@@ -41,12 +41,11 @@
                                 </connections>
                             </barButtonItem>
                             <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="bar" selectedSegmentIndex="0" id="QtK-7h-4KW">
-                                <rect key="frame" x="90" y="8" width="360" height="29"/>
+                                <rect key="frame" x="140" y="8" width="260" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
                                     <segment title="Ajustes"/>
                                     <segment title="Acerca de..."/>
-                                    <segment title="Versión Pro"/>
                                 </segments>
                                 <connections>
                                     <action selector="segmentedControlPressed:" destination="-1" eventType="valueChanged" id="uTc-aR-HkZ"/>

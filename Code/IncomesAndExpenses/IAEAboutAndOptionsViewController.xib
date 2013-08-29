@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IAEAboutAndOptionsViewController">
             <connections>
                 <outlet property="collectionView" destination="0LZ-Hu-3KV" id="CaG-2d-Ma4"/>
+                <outlet property="segmentedControl" destination="QtK-7h-4KW" id="e06-s1-k2I"/>
                 <outlet property="view" destination="2" id="3"/>
             </connections>
         </placeholder>
@@ -33,11 +34,24 @@
                     <color key="tintColor" red="0.74509803919999995" green="0.74509803919999995" blue="0.74509803919999995" alpha="1" colorSpace="deviceRGB"/>
                     <items>
                         <navigationItem id="xLY-8Y-4Zk">
+                            <nil key="title"/>
                             <barButtonItem key="leftBarButtonItem" systemItem="done" id="Ojz-vW-4UK">
                                 <connections>
                                     <action selector="doneButtonPressed:" destination="-1" id="fLF-bb-n9c"/>
                                 </connections>
                             </barButtonItem>
+                            <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="bar" selectedSegmentIndex="0" id="QtK-7h-4KW">
+                                <rect key="frame" x="90" y="8" width="360" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Ajustes"/>
+                                    <segment title="Acerca de..."/>
+                                    <segment title="Versión Pro"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentedControlPressed:" destination="-1" eventType="valueChanged" id="uTc-aR-HkZ"/>
+                                </connections>
+                            </segmentedControl>
                         </navigationItem>
                     </items>
                 </navigationBar>

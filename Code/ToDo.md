@@ -17,8 +17,10 @@
 ** Hay que hacerlo más bonito.
 
 * Settings
-** Localizar.
-** Enlace a web.
+** -Localizar.-
+** -Enlace a web.-
+** Si se compra dominio, poner el enlace definitivo.
+** Introducir segmented control para gestionar tres páginas (ajustes, Acerca de... y versión pro)
 ** Información sobre la siguiente versión
 
 * Menú de texto
@@ -52,6 +54,7 @@
 *** En el caso de poner kern, la otra opción es obtener el diccionario de atributos, setear el kern y volver a recrear con esos atributos y el título que proceda.
 ** Las properties readonly se pueden redefinir en .m para que sean readwrite. Hay casos en los que debería de hacerlo.
 ** En la calculadora, implementar la rejilla usando drawRect: en lugar de disponer de varias UIViews en el Xib
+** Vigilar los ToDo del código en forma de comentario
 
 * Otros
 ** -Limpiar etiquetas no usadas-

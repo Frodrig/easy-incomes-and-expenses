@@ -12,6 +12,8 @@
 		5B18053317BBC93500EB8ABF /* ToDo.md in Resources */ = {isa = PBXBuildFile; fileRef = 5B18053217BBC93500EB8ABF /* ToDo.md */; };
 		5B1F0D3517841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1F0D3417841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m */; };
 		5B1F0D3717841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B1F0D3617841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib */; };
+		5B23FD8B17CF9B3700B4AD77 /* IAEProVersionAboutAndOptionsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B23FD8A17CF9B3700B4AD77 /* IAEProVersionAboutAndOptionsCollectionViewCell.xib */; };
+		5B23FD8E17CF9C0B00B4AD77 /* IAEProVersionAboutAndOptionsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B23FD8D17CF9C0B00B4AD77 /* IAEProVersionAboutAndOptionsCollectionViewCell.m */; };
 		5B251FA117AACA71000957A5 /* IAEStrokeAnimatableLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B251FA017AACA71000957A5 /* IAEStrokeAnimatableLineView.m */; };
 		5B26461117968496006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B26461017968496006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.m */; };
 		5B264613179684A5006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B264612179684A5006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.xib */; };
@@ -128,6 +130,9 @@
 		5B1F0D3317841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEditModeConceptCollectionViewCell.h; sourceTree = "<group>"; };
 		5B1F0D3417841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEditModeConceptCollectionViewCell.m; sourceTree = "<group>"; };
 		5B1F0D3617841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEEditModeConceptCollectionViewCell.xib; sourceTree = "<group>"; };
+		5B23FD8A17CF9B3700B4AD77 /* IAEProVersionAboutAndOptionsCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEProVersionAboutAndOptionsCollectionViewCell.xib; sourceTree = "<group>"; };
+		5B23FD8C17CF9C0B00B4AD77 /* IAEProVersionAboutAndOptionsCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEProVersionAboutAndOptionsCollectionViewCell.h; sourceTree = "<group>"; };
+		5B23FD8D17CF9C0B00B4AD77 /* IAEProVersionAboutAndOptionsCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEProVersionAboutAndOptionsCollectionViewCell.m; sourceTree = "<group>"; };
 		5B251F9F17AACA71000957A5 /* IAEStrokeAnimatableLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEStrokeAnimatableLineView.h; sourceTree = "<group>"; };
 		5B251FA017AACA71000957A5 /* IAEStrokeAnimatableLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEStrokeAnimatableLineView.m; sourceTree = "<group>"; };
 		5B251FA317AACA8E000957A5 /* IAEStrokeAnimatableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEStrokeAnimatableViewDelegate.h; sourceTree = "<group>"; };
@@ -374,6 +379,16 @@
 			name = WithConceptCell;
 			sourceTree = "<group>";
 		};
+		5B23FD8917CF9AE600B4AD77 /* IAEProVersionAboutAndOptionsCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				5B23FD8A17CF9B3700B4AD77 /* IAEProVersionAboutAndOptionsCollectionViewCell.xib */,
+				5B23FD8C17CF9C0B00B4AD77 /* IAEProVersionAboutAndOptionsCollectionViewCell.h */,
+				5B23FD8D17CF9C0B00B4AD77 /* IAEProVersionAboutAndOptionsCollectionViewCell.m */,
+			);
+			name = IAEProVersionAboutAndOptionsCollectionViewCell;
+			sourceTree = "<group>";
+		};
 		5B251FA217AACA76000957A5 /* Stroke Animatable View */ = {
 			isa = PBXGroup;
 			children = (
@@ -387,9 +402,10 @@
 		5B26460E17968383006F6E58 /* Collection View Cells & Views */ = {
 			isa = PBXGroup;
 			children = (
-				5B26461B1796A185006F6E58 /* IAEInfoAboutAndOptionsCollectionViewCell */,
 				5B26461417968548006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView */,
 				5B26461717969066006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell */,
+				5B26461B1796A185006F6E58 /* IAEInfoAboutAndOptionsCollectionViewCell */,
+				5B23FD8917CF9AE600B4AD77 /* IAEProVersionAboutAndOptionsCollectionViewCell */,
 			);
 			name = "Collection View Cells & Views";
 			sourceTree = "<group>";
@@ -1345,6 +1361,7 @@
 				5B2A41B417C77E8500C29036 /* 709-plus.png in Resources */,
 				5B767E0D1636D7FC005315F8 /* Default-568h@2x.png in Resources */,
 				5BF92542179554800002CF9F /* IAEAboutAndOptionsViewController.xib in Resources */,
+				5B23FD8B17CF9B3700B4AD77 /* IAEProVersionAboutAndOptionsCollectionViewCell.xib in Resources */,
 				5B94036017904C1400F9C1D0 /* IAEYearSelectorViewController.xib in Resources */,
 				5B36AFFD1785D73800132475 /* IAECategorySelectorViewController.xib in Resources */,
 				5B36AFF21785874D00132475 /* IAEAdjustConceptAmountViewController.xib in Resources */,
@@ -1388,6 +1405,7 @@
 				5B5C968C17816EF0008CD851 /* IAEValueDecoratorViewZeroConfigurator.m in Sources */,
 				5BC7101A17AC29F600E12953 /* IAEConcept.m in Sources */,
 				5B767E031636D7FC005315F8 /* main.m in Sources */,
+				5B23FD8E17CF9C0B00B4AD77 /* IAEProVersionAboutAndOptionsCollectionViewCell.m in Sources */,
 				5BCE3AB417A9689600CD01E7 /* IAEHelperReportTextRawMenuDataSource.m in Sources */,
 				5B767E071636D7FC005315F8 /* IAEAppDelegate.m in Sources */,
 				5BCE3ABD17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.m in Sources */,

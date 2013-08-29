@@ -44,6 +44,16 @@ static NSString * const kLTexForEntryWithNoDay = @"LTEXT_EDITMODECONCEPTCELL_ENT
 static const CGFloat kDefaultDurationOfStrokeStateModeTransition = 0.25;
 static const CGFloat kAlphaValueForStrokeState = 0.3;
 
+#pragma mark - Properties
+
+- (void)setDrawSeparatorLine:(BOOL)drawSeparatorLine
+{
+    if (drawSeparatorLine != _drawSeparatorLine) {
+        _drawSeparatorLine = drawSeparatorLine;
+        [self setNeedsDisplay];
+    }
+}
+
 #pragma mark - Init
 
 - (id)initWithFrame:(CGRect)frame
@@ -70,7 +80,9 @@ static const CGFloat kAlphaValueForStrokeState = 0.3;
 - (void)drawRect:(CGRect)rect
 {
     // Drawing code
-    [self drawBottomDotLine];
+    if (self.drawSeparatorLine) {
+        [self drawBottomDotLine];
+    }
 }
 
 #pragma mark - Configuration labels

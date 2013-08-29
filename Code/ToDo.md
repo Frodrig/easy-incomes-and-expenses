@@ -5,7 +5,7 @@
 
 * Conceptos
 ** En modo anual y cuando tengamos el día activado, habrá que activar barras de scroll
-** El último que no saque línea separadora
+** -El último que no saque línea separadora-
 ** -La línea separadora no está correctamente centrada-
 
 * Contextos

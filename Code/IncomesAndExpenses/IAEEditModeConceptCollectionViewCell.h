@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIView *identifierContainerView;
 @property (nonatomic) CGFloat durationOfStrokeStateTransition;
 @property (nonatomic, readonly, getter = isInStrokeState) BOOL strokeState;
+@property (nonatomic) BOOL drawSeparatorLine;
 
 - (UILabel *)findCategoryLabel;
 - (UILabel *)findAmountLabel;

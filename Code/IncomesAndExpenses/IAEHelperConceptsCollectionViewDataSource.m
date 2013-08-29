@@ -121,11 +121,13 @@ static NSString * const kLtextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
     NSAssert(category, @"");
     NSDecimalNumber *amountWithSign = [concept amountWithSign];
     NSString *amountWithSignString = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:amountWithSign];
-    EconomicValueType economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:amountWithSign];
+    const EconomicValueType economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:amountWithSign];
     UIColor *colorForEconomicValueType = [IAEColorHelper colorForEconomicValueType:economicValueType];
-    NSUInteger instantEntryIndex = [self.iaeViewControllerQuery findNumberOfConceptsOfActualSelectedContext:indexPath.section] - indexPath.row;
+    const NSUInteger numberOfConcepts = [self.iaeViewControllerQuery findNumberOfConceptsOfActualSelectedContext:indexPath.section];
+    NSUInteger instantEntryIndex =  numberOfConcepts - indexPath.row;
     
     cell.valueDecoratorView.economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:amountWithSign];
+    cell.drawSeparatorLine = indexPath.row != numberOfConcepts - 1;
     [cell configureCategoryLabelWithName:[category localizedTag]];
     [cell configureAmountLabelWithValue:amountWithSignString andColor:colorForEconomicValueType];
     [self configureIdentifierOfConceptCell:cell atIndexPath:indexPath withIndex:instantEntryIndex];

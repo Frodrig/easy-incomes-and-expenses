@@ -25,6 +25,7 @@ static NSString * const kCollectionViewSettingsCellNibName = @"IAESettingsAboutA
 static NSString * const kCollectionviewSettingsCellIdentifier = @"IAESettingsCell";
 static NSString * const kCollectionViewAboutCellNibName = @"IAEInfoAboutAndOptionsCollectionViewCell";
 static NSString * const kCollectionViewAboutCellIdentifier = @"IAEInfoCell";
+static NSString * const kLTextAppUrl = @"LTEXT_URLPAGE";
 
 static const NSUInteger kNumberOfSectionsInCollectionView = 2;
 
@@ -178,7 +179,18 @@ static NSString * const kAboutHeaderSectionTextTag = @"LTEXT_ABOUT_HEADERSECTION
 
 #pragma mark - IAEAboutAndOptionsViewController
 
-- (void)feedbackEmailButtonWasPressedIninfoAboutOptionsCollectionViewCell:(IAEInfoAboutAndOptionsCollectionViewCell *)cell
+- (void)urlButtonWasPressedInInfoAboutOptionsCollectionViewCell:(IAEInfoAboutAndOptionsCollectionViewCell *)cell
+{
+    [self launchSafariWithAppUrl];
+}
+
+- (void)launchSafariWithAppUrl
+{
+    NSString *urlString = NSLocalizedString(kLTextAppUrl, @"");
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
+}
+
+- (void)feedbackEmailButtonWasPressedInInfoAboutOptionsCollectionViewCell:(IAEInfoAboutAndOptionsCollectionViewCell *)cell
 {
     [self lauchMailComposerViewControllerForFeedback];
 }

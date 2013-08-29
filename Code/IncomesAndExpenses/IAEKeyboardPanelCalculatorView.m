@@ -32,7 +32,7 @@ static const CGFloat kRadiusForButtons = 15;
 static const CGFloat kWhiteColorComponentForExternalGratePanel = 0.8;
 static const CGFloat kWhiteColorAlphaComponentForExternalGratePanel = 1.0;
     
-static NSString * const kLtextAddButtonTitle = @"LTEXT_CALCULATOR_BUTTON_ADD";
+static NSString * const kLTextAddButtonTitle = @"LTEXT_CALCULATOR_BUTTON_ADD";
 
 #pragma mark - Properties
 
@@ -107,7 +107,7 @@ static NSString * const kLtextAddButtonTitle = @"LTEXT_CALCULATOR_BUTTON_ADD";
     
 - (void)configureAddButton
 {
-    [self.addButton setTitle:NSLocalizedString(kLtextAddButtonTitle, @"") forState:UIControlStateNormal];
+    [self.addButton setTitle:NSLocalizedString(kLTextAddButtonTitle, @"") forState:UIControlStateNormal];
 }
 
 #pragma mark - Draw

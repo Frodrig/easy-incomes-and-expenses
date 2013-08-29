@@ -24,8 +24,8 @@
 
 @implementation IAEHelperReportAreaViewDataSource
 
-static NSString * const kLtextIncomeCategoryTypeName = @"LTEXT_CATEGORYTYPEINCOME_NAME";
-static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPENSE_NAME";
+static NSString * const kLTextIncomeCategoryTypeName = @"LTEXT_CATEGORYTYPEINCOME_NAME";
+static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPENSE_NAME";
 
 #pragma mark - Init
 
@@ -160,7 +160,7 @@ static NSString * const kLtextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
     NSString *subtitle = nil;
     
     if ([self.iaeViewControllerQuery isTheBalancesOptionSelectedInReportMenu]) {
-        subtitle = itemIndex == 0 ? NSLocalizedString(kLtextIncomeCategoryTypeName, @"") : NSLocalizedString(kLtextExpenseCategoryTypeName, @"");
+        subtitle = itemIndex == 0 ? NSLocalizedString(kLTextIncomeCategoryTypeName, @"") : NSLocalizedString(kLTextExpenseCategoryTypeName, @"");
     } else {
         NSArray *categories = [self.iaeViewControllerQuery isTheIncomesOptionSelectedInReportMenu] ?
                               [self.iaeViewControllerQuery findIncomesCategoriesOfActualSelectedContextView] :

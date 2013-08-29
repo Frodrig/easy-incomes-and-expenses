@@ -34,9 +34,9 @@ static const NSUInteger kTagDayButton = 20;
 static const NSUInteger kTagAmountLabel = 30;
 static const NSUInteger kTagStrokeHelperView = 100;
 
-static NSString * const kLtextNoCategorySelected = @"LTEXT_CALCULATOR_NOCATEGORYSELECTED";
-static NSString * const kLtextNoDaySelected = @"LTEXT_CALCULATOR_NODAYSELECTED";
-static NSString * const kLtextDaySelected = @"LTEXT_CALCULATOR_DAYSELECTED";
+static NSString * const kLTextNoCategorySelected = @"LTEXT_CALCULATOR_NOCATEGORYSELECTED";
+static NSString * const kLTextNoDaySelected = @"LTEXT_CALCULATOR_NODAYSELECTED";
+static NSString * const kLTextDaySelected = @"LTEXT_CALCULATOR_DAYSELECTED";
 
 static NSString * const kFontFamilyNameForAmountLabel = @"HelveticaNeue-Thin";
 static const NSUInteger kFontFamilySizeForAmountLabel = 42;
@@ -141,7 +141,7 @@ static const CGFloat kAlphaValueForColorDisplay = 0.5;
 
 - (void)configureCategory
 {
-    [self setCategoryName:NSLocalizedString(kLtextNoCategorySelected, @"")];
+    [self setCategoryName:NSLocalizedString(kLTextNoCategorySelected, @"")];
 }
 
 - (void)configureDay
@@ -172,8 +172,8 @@ static const CGFloat kAlphaValueForColorDisplay = 0.5;
 
 - (void)setDay:(NSUInteger)day withDayweekName:(NSString *)dayWeekName inMonthName:(NSString *)monthName ofYearName:(NSString *)yearName
 {
-    NSString *dayName = day < 1 ? NSLocalizedString(kLtextNoDaySelected, @"") :
-                                  [NSString stringWithFormat:NSLocalizedString(kLtextDaySelected, @""), day, [dayWeekName lowercaseString]];
+    NSString *dayName = day < 1 ? NSLocalizedString(kLTextNoDaySelected, @"") :
+                                  [NSString stringWithFormat:NSLocalizedString(kLTextDaySelected, @""), day, [dayWeekName lowercaseString]];
     NSString *monthAndYearPhrase = [self makeStringPhraseWithMonthName:monthName andYearName:yearName withDotAtEnd:YES];
     NSString *titleButton = [NSString stringWithFormat:@"%@ %@", monthAndYearPhrase, dayName];
     [self.dayButton setTitle:titleButton forState:UIControlStateNormal];

@@ -25,13 +25,13 @@ static const NSUInteger kDeveloperNameLabelViewTag = 202;
 static const NSUInteger kFeedbackLabelViewTag = 301;
 static const NSUInteger kEmailButtonTag = 302;
 
-static NSString * const kLtextTitle = @"LTEXT_SETTINGS_ABOUT_TITLE";
-static NSString * const kLtextUrl = @"LTEXT_SETTINGS_ABOUT_URL";
-static NSString * const kLtextLiteTitle = @"LTEXT_SETTINGS_ABOUT_LITE";
-static NSString * const kLtextDesignedAndDeveloped = @"LTEXT_SETTINGS_ABOUT_DESIGNEDANDDEVELOPED";
-static NSString * const kLtextDeveloperName = @"LTEXT_SETTINGS_ABOUT_DEVELOPER";
-static NSString * const kLtextFeedback = @"LTEXT_SETTINGS_ABOUT_FEEDBACK";
-static NSString * const kLtextEmail = @"LTEXT_SETTINGS_ABOUT_EMAIL";
+static NSString * const kLTextTitle = @"LTEXT_SETTINGS_ABOUT_TITLE";
+static NSString * const kLTextUrl = @"LTEXT_SETTINGS_ABOUT_URL";
+static NSString * const kLTextLiteTitle = @"LTEXT_SETTINGS_ABOUT_LITE";
+static NSString * const kLTextDesignedAndDeveloped = @"LTEXT_SETTINGS_ABOUT_DESIGNEDANDDEVELOPED";
+static NSString * const kLTextDeveloperName = @"LTEXT_SETTINGS_ABOUT_DEVELOPER";
+static NSString * const kLTextFeedback = @"LTEXT_SETTINGS_ABOUT_FEEDBACK";
+static NSString * const kLTextEmail = @"LTEXT_SETTINGS_ABOUT_EMAIL";
 
 #pragma mark - Init
 
@@ -51,13 +51,13 @@ static NSString * const kLtextEmail = @"LTEXT_SETTINGS_ABOUT_EMAIL";
 
 - (void)localizeControls
 {
-    [self localizeLabel:(UILabel *)[self viewWithTag:kTitleLabelViewTag] withUnlocalizedText:kLtextTitle];
-    [self localizeButton:(UIButton *)[self viewWithTag:kUrlButtonTag] withUnlocalizedText:kLtextUrl];
-    [self localizeLabel:(UILabel *)[self viewWithTag:kLiteLabelViewTag] withUnlocalizedText:kLtextLiteTitle];
-    [self localizeLabel:(UILabel *)[self viewWithTag:kDesignedAndDevelopedLabelViewTag] withUnlocalizedText:kLtextDesignedAndDeveloped];
-    [self localizeLabel:(UILabel *)[self viewWithTag:kDeveloperNameLabelViewTag] withUnlocalizedText:kLtextDeveloperName];
-    [self localizeLabel:(UILabel *)[self viewWithTag:kFeedbackLabelViewTag] withUnlocalizedText:kLtextFeedback];
-    [self localizeButton:(UIButton *)[self viewWithTag:kEmailButtonTag] withUnlocalizedText:kLtextEmail];
+    [self localizeLabel:(UILabel *)[self viewWithTag:kTitleLabelViewTag] withUnlocalizedText:kLTextTitle];
+    [self localizeButton:(UIButton *)[self viewWithTag:kUrlButtonTag] withUnlocalizedText:kLTextUrl];
+    [self localizeLabel:(UILabel *)[self viewWithTag:kLiteLabelViewTag] withUnlocalizedText:kLTextLiteTitle];
+    [self localizeLabel:(UILabel *)[self viewWithTag:kDesignedAndDevelopedLabelViewTag] withUnlocalizedText:kLTextDesignedAndDeveloped];
+    [self localizeLabel:(UILabel *)[self viewWithTag:kDeveloperNameLabelViewTag] withUnlocalizedText:kLTextDeveloperName];
+    [self localizeLabel:(UILabel *)[self viewWithTag:kFeedbackLabelViewTag] withUnlocalizedText:kLTextFeedback];
+    [self localizeButton:(UIButton *)[self viewWithTag:kEmailButtonTag] withUnlocalizedText:kLTextEmail];
 
 }
 
@@ -79,11 +79,12 @@ static NSString * const kLtextEmail = @"LTEXT_SETTINGS_ABOUT_EMAIL";
 
 - (IBAction)feedbackButtonPressed:(id)sender
 {
-    [self.delegate feedbackEmailButtonWasPressedIninfoAboutOptionsCollectionViewCell:self];
+    [self.delegate feedbackEmailButtonWasPressedInInfoAboutOptionsCollectionViewCell:self];
 }
 
 - (IBAction)urlButtonPressed:(id)sender
 {
+    [self.delegate urlButtonWasPressedInInfoAboutOptionsCollectionViewCell:self];
 }
 
 @end

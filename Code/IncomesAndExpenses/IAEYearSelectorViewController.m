@@ -47,10 +47,10 @@ static const CGFloat kColorWhiteComponentForStrokeAnimation = 0.8;
 static const CGFloat kColorWhiteAlphaComponentForStrokeAnimation = 1.0;
 static const NSUInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
 
-static NSString * const kLtextAlertViewConfirmCleanTitle = @"LTEXT_CONFIRM_CLEANYEARCONCEPTS_TITLE";
-static NSString * const kLtextAlertViewConfirmCleanMessage = @"LTEXT_CONFIRM_CLEANYEARCONCEPTS_TEXT";
-static NSString * const kLtextAlertViewConfirmCancelOption = @"LTEXT_ALERTVIEW_CANCEL";
-static NSString * const kLtextAlertViewConfirmCleanOption = @"LTEXT_ALERTVIEW_CLEAN";
+static NSString * const kLTextAlertViewConfirmCleanTitle = @"LTEXT_CONFIRM_CLEANYEARCONCEPTS_TITLE";
+static NSString * const kLTextAlertViewConfirmCleanMessage = @"LTEXT_CONFIRM_CLEANYEARCONCEPTS_TEXT";
+static NSString * const kLTextAlertViewConfirmCancelOption = @"LTEXT_ALERTVIEW_CANCEL";
+static NSString * const kLTextAlertViewConfirmCleanOption = @"LTEXT_ALERTVIEW_CLEAN";
 
 #pragma mark - Properties
 
@@ -452,11 +452,11 @@ static NSString * const kLtextAlertViewConfirmCleanOption = @"LTEXT_ALERTVIEW_CL
 - (void)launchCleanConfirmationAlertView
 {
     UIAlertView *alertView = [[UIAlertView alloc]
-                                initWithTitle:NSLocalizedString(kLtextAlertViewConfirmCleanTitle, @"")
-                                message:NSLocalizedString(kLtextAlertViewConfirmCleanMessage, @"")
+                                initWithTitle:NSLocalizedString(kLTextAlertViewConfirmCleanTitle, @"")
+                                message:NSLocalizedString(kLTextAlertViewConfirmCleanMessage, @"")
                                 delegate:self
-                                cancelButtonTitle:NSLocalizedString(kLtextAlertViewConfirmCancelOption, @"")
-                                otherButtonTitles:NSLocalizedString(kLtextAlertViewConfirmCleanOption, @""), nil];
+                                cancelButtonTitle:NSLocalizedString(kLTextAlertViewConfirmCancelOption, @"")
+                                otherButtonTitles:NSLocalizedString(kLTextAlertViewConfirmCleanOption, @""), nil];
         
     [alertView show];
 }

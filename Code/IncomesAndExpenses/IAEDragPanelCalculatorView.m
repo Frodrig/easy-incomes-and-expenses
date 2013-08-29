@@ -21,7 +21,7 @@
 
 static const NSUInteger kTagOfTitleLabel = 5;
 
-static NSString * const kLtextTitleLabel = @"LTEXT_CALCULATOR_TITLE";
+static NSString * const kLTextTitleLabel = @"LTEXT_CALCULATOR_TITLE";
 static const CGFloat kCalculatorTitleLabelKern = 5;
 
 static const NSUInteger kRadiusTopCorners = 20;
@@ -54,7 +54,7 @@ static const NSUInteger kRadiusTopCorners = 20;
 {
     NSMutableDictionary *attributes = [[self.title.attributedText attributesAtIndex:0 effectiveRange:NULL] mutableCopy];
     attributes[NSKernAttributeName] = @(kCalculatorTitleLabelKern);
-    self.title.attributedText = [[NSAttributedString alloc] initWithString:NSLocalizedString(kLtextTitleLabel, @"") attributes:attributes];
+    self.title.attributedText = [[NSAttributedString alloc] initWithString:NSLocalizedString(kLTextTitleLabel, @"") attributes:attributes];
 }
 
 @end

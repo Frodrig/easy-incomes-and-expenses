@@ -12,6 +12,7 @@
 
 @protocol IAEInfoAboutAndOptionsCollectionViewCellDelegate <NSObject>
 
-- (void)feedbackEmailButtonWasPressedIninfoAboutOptionsCollectionViewCell:(IAEInfoAboutAndOptionsCollectionViewCell *)cell;
+- (void)feedbackEmailButtonWasPressedInInfoAboutOptionsCollectionViewCell:(IAEInfoAboutAndOptionsCollectionViewCell *)cell;
+- (void)urlButtonWasPressedInInfoAboutOptionsCollectionViewCell:(IAEInfoAboutAndOptionsCollectionViewCell *)cell;
 
 @end

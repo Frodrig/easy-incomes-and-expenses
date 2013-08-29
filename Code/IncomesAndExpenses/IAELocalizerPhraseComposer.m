@@ -12,9 +12,9 @@
 
 #pragma mark - Constants
 
-static NSString * const kLtextNoConcepts = @"LTEXT_PHRASE_NOCONCEPTS";
-static NSString * const kLtextOneConcept = @"LTEXT_PHRASE_ONECONCEPT";
-static NSString * const kLtextTwoOrMoreConcepts = @"LTEXT_PHRASE_TWOORMORECONCEPTS";
+static NSString * const kLTextNoConcepts = @"LTEXT_PHRASE_NOCONCEPTS";
+static NSString * const kLTextOneConcept = @"LTEXT_PHRASE_ONECONCEPT";
+static NSString * const kLTextTwoOrMoreConcepts = @"LTEXT_PHRASE_TWOORMORECONCEPTS";
 
 #pragma mark - Phrases
 
@@ -22,11 +22,11 @@ static NSString * const kLtextTwoOrMoreConcepts = @"LTEXT_PHRASE_TWOORMORECONCEP
 {
     NSString *phrase = nil;
     if (numberOfConcepts == 0) {
-        phrase = NSLocalizedString(kLtextNoConcepts, @"");
+        phrase = NSLocalizedString(kLTextNoConcepts, @"");
     } else if (numberOfConcepts == 1) {
-        phrase = NSLocalizedString(kLtextOneConcept, @"");
+        phrase = NSLocalizedString(kLTextOneConcept, @"");
     } else {
-        phrase = [NSString stringWithFormat:NSLocalizedString(kLtextTwoOrMoreConcepts, @""), numberOfConcepts];
+        phrase = [NSString stringWithFormat:NSLocalizedString(kLTextTwoOrMoreConcepts, @""), numberOfConcepts];
     }
     
     return phrase;

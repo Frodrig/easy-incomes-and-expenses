@@ -92,8 +92,8 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 static NSString * const kNotificationDayModeOnName = @"dayModeToOn";
 static NSString * const kNotificationDayModeOffName = @"dayModeToOff";
 
-static NSString * const kLtextModeSegmentedControlEditMode = @"LTEXT_MODESEGMENTEDCONTROL_EDITMODE";
-static NSString * const kLtextModeSegmentedControlReportmode = @"LTEXT_MODESEGMENTEDCONTROL_REPORTMODE";
+static NSString * const kLTextModeSegmentedControlEditMode = @"LTEXT_MODESEGMENTEDCONTROL_EDITMODE";
+static NSString * const kLTextModeSegmentedControlReportmode = @"LTEXT_MODESEGMENTEDCONTROL_REPORTMODE";
 
 static const NSUInteger kContentScrollViewNumberOfItems = 13;
 static const NSUInteger kGlobalIndexForYearInContextScrollView = 0;

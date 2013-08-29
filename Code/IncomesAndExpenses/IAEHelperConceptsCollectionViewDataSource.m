@@ -34,7 +34,7 @@ static NSString * const kNibConceptCellName = @"IAEEditModeConceptCollectionView
 static NSString * const kIdConceptCellName = @"EditModeConceptCell";
 
 static NSString * const kCollectionViewHeaderIdentifier = @"EditModeConceptHeader";
-static NSString * const kLtextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEADER_BASEINFO";
+static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEADER_BASEINFO";
 
 #pragma mark - Init
 
@@ -96,7 +96,7 @@ static NSString * const kLtextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
     IAEMonth *month = months[indexPath.section];
     NSString *monthName = [IAEDateHelper findMonthNameStringWithMonthIndex:month.month inShortForm:NO];
     NSString *monthBalance = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:[month balance]];
-    NSString *info = [NSString stringWithFormat:NSLocalizedString(kLtextBaseTextForHeaderInfo, @""), monthBalance, month.concepts.count];
+    NSString *info = [NSString stringWithFormat:NSLocalizedString(kLTextBaseTextForHeaderInfo, @""), monthBalance, month.concepts.count];
     header.title = monthName;
     header.info = info;
 }

@@ -24,7 +24,7 @@
 
 #pragma mark - Constants
 
-static NSString * const kLtextReportAreaItemsNoItemsWarning = @"LTEXT_REPORTAREAITEMS_NOITEMSWARNING";
+static NSString * const kLTextReportAreaItemsNoItemsWarning = @"LTEXT_REPORTAREAITEMS_NOITEMSWARNING";
 static NSString * const kReportAreaItemsNoItemsWarningFontName = @"HelveticaNeue-Ultralight";
 static const CGFloat kReportAreaItemsNoItemsFontSize = 36;
 static const CGFloat kReportAreaItemsNoItemsWarningKern = 0;
@@ -63,7 +63,7 @@ static NSString * const kReloadPendingKey = @"ReloadPending";
         NSDictionary *attributesForText = @{NSFontAttributeName: fontForText,
                                             NSForegroundColorAttributeName: [UIColor blackColor],
                                             NSKernAttributeName: @(kReportAreaItemsNoItemsWarningKern)};
-        _noItemsLabel.attributedText = [[NSAttributedString alloc] initWithString:NSLocalizedString(kLtextReportAreaItemsNoItemsWarning, @"")
+        _noItemsLabel.attributedText = [[NSAttributedString alloc] initWithString:NSLocalizedString(kLTextReportAreaItemsNoItemsWarning, @"")
                                                                        attributes:attributesForText];
         _noItemsLabel.textAlignment = NSTextAlignmentCenter;
         _noItemsLabel.backgroundColor = [UIColor clearColor];

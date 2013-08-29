@@ -26,8 +26,8 @@
 		5B2A41B517C77E8500C29036 /* 709-plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B2A41B317C77E8500C29036 /* 709-plus@2x.png */; };
 		5B2AAA2B17C773C500E7C7A5 /* 746-plus-circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B2AAA2917C773C500E7C7A5 /* 746-plus-circle.png */; };
 		5B2AAA2C17C773C500E7C7A5 /* 746-plus-circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B2AAA2A17C773C500E7C7A5 /* 746-plus-circle@2x.png */; };
-		5B2AAA3017C773CF00E7C7A5 /* 746-minus-circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B2AAA2E17C773CF00E7C7A5 /* 746-minus-circle@2x.png */; };
-		5B2AAA3217C7747100E7C7A5 /* 746-minus-circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B2AAA3117C7747100E7C7A5 /* 746-minus-circle.png */; };
+		5B2AAA3017C773CF00E7C7A5 /* 747-minus-circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B2AAA2E17C773CF00E7C7A5 /* 747-minus-circle@2x.png */; };
+		5B2AAA3217C7747100E7C7A5 /* 747-minus-circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B2AAA3117C7747100E7C7A5 /* 747-minus-circle.png */; };
 		5B2D38B817AFA8CE0056488B /* IAEWithoutConceptsTextWarning.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B2D38B517AFA1B30056488B /* IAEWithoutConceptsTextWarning.xib */; };
 		5B32D654177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B32D653177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m */; };
 		5B32D65D177C41980070AC72 /* IAEYearSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B32D65C177C41980070AC72 /* IAEYearSelectorViewController.m */; };
@@ -149,8 +149,8 @@
 		5B2AAA2817C748B900E7C7A5 /* IAEDisplayPanelCalculatorViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEDisplayPanelCalculatorViewDelegate.h; sourceTree = "<group>"; };
 		5B2AAA2917C773C500E7C7A5 /* 746-plus-circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "746-plus-circle.png"; sourceTree = "<group>"; };
 		5B2AAA2A17C773C500E7C7A5 /* 746-plus-circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "746-plus-circle@2x.png"; sourceTree = "<group>"; };
-		5B2AAA2E17C773CF00E7C7A5 /* 746-minus-circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "746-minus-circle@2x.png"; sourceTree = "<group>"; };
-		5B2AAA3117C7747100E7C7A5 /* 746-minus-circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "746-minus-circle.png"; sourceTree = "<group>"; };
+		5B2AAA2E17C773CF00E7C7A5 /* 747-minus-circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "747-minus-circle@2x.png"; sourceTree = "<group>"; };
+		5B2AAA3117C7747100E7C7A5 /* 747-minus-circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "747-minus-circle.png"; sourceTree = "<group>"; };
 		5B2D38B417AFA1B30056488B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/IAEWithoutConceptsTextWarning.xib; sourceTree = "<group>"; };
 		5B2D38B617AFA1B90056488B /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/IAEWithoutConceptsTextWarning.xib; sourceTree = "<group>"; };
 		5B32D652177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEasyIncomesAndExpensesViewController.h; sourceTree = "<group>"; };
@@ -437,7 +437,7 @@
 		5B29ED30179FC2C300FCC5C6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				5B2AAA2E17C773CF00E7C7A5 /* 746-minus-circle@2x.png */,
+				5B2AAA2E17C773CF00E7C7A5 /* 747-minus-circle@2x.png */,
 				5B2A41B217C77E8500C29036 /* 709-plus.png */,
 				5BC110FE17CD1DF500FF6D6B /* 730-envelope.png */,
 				5BC110FF17CD1DF500FF6D6B /* 730-envelope@2x.png */,
@@ -448,7 +448,7 @@
 				5B2A41AA17C77B6200C29036 /* 740-gear.png */,
 				5B2A41AB17C77B6200C29036 /* 740-gear@2x.png */,
 				5B2AAA2A17C773C500E7C7A5 /* 746-plus-circle@2x.png */,
-				5B2AAA3117C7747100E7C7A5 /* 746-minus-circle.png */,
+				5B2AAA3117C7747100E7C7A5 /* 747-minus-circle.png */,
 			);
 			name = Resources;
 			path = IncomesAndExpenses;
@@ -1353,7 +1353,7 @@
 				5B2A41AC17C77B6200C29036 /* 740-gear.png in Resources */,
 				5B0574C117AFE2F600B95D50 /* IAEWithoutConceptsTextWarningReportMode.xib in Resources */,
 				5B2A41B117C77C8100C29036 /* 765-arrow-left@2x.png in Resources */,
-				5B2AAA3017C773CF00E7C7A5 /* 746-minus-circle@2x.png in Resources */,
+				5B2AAA3017C773CF00E7C7A5 /* 747-minus-circle@2x.png in Resources */,
 				5B264613179684A5006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.xib in Resources */,
 				5BC1110017CD1DF500FF6D6B /* 730-envelope.png in Resources */,
 				5B2A41AD17C77B6200C29036 /* 740-gear@2x.png in Resources */,
@@ -1365,7 +1365,7 @@
 				5B55C407178AA8C20066F586 /* IAECategoryEditorViewController.xib in Resources */,
 				5B76116416C56C7300558D6D /* Default-Landscape~ipad.png in Resources */,
 				5BCE3AA117A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib in Resources */,
-				5B2AAA3217C7747100E7C7A5 /* 746-minus-circle.png in Resources */,
+				5B2AAA3217C7747100E7C7A5 /* 747-minus-circle.png in Resources */,
 				5B2AAA2B17C773C500E7C7A5 /* 746-plus-circle.png in Resources */,
 				5B76116816C56C7A00558D6D /* Default-Landscape@2x~ipad.png in Resources */,
 				5B8A31CF16C9090E008731AD /* 72.png in Resources */,

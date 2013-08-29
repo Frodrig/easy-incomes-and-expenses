@@ -1,7 +1,7 @@
 # ToDo: Easy Incomes and Expenses.
 
 * Ajuste de la cantidad
-** Repasar visualmente
+** -Repasar visualmente-
 
 * Conceptos
 ** En modo anual y cuando tengamos el día activado, habrá que activar barras de scroll
@@ -23,6 +23,7 @@
 
 * Settings
 ** Localizar.
+*** Limpiar etiquetas no usadas
 ** Enlace a web.
 ** Información sobre la siguiente versión
 

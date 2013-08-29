@@ -17,12 +17,9 @@
 
 - (void)setCategoryName:(NSString *)categoryName;
 - (void)setDay:(NSUInteger)day withDayweekName:(NSString *)dayWeekName inMonthName:(NSString *)monthName ofYearName:(NSString *)yearName;
+- (void)setMonthName:(NSString *)monthName ofYearName:(NSString *)yearName;
 - (void)setAmountString:(NSString *)amount;
 - (void)setDisplayWithIncomeColorUsingAnimation:(BOOL)animation;
 - (void)setDisplayExpenseColorUsingAnimation:(BOOL)animation;
-
-- (void)showDayButton;
-- (void)hideDayButton;
-- (BOOL)isDayButtonVisible;
 
 @end

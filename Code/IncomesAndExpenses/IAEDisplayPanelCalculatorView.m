@@ -170,43 +170,28 @@ static const CGFloat kAlphaValueForColorDisplay = 0.5;
 
 #pragma mark - Day
 
-- (void)showDayButton
-{
-    self.dayContainerView.hidden = NO;
-    [UIView animateWithDuration:kDurationOfTransitionWhenDayActive animations:^{
-        self.dayContainerView.alpha = 1.0;
-        self.categoryContainerView.frame = CGRectMake(self.categoryContainerView.frame.origin.x,
-                                                      0,
-                                                      self.categoryContainerView.frame.size.width,
-                                                      self.categoryContainerView.frame.size.height);
-    } completion:^(BOOL finished) {
-    }];
-}
-
-- (void)hideDayButton
-{
-    [UIView animateWithDuration:kDurationOfTransitionWhenDayActive animations:^{
-        self.dayContainerView.alpha = 0.0;
-        self.categoryContainerView.frame = CGRectMake(self.categoryContainerView.frame.origin.x,
-                                                      self.frame.size.height / 4.0,
-                                                      self.categoryContainerView.frame.size.width,
-                                                      self.categoryContainerView.frame.size.height);
-    } completion:^(BOOL finished) {
-        self.dayContainerView.hidden = YES;
-    }];
-}
-
-- (BOOL)isDayButtonVisible
-{
-    return !self.dayButton.hidden;
-}
-
 - (void)setDay:(NSUInteger)day withDayweekName:(NSString *)dayWeekName inMonthName:(NSString *)monthName ofYearName:(NSString *)yearName
 {
     NSString *dayName = day < 1 ? NSLocalizedString(kLtextNoDaySelected, @"") :
                                   [NSString stringWithFormat:NSLocalizedString(kLtextDaySelected, @""), day, [dayWeekName lowercaseString]];
-    NSString *titleButton = [NSString stringWithFormat:@"%@ %@. %@", monthName, yearName, dayName];
+    NSString *monthAndYearPhrase = [self makeStringPhraseWithMonthName:monthName andYearName:yearName withDotAtEnd:YES];
+    NSString *titleButton = [NSString stringWithFormat:@"%@ %@", monthAndYearPhrase, dayName];
     [self.dayButton setTitle:titleButton forState:UIControlStateNormal];
+    self.dayButton.enabled = YES;
+}
+
+- (NSString *)makeStringPhraseWithMonthName:(NSString *)monthName andYearName:(NSString *)yearName withDotAtEnd:(BOOL)dotAtEnd
+{
+    NSString *phrase = [NSString stringWithFormat:@"%@ %@%@", monthName, yearName, dotAtEnd ? @"." : @""];
+    
+    return phrase;
+}
+
+- (void)setMonthName:(NSString *)monthName ofYearName:(NSString *)yearName
+{
+    NSString *monthAndYearPhrase = [self makeStringPhraseWithMonthName:monthName andYearName:yearName withDotAtEnd:NO];
+    [self.dayButton setTitle:monthAndYearPhrase forState:UIControlStateNormal];
+    self.dayButton.enabled = NO;
 }
 
 #pragma mark - Ammount

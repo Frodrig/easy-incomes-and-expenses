@@ -16,8 +16,8 @@
 * Selector de categorías
 
 * Calculadora
-** En modo día, incluir el año en el que estamos tras el mes "July 2012".
-** En modo NO día, considerar que aparezca el mes y el año segundo del número de concepto "July 2012. Concept number 1".
+** -En modo día, incluir el año en el que estamos tras el mes "July 2012".-
+** -En modo NO día, considerar que aparezca el mes y el año. Adicionalmente, considerar si tiene sentido incluir el número de concepto siguiente. Esto último probablemente no sea necesario.-
 ** Hay que implementar arrastre. Cuando arrastramos hacia arriba el resto de elementos suben pero usando dynamics.
 
 * Modo informe

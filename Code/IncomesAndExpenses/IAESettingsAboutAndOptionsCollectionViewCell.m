@@ -16,16 +16,16 @@
 
 @implementation IAESettingsAboutAndOptionsCollectionViewCell
 
-static NSString * const userDefaultsDayModeActive = @"dayModeActive";
+static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 
-static NSString * const familyFontForInformationLabelsName = @"HelveticaNeue-UltraLight";
-static NSUInteger familyFontForInformationLabelSize = 24;
-static CGFloat kernValueForInformationLabels = 1.0;
+static NSString * const kFamilyFontForInformationLabelsName = @"HelveticaNeue-UltraLight";
+static const NSUInteger kFamilyFontForInformationLabelSize = 24;
+static const CGFloat kKernValueForInformationLabels = 1.0;
 
-static NSString * const tagDayModeLabelText = @"LTEXT_ABOUTANDOPTIONS_DAYMODELABEL_TEXT";
+static NSString * const kTagDayModeLabelText = @"LTEXT_ABOUTANDOPTIONS_DAYMODELABEL_TEXT";
 
-static NSString * const notificationDayModeOnName = @"dayModeToOn";
-static NSString * const notificationDayModeOffName = @"dayModeToOff";
+static NSString * const kNotificationDayModeOnName = @"dayModeToOn";
+static NSString * const kNotificationDayModeOffName = @"dayModeToOff";
 
 - (void)awakeFromNib
 {
@@ -40,7 +40,7 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 
 - (void)initDayModeInformationLabel
 {
-    _dayModeInformationLabel.attributedText = [[NSAttributedString alloc] initWithString:NSLocalizedString(tagDayModeLabelText, @"")
+    _dayModeInformationLabel.attributedText = [[NSAttributedString alloc] initWithString:NSLocalizedString(kTagDayModeLabelText, @"")
                                                                               attributes:[self createAttributesForInformationLabels]];
 }
 
@@ -48,27 +48,27 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 {
     NSDictionary *attributes = @{NSFontAttributeName: [self createFontForInformationLabels],
                                  NSForegroundColorAttributeName: [UIColor blackColor],
-                                 NSKernAttributeName: [NSNumber numberWithInteger: kernValueForInformationLabels]};
+                                 NSKernAttributeName: [NSNumber numberWithInteger: kKernValueForInformationLabels]};
     
     return attributes;
 }
 
 - (UIFont *)createFontForInformationLabels
 {
-    UIFont *font = [UIFont fontWithName:familyFontForInformationLabelsName size:familyFontForInformationLabelSize];
+    UIFont *font = [UIFont fontWithName:kFamilyFontForInformationLabelsName size:kFamilyFontForInformationLabelSize];
     return font;
 }
 
 - (void)initDayModeInformationSwitch
 {
-    _dayModeSwitch.on = [[NSUserDefaults standardUserDefaults] boolForKey:userDefaultsDayModeActive];
+    _dayModeSwitch.on = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsDayModeActive];
 }
 
 #pragma mark - Control Events
 
 - (IBAction)daySwitchValueChanged:(id)sender
 {
-    [[NSUserDefaults standardUserDefaults] setBool:self.dayModeSwitch.on forKey:userDefaultsDayModeActive];
+    [[NSUserDefaults standardUserDefaults] setBool:self.dayModeSwitch.on forKey:kUserDefaultsDayModeActive];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [self notifyDayModeChanged];
 }
@@ -77,7 +77,7 @@ static NSString * const notificationDayModeOffName = @"dayModeToOff";
 {
     // ToDo: Seria mas eficiente que llegara la notificacion solo cuando se va a cerrar el dialogo para evitar cambios continuados
 
-    NSString *notificationName = self.dayModeSwitch.on ? notificationDayModeOnName : notificationDayModeOffName;
+    NSString *notificationName = self.dayModeSwitch.on ? kNotificationDayModeOnName : kNotificationDayModeOffName;
     NSNotification *notification = [NSNotification notificationWithName:notificationName object:nil];
     [[NSNotificationCenter defaultCenter] postNotification:notification];
 }

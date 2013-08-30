@@ -47,6 +47,7 @@
 #import "IAEDragPanelCalculatorView.h"
 
 @interface IAEEasyIncomesAndExpensesViewController ()
+@property (weak, nonatomic) IBOutlet UIButton *settingsButton;
 @property (weak, nonatomic) IBOutlet UIView *containerViewForDynamicFX;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *yearsButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *categoriesButton;
@@ -87,6 +88,10 @@
 #pragma mark - Constants
 
 static const NSUInteger kNumberOfMonths = 12;
+
+static NSString * const kLTextYearsBarButtonTitle = @"LTEXT_BARBUTTON_YEARS_TITLE";
+static NSString * const kLTextSettingsBarButtonTitle = @"LTEXT_BARBUTTON_SETTINGS_TITLE";
+static NSString * const kLTextCategoriesBarButtonTitle = @"LTEXT_BARBUTTON_CATEGORIES_TITLE";
 
 static const CGFloat kEditAndReportModeContentContainerRadius = 15;
 static const CGFloat kColorWithWhiteForEditAndReportModeContentContainerBackground = 0.97;
@@ -285,12 +290,24 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     [super viewDidLoad];
     
 	// Do any additional setup after loading the view.
+    [self configureBarButtonsTitle];
     [self configureSelectorContextView];
     [self configureEditAndReportModeContentContainerView];
     [self configureCalculatorViewController];
     [self configureConceptsViews];
     [self configureReportAreaView];
     [self configureReportMenuView];
+}
+
+- (void)configureBarButtonsTitle
+{
+    [self.yearsButton setTitle:NSLocalizedString(kLTextYearsBarButtonTitle, @"")];
+    [self.categoriesButton setTitle:NSLocalizedString(kLTextCategoriesBarButtonTitle, @"")];
+    
+    NSDictionary *attributes = [[self.settingsButton attributedTitleForState:UIControlStateNormal] attributesAtIndex:0 effectiveRange:NULL];
+    NSAttributedString *settingsAttributedString = [[NSAttributedString alloc] initWithString:NSLocalizedString(kLTextSettingsBarButtonTitle, @"")
+                                                                                   attributes:attributes];
+    [self.settingsButton setAttributedTitle:settingsAttributedString forState:UIControlStateNormal];
 }
 
 - (void)configureSelectorContextView

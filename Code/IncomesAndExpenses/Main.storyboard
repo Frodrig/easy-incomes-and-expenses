@@ -80,13 +80,16 @@
                             </connections>
                         </barButtonItem>
                         <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="Yxn-Dz-OEd">
-                            <rect key="frame" x="359" y="8" width="307" height="28"/>
+                            <rect key="frame" x="353" y="8" width="320" height="28"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="21"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="21"/>
                             <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" title="Easy Incomes and Expenses" image="740-gear.png">
+                            <state key="normal" title="Easy Incomes and Expenses">
                                 <color key="titleColor" red="0.69803923368453979" green="0.69803923368453979" blue="0.69803923368453979" alpha="1" colorSpace="deviceRGB"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
                                 <action selector="settingsOptionPressed:" destination="7Ea-79-0mi" eventType="touchUpInside" id="Grq-ff-sYt"/>
@@ -112,6 +115,7 @@
                         <outlet property="editAndReportModeContentContainerView" destination="G41-3w-8Uv" id="FNX-AU-fYg"/>
                         <outlet property="modeSegmentedControl" destination="iQJ-fE-Ltz" id="wtQ-Ue-Syc"/>
                         <outlet property="selectorContextView" destination="Dio-MI-59n" id="qfS-89-4Iz"/>
+                        <outlet property="settingsButton" destination="Yxn-Dz-OEd" id="kdk-IS-aBF"/>
                         <outlet property="yearsButton" destination="Dot-VC-q0a" id="DrA-Pm-J0F"/>
                     </connections>
                 </viewController>
@@ -120,9 +124,6 @@
             <point key="canvasLocation" x="-74" y="36"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="740-gear.png" width="28" height="28"/>
-    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="lightContent"/>
         <simulatedOrientationMetrics key="orientation"/>

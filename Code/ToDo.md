@@ -7,6 +7,12 @@
 *** Al transicionar en conceptos, se ha perdido la transición con fade. Sin embargo, si lo que hay es un warning, sí que se produce esa transición.
 **** Ya se realiza pero el código es MUY MEJORABLE Y OPTIMIZABLE habría que volver. Mirar el método updateContentInformationBasedInCurrentContext
 
+* Barra superior
+** -Localizar botones-
+** -Quitar botón de gear-
+** -Cambiar fuente botón settings-
+** Pensar en como indicar que es un botón el título central.
+
 * Modo Reporte
 ** -Al cambiar al modo reporte sale mal posicionado en la zona inferior.-
 
@@ -24,14 +30,13 @@
 * Settings
 ** Si se compra dominio, poner el enlace definitivo.
 
-* Menú de texto
-** Usar dynamics para desplazar la raya inferior con cierto rebote.
-
 * Abrir año
 ** -Si abrimos un año y nos situamos en un mes con contenido ocurre que, si venimos de otro que NO tenía contenido, no se quita el cartel de que NO hay conceptos.-
 
 * Año abierto
-** Recordarlo al salir de la aplicación y entrar de nuevo. 
+** Recordarlo al salir de la aplicación y entrar de nuevo si y sólo sí tiene al menos un concepto. En caso contrario, iremos al año más reciente. 
+** Considerar un color diferente en el menú de contexto
+** Considerar alguna animación característica al cambiar en el menú de contexto.
 
 * Inicio e iconos
 ** Pantalla de inicio

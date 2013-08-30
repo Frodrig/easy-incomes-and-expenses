@@ -303,11 +303,6 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 {
     [self.yearsButton setTitle:NSLocalizedString(kLTextYearsBarButtonTitle, @"")];
     [self.categoriesButton setTitle:NSLocalizedString(kLTextCategoriesBarButtonTitle, @"")];
-    
-    NSDictionary *attributes = [[self.settingsButton attributedTitleForState:UIControlStateNormal] attributesAtIndex:0 effectiveRange:NULL];
-    NSAttributedString *settingsAttributedString = [[NSAttributedString alloc] initWithString:NSLocalizedString(kLTextSettingsBarButtonTitle, @"")
-                                                                                   attributes:attributes];
-    [self.settingsButton setAttributedTitle:settingsAttributedString forState:UIControlStateNormal];
 }
 
 - (void)configureSelectorContextView

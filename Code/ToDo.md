@@ -5,8 +5,11 @@
 *** Al transicionar en conceptos, se ha perdido la transición con fade. Sin embargo, si lo que hay es un warning, sí que se produce esa transición.
 **** Ya se realiza pero el código es MUY MEJORABLE Y OPTIMIZABLE habría que volver. Mirar el método updateContentInformationBasedInCurrentContext
 
+* Conceptos
+* Al añadir un concepto cuando ya había uno, no se dibuja la línea separadora.
+
 * Calculadora
-** Hay que implementar arrastre. Cuando arrastramos hacia arriba el resto de elementos suben pero usando dynamics.
+** -Hay que implementar arrastre. Cuando arrastramos hacia arriba el resto de elementos suben pero usando dynamics.-
 
 * Transiciones modo edición - informe
 ** Hay que hacerlo más bonito.
@@ -17,9 +20,15 @@
 * Menú de texto
 ** Usar dynamics para desplazar la raya inferior con cierto rebote.
 
+* Año abierto
+** Recordarlo al salir de la aplicación y entrar de nuevo. 
+
 * Inicio e iconos
 ** Pantalla de inicio
 ** Icono
+
+* Problemas conocidos
+** Al pasar de un mes sin conceptos en modo informe en la sección balance a otro adyacente con conceptos, no se cargo el informe de balance. Tuve que dar más saltos por la aplicación para que saliera. Lo he conseguido reproducir con relativa facilidad una vez visto.
 
 * Refactorización
 ** En todos los sitios donde vuelvo a recrear la fuente y su tamaño… simplemente cambiar el campo text para la label asociada. Esto es válido a no ser que tenga que poner kern.

@@ -12,6 +12,7 @@
 #import "IAECategoryEditorViewControllerDelegate.h"
 #import "IAEDisplayPanelCalculatorViewDelegate.h"
 
+@class IAEDragPanelCalculatorView;
 @protocol IAECalculatorViewControllerDelegate;
 @protocol IAECalculatorViewControllerDataSource;
 
@@ -24,9 +25,20 @@
 @property (nonatomic, weak) id<IAECalculatorViewControllerDelegate> delegate;
 @property (nonatomic, weak) id<IAECalculatorViewControllerDataSource> dataSource;
 
+@property (weak, nonatomic) IBOutlet IAEDragPanelCalculatorView *dragPanel;
 @property (nonatomic, readonly) CGFloat sizeHeightOffsetWhenShowed;
 @property (nonatomic, readonly) CGFloat sizeHeightOfDragPanel;
-@property (nonatomic, readonly) BOOL disableMode;
+@property (nonatomic, readonly, getter = isInDisableMode) BOOL disableMode;
+@property (nonatomic, readonly, getter = isInDragMode) BOOL dragMode;
+
+- (void)addPanGestureRecognizer:(UIPanGestureRecognizer *)panGestureRecognizer;
+- (void)removePanGestureRecognizer;
+
+- (void)calculeDragLimits;
+
+- (void)beginDragTranslation;
+- (void)endDragTranslation;
+- (void)doDragTranslation:(CGFloat)translation;
 
 - (IBAction)incomeButtonPressed:(id)sender;
 - (IBAction)expenseButtonPressed:(id)sender;

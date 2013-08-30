@@ -44,12 +44,13 @@
 #import "UIView+RoundedCorners.h"
 #import "NSDecimalNumber+AbsoluteValue.h"
 #import "IAEStrokeAnimatableLineView.h"
+#import "IAEDragPanelCalculatorView.h"
 
 @interface IAEEasyIncomesAndExpensesViewController ()
+@property (weak, nonatomic) IBOutlet UIView *containerViewForDynamicFX;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *yearsButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *categoriesButton;
 
-//@property (weak, nonatomic) IBOutlet UIScrollView *contextScrollView;
 @property (weak, nonatomic) IBOutlet IAESelectorContextView *selectorContextView;
 @property (weak, nonatomic) IBOutlet UIView *editAndReportModeContentContainerView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *modeSegmentedControl;
@@ -68,6 +69,7 @@
 @property (nonatomic, strong) UIPopoverController *popover;
 @property (nonatomic, strong) UITapGestureRecognizer *tapConceptsRecognizer;
 @property (nonatomic, strong) UISwipeGestureRecognizer *swipeConceptsGestureRecognizer;
+@property (nonatomic, strong) UIPanGestureRecognizer *panCalculatorGestureRecognizer;
 @property (nonatomic, strong) IAEStrokeAnimatableLineView *strokeAnimatableLineView;
 @property (nonatomic, weak) IAEEditModeConceptCollectionViewCell *conceptCellToRemove;
 @property (nonatomic) BOOL initialPositioning;
@@ -75,6 +77,8 @@
 @property (nonatomic, weak) IAEConcept *conceptChangingDay;
 @property (nonatomic) BOOL reloadAllPendingFromYearSelectorIfReturnWithSameYearDate;
 @property (nonatomic) NSInteger lastContextIndexMenuPressed;
+@property (nonatomic, strong) UIAttachmentBehavior *attachBehaviorForContainerFX;
+@property (nonatomic, strong) UIDynamicAnimator *dynamicAnimator;
 
 @end
 
@@ -129,6 +133,9 @@ static const CGFloat kDurationOfFrameUpdateWhenShowOrHideCalculator = 0.25;
 
 static const NSInteger kInvalidOptionIndex = -1;
 
+static const CGFloat kFrecuencyForContainerFXAttachBehavior = 1.5;
+static const CGFloat kDampingForContainerFXAttachBehavior = 2;
+
 #pragma mark - Properties
 
 - (IAEStrokeAnimatableLineView *)strokeAnimatableLineView
@@ -178,6 +185,7 @@ static const NSInteger kInvalidOptionIndex = -1;
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.calculatorViewController removePanGestureRecognizer];
     [self.conceptsCollectionView removeGestureRecognizer:self.tapConceptsRecognizer];
     [self.conceptsCollectionView removeGestureRecognizer:self.swipeConceptsGestureRecognizer];
 }
@@ -191,6 +199,7 @@ static const NSInteger kInvalidOptionIndex = -1;
         [self initCommonProperties];
         [self initTapConceptsGestureRecognizer];
         [self initSwipeConceptsGestureRecognizer];
+        [self initPanCalculatorGestureRecognizer];
         [self initAsObserverOfNotificationCenter];
         [self initContextMenuView];
         [self initCalculatorViewController];
@@ -218,6 +227,11 @@ static const NSInteger kInvalidOptionIndex = -1;
 {
     _swipeConceptsGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeOnConceptsCollectionView:)];
     _swipeConceptsGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+}
+
+- (void)initPanCalculatorGestureRecognizer
+{
+    _panCalculatorGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panOnCalculatorView:)];
 }
 
 - (void)initAsObserverOfNotificationCenter
@@ -283,8 +297,9 @@ static const NSInteger kInvalidOptionIndex = -1;
 
 - (void)configureCalculatorViewController
 {
-    _calculatorViewController.delegate = self;
-    _calculatorViewController.dataSource = self.helperCalculatorDataSource;
+    [self.calculatorViewController addPanGestureRecognizer:self.panCalculatorGestureRecognizer];
+    self.calculatorViewController.delegate = self;
+    self.calculatorViewController.dataSource = self.helperCalculatorDataSource;
 }
 
 - (void)configureConceptsViews
@@ -339,6 +354,7 @@ static const NSInteger kInvalidOptionIndex = -1;
     [self vinculeCalculatorViewControllerView];
     [self vinculeReportAreaView];
     [self vinculeReportMenuView];
+    [self createAndVinculeAttachBehavior];
     
     [self gotoToTodayMonthByInitialPositioning];
 
@@ -355,11 +371,27 @@ static const NSInteger kInvalidOptionIndex = -1;
 
 - (void)vinculeContextMenuView
 {
-    [self.view addSubview:_contextMenuView];
+    [self.containerViewForDynamicFX addSubview:_contextMenuView];
     self.contextMenuView.delegate = self;
     self.contextMenuView.dataSource = self.helperContextTextRawMenuDataSource;
-    self.contextMenuView.center = CGPointMake(self.view.center.x,
+    self.contextMenuView.center = CGPointMake(self.containerViewForDynamicFX.center.x,
                                               self.selectorContextView.center.y + self.selectorContextView.bounds.size.height / 2 + self.contextMenuView.bounds.size.height / 2);
+}
+
+- (void)vinculeCalculatorViewControllerView
+{
+    self.calculatorViewController.view.frame = CGRectMake(0,
+                                                          0,
+                                                          self.calculatorViewController.view.bounds.size.width,
+                                                          self.calculatorViewController.view.bounds.size.height);
+    
+    CGFloat centerY = self.view.frame.size.height +
+    self.calculatorViewController.view.bounds.size.height / 2 -
+    self.calculatorViewController.sizeHeightOfDragPanel;
+    self.calculatorViewController.view.center = CGPointMake(self.view.center.x, centerY);
+    
+    [self.view addSubview:self.calculatorViewController.view];
+    [self.calculatorViewController calculeDragLimits];
 }
 
 - (void)vinculeReportAreaView
@@ -380,6 +412,19 @@ static const NSInteger kInvalidOptionIndex = -1;
     self.reportMenuView.center = CGPointMake(self.view.center.x,
                                              self.reportAreaView.center.y + self.reportAreaView.bounds.size.height / 2 + self.reportMenuView.bounds.size.height / 1.35);
     self.reportMenuView.hidden = YES;
+}
+
+- (void)createAndVinculeAttachBehavior
+{
+    self.attachBehaviorForContainerFX = [[UIAttachmentBehavior alloc] initWithItem:self.containerViewForDynamicFX
+                                                                  attachedToAnchor:self.calculatorViewController.view.center];
+    
+    
+    self.attachBehaviorForContainerFX.frequency = kFrecuencyForContainerFXAttachBehavior;
+    self.attachBehaviorForContainerFX.damping = kDampingForContainerFXAttachBehavior;
+    
+    self.dynamicAnimator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
+    [self.dynamicAnimator addBehavior:self.attachBehaviorForContainerFX];
 }
 
 - (void)gotoToTodayMonthByInitialPositioning
@@ -864,23 +909,6 @@ static const NSInteger kInvalidOptionIndex = -1;
     [contextView reloadDataWithoutAnimation];
 }
 
-#pragma mark - CalculatorViewController (vincule)
-
-- (void)vinculeCalculatorViewControllerView
-{
-    self.calculatorViewController.view.frame = CGRectMake(0,
-                                                          0,
-                                                          self.calculatorViewController.view.bounds.size.width,
-                                                          self.calculatorViewController.view.bounds.size.height);
-    
-    CGFloat centerY = self.view.frame.size.height +
-                      self.calculatorViewController.view.bounds.size.height / 2 -
-                      self.calculatorViewController.sizeHeightOfDragPanel;
-    self.calculatorViewController.view.center = CGPointMake(self.view.center.x, centerY);
-    
-    [self.view addSubview:self.calculatorViewController.view];
-}
-
 #pragma mark - AnnualBalance (vincule)
 
 - (NSDictionary *)createAttributeDictionaryForAnnualBalanceLabelsWithColor:(UIColor *)color
@@ -1199,6 +1227,24 @@ static const NSInteger kInvalidOptionIndex = -1;
 - (void)doRemoveConceptCellToRemove
 {
     [self removeConceptAndUpdateBalancesOfCell:self.conceptCellToRemove withAnimation:YES];
+}
+
+#pragma mark - UIPanGestureRecognizer
+
+- (void)panOnCalculatorView:(UIPanGestureRecognizer *)panGestureRecognizer
+{
+    if (panGestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        [self.calculatorViewController beginDragTranslation];
+    }
+    
+    CGPoint translation = [panGestureRecognizer translationInView:self.calculatorViewController.dragPanel];
+    [self.calculatorViewController doDragTranslation:translation.y];
+    self.attachBehaviorForContainerFX.anchorPoint = self.calculatorViewController.view.center;
+    [panGestureRecognizer setTranslation:CGPointZero inView:self.calculatorViewController.dragPanel];
+    
+    if (panGestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        [self.calculatorViewController endDragTranslation];
+    }
 }
 
 #pragma mark - UISwipeGestureRecognizer
@@ -1637,26 +1683,16 @@ static const NSInteger kInvalidOptionIndex = -1;
 {
     [self setNavigationButtonsEnabled:NO];
     
-    [UIView animateWithDuration:kDurationOfFrameUpdateWhenShowOrHideCalculator animations:^{
-        [self updateFramePositionBeforeShowCalculatorForView:self.selectorContextView];
-        [self updateFramePositionBeforeShowCalculatorForView:self.contextMenuView];
-        [self updateFramePositionBeforeShowCalculatorForView:self.modeSegmentedControl];
-        [self updateFramePositionBeforeShowCalculatorForView:self.editAndReportModeContentContainerView];
-    }];
+    self.attachBehaviorForContainerFX.anchorPoint = self.calculatorViewController.view.center;
 }
 
 - (void)hideButtonWasPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
 {
     [self updateBalancesWithAnimation:YES];
 
-    [UIView animateWithDuration:kDurationOfFrameUpdateWhenShowOrHideCalculator animations:^{
-        [self updateFramePositionAfterShowCalculatorForView:self.selectorContextView];
-        [self updateFramePositionAfterShowCalculatorForView:self.contextMenuView];
-        [self updateFramePositionAfterShowCalculatorForView:self.modeSegmentedControl];
-        [self updateFramePositionAfterShowCalculatorForView:self.editAndReportModeContentContainerView];
-    } completion:^(BOOL finished) {
-        [self setNavigationButtonsEnabled:YES];
-    }];
+    [self setNavigationButtonsEnabled:YES];
+    
+    self.attachBehaviorForContainerFX.anchorPoint = self.calculatorViewController.view.center;
 }
 
 - (void)updateFramePositionBeforeShowCalculatorForView:(UIView *)view

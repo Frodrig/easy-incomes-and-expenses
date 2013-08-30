@@ -30,7 +30,6 @@ typedef NS_ENUM(NSUInteger, CalculatorMode) {
     CM_EXPENSE
 };
 
-@property (weak, nonatomic) IBOutlet IAEDragPanelCalculatorView *dragPanel;
 @property (weak, nonatomic) IBOutlet IAEDisplayPanelCalculatorView *displayPanel;
 @property (weak, nonatomic) IBOutlet UIButton *incomeButton;
 @property (weak, nonatomic) IBOutlet UIButton *expenseButton;
@@ -46,24 +45,33 @@ typedef NS_ENUM(NSUInteger, CalculatorMode) {
 @property (nonatomic, strong) UIColor *validActionTransitionColor;
 @property (nonatomic, strong) UIColor *invalidActionBaseColor;
 @property (nonatomic, strong) UIColor *invalidActionTransitionColor;
+@property (nonatomic, weak) UIPanGestureRecognizer *panGestureRecognizer;
+@property (nonatomic) CGRect frameInHideMode;
+@property (nonatomic) CGRect frameInVisibleMode;
+@property (nonatomic, readwrite, getter = isInDisableMode) BOOL disableMode;
+@property (nonatomic, readwrite, getter = isInDragMode) BOOL dragMode;
+@property (nonatomic) CalculatorMode previousCalculatorMode;
+
 @end
 
 @implementation IAECalculatorViewController
 
 @synthesize sizeHeightOfDragPanel = _sizeHeightOfDragPanel;
 
-static CGFloat animationDurationShowHideAction = 0.25;
-static CGFloat marginHeightOffsetWhenShowed = 10;
+static const CGFloat kAnimationDurationShowHideAction = 0.5;
+static const CGFloat kMarginHeightOffsetWhenShowed = 10;
 
-static NSString * const userDefaultsDayModeActive = @"dayModeActive";
-static NSString * const notificationDayModeOnName = @"dayModeToOn";
-static NSString * const notificationDayModeOffName = @"dayModeToOff";
+static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
+static NSString * const kNotificationDayModeOnName = @"dayModeToOn";
+static NSString * const kNotificationDayModeOffName = @"dayModeToOff";
 
-static NSUInteger amountMaxNumbersLenght = 15;
-static NSUInteger amountMaxNumberLenghtInDecimalPart = 2;
+static const NSUInteger kAmountMaxNumbersLenght = 15;
+static const NSUInteger kAmountMaxNumberLenghtInDecimalPart = 2;
 
-static CGFloat animationDurationForDisableAction = 0.25;
-static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
+static const CGFloat kAnimationDurationForDisableAction = 0.5;
+static const CGFloat kRatioOfDragPanelVisibleForDisableAction = 0.55;
+
+static const CGFloat kRatioToDecideHideInDrag = 1.4;
 
 #pragma mark - Properties
 
@@ -87,7 +95,7 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
 
 - (CGFloat)sizeHeightOffsetWhenShowed
 {
-    return [self calculeAbsoluteOffsetDisplacementValue] + marginHeightOffsetWhenShowed;
+    return [self calculeAbsoluteOffsetDisplacementValue] + kMarginHeightOffsetWhenShowed;
 }
 
 - (CGFloat)sizeHeightOfDragPanel
@@ -151,6 +159,7 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
 - (void)initValues
 {
     _mode = CM_HIDE;
+    _previousCalculatorMode = CM_HIDE;
     self.view.autoresizingMask = UIViewAutoresizingNone;
 }
 
@@ -158,12 +167,12 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(notificationCenterOnDayModeOn:)
-                                                 name:notificationDayModeOnName
+                                                 name:kNotificationDayModeOnName
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(notificationCenterOnDayModeOff:)
-                                                 name:notificationDayModeOffName
+                                                 name:kNotificationDayModeOffName
                                                object:nil];
 }
 
@@ -190,24 +199,24 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
 - (void)disable
 {
     if ([self isDisabeOptionAvailable]) {
-        [UIView animateWithDuration:animationDurationForDisableAction animations:^{
+        [UIView animateWithDuration:kAnimationDurationForDisableAction animations:^{
             self.view.center = CGPointMake(self.view.center.x,
-                                           self.view.center.y + self.dragPanel.bounds.size.height * ratioOfDragPanelVisiableForDisableAction);
+                                           self.view.center.y + self.dragPanel.bounds.size.height * kRatioOfDragPanelVisibleForDisableAction);
         }];
         [self setIncomeAndExpenseButtonsInEnableState:NO];
-        _disableMode = YES;
+        self.disableMode = YES;
     }
 }
 
 - (void)enable
 {
     if (self.disableMode) {
-        [UIView animateWithDuration:animationDurationForDisableAction animations:^{
+        [UIView animateWithDuration:kAnimationDurationForDisableAction animations:^{
             self.view.center = CGPointMake(self.view.center.x,
-                                           self.view.center.y - self.dragPanel.bounds.size.height * ratioOfDragPanelVisiableForDisableAction);
+                                           self.view.center.y - self.dragPanel.bounds.size.height * kRatioOfDragPanelVisibleForDisableAction);
         }];
         [self setIncomeAndExpenseButtonsInEnableState:YES];
-        _disableMode = NO;
+        self.disableMode = NO;
     }
 }
 
@@ -306,7 +315,7 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
 
 - (void)configureDisplayPanelWithActualDay
 {
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:userDefaultsDayModeActive]) {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsDayModeActive]) {
         [self.displayPanel setDay:self.actualDay
                   withDayweekName:[self findDayOfTheWeekName]
                       inMonthName:[self findMonthName]
@@ -347,16 +356,19 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
     return mode == self.mode;
 }
 
-- (void)showInMode:(CalculatorMode)mode;
+- (void)showInMode:(CalculatorMode)mode
 {
     NSAssert(mode != CM_HIDE, @"");
     self.mode = mode;
+    [self updateVisibilityToShow:YES usingAnimation:YES];
+    [self prepareActualMode];
+    [self.delegate showButtonWasPressedOnCalculatorViewController:self];
+}
 
-    [self updateVisibilityWithOffset:-[self calculeAbsoluteOffsetDisplacementValue] usingAnimation:YES];
+- (void)prepareActualMode
+{
     [self setDefaultCategoryForActualMode];
     [self configureDisplayPanelInShowMode];
-    
-    [self.delegate showButtonWasPressedOnCalculatorViewController:self];
 }
 
 - (void)changeToMode:(CalculatorMode)mode
@@ -370,8 +382,9 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
 
 - (void)hide
 {
+    self.previousCalculatorMode = self.mode;
     self.mode = CM_HIDE;
-    [self updateVisibilityWithOffset:[self calculeAbsoluteOffsetDisplacementValue] usingAnimation:YES];
+    [self updateVisibilityToShow:NO usingAnimation:YES];
 
     [self.delegate hideButtonWasPressedOnCalculatorViewController:self];
 }
@@ -381,13 +394,10 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
     return self.view.bounds.size.height - self.dragPanel.bounds.size.height;
 }
 
-- (void)updateVisibilityWithOffset:(CGFloat)offset usingAnimation:(BOOL)animation
+- (void)updateVisibilityToShow:(BOOL)show usingAnimation:(BOOL)animation
 {
-    [UIView animateWithDuration:animation ? animationDurationShowHideAction : 0.0 animations:^{
-        self.view.frame = CGRectMake(self.view.frame.origin.x,
-                                     self.view.frame.origin.y + offset,
-                                     self.view.frame.size.width,
-                                     self.view.frame.size.height);
+    [UIView animateWithDuration:animation ? kAnimationDurationShowHideAction : 0.0 animations:^{
+        self.view.frame = show ? self.frameInVisibleMode : self.frameInHideMode;
     }];
 }
 
@@ -519,7 +529,7 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
 {
     BOOL decimalSymbolPresent = [self isDecimalPresent];
     
-    return decimalSymbolPresent ? NO : self.actualAmount.length <= amountMaxNumbersLenght - 1;
+    return decimalSymbolPresent ? NO : self.actualAmount.length <= kAmountMaxNumbersLenght - 1;
 }
 
 - (BOOL)isDecimalPresent
@@ -618,7 +628,7 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
 
 - (BOOL)isActualAmountWithSpaceForNewValue
 {
-    return self.actualAmount.length <= amountMaxNumbersLenght;
+    return self.actualAmount.length <= kAmountMaxNumbersLenght;
 }
 
 - (BOOL)isActualAmountWithSpaceForNewDecimalNumber
@@ -631,7 +641,7 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
 - (NSUInteger)characterSpaceForDecimalNumbers
 {
     NSRange decimalRange = [self findDecimalRangeLocationInAmountString:self.actualAmount];
-    NSUInteger space = amountMaxNumberLenghtInDecimalPart;
+    NSUInteger space = kAmountMaxNumberLenghtInDecimalPart;
     if (decimalRange.location != NSNotFound) {
         space -= (self.actualAmount.length - (decimalRange.location + 1));
     }
@@ -842,5 +852,70 @@ static CGFloat ratioOfDragPanelVisiableForDisableAction = 0.55;
     [self resetAmountPannel];
 }
 
+#pragma mark - Pan / Drag
+
+- (void)calculeDragLimits
+{
+    CGFloat offsetDisplacement = [self calculeAbsoluteOffsetDisplacementValue];
+
+    if ([self isInHideMode]) {
+        self.frameInVisibleMode = CGRectMake(self.view.frame.origin.x,
+                                             self.view.frame.origin.y - offsetDisplacement,
+                                             self.view.frame.size.width,
+                                             self.view.frame.size.height);
+        self.frameInHideMode = self.view.frame;
+    } else {
+        self.frameInVisibleMode = self.view.frame;
+        self.frameInHideMode = CGRectMake(self.view.frame.origin.x,
+                                          self.view.frame.origin.y + offsetDisplacement,
+                                          self.view.frame.size.width,
+                                          self.view.frame.size.height);
+    }
+}
+
+- (void)doDragTranslation:(CGFloat)translation
+{
+    if (![self isInDisableMode]) {
+        self.view.center = CGPointMake(self.view.center.x, self.view.center.y + translation);
+        if (self.view.frame.origin.y < self.frameInVisibleMode.origin.y) {
+            self.view.frame = self.frameInVisibleMode;
+        } else if (self.view.frame.origin.y > self.frameInHideMode.origin.y) {
+            self.view.frame = self.frameInHideMode;
+        }
+    }
+}
+
+- (void)beginDragTranslation
+{
+    self.dragMode = YES;
+    if (![self isInVisibleMode]) {
+        self.mode = self.previousCalculatorMode == CM_HIDE ? CM_INCOME : self.previousCalculatorMode;
+        [self prepareActualMode];
+    }
+}
+
+- (void)endDragTranslation
+{
+    if ([self isInDragMode]) {
+        self.dragMode = NO;
+        if (self.view.frame.origin.y > self.frameInVisibleMode.origin.y * kRatioToDecideHideInDrag) {
+            [self hide];
+        } else {
+            [self showInMode:self.mode];
+        }
+    }
+}
+
+- (void)addPanGestureRecognizer:(UIPanGestureRecognizer *)panGestureRecognizer
+{
+    self.panGestureRecognizer = panGestureRecognizer;
+    [self.dragPanel addGestureRecognizer:panGestureRecognizer];
+}
+
+- (void)removePanGestureRecognizer
+{
+    [self.dragPanel removeGestureRecognizer:self.panGestureRecognizer];
+    self.panGestureRecognizer = nil;
+}
 
 @end

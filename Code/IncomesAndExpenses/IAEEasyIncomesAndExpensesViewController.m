@@ -385,9 +385,7 @@ static const CGFloat kDampingForContainerFXAttachBehavior = 2;
                                                           self.calculatorViewController.view.bounds.size.width,
                                                           self.calculatorViewController.view.bounds.size.height);
     
-    CGFloat centerY = self.view.frame.size.height +
-    self.calculatorViewController.view.bounds.size.height / 2 -
-    self.calculatorViewController.sizeHeightOfDragPanel;
+    CGFloat centerY = self.view.frame.size.height + self.calculatorViewController.view.bounds.size.height / 2 - self.calculatorViewController.sizeHeightOfDragPanel;
     self.calculatorViewController.view.center = CGPointMake(self.view.center.x, centerY);
     
     [self.view addSubview:self.calculatorViewController.view];
@@ -396,11 +394,11 @@ static const CGFloat kDampingForContainerFXAttachBehavior = 2;
 
 - (void)vinculeReportAreaView
 {
-    self.reportAreaView.frame = CGRectMake(self.editAndReportModeContentContainerView.frame.origin.x,
-                                           self.editAndReportModeContentContainerView.frame.origin.y,
+    self.reportAreaView.frame = CGRectMake(0,
+                                           0,
                                            self.editAndReportModeContentContainerView.frame.size.width,
                                            self.editAndReportModeContentContainerView.frame.size.height);
-    [self.view addSubview:self.reportAreaView];
+    [self.editAndReportModeContentContainerView addSubview:self.reportAreaView];
     self.reportAreaView.hidden = YES;
 }
 
@@ -409,8 +407,8 @@ static const CGFloat kDampingForContainerFXAttachBehavior = 2;
     [self.view addSubview:self.reportMenuView];
     self.reportMenuView.dataSource = self.helperReportTextRawMenuDataSource;
     self.reportMenuView.delegate = self;
-    self.reportMenuView.center = CGPointMake(self.view.center.x,
-                                             self.reportAreaView.center.y + self.reportAreaView.bounds.size.height / 2 + self.reportMenuView.bounds.size.height / 1.35);
+    CGFloat centerY = self.view.frame.size.height - self.reportMenuView.bounds.size.height / 1.5;
+    self.reportMenuView.center = CGPointMake(self.view.center.x, centerY);
     self.reportMenuView.hidden = YES;
 }
 

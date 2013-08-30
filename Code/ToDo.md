@@ -1,10 +1,13 @@
 # ToDo: Easy Incomes and Expenses.
 
 * Contextos
-** Se ubica de forma incorrecta los items al pulsarse en el menú.
+** -Se ubica de forma incorrecta los items al pulsarse en el menú.-
 ** Transiciones al pulsar en un contexto
 *** Al transicionar en conceptos, se ha perdido la transición con fade. Sin embargo, si lo que hay es un warning, sí que se produce esa transición.
 **** Ya se realiza pero el código es MUY MEJORABLE Y OPTIMIZABLE habría que volver. Mirar el método updateContentInformationBasedInCurrentContext
+
+* Modo Reporte
+** Al cambiar al modo reporte sale mal posicionado en la zona inferior.
 
 * Conceptos
 ** -Al borrar la última entrada no se borra la línea separadora de la celda en la entrada anterior-

@@ -84,7 +84,7 @@ static const CGFloat kDurationOfAnimationOfChangeContext = 0.65;
     [UIView animateWithDuration:kDurationOfAnimationOfChangeContext animations:^{
         contextViewToHide.alpha = 0;
         contextViewToShow.alpha = 1.0;
-        contextViewToShow.center = self.center;
+        contextViewToShow.center = CGPointMake(contextViewToShow.center.x, contextViewToShow.center.y / 2);
     } completion:^(BOOL finished) {
         contextViewToHide.alpha = 1.0;
         contextViewToHide.hidden = YES;

@@ -374,7 +374,7 @@ static const CGFloat kDampingForContainerFXAttachBehavior = 2;
     [self.containerViewForDynamicFX addSubview:_contextMenuView];
     self.contextMenuView.delegate = self;
     self.contextMenuView.dataSource = self.helperContextTextRawMenuDataSource;
-    self.contextMenuView.center = CGPointMake(self.containerViewForDynamicFX.center.x,
+    self.contextMenuView.center = CGPointMake(self.selectorContextView.center.x,
                                               self.selectorContextView.center.y + self.selectorContextView.bounds.size.height / 2 + self.contextMenuView.bounds.size.height / 2);
 }
 

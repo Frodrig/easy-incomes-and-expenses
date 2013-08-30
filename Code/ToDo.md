@@ -1,6 +1,7 @@
 # ToDo: Easy Incomes and Expenses.
 
 * Contextos
+** Se ubica de forma incorrecta los items al pulsarse en el menú.
 ** Transiciones al pulsar en un contexto
 *** Al transicionar en conceptos, se ha perdido la transición con fade. Sin embargo, si lo que hay es un warning, sí que se produce esa transición.
 **** Ya se realiza pero el código es MUY MEJORABLE Y OPTIMIZABLE habría que volver. Mirar el método updateContentInformationBasedInCurrentContext

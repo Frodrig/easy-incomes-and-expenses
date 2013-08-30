@@ -1364,11 +1364,24 @@ static const CGFloat kDampingForContainerFXAttachBehavior = 2;
 {
     IAEConcept *concept = [self findConceptOfCell:cell];
     IAEMonth *month = [self findActualSelectedMonth];
+    const NSUInteger numberOfConceptsBeforeRemove = month.concepts.count;
+    const NSUInteger numberOfConceptsAfterRemove = numberOfConceptsBeforeRemove - 1;
+    NSIndexPath *indexPathOfCell = [self.conceptsCollectionView indexPathForCell:cell];
+    const BOOL isLastCell = indexPathOfCell.row == numberOfConceptsBeforeRemove - 1;
+    
     [month removeConcept:concept];
     [[IAEBook sharedBook] saveAll];
     
-    [self.conceptsCollectionView deleteItemsAtIndexPaths:@[[self.conceptsCollectionView indexPathForCell:cell]]];
-    [self updateBalancesWithAnimation:YES];
+    [self.conceptsCollectionView performBatchUpdates:^{
+        [self.conceptsCollectionView deleteItemsAtIndexPaths:@[[self.conceptsCollectionView indexPathForCell:cell]]];
+        if (isLastCell && numberOfConceptsAfterRemove > 0) {
+            NSIndexPath *indexPathOfNewLastCell = [NSIndexPath indexPathForRow:indexPathOfCell.row - 1
+                                                                  inSection:indexPathOfCell.section];
+            [self.conceptsCollectionView reloadItemsAtIndexPaths:@[indexPathOfNewLastCell]];
+        }
+    } completion:^(BOOL finished) {
+        [self updateBalancesWithAnimation:YES];
+    }];
 }
 
 #pragma mark - IAEAdjustConceptAmountViewControllerDelegate

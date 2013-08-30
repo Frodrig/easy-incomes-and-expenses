@@ -6,7 +6,7 @@
 **** Ya se realiza pero el código es MUY MEJORABLE Y OPTIMIZABLE habría que volver. Mirar el método updateContentInformationBasedInCurrentContext
 
 * Conceptos
-* Al añadir un concepto cuando ya había uno, no se dibuja la línea separadora.
+** Al borrar, a veces, se produce salto a la hora de recargar el contenido. No he encontrado el patrón claro.
 
 * Calculadora
 ** -Hay que implementar arrastre. Cuando arrastramos hacia arriba el resto de elementos suben pero usando dynamics.-

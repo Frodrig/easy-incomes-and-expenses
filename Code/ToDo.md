@@ -6,6 +6,7 @@
 **** Ya se realiza pero el código es MUY MEJORABLE Y OPTIMIZABLE habría que volver. Mirar el método updateContentInformationBasedInCurrentContext
 
 * Conceptos
+** -Al borrar la última entrada no se borra la línea separadora de la celda en la entrada anterior-
 ** Al borrar, a veces, se produce salto a la hora de recargar el contenido. No he encontrado el patrón claro.
 
 * Calculadora
@@ -19,6 +20,9 @@
 
 * Menú de texto
 ** Usar dynamics para desplazar la raya inferior con cierto rebote.
+
+* Abrir año
+** Si abrimos un año y nos situamos en un mes con contenido ocurre que, si venimos de otro que NO tenía contenido, no se quita el cartel de que NO hay conceptos.
 
 * Año abierto
 ** Recordarlo al salir de la aplicación y entrar de nuevo. 

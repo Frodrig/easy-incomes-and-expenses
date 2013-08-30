@@ -1594,6 +1594,7 @@ static const CGFloat kDampingForContainerFXAttachBehavior = 2;
     [self.contextMenuView reloadOptionsStringNames];
     [self reloadBalancesOfContextViewsWithAnimation:animation];
     [self reloadConceptsOfActualSelectedContextView];
+    [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:animation];
 }
 
 - (void)reloadAllAndGoToTodayMonthWithAnimation:(BOOL)animation

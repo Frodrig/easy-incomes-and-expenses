@@ -1,37 +1,22 @@
 # ToDo: Easy Incomes and Expenses.
 
 * Contextos
-** -Se ubica de forma incorrecta los items al pulsarse en el menú.-
 ** Transiciones al pulsar en un contexto
 *** Que sea suave la carga de conceptos
 *** Al transicionar en conceptos, se ha perdido la transición con fade. Sin embargo, si lo que hay es un warning, sí que se produce esa transición.
 **** Ya se realiza pero el código es MUY MEJORABLE Y OPTIMIZABLE habría que volver. Mirar el método updateContentInformationBasedInCurrentContext
 
 * Barra superior
-** -Localizar botones-
-** -Quitar botón de gear-
-** -Cambiar fuente botón settings-
 ** Pensar en como indicar que es un botón el título central.
 
-* Modo Reporte
-** -Al cambiar al modo reporte sale mal posicionado en la zona inferior.-
-
 * Conceptos
-** -Al borrar la última entrada no se borra la línea separadora de la celda en la entrada anterior-
 ** Al borrar, a veces, se produce salto a la hora de recargar el contenido. No he encontrado el patrón claro.
 
-* Calculadora
-** -Hay que implementar arrastre. Cuando arrastramos hacia arriba el resto de elementos suben pero usando dynamics.-
-
 * Transiciones modo edición - informe
-** -Hay que hacerlo más bonito.-
 ** Testear correcto funcionamiento
 
 * Settings
 ** Si se compra dominio, poner el enlace definitivo.
-
-* Abrir año
-** -Si abrimos un año y nos situamos en un mes con contenido ocurre que, si venimos de otro que NO tenía contenido, no se quita el cartel de que NO hay conceptos.-
 
 * Año abierto
 ** Recordarlo al salir de la aplicación y entrar de nuevo si y sólo sí tiene al menos un concepto. En caso contrario, iremos al año más reciente. 

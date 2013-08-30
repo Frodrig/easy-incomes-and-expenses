@@ -7,7 +7,7 @@
 **** Ya se realiza pero el código es MUY MEJORABLE Y OPTIMIZABLE habría que volver. Mirar el método updateContentInformationBasedInCurrentContext
 
 * Modo Reporte
-** Al cambiar al modo reporte sale mal posicionado en la zona inferior.
+** -Al cambiar al modo reporte sale mal posicionado en la zona inferior.-
 
 * Conceptos
 ** -Al borrar la última entrada no se borra la línea separadora de la celda en la entrada anterior-

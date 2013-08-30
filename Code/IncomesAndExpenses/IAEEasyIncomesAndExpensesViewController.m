@@ -136,6 +136,9 @@ static const NSInteger kInvalidOptionIndex = -1;
 static const CGFloat kFrecuencyForContainerFXAttachBehavior = 1.5;
 static const CGFloat kDampingForContainerFXAttachBehavior = 2;
 
+static const CGFloat kDurationModeFadeOut = 0.35;
+static const CGFloat kDurationModeFadeIn = 0.75;
+
 #pragma mark - Properties
 
 - (IAEStrokeAnimatableLineView *)strokeAnimatableLineView
@@ -516,32 +519,53 @@ static const CGFloat kDampingForContainerFXAttachBehavior = 2;
 {
     [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES];
     
-    [self.conceptsCollectionView reloadData];
-    [self updateCalculatorViewHideHalfState];
-        
-    self.editAndReportModeContentContainerView.backgroundColor = [UIColor colorWithWhite:kColorWithWhiteForEditAndReportModeContentContainerBackground
-                                                                                   alpha:1.0];
-    self.conceptsCollectionView.hidden = NO;
-    self.calculatorViewController.view.hidden = NO;
-    self.reportAreaView.hidden = YES;
-    self.reportMenuView.hidden = YES;
-    self.reportAreaView.dataSource = nil;
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+    [UIView animateWithDuration:kDurationModeFadeOut animations:^{
+        self.editAndReportModeContentContainerView.alpha = 0.0;
+        self.reportMenuView.center = CGPointMake(self.reportMenuView.center.x, self.reportMenuView.center.y + self.reportMenuView.bounds.size.height);
+    } completion:^(BOOL finished) {
+        self.reportAreaView.dataSource = nil;
+        self.reportAreaView.hidden = YES;
+        self.reportMenuView.hidden = YES;
+        self.reportMenuView.center = CGPointMake(self.reportMenuView.center.x, self.reportMenuView.center.y - self.reportMenuView.bounds.size.height);
+        self.conceptsCollectionView.hidden = NO;
+        self.calculatorViewController.view.hidden = NO;
+        [self.conceptsCollectionView reloadData];
+        self.editAndReportModeContentContainerView.backgroundColor = [UIColor colorWithWhite:kColorWithWhiteForEditAndReportModeContentContainerBackground
+                                                                                       alpha:1.0];
+        [UIView animateWithDuration:kDurationModeFadeIn animations:^{
+            self.editAndReportModeContentContainerView.alpha = 1.0;
+            self.calculatorViewController.view.center = CGPointMake(self.calculatorViewController.view.center.x, self.calculatorViewController.view.center.y - self.calculatorViewController.dragPanel.bounds.size.height);
+        } completion:^(BOOL finished) {
+            [self updateCalculatorViewHideHalfState];
+        }];
+    }];
 }
 
 - (void)updateAfterChangeToReportMode
 {
     [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES];
     
-    self.reportMenuView.optionsEnabled = [self existConceptsInActualSelectedContext];
-    self.editAndReportModeContentContainerView.backgroundColor = [UIColor clearColor];
-    self.conceptsCollectionView.hidden = YES;
-    self.calculatorViewController.view.hidden = YES;
-    self.reportAreaView.hidden = NO;
-    self.reportMenuView.hidden = NO;
-    self.reportMenuView.currentOptionIndexSelected = kReportMenuIndexOfBalancesOption;
-    self.reportAreaView.dataSource = self.helperReportAreaViewDataSource;
-    
-    [self.reportAreaView playShowAnimationOverActualLoadedData];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+    [UIView animateWithDuration:kDurationModeFadeOut animations:^{
+        self.editAndReportModeContentContainerView.alpha = 0.0;
+        self.calculatorViewController.view.center = CGPointMake(self.calculatorViewController.view.center.x, self.calculatorViewController.view.center.y + self.calculatorViewController.dragPanel.bounds.size.height);
+    } completion:^(BOOL finished) {
+        self.reportMenuView.center = CGPointMake(self.reportMenuView.center.x, self.reportMenuView.center.y + self.reportMenuView.bounds.size.height);
+        self.conceptsCollectionView.hidden = YES;
+        self.calculatorViewController.view.hidden = YES;
+        self.reportAreaView.hidden = NO;
+        self.reportMenuView.hidden = NO;
+        self.editAndReportModeContentContainerView.backgroundColor = [UIColor clearColor];
+        self.reportAreaView.dataSource = self.helperReportAreaViewDataSource;
+        [UIView animateWithDuration:kDurationModeFadeIn animations:^{
+            self.editAndReportModeContentContainerView.alpha = 1.0;
+            self.reportMenuView.center = CGPointMake(self.reportMenuView.center.x, self.reportMenuView.center.y - self.reportMenuView.bounds.size.height);
+        } completion:^(BOOL finished) {
+            self.reportMenuView.optionsEnabled = [self existConceptsInActualSelectedContext];
+            self.reportMenuView.currentOptionIndexSelected = kReportMenuIndexOfBalancesOption;
+        }];
+    }];
 }
 
 #pragma mark - IAEEasyIncomesAndExpensesViewControllerQuery

@@ -26,6 +26,9 @@
 ** Considerar un color diferente en el menú de contexto
 ** Considerar alguna animación característica al cambiar en el menú de contexto.
 
+* Selector de categorías
+* -Aparece el círculo de categoría seleccionada aunque cambiemos al grupo distinto. Es como si las celdas no se respetaran en condiciones.-
+
 * Selección fecha
 ** -En inglés parece que está todo descolocado en un día. En español funciona bien.-
 
@@ -38,7 +41,7 @@
 ** -Categorías generales-
 
 * Calculadora
-** Estando en ingreso o gasto puedo elegir categorías del otro tipo. Si lo hago, debería de cambiar en la calculadora el tipo también de forma visual. Logicamente sí se introduce el concepto como la categoría que es.
+** -Estando en ingreso o gasto puedo elegir categorías del otro tipo. Si lo hago, debería de cambiar en la calculadora el tipo también de forma visual. Logicamente sí se introduce el concepto como la categoría que es.-
 ** -Se ha quedado el tachado en rojo-
 ** -Se permite tachar aunque no haya valor alguno-
 

@@ -27,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationToolBar;
 @property (nonatomic, weak) IAECategory* initialCategory;
 @property (nonatomic, strong) NSIndexPath *selectedCategoryIndexPath;
+@property (nonatomic) CategoryType selectedCategoryType;
 @property (nonatomic, strong) IAEStrokeAnimatableLineView *strokeAnimatableView;
 
 @end
@@ -166,7 +167,10 @@ static const NSInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
         [self changeToSectionOfCategoryType:self.initialCategory.categoryType];
         [self selectAndScrollToCategory:self.initialCategory withAnimation:NO];
         // Nota: Al seleccionarse manualmente la celda no se ejecuta el delegado y hay que llamar manualmente a changeToNewSelectedIndexPath:
-        [self changeToSelectedIndexPath:[self findIndexPathOfCategory:self.initialCategory] withAnimation:NO andLogicBlockWhenFinish:nil];
+        [self changeToSelectedIndexPath:[self findIndexPathOfCategory:self.initialCategory]
+                         ofCategoryType:self.initialCategory.categoryType
+                          withAnimation:NO
+                andLogicBlockWhenFinish:nil];
         self.initialCategory = nil;
     } else {
         [self changeToSectionOfCategoryType:IncomeCategory];
@@ -260,22 +264,25 @@ static const NSInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
 - (void)selectAndScrollToCategory:(IAECategory *)category withAnimation:(BOOL)animation
 {
     NSIndexPath *indexPathOfCategory = [self findIndexPathOfCategory:category];
-    [self changeToSelectedIndexPath:indexPathOfCategory withAnimation:animation andLogicBlockWhenFinish:nil];
+    [self changeToSelectedIndexPath:indexPathOfCategory ofCategoryType:category.categoryType withAnimation:animation andLogicBlockWhenFinish:nil];
     [self.categoriesTableView selectRowAtIndexPath:indexPathOfCategory animated:animation scrollPosition:UITableViewScrollPositionMiddle];
 }
 
 - (void)changeToSelectedIndexPath:(NSIndexPath *)newSelectedIndexPath
+                   ofCategoryType:(CategoryType)categoryType
                     withAnimation:(BOOL)animation
           andLogicBlockWhenFinish:(void(^)(void))logicBlock
 {
     if ([self isCategorySelectionWithoutDecoratorFlagEnabled]) {
         self.selectedCategoryIndexPath = newSelectedIndexPath;
+        self.selectedCategoryType = categoryType;
         if (logicBlock) {
             logicBlock();
         }
     } else {
         void(^animationCoordinationBlock)(void) = ^(void) {
             self.selectedCategoryIndexPath = newSelectedIndexPath;
+            self.selectedCategoryType = categoryType;
             [self makeOpenDecoratorViewAtIndexPath:self.selectedCategoryIndexPath
                                            visible:YES
                                      withAnimation:animation
@@ -340,7 +347,7 @@ static const NSInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self changeToSelectedIndexPath:indexPath withAnimation:YES andLogicBlockWhenFinish:^{
+    [self changeToSelectedIndexPath:indexPath ofCategoryType:self.selectedCategoryType withAnimation:YES andLogicBlockWhenFinish:^{
         [self.delegate categorySelectorViewController:self didSelectCategory:[self findCategoryOfCellAtIndexPath:indexPath]];
     }];
 }
@@ -361,9 +368,10 @@ static const NSInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    IAECategoryTableViewCell *cell = (IAECategoryTableViewCell *)[self.categoriesTableView dequeueReusableCellWithIdentifier:@"CategoryTableViewCell" forIndexPath:indexPath];
+    IAECategoryTableViewCell *cell = (IAECategoryTableViewCell *)[self.categoriesTableView dequeueReusableCellWithIdentifier:@"CategoryTableViewCell"
+                                                                                                                forIndexPath:indexPath];
     IAECategory *category = [self findCategoryOfCellAtIndexPath:indexPath];
-    [self configureTableViewCell:cell withCategory:category];
+    [self configureTableViewCell:cell atIndexPath:(NSIndexPath *)indexPath withCategory:category];
     
     return cell;
 }
@@ -384,7 +392,7 @@ static const NSInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
     return categories;
 }
 
-- (void)configureTableViewCell:(IAECategoryTableViewCell *)cell withCategory:(IAECategory *)category
+- (void)configureTableViewCell:(IAECategoryTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath withCategory:(IAECategory *)category
 {
     NSDictionary *attributes = [self createAttributeDictionaryForCategoryNameAttributeTextWithCategory:category];
     cell.categoryLabel.attributedText = [[NSAttributedString alloc] initWithString:[category localizedTag]
@@ -393,6 +401,9 @@ static const NSInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
         NSUInteger numberOfConceptsOfCategory = [[IAEBook sharedBook] findAllConceptsWithCategory:category].count;
         cell.numberOfConceptsLabel.text = [IAELocalizerPhraseComposer stringPhraseWithNumberOfConcepts:numberOfConceptsOfCategory];
     }
+    
+    const BOOL selectedCategory = self.selectedCategoryIndexPath ? [self.selectedCategoryIndexPath compare:indexPath] == NSOrderedSame && category.categoryType == self.selectedCategoryType : NO;
+    cell.openDecoratorView.hidden = !selectedCategory;
 }
 
 - (NSDictionary *)createAttributeDictionaryForCategoryNameAttributeTextWithCategory:(IAECategory *)category

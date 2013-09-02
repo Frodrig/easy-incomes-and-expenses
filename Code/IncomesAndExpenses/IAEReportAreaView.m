@@ -45,7 +45,7 @@ static const CGFloat kMinAlphaValueForScrolledReportAreaItems = 0.15;
 
 static NSString * const kReloadPendingKey = @"ReloadPending";
 
-static const NSUInteger KDurationOfNoItemsLabelAnimations = 0.5;
+static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
 
 #pragma mark - Properties
 
@@ -288,8 +288,6 @@ static const NSUInteger KDurationOfNoItemsLabelAnimations = 0.5;
     const BOOL ignoreBecouseSameState = show ? self.noItemsLabel.superview == self && self.noItemsLabel.alpha == 1.0 : self.noItemsLabel.superview == nil;
     
     if (!ignoreBecouseSameState) {
-        self.noItemsLabel.alpha = 1.0;
-        
         if (animation) {
             [self addSubview:self.noItemsLabel];
             self.noItemsLabel.alpha = show ? 0.0 : 1.0;
@@ -305,6 +303,7 @@ static const NSUInteger KDurationOfNoItemsLabelAnimations = 0.5;
                 }
             }];
         } else {
+            self.noItemsLabel.alpha = 1.0;
             if (show) {
                 [self addSubview:self.noItemsLabel];
             } else {

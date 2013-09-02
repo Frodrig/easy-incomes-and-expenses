@@ -529,13 +529,12 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 
 - (void)updateAfterChangeToEditMode
 {
-    [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES];
-    
     [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
     [UIView animateWithDuration:kDurationModeFadeOut animations:^{
         self.editAndReportModeContentContainerView.alpha = 0.0;
         self.reportMenuView.center = CGPointMake(self.reportMenuView.center.x, self.reportMenuView.center.y + self.reportMenuView.bounds.size.height);
     } completion:^(BOOL finished) {
+        self.withoutConceptsWarningInMonthReportModeView.alpha = 0;
         self.reportAreaView.dataSource = nil;
         self.reportAreaView.reportAreaViewDelegate = self;
         self.reportAreaView.hidden = YES;
@@ -547,6 +546,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
         self.editAndReportModeContentContainerView.backgroundColor = [UIColor colorWithWhite:kColorWithWhiteForEditAndReportModeContentContainerBackground
                                                                                        alpha:1.0];
         [UIView animateWithDuration:kDurationModeFadeIn animations:^{
+            self.withoutConceptsWarningInMonthEditModeView.alpha = [self existConceptsInActualSelectedContext] > 0 ? 0.0 : 1.0;
             self.editAndReportModeContentContainerView.alpha = 1.0;
             self.calculatorViewController.view.center = CGPointMake(self.calculatorViewController.view.center.x, self.calculatorViewController.view.center.y - self.calculatorViewController.dragPanel.bounds.size.height);
         } completion:^(BOOL finished) {
@@ -557,13 +557,12 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 
 - (void)updateAfterChangeToReportMode
 {
-    [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES];
-    
     [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
     [UIView animateWithDuration:kDurationModeFadeOut animations:^{
         self.editAndReportModeContentContainerView.alpha = 0.0;
         self.calculatorViewController.view.center = CGPointMake(self.calculatorViewController.view.center.x, self.calculatorViewController.view.center.y + self.calculatorViewController.dragPanel.bounds.size.height);
     } completion:^(BOOL finished) {
+        self.withoutConceptsWarningInMonthEditModeView.alpha = 0;
         self.reportMenuView.center = CGPointMake(self.reportMenuView.center.x, self.reportMenuView.center.y + self.reportMenuView.bounds.size.height);
         self.conceptsCollectionView.hidden = YES;
         self.calculatorViewController.view.hidden = YES;
@@ -573,6 +572,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
         self.reportAreaView.dataSource = self.helperReportAreaViewDataSource;
         self.reportAreaView.reportAreaViewDelegate = self;
         [UIView animateWithDuration:kDurationModeFadeIn animations:^{
+            self.withoutConceptsWarningInMonthReportModeView.alpha = [self existConceptsInActualSelectedContext] > 0 ? 0.0 : 1.0;
             self.editAndReportModeContentContainerView.alpha = 1.0;
             self.reportMenuView.center = CGPointMake(self.reportMenuView.center.x, self.reportMenuView.center.y - self.reportMenuView.bounds.size.height);
         } completion:^(BOOL finished) {

@@ -312,6 +312,7 @@ static const CGFloat kRatioToDecideHideInDrag = 1.4;
 - (void)configureDisplayPanelWithActualCategory
 {
     [self.displayPanel setCategoryName:[self.actualCategory localizedTag]];
+    [self configureDisplayPanelWithAppropiateColorWithAnimation:YES];
 }
 
 - (void)configureDisplayPanelWithActualDay

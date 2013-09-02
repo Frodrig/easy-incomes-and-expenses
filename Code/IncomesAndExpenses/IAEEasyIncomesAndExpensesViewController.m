@@ -534,18 +534,20 @@ static const CGFloat kDurationModeFadeIn = 0.75;
         self.editAndReportModeContentContainerView.alpha = 0.0;
         self.reportMenuView.center = CGPointMake(self.reportMenuView.center.x, self.reportMenuView.center.y + self.reportMenuView.bounds.size.height);
     } completion:^(BOOL finished) {
-        [self.conceptsCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
         self.withoutConceptsWarningInMonthReportModeView.alpha = 0;
         self.reportAreaView.dataSource = nil;
         self.reportAreaView.reportAreaViewDelegate = self;
         self.reportAreaView.hidden = YES;
         self.reportMenuView.hidden = YES;
         self.reportMenuView.center = CGPointMake(self.reportMenuView.center.x, self.reportMenuView.center.y - self.reportMenuView.bounds.size.height);
+        if ([self findNumberOfConceptsOfActualSelectedContext:0] > 0) {
+            [self.conceptsCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+        }
         self.conceptsCollectionView.hidden = NO;
-        self.calculatorViewController.view.hidden = NO;
         [self.conceptsCollectionView reloadData];
+        self.calculatorViewController.view.hidden = NO;
         self.editAndReportModeContentContainerView.backgroundColor = [UIColor colorWithWhite:kColorWithWhiteForEditAndReportModeContentContainerBackground
-                                                                                       alpha:1.0];
+                                                                                alpha:1.0];
         [UIView animateWithDuration:kDurationModeFadeIn animations:^{
             self.withoutConceptsWarningInMonthEditModeView.alpha = [self existConceptsInActualSelectedContext] > 0 ? 0.0 : 1.0;
             self.editAndReportModeContentContainerView.alpha = 1.0;
@@ -556,6 +558,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     }];
 }
 
+
 - (void)updateAfterChangeToReportMode
 {
     [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
@@ -563,16 +566,16 @@ static const CGFloat kDurationModeFadeIn = 0.75;
         self.editAndReportModeContentContainerView.alpha = 0.0;
         self.calculatorViewController.view.center = CGPointMake(self.calculatorViewController.view.center.x, self.calculatorViewController.view.center.y + self.calculatorViewController.dragPanel.bounds.size.height);
     } completion:^(BOOL finished) {
-        self.reportMenuView.currentOptionIndexSelected = 0;
         self.withoutConceptsWarningInMonthEditModeView.alpha = 0;
-        self.reportMenuView.center = CGPointMake(self.reportMenuView.center.x, self.reportMenuView.center.y + self.reportMenuView.bounds.size.height);
-        self.conceptsCollectionView.hidden = YES;
-        self.calculatorViewController.view.hidden = YES;
-        self.reportAreaView.hidden = NO;
-        self.reportMenuView.hidden = NO;
-        self.editAndReportModeContentContainerView.backgroundColor = [UIColor clearColor];
         self.reportAreaView.dataSource = self.helperReportAreaViewDataSource;
         self.reportAreaView.reportAreaViewDelegate = self;
+        self.reportMenuView.currentOptionIndexSelected = 0;
+        self.reportMenuView.center = CGPointMake(self.reportMenuView.center.x, self.reportMenuView.center.y + self.reportMenuView.bounds.size.height);
+        self.reportAreaView.hidden = NO;
+        self.reportMenuView.hidden = NO;
+        self.conceptsCollectionView.hidden = YES;
+        self.calculatorViewController.view.hidden = YES;
+        self.editAndReportModeContentContainerView.backgroundColor = [UIColor clearColor];
         [UIView animateWithDuration:kDurationModeFadeIn animations:^{
             self.withoutConceptsWarningInMonthReportModeView.alpha = [self existConceptsInActualSelectedContext] > 0 ? 0.0 : 1.0;
             self.editAndReportModeContentContainerView.alpha = 1.0;

@@ -88,7 +88,7 @@ static const CGFloat kWhiteAlphaComponentForCircle = 1.0;
     const CGFloat labelWidth = self.daysOfTheWeekContainerView.bounds.size.width / numberOfDays;
     const CGFloat labelHeight = self.daysOfTheWeekContainerView.bounds.size.height;
     
-    NSArray *dayOfTheWeekIndexes = [IAEVersionHelper isSpanishVersion] ? @[@2, @3, @4, @5, @6, @7, @1] : @[@1, @2, @3, @4, @5, @6, @7];
+    NSArray *dayOfTheWeekIndexes = @[@2, @3, @4, @5, @6, @7, @1];
     for (NSNumber *dayIndexIt in dayOfTheWeekIndexes) {
         NSString *labelText = [IAEDateHelper findDayOfTheWeekNameStringWithDayOfTheWeekIndex:[dayIndexIt unsignedIntegerValue] inShortForm:YES];
         NSDictionary *labelAttributes = @{NSFontAttributeName: [UIFont fontWithName:kDayOfTheWeekFontFamilyName size:kDayOfTheWeekFontSize],
@@ -111,13 +111,13 @@ static const CGFloat kWhiteAlphaComponentForCircle = 1.0;
     const NSUInteger numberOfRows = 5;
     const NSUInteger dayOfTheMonthWidthSize = self.daysOfTheMonthContainerView.bounds.size.width / numberOfColumns;
     const NSUInteger dayOfTheMonthHeightSize = self.daysOfTheMonthContainerView.bounds.size.height / numberOfRows;
-    const NSUInteger firstDayOfTheWeekIndex = [IAEDateHelper findFirstDayWeekFromYearDate:self.yearDate andMonthIndex:self.monthIndex];
+    const NSUInteger firstDayOfTheWeekIndex = [IAEDateHelper findFirstDayWeekFromYearDate:self.yearDate andMonthIndex:self.monthIndex] - 1;
     const NSUInteger maxDaysInMonth = [IAEDateHelper findNumberOfDaysFromYearDate:self.yearDate andMonthIndex:self.monthIndex];
     
     NSUInteger dayIt = 1;
     for (NSUInteger rowIt = 0; rowIt < numberOfRows; rowIt++) {
         for (NSUInteger columnIt = 0; columnIt < numberOfColumns; ++columnIt) {
-            const BOOL validDayForMonth = (rowIt > 0 || columnIt >= firstDayOfTheWeekIndex - 1) && (dayIt <= maxDaysInMonth);
+            const BOOL validDayForMonth = (rowIt > 0 || columnIt >= firstDayOfTheWeekIndex) && (dayIt <= maxDaysInMonth);
             if (validDayForMonth) {
                 CGRect labelRect = CGRectMake(columnIt * dayOfTheMonthWidthSize,
                                               rowIt * dayOfTheMonthHeightSize,

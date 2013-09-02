@@ -18,14 +18,27 @@
 * Settings
 ** Si se compra dominio, poner el enlace definitivo.
 
+* Gestión entrada y salida de la aplicación.
+** Código relacionado.
+
 * Año abierto
-** Recordarlo al salir de la aplicación y entrar de nuevo si y sólo sí tiene al menos un concepto. En caso contrario, iremos al año más reciente. 
+** Al salir de la aplicación recordamos el año abierto y mes en el que nos encontrábamos. Al volver de la aplicación, si ha pasado más de un día desde que saliéramos, cargamos el año actual y nos ponemos sobre el mes actual.
 ** Considerar un color diferente en el menú de contexto
 ** Considerar alguna animación característica al cambiar en el menú de contexto.
+
+* Selección fecha
+** En inglés parece que está todo descolocado en un día. En español funciona bien.
 
 * Inicio e iconos
 ** Pantalla de inicio
 ** Icono
+
+* Localización
+** Meses
+** Categorías generales
+
+* Calculadora
+** Se ha quedado el tachado en rojo
 
 * Problemas conocidos
 ** Al pasar de un mes sin conceptos en modo informe en la sección balance a otro adyacente con conceptos, no se cargo el informe de balance. Tuve que dar más saltos por la aplicación para que saliera. Lo he conseguido reproducir con relativa facilidad una vez visto.
@@ -43,7 +56,11 @@
 ** Contraseña
 
 * Ideas
+** Mes actual
+** Si estamos con el año actual abierto, mostramos algún indicativo sobre el mes actual.
 ** Años
+*** Que se pueda deshablitar acceso a meses aún no disponibles.
+*** Que se pueda deshabilitar el tener en cuenta valores económicos de meses no cumplidos.
 *** Considerar que los años que no tengan conceptos sean más pequeños como celda.
 *** Considerar que cuando nos ponemos sobre la celda de año actual, las entradas sean muy pequeñas para poder ver más elementos
 *** Considerar un botón que cambie de orden los años de menor a mayor. Al menos, quizás, para cuando estamos en modo años con conceptos.

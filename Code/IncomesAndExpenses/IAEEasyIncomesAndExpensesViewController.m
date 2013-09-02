@@ -1159,7 +1159,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     IAEYear *year = [self findOpenYear];
     if (contextView.contextType == CONTEXT_VIEW_MONTH) {
         IAEMonth *month = [year.ordererMonths objectAtIndex:contextView.valueIndex - 1];
-        name = [month description];
+        name = [month monthAsString];
     } else if (contextView.contextType == CONTEXT_VIEW_YEAR) {
         name = [year yearDateAsString];
     }

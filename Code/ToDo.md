@@ -34,10 +34,11 @@
 ** Icono
 
 * Localización
-** Meses
-** Categorías generales
+** -Meses-
+** -Categorías generales-
 
 * Calculadora
+** Estando en ingreso o gasto puedo elegir categorías del otro tipo. Si lo hago, debería de cambiar en la calculadora el tipo también de forma visual. Logicamente sí se introduce el concepto como la categoría que es.
 ** -Se ha quedado el tachado en rojo-
 ** -Se permite tachar aunque no haya valor alguno-
 

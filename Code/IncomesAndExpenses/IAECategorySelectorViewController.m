@@ -387,7 +387,7 @@ static const NSInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
 - (void)configureTableViewCell:(IAECategoryTableViewCell *)cell withCategory:(IAECategory *)category
 {
     NSDictionary *attributes = [self createAttributeDictionaryForCategoryNameAttributeTextWithCategory:category];
-    cell.categoryLabel.attributedText = [[NSAttributedString alloc] initWithString:[category description]
+    cell.categoryLabel.attributedText = [[NSAttributedString alloc] initWithString:[category localizedTag]
                                                                         attributes:attributes];
     if (self.showNumberOfConcepts) {
         NSUInteger numberOfConceptsOfCategory = [[IAEBook sharedBook] findAllConceptsWithCategory:category].count;

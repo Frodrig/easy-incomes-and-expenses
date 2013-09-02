@@ -534,6 +534,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
         self.editAndReportModeContentContainerView.alpha = 0.0;
         self.reportMenuView.center = CGPointMake(self.reportMenuView.center.x, self.reportMenuView.center.y + self.reportMenuView.bounds.size.height);
     } completion:^(BOOL finished) {
+        [self.conceptsCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
         self.withoutConceptsWarningInMonthReportModeView.alpha = 0;
         self.reportAreaView.dataSource = nil;
         self.reportAreaView.reportAreaViewDelegate = self;

@@ -1,8 +1,5 @@
 # ToDo: Easy Incomes and Expenses.
 
-* Transiciones
-** -Mejoras y testeo-
-
 * Barra superior
 ** Pensar en como indicar que es un botón el título central.
 
@@ -13,36 +10,13 @@
 * Settings
 ** Si se compra dominio, poner el enlace definitivo.
 
-* Gestión entrada y salida de la aplicación.
-** -Código relacionado.-
-
 * Año abierto
-** -No hay que hacer nada. Si se cierra la aplicación, se guarda el estado del año en el que estamos. Si la aplicación es terminada, se arranca en el año actual. A priori no tenemos porqué procuparnos. Quedaríamos a la espera de hacer pruebas en instruments.-
 ** Considerar un color diferente en el menú de contexto
 ** Considerar alguna animación característica al cambiar en el menú de contexto.
 
-* Selector de categorías
-* -Aparece el círculo de categoría seleccionada aunque cambiemos al grupo distinto. Es como si las celdas no se respetaran en condiciones.-
-
-* Selección fecha
-** -En inglés parece que está todo descolocado en un día. En español funciona bien.-
-
 * Inicio e iconos
-** -Pantalla de inicio-
 ** Transición desde la pantalla de inicio.
 ** Icono
-
-* Localización
-** -Meses-
-** -Categorías generales-
-
-* Calculadora
-** -Estando en ingreso o gasto puedo elegir categorías del otro tipo. Si lo hago, debería de cambiar en la calculadora el tipo también de forma visual. Logicamente sí se introduce el concepto como la categoría que es.-
-** -Se ha quedado el tachado en rojo-
-** -Se permite tachar aunque no haya valor alguno-
-
-* Problemas conocidos
-** -Al pasar de un mes sin conceptos en modo informe en la sección balance a otro adyacente con conceptos, no se cargo el informe de balance. Tuve que dar más saltos por la aplicación para que saliera. Lo he conseguido reproducir con relativa facilidad una vez visto.-
 
 * Refactorización
 ** En todos los sitios donde vuelvo a recrear la fuente y su tamaño… simplemente cambiar el campo text para la label asociada. Esto es válido a no ser que tenga que poner kern.

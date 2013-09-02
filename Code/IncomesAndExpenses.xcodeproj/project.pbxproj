@@ -38,7 +38,6 @@
 		5B36AFF71785BBF400132475 /* NSDecimalNumber+AbsoluteValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B36AFF61785BBF400132475 /* NSDecimalNumber+AbsoluteValue.m */; };
 		5B36AFFC1785D73800132475 /* IAECategorySelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B36AFFA1785D73800132475 /* IAECategorySelectorViewController.m */; };
 		5B36AFFD1785D73800132475 /* IAECategorySelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B36AFFB1785D73800132475 /* IAECategorySelectorViewController.xib */; };
-		5B55449D17745EA2009CFC84 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B55449C17745EA2009CFC84 /* Media.xcassets */; };
 		5B5544A2177460DD009CFC84 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B5544A1177460DD009CFC84 /* Main.storyboard */; };
 		5B55C406178AA8C20066F586 /* IAECategoryEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B55C404178AA8C20066F586 /* IAECategoryEditorViewController.m */; };
 		5B55C407178AA8C20066F586 /* IAECategoryEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B55C405178AA8C20066F586 /* IAECategoryEditorViewController.xib */; };
@@ -72,6 +71,8 @@
 		5B767E091636D7FC005315F8 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B767E081636D7FC005315F8 /* Default.png */; };
 		5B767E0B1636D7FC005315F8 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B767E0A1636D7FC005315F8 /* Default@2x.png */; };
 		5B767E0D1636D7FC005315F8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B767E0C1636D7FC005315F8 /* Default-568h@2x.png */; };
+		5B78C29317D51008006A0D53 /* EasyIncomesAndExpenses IOS7.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B78C29117D51008006A0D53 /* EasyIncomesAndExpenses IOS7.png */; };
+		5B78C29417D51008006A0D53 /* EasyIncomesAndExpenses IOS7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B78C29217D51008006A0D53 /* EasyIncomesAndExpenses IOS7@2x.png */; };
 		5B7A4D7F16B68062001751A9 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B7A4D7E16B68062001751A9 /* MessageUI.framework */; };
 		5B8A31CF16C9090E008731AD /* 72.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B8A31CD16C90901008731AD /* 72.png */; };
 		5B8A31D116C90911008731AD /* 72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B8A31D016C90911008731AD /* 72@2x.png */; };
@@ -172,7 +173,6 @@
 		5B36AFFA1785D73800132475 /* IAECategorySelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECategorySelectorViewController.m; sourceTree = "<group>"; };
 		5B36AFFB1785D73800132475 /* IAECategorySelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAECategorySelectorViewController.xib; sourceTree = "<group>"; };
 		5B48BFFA1799425500BF0A68 /* IAEDayCalendarSelectorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEDayCalendarSelectorViewControllerDelegate.h; sourceTree = "<group>"; };
-		5B55449C17745EA2009CFC84 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = IncomesAndExpenses/Media.xcassets; sourceTree = "<group>"; };
 		5B5544A017745F42009CFC84 /* IAEValueDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEValueDefs.h; sourceTree = "<group>"; };
 		5B5544A1177460DD009CFC84 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		5B55C403178AA8C20066F586 /* IAECategoryEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategoryEditorViewController.h; sourceTree = "<group>"; };
@@ -229,6 +229,8 @@
 		5B767E081636D7FC005315F8 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		5B767E0A1636D7FC005315F8 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		5B767E0C1636D7FC005315F8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		5B78C29117D51008006A0D53 /* EasyIncomesAndExpenses IOS7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EasyIncomesAndExpenses IOS7.png"; sourceTree = "<group>"; };
+		5B78C29217D51008006A0D53 /* EasyIncomesAndExpenses IOS7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EasyIncomesAndExpenses IOS7@2x.png"; sourceTree = "<group>"; };
 		5B7A4D7E16B68062001751A9 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		5B8488F3178AB88C0001551F /* IAECategoryEditorDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategoryEditorDefs.h; sourceTree = "<group>"; };
 		5B8488F5178AB8B10001551F /* IAECategoryEditorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategoryEditorViewControllerDelegate.h; sourceTree = "<group>"; };
@@ -784,11 +786,12 @@
 			isa = PBXGroup;
 			children = (
 				5B18053117BBC92C00EB8ABF /* ToDo */,
-				5B55449C17745EA2009CFC84 /* Media.xcassets */,
 				5B8A31D016C90911008731AD /* 72@2x.png */,
 				5B8A31CD16C90901008731AD /* 72.png */,
 				5B8A31CB16C9088D008731AD /* Default-Portrait@2x~ipad.png */,
 				5BE82E2E17D5045F00C10B42 /* Default-Landscape.png */,
+				5B78C29117D51008006A0D53 /* EasyIncomesAndExpenses IOS7.png */,
+				5B78C29217D51008006A0D53 /* EasyIncomesAndExpenses IOS7@2x.png */,
 				5BE82E2F17D5045F00C10B42 /* Default-Landscape@2x~ipad.png */,
 				5B8A31C816C904D2008731AD /* Default-Portrait~ipad.png */,
 				5B0F8BC116B94A7B002D62A5 /* Localizacion */,
@@ -1357,6 +1360,7 @@
 				5B767E0B1636D7FC005315F8 /* Default@2x.png in Resources */,
 				5BE82E3117D5045F00C10B42 /* Default-Landscape@2x~ipad.png in Resources */,
 				5B2A41B517C77E8500C29036 /* 709-plus@2x.png in Resources */,
+				5B78C29417D51008006A0D53 /* EasyIncomesAndExpenses IOS7@2x.png in Resources */,
 				5B2AAA2C17C773C500E7C7A5 /* 746-plus-circle@2x.png in Resources */,
 				5B23FD9217CFAB5100B4AD77 /* 727-more@2x.png in Resources */,
 				5B23FD9117CFAB5100B4AD77 /* 727-more.png in Resources */,
@@ -1380,7 +1384,6 @@
 				5BC1110017CD1DF500FF6D6B /* 730-envelope.png in Resources */,
 				5B2A41AD17C77B6200C29036 /* 740-gear@2x.png in Resources */,
 				5B8CD5D317A262BC00A353A5 /* IAEContextViewContent.xib in Resources */,
-				5B55449D17745EA2009CFC84 /* Media.xcassets in Resources */,
 				5B0F8BC416B94ADD002D62A5 /* Localizable.strings in Resources */,
 				5B5544A2177460DD009CFC84 /* Main.storyboard in Resources */,
 				5BD94C0F1786B896009009B1 /* IAECategoryTableViewCell.xib in Resources */,
@@ -1392,6 +1395,7 @@
 				5B8A31CF16C9090E008731AD /* 72.png in Resources */,
 				5B8A31D116C90911008731AD /* 72@2x.png in Resources */,
 				5B62D85D178EA8A2009879A6 /* IAEYearSelectorCollectionViewCell.xib in Resources */,
+				5B78C29317D51008006A0D53 /* EasyIncomesAndExpenses IOS7.png in Resources */,
 				5BC1110117CD1DF500FF6D6B /* 730-envelope@2x.png in Resources */,
 				5BA0131317983A9000337E84 /* IAEDayCalendarSelectorViewController.xib in Resources */,
 				5B1F0D3717841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib in Resources */,
@@ -1575,7 +1579,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -1600,7 +1604,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";

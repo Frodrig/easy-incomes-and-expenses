@@ -45,7 +45,7 @@ static const CGFloat kMinAlphaValueForScrolledReportAreaItems = 0.15;
 
 static NSString * const kReloadPendingKey = @"ReloadPending";
 
-static const NSUInteger KDurationOfNoItemsLabelAnimations = 0.75;
+static const NSUInteger KDurationOfNoItemsLabelAnimations = 0.5;
 
 #pragma mark - Properties
 

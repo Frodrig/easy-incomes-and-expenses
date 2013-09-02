@@ -1031,10 +1031,8 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 
 - (void)reloadDataWithAnimationWasDoneInReportAreaView:(IAEReportAreaView *)reportAreaView
 {
-    if ([self isReportModeActive]) {
-        [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:!self.initialPositioning];
-        [self disableOrEnableReportMenuIfAppropiate];
-    }
+    [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:!self.initialPositioning];
+    [self disableOrEnableReportMenuIfAppropiate];
 }
 
 #pragma mark - IAESelectorContextView Delegate
@@ -1062,9 +1060,26 @@ static const CGFloat kDurationModeFadeIn = 0.75;
             [self updateConceptsCollectionViewWithAnimation:!self.initialPositioning];
             [self updateCalculatorViewHideHalfState];
         } else if ([self isReportModeActive]) {
-            [self.reportAreaView reloadDataWithAnimation:YES];
+            // Si hay aviso de que venimos de un contexto sin conceptos, primero comprobamos si hay que quitarlo y luego recargamos.
+            // Si NO venimos del caso anterior, primero recargamos y luego, en el delegado, comprobamos si estamos en un contexto sin conceptos
+            // NOTA: En el primer caso también llamamos al delegado y volvemos a ejecutar showWithout... pero no pasara nada ya que el estado se habra
+            // establecido en la primera llamada.
+            if ([self isAnyWithoutConceptsWarningViewVisible]) {
+                [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES andExecuteAfterAnimationTheLogicBlock:^{
+                    [self.reportAreaView reloadDataWithAnimation:YES];
+                }];
+            } else {
+                [self.reportAreaView reloadDataWithAnimation:YES];
+            }
         }
     }
+}
+
+- (BOOL)isAnyWithoutConceptsWarningViewVisible
+{
+    const BOOL isAny = self.withoutConceptsWarningInMonthEditModeView.alpha == 1.0 || self.withoutConceptsWarningInMonthReportModeView.alpha == 1.0;
+    
+    return isAny;
 }
 
 - (void)updateConceptsCollectionViewWithAnimation:(BOOL)animation
@@ -1100,7 +1115,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 - (void)showWithoutConceptsWarningViewIfAppropriateWithAnimation:(BOOL)animation
                            andExecuteAfterAnimationTheLogicBlock:(void(^)(void))logicBlock
 {
-    BOOL show = [self existConceptsInActualSelectedContext] == 0;
+    const BOOL show = [self existConceptsInActualSelectedContext] == 0;
     CGFloat alpha = show ? 1.0 : 0.0;
     
     void(^ alphaChanges)(void) = ^(void) {

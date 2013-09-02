@@ -128,11 +128,11 @@ static const CGFloat kDelayToExecuteRemoveConceptCell = 0.2;
 
 static const CGFloat KDurationOfAnimationUpdateForEntryInstantIndex = 0.15;
 
-static const CGFloat kDurationOfEditConceptCollectionViewTransition = 0.25;
+static const CGFloat kDurationOfEditConceptCollectionViewTransition = 0.5;
 
 static NSString * const kXibWithoutConceptsWarningInEditModeViewName = @"IAEWithoutConceptsTextWarning";
 static NSString * const kXibWithoutConceptsWarningInReportModeViewName = @"IAEWithoutConceptsTextWarningReportMode";
-static const CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.25;
+static const CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.5;
 
 static const CGFloat kDurationOfFrameUpdateWhenShowOrHideCalculator = 0.25;
 
@@ -537,6 +537,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
         self.reportMenuView.center = CGPointMake(self.reportMenuView.center.x, self.reportMenuView.center.y + self.reportMenuView.bounds.size.height);
     } completion:^(BOOL finished) {
         self.reportAreaView.dataSource = nil;
+        self.reportAreaView.reportAreaViewDelegate = self;
         self.reportAreaView.hidden = YES;
         self.reportMenuView.hidden = YES;
         self.reportMenuView.center = CGPointMake(self.reportMenuView.center.x, self.reportMenuView.center.y - self.reportMenuView.bounds.size.height);
@@ -570,6 +571,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
         self.reportMenuView.hidden = NO;
         self.editAndReportModeContentContainerView.backgroundColor = [UIColor clearColor];
         self.reportAreaView.dataSource = self.helperReportAreaViewDataSource;
+        self.reportAreaView.reportAreaViewDelegate = self;
         [UIView animateWithDuration:kDurationModeFadeIn animations:^{
             self.editAndReportModeContentContainerView.alpha = 1.0;
             self.reportMenuView.center = CGPointMake(self.reportMenuView.center.x, self.reportMenuView.center.y - self.reportMenuView.bounds.size.height);
@@ -1025,6 +1027,16 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     self.conceptChangingDay = nil;
 }
 
+#pragma mark - IAEReportAreaViewDelegate
+
+- (void)reloadDataWithAnimationWasDoneInReportAreaView:(IAEReportAreaView *)reportAreaView
+{
+    if ([self isReportModeActive]) {
+        [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:!self.initialPositioning];
+        [self disableOrEnableReportMenuIfAppropiate];
+    }
+}
+
 #pragma mark - IAESelectorContextView Delegate
 
 - (BOOL)isReportScrollView:(UIScrollView *)scrollView
@@ -1047,38 +1059,31 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     } else {
         [self updateCurrentOptionIndexSelectedOfContextMenu];
         if ([self isEditModeActive]) {
-            [self setConceptsCollectionViewInTransitionAspect:YES withAnimation:!self.initialPositioning];
-            [self updateContentOfConceptsCollectionView];
-            [self setConceptsCollectionViewInTransitionAspect:NO withAnimation:!self.initialPositioning];
+            [self updateConceptsCollectionViewWithAnimation:!self.initialPositioning];
             [self updateCalculatorViewHideHalfState];
         } else if ([self isReportModeActive]) {
-            [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:!self.initialPositioning];
-            [self disableOrEnableReportMenuIfAppropiate];
             [self.reportAreaView reloadDataWithAnimation:YES];
         }
     }
 }
 
-- (void)setConceptsCollectionViewInTransitionAspect:(BOOL)transition withAnimation:(BOOL)animation
+- (void)updateConceptsCollectionViewWithAnimation:(BOOL)animation
 {
-    void(^ alphaChangesBlock)(void) = ^(void) {
-        CGFloat alphaValue = transition ? 0.0 : 1.0;
-        self.conceptsCollectionView.alpha = alphaValue;
-    };
-    
-    void(^ logicBlock)(void) = ^(void) {
-            [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:animation];
-    };
-    
     if (animation) {
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
         [UIView animateWithDuration:kDurationOfEditConceptCollectionViewTransition animations:^{
-            alphaChangesBlock();
+            self.conceptsCollectionView.alpha = 0.0;
         } completion:^(BOOL finished) {
-            logicBlock();
+            [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:animation];
+            [self updateContentOfConceptsCollectionView];
+            [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+            [UIView animateWithDuration:kDurationOfEditConceptCollectionViewTransition animations:^{
+                self.conceptsCollectionView.alpha = 1.0;
+            }];
         }];
     } else {
-        alphaChangesBlock();
-        logicBlock();
+        [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:animation];
+        [self updateContentOfConceptsCollectionView];
     }
 }
 

@@ -11,6 +11,7 @@
 #import "IAEReportAreaItemView.h"
 #import "IAEEconomicValueUpdater.h"
 #import "IAECurrencyManager.h"
+#import "IAEReportAreaViewDelegate.h"
 
 @interface IAEReportAreaView()
 
@@ -43,6 +44,8 @@ static const CGFloat kDurationOfReportItemViewDisappear = 0.75;
 static const CGFloat kMinAlphaValueForScrolledReportAreaItems = 0.15;
 
 static NSString * const kReloadPendingKey = @"ReloadPending";
+
+static const NSUInteger KDurationOfNoItemsLabelAnimations = 0.75;
 
 #pragma mark - Properties
 
@@ -175,19 +178,13 @@ static NSString * const kReloadPendingKey = @"ReloadPending";
 {
     if (!self.reloadInProgress && !self.showingAllReportAreaItems) {
         [self beginReloadDataWithAnimation];
-        [self desvinculeNoItemsLabels];
         [self removeAllReportAreaItemsWithAnimation:animation andExecuteBlockAtCompletion:^(void) {
-            [self createAndAddAllReportAreaItemsWithAnimation:animation];
+            [self createAndAddAllReportAreaItemsIfAppropiateWithAnimation:animation];
             [self adjustContentSizeAndResetPosition];
         }];
     } else if (self.showingAllReportAreaItems) {
         self.reloadPendingInformation[kReloadPendingKey] = [NSNumber numberWithBool:animation];
     }
-}
-
-- (void)desvinculeNoItemsLabels
-{
-    [self.noItemsLabel removeFromSuperview];
 }
 
 - (void)beginReloadDataWithAnimation
@@ -200,6 +197,7 @@ static NSString * const kReloadPendingKey = @"ReloadPending";
 {
     _reloadInProgress = NO;
     self.scrollEnabled = !_showingAllReportAreaItems;
+    [self.reportAreaViewDelegate reloadDataWithAnimationWasDoneInReportAreaView:self];
 }
 
 - (void)processPendingReloads
@@ -251,29 +249,75 @@ static NSString * const kReloadPendingKey = @"ReloadPending";
 {
     NSMutableSet *allReportAreaItems = [[NSMutableSet alloc] initWithCapacity:self.subviews.count];
     for (IAEReportAreaItemView *viewIt in self.subviews) {
-        [allReportAreaItems addObject:viewIt];
+        if ([viewIt isMemberOfClass:[IAEReportAreaItemView class]]) {
+            [allReportAreaItems addObject:viewIt];
+        }
     }
 
     return [NSSet setWithSet:allReportAreaItems];
 }
 
-- (void)createAndAddAllReportAreaItemsWithAnimation:(BOOL)animation
+- (void)createAndAddAllReportAreaItemsIfAppropiateWithAnimation:(BOOL)animation
 {
     NSUInteger numberOfReportAreaItems = [self.dataSource numberOfItemsInReportAreaView:self];
     if (numberOfReportAreaItems > 0) {
+        [self endReloadDataWithAnimation];
+        [self showNoItemsLabel:NO withAnimation:animation completion:nil];
+        
         for (NSUInteger reportAreaItemIt = 0; reportAreaItemIt < numberOfReportAreaItems; reportAreaItemIt++) {
             IAEReportAreaItemView *reportAreaItem = [self createReportAreaItemWithIndex:reportAreaItemIt ofTotalNumber:numberOfReportAreaItems];
             [self addSubview:reportAreaItem];
         }
         
-        [self endReloadDataWithAnimation];
-        
         if (animation) {
             [self playShowAnimationOverActualLoadedData];
         }
     } else if ([self.dataSource showNoItemsLabelIfAppropiateInReportAreaView:self]) {
-        [self addSubview:self.noItemsLabel];
-        [self endReloadDataWithAnimation];
+        [self showNoItemsLabel:YES withAnimation:animation completion:^{
+            [self endReloadDataWithAnimation];
+        }];
+    } else {
+        [self showNoItemsLabel:NO withAnimation:animation completion:^{
+            [self endReloadDataWithAnimation];
+        }];
+    }
+}
+
+- (void)showNoItemsLabel:(BOOL)show withAnimation:(BOOL)animation completion:(void(^)(void))completionBlock
+{
+    const BOOL ignoreBecouseSameState = show ? self.noItemsLabel.superview == self && self.noItemsLabel.alpha == 1.0 : self.noItemsLabel.superview == nil;
+    
+    if (!ignoreBecouseSameState) {
+        self.noItemsLabel.alpha = 1.0;
+        
+        if (animation) {
+            [self addSubview:self.noItemsLabel];
+            self.noItemsLabel.alpha = show ? 0.0 : 1.0;
+            [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+            [UIView animateWithDuration:KDurationOfNoItemsLabelAnimations animations:^{
+                self.noItemsLabel.alpha = show ? 1.0 : 0.0;
+            } completion:^(BOOL finished) {
+                if (completionBlock) {
+                    completionBlock();
+                }
+                if (!show) {
+                    [self.noItemsLabel removeFromSuperview];
+                }
+            }];
+        } else {
+            if (show) {
+                [self addSubview:self.noItemsLabel];
+            } else {
+                [self.noItemsLabel removeFromSuperview];
+            }
+            if (completionBlock) {
+                completionBlock();
+            }
+        }
+    } else {
+        if (completionBlock) {
+            completionBlock();
+        }
     }
 }
 

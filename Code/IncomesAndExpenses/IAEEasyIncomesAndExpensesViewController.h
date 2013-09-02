@@ -18,6 +18,7 @@
 #import "IAETextRawSelectorMenuViewDelegate.h"
 #import "IAEStrokeAnimatableViewDelegate.h"
 #import "IAEEasyIncomesAndExpensesViewControllerQuery.h"
+#import "IAEReportAreaViewDelegate.h"
 
 @interface IAEEasyIncomesAndExpensesViewController : UIViewController<UIPopoverControllerDelegate,
                                                                       IAESelectorContextViewDelegate,
@@ -31,6 +32,7 @@
                                                                       IAECalculatorViewControllerDelegate,
                                                                       IAETextRawSelectorMenuViewDelegate,
                                                                       IAEStrokeAnimatableViewDelegate,
+                                                                      IAEReportAreaViewDelegate,
                                                                       IAEEasyIncomesAndExpensesViewControllerQuery>
 
 - (IBAction)categoriesButtonPressed:(id)sender;

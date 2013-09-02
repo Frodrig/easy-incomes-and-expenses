@@ -21,22 +21,12 @@ static NSString * const easyIncomesAndExpensesViewControllerID = @"EasyIncomesAn
 
 static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
 
-//static CGFloat kNavigationBarTintColorWhiteComponents = 0.6;
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [self processProcessInfoEnvironment];
-    
     [self createYearBookIfProceed];
     [self prepareDefaults];
-    
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.backgroundColor = [UIColor whiteColor];
-    UIViewController *rootViewController = [self instantiateFromStoryBoardEasyIncomesViewController];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:rootViewController];
-    navigationController.navigationBar.tintColor = [UIColor colorWithWhite:kGlobalTintColorForWhiteComponent alpha:1.0];
-    self.window.rootViewController = navigationController;
-    [self.window makeKeyAndVisible];
+    [self createWindowAssignNavigationControlerAndMakeVisible];
     
     return YES;
 }
@@ -74,6 +64,23 @@ static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
     // Defaults del registration  domain
     NSDictionary *defaults = @{kUserDefaultsDayModeActiveKey: [NSNumber numberWithBool:NO]};
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
+}
+
+- (void)createWindowAssignNavigationControlerAndMakeVisible
+{
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.rootViewController = [self makeNavigationControllerWithRootController];
+    [self.window makeKeyAndVisible];
+}
+
+- (UINavigationController *)makeNavigationControllerWithRootController
+{
+    UIViewController *rootViewController = [self instantiateFromStoryBoardEasyIncomesViewController];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:rootViewController];
+    navigationController.navigationBar.tintColor = [UIColor colorWithWhite:kGlobalTintColorForWhiteComponent alpha:1.0];
+    
+    return navigationController;
 }
 
 - (void)createYearTest
@@ -117,6 +124,7 @@ static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
     [[IAEBook sharedBook] saveAll];
 }
 
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -125,34 +133,14 @@ static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    //[[IAEBook sharedBook] saveAll];
-
-    /*
-    IAEIncomeExpenseControllerViewController *rootController = (IAEIncomeExpenseControllerViewController *) self.window.rootViewController;
-    [[NSUserDefaults standardUserDefaults] setInteger:[rootController actualDateStateYear] != nil ? [rootController actualDateStateYear].yearDate : -1 forKey:@"yearBeforeEnterBackground"];
-    [[NSUserDefaults standardUserDefaults] setInteger:[rootController actualDateStateMonth] != nil ? [rootController actualDateStateMonth].month - 1: -1 forKey:@"monthBeforeEnterBackground"];
-    [[NSUserDefaults standardUserDefaults] setBool:[rootController inputModeActive] forKey:@"inputModeBeforeEnterBackground"];
-
-    [[IAEBook sharedBook] unloadAll];
-    [rootController unloadConceptControllersGoingToBackground];
-     */
+    [[IAEBook sharedBook] saveAll];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    
-    // Carga todo pero sin recargar, es decir, si ya estaba cargado no hace nada
-    /*
-    NSInteger yearToRestore = [[NSUserDefaults standardUserDefaults] integerForKey:@"yearBeforeEnterBackground"];
-    if (yearToRestore != -1) {
-        [[IAEBook sharedBook] loadYear:yearToRestore];
-        IAEIncomeExpenseControllerViewController *rootController = (IAEIncomeExpenseControllerViewController *) self.window.rootViewController;
-        [rootController loadConceptControllersToRestoreFromBackgroundWithActualLoadedYearAndMonth:[[NSUserDefaults standardUserDefaults] integerForKey:@"monthBeforeEnterBackground"]];
-    }
-     */
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -162,8 +150,8 @@ static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    //[[IAEBook sharedBook] saveAll];
+    // Saves changes in the application's managed object context before the application terminates.
+    //[self saveContext];
 }
 
 

@@ -45,6 +45,8 @@
 - (IBAction)incomeButtonPressed:(id)sender;
 - (IBAction)expenseButtonPressed:(id)sender;
 
+- (void)hide;
+
 - (IBAction)categoryButtonPressed:(UIButton *)button;
 - (IBAction)dayButtonPressed:(UIButton *)button;
 - (IBAction)keyboardNumberPressed:(UIButton *)button;

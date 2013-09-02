@@ -400,6 +400,8 @@ static const CGFloat kRatioToDecideHideInDrag = 1.4;
 {
     [UIView animateWithDuration:animation ? kAnimationDurationShowHideAction : 0.0 animations:^{
         self.view.frame = show ? self.frameInVisibleMode : self.frameInHideMode;
+    } completion:^(BOOL finished) {
+        [self resetAmountPannel];
     }];
 }
 

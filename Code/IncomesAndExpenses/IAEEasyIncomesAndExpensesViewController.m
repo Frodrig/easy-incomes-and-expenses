@@ -56,6 +56,9 @@
 @property (weak, nonatomic) IBOutlet UIView *editAndReportModeContentContainerView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *modeSegmentedControl;
 @property (weak, nonatomic) IBOutlet UICollectionView *conceptsCollectionView;
+@property (nonatomic, strong) IAEYearSelectorViewController *yearSelectorViewController;
+@property (nonatomic, strong) IAECategorySelectorViewController *categoriesSelectorViewController;
+@property (nonatomic, strong) IAEAboutAndOptionsViewController *aboutAndOptionsViewController;
 @property (nonatomic, strong) IAEReportAreaView *reportAreaView;
 @property (nonatomic, strong) IAETextRawSelectorMenuView *contextMenuView;
 @property (nonatomic, strong) IAETextRawSelectorMenuView *reportMenuView;
@@ -244,6 +247,16 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 
 - (void)initAsObserverOfNotificationCenter
 {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationWillResignActive:)
+                                                 name:UIApplicationWillResignActiveNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationDidEnterBackground:)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(notificationCenterOnDayModeOn:)
                                                  name:kNotificationDayModeOnName
@@ -473,13 +486,13 @@ static const CGFloat kDurationModeFadeIn = 0.75;
                               CATEGORYSELECTOR_EXTRAACTION_ADD |
                               CATEGORYSELECTOR_EXTRAACTION_DONE |
                               CATEGORYSELECTOR_EXTRAACTION_DELETE;
-    IAECategorySelectorViewController *categorySelectorViewController = [[IAECategorySelectorViewController alloc] initWithExtraActions:extraActions
+    self.categoriesSelectorViewController = [[IAECategorySelectorViewController alloc] initWithExtraActions:extraActions
                                                                                                                    withSelectedCategory:nil];
-    categorySelectorViewController.showNumberOfConcepts = YES;
-    categorySelectorViewController.delegate = self;
-    categorySelectorViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+    self.categoriesSelectorViewController.showNumberOfConcepts = YES;
+    self.categoriesSelectorViewController.delegate = self;
+    self.categoriesSelectorViewController.modalPresentationStyle = UIModalPresentationFormSheet;
     
-    [self presentViewController:categorySelectorViewController animated:YES completion:nil];
+    [self presentViewController:self.categoriesSelectorViewController animated:YES completion:nil];
 }
 
 - (IBAction)yearsButtonPressed:(id)sender
@@ -489,19 +502,19 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 
 - (void)openModalForPresentYearSelectorViewController
 {
-    IAEYearSelectorViewController *yearSelectorViewController = [[IAEYearSelectorViewController alloc] initWithNibName:nil bundle:nil];
-    yearSelectorViewController.delegate = self;
-    yearSelectorViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+    self.yearSelectorViewController = [[IAEYearSelectorViewController alloc] initWithNibName:nil bundle:nil];
+    self.yearSelectorViewController.delegate = self;
+    self.yearSelectorViewController.modalPresentationStyle = UIModalPresentationFormSheet;
     
-    [self presentViewController:yearSelectorViewController animated:YES completion:nil];
+    [self presentViewController:self.yearSelectorViewController animated:YES completion:nil];
 }
 
 - (IBAction)settingsOptionPressed:(id)sender
 {
-    IAEAboutAndOptionsViewController *aboutAndOptionsViewController = [[IAEAboutAndOptionsViewController alloc] initWithNibName:nil bundle:nil];
-    aboutAndOptionsViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+    self.aboutAndOptionsViewController = [[IAEAboutAndOptionsViewController alloc] initWithNibName:nil bundle:nil];
+    self.aboutAndOptionsViewController.modalPresentationStyle = UIModalPresentationFormSheet;
     
-    [self presentViewController:aboutAndOptionsViewController animated:YES completion:nil];
+    [self presentViewController:self.aboutAndOptionsViewController animated:YES completion:nil];
 }
 
 - (IBAction)segmentedControlPressed:(UISegmentedControl *)sender
@@ -1646,6 +1659,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 {
     [self reloadAllWithAnimation:NO];
     [self goToTodayMonth];
+    self.yearSelectorViewController = nil;
 }
 
 - (void)reloadAllWithAnimation:(BOOL)animation
@@ -1723,6 +1737,26 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 - (void)notificationCenterOnDayModeOff:(NSNotification *)notification
 {
     [self.conceptsCollectionView reloadData];
+}
+
+- (void)applicationWillResignActive:(UIApplication *)application
+{
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    [self closeModalsAfterEnterBackground];
+}
+
+- (void)closeModalsAfterEnterBackground
+{
+    [self.yearSelectorViewController closeButtonPressed:nil];
+    /*[self.categoriesSelectorViewController doneButtonPressed:nil];
+    [self.aboutAndOptionsViewController doneButtonPressed:nil];
+    if (self.contextMenuView.currentOptionIndexSelected > 0 && [self isEditModeActive]) {
+        [self.calculatorViewController hide];
+    }
+     */
 }
 
 #pragma mark - IAEDayCalendarSelectorViewControllerDelegate

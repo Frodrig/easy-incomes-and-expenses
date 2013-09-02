@@ -15,4 +15,7 @@
                                                                IAEInfoAboutAndOptionsCollectionViewCellDelegate,
                                                                MFMailComposeViewControllerDelegate>
 
+- (IBAction)doneButtonPressed:(id)sender;
+- (IBAction)segmentedControlPressed:(UISegmentedControl *)segmentedControl;
+
 @end

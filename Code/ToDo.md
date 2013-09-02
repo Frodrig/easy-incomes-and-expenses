@@ -1,19 +1,14 @@
 # ToDo: Easy Incomes and Expenses.
 
-* Contextos
-** Transiciones al pulsar en un contexto
-*** Que sea suave la carga de conceptos
-*** Al transicionar en conceptos, se ha perdido la transición con fade. Sin embargo, si lo que hay es un warning, sí que se produce esa transición.
-**** Ya se realiza pero el código es MUY MEJORABLE Y OPTIMIZABLE habría que volver. Mirar el método updateContentInformationBasedInCurrentContext
+* Transiciones
+** -Mejoras y testeo-
 
 * Barra superior
 ** Pensar en como indicar que es un botón el título central.
 
 * Conceptos
 ** Al borrar, a veces, se produce salto a la hora de recargar el contenido. No he encontrado el patrón claro.
-
-* Transiciones modo edición - informe
-** Testear correcto funcionamiento
+** He logrado borrar conceptos para dejarlos a 0 y, sin embargo, el contador detenerse en una cifra superior a 0.
 
 * Settings
 ** Si se compra dominio, poner el enlace definitivo.

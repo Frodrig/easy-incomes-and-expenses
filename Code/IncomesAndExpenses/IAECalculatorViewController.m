@@ -186,6 +186,7 @@ static const CGFloat kRatioToDecideHideInDrag = 1.4;
 - (void)configureDisplayPanelCalculatorView
 {
     self.displayPanel.delegate = self;
+    self.displayPanel.dataSource = self;
 }
 
 - (void)dismissPopover
@@ -916,6 +917,13 @@ static const CGFloat kRatioToDecideHideInDrag = 1.4;
 {
     [self.dragPanel removeGestureRecognizer:self.panGestureRecognizer];
     self.panGestureRecognizer = nil;
+}
+
+#pragma mark - IAEDisplayPanelCalculatorDataSource
+
+- (BOOL)isDecimalPresentForDisplayPanelCalculatorView:(IAEDisplayPanelCalculatorView *)displayPanelCalculatorView
+{
+    return [self isDecimalPresent];
 }
 
 @end

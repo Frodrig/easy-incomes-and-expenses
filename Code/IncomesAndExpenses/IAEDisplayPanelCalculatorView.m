@@ -11,6 +11,7 @@
 #import "IAEColorHelper.h"
 #import "IAEStrokeAnimatableLineView.h"
 #import "IAEDisplayPanelCalculatorViewDelegate.h"
+#import "IAEDisplayPanelCalculatorViewDataSource.h"
 
 @interface IAEDisplayPanelCalculatorView()
 @property (nonatomic, weak) UIView *categoryContainerView;
@@ -256,7 +257,11 @@ static const CGFloat kAlphaValueForColorDisplay = 0.5;
 
 - (BOOL)canApplyStrokeToAmountLabel
 {
-    BOOL canApply = ![self.amountLabel.text isEqualToString:@"0"];
+    NSNumber *amountNumber = [[IAECurrencyManager sharedManager].currencyFormatter numberFromString:self.amountLabel.text];
+    BOOL noZeroValue = [amountNumber compare:[NSNumber numberWithInteger:0]] != NSOrderedSame;
+    BOOL zeroValue = !noZeroValue;
+    BOOL isDecimalPresent = [self.dataSource isDecimalPresentForDisplayPanelCalculatorView:self];
+    BOOL canApply = noZeroValue || (zeroValue && isDecimalPresent);
     
     return canApply;
 }

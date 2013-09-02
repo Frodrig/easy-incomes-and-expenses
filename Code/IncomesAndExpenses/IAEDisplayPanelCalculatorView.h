@@ -10,10 +10,12 @@
 #import "IAEStrokeAnimatableViewDelegate.h"
 
 @protocol IAEDisplayPanelCalculatorViewDelegate;
+@protocol IAEDisplayPanelCalculatorViewDataSource;
 
 @interface IAEDisplayPanelCalculatorView : UIView<IAEStrokeAnimatableViewDelegate>
 
 @property (nonatomic, weak) id<IAEDisplayPanelCalculatorViewDelegate> delegate;
+@property (nonatomic, weak) id<IAEDisplayPanelCalculatorViewDataSource> dataSource;
 
 - (void)setCategoryName:(NSString *)categoryName;
 - (void)setDay:(NSUInteger)day withDayweekName:(NSString *)dayWeekName inMonthName:(NSString *)monthName ofYearName:(NSString *)yearName;

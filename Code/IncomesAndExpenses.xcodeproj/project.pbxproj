@@ -270,6 +270,7 @@
 		5BA51A7B1796D81E00A3D923 /* IAEInfoAboutAndOptionsCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEInfoAboutAndOptionsCollectionViewCell.m; sourceTree = "<group>"; };
 		5BA51A7D1796DA2000A3D923 /* IAEInfoAboutAndOptionsCollectionViewCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEInfoAboutAndOptionsCollectionViewCellDelegate.h; sourceTree = "<group>"; };
 		5BAA5E46170988AC00B6B3F8 /* IncomesAndExpenses copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "IncomesAndExpenses copy-Info.plist"; path = "/Users/fernandorodriguezmartinez/Trabajo/Freelance/Git/Easy Incomes and Expenses/Code/IncomesAndExpenses copy-Info.plist"; sourceTree = "<absolute>"; };
+		5BB2048B17D47E7100563B7C /* IAEDisplayPanelCalculatorViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEDisplayPanelCalculatorViewDataSource.h; sourceTree = "<group>"; };
 		5BC110FE17CD1DF500FF6D6B /* 730-envelope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "730-envelope.png"; sourceTree = "<group>"; };
 		5BC110FF17CD1DF500FF6D6B /* 730-envelope@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "730-envelope@2x.png"; sourceTree = "<group>"; };
 		5BC31A8316651F1F009F23D6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -942,6 +943,7 @@
 				5B90783A179D268000B2A0F7 /* IAEDisplayPanelCalculatorView.h */,
 				5B90783B179D268000B2A0F7 /* IAEDisplayPanelCalculatorView.m */,
 				5B2AAA2817C748B900E7C7A5 /* IAEDisplayPanelCalculatorViewDelegate.h */,
+				5BB2048B17D47E7100563B7C /* IAEDisplayPanelCalculatorViewDataSource.h */,
 			);
 			name = "Display Panel";
 			sourceTree = "<group>";

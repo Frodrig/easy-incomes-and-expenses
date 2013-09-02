@@ -45,8 +45,8 @@ static const CGFloat kFontFamilyKernForAmountLabel = 0.0;
 static const CGFloat kDurationOfTransitionWhenDayActive = 0.25;
 
 static const CGFloat kDurationOfStrokeAnimation = 0.25;
-static const CGFloat kColorWhiteComponentForStrokeAnimationForConcepts = 0.8;
-static const CGFloat kColorWhiteAlphaComponentForStrokeAnimationForConcepts = 1.0;
+static const CGFloat kColorWhiteComponentForStrokeAnimationForConcepts = 1;
+static const CGFloat kColorWhiteAlphaComponentForStrokeAnimationForConcepts = 0.3;
 static const StrokeType kTypeStrokeAnimationForConcepts = STROKEANIMATABLE_TYPE_THIN;
 
 static const CGFloat kAlphaValueForAmountLabelInStrokeState = 0.1;

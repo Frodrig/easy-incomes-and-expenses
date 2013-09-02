@@ -27,7 +27,7 @@
 ** Considerar alguna animación característica al cambiar en el menú de contexto.
 
 * Selección fecha
-** En inglés parece que está todo descolocado en un día. En español funciona bien.
+# -En inglés parece que está todo descolocado en un día. En español funciona bien.-
 
 * Inicio e iconos
 ** Pantalla de inicio
@@ -39,6 +39,7 @@
 
 * Calculadora
 ** Se ha quedado el tachado en rojo
+** Se permite tachar aunque no haya valor alguno
 
 * Problemas conocidos
 ** Al pasar de un mes sin conceptos en modo informe en la sección balance a otro adyacente con conceptos, no se cargo el informe de balance. Tuve que dar más saltos por la aplicación para que saliera. Lo he conseguido reproducir con relativa facilidad una vez visto.
@@ -56,6 +57,8 @@
 ** Contraseña
 
 * Ideas
+** Calculadora:
+*** Tachar supondría no dibujar la raya y si enviar lejos la cantidad
 ** Mes actual
 ** Si estamos con el año actual abierto, mostramos algún indicativo sobre el mes actual.
 ** Años

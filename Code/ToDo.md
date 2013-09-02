@@ -14,10 +14,10 @@
 ** Si se compra dominio, poner el enlace definitivo.
 
 * Gestión entrada y salida de la aplicación.
-** Código relacionado.
+** -Código relacionado.-
 
 * Año abierto
-** Al salir de la aplicación recordamos el año abierto y mes en el que nos encontrábamos. Al volver de la aplicación, si ha pasado más de un día desde que saliéramos, cargamos el año actual y nos ponemos sobre el mes actual.
+** -No hay que hacer nada. Si se cierra la aplicación, se guarda el estado del año en el que estamos. Si la aplicación es terminada, se arranca en el año actual. A priori no tenemos porqué procuparnos. Quedaríamos a la espera de hacer pruebas en instruments.-
 ** Considerar un color diferente en el menú de contexto
 ** Considerar alguna animación característica al cambiar en el menú de contexto.
 
@@ -28,7 +28,8 @@
 ** -En inglés parece que está todo descolocado en un día. En español funciona bien.-
 
 * Inicio e iconos
-** Pantalla de inicio
+** -Pantalla de inicio-
+** Transición desde la pantalla de inicio.
 ** Icono
 
 * Localización
@@ -41,7 +42,7 @@
 ** -Se permite tachar aunque no haya valor alguno-
 
 * Problemas conocidos
-** Al pasar de un mes sin conceptos en modo informe en la sección balance a otro adyacente con conceptos, no se cargo el informe de balance. Tuve que dar más saltos por la aplicación para que saliera. Lo he conseguido reproducir con relativa facilidad una vez visto.
+** -Al pasar de un mes sin conceptos en modo informe en la sección balance a otro adyacente con conceptos, no se cargo el informe de balance. Tuve que dar más saltos por la aplicación para que saliera. Lo he conseguido reproducir con relativa facilidad una vez visto.-
 
 * Refactorización
 ** En todos los sitios donde vuelvo a recrear la fuente y su tamaño… simplemente cambiar el campo text para la label asociada. Esto es válido a no ser que tenga que poner kern.

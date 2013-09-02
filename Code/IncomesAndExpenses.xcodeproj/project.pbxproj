@@ -63,8 +63,6 @@
 		5B6E9FA7177D9C950072EE34 /* UIView+LoadFromXib.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6E9FA6177D9C950072EE34 /* UIView+LoadFromXib.m */; };
 		5B7319F31796A8AB00FAF632 /* IAEInfoAboutAndOptionsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B26461C1796A1CA006F6E58 /* IAEInfoAboutAndOptionsCollectionViewCell.xib */; };
 		5B7602B617C3CC9E009920CD /* IAECategoryWithNumberOfConceptsTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B7602B517C3CC9E009920CD /* IAECategoryWithNumberOfConceptsTableView.xib */; };
-		5B76116416C56C7300558D6D /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B76116316C56C7300558D6D /* Default-Landscape~ipad.png */; };
-		5B76116816C56C7A00558D6D /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B76116716C56C7A00558D6D /* Default-Landscape@2x~ipad.png */; };
 		5B767DF71636D7FC005315F8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B767DF61636D7FC005315F8 /* UIKit.framework */; };
 		5B767DF91636D7FC005315F8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B767DF81636D7FC005315F8 /* Foundation.framework */; };
 		5B767DFB1636D7FC005315F8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B767DFA1636D7FC005315F8 /* CoreGraphics.framework */; };
@@ -100,6 +98,7 @@
 		5BC7101A17AC29F600E12953 /* IAEConcept.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC7101417AC29F600E12953 /* IAEConcept.m */; };
 		5BC7101B17AC29F600E12953 /* IAEMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC7101517AC29F600E12953 /* IAEMonth.m */; };
 		5BC7101C17AC29F600E12953 /* IAEYear.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC7101617AC29F600E12953 /* IAEYear.m */; };
+		5BCCC91717D5008E00FC1A05 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BCCC91617D5008E00FC1A05 /* Images.xcassets */; };
 		5BCE3A9F17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3A9E17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m */; };
 		5BCE3AA117A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BCE3AA017A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib */; };
 		5BCE3AA817A95D5300CD01E7 /* IAENumberUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3AA717A95D5300CD01E7 /* IAENumberUtils.m */; };
@@ -112,6 +111,8 @@
 		5BD06168163A8CFF00A80BE3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD06167163A8CFF00A80BE3 /* CoreData.framework */; };
 		5BD94C0B1786B864009009B1 /* IAECategoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD94C0A1786B864009009B1 /* IAECategoryTableViewCell.m */; };
 		5BD94C0F1786B896009009B1 /* IAECategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BD94C0E1786B896009009B1 /* IAECategoryTableViewCell.xib */; };
+		5BE82E3017D5045F00C10B42 /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BE82E2E17D5045F00C10B42 /* Default-Landscape.png */; };
+		5BE82E3117D5045F00C10B42 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BE82E2F17D5045F00C10B42 /* Default-Landscape@2x~ipad.png */; };
 		5BEA608217A6A36600520E09 /* IAEReportAreaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA608117A6A36600520E09 /* IAEReportAreaView.m */; };
 		5BEA608717A6A39400520E09 /* IAEReportAreaItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA608617A6A39400520E09 /* IAEReportAreaItemView.m */; };
 		5BEA98AB1793E3A500098AE0 /* IAECircleDecoratorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA98AA1793E3A500098AE0 /* IAECircleDecoratorView.m */; };
@@ -215,8 +216,6 @@
 		5B6E9FA5177D9C950072EE34 /* UIView+LoadFromXib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+LoadFromXib.h"; sourceTree = "<group>"; };
 		5B6E9FA6177D9C950072EE34 /* UIView+LoadFromXib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+LoadFromXib.m"; sourceTree = "<group>"; };
 		5B7602B517C3CC9E009920CD /* IAECategoryWithNumberOfConceptsTableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAECategoryWithNumberOfConceptsTableView.xib; sourceTree = "<group>"; };
-		5B76116316C56C7300558D6D /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
-		5B76116716C56C7A00558D6D /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
 		5B767DF21636D7FC005315F8 /* Easy Inc & Exp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Easy Inc & Exp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B767DF61636D7FC005315F8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5B767DF81636D7FC005315F8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -291,6 +290,7 @@
 		5BC7101617AC29F600E12953 /* IAEYear.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IAEYear.m; path = IncomesAndExpenses/IAEYear.m; sourceTree = "<group>"; };
 		5BC7102217AC2A5900E12953 /* IAECategoryEditorDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IAECategoryEditorDefs.h; path = IncomesAndExpenses/IAECategoryEditorDefs.h; sourceTree = "<group>"; };
 		5BC7102317AC2B0900E12953 /* CategoryDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryDefs.h; sourceTree = "<group>"; };
+		5BCCC91617D5008E00FC1A05 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5BCE3A9D17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEditModeConceptCollectionViewHeader.h; sourceTree = "<group>"; };
 		5BCE3A9E17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEditModeConceptCollectionViewHeader.m; sourceTree = "<group>"; };
 		5BCE3AA017A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEEditModeConceptCollectionViewHeader.xib; sourceTree = "<group>"; };
@@ -313,6 +313,8 @@
 		5BD94C0A1786B864009009B1 /* IAECategoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECategoryTableViewCell.m; sourceTree = "<group>"; };
 		5BD94C0E1786B896009009B1 /* IAECategoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAECategoryTableViewCell.xib; sourceTree = "<group>"; };
 		5BD94C111786D051009009B1 /* IAECategorySelectorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategorySelectorViewControllerDelegate.h; sourceTree = "<group>"; };
+		5BE82E2E17D5045F00C10B42 /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape.png"; sourceTree = "<group>"; };
+		5BE82E2F17D5045F00C10B42 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
 		5BEA607E17A66BB000520E09 /* IAETextRawSelectorMenuViewDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAETextRawSelectorMenuViewDefs.h; sourceTree = "<group>"; };
 		5BEA608017A6A36600520E09 /* IAEReportAreaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEReportAreaView.h; sourceTree = "<group>"; };
 		5BEA608117A6A36600520E09 /* IAEReportAreaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEReportAreaView.m; sourceTree = "<group>"; };
@@ -786,9 +788,9 @@
 				5B8A31D016C90911008731AD /* 72@2x.png */,
 				5B8A31CD16C90901008731AD /* 72.png */,
 				5B8A31CB16C9088D008731AD /* Default-Portrait@2x~ipad.png */,
+				5BE82E2E17D5045F00C10B42 /* Default-Landscape.png */,
+				5BE82E2F17D5045F00C10B42 /* Default-Landscape@2x~ipad.png */,
 				5B8A31C816C904D2008731AD /* Default-Portrait~ipad.png */,
-				5B76116716C56C7A00558D6D /* Default-Landscape@2x~ipad.png */,
-				5B76116316C56C7300558D6D /* Default-Landscape~ipad.png */,
 				5B0F8BC116B94A7B002D62A5 /* Localizacion */,
 				5B29ED30179FC2C300FCC5C6 /* Resources */,
 				5B767DFC1636D7FC005315F8 /* IncomesAndExpenses */,
@@ -833,6 +835,7 @@
 				5B767DFD1636D7FC005315F8 /* Supporting Files */,
 				5B767E051636D7FC005315F8 /* IAEAppDelegate.h */,
 				5B767E061636D7FC005315F8 /* IAEAppDelegate.m */,
+				5BCCC91617D5008E00FC1A05 /* Images.xcassets */,
 			);
 			path = IncomesAndExpenses;
 			sourceTree = "<group>";
@@ -1352,10 +1355,12 @@
 				5B2A41B017C77C8100C29036 /* 765-arrow-left.png in Resources */,
 				5B767E091636D7FC005315F8 /* Default.png in Resources */,
 				5B767E0B1636D7FC005315F8 /* Default@2x.png in Resources */,
+				5BE82E3117D5045F00C10B42 /* Default-Landscape@2x~ipad.png in Resources */,
 				5B2A41B517C77E8500C29036 /* 709-plus@2x.png in Resources */,
 				5B2AAA2C17C773C500E7C7A5 /* 746-plus-circle@2x.png in Resources */,
 				5B23FD9217CFAB5100B4AD77 /* 727-more@2x.png in Resources */,
 				5B23FD9117CFAB5100B4AD77 /* 727-more.png in Resources */,
+				5BE82E3017D5045F00C10B42 /* Default-Landscape.png in Resources */,
 				5B18053317BBC93500EB8ABF /* ToDo.md in Resources */,
 				5B2D38B817AFA8CE0056488B /* IAEWithoutConceptsTextWarning.xib in Resources */,
 				5B7602B617C3CC9E009920CD /* IAECategoryWithNumberOfConceptsTableView.xib in Resources */,
@@ -1380,11 +1385,10 @@
 				5B5544A2177460DD009CFC84 /* Main.storyboard in Resources */,
 				5BD94C0F1786B896009009B1 /* IAECategoryTableViewCell.xib in Resources */,
 				5B55C407178AA8C20066F586 /* IAECategoryEditorViewController.xib in Resources */,
-				5B76116416C56C7300558D6D /* Default-Landscape~ipad.png in Resources */,
 				5BCE3AA117A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib in Resources */,
+				5BCCC91717D5008E00FC1A05 /* Images.xcassets in Resources */,
 				5B2AAA3217C7747100E7C7A5 /* 747-minus-circle.png in Resources */,
 				5B2AAA2B17C773C500E7C7A5 /* 746-plus-circle.png in Resources */,
-				5B76116816C56C7A00558D6D /* Default-Landscape@2x~ipad.png in Resources */,
 				5B8A31CF16C9090E008731AD /* 72.png in Resources */,
 				5B8A31D116C90911008731AD /* 72@2x.png in Resources */,
 				5B62D85D178EA8A2009879A6 /* IAEYearSelectorCollectionViewCell.xib in Resources */,

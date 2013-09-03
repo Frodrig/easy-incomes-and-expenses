@@ -10,7 +10,7 @@
 ** Si se compra dominio, poner el enlace definitivo.
 
 * Año
-** ¿Algún efecto indicativo del cambio de año?
+** -¿Algún efecto indicativo del cambio de año?-
 
 * Inicio e iconos
 ** Transición desde la pantalla de inicio.

@@ -1737,6 +1737,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 
 - (void)yearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController didLoadSelectedYearDate:(NSUInteger)yearDate
 {
+    [self.contextMenuView animateOptionAtIndex:0 withAnimationType:TextRawSelectorAnimation_DestroyWithGosthAndReload];
     [self reloadAllWithAnimation:YES];
     self.yearSelectorViewController = nil;
 }
@@ -1761,7 +1762,8 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 
 - (void)yearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController didCreateAndLoadSelectedYearDate:(NSUInteger)yearDate
 {
-    [self reloadAllWithAnimation:NO];
+    [self.contextMenuView animateOptionAtIndex:0 withAnimationType:TextRawSelectorAnimation_DestroyWithGosthAndReload];
+    [self reloadAllWithAnimation:YES];
     [self goToTodayMonth];
 }
 

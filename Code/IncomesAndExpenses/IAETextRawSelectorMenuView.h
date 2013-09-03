@@ -15,6 +15,7 @@
 typedef NS_ENUM(NSUInteger, TextRawSelectorAnimationType) {
   TextRawSelectorAnimation_Blink,
   TextRawSelectorAnimation_Rotation,
+  TextRawSelectorAnimation_DestroyWithGosthAndReload,
 };
 
 @interface IAETextRawSelectorMenuView : UIView
@@ -27,6 +28,7 @@ typedef NS_ENUM(NSUInteger, TextRawSelectorAnimationType) {
 
 - (void)reloadData;
 - (void)reloadOptionsStringNames;
+- (void)reloadOptionStringNameAtIndex:(NSUInteger)index;
 
 - (void)animateOptionAtIndex:(NSUInteger)index withAnimationType:(TextRawSelectorAnimationType)animationType;
 

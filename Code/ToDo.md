@@ -6,11 +6,11 @@
 * Contextos
 ** Cambiar de contexto A a contexto B y antes de que B esté en pantalla cambiar a A, hace doble carga sobre el contenido de A.
 
-* Conceptos
-** Hacer scroll de conceptos y cambiar de contexto y volver se produce el parpadeo de lo que ya tenemos cargado.
-
 * Settings
 ** Si se compra dominio, poner el enlace definitivo.
+
+* Año
+** ¿Algún efecto indicativo del cambio de año?
 
 * Inicio e iconos
 ** Transición desde la pantalla de inicio.

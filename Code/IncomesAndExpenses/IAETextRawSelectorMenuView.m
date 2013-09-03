@@ -32,6 +32,9 @@ static const CGFloat kDurationOfContainerViewEnableDisableEffect = 0.5;
 static const CGFloat kAlphaValueOfContainerViewInDisabledMode = 0.25;
 
 static const CGFloat kDurationOfAnimationOption = 0.5;
+static const CGFloat kDurationOfAnimationOptionDestroyWithGosth = 0.75;
+static const CGFloat kDistanceOfAnimationOptionDestroyWithGosth = 25;
+static const CGFloat kMinimumAlphaOfAnimationOptionDestroyWithGosth = 0.1;
 
 #pragma mark - properties
 
@@ -145,11 +148,18 @@ static const CGFloat kDurationOfAnimationOption = 0.5;
     
     NSUInteger numberOfItems = [self.dataSource numberOfOptionsInTextRawSelectorMenu:self];
     for (NSUInteger itemIt = 0; itemIt < numberOfItems; ++itemIt) {
-        NSString *newTitle = [self.dataSource textRawSelectorMenu:self optionStringNameAtIndex:itemIt];
-        NSUInteger tagOfItemIt = [self createTagForButtonAtIndex:itemIt];
-        UIButton *option = (UIButton *)[self viewWithTag:tagOfItemIt];
-        [option setAttributedTitle:[self createAttributedStringForOptionAtIndex:itemIt withString:newTitle] forState:UIControlStateNormal];
+        [self reloadOptionStringNameAtIndex:itemIt];
     }
+}
+
+- (void)reloadOptionStringNameAtIndex:(NSUInteger)index
+{
+    NSString *newTitle = [self.dataSource textRawSelectorMenu:self optionStringNameAtIndex:index];
+    NSUInteger tagOfItemIt = [self createTagForButtonAtIndex:index];
+    UIButton *option = (UIButton *)[self viewWithTag:tagOfItemIt];
+    [option setAttributedTitle:[self createAttributedStringForOptionAtIndex:index withString:newTitle]
+                      forState:UIControlStateNormal];
+
 }
 
 - (void)removeAllMenuOptions
@@ -344,6 +354,8 @@ static const CGFloat kDurationOfAnimationOption = 0.5;
         [self animateWithBlinkTheOption:option];
     } else if (animationType == TextRawSelectorAnimation_Rotation) {
         [self animationWithRotationTheOption:option];
+    } else if (animationType == TextRawSelectorAnimation_DestroyWithGosthAndReload) {
+        [self animationWithDestroyWithGosthTheOption:option atIndex:index];
     }
 }
 
@@ -374,6 +386,31 @@ static const CGFloat kDurationOfAnimationOption = 0.5;
             }];
         }];
     }];
+}
+
+- (void)animationWithDestroyWithGosthTheOption:(UIButton *)option atIndex:(NSUInteger)index
+{
+    UIButton *cloneOption = [self cloneOptionButton:option];
+    [self.containerView addSubview:cloneOption];
+
+    [UIView setAnimationBeginsFromCurrentState:UIViewAnimationCurveEaseOut];
+    [UIView animateWithDuration:kDurationOfAnimationOptionDestroyWithGosth animations:^{
+        cloneOption.center = CGPointMake(cloneOption.center.x, cloneOption.center.y + kDistanceOfAnimationOptionDestroyWithGosth);
+        cloneOption.alpha = kMinimumAlphaOfAnimationOptionDestroyWithGosth;
+    } completion:^(BOOL finished) {
+        [cloneOption removeFromSuperview];
+    }];
+}
+
+- (UIButton *)cloneOptionButton:(UIButton *)option
+{
+    UIButton *cloneOption = [UIButton buttonWithType:option.buttonType];
+    cloneOption.frame = option.frame;
+    [cloneOption setAttributedTitle:[option attributedTitleForState:UIControlStateNormal] forState:UIControlStateNormal];
+    cloneOption.backgroundColor = [UIColor clearColor];
+    
+    return cloneOption;
+
 }
 
 

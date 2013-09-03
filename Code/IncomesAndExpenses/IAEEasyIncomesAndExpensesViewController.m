@@ -553,11 +553,8 @@ static const CGFloat kDurationModeFadeIn = 0.75;
         self.reportAreaView.hidden = YES;
         self.reportMenuView.hidden = YES;
         self.reportMenuView.center = CGPointMake(self.reportMenuView.center.x, self.reportMenuView.center.y - self.reportMenuView.bounds.size.height);
-        if ([self findNumberOfConceptsOfActualSelectedContext:0] > 0) {
-            [self.conceptsCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
-        }
+        [self updateContentOfConceptsCollectionViewWithAnimation:NO];
         self.conceptsCollectionView.hidden = NO;
-        [self.conceptsCollectionView reloadData];
         self.calculatorViewController.view.hidden = NO;
         self.editAndReportModeContentContainerView.backgroundColor = [UIColor colorWithWhite:kColorWithWhiteForEditAndReportModeContentContainerBackground
                                                                                 alpha:1.0];
@@ -1108,7 +1105,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
             self.conceptsCollectionView.alpha = 0.0;
         } completion:^(BOOL finished) {
             [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:animation];
-            [self updateContentOfConceptsCollectionView];
+            [self updateContentOfConceptsCollectionViewWithAnimation:NO];
             [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
             [UIView animateWithDuration:kDurationOfEditConceptCollectionViewTransition animations:^{
                 self.conceptsCollectionView.alpha = 1.0;
@@ -1116,7 +1113,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
         }];
     } else {
         [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:animation];
-        [self updateContentOfConceptsCollectionView];
+        [self updateContentOfConceptsCollectionViewWithAnimation:NO];
     }
 }
 
@@ -1183,8 +1180,10 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     return YES;
 }
 
-- (void)updateContentOfConceptsCollectionView
+- (void)updateContentOfConceptsCollectionViewWithAnimation:(BOOL)animation
 {
+    CGRect frame = CGRectMake(0.0, 0.0, self.conceptsCollectionView.bounds.size.width, self.conceptsCollectionView.bounds.size.height);
+    [self.conceptsCollectionView scrollRectToVisible:frame animated:animation];
     [self.conceptsCollectionView reloadData];
 }
 
@@ -1630,7 +1629,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     [[IAECategoryStore sharedCategoryStore] removeCategoryByTag:tagOfCategory];
     [[IAEBook sharedBook] saveAll];
     
-    [self.conceptsCollectionView reloadData];
+    [self updateContentOfConceptsCollectionViewWithAnimation:NO];
     NSAssert([self categorySelectorViewControllerWasLaunchedFromCategoryButton], @"");
     [categorySelectorViewController reloadAfterRemoveCellWithCategoryTag:tagOfCategory];
 }
@@ -1673,12 +1672,12 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     [categoryEditorViewController dismissViewControllerAnimated:YES completion:nil];
     [categorySelector reloadData];
     
-    [self.conceptsCollectionView reloadData];
+    [self updateContentOfConceptsCollectionViewWithAnimation:NO];
 }
 
 - (void)returnToUpdatedEditModeViewControllerFromCategoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
 {
-    [self.conceptsCollectionView reloadData];
+    [self updateContentOfConceptsCollectionViewWithAnimation:NO];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -1770,12 +1769,12 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 
 - (void)notificationCenterOnDayModeOn:(NSNotification *)notification
 {
-    [self.conceptsCollectionView reloadData];
+    [self updateContentOfConceptsCollectionViewWithAnimation:NO];
 }
 
 - (void)notificationCenterOnDayModeOff:(NSNotification *)notification
 {
-    [self.conceptsCollectionView reloadData];
+    [self updateContentOfConceptsCollectionViewWithAnimation:NO];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -1813,7 +1812,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     if (self.conceptChangingDay.dayOfTheMonth != day) {
         self.conceptChangingDay.dayOfTheMonth = day;
         [[IAEBook sharedBook] saveAll];
-        [self.conceptsCollectionView reloadData];
+        [self updateContentOfConceptsCollectionViewWithAnimation:NO];
     }
 }
 

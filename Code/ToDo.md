@@ -3,11 +3,15 @@
 * Barra superior
 ** Pensar en como indicar que es un botón el título central.
 
+* Contextos
+** Cambiar de contexto A a contexto B y antes de que B esté en pantalla cambiar a A, hace doble carga sobre el contenido de A.
+
 * Conceptos
 ** Al borrar, a veces, se produce salto a la hora de recargar el contenido. No he encontrado el patrón claro.
-
 *** Si se borra mientras se está haciendo scroll de la calculadora.
 ** El código que ubica el scroll en primera posición, a veces falla porque, al parecer, no hay conceptos.
+*** Hacer scroll de conceptos y cambiar de contexto y volver. 
+*** Además, se ha probado que el scroll no se realiza bien arriba del todo.
 ** Al borrar de forma desordenada, breakpoint en removeConceptAndUpdateBalancesOfCell en         [self.conceptsCollectionView deleteItemsAtIndexPaths:@[[self.conceptsCollectionView indexPathForCell:cell]]];
 
 * Settings

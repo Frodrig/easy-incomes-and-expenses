@@ -5,6 +5,7 @@
 
 * Contextos
 ** Cambiar de contexto A a contexto B y antes de que B esté en pantalla cambiar a A, hace doble carga sobre el contenido de A.
+*** -Poca cosa vamos a poder hacer por ahora. Acelerado el tiempo de la animación de fx de cambio de contexto para provocar una carga más temprana del contenido.-
 
 * Conceptos
 ** -El código que ubica el scroll en primera posición, a veces falla porque, al parecer, no hay conceptos.-
@@ -16,7 +17,11 @@
 ** Si se compra dominio, poner el enlace definitivo.
 
 * Año abierto
-** Ocurrió que al ir a cargar el modal, saltó assert indicando que o no había o había más de uno cargado. Ojo.
+** -Al cambiar de año en modo reporte, no recargamos contenido.-
+** -Al cambiar de año deberíamos de respetar el contexto actualmente seleccionado.-
+** -Ocurrió que al ir a cargar el modal, saltó assert indicando que o no había o había más de uno cargado. Ojo.-
+*** -¿Pasos de reproducción?-
+**** -No he sido capaz de reproducirlo-
 
 * Inicio e iconos
 ** Transición desde la pantalla de inicio.

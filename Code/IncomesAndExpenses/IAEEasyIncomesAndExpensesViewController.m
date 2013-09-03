@@ -1347,10 +1347,13 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 - (void)swipeOnConceptsCollectionView:(UIGestureRecognizer *)swipeGestureRecognizer
 {
     if ([self canSwipeOnConceptsCollectionView]) {
+        // Nota: Puede venir un concepto nulo por hacer strike en una zona hueca
         self.conceptCellToRemove = [self findConceptCellUnderLocationOfGestureRecognizer:swipeGestureRecognizer];
-        self.conceptCellToRemove.durationOfStrokeStateTransition = self.strokeAnimatableLineView.durationOfStrokeAnimation;
-        [self.strokeAnimatableLineView doStrokeOverTheView:self.conceptCellToRemove.conceptInformationContainerView];
-        [self.conceptCellToRemove goToStrokeState];
+        if (self.conceptCellToRemove) {
+            self.conceptCellToRemove.durationOfStrokeStateTransition = self.strokeAnimatableLineView.durationOfStrokeAnimation;
+            [self.strokeAnimatableLineView doStrokeOverTheView:self.conceptCellToRemove.conceptInformationContainerView];
+            [self.conceptCellToRemove goToStrokeState];
+        }
     }
 }
 
@@ -1496,6 +1499,8 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 
 - (void)removeConceptAndUpdateBalancesOfCell:(UICollectionViewCell *)cell withAnimation:(BOOL)animation
 {
+    NSAssert(cell, @"");
+
     IAEConcept *concept = [self findConceptOfCell:cell];
     IAEMonth *month = [self findActualSelectedMonth];
     const NSUInteger numberOfConceptsBeforeRemove = month.concepts.count;
@@ -1507,10 +1512,12 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     [[IAEBook sharedBook] saveAll];
     
     [self.conceptsCollectionView performBatchUpdates:^{
-        [self.conceptsCollectionView deleteItemsAtIndexPaths:@[[self.conceptsCollectionView indexPathForCell:cell]]];
+        // En algunas ocasiones nos ha dado fallo en este punto porque indexPathOfCell era nil
+        // Se han colocado assertos pero vamos a proteger por si acaso
+        [self.conceptsCollectionView deleteItemsAtIndexPaths:@[indexPathOfCell]];
         if (isLastCell && numberOfConceptsAfterRemove > 0) {
             NSIndexPath *indexPathOfNewLastCell = [NSIndexPath indexPathForRow:indexPathOfCell.row - 1
-                                                                  inSection:indexPathOfCell.section];
+                                                                     inSection:indexPathOfCell.section];
             [self.conceptsCollectionView reloadItemsAtIndexPaths:@[indexPathOfNewLastCell]];
         }
     } completion:^(BOOL finished) {

@@ -4,23 +4,27 @@
 ** Pensar en como indicar que es un botón el título central.
 
 * Conceptos
+** -Modificar categoría, cantidad o día con calculadora desplegada falla al no existir espacio.-
+** Popover de ajuste de categoría, cantidad y día
+*** Mientras se está haciendo scroll, no debería de poderse.
+*** Cuando el concepto está medio tapado, la ubicación no es del todo correcta.
+**** En la versión original, esto se corregía haciendo scroll del elemento y centrándolo en pantalla.
 ** Al borrar, a veces, se produce salto a la hora de recargar el contenido. No he encontrado el patrón claro.
 ** He logrado borrar conceptos para dejarlos a 0 y, sin embargo, el contador detenerse en una cifra superior a 0.
+** El código que ubica el scroll en primera posición, a veces falla porque, al parecer, no hay conceptos.
 
 * Settings
 ** Si se compra dominio, poner el enlace definitivo.
 
 * Año abierto
-** Considerar un color diferente en el menú de contexto
-** Considerar alguna animación característica al cambiar en el menú de contexto.
 ** Ocurrió que al ir a cargar el modal, saltó assert indicando que o no había o había más de uno cargado. Ojo.
-
-* Ayuda
-** ¿Podemos meter algo?
 
 * Inicio e iconos
 ** Transición desde la pantalla de inicio.
 ** Icono
+
+* Ayuda
+** ¿Podemos meter algo?
 
 * Refactorización
 ** En todos los sitios donde vuelvo a recrear la fuente y su tamaño… simplemente cambiar el campo text para la label asociada. Esto es válido a no ser que tenga que poner kern.
@@ -40,6 +44,8 @@
 ** Mes actual
 ** Si estamos con el año actual abierto, mostramos algún indicativo sobre el mes actual.
 ** Años
+*** Considerar un color diferente en el menú de contexto
+*** Considerar alguna animación característica al cambiar en el menú de contexto.
 *** Que se pueda deshablitar acceso a meses aún no disponibles.
 *** Que se pueda deshabilitar el tener en cuenta valores económicos de meses no cumplidos.
 *** Considerar que los años que no tengan conceptos sean más pequeños como celda.

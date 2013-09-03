@@ -1407,13 +1407,15 @@ static const CGFloat kDurationModeFadeIn = 0.75;
                                             translateViewFrameToGlobalCoordination.origin.y + 10.0,
                                             translateViewFrameToGlobalCoordination.size.width,
                                             translateViewFrameToGlobalCoordination.size.height - 10.0);
+    UIPopoverArrowDirection arrowDirection = [self.calculatorViewController isInVisibleMode] ? UIPopoverArrowDirectionUp: UIPopoverArrowDirectionDown;
     
     self.popover = [[UIPopoverController alloc] initWithContentViewController:viewController];
     self.popover.delegate = self;
     self.popover.popoverContentSize = viewController.view.bounds.size;
     [self.popover presentPopoverFromRect:presentPopoverFrame
                                   inView:view.superview
-                permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
+                permittedArrowDirections:arrowDirection
+                                animated:YES];
 }
 
 - (void)openPopoverForSelectDayOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell

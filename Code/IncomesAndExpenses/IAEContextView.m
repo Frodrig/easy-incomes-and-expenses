@@ -88,7 +88,7 @@ static const CGFloat kKernForBalanceLabel = 4;
 
 - (void)reloadDataWithoutAnimation
 {
-    [self configureContentNameLabelText:NO];
+    [self configureContentNameLabelText];
     NSString *balanceString = [self balanceStringValueForUpdateWithoutUsingAnimation];
     [self configureContentBalanceLabelText:NO fromBalanceStringValue:balanceString];
 }
@@ -102,7 +102,7 @@ static const CGFloat kKernForBalanceLabel = 4;
 
 - (void)reloadDataWithAnimationFromUsingZeroValue:(BOOL)fromZero
 {
-    [self configureContentNameLabelText:YES];
+    [self configureContentNameLabelText];
     NSString *balanceString = [self balanceStringValueForUpdateUsingAnimationFromZeroValue:fromZero];
     [self configureContentBalanceLabelText:YES fromBalanceStringValue:balanceString];
 }
@@ -115,7 +115,7 @@ static const CGFloat kKernForBalanceLabel = 4;
     return balanceString;
 }
 
-- (void)configureContentNameLabelText:(BOOL)animation
+- (void)configureContentNameLabelText
 {
     NSString *contentName = [self contentName];
     NSDictionary *attributes = [self createAttributeDictionaryForLabelsWithSize:kSizeFontForNameLabel

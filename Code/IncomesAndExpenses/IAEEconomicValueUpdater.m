@@ -21,6 +21,12 @@
 @implementation IAEEconomicValueUpdater
 
 
+#pragma mark - Constants
+
+static const CGFloat kRationOfDurationByUpdateProcessEconomicLabel = 0.1;
+
+#pragma mark - Properties
+
 - (NSMutableArray *)pendingLabelUpdates
 {
     if (!_pendingLabelUpdates) {
@@ -54,7 +60,9 @@
     if (![self isLabelCounterProcessingAnimation:label]) {
         [self createDisplayLinkRunLoopIfAppropiate];
         [self addNewEntryForEconomicLabel:label toValue:destinationValue withDuration:duration];
-    }    
+    } else {
+        [self updateProcessEconomicLabel:label withValue:destinationValue andDuration:duration];
+    }
 }
 
 - (void)createDisplayLinkRunLoopIfAppropiate
@@ -70,7 +78,9 @@
     [self.pendingLabelUpdates addObject:newLabelToUpdateEntry];
 }
 
-- (NSDictionary *)makeDictionaryEntryForLabel:(UILabel *)label destinationValue:(NSDecimalNumber *)destValue andDurationValue:(CGFloat)duration
+- (NSMutableDictionary *)makeDictionaryEntryForLabel:(UILabel *)label
+                                    destinationValue:(NSDecimalNumber *)destValue
+                                    andDurationValue:(CGFloat)duration
 {
     NSDecimalNumber *fromValue = [self extractDecimalNumberFromLabel:label];
     NSNumber *durationNumber = [NSNumber numberWithFloat:duration];
@@ -78,7 +88,7 @@
     
     NSArray *values = [NSArray arrayWithObjects:label, fromValue, [destValue copy], durationNumber, startTimeNumber, nil];
     NSArray *keys = [NSArray arrayWithObjects:@"label", @"from", @"to", @"duration", @"startTime", nil];
-    NSDictionary *dictionaryEntry = [NSDictionary dictionaryWithObjects:values forKeys:keys];
+    NSMutableDictionary *dictionaryEntry = [NSMutableDictionary dictionaryWithObjects:values forKeys:keys];
     
     return dictionaryEntry;
 }
@@ -90,6 +100,31 @@
 
      return decimalNumber;
 }
+
+- (void)updateProcessEconomicLabel:(UILabel *)label withValue:(NSDecimalNumber *)destValue andDuration:(CGFloat)duration
+{
+    NSMutableDictionary *informationOfLabel = [self findInPendingLabelUpdatesInformationOfLabel:label];
+    NSAssert(informationOfLabel, @"En este punto DEBERIA de existir entrada para el label");
+    
+    informationOfLabel[@"to"] = [destValue copy];
+    NSNumber *actualDuration = [informationOfLabel objectForKey:@"duration"];
+    CGFloat newDuration = actualDuration.floatValue + duration * kRationOfDurationByUpdateProcessEconomicLabel;
+    informationOfLabel[@"duration"] = @(newDuration);
+}
+
+- (NSMutableDictionary *)findInPendingLabelUpdatesInformationOfLabel:(UILabel *)label
+{
+    NSMutableDictionary *information = nil;
+    for (information in self.pendingLabelUpdates) {
+        UILabel *labelIt = information[@"label"];
+        if (label == labelIt) {
+            break;
+        }
+    }
+    
+    return information;
+}
+
 
 - (BOOL)isLabelCounterProcessingAnimation:(UILabel *)label
 {

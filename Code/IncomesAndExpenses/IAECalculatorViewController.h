@@ -31,7 +31,6 @@
 @property (nonatomic, readonly) CGFloat sizeHeightOffsetWhenShowed;
 @property (nonatomic, readonly) CGFloat sizeHeightOfDragPanel;
 @property (nonatomic, readonly, getter = isInDisableMode) BOOL disableMode;
-@property (nonatomic, readonly, getter = isInDragMode) BOOL dragMode;
 
 - (void)addPanGestureRecognizer:(UIPanGestureRecognizer *)panGestureRecognizer;
 - (void)removePanGestureRecognizer;
@@ -64,5 +63,7 @@
 - (void)disable;
 - (void)enable;
 - (BOOL)isDisabeOptionAvailable;
+
+- (BOOL)isAnyTranslationActive;
 
 @end

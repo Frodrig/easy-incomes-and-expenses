@@ -6,7 +6,7 @@
 * Conceptos
 ** -Modificar categoría, cantidad o día con calculadora desplegada falla al no existir espacio.-
 ** Popover de ajuste de categoría, cantidad y día
-*** Mientras se está haciendo scroll, no debería de poderse.
+*** Mientras se está haciendo scroll, no debería de poderse manipular: ni borrar, ni tap sobre cualquier zona.
 *** Cuando el concepto está medio tapado, la ubicación no es del todo correcta. En la versión original, esto se corregía haciendo scroll del elemento y centrándolo en pantalla.
 ** Al borrar, a veces, se produce salto a la hora de recargar el contenido. No he encontrado el patrón claro.
 ** -He logrado borrar conceptos para dejarlos a 0 y, sin embargo, el contador detenerse en una cifra superior a 0.-
@@ -33,6 +33,7 @@
 ** ¿Podemos meter algo?
 
 * Refactorización
+** ¡Warnings!
 ** En todos los sitios donde vuelvo a recrear la fuente y su tamaño… simplemente cambiar el campo text para la label asociada. Esto es válido a no ser que tenga que poner kern.
 *** En el caso de poner kern, la otra opción es obtener el diccionario de atributos, setear el kern y volver a recrear con esos atributos y el título que proceda.
 ** Las properties readonly se pueden redefinir en .m para que sean readwrite. Hay casos en los que debería de hacerlo.

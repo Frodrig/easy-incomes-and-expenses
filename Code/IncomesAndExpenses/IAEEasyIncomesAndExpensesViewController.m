@@ -1323,7 +1323,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 
 - (void)swipeOnConceptsCollectionView:(UIGestureRecognizer *)swipeGestureRecognizer
 {
-    if ([self isActualSelectedContextAMonth]) {
+    if ([self canSwipeOnConceptsCollectionView]) {
         self.conceptCellToRemove = [self findConceptCellUnderLocationOfGestureRecognizer:swipeGestureRecognizer];
         self.conceptCellToRemove.durationOfStrokeStateTransition = self.strokeAnimatableLineView.durationOfStrokeAnimation;
         [self.strokeAnimatableLineView doStrokeOverTheView:self.conceptCellToRemove.conceptInformationContainerView];
@@ -1331,14 +1331,28 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     }
 }
 
+- (BOOL)canSwipeOnConceptsCollectionView
+{
+    BOOL can = [self isActualSelectedContextAMonth] && ![self.calculatorViewController isAnyTranslationActive];
+    
+    return can;
+}
+
 #pragma mark - UITapGestureRecognizer
 
 - (void)tapOnConceptsCollectionView:(UITapGestureRecognizer *)tapGestureRecognizer
 {
     NSAssert(tapGestureRecognizer == self.tapConceptsRecognizer, @"");
-    if ([self isActualSelectedContextAMonth]) {
+    if ([self canTapOnConceptsCollectionView]) {
         [self findCellOfConceptCollectionViewAndExecuteActionUnderTapGesture:tapGestureRecognizer];
     }
+}
+
+- (BOOL)canTapOnConceptsCollectionView
+{
+    BOOL can = [self isActualSelectedContextAMonth] && ![self.calculatorViewController isAnyTranslationActive];
+    
+    return can;
 }
 
 - (void)findCellOfConceptCollectionViewAndExecuteActionUnderTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer

@@ -50,6 +50,7 @@ typedef NS_ENUM(NSUInteger, CalculatorMode) {
 @property (nonatomic) CGRect frameInVisibleMode;
 @property (nonatomic, readwrite, getter = isInDisableMode) BOOL disableMode;
 @property (nonatomic, readwrite, getter = isInDragMode) BOOL dragMode;
+@property (nonatomic) BOOL automaticDragMode;
 @property (nonatomic) CalculatorMode previousCalculatorMode;
 
 @end
@@ -398,10 +399,12 @@ static const CGFloat kRatioToDecideHideInDrag = 1.4;
 
 - (void)updateVisibilityToShow:(BOOL)show usingAnimation:(BOOL)animation
 {
+    self.automaticDragMode = YES;
     [UIView animateWithDuration:animation ? kAnimationDurationShowHideAction : 0.0 animations:^{
         self.view.frame = show ? self.frameInVisibleMode : self.frameInHideMode;
     } completion:^(BOOL finished) {
         [self resetAmountPannel];
+        self.automaticDragMode = NO;
     }];
 }
 
@@ -927,6 +930,13 @@ static const CGFloat kRatioToDecideHideInDrag = 1.4;
 - (BOOL)isDecimalPresentForDisplayPanelCalculatorView:(IAEDisplayPanelCalculatorView *)displayPanelCalculatorView
 {
     return [self isDecimalPresent];
+}
+
+#pragma mark - Translation questions
+
+- (BOOL)isAnyTranslationActive
+{
+    return self.isInDragMode || self.automaticDragMode;
 }
 
 @end

@@ -11,7 +11,8 @@
 ** -El código que ubica el scroll en primera posición, a veces falla porque, al parecer, no hay conceptos.-
 *** Hacer scroll de conceptos y cambiar de contexto y volver se produce el parpadeo de lo que ya tenemos cargado.
 *** -Además, se ha probado que el scroll no se realiza bien arriba del todo.-
-** Al borrar de forma desordenada, breakpoint en removeConceptAndUpdateBalancesOfCell en         [self.conceptsCollectionView deleteItemsAtIndexPaths:@[[self.conceptsCollectionView indexPathForCell:cell]]];
+** -Al borrar de forma desordenada, breakpoint en removeConceptAndUpdateBalancesOfCell en         [self.conceptsCollectionView deleteItemsAtIndexPaths:@[[self.conceptsCollectionView indexPathForCell:cell]]];-
+** -Podemos borrar un concepto que no se ve en pantalla completamente. En ese caso ¿qué debemos de hacer? Lo situaremos en pantalla.-
 
 * Settings
 ** Si se compra dominio, poner el enlace definitivo.

@@ -1348,11 +1348,13 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 {
     if ([self canSwipeOnConceptsCollectionView]) {
         // Nota: Puede venir un concepto nulo por hacer strike en una zona hueca
-        self.conceptCellToRemove = [self findConceptCellUnderLocationOfGestureRecognizer:swipeGestureRecognizer];
-        if (self.conceptCellToRemove) {
-            self.conceptCellToRemove.durationOfStrokeStateTransition = self.strokeAnimatableLineView.durationOfStrokeAnimation;
-            [self.strokeAnimatableLineView doStrokeOverTheView:self.conceptCellToRemove.conceptInformationContainerView];
-            [self.conceptCellToRemove goToStrokeState];
+        IAEEditModeConceptCollectionViewCell *cell = [self findConceptCellUnderLocationOfGestureRecognizer:swipeGestureRecognizer];
+        if (cell) {
+            if ([self isCompletelyVisibleConceptCollectionViewCell:cell]) {
+                [self doStrokeOverConceptCell:cell];
+            } else {
+                [self scrollToConceptsCollectionViewCell:cell];
+            }
         }
     }
 }
@@ -1362,6 +1364,14 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     BOOL can = [self isActualSelectedContextAMonth] && ![self.calculatorViewController isAnyTranslationActive];
     
     return can;
+}
+
+- (void)doStrokeOverConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
+{
+    self.conceptCellToRemove = cell;
+    self.conceptCellToRemove.durationOfStrokeStateTransition = self.strokeAnimatableLineView.durationOfStrokeAnimation;
+    [self.strokeAnimatableLineView doStrokeOverTheView:self.conceptCellToRemove.conceptInformationContainerView];
+    [self.conceptCellToRemove goToStrokeState];
 }
 
 #pragma mark - UITapGestureRecognizer
@@ -1399,10 +1409,11 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 - (void)executeActionOnCellOfConceptCollectionView:(IAEEditModeConceptCollectionViewCell *)cell
                    underLocatonOfTapGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
 {
-    if (![self isCompletelyVisibleConceptCollectionViewCell:cell]) {
-        [self scrollToConceptsCollectionViewCell:cell];
+    if ([self isCompletelyVisibleConceptCollectionViewCell:cell]) {
+        [self openAppropiatePopoverForManipulateConceptsCollectionViewCell:cell
+                                        underLocatonOfTapGestureRecognizer:gestureRecognizer];
     } else {
-        [self openAppropiatePopoverForManipulateConceptsCollectionViewCell:cell underLocatonOfTapGestureRecognizer:gestureRecognizer];
+        [self scrollToConceptsCollectionViewCell:cell];
     }
 }
 

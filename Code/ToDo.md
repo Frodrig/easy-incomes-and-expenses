@@ -6,8 +6,8 @@
 * Conceptos
 ** -Modificar categoría, cantidad o día con calculadora desplegada falla al no existir espacio.-
 ** Popover de ajuste de categoría, cantidad y día
-*** Mientras se está haciendo scroll, no debería de poderse manipular: ni borrar, ni tap sobre cualquier zona.
-*** Cuando el concepto está medio tapado, la ubicación no es del todo correcta. En la versión original, esto se corregía haciendo scroll del elemento y centrándolo en pantalla.
+*** -Mientras se está haciendo scroll, no debería de poderse manipular: ni borrar, ni tap sobre cualquier zona.-
+*** -Cuando el concepto está medio tapado, la ubicación no es del todo correcta. En la versión original, esto se corregía haciendo scroll del elemento y centrándolo en pantalla.-
 ** Al borrar, a veces, se produce salto a la hora de recargar el contenido. No he encontrado el patrón claro.
 ** -He logrado borrar conceptos para dejarlos a 0 y, sin embargo, el contador detenerse en una cifra superior a 0.-
 *** Si se borra mientras se está haciendo scroll de la calculadora.

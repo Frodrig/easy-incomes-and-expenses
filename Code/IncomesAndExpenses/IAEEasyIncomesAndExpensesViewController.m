@@ -1373,8 +1373,31 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 - (void)executeActionOnCellOfConceptCollectionView:(IAEEditModeConceptCollectionViewCell *)cell
                    underLocatonOfTapGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
 {
-    CGPoint location = [self convertLocationToCellArea:cell fromGestureRecognizer:gestureRecognizer];
+    if (![self isCompletelyVisibleConceptCollectionViewCell:cell]) {
+        [self scrollToConceptsCollectionViewCell:cell];
+    } else {
+        [self openAppropiatePopoverForManipulateConceptsCollectionViewCell:cell underLocatonOfTapGestureRecognizer:gestureRecognizer];
+    }
+}
+
+- (BOOL)isCompletelyVisibleConceptCollectionViewCell:(IAEEditModeConceptCollectionViewCell *)cell
+{
+    const CGRect frameOfCell = [self.conceptsCollectionView convertRect:cell.frame toView:self.conceptsCollectionView.superview];
+    const BOOL isCompletely = CGRectContainsRect(self.conceptsCollectionView.frame, frameOfCell);
     
+    return isCompletely;
+}
+
+- (void)scrollToConceptsCollectionViewCell:(IAEEditModeConceptCollectionViewCell *)cell
+{
+    NSIndexPath *cellIndexPath = [self.conceptsCollectionView indexPathForCell:cell];
+    [self.conceptsCollectionView scrollToItemAtIndexPath:cellIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
+}
+
+- (void)openAppropiatePopoverForManipulateConceptsCollectionViewCell:(IAEEditModeConceptCollectionViewCell *)cell
+                                  underLocatonOfTapGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+{
+    CGPoint location = [self convertLocationToCellArea:cell fromGestureRecognizer:gestureRecognizer];
     if ([cell isAmountLabelContainingLocationPoint:location]) {
         [self openPopoverForAdjustAmountOfConceptCell:cell];
     } else if ([cell isCategoryNameOrTypeContainingLocationPoint:location]) {

@@ -13,7 +13,7 @@
 ** -¿Algún efecto indicativo del cambio de año?-
 
 * Inicio e iconos
-** Transición desde la pantalla de inicio.
+** A la espera de solucionar el bug de la pantalla de inicio.
 ** Icono
 
 * Ayuda

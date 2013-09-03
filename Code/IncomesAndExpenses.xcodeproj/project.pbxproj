@@ -71,7 +71,7 @@
 		5B78C29417D51008006A0D53 /* EasyIncomesAndExpenses IOS7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B78C29217D51008006A0D53 /* EasyIncomesAndExpenses IOS7@2x.png */; };
 		5B7A4D7F16B68062001751A9 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B7A4D7E16B68062001751A9 /* MessageUI.framework */; };
 		5B7FCE8D17D5E5F400624D25 /* EasyIncomesAndExpenses IOS7.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B7FCE8C17D5E5F400624D25 /* EasyIncomesAndExpenses IOS7.png */; };
-		5B7FCE9017D63CF700624D25 /* ipadlandscape_launchimage@.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B7FCE8E17D63CF700624D25 /* ipadlandscape_launchimage@.png */; };
+		5B7FCE9017D63CF700624D25 /* ipadlandscape_launchimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B7FCE8E17D63CF700624D25 /* ipadlandscape_launchimage.png */; };
 		5B7FCE9117D63CF700624D25 /* ipadlandscape_launchimage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B7FCE8F17D63CF700624D25 /* ipadlandscape_launchimage@2x.png */; };
 		5B8CD5D117A262A800A353A5 /* IAEContextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8CD5D017A262A800A353A5 /* IAEContextView.m */; };
 		5B8CD5D317A262BC00A353A5 /* IAEContextViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B8CD5D217A262BC00A353A5 /* IAEContextViewContent.xib */; };
@@ -229,7 +229,7 @@
 		5B78C29217D51008006A0D53 /* EasyIncomesAndExpenses IOS7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EasyIncomesAndExpenses IOS7@2x.png"; sourceTree = "<group>"; };
 		5B7A4D7E16B68062001751A9 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		5B7FCE8C17D5E5F400624D25 /* EasyIncomesAndExpenses IOS7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EasyIncomesAndExpenses IOS7.png"; sourceTree = "<group>"; };
-		5B7FCE8E17D63CF700624D25 /* ipadlandscape_launchimage@.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ipadlandscape_launchimage@.png"; sourceTree = "<group>"; };
+		5B7FCE8E17D63CF700624D25 /* ipadlandscape_launchimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ipadlandscape_launchimage.png; sourceTree = "<group>"; };
 		5B7FCE8F17D63CF700624D25 /* ipadlandscape_launchimage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ipadlandscape_launchimage@2x.png"; sourceTree = "<group>"; };
 		5B8488F3178AB88C0001551F /* IAECategoryEditorDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategoryEditorDefs.h; sourceTree = "<group>"; };
 		5B8488F5178AB8B10001551F /* IAECategoryEditorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategoryEditorViewControllerDelegate.h; sourceTree = "<group>"; };
@@ -872,7 +872,7 @@
 			children = (
 				5B78C29217D51008006A0D53 /* EasyIncomesAndExpenses IOS7@2x.png */,
 				5B7FCE8C17D5E5F400624D25 /* EasyIncomesAndExpenses IOS7.png */,
-				5B7FCE8E17D63CF700624D25 /* ipadlandscape_launchimage@.png */,
+				5B7FCE8E17D63CF700624D25 /* ipadlandscape_launchimage.png */,
 				5B7FCE8F17D63CF700624D25 /* ipadlandscape_launchimage@2x.png */,
 				5BF6F23917D6554D009B5D2C /* ipadlandscape_launchimagecrop.png */,
 				5BF6F23A17D6554D009B5D2C /* ipadlandscape_launchimagecrop@2x.png */,
@@ -1388,7 +1388,7 @@
 				5B0574C117AFE2F600B95D50 /* IAEWithoutConceptsTextWarningReportMode.xib in Resources */,
 				5B2A41B117C77C8100C29036 /* 765-arrow-left@2x.png in Resources */,
 				5B2AAA3017C773CF00E7C7A5 /* 747-minus-circle@2x.png in Resources */,
-				5B7FCE9017D63CF700624D25 /* ipadlandscape_launchimage@.png in Resources */,
+				5B7FCE9017D63CF700624D25 /* ipadlandscape_launchimage.png in Resources */,
 				5B264613179684A5006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.xib in Resources */,
 				5BC1110017CD1DF500FF6D6B /* 730-envelope.png in Resources */,
 				5B2A41AD17C77B6200C29036 /* 740-gear@2x.png in Resources */,
@@ -1586,6 +1586,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -1610,6 +1611,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";

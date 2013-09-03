@@ -235,7 +235,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 
 - (void)initLaunchImage
 {
-    self.launchImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ipadlandscape_launchimagecrop"]];
+    self.launchImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ipadlandscape_launchimage"]];
     self.launchImage.backgroundColor = [UIColor clearColor];
 }
 

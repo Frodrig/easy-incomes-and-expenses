@@ -31,6 +31,8 @@ static const CGFloat kYMarginOfTheLineSelector = 3;
 static const CGFloat kDurationOfContainerViewEnableDisableEffect = 0.5;
 static const CGFloat kAlphaValueOfContainerViewInDisabledMode = 0.25;
 
+static const CGFloat kDurationOfAnimationOption = 0.5;
+
 #pragma mark - properties
 
 - (UIView *)containerView
@@ -332,5 +334,47 @@ static const CGFloat kAlphaValueOfContainerViewInDisabledMode = 0.25;
         [self.delegate optionIndex:optionIndex wasSelectedInTextRawSelectorMenuView:self];
     }
 }
+
+#pragma mark - Animation
+
+- (void)animateOptionAtIndex:(NSUInteger)index withAnimationType:(TextRawSelectorAnimationType)animationType
+{
+    UIButton *option = [self findMenuOptionWithIndex:index];
+    if (animationType == TextRawSelectorAnimation_Blink) {
+        [self animateWithBlinkTheOption:option];
+    } else if (animationType == TextRawSelectorAnimation_Rotation) {
+        [self animationWithRotationTheOption:option];
+    }
+}
+
+- (void)animateWithBlinkTheOption:(UIButton *)option
+{
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+    [UIView animateWithDuration:kDurationOfAnimationOption animations:^{
+        option.alpha = 0.1;
+    } completion:^(BOOL finished) {
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+        [UIView animateWithDuration:kDurationOfAnimationOption animations:^{
+            option.alpha = 1.0;
+        }];
+    }];
+}
+
+- (void)animationWithRotationTheOption:(UIButton *)option
+{
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+    [UIView animateWithDuration:kDurationOfAnimationOption animations:^{
+        option.transform = CGAffineTransformRotate(option.transform, -M_PI/12);
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:kDurationOfAnimationOption animations:^{
+            option.transform = CGAffineTransformRotate(option.transform, M_PI/6);
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:kDurationOfAnimationOption animations:^{
+                option.transform = CGAffineTransformRotate(option.transform, -M_PI/12);
+            }];
+        }];
+    }];
+}
+
 
 @end

@@ -11,6 +11,12 @@
 @protocol IAETextRawSelectorMenuViewDelegate;
 @protocol IAETextRawSelectorMenuViewDataSource;
 
+
+typedef NS_ENUM(NSUInteger, TextRawSelectorAnimationType) {
+  TextRawSelectorAnimation_Blink,
+  TextRawSelectorAnimation_Rotation,
+};
+
 @interface IAETextRawSelectorMenuView : UIView
 
 @property (nonatomic, weak) id<IAETextRawSelectorMenuViewDelegate> delegate;
@@ -19,7 +25,9 @@
 @property (nonatomic) NSUInteger currentOptionIndexSelected;
 @property (nonatomic) BOOL optionsEnabled;
 
-- (void) reloadData;
-- (void) reloadOptionsStringNames;
+- (void)reloadData;
+- (void)reloadOptionsStringNames;
+
+- (void)animateOptionAtIndex:(NSUInteger)index withAnimationType:(TextRawSelectorAnimationType)animationType;
 
 @end

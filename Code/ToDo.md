@@ -13,6 +13,10 @@
 * Año abierto
 ** Considerar un color diferente en el menú de contexto
 ** Considerar alguna animación característica al cambiar en el menú de contexto.
+** Ocurrió que al ir a cargar el modal, saltó assert indicando que o no había o había más de uno cargado. Ojo.
+
+* Ayuda
+** ¿Podemos meter algo?
 
 * Inicio e iconos
 ** Transición desde la pantalla de inicio.

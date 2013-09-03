@@ -9,11 +9,14 @@
 *** Mientras se está haciendo scroll, no debería de poderse.
 *** Cuando el concepto está medio tapado, la ubicación no es del todo correcta. En la versión original, esto se corregía haciendo scroll del elemento y centrándolo en pantalla.
 ** Al borrar, a veces, se produce salto a la hora de recargar el contenido. No he encontrado el patrón claro.
-** He logrado borrar conceptos para dejarlos a 0 y, sin embargo, el contador detenerse en una cifra superior a 0.
+** -He logrado borrar conceptos para dejarlos a 0 y, sin embargo, el contador detenerse en una cifra superior a 0.-
 *** Si se borra mientras se está haciendo scroll de la calculadora.
 ** -He logrado tachar un concepto y que este no se ponga en gris.-
 ** El código que ubica el scroll en primera posición, a veces falla porque, al parecer, no hay conceptos.
 ** Al borrar de forma desordenada, breakpoint en removeConceptAndUpdateBalancesOfCell en         [self.conceptsCollectionView deleteItemsAtIndexPaths:@[[self.conceptsCollectionView indexPathForCell:cell]]];
+
+* Calculadora
+** -Cuando estoy en modo ingreso, muestro "Gasto General" y viceversa. Puede ser debido a la localización.-
 
 
 * Settings

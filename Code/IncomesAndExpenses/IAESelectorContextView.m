@@ -20,7 +20,7 @@
 
 #pragma mark - Constants
 
-static const CGFloat kDurationOfAnimationOfChangeContext = 0.65;
+static const CGFloat kDurationOfAnimationOfChangeContext = 0.35;
 
 #pragma mark - Properties
 

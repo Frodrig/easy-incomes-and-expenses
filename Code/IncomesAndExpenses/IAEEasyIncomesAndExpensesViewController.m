@@ -1061,33 +1061,48 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 
 - (void)selectorContextView:(IAESelectorContextView *)selectorContextView didChangeToContextViewAtIndex:(NSUInteger)index
 {
-    [self updateContentInformationBasedInCurrentContext];
+    if ([self isContextMenuOptionPending]) {
+        [self processNextContextMenuOptionPending];
+    } else {
+        [self updateContentInformationBasedInCurrentContext];
+    }
 }
 
 - (void)updateContentInformationBasedInCurrentContext
 {
-    if (self.lastContextIndexMenuPressed != kInvalidOptionIndex) {
-        [self.selectorContextView changeToContextViewOfIndex:self.lastContextIndexMenuPressed withAnimation:YES];
-        self.lastContextIndexMenuPressed = kInvalidOptionIndex;
-    } else {
-        [self updateCurrentOptionIndexSelectedOfContextMenu];
-        if ([self isEditModeActive]) {
-            [self updateConceptsCollectionViewWithAnimation:!self.initialPositioning];
-            [self updateCalculatorViewHideHalfState];
-        } else if ([self isReportModeActive]) {
-            // Si hay aviso de que venimos de un contexto sin conceptos, primero comprobamos si hay que quitarlo y luego recargamos.
-            // Si NO venimos del caso anterior, primero recargamos y luego, en el delegado, comprobamos si estamos en un contexto sin conceptos
-            // NOTA: En el primer caso también llamamos al delegado y volvemos a ejecutar showWithout... pero no pasara nada ya que el estado se habra
-            // establecido en la primera llamada.
-            if ([self isAnyWithoutConceptsWarningViewVisible]) {
-                [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES andExecuteAfterAnimationTheLogicBlock:^{
-                    [self.reportAreaView reloadDataWithAnimation:YES];
-                }];
-            } else {
+    [self updateCurrentOptionIndexSelectedOfContextMenu];
+    
+    if ([self isEditModeActive]) {
+        [self updateConceptsCollectionViewWithAnimation:!self.initialPositioning];
+        [self updateCalculatorViewHideHalfState];
+    } else if ([self isReportModeActive]) {
+        // Si hay aviso de que venimos de un contexto sin conceptos, primero comprobamos si hay que quitarlo y luego recargamos.
+        // Si NO venimos del caso anterior, primero recargamos y luego, en el delegado, comprobamos si estamos en un contexto sin conceptos
+        // NOTA: En el primer caso también llamamos al delegado y volvemos a ejecutar showWithout... pero no pasara nada ya que el estado se habra
+        // establecido en la primera llamada.
+        if ([self isAnyWithoutConceptsWarningViewVisible]) {
+            [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES andExecuteAfterAnimationTheLogicBlock:^{
                 [self.reportAreaView reloadDataWithAnimation:YES];
-            }
+            }];
+        } else {
+            [self.reportAreaView reloadDataWithAnimation:YES];
         }
     }
+}
+
+- (BOOL)isContextMenuOptionPending
+{
+    const BOOL is = self.lastContextIndexMenuPressed != kInvalidOptionIndex;
+    
+    return is;
+}
+
+- (void)processNextContextMenuOptionPending
+{
+    NSAssert([self isContextMenuOptionPending], @"");
+    
+    [self.selectorContextView changeToContextViewOfIndex:self.lastContextIndexMenuPressed withAnimation:YES];
+    self.lastContextIndexMenuPressed = kInvalidOptionIndex;
 }
 
 - (BOOL)isAnyWithoutConceptsWarningViewVisible

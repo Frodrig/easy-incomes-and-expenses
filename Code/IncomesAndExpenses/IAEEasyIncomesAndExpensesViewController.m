@@ -553,7 +553,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
         self.reportAreaView.hidden = YES;
         self.reportMenuView.hidden = YES;
         self.reportMenuView.center = CGPointMake(self.reportMenuView.center.x, self.reportMenuView.center.y - self.reportMenuView.bounds.size.height);
-        [self updateContentOfConceptsCollectionViewWithAnimation:NO];
+        [self reloadContentOfConceptsCollectionView];
         self.conceptsCollectionView.hidden = NO;
         self.calculatorViewController.view.hidden = NO;
         self.editAndReportModeContentContainerView.backgroundColor = [UIColor colorWithWhite:kColorWithWhiteForEditAndReportModeContentContainerBackground
@@ -1064,16 +1064,20 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     if ([self isContextMenuOptionPending]) {
         [self processNextContextMenuOptionPending];
     } else {
-        [self updateContentInformationBasedInCurrentContext];
+        [self updateContentInformationBasedInCurrentContextWithAnimation:!self.initialPositioning];
     }
 }
 
-- (void)updateContentInformationBasedInCurrentContext
+- (void)updateContentInformationBasedInCurrentContextWithAnimation:(BOOL)animation
 {
     [self updateCurrentOptionIndexSelectedOfContextMenu];
-    
+    [self updateContentInformationOfActualModeWithAnimation:animation];
+}
+
+- (void)updateContentInformationOfActualModeWithAnimation:(BOOL)animation
+{
     if ([self isEditModeActive]) {
-        [self updateConceptsCollectionViewWithAnimation:!self.initialPositioning];
+        [self updateConceptsCollectionViewWithAnimation:animation];
         [self updateCalculatorViewHideHalfState];
     } else if ([self isReportModeActive]) {
         // Si hay aviso de que venimos de un contexto sin conceptos, primero comprobamos si hay que quitarlo y luego recargamos.
@@ -1081,11 +1085,11 @@ static const CGFloat kDurationModeFadeIn = 0.75;
         // NOTA: En el primer caso también llamamos al delegado y volvemos a ejecutar showWithout... pero no pasara nada ya que el estado se habra
         // establecido en la primera llamada.
         if ([self isAnyWithoutConceptsWarningViewVisible]) {
-            [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES andExecuteAfterAnimationTheLogicBlock:^{
-                [self.reportAreaView reloadDataWithAnimation:YES];
+            [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:animation andExecuteAfterAnimationTheLogicBlock:^{
+                [self reloadContentOfConceptsReportViewWithAnimation:animation];
             }];
         } else {
-            [self.reportAreaView reloadDataWithAnimation:YES];
+            [self reloadContentOfConceptsReportViewWithAnimation:animation];
         }
     }
 }
@@ -1120,15 +1124,15 @@ static const CGFloat kDurationModeFadeIn = 0.75;
             self.conceptsCollectionView.alpha = 0.0;
         } completion:^(BOOL finished) {
             [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:animation];
-            [self updateContentOfConceptsCollectionViewWithAnimation:NO];
+            [self reloadContentOfConceptsCollectionView];
             [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
             [UIView animateWithDuration:kDurationOfEditConceptCollectionViewTransition animations:^{
                 self.conceptsCollectionView.alpha = 1.0;
             }];
         }];
     } else {
-        [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:animation];
-        [self updateContentOfConceptsCollectionViewWithAnimation:NO];
+        [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:NO];
+        [self reloadContentOfConceptsCollectionView];
     }
 }
 
@@ -1195,10 +1199,15 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     return YES;
 }
 
-- (void)updateContentOfConceptsCollectionViewWithAnimation:(BOOL)animation
+- (void)reloadContentOfConceptsReportViewWithAnimation:(BOOL)animation
+{
+    [self.reportAreaView reloadDataWithAnimation:YES];
+}
+
+- (void)reloadContentOfConceptsCollectionView
 {
     CGRect frame = CGRectMake(0.0, 0.0, self.conceptsCollectionView.bounds.size.width, self.conceptsCollectionView.bounds.size.height);
-    [self.conceptsCollectionView scrollRectToVisible:frame animated:animation];
+    [self.conceptsCollectionView scrollRectToVisible:frame animated:NO];
     [self.conceptsCollectionView reloadData];
 }
 
@@ -1644,7 +1653,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     [[IAECategoryStore sharedCategoryStore] removeCategoryByTag:tagOfCategory];
     [[IAEBook sharedBook] saveAll];
     
-    [self updateContentOfConceptsCollectionViewWithAnimation:NO];
+    [self reloadContentOfConceptsCollectionView];
     NSAssert([self categorySelectorViewControllerWasLaunchedFromCategoryButton], @"");
     [categorySelectorViewController reloadAfterRemoveCellWithCategoryTag:tagOfCategory];
 }
@@ -1687,12 +1696,12 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     [categoryEditorViewController dismissViewControllerAnimated:YES completion:nil];
     [categorySelector reloadData];
     
-    [self updateContentOfConceptsCollectionViewWithAnimation:NO];
+    [self reloadContentOfConceptsCollectionView];
 }
 
 - (void)returnToUpdatedEditModeViewControllerFromCategoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
 {
-    [self updateContentOfConceptsCollectionViewWithAnimation:NO];
+    [self reloadContentOfConceptsCollectionView];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -1710,8 +1719,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 
 - (void)yearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController didLoadSelectedYearDate:(NSUInteger)yearDate
 {
-    [self reloadAllWithAnimation:NO];
-    [self goToTodayMonth];
+    [self reloadAllWithAnimation:YES];
     self.yearSelectorViewController = nil;
 }
 
@@ -1719,14 +1727,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 {
     [self.contextMenuView reloadOptionsStringNames];
     [self reloadBalancesOfContextViewsWithAnimation:animation];
-    [self reloadConceptsOfActualSelectedContextView];
-    [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:animation];
-}
-
-- (void)reloadAllAndGoToTodayMonthWithAnimation:(BOOL)animation
-{
-    [self reloadAllWithAnimation:animation];
-    [self goToTodayMonth];
+    [self updateContentInformationOfActualModeWithAnimation:animation];
 }
 
 - (void)reloadBalancesOfContextViewsWithAnimation:(BOOL)animation
@@ -1740,37 +1741,33 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     }];
 }
 
-- (void)reloadConceptsOfActualSelectedContextView
-{
-    [self.conceptsCollectionView reloadData];
-}
-
 - (void)yearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController didCreateAndLoadSelectedYearDate:(NSUInteger)yearDate
 {
-    [self reloadAllAndGoToTodayMonthWithAnimation:NO];
+    [self reloadAllWithAnimation:NO];
+    [self goToTodayMonth];
 }
 
 - (void)closeButtonWasPressedInYearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController
 {
-    [self reloadAllAndGoToTodayMonthWithAnimationIfOpenYearWasCleanInYearSelector];
-}
-
-- (void)reloadAllAndGoToTodayMonthWithAnimationIfOpenYearWasCleanInYearSelector
-{
-    if (self.reloadAllPendingFromYearSelectorIfReturnWithSameYearDate) {
-        [self reloadAllAndGoToTodayMonthWithAnimation:NO];
-        self.reloadAllPendingFromYearSelectorIfReturnWithSameYearDate = NO;
-    }
+    [self returnFromYearSelectorToSameYear];
 }
 
 - (void)openYearSelectedWasSelectedInYearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController
 {
-    [self reloadAllAndGoToTodayMonthWithAnimationIfOpenYearWasCleanInYearSelector];
+    [self returnFromYearSelectorToSameYear];
+}
+
+- (void)returnFromYearSelectorToSameYear
+{
+    if (self.reloadAllPendingFromYearSelectorIfReturnWithSameYearDate) {
+        [self reloadAllWithAnimation:YES];
+        self.reloadAllPendingFromYearSelectorIfReturnWithSameYearDate = NO;
+    }
 }
 
 - (void)yearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController didCleanOpenYearDate:(NSUInteger)yearDate
 {
-    // Nota: Este evento informa de que se ha vaciado el año abiertopero que aun no se ha cerrado el dialogo selector, es decir, la recarga
+    // Nota: Este evento informa de que se ha vaciado el año abierto pero que aun no se ha cerrado el dialogo selector, es decir, la recarga
     // de datos sucedera si y solo si, se retorna al mismo año abierto antes de abrir la venta de seleccion de años
     self.reloadAllPendingFromYearSelectorIfReturnWithSameYearDate = YES;
 }
@@ -1784,12 +1781,12 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 
 - (void)notificationCenterOnDayModeOn:(NSNotification *)notification
 {
-    [self updateContentOfConceptsCollectionViewWithAnimation:NO];
+    [self reloadContentOfConceptsCollectionView];
 }
 
 - (void)notificationCenterOnDayModeOff:(NSNotification *)notification
 {
-    [self updateContentOfConceptsCollectionViewWithAnimation:NO];
+    [self reloadContentOfConceptsCollectionView];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -1827,7 +1824,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     if (self.conceptChangingDay.dayOfTheMonth != day) {
         self.conceptChangingDay.dayOfTheMonth = day;
         [[IAEBook sharedBook] saveAll];
-        [self updateContentOfConceptsCollectionViewWithAnimation:NO];
+        [self reloadContentOfConceptsCollectionView];
     }
 }
 
@@ -1930,7 +1927,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
             [self gotoToContextViewWithIndex:optionIndex];
         }
     } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
-        [self.reportAreaView reloadDataWithAnimation:YES];
+        [self reloadContentOfConceptsReportViewWithAnimation:YES];
     }
 }
 

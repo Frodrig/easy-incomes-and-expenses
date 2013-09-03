@@ -5,24 +5,12 @@
 
 * Contextos
 ** Cambiar de contexto A a contexto B y antes de que B esté en pantalla cambiar a A, hace doble carga sobre el contenido de A.
-*** -Poca cosa vamos a poder hacer por ahora. Acelerado el tiempo de la animación de fx de cambio de contexto para provocar una carga más temprana del contenido.-
 
 * Conceptos
-** -El código que ubica el scroll en primera posición, a veces falla porque, al parecer, no hay conceptos.-
-*** Hacer scroll de conceptos y cambiar de contexto y volver se produce el parpadeo de lo que ya tenemos cargado.
-*** -Además, se ha probado que el scroll no se realiza bien arriba del todo.-
-** -Al borrar de forma desordenada, breakpoint en removeConceptAndUpdateBalancesOfCell en         [self.conceptsCollectionView deleteItemsAtIndexPaths:@[[self.conceptsCollectionView indexPathForCell:cell]]];-
-** -Podemos borrar un concepto que no se ve en pantalla completamente. En ese caso ¿qué debemos de hacer? Lo situaremos en pantalla.-
+** Hacer scroll de conceptos y cambiar de contexto y volver se produce el parpadeo de lo que ya tenemos cargado.
 
 * Settings
 ** Si se compra dominio, poner el enlace definitivo.
-
-* Año abierto
-** -Al cambiar de año en modo reporte, no recargamos contenido.-
-** -Al cambiar de año deberíamos de respetar el contexto actualmente seleccionado.-
-** -Ocurrió que al ir a cargar el modal, saltó assert indicando que o no había o había más de uno cargado. Ojo.-
-*** -¿Pasos de reproducción?-
-**** -No he sido capaz de reproducirlo-
 
 * Inicio e iconos
 ** Transición desde la pantalla de inicio.
@@ -32,7 +20,6 @@
 ** ¿Podemos meter algo?
 
 * Refactorización
-** ¡Warnings!
 ** En todos los sitios donde vuelvo a recrear la fuente y su tamaño… simplemente cambiar el campo text para la label asociada. Esto es válido a no ser que tenga que poner kern.
 *** En el caso de poner kern, la otra opción es obtener el diccionario de atributos, setear el kern y volver a recrear con esos atributos y el título que proceda.
 ** Las properties readonly se pueden redefinir en .m para que sean readwrite. Hay casos en los que debería de hacerlo.

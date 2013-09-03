@@ -31,14 +31,6 @@ static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
     return YES;
 }
 
-- (UIViewController *)instantiateFromStoryBoardEasyIncomesViewController
-{
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:mainStoryBoardName bundle:[NSBundle mainBundle]];
-    UIViewController *viewController = [storyBoard instantiateViewControllerWithIdentifier:easyIncomesAndExpensesViewControllerID];
-    
-    return viewController;
-}
-
 - (void)processProcessInfoEnvironment
 {
     NSNumber *testEnviromentVariable = [[NSProcessInfo processInfo].environment valueForKey:@"createTestDataAtLaunch"];
@@ -81,6 +73,14 @@ static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
     navigationController.navigationBar.tintColor = [UIColor colorWithWhite:kGlobalTintColorForWhiteComponent alpha:1.0];
     
     return navigationController;
+}
+
+- (UIViewController *)instantiateFromStoryBoardEasyIncomesViewController
+{
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:mainStoryBoardName bundle:[NSBundle mainBundle]];
+    UIViewController *viewController = [storyBoard instantiateViewControllerWithIdentifier:easyIncomesAndExpensesViewControllerID];
+    
+    return viewController;
 }
 
 - (void)createYearTest

@@ -16,6 +16,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *amountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
+@property (nonatomic, readwrite, getter = isInStrokeState) BOOL strokeState;
 
 @end
 
@@ -71,6 +72,7 @@ static const CGFloat kAlphaValueForStrokeState = 0.3;
     [self setIndividualsInformationElementsWithAlpha:1.0];
     [self removeIdentifierContainerViewSubviews];
     self.durationOfStrokeStateTransition = kDefaultDurationOfStrokeStateModeTransition;
+    self.strokeState = NO;
 }
 
 #pragma mark - Draw
@@ -329,7 +331,9 @@ static const CGFloat kAlphaValueForStrokeState = 0.3;
 {
     if (!self.isInStrokeState) {
         [self animateIndividualInformationWithAlpha:kAlphaValueForStrokeState andCompletionLogic:^(BOOL finished) {
-            _strokeState = YES;
+            if (finished) {
+                self.strokeState = YES;
+            }
         }];
     }
 }
@@ -338,7 +342,9 @@ static const CGFloat kAlphaValueForStrokeState = 0.3;
 {
     if (self.isInStrokeState) {
         [self animateIndividualInformationWithAlpha:1.0 andCompletionLogic:^(BOOL finished) {
-            _strokeState = NO;
+            if (finished) {
+                self.strokeState = NO;
+            }
         }];
     }
 }

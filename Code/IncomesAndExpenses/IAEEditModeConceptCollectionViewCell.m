@@ -45,6 +45,9 @@ static NSString * const kLTexForEntryWithNoDay = @"LTEXT_EDITMODECONCEPTCELL_ENT
 static const CGFloat kDefaultDurationOfStrokeStateModeTransition = 0.25;
 static const CGFloat kAlphaValueForStrokeState = 0.3;
 
+static const CGFloat kEditModeYTranslation = 5.0;
+static NSString * const kEditModeAnimationKey = @"editModeAnimation";
+
 #pragma mark - Properties
 
 - (void)setDrawSeparatorLine:(BOOL)drawSeparatorLine
@@ -385,6 +388,41 @@ static const CGFloat kAlphaValueForStrokeState = 0.3;
 {
     return self.amountLabel;
 }
+
+#pragma mark - setVisualAspectInEditMode
+
+- (void)setVisualAspectInEditMode:(BOOL)editMode forConceptElement:(EditModeConceptElement)conceptElement
+{
+    UIView *view = [self findViewForConceptElement:conceptElement];
+    if (editMode) {
+        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.translation.y"];
+        animation.removedOnCompletion = NO;
+        animation.autoreverses = YES;
+        animation.repeatCount = HUGE_VALF;
+        animation.toValue = @(kEditModeYTranslation);
+        animation.duration = 1;
+        animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        animation.cumulative = NO;
+        [view.layer addAnimation:animation forKey:kEditModeAnimationKey];
+    } else {
+        [view.layer removeAnimationForKey:kEditModeAnimationKey];
+    }
+}
+
+- (UIView *)findViewForConceptElement:(EditModeConceptElement)conceptElement
+{
+    UIView *view = nil;
+    if (conceptElement == EditModeConceptElement_Category) {
+        view = self.categoryLabel.superview;
+    } else if (conceptElement == EditModeConceptElement_DayOrNumberInstance) {
+        view = self.identifierContainerView;
+    } else if (conceptElement == EditModeConceptElement_Amount) {
+        view = self.amountLabel;
+    }
+    
+    return view;
+}
+
 
 
 @end

@@ -13,6 +13,7 @@
 @interface IAEDayCalendarSelectorViewController : UIViewController
 
 @property(nonatomic, weak)id<IAEDayCalendarSelectorViewControllerDelegate> delegate;
+@property(nonatomic, strong) NSIndexPath *conceptCellIndexPath;
 
 - (instancetype)initWithYearDate:(NSUInteger)yearDate monthIndex:(NSUInteger)monthIndex andDaySelected:(NSUInteger)daySelected;
 

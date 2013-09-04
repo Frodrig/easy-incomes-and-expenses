@@ -1,36 +1,15 @@
 # ToDo: Easy Incomes and Expenses.
 
-* Barra superior
-** -Pensar en como indicar que es un botón el título central.-
-
 * Contextos
 ** Cambiar de contexto A a contexto B y antes de que B esté en pantalla cambiar a A, hace doble carga sobre el contenido de A.
 
 * Settings
 ** Si se compra dominio, poner el enlace definitivo.
 
-* Cantidades
-** -En selector de años y selector de categorías, de cero a nueve con letra y superiores con número.-
-
 * Concepto
-** El elemento seleccionado, hacer que tenga una animación muy breve
-
-* Año
-** -No aparece correctamente centrado el año abierto-
-** -Valorar poner heder para cada opción pulsada-
-*** -No, el segmented es suficientemente explicativo y restamos espacio para mostrar años-
-** -Mejorar la localización de las opciones segmented-
-** -Valorar migrar a TableView para conseguir animación de recarga-
-*** -Sin tiempo para hacerlo: implementado fadein y fadeout-
-
-* Categorías
-** -Sin localizar textos del segmented-
-** -Animación de fade al cambiar entre tipo de categoría-
-** -Valorar poner header-
-*** -Mejor no, pues taparía zona de trabajo. Cuantas más categorías se vean a la vez, mejor.-
-
-* Segmented de cambio de modo
-** -Sin localizar-
+** -El elemento seleccionado, hacer que tenga una animación muy breve-
+** Hemos descubierto que el controller del día no guarda el indexpath de la celda relacionada. Esto no es consistente con los controladores para cambiar categorías y cantidades
+** Hemos descubierto que al cambiar un elemento recargamos TODO en lugar de recargar únicamente la celda involucrada.
 
 * Inicio e iconos
 ** A la espera de solucionar el bug de la pantalla de inicio.

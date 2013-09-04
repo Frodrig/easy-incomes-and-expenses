@@ -1109,12 +1109,37 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 - (void)performActionsAfterDismissPopover:(UIPopoverController *)popoverController
 {
     if ([popoverController.contentViewController isKindOfClass:[IAEAdjustConceptAmountViewController class]]) {
-        [self updateBalancesWithAnimation:YES];
+        [self performActionsAfterDismissAdjustConceptAmountPopover:popoverController];
     } else if ([popoverController.contentViewController isKindOfClass:[IAEDayCalendarSelectorViewController class]]) {
-        [self cleanDayCalendarSelectorProperties];
+        [self performActionsAfterDismissDayCalendarSelectorPopover:popoverController];
+    } else if ([popoverController.contentViewController isKindOfClass:[IAECategorySelectorViewController class]]) {
+        [self performActionsAfterDismissCategorySelectorPopover:popoverController];
     }
     
     self.popover = nil;
+}
+
+- (void)performActionsAfterDismissAdjustConceptAmountPopover:(UIPopoverController *)popoverController
+{
+    [self updateBalancesWithAnimation:YES];
+    IAEAdjustConceptAmountViewController *controller = (IAEAdjustConceptAmountViewController *)popoverController.contentViewController;
+    IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:controller.conceptCellIndexPath];
+    [cell setVisualAspectInEditMode:NO forConceptElement:EditModeConceptElement_Amount];
+}
+
+- (void)performActionsAfterDismissDayCalendarSelectorPopover:(UIPopoverController *)popoverController
+{
+    [self cleanDayCalendarSelectorProperties];
+    IAEDayCalendarSelectorViewController *controller = (IAEDayCalendarSelectorViewController *)popoverController.contentViewController;
+    IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:controller.conceptCellIndexPath];
+    [cell setVisualAspectInEditMode:NO forConceptElement:EditModeConceptElement_DayOrNumberInstance];
+}
+
+- (void)performActionsAfterDismissCategorySelectorPopover:(UIPopoverController *)popoverController
+{
+    IAECategorySelectorViewController *controller = (IAECategorySelectorViewController *)popoverController.contentViewController;
+    IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:controller.conceptCellIndexPath];
+    [cell setVisualAspectInEditMode:NO forConceptElement:EditModeConceptElement_Category];
 }
 
 - (void)updateBalancesIfDismissFromAdjustConceptAmountPopover:(UIPopoverController *)popover
@@ -1540,7 +1565,9 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 }
 
 - (void)openPopoverForAdjustAmountOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
-{    
+{
+    [cell setVisualAspectInEditMode:YES forConceptElement:EditModeConceptElement_Amount];
+
     IAEAdjustConceptAmountViewController *viewController = [[IAEAdjustConceptAmountViewController alloc] init];
     viewController.delegate = self;
     viewController.conceptCellIndexPath = [self.conceptsCollectionView indexPathForCell:cell];
@@ -1550,6 +1577,8 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 
 - (void)openPopoverForEditCategoryOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
+    [cell setVisualAspectInEditMode:YES forConceptElement:EditModeConceptElement_Category];
+
     IAECategory *categoryOfCell = [self findCategoryOfConceptCell:cell];
     IAECategorySelectorViewController *viewController = [[IAECategorySelectorViewController alloc]
                                                          initWithExtraActions:CATEGORYSELECTOR_EXTRAACTION_CATEGORYSELECTION
@@ -1581,6 +1610,8 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 
 - (void)openPopoverForSelectDayOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
+    [cell setVisualAspectInEditMode:YES forConceptElement:EditModeConceptElement_DayOrNumberInstance];
+
     self.conceptChangingDay = [self findConceptOfCell:cell];
     
     IAEYear *year = [self findOpenYear];
@@ -1590,6 +1621,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     IAEDayCalendarSelectorViewController *viewController = [[IAEDayCalendarSelectorViewController alloc] initWithYearDate:year.yearDate
                                                                                                                monthIndex:month.month
                                                                                                            andDaySelected:selectedDay];
+    viewController.conceptCellIndexPath = [self.conceptsCollectionView indexPathForCell:cell];
     viewController.delegate = self;
     
     [self createAndPresentPopoverForConceptCellView:cell.identifierContainerView withViewController:viewController];

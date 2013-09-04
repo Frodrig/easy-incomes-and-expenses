@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSUInteger, EditModeConceptElement) {
+    EditModeConceptElement_Category,
+    EditModeConceptElement_DayOrNumberInstance,
+    EditModeConceptElement_Amount
+};
+
 @class IAEValueDecoratorView;
 
 @interface IAEEditModeConceptCollectionViewCell : UICollectionViewCell
@@ -35,6 +41,8 @@
 
 - (void)goToStrokeState;
 - (void)exitFromStrokeState;
+
+- (void)setVisualAspectInEditMode:(BOOL)editMode forConceptElement:(EditModeConceptElement)conceptElement;
 
 - (NSString *)description;
 

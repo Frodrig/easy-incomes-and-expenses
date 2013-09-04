@@ -35,6 +35,9 @@ typedef NS_ENUM(NSUInteger, EditModeConceptElement) {
 - (void)setIdentifierWithDayOfTheMonthIndex:(NSUInteger)index andDayOfTheWeekName:(NSString *)name;
 - (void)setIdentifierWithoutDay;
 
+- (void)setTagWithIndex:(NSUInteger)index;
+- (NSUInteger)extractIndexFromTag;
+
 - (BOOL)isAmountLabelContainingLocationPoint:(CGPoint)location;
 - (BOOL)isCategoryNameOrTypeContainingLocationPoint:(CGPoint)location;
 - (BOOL)isIdentifierOrDayContainingLocationPoint:(CGPoint)location;

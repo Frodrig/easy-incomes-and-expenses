@@ -965,6 +965,19 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     return [self findConceptAtIndexPath:indexPathOfCell];
 }
 
+- (IAEEditModeConceptCollectionViewCell *)findConceptCellOfConcept:(IAEConcept *)concept
+{
+    const BOOL dayMode = [self isDayModeActiveForConcepts];
+    NSArray *concepts = dayMode ? [concept.month allConceptsSortedByDay] : [concept.month allConceptsSortedByEntryInstant];
+    NSUInteger conceptIndex = [concepts indexOfObject:concept];
+    NSLog(@"conceptIndex %d", conceptIndex);
+    NSIndexPath *indexPathOfCell = [NSIndexPath indexPathForRow:conceptIndex inSection:0];
+    IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell*) [self.conceptsCollectionView cellForItemAtIndexPath:indexPathOfCell];
+
+    NSAssert(cell, @"");
+    return cell;
+}
+
 - (IAEContextView *)findActualSelectedMonthContextView
 {
     NSAssert(self.contextMenuView.currentOptionIndexSelected > 0, @"");
@@ -1314,6 +1327,22 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     CGRect frame = CGRectMake(0.0, 0.0, self.conceptsCollectionView.bounds.size.width, self.conceptsCollectionView.bounds.size.height);
     [self.conceptsCollectionView scrollRectToVisible:frame animated:NO];
     [self.conceptsCollectionView reloadData];
+}
+
+- (void)reloadContentOfConceptsCollectionViewAndScrollToConcept:(IAEConcept *)concept
+{
+    [self.conceptsCollectionView performBatchUpdates:^{
+       // [self.conceptsCollectionView moveItemAtIndexPath:[self.conceptsCollectionView indexPathForCell:concept] toIndexPath:]
+
+    } completion:^(BOOL finished) {
+        IAEEditModeConceptCollectionViewCell *cell = [self findConceptCellOfConcept:concept];
+        NSIndexPath *cellIndexPath = [self.conceptsCollectionView indexPathForCell:cell];
+        [self.conceptsCollectionView scrollToItemAtIndexPath:cellIndexPath
+                                            atScrollPosition:UICollectionViewScrollPositionBottom
+                                                    animated:NO];
+
+    }];
+    
 }
 
 #pragma mark - IAEContextViewDataSource
@@ -1944,9 +1973,17 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     if (concept.dayOfTheMonth != day) {
         concept.dayOfTheMonth = day;
         [[IAEBook sharedBook] saveAll];
-        [self reloadContentOfConceptsCollectionView];
+
+        NSArray *concepts = [self isDayModeActiveForConcepts] ? [concept.month allConceptsSortedByDay] : [concept.month allConceptsSortedByEntryInstant];
+        NSUInteger newIndexOfConcept = [concepts indexOfObject:concept];
+        NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:newIndexOfConcept inSection:0];
+        [self.conceptsCollectionView performBatchUpdates:^{
+            [self.conceptsCollectionView moveItemAtIndexPath:dayCalendarSelectorViewController.conceptCellIndexPath toIndexPath:newIndexPath];
+        } completion:^(BOOL finished) {
+            [self.conceptsCollectionView reloadItemsAtIndexPaths:@[newIndexPath]];
+            [self.conceptsCollectionView scrollToItemAtIndexPath:newIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
+        }];
     }
-    
 }
 
 #pragma mark - IAECalculatorViewControllerDelegate

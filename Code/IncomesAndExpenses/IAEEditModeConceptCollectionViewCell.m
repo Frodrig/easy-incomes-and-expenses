@@ -48,6 +48,8 @@ static const CGFloat kAlphaValueForStrokeState = 0.3;
 static const CGFloat kEditModeYTranslation = 5.0;
 static NSString * const kEditModeAnimationKey = @"editModeAnimation";
 
+static const CGFloat kBaseCellIndexValue = 100;
+
 #pragma mark - Properties
 
 - (void)setDrawSeparatorLine:(BOOL)drawSeparatorLine
@@ -422,6 +424,21 @@ static NSString * const kEditModeAnimationKey = @"editModeAnimation";
     
     return view;
 }
+
+#pragma mark - Tag
+
+- (void)setTagWithIndex:(NSUInteger)index
+{
+    self.tag = kBaseCellIndexValue + index;
+}
+
+- (NSUInteger)extractIndexFromTag
+{
+    const NSUInteger index = self.tag - kBaseCellIndexValue;
+    
+    return index;
+}
+
 
 
 

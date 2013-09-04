@@ -42,8 +42,8 @@
                                 <rect key="frame" x="150" y="8" width="161" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                                 <segments>
-                                    <segment title="Ingresos"/>
-                                    <segment title="Gastos"/>
+                                    <segment title="A"/>
+                                    <segment title="B"/>
                                 </segments>
                                 <connections>
                                     <action selector="categorySegmentedControlPressed:" destination="-1" eventType="valueChanged" id="j6u-UA-g1o"/>

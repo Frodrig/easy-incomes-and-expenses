@@ -11,6 +11,14 @@
 
 * Año
 ** No aparece correctamente centrado el año abierto
+** Valorar poner heder para cada opción pulsada
+
+* Categorías
+** -Sin localizar textos del segmented-
+** Valorar poner header
+
+* Segmented de cambio de modo
+** Sin localizar
 
 * Inicio e iconos
 ** A la espera de solucionar el bug de la pantalla de inicio.

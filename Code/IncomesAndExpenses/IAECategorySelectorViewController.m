@@ -37,6 +37,8 @@
 static const NSUInteger kIncomeSegmentedIndex = 0;
 static const NSUInteger kExpenseSegmentedIndex = 1;
 
+static NSString * const kLTextIncomeCategoryTitleOption = @"LTEXT_CATEGORYSELECTOR_INCOMESOPTION";
+static NSString * const kLTextExpenseCategoryTitleOption = @"LTEXT_CATEGORYSELECTOR_EXPENSESOPTION";
 static NSString * const kXibOfCategoryTableViewCellWithoutNumberOfConcepts = @"IAECategoryTableViewCell";
 static NSString * const kXibOfCategoryTableViewCellWithNumberOfConcepts = @"IAECategoryWithNumberOfConceptsTableView";
 static NSString * const kIDOfCategoryTableViewCell = @"CategoryTableViewCell";
@@ -135,11 +137,14 @@ static const NSInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
     [self.categoriesTableView removeGestureRecognizer:self.swipeGestureRecognizer];
 }
 
+#pragma mark - ViewDidLoad
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     [self configureNavigationItem];
+    [self configureCategorySegmentedControl];
     [self configureCategoriesTableView];
 }
 
@@ -205,6 +210,12 @@ static const NSInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
 - (BOOL)deleteActionFlagEnabled
 {
     return self.actions & CATEGORYSELECTOR_EXTRAACTION_DELETE;
+}
+
+- (void)configureCategorySegmentedControl
+{
+    [self.categorySegmentedControl setTitle:NSLocalizedString(kLTextIncomeCategoryTitleOption, @"") forSegmentAtIndex:kIncomeSegmentedIndex];
+    [self.categorySegmentedControl setTitle:NSLocalizedString(kLTextExpenseCategoryTitleOption, @"") forSegmentAtIndex:kExpenseSegmentedIndex];
 }
 
 - (void)configureCategoriesTableView

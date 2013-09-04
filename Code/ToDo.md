@@ -10,12 +10,17 @@
 ** Si se compra dominio, poner el enlace definitivo.
 
 * Año
-** No aparece correctamente centrado el año abierto
-** Valorar poner heder para cada opción pulsada
+** -No aparece correctamente centrado el año abierto-
+** -Valorar poner heder para cada opción pulsada-
+*** -No, el segmented es suficientemente explicativo y restamos espacio para mostrar años-
+** -Mejorar la localización de las opciones segmented-
+** Valorar migrar a TableView para conseguir animación de recarga
 
 * Categorías
 ** -Sin localizar textos del segmented-
-** Valorar poner header
+** -Animación de fade al cambiar entre tipo de categoría-
+** -Valorar poner header-
+*** -Mejor no, pues taparía zona de trabajo. Cuantas más categorías se vean a la vez, mejor.-
 
 * Segmented de cambio de modo
 ** -Sin localizar-

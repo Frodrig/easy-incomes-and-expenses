@@ -1938,6 +1938,8 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 - (void)dayCalendarSelectorViewController:(IAEDayCalendarSelectorViewController *)dayCalendarSelectorViewController
                              didSelectDay:(NSUInteger)day
 {
+    [self dismisPopover];
+
     IAEConcept *concept = [self findConceptAtIndexPath:dayCalendarSelectorViewController.conceptCellIndexPath];
     if (concept.dayOfTheMonth != day) {
         concept.dayOfTheMonth = day;
@@ -1945,7 +1947,6 @@ static const CGFloat kDurationModeFadeIn = 0.75;
         [self reloadContentOfConceptsCollectionView];
     }
     
-    [self dismisPopover];
 }
 
 #pragma mark - IAECalculatorViewControllerDelegate

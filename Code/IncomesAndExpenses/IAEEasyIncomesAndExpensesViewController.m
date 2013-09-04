@@ -112,7 +112,7 @@ static NSString * const kNotificationDayModeOnName = @"dayModeToOn";
 static NSString * const kNotificationDayModeOffName = @"dayModeToOff";
 
 static NSString * const kLTextModeSegmentedControlEditMode = @"LTEXT_MODESEGMENTEDCONTROL_EDITMODE";
-static NSString * const kLTextModeSegmentedControlReportmode = @"LTEXT_MODESEGMENTEDCONTROL_REPORTMODE";
+static NSString * const kLTextModeSegmentedControlReportMode = @"LTEXT_MODESEGMENTEDCONTROL_REPORTMODE";
 
 static const NSUInteger kContentScrollViewNumberOfItems = 13;
 static const NSUInteger kGlobalIndexForYearInContextScrollView = 0;
@@ -321,6 +321,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 	// Do any additional setup after loading the view.
     [self configureNavigationBar];
     [self configureSelectorContextView];
+    [self configureEditModeSegmentedControl];
     [self configureEditAndReportModeContentContainerView];
     [self configureCalculatorViewController];
     [self configureConceptsViews];
@@ -353,6 +354,12 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 - (void)configureSelectorContextView
 {
     self.selectorContextView.delegate = self;
+}
+
+- (void)configureEditModeSegmentedControl
+{
+    [self.modeSegmentedControl setTitle:NSLocalizedString(kLTextModeSegmentedControlEditMode, @"") forSegmentAtIndex:kSegmentedControlIndexEditMode];
+    [self.modeSegmentedControl setTitle:NSLocalizedString(kLTextModeSegmentedControlReportMode, @"") forSegmentAtIndex:kSegmentedControlIndexReportMode];
 }
 
 - (void)configureCalculatorViewController

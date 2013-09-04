@@ -10,7 +10,10 @@
 ** Si se compra dominio, poner el enlace definitivo.
 
 * Cantidades
-** En selector de años y selector de categorías, de cero a nueve con letra y superiores con número.
+** -En selector de años y selector de categorías, de cero a nueve con letra y superiores con número.-
+
+* Concepto
+** El elemento seleccionado, hacer que tenga una animación muy breve
 
 * Año
 ** -No aparece correctamente centrado el año abierto-

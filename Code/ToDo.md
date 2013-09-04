@@ -18,7 +18,7 @@
 ** Valorar poner header
 
 * Segmented de cambio de modo
-** Sin localizar
+** -Sin localizar-
 
 * Inicio e iconos
 ** A la espera de solucionar el bug de la pantalla de inicio.

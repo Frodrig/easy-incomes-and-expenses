@@ -351,7 +351,7 @@ static const NSInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
 
 - (IBAction)categorySegmentedControlPressed:(id)sender
 {
-    [self.categoriesTableView reloadData];
+    [self.categoriesTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 #pragma mark - UITableViewDelegate

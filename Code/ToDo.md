@@ -9,6 +9,9 @@
 * Settings
 ** Si se compra dominio, poner el enlace definitivo.
 
+* Cantidades
+** En selector de años y selector de categorías, de cero a nueve con letra y superiores con número.
+
 * Año
 ** -No aparece correctamente centrado el año abierto-
 ** -Valorar poner heder para cada opción pulsada-

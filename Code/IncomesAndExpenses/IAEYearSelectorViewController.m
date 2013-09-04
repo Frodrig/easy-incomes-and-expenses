@@ -52,6 +52,9 @@ static NSString * const kLTextAlertViewConfirmCleanMessage = @"LTEXT_CONFIRM_CLE
 static NSString * const kLTextAlertViewConfirmCancelOption = @"LTEXT_ALERTVIEW_CANCEL";
 static NSString * const kLTextAlertViewConfirmCleanOption = @"LTEXT_ALERTVIEW_CLEAN";
 
+static const CGFloat kDurationChangeModeFadeIn = 0.5;
+static const CGFloat kDurationChangeModeFadeOut = 0.35;
+
 #pragma mark - Properties
 
 - (IAEStrokeAnimatableLineView *)strokeAnimatableLineView
@@ -212,8 +215,17 @@ static NSString * const kLTextAlertViewConfirmCleanOption = @"LTEXT_ALERTVIEW_CL
 - (IBAction)yearSegmentedControlPressed:(id)sender
 {
     if ([self canChangeTheSelectedSegmentIndex]) {
-        [self.yearsCollectionView reloadData];
-        [self goToOpenYearScrollPosition];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+        [UIView animateWithDuration:kDurationChangeModeFadeIn animations:^{
+            self.yearsCollectionView.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            [self.yearsCollectionView reloadData];
+            [self goToOpenYearScrollPosition];
+            [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+            [UIView animateWithDuration:kDurationChangeModeFadeOut animations:^{
+                self.yearsCollectionView.alpha = 1.0;
+            }];
+        }];
     }
 }
 

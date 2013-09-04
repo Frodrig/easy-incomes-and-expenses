@@ -20,7 +20,8 @@
 ** -Valorar poner heder para cada opción pulsada-
 *** -No, el segmented es suficientemente explicativo y restamos espacio para mostrar años-
 ** -Mejorar la localización de las opciones segmented-
-** Valorar migrar a TableView para conseguir animación de recarga
+** -Valorar migrar a TableView para conseguir animación de recarga-
+*** -Sin tiempo para hacerlo: implementado fadein y fadeout-
 
 * Categorías
 ** -Sin localizar textos del segmented-

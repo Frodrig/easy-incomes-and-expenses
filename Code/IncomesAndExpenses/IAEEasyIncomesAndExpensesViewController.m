@@ -48,11 +48,12 @@
 
 @interface IAEEasyIncomesAndExpensesViewController ()
 
+@property (strong, nonatomic) IBOutlet UILabel *navigationBarTitleLabel;
 @property (nonatomic, strong) UIImageView *launchImage;
-@property (weak, nonatomic) IBOutlet UIButton *settingsButton;
 @property (weak, nonatomic) IBOutlet UIView *containerViewForDynamicFX;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *yearsButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *categoriesButton;
+@property (weak, nonatomic) UIBarButtonItem *yearsButton;
+@property (weak, nonatomic) UIBarButtonItem *categoriesButton;
+@property (weak, nonatomic) UIBarButtonItem *settingsButton;
 @property (weak, nonatomic) IBOutlet IAESelectorContextView *selectorContextView;
 @property (weak, nonatomic) IBOutlet UIView *editAndReportModeContentContainerView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *modeSegmentedControl;
@@ -96,8 +97,10 @@ static const NSUInteger kNumberOfMonths = 12;
 static const CGFloat kDurationInitializationAnimationFadeIn = 2.0;
 static const CGFloat kDurationInitializationAnimationTraslantion = 2.25;
 
-static NSString * const kLTextYearsBarButtonTitle = @"LTEXT_BARBUTTON_YEARS_TITLE";
+static NSString * const kLTextNavigationBarTitle = @"LTEXT_NAVIGATIONBAR_TITLE";
+static NSString * const kLTextVersionAppType = @"LTEXT_CATEGORY_VERSION";
 static NSString * const kLTextSettingsBarButtonTitle = @"LTEXT_BARBUTTON_SETTINGS_TITLE";
+static NSString * const kLTextYearsBarButtonTitle = @"LTEXT_BARBUTTON_YEARS_TITLE";
 static NSString * const kLTextCategoriesBarButtonTitle = @"LTEXT_BARBUTTON_CATEGORIES_TITLE";
 
 static const CGFloat kEditAndReportModeContentContainerRadius = 15;
@@ -309,12 +312,14 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     _helperConceptsCollectionViewDataSource = [[IAEHelperConceptsCollectionViewDataSource alloc] initWithEasyIncomesAndExpensesViewControllerQuery:self];
 }
 
+#pragma mark - ViewDidLoad
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
 	// Do any additional setup after loading the view.
-    [self configureBarButtonsTitle];
+    [self configureNavigationBar];
     [self configureSelectorContextView];
     [self configureEditAndReportModeContentContainerView];
     [self configureCalculatorViewController];
@@ -323,10 +328,26 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     [self configureReportMenuView];
 }
 
-- (void)configureBarButtonsTitle
+- (void)configureNavigationBar
 {
-    [self.yearsButton setTitle:NSLocalizedString(kLTextYearsBarButtonTitle, @"")];
-    [self.categoriesButton setTitle:NSLocalizedString(kLTextCategoriesBarButtonTitle, @"")];
+    self.navigationBarTitleLabel.text = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(kLTextNavigationBarTitle, @""), NSLocalizedString(kLTextVersionAppType, @"")];
+    
+    self.categoriesButton = [self makeBarButtonWithTitle:kLTextCategoriesBarButtonTitle andSelector:@selector(categoriesButtonPressed:)];
+    self.yearsButton = [self makeBarButtonWithTitle:kLTextYearsBarButtonTitle andSelector:@selector(yearsButtonPressed:)];
+    self.navigationItem.rightBarButtonItems = @[self.categoriesButton, self.yearsButton];
+    
+    self.settingsButton = [self makeBarButtonWithTitle:kLTextSettingsBarButtonTitle andSelector:@selector(settingsOptionPressed:)];
+    self.navigationItem.leftBarButtonItem = self.settingsButton;
+}
+
+- (UIBarButtonItem *)makeBarButtonWithTitle:(NSString *)title andSelector:(SEL)selector
+{
+    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(title, @"")
+                                                               style:UIBarButtonItemStyleBordered
+                                                              target:self
+                                                              action:selector];
+
+    return button;
 }
 
 - (void)configureSelectorContextView
@@ -383,6 +404,8 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 {
     self.reportMenuView.backgroundColor = [UIColor clearColor];
 }
+
+#pragma mark - ViewWillAppear
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -497,6 +520,8 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 {
     [self.selectorContextView changeToContextViewOfIndex:contextIndex withAnimation:!self.initialPositioning];
 }
+
+#pragma mark - ViewDidAppear
 
 - (void)viewDidAppear:(BOOL)animated
 {

@@ -74,53 +74,28 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="keZ-vo-FzI">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" title="Años" id="Dot-VC-q0a">
-                            <connections>
-                                <action selector="yearsButtonPressed:" destination="7Ea-79-0mi" id="wH5-lY-nyw"/>
-                            </connections>
-                        </barButtonItem>
-                        <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="Yxn-Dz-OEd">
-                            <rect key="frame" x="353" y="8" width="320" height="28"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="21"/>
-                            <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <state key="normal" title="Easy Incomes and Expenses">
-                                <color key="titleColor" red="0.69803923368453979" green="0.69803923368453979" blue="0.69803923368453979" alpha="1" colorSpace="deviceRGB"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <state key="highlighted" title="Easy Incomes and Expenses">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="settingsOptionPressed:" destination="7Ea-79-0mi" eventType="touchUpInside" id="Grq-ff-sYt"/>
-                            </connections>
-                        </button>
-                        <barButtonItem key="rightBarButtonItem" title="Categorías" id="AgY-ym-Q0h">
-                            <connections>
-                                <action selector="categoriesButtonPressed:" destination="7Ea-79-0mi" id="ZZC-xV-ey1"/>
-                            </connections>
-                        </barButtonItem>
                         <connections>
-                            <outlet property="leftBarButtonItem" destination="Dot-VC-q0a" id="Bpz-2o-rrO"/>
-                            <outlet property="rightBarButtonItem" destination="AgY-ym-Q0h" id="BRz-hc-pNT"/>
-                            <outlet property="titleView" destination="Yxn-Dz-OEd" id="AdG-Gr-a2n"/>
+                            <outlet property="titleView" destination="eNa-tf-Xv0" id="1uO-89-wSt"/>
                         </connections>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
-                        <outlet property="categoriesButton" destination="AgY-ym-Q0h" id="u32-2A-3IE"/>
                         <outlet property="conceptsCollectionView" destination="Ua3-PB-7Qf" id="Z3m-0j-JJI"/>
                         <outlet property="containerViewForDynamicFX" destination="6wF-Rw-GjU" id="hWC-Am-sbP"/>
                         <outlet property="editAndReportModeContentContainerView" destination="G41-3w-8Uv" id="FNX-AU-fYg"/>
                         <outlet property="modeSegmentedControl" destination="iQJ-fE-Ltz" id="wtQ-Ue-Syc"/>
+                        <outlet property="navigationBarTitleLabel" destination="eNa-tf-Xv0" id="Tka-lU-rxt"/>
                         <outlet property="selectorContextView" destination="Dio-MI-59n" id="qfS-89-4Iz"/>
-                        <outlet property="settingsButton" destination="Yxn-Dz-OEd" id="kdk-IS-aBF"/>
-                        <outlet property="yearsButton" destination="Dot-VC-q0a" id="DrA-Pm-J0F"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nSe-iv-lCf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eNa-tf-Xv0">
+                    <rect key="frame" x="0.0" y="0.0" width="42" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="19"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </objects>
             <point key="canvasLocation" x="-74" y="36"/>
         </scene>

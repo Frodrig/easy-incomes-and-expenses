@@ -1,7 +1,7 @@
 # ToDo: Easy Incomes and Expenses.
 
 * Barra superior
-** Pensar en como indicar que es un botón el título central.
+** -Pensar en como indicar que es un botón el título central.-
 
 * Contextos
 ** Cambiar de contexto A a contexto B y antes de que B esté en pantalla cambiar a A, hace doble carga sobre el contenido de A.
@@ -10,7 +10,7 @@
 ** Si se compra dominio, poner el enlace definitivo.
 
 * Año
-** -¿Algún efecto indicativo del cambio de año?-
+** No aparece correctamente centrado el año abierto
 
 * Inicio e iconos
 ** A la espera de solucionar el bug de la pantalla de inicio.

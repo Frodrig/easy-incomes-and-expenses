@@ -8,8 +8,9 @@
 
 * Concepto
 ** -El elemento seleccionado, hacer que tenga una animación muy breve-
-** Hemos descubierto que el controller del día no guarda el indexpath de la celda relacionada. Esto no es consistente con los controladores para cambiar categorías y cantidades
-** Hemos descubierto que al cambiar un elemento recargamos TODO en lugar de recargar únicamente la celda involucrada.
+** -Hemos descubierto que el controller del día no guarda el indexpath de la celda relacionada. Esto no es consistente con los controladores para cambiar categorías y cantidades-
+** He visto que la animación de movimiento sobre el día seguía activa tras elegir un día. Es como si no se desactivara.
+*** Parece que tiene que ver con la reordenación que se produce de indexPath que hace que al mandar la orden de desactivar sea a otra celda diferente.
 
 * Inicio e iconos
 ** A la espera de solucionar el bug de la pantalla de inicio.
@@ -17,6 +18,8 @@
 
 * Ayuda
 ** ¿Podemos meter algo?
+
+* ToDos
 
 * Refactorización
 ** En todos los sitios donde vuelvo a recrear la fuente y su tamaño… simplemente cambiar el campo text para la label asociada. Esto es válido a no ser que tenga que poner kern.

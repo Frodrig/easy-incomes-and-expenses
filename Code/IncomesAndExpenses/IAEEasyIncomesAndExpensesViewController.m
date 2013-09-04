@@ -80,7 +80,6 @@
 @property (nonatomic, weak) IAEEditModeConceptCollectionViewCell *conceptCellToRemove;
 @property (nonatomic) BOOL initialPositioning;
 @property (nonatomic, weak) IAECategory *categoryRenaming;
-@property (nonatomic, weak) IAEConcept *conceptChangingDay;
 @property (nonatomic) BOOL reloadAllPendingFromYearSelectorIfReturnWithSameYearDate;
 @property (nonatomic) NSInteger lastContextIndexMenuPressed;
 @property (nonatomic, strong) UIAttachmentBehavior *attachBehaviorForContainerFX;
@@ -1129,7 +1128,6 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 
 - (void)performActionsAfterDismissDayCalendarSelectorPopover:(UIPopoverController *)popoverController
 {
-    [self cleanDayCalendarSelectorProperties];
     IAEDayCalendarSelectorViewController *controller = (IAEDayCalendarSelectorViewController *)popoverController.contentViewController;
     IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:controller.conceptCellIndexPath];
     [cell setVisualAspectInEditMode:NO forConceptElement:EditModeConceptElement_DayOrNumberInstance];
@@ -1147,11 +1145,6 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     if ([popover.contentViewController isKindOfClass:[IAEAdjustConceptAmountViewController class]]) {
         [self updateBalancesWithAnimation:YES];
     }
-}
-
-- (void)cleanDayCalendarSelectorProperties
-{
-    self.conceptChangingDay = nil;
 }
 
 #pragma mark - IAEReportAreaViewDelegate
@@ -1611,8 +1604,6 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 - (void)openPopoverForSelectDayOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
     [cell setVisualAspectInEditMode:YES forConceptElement:EditModeConceptElement_DayOrNumberInstance];
-
-    self.conceptChangingDay = [self findConceptOfCell:cell];
     
     IAEYear *year = [self findOpenYear];
     IAEMonth *month = [self findActualSelectedMonth];
@@ -1940,12 +1931,6 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 - (void)closeModalsAfterEnterBackground
 {
     [self.yearSelectorViewController closeButtonPressed:nil];
-    /*[self.categoriesSelectorViewController doneButtonPressed:nil];
-    [self.aboutAndOptionsViewController doneButtonPressed:nil];
-    if (self.contextMenuView.currentOptionIndexSelected > 0 && [self isEditModeActive]) {
-        [self.calculatorViewController hide];
-    }
-     */
 }
 
 #pragma mark - IAEDayCalendarSelectorViewControllerDelegate
@@ -1953,18 +1938,14 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 - (void)dayCalendarSelectorViewController:(IAEDayCalendarSelectorViewController *)dayCalendarSelectorViewController
                              didSelectDay:(NSUInteger)day
 {
-    [self updateConceptChangingDayWithDay:day];
-    [self dismisPopover];
-}
-
-- (void)updateConceptChangingDayWithDay:(NSUInteger)day
-{
-    NSAssert(self.conceptChangingDay, @"");
-    if (self.conceptChangingDay.dayOfTheMonth != day) {
-        self.conceptChangingDay.dayOfTheMonth = day;
+    IAEConcept *concept = [self findConceptAtIndexPath:dayCalendarSelectorViewController.conceptCellIndexPath];
+    if (concept.dayOfTheMonth != day) {
+        concept.dayOfTheMonth = day;
         [[IAEBook sharedBook] saveAll];
         [self reloadContentOfConceptsCollectionView];
     }
+    
+    [self dismisPopover];
 }
 
 #pragma mark - IAECalculatorViewControllerDelegate

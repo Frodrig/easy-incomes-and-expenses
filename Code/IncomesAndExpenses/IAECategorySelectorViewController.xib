@@ -45,6 +45,7 @@
                                     <segment title="A"/>
                                     <segment title="B"/>
                                 </segments>
+                                <color key="tintColor" red="0.80784320831298828" green="0.80784320831298828" blue="0.80784320831298828" alpha="1" colorSpace="deviceRGB"/>
                                 <connections>
                                     <action selector="categorySegmentedControlPressed:" destination="-1" eventType="valueChanged" id="j6u-UA-g1o"/>
                                 </connections>

@@ -58,7 +58,7 @@
                                     <segment title="First"/>
                                     <segment title="Second"/>
                                 </segments>
-                                <color key="tintColor" red="0.74509803919999995" green="0.74509803919999995" blue="0.74509803919999995" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="tintColor" red="0.80784320831298828" green="0.80784320831298828" blue="0.80784320831298828" alpha="1" colorSpace="deviceRGB"/>
                                 <connections>
                                     <action selector="yearSegmentedControlPressed:" destination="-1" eventType="valueChanged" id="JfY-QR-oln"/>
                                 </connections>

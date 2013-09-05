@@ -29,8 +29,9 @@
 
 @implementation IAECategoryEditorViewController
 
-static const NSUInteger kSizeInformationLabel = 32;
+static const NSUInteger kSizeInformationLabel = 41;
 static const NSUInteger kSizeInputTextField = 68;
+static const NSUInteger kSizeWarningLabel = 28;
 static const NSUInteger kSizeRoundedRectCorners = 10;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -140,7 +141,7 @@ static const NSUInteger kSizeRoundedRectCorners = 10;
 - (void)configureProblemWarningLabel
 {
     self.problemWarningLabel.attributedText = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"LTEXT_INVALIDCATEGORY", "")
-                                                                              attributes:[self createAttributeForLabelWithSize:21]];
+                                                                              attributes:[self createAttributeForLabelWithSize:kSizeWarningLabel]];
     self.problemWarningLabel.numberOfLines = 2;
     self.problemWarningLabel.alpha = 0;
 }
@@ -309,8 +310,10 @@ static const NSUInteger kSizeRoundedRectCorners = 10;
     NSString *normalizedCategoryTag = [self.categoryInputTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     if (self.editModeContext == EDITMODE_CATEGORY_ADD) {
         [self.delegate categoryEditorViewController:self DidValidateNewCategoryTag:normalizedCategoryTag ofCategoryType:self.categoryTypeContext];
-    } else if (self.editModeContext == EDITMODE_CATEGORY_RENAME && [self categoryTagToRenameDifferentOfCategoryTag:normalizedCategoryTag]) {
+    } else if (self.editModeContext == EDITMODE_CATEGORY_RENAME) {
         [self.delegate categoryEditorViewController:self DidValidateRenameCategory:self.categoryToRename withTag:normalizedCategoryTag];
+    } else {
+        NSAssert(0, @"");
     }
 }
 

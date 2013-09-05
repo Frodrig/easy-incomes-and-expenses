@@ -1,22 +1,19 @@
 # ToDo: Easy Incomes and Expenses.
 
-* Contextos
-** Cambiar de contexto A a contexto B y antes de que B esté en pantalla cambiar a A, hace doble carga sobre el contenido de A.
-
 * Settings
 ** Si se compra dominio, poner el enlace definitivo.
 
 * Inicio e iconos
 ** A la espera de solucionar el bug de la pantalla de inicio.
-** Icono
 
 * Conceptos
 ** A lo mejor deberíamos de permitir, al menos, que en la pestaña global si se da a un concepto vayamos a su contexto inmediatamente.
 
-* Ayuda
-** ¿Podemos meter algo?
-
-* CrashLitic
+* Web
+** Presentación
+** Soporte
+** Ayuda
+** Versión Pro
 
 * ToDos
 

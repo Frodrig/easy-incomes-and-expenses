@@ -6,22 +6,17 @@
 * Settings
 ** Si se compra dominio, poner el enlace definitivo.
 
-* Renombrar categoría
-** El decorador quizás deba de ser más ancho
-** Si ponemos el mismo nombre, no nos advierte pero tampoco nos deja dar a intro
-** La fuente usada para advertir más grande
-
-* Concepto
-** -Cuando cambiamos la fecha de una celda, deberíamos de ser capaces de ir a la nueva posición donde se encuentra.-
-
 * Inicio e iconos
 ** A la espera de solucionar el bug de la pantalla de inicio.
 ** Icono
 
+* Conceptos
+** A lo mejor deberíamos de permitir, al menos, que en la pestaña global si se da a un concepto vayamos a su contexto inmediatamente.
+
 * Ayuda
 ** ¿Podemos meter algo?
 
-* TestFlight / CrashLitic
+* CrashLitic
 
 * ToDos
 
@@ -40,6 +35,8 @@
 ** Contraseña
 
 * Ideas
+** Conceptos
+*** Poder manipularlos desde la pestaña global
 ** Calculadora:
 *** Tachar supondría no dibujar la raya y si enviar lejos la cantidad
 ** Mes actual

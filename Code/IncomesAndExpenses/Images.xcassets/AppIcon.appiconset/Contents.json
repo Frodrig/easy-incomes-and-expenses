@@ -23,13 +23,13 @@
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "EasyIncomesAndExpenses IOS7 icon.png",
+      "filename" : "icon.png",
       "scale" : "1x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "EasyIncomesAndExpenses IOS7 icon@2x.png",
+      "filename" : "icon@2x.png",
       "scale" : "2x"
     }
   ],

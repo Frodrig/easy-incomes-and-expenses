@@ -29,8 +29,6 @@
 		5B2AAA3017C773CF00E7C7A5 /* 747-minus-circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B2AAA2E17C773CF00E7C7A5 /* 747-minus-circle@2x.png */; };
 		5B2AAA3217C7747100E7C7A5 /* 747-minus-circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B2AAA3117C7747100E7C7A5 /* 747-minus-circle.png */; };
 		5B2D38B817AFA8CE0056488B /* IAEWithoutConceptsTextWarning.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B2D38B517AFA1B30056488B /* IAEWithoutConceptsTextWarning.xib */; };
-		5B3216C617D65F80002DEBEA /* EasyIncomesAndExpenses IOS7 icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3216C417D65F80002DEBEA /* EasyIncomesAndExpenses IOS7 icon.png */; };
-		5B3216C717D65F80002DEBEA /* EasyIncomesAndExpenses IOS7 icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3216C517D65F80002DEBEA /* EasyIncomesAndExpenses IOS7 icon@2x.png */; };
 		5B32D654177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B32D653177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m */; };
 		5B32D65D177C41980070AC72 /* IAEYearSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B32D65C177C41980070AC72 /* IAEYearSelectorViewController.m */; };
 		5B36AFF11785874D00132475 /* IAEAdjustConceptAmountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B36AFEF1785874D00132475 /* IAEAdjustConceptAmountViewController.m */; };
@@ -81,6 +79,8 @@
 		5B90783C179D268000B2A0F7 /* IAEDisplayPanelCalculatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B90783B179D268000B2A0F7 /* IAEDisplayPanelCalculatorView.m */; };
 		5B907840179D269E00B2A0F7 /* IAEKeyboardPanelCalculatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B90783F179D269E00B2A0F7 /* IAEKeyboardPanelCalculatorView.m */; };
 		5B94036017904C1400F9C1D0 /* IAEYearSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B94035F17904C1400F9C1D0 /* IAEYearSelectorViewController.xib */; };
+		5B951F6C17D88F1700CCEACE /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B951F6A17D88F1700CCEACE /* icon.png */; };
+		5B951F6D17D88F1700CCEACE /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B951F6B17D88F1700CCEACE /* icon@2x.png */; };
 		5BA0130D179800AC00337E84 /* NSString+TwoDigitString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA0130C179800AC00337E84 /* NSString+TwoDigitString.m */; };
 		5BA0131217983A9000337E84 /* IAEDayCalendarSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA0131017983A9000337E84 /* IAEDayCalendarSelectorViewController.m */; };
 		5BA0131317983A9000337E84 /* IAEDayCalendarSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA0131117983A9000337E84 /* IAEDayCalendarSelectorViewController.xib */; };
@@ -152,8 +152,6 @@
 		5B2AAA3117C7747100E7C7A5 /* 747-minus-circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "747-minus-circle.png"; sourceTree = "<group>"; };
 		5B2D38B417AFA1B30056488B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/IAEWithoutConceptsTextWarning.xib; sourceTree = "<group>"; };
 		5B2D38B617AFA1B90056488B /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/IAEWithoutConceptsTextWarning.xib; sourceTree = "<group>"; };
-		5B3216C417D65F80002DEBEA /* EasyIncomesAndExpenses IOS7 icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EasyIncomesAndExpenses IOS7 icon.png"; sourceTree = "<group>"; };
-		5B3216C517D65F80002DEBEA /* EasyIncomesAndExpenses IOS7 icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EasyIncomesAndExpenses IOS7 icon@2x.png"; sourceTree = "<group>"; };
 		5B32D652177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEasyIncomesAndExpensesViewController.h; sourceTree = "<group>"; };
 		5B32D653177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEasyIncomesAndExpensesViewController.m; sourceTree = "<group>"; };
 		5B32D65B177C41980070AC72 /* IAEYearSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEYearSelectorViewController.h; sourceTree = "<group>"; };
@@ -253,6 +251,8 @@
 		5B907842179D7FED00B2A0F7 /* IAECalculatorViewControllerDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECalculatorViewControllerDataSource.h; sourceTree = "<group>"; };
 		5B94035C178FEA5C00F9C1D0 /* IAEYearSelectorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEYearSelectorViewControllerDelegate.h; sourceTree = "<group>"; };
 		5B94035F17904C1400F9C1D0 /* IAEYearSelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEYearSelectorViewController.xib; sourceTree = "<group>"; };
+		5B951F6A17D88F1700CCEACE /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		5B951F6B17D88F1700CCEACE /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		5BA0130B179800AC00337E84 /* NSString+TwoDigitString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+TwoDigitString.h"; sourceTree = "<group>"; };
 		5BA0130C179800AC00337E84 /* NSString+TwoDigitString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+TwoDigitString.m"; sourceTree = "<group>"; };
 		5BA0130F17983A9000337E84 /* IAEDayCalendarSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEDayCalendarSelectorViewController.h; sourceTree = "<group>"; };
@@ -864,10 +864,10 @@
 		5B7FCE9317D63D1D00624D25 /* Apple */ = {
 			isa = PBXGroup;
 			children = (
-				5B3216C417D65F80002DEBEA /* EasyIncomesAndExpenses IOS7 icon.png */,
-				5B3216C517D65F80002DEBEA /* EasyIncomesAndExpenses IOS7 icon@2x.png */,
 				5B7FCE8E17D63CF700624D25 /* ipadlandscape_launchimage.png */,
 				5B7FCE8F17D63CF700624D25 /* ipadlandscape_launchimage@2x.png */,
+				5B951F6A17D88F1700CCEACE /* icon.png */,
+				5B951F6B17D88F1700CCEACE /* icon@2x.png */,
 				5BF6F23917D6554D009B5D2C /* ipadlandscape_launchimagecrop.png */,
 				5BF6F23A17D6554D009B5D2C /* ipadlandscape_launchimagecrop@2x.png */,
 			);
@@ -1374,6 +1374,7 @@
 				5B94036017904C1400F9C1D0 /* IAEYearSelectorViewController.xib in Resources */,
 				5B36AFFD1785D73800132475 /* IAECategorySelectorViewController.xib in Resources */,
 				5B36AFF21785874D00132475 /* IAEAdjustConceptAmountViewController.xib in Resources */,
+				5B951F6D17D88F1700CCEACE /* icon@2x.png in Resources */,
 				5B907833179D1AA700B2A0F7 /* IAECalculatorViewController.xib in Resources */,
 				5B26461617968F84006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.xib in Resources */,
 				5B0574C117AFE2F600B95D50 /* IAEWithoutConceptsTextWarningReportMode.xib in Resources */,
@@ -1382,7 +1383,6 @@
 				5B7FCE9017D63CF700624D25 /* ipadlandscape_launchimage.png in Resources */,
 				5B264613179684A5006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.xib in Resources */,
 				5BC1110017CD1DF500FF6D6B /* 730-envelope.png in Resources */,
-				5B3216C617D65F80002DEBEA /* EasyIncomesAndExpenses IOS7 icon.png in Resources */,
 				5B7FCE9117D63CF700624D25 /* ipadlandscape_launchimage@2x.png in Resources */,
 				5B8CD5D317A262BC00A353A5 /* IAEContextViewContent.xib in Resources */,
 				5B0F8BC416B94ADD002D62A5 /* Localizable.strings in Resources */,
@@ -1390,11 +1390,11 @@
 				5BD94C0F1786B896009009B1 /* IAECategoryTableViewCell.xib in Resources */,
 				5B55C407178AA8C20066F586 /* IAECategoryEditorViewController.xib in Resources */,
 				5BCE3AA117A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib in Resources */,
-				5B3216C717D65F80002DEBEA /* EasyIncomesAndExpenses IOS7 icon@2x.png in Resources */,
 				5BCCC91717D5008E00FC1A05 /* Images.xcassets in Resources */,
 				5B2AAA3217C7747100E7C7A5 /* 747-minus-circle.png in Resources */,
 				5B2AAA2B17C773C500E7C7A5 /* 746-plus-circle.png in Resources */,
 				5B62D85D178EA8A2009879A6 /* IAEYearSelectorCollectionViewCell.xib in Resources */,
+				5B951F6C17D88F1700CCEACE /* icon.png in Resources */,
 				5BC1110117CD1DF500FF6D6B /* 730-envelope@2x.png in Resources */,
 				5BA0131317983A9000337E84 /* IAEDayCalendarSelectorViewController.xib in Resources */,
 				5B1F0D3717841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib in Resources */,

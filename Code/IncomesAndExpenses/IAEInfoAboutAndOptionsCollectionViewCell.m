@@ -72,10 +72,7 @@ static NSString * const kLTextProVersionInfo = @"LTEXT_SETTINGS_ABOUT_PROVERSION
 
 - (void)localizeButton:(UIButton *)button withUnlocalizedText:(NSString *)text
 {
-    NSDictionary *attributes = [[button attributedTitleForState:UIControlStateNormal] attributesAtIndex:0 effectiveRange:NULL];
-    NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:NSLocalizedString(text, @"")
-                                                                          attributes:attributes];
-    [button setAttributedTitle:attributedTitle forState:UIControlStateNormal];
+    [button setTitle:NSLocalizedString(text, @"") forState:UIControlStateNormal];
 }
 
 #pragma mark - Control Events

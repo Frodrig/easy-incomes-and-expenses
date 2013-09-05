@@ -36,6 +36,7 @@
 		5B36AFF71785BBF400132475 /* NSDecimalNumber+AbsoluteValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B36AFF61785BBF400132475 /* NSDecimalNumber+AbsoluteValue.m */; };
 		5B36AFFC1785D73800132475 /* IAECategorySelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B36AFFA1785D73800132475 /* IAECategorySelectorViewController.m */; };
 		5B36AFFD1785D73800132475 /* IAECategorySelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B36AFFB1785D73800132475 /* IAECategorySelectorViewController.xib */; };
+		5B3ACD4B17D8BF4500771B11 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3ACD4A17D8BF4500771B11 /* Crashlytics.framework */; };
 		5B5544A2177460DD009CFC84 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B5544A1177460DD009CFC84 /* Main.storyboard */; };
 		5B55C406178AA8C20066F586 /* IAECategoryEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B55C404178AA8C20066F586 /* IAECategoryEditorViewController.m */; };
 		5B55C407178AA8C20066F586 /* IAECategoryEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B55C405178AA8C20066F586 /* IAECategoryEditorViewController.xib */; };
@@ -165,6 +166,7 @@
 		5B36AFF91785D73800132475 /* IAECategorySelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategorySelectorViewController.h; sourceTree = "<group>"; };
 		5B36AFFA1785D73800132475 /* IAECategorySelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECategorySelectorViewController.m; sourceTree = "<group>"; };
 		5B36AFFB1785D73800132475 /* IAECategorySelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAECategorySelectorViewController.xib; sourceTree = "<group>"; };
+		5B3ACD4A17D8BF4500771B11 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		5B48BFFA1799425500BF0A68 /* IAEDayCalendarSelectorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEDayCalendarSelectorViewControllerDelegate.h; sourceTree = "<group>"; };
 		5B5544A017745F42009CFC84 /* IAEValueDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEValueDefs.h; sourceTree = "<group>"; };
 		5B5544A1177460DD009CFC84 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -335,6 +337,7 @@
 				5B767DF71636D7FC005315F8 /* UIKit.framework in Frameworks */,
 				5B767DF91636D7FC005315F8 /* Foundation.framework in Frameworks */,
 				5B767DFB1636D7FC005315F8 /* CoreGraphics.framework in Frameworks */,
+				5B3ACD4B17D8BF4500771B11 /* Crashlytics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -785,6 +788,7 @@
 		5B767DF51636D7FC005315F8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5B3ACD4A17D8BF4500771B11 /* Crashlytics.framework */,
 				5B7A4D7E16B68062001751A9 /* MessageUI.framework */,
 				5BC31A8316651F1F009F23D6 /* QuartzCore.framework */,
 				5BD06167163A8CFF00A80BE3 /* CoreData.framework */,
@@ -1304,6 +1308,7 @@
 				5B767DEE1636D7FC005315F8 /* Sources */,
 				5B767DEF1636D7FC005315F8 /* Frameworks */,
 				5B767DF01636D7FC005315F8 /* Resources */,
+				5B3ACD4917D8BF0B00771B11 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1402,6 +1407,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5B3ACD4917D8BF0B00771B11 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run ed113bdf0c248b243b565ef1fdac0f966317a7b8";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5B767DEE1636D7FC005315F8 /* Sources */ = {
@@ -1581,6 +1602,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/fernandorodriguezmartinez/Trabajo/Freelance/Git/Easy\\ Incomes\\ and\\ Expenses/Code",
+				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IncomesAndExpenses/IncomesAndExpenses-Prefix.pch";
@@ -1607,6 +1632,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/fernandorodriguezmartinez/Trabajo/Freelance/Git/Easy\\ Incomes\\ and\\ Expenses/Code",
+				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IncomesAndExpenses/IncomesAndExpenses-Prefix.pch";

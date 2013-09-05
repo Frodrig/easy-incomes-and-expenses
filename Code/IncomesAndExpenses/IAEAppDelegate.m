@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 Fernando Rodríguez Martínez. All rights reserved.
 //
 
+#import <Crashlytics/Crashlytics.h>
 #import "IAEAppDelegate.h"
 #import "IAEBook.h"
-
 #import "IAEYear.h"
 #import "IAEMonth.h"
 #import "IAECategoryStore.h"
@@ -23,6 +23,8 @@ static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [Crashlytics startWithAPIKey:@"ed113bdf0c248b243b565ef1fdac0f966317a7b8"];
+    
     [self processProcessInfoEnvironment];
     [self createYearBookIfProceed];
     [self prepareDefaults];

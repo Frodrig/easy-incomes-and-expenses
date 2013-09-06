@@ -8,16 +8,36 @@
 
 #import "IAEAdjustConceptAmountViewController.h"
 #import "IAEAdjustConceptAmountViewControllerDelegate.h"
+#import "IAEAdjustConceptAmountViewControllerDataSource.h"
 #import "IAECurrencyManager.h"
 
 @interface IAEAdjustConceptAmountViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *incrementAmountLabel;
 @property (weak, nonatomic) IBOutlet UISlider *slider;
+@property (nonatomic, strong) UIColor *colorBackgroundForInvalidAction;
 
 @end
 
 @implementation IAEAdjustConceptAmountViewController
+
+#pragma mark - Constants
+
+static const CGFloat kDurationOfAnimationOfInvalidAdjustActionFadeIn = 0.1;
+static const CGFloat kDurationOfAnimationOfInvalidAdjustActionFadeOut = 0.25;
+
+#pragma mark - Properties
+
+- (UIColor *)colorBackgroundForInvalidAction
+{
+    if (!_colorBackgroundForInvalidAction) {
+        _colorBackgroundForInvalidAction = [UIColor colorWithRed:1 green:0.0 blue:0.0 alpha:0.1];
+    }
+    
+    return _colorBackgroundForInvalidAction;
+}
+
+#pragma mark - Init
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -67,14 +87,35 @@
 - (IBAction)incomeButtonPressed:(id)sender
 {
     NSNumber *amountValue = [self convertSliderValueToDesiredValue];
-    [self.delegate adjustConceptsAmountViewController:self didPressedAdjustButtonWithAmount:amountValue];
+    [self notifyAdjustButtonPressedWithAmount:amountValue andButton:sender];
 }
 
 - (IBAction)expenseButtonPressed:(id)sender
 {
     NSNumber *amountValue = [self convertSliderValueToDesiredValue];
     amountValue = [NSNumber numberWithFloat:amountValue.floatValue * -1.0];
-    [self.delegate adjustConceptsAmountViewController:self didPressedAdjustButtonWithAmount:amountValue];
+    [self notifyAdjustButtonPressedWithAmount:amountValue andButton:sender];
+}
+
+- (void)notifyAdjustButtonPressedWithAmount:(NSNumber *)amount andButton:(UIButton *)button
+{
+    if ([self.dataSource canAdjustConceptAmountViewController:self addAmount:amount]) {
+        [self.delegate adjustConceptsAmountViewController:self didPressedAdjustButtonWithAmount:amount];
+    } else {
+        [self doAnimationOfInvalidAdjustActionOverButton:button];
+    }
+}
+
+- (void)doAnimationOfInvalidAdjustActionOverButton:(UIButton *)button
+{
+    [UIView animateWithDuration:kDurationOfAnimationOfInvalidAdjustActionFadeIn animations:^{
+        self.view.backgroundColor = self.colorBackgroundForInvalidAction;
+    } completion:^(BOOL finished) {
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+        [UIView animateWithDuration:kDurationOfAnimationOfInvalidAdjustActionFadeIn animations:^{
+            self.view.backgroundColor = [UIColor clearColor];
+        }];
+    }];
 }
 
 - (IBAction)sliderValueChanged:(id)sender

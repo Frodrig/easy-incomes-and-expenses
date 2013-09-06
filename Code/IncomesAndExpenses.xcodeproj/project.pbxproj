@@ -176,6 +176,7 @@
 		5B55C405178AA8C20066F586 /* IAECategoryEditorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAECategoryEditorViewController.xib; sourceTree = "<group>"; };
 		5B57275617D9A99B00552E98 /* IAENibUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAENibUtils.h; sourceTree = "<group>"; };
 		5B57275717D9A99B00552E98 /* IAENibUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAENibUtils.m; sourceTree = "<group>"; };
+		5B57275917D9FAD400552E98 /* IAEAdjustConceptAmountViewControllerDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEAdjustConceptAmountViewControllerDataSource.h; sourceTree = "<group>"; };
 		5B5C96791781673A008CD851 /* IAEValueDecoratorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEValueDecoratorView.h; sourceTree = "<group>"; };
 		5B5C967A1781673A008CD851 /* IAEValueDecoratorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEValueDecoratorView.m; sourceTree = "<group>"; };
 		5B5C967D17816A13008CD851 /* UIView+RoundedCorners.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RoundedCorners.h"; sourceTree = "<group>"; };
@@ -1212,6 +1213,7 @@
 			isa = PBXGroup;
 			children = (
 				5B36AFF31785906100132475 /* IAEAdjustConceptAmountViewControllerDelegate.h */,
+				5B57275917D9FAD400552E98 /* IAEAdjustConceptAmountViewControllerDataSource.h */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";

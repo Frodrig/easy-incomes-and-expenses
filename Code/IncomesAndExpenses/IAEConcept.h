@@ -20,8 +20,13 @@
 @property (nonatomic, retain) IAECategory *category;
 @property (nonatomic, retain) IAEMonth *month;
 
++ (NSDecimalNumber *)maxCentinelConceptValue;
++ (NSDecimalNumber *)minCentinelConceptValue;
+
 - (BOOL)canAssignSignedValue:(NSDecimalNumber *)signedValue;
 
 - (NSDecimalNumber *)amountWithSign;
+
+- (BOOL)canAddAmount:(NSNumber *)amount;
 
 @end

@@ -9,10 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @protocol IAEAdjustConceptAmountViewControllerDelegate;
+@protocol IAEAdjustConceptAmountViewControllerDataSource;
 
 @interface IAEAdjustConceptAmountViewController : UIViewController
 
-@property(nonatomic, weak) id<IAEAdjustConceptAmountViewControllerDelegate> delegate;
-@property(nonatomic, strong) NSIndexPath *conceptCellIndexPath;
+@property (nonatomic, weak) id<IAEAdjustConceptAmountViewControllerDelegate> delegate;
+@property (nonatomic, weak) id<IAEAdjustConceptAmountViewControllerDataSource> dataSource;
+
+@property (nonatomic, strong) NSIndexPath *conceptCellIndexPath;
 
 @end

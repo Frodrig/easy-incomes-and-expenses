@@ -19,6 +19,7 @@
 #import "IAEStrokeAnimatableViewDelegate.h"
 #import "IAEEasyIncomesAndExpensesViewControllerQuery.h"
 #import "IAEReportAreaViewDelegate.h"
+#import "IAEAdjustConceptAmountViewControllerDataSource.h"
 
 @interface IAEEasyIncomesAndExpensesViewController : UIViewController<UIPopoverControllerDelegate,
                                                                       IAESelectorContextViewDelegate,
@@ -33,10 +34,12 @@
                                                                       IAETextRawSelectorMenuViewDelegate,
                                                                       IAEStrokeAnimatableViewDelegate,
                                                                       IAEReportAreaViewDelegate,
+                                                                      IAEAdjustConceptAmountViewControllerDataSource,
                                                                       IAEEasyIncomesAndExpensesViewControllerQuery>
 
-- (IBAction)categoriesButtonPressed:(id)sender;
-- (IBAction)yearsButtonPressed:(id)sender;
+- (void)categoriesButtonPressed:(id)sender;
+- (void)yearsButtonPressed:(id)sender;
+- (void)settingsOptionPressed:(id)sender;
 
 - (void)reloadAllWithAnimation:(BOOL)animation;
 

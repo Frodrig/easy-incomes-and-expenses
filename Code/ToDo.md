@@ -15,12 +15,13 @@
 * Error
 ** ¡Puedo incrementar el valor máximo desde la zona de ajuste!
 
+* Iconos más pequeños de tamaño
+
 * Refactorización
 ** En todos los sitios donde vuelvo a recrear la fuente y su tamaño… simplemente cambiar el campo text para la label asociada. Esto es válido a no ser que tenga que poner kern.
 *** En el caso de poner kern, la otra opción es obtener el diccionario de atributos, setear el kern y volver a recrear con esos atributos y el título que proceda.
 ** Las properties readonly se pueden redefinir en .m para que sean readwrite. Hay casos en los que debería de hacerlo.
 ** En la calculadora, implementar la rejilla usando drawRect: en lugar de disponer de varias UIViews en el Xib
-** Vigilar los ToDo del código en forma de comentario
 ** La gestión de los conceptos ha de pasar por Fecther para no cargar todo a la vez.
 ** OpenYear NO debería de crear todo en memoria, usar algún cacheado con el fin de que saber el numero de conceptos de un año y balance no fuera tan costoso y se usara un plist y punto.
 

@@ -563,7 +563,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 
 #pragma mark - ControlEvents
 
-- (IBAction)categoriesButtonPressed:(id)sender
+- (void)categoriesButtonPressed:(id)sender
 {
     [self openModalForPresentCategorySelectorViewController];
 }
@@ -583,7 +583,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     [self presentViewController:self.categoriesSelectorViewController animated:YES completion:nil];
 }
 
-- (IBAction)yearsButtonPressed:(id)sender
+- (void)yearsButtonPressed:(id)sender
 {
     [self openModalForPresentYearSelectorViewController];
 }
@@ -597,7 +597,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     [self presentViewController:self.yearSelectorViewController animated:YES completion:nil];
 }
 
-- (IBAction)settingsOptionPressed:(id)sender
+- (void)settingsOptionPressed:(id)sender
 {
     self.aboutAndOptionsViewController = [[IAEAboutAndOptionsViewController alloc] initWithNibName:nil bundle:nil];
     self.aboutAndOptionsViewController.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -1624,6 +1624,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 
     IAEAdjustConceptAmountViewController *viewController = [[IAEAdjustConceptAmountViewController alloc] init];
     viewController.delegate = self;
+    viewController.dataSource = self;
     viewController.conceptCellIndexPath = [self.conceptsCollectionView indexPathForCell:cell];
 
     [self createAndPresentPopoverForConceptCellView:[cell findAmountLabel] withViewController:viewController];
@@ -1712,33 +1713,40 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 - (void)adjustConceptsAmountViewController:(IAEAdjustConceptAmountViewController *)adjustConceptsAmountViewController
           didPressedAdjustButtonWithAmount:(NSNumber *)amount
 {
-    [self modifyAmmountOfConceptOfCellIndexPath:adjustConceptsAmountViewController.conceptCellIndexPath byAddingAmmount:amount];
+    IAEConcept *concept = [self findConceptAtIndexPath:adjustConceptsAmountViewController.conceptCellIndexPath];
+    
+    IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:adjustConceptsAmountViewController.conceptCellIndexPath];
+    
+    [self updateWithNewAbsoluteValueOfConcept:concept byAdding:amount];
+    [self.helperConceptsCollectionViewDataSource configureEditModeConceptCell:cell withConceptAtIndexPath:adjustConceptsAmountViewController.conceptCellIndexPath];
+    [[IAEBook sharedBook] saveAll];
 }
 
-- (void)modifyAmmountOfConceptOfCellIndexPath:(NSIndexPath *)cellIndexPath byAddingAmmount:(NSNumber *)amount
+- (void)updateWithNewAbsoluteValueOfConcept:(IAEConcept *)concept byAdding:(NSNumber *)amount
 {
-    IAEConcept *concept = [self findConceptAtIndexPath:cellIndexPath];
+    NSDecimalNumber *newConceptValue = [self calculeNewConceptValueForConcept:concept byAdding:amount];
+    NSAssert([concept canAddAmount:amount], @"");
     
-    IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:cellIndexPath];
-    
-    if ([self updateWithNewAbsoluteValueOfConcept:concept byAdding:amount]) {
-        [self.helperConceptsCollectionViewDataSource configureEditModeConceptCell:cell withConceptAtIndexPath:cellIndexPath];
-        [[IAEBook sharedBook] saveAll];
-    }
+    concept.amount = [newConceptValue decimalNumberByAbsoluteValue];
 }
 
-- (BOOL)updateWithNewAbsoluteValueOfConcept:(IAEConcept *)concept byAdding:(NSNumber *)amount
+- (NSDecimalNumber *)calculeNewConceptValueForConcept:(IAEConcept *)concept byAdding:(NSNumber *)amount
 {
     NSDecimalNumber *amountDecimalNumber = [NSDecimalNumber decimalNumberWithString:[amount stringValue]];
     NSDecimalNumber *conceptAmountWithSign = [concept amountWithSign];
     NSDecimalNumber *newConceptValue = [conceptAmountWithSign decimalNumberByAdding:amountDecimalNumber];
-   
-    BOOL canUpdate = [concept canAssignSignedValue:newConceptValue];
-    if (canUpdate) {
-        concept.amount = [newConceptValue decimalNumberByAbsoluteValue];
-    }
+
+    return newConceptValue;
+}
+
+#pragma mark - IAEAdjustConceptAmountViewControllerDataSource
+
+- (BOOL)canAdjustConceptAmountViewController:(IAEAdjustConceptAmountViewController *)adjustConceptViewController addAmount:(NSNumber *)amount
+{
+    IAEConcept *concept = [self findConceptAtIndexPath:adjustConceptViewController.conceptCellIndexPath];
+    const BOOL can = [concept canAddAmount:amount];
     
-    return canUpdate;
+    return can;
 }
 
 #pragma mark - IAECategorySelectorViewControllerDelegate

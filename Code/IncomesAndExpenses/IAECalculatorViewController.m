@@ -74,6 +74,9 @@ static const CGFloat kRatioOfDragPanelVisibleForDisableAction = 0.55;
 
 static const CGFloat kRatioToDecideHideInDrag = 1.4;
 
+static const CGFloat kDurationInvalidActionFXFadeIn = 0.05;
+static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
+
 #pragma mark - Properties
 
 - (NSString *)actualAmount
@@ -579,11 +582,11 @@ static const CGFloat kRatioToDecideHideInDrag = 1.4;
 - (void)applyPressedAnimationOverButton:(UIButton *)button withValidAction:(BOOL)validAction
 {
     button.backgroundColor = validAction ? self.validActionBaseColor : self.invalidActionTransitionColor;
-    [UIView animateWithDuration:0.05 animations:^{
+    [UIView animateWithDuration:kDurationInvalidActionFXFadeIn animations:^{
         button.backgroundColor = validAction ? self.validActionTransitionColor : self.invalidActionTransitionColor;
     } completion:^(BOOL finished) {
         [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-        [UIView animateWithDuration:0.15 animations:^{
+        [UIView animateWithDuration:kDurationInvalidActionFXFadeOut animations:^{
             button.backgroundColor = validAction ? self.validActionBaseColor : self.invalidActionBaseColor;
         } completion:^(BOOL finished) {
             button.backgroundColor = [UIColor clearColor];

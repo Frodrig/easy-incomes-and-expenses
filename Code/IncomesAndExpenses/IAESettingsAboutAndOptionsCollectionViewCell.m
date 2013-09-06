@@ -26,9 +26,6 @@ static const CGFloat kKernValueForInformationLabels = 1.0;
 
 static NSString * const kTagDayModeLabelText = @"LTEXT_ABOUTANDOPTIONS_DAYMODELABEL_TEXT";
 
-static NSString * const kNotificationDayModeOnName = @"dayModeToOn";
-static NSString * const kNotificationDayModeOffName = @"dayModeToOff";
-
 static NSString * const kNibName = @"IAESettingsAboutAndOptionsCollectionViewCell";
 
 #pragma mark - Class
@@ -88,16 +85,6 @@ static NSString * const kNibName = @"IAESettingsAboutAndOptionsCollectionViewCel
 {
     [[NSUserDefaults standardUserDefaults] setBool:self.dayModeSwitch.on forKey:kUserDefaultsDayModeActive];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    [self notifyDayModeChanged];
-}
-
-- (void)notifyDayModeChanged
-{
-    // ToDo: Seria mas eficiente que llegara la notificacion solo cuando se va a cerrar el dialogo para evitar cambios continuados
-
-    NSString *notificationName = self.dayModeSwitch.on ? kNotificationDayModeOnName : kNotificationDayModeOffName;
-    NSNotification *notification = [NSNotification notificationWithName:notificationName object:nil];
-    [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
 #pragma mark - Acciones directas

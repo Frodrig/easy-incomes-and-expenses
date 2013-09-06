@@ -1101,7 +1101,6 @@ static const CGFloat kDurationModeFadeIn = 0.75;
                                             contextType:(IAEContextViewType)contextType
                                           andValueIndex:(NSUInteger)contextValueIndex
 {
-    // ToDo: La definicion de las dimensiones se podria hacer en el propio selector
     CGRect frame = CGRectMake(0, 0, self.selectorContextView.bounds.size.width, self.selectorContextView.bounds.size.height);
     IAEContextView *contextView = [[IAEContextView alloc] initWithFrame:frame type:contextType andValueIndex:contextValueIndex];
     contextView.dataSource = self;
@@ -1828,7 +1827,6 @@ static const CGFloat kDurationModeFadeIn = 0.75;
            DidValidateNewCategoryTag:(NSString *)categoryTag
                       ofCategoryType:(CategoryType)categoryType
 {
-    // ToDo: Valorar que la creacion se realice en el editor de categorias para factorizar en un unico sitio la creacion
     IAECategory *newCategory = [[IAECategoryStore sharedCategoryStore] createCategoryOfType:categoryType
                                                                                      andTag:categoryTag
                                                                        withValidityTagCheck:NO];

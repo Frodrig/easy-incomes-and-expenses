@@ -15,10 +15,15 @@
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (nonatomic) BOOL dayModeWasActiveAtStart;
 
 @end
 
 @implementation IAEAboutAndOptionsViewController
+
+#pragma mark - Constants
+
+static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 
 static NSString * const kCollectionViewHeaderNibName = @"IAEHeaderAboutAndOptionsCollectionReusableView";
 static NSString * const kCollectionViewHeaderIdentifier = @"IAEHeaderAboutAndOptions";
@@ -28,7 +33,6 @@ static NSString * const kCollectionViewAboutCellNibName = @"IAEInfoAboutAndOptio
 static NSString * const kCollectionViewAboutCellIdentifier = @"IAEInfoCell";
 static NSString * const kCollectionViewProVersionCellNibName = @"IAEProVersionAboutAndOptionsCollectionViewCell";
 static NSString * const kCollectionViewProVersionCellIdentifier = @"IAEProVersionCell";
-
 
 static NSString * const kLTextAppUrl = @"LTEXT_URLPAGE";
 
@@ -45,13 +49,24 @@ static NSUInteger kAboutOptionIndexInSegmentedControl = 1;
 static NSString * const kLTextTitleForSegmentedAtIndex0 = @"LTEXT_SETTINGS_MENUSETTINGSOPTION";
 static NSString * const kLTextTitleForSegmentedAtIndex1 = @"LTEXT_SETTINGS_ABOUTSETTINGSOPTION";
 
+static NSString * const kNotificationDayModeOnName = @"dayModeToOn";
+static NSString * const kNotificationDayModeOffName = @"dayModeToOff";
+
+#pragma mark - Init
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        [self getGlobalSettingsInformation];
     }
     return self;
+}
+
+- (void)getGlobalSettingsInformation
+{
+    _dayModeWasActiveAtStart = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsDayModeActive];
 }
 
 - (void)viewDidLoad
@@ -94,7 +109,24 @@ static NSString * const kLTextTitleForSegmentedAtIndex1 = @"LTEXT_SETTINGS_ABOUT
 
 - (IBAction)doneButtonPressed:(id)sender
 {
+    [self notifyGlobalValueChangesIfAppropiate];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)notifyGlobalValueChangesIfAppropiate
+{
+    const BOOL actualDayModeActive = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsDayModeActive];
+    if (actualDayModeActive != self.dayModeWasActiveAtStart) {
+        [self notifyDayModeChanged:actualDayModeActive];
+    }
+}
+
+- (void)notifyDayModeChanged:(BOOL)dayModeOn
+{
+    NSString *notificationName = dayModeOn ? kNotificationDayModeOnName : kNotificationDayModeOffName;
+    NSNotification *notification = [NSNotification notificationWithName:notificationName object:nil];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
 - (IBAction)segmentedControlPressed:(UISegmentedControl *)segmentedControl

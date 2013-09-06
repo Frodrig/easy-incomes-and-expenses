@@ -822,7 +822,6 @@ static const CGFloat kRatioToDecideHideInDrag = 1.4;
            DidValidateNewCategoryTag:(NSString *)categoryTag
                       ofCategoryType:(CategoryType)categoryType
 {
-    // ToDo: Valorar que la creacion se realice en el editor de categorias para factorizar en un unico sitio la creacion
     IAECategory *category = [[IAECategoryStore sharedCategoryStore] createCategoryOfType:categoryType andTag:categoryTag withValidityTagCheck:NO];
     NSAssert(category, @"");
     [[IAEBook sharedBook] saveAll];

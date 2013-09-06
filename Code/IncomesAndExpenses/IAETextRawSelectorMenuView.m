@@ -82,7 +82,6 @@ static const CGFloat kMinimumAlphaOfAnimationOptionDestroyWithGosth = 0.1;
 
 - (void)setOptionsEnabled:(BOOL)optionsEnabled
 {
-    // ToDo: Problema conocido al cambiar de seccion permanece el selector de menu pese a que no hay conceptos
     if (optionsEnabled != _optionsEnabled) {
         [self enableOptions:optionsEnabled];
         [self enableSelectorLine:optionsEnabled];

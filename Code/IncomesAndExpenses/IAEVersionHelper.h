@@ -10,7 +10,7 @@
 
 @interface IAEVersionHelper : NSObject
 
-+ (BOOL)isSpanishVersion;
-+ (BOOL)isEnglishVersion;
++ (BOOL)isSpanishLanguageVersion;
++ (BOOL)isEnglishLanguageVersion;
 
 @end

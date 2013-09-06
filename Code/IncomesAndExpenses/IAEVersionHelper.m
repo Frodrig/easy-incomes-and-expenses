@@ -10,22 +10,24 @@
 
 @implementation IAEVersionHelper
 
-static NSString * const ltextLanguage = @"LTEXT_LANGUAGE";
-static NSString * const esLanguageValue = @"es";
-static NSString * const enLanguageValue = @"en";
+static NSString * const kLTextLanguage = @"LTEXT_LANGUAGE";
+static NSString * const kESLanguageValue = @"es";
+static NSString * const kENLanguageValue = @"en";
 
-+ (BOOL)isSpanishVersion
++ (BOOL)isSpanishLanguageVersion
 {
-    // ToDo: ¡Esto no se puede mirar por el idioma!
-    NSComparisonResult compareResult = [NSLocalizedString(ltextLanguage, @"") compare:esLanguageValue];
-    return compareResult == NSOrderedSame;
+    NSComparisonResult compareResult = [NSLocalizedString(kLTextLanguage, @"") compare:kESLanguageValue];
+    const BOOL is = compareResult == NSOrderedSame;
+    
+    return is;
 }
 
-+ (BOOL)isEnglishVersion
++ (BOOL)isEnglishLanguageVersion
 {
-    // ToDo: ¡Esto no se puede mirar por el idioma!
-    NSComparisonResult compareResult = [NSLocalizedString(ltextLanguage, @"") compare:enLanguageValue];
-    return compareResult == NSOrderedSame;
+    NSComparisonResult compareResult = [NSLocalizedString(kLTextLanguage, @"") compare:kENLanguageValue];
+    const BOOL is = compareResult == NSOrderedSame;
+    
+    return is;
 }
 
 @end

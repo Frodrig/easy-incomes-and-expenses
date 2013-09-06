@@ -50,7 +50,7 @@ static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
 
 - (BOOL)showNoItemsLabelIfAppropiateInReportAreaView:(IAEReportAreaView *)reportAreaView
 {
-    BOOL anyConceptForActualContextView = [self.iaeViewControllerQuery findNumberOfConceptsOfActualSelectedContext:0] > 0;
+    BOOL anyConceptForActualContextView = [self.iaeViewControllerQuery findNumberOfConceptsOfActualSelectedContextUsingSectionForYearContext:0] > 0;
     
     return anyConceptForActualContextView;
 }
@@ -60,7 +60,7 @@ static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
     NSUInteger number = 0;
     
     if ([self.iaeViewControllerQuery isTheBalancesOptionSelectedInReportMenu]) {
-        number = [self.iaeViewControllerQuery findNumberOfConceptsOfActualSelectedContext:0] > 0 ? 2 : 0;
+        number = [self.iaeViewControllerQuery findNumberOfConceptsOfActualSelectedContextUsingSectionForYearContext:0] > 0 ? 2 : 0;
     } else if ([self.iaeViewControllerQuery isTheIncomesOptionSelectedInReportMenu]) {
         number = [self.iaeViewControllerQuery findIncomesCategoriesOfActualSelectedContextView].count;
     } else if ([self.iaeViewControllerQuery isTheExpensesOptionSelectedInReportMenu]) {

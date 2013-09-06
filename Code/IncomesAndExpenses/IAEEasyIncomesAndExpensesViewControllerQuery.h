@@ -36,7 +36,7 @@
 
 - (NSArray *)findAllOrdererMonthsWithConceptsOfOpenYear;
 
-- (NSUInteger)findNumberOfConceptsOfActualSelectedContext:(NSInteger)section;
+- (NSUInteger)findNumberOfConceptsOfActualSelectedContextUsingSectionForYearContext:(NSInteger)section;
 - (IAEConcept *)findConceptAtIndexPath:(NSIndexPath *)indexPath;
 
 - (NSDecimalNumber *)findIncomesOfActualSelectedContextView;

@@ -69,7 +69,7 @@ static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    NSUInteger numberOfItems = [self.iaeViewControllerQuery findNumberOfConceptsOfActualSelectedContext:section];
+    NSUInteger numberOfItems = [self.iaeViewControllerQuery findNumberOfConceptsOfActualSelectedContextUsingSectionForYearContext:section];
     
     return numberOfItems;
 }
@@ -123,7 +123,7 @@ static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
     NSString *amountWithSignString = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:amountWithSign];
     const EconomicValueType economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:amountWithSign];
     UIColor *colorForEconomicValueType = [IAEColorHelper colorForEconomicValueType:economicValueType];
-    const NSUInteger numberOfConcepts = [self.iaeViewControllerQuery findNumberOfConceptsOfActualSelectedContext:indexPath.section];
+    const NSUInteger numberOfConcepts = [self.iaeViewControllerQuery findNumberOfConceptsOfActualSelectedContextUsingSectionForYearContext:indexPath.section];
     NSUInteger instantEntryIndex =  numberOfConcepts - indexPath.row;
     
     cell.valueDecoratorView.economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:amountWithSign];

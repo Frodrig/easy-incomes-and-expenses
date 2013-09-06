@@ -857,9 +857,8 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     return concept;
 }
 
-- (NSUInteger)findNumberOfConceptsOfActualSelectedContext:(NSInteger)section
+- (NSUInteger)findNumberOfConceptsOfActualSelectedContextUsingSectionForYearContext:(NSInteger)section
 {
-    // ToDo: Este metodo está fatalmente nombrado por culpa de ese parametro que se usa solo si hay año
     NSUInteger numberOfConcepts = 0;
     if ([self isActualSelectedContextAMonth]) {
         IAEMonth *month = [self findActualSelectedMonth];
@@ -877,7 +876,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 
 - (BOOL)existConceptsInActualSelectedContext
 {
-    NSUInteger numberOfConcepts = [self findNumberOfConceptsOfActualSelectedContext:0];
+    NSUInteger numberOfConcepts = [self findNumberOfConceptsOfActualSelectedContextUsingSectionForYearContext:0];
     
     return numberOfConcepts > 0;
 }
@@ -1425,7 +1424,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 - (void)updateIdentifierWithEntryInstanIndexForVisibleConceptViewCellsBeforeIndexPath:(NSIndexPath *)indexPathLimit
 {
     NSInteger cellUpdateCounter = 0;
-    NSUInteger numberOfItems = [self findNumberOfConceptsOfActualSelectedContext:indexPathLimit.section];
+    NSUInteger numberOfItems = [self findNumberOfConceptsOfActualSelectedContextUsingSectionForYearContext:indexPathLimit.section];
     for (IAEEditModeConceptCollectionViewCell *cellVisible in self.conceptsCollectionView.visibleCells) {
         NSIndexPath *indexPathOfVisibleCell = [self.conceptsCollectionView indexPathForCell:cellVisible];
         if (indexPathOfVisibleCell.row < indexPathLimit.row) {
@@ -2063,7 +2062,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 
 - (void)reloadConceptsCollectionViewWithoutDayModeAfterCreateNewConcept
 {
-    NSUInteger numberOfConceptsForActualContext = [self findNumberOfConceptsOfActualSelectedContext:0];
+    NSUInteger numberOfConceptsForActualContext = [self findNumberOfConceptsOfActualSelectedContextUsingSectionForYearContext:0];
     NSIndexPath *indexPathOfInsertion = [NSIndexPath indexPathForRow:numberOfConceptsForActualContext - 1 inSection:0];
     
     [self.conceptsCollectionView performBatchUpdates:^{

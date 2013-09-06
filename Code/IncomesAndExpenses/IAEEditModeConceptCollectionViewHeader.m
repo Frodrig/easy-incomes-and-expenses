@@ -7,6 +7,7 @@
 //
 
 #import "IAEEditModeConceptCollectionViewHeader.h"
+#import "IAENibUtils.h"
 
 @interface IAEEditModeConceptCollectionViewHeader()
 
@@ -28,6 +29,20 @@ static const NSUInteger kTagOfMonthInfoLabel = 20;
 static NSString * const kFamilyFontNameForInfo = @"HelveticaNeue-Ultralightitalic";
 static const NSUInteger kFontSizeForInfo = 21;
 static const NSUInteger kFontKernForInfo = 1;
+
+static NSString * const kNibName = @"IAEEditModeConceptCollectionViewHeader";
+
+#pragma mark - Class
+
++ (CGSize)sizeOfItem
+{
+    static CGSize sizeOfItem;
+    if (CGSizeEqualToSize(sizeOfItem, CGSizeZero)) {
+        sizeOfItem = [IAENibUtils findSizeOfTheBaseViewOfNibNamed:kNibName];
+    }
+    
+    return sizeOfItem;
+}
 
 #pragma mark - Properties
 

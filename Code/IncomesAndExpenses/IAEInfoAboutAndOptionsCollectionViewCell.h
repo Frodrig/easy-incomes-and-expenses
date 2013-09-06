@@ -14,6 +14,8 @@
 
 @property(nonatomic, weak)id<IAEInfoAboutAndOptionsCollectionViewCellDelegate> delegate;
 
++ (CGSize)sizeOfItem;
+
 - (IBAction)feedbackButtonPressed:(id)sender;
 
 @end

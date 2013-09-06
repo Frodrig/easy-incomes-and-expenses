@@ -1393,8 +1393,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 {
     CGSize headerSize = CGSizeZero;
     if ([self isActualSelectedContextTheYearOpen]) {
-        // ToDo: Mal, esto deberia de cogerse directamente del xib
-        headerSize = CGSizeMake(910, 50);
+        headerSize = [IAEEditModeConceptCollectionViewHeader sizeOfItem];
     }
     
     return headerSize;
@@ -1830,7 +1829,9 @@ static const CGFloat kDurationModeFadeIn = 0.75;
                       ofCategoryType:(CategoryType)categoryType
 {
     // ToDo: Valorar que la creacion se realice en el editor de categorias para factorizar en un unico sitio la creacion
-    IAECategory *newCategory = [[IAECategoryStore sharedCategoryStore] createCategoryOfType:categoryType andTag:categoryTag withValidityTagCheck:NO];
+    IAECategory *newCategory = [[IAECategoryStore sharedCategoryStore] createCategoryOfType:categoryType
+                                                                                     andTag:categoryTag
+                                                                       withValidityTagCheck:NO];
     NSAssert(newCategory, @"");
     [[IAEBook sharedBook] saveAll];
     

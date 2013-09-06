@@ -7,8 +7,10 @@
 //
 
 #import "IAESettingsAboutAndOptionsCollectionViewCell.h"
+#import "IAENibUtils.h"
 
 @interface IAESettingsAboutAndOptionsCollectionViewCell()
+
 @property (weak, nonatomic) IBOutlet UILabel *dayModeInformationLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *dayModeSwitch;
 
@@ -26,6 +28,22 @@ static NSString * const kTagDayModeLabelText = @"LTEXT_ABOUTANDOPTIONS_DAYMODELA
 
 static NSString * const kNotificationDayModeOnName = @"dayModeToOn";
 static NSString * const kNotificationDayModeOffName = @"dayModeToOff";
+
+static NSString * const kNibName = @"IAESettingsAboutAndOptionsCollectionViewCell";
+
+#pragma mark - Class
+
++ (CGSize)sizeOfItem
+{
+    static CGSize size;
+    if (CGSizeEqualToSize(size, CGSizeZero)) {
+        size = [IAENibUtils findSizeOfTheBaseViewOfNibNamed:kNibName];
+    }
+    
+    return size;
+}
+
+#pragma mark - Init
 
 - (void)awakeFromNib
 {

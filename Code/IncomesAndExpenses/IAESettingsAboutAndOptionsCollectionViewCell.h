@@ -10,6 +10,8 @@
 
 @interface IAESettingsAboutAndOptionsCollectionViewCell : UICollectionViewCell
 
++ (CGSize)sizeOfItem;
+
 - (void)setDaySwitchValueOn:(BOOL)on;
 - (IBAction)daySwitchValueChanged:(id)sender;
 

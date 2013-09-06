@@ -113,14 +113,14 @@ static NSString * const kLTextTitleForSegmentedAtIndex1 = @"LTEXT_SETTINGS_ABOUT
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+                  layout:(UICollectionViewLayout*)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    // ToDo: No me gusta nada esto...
     CGSize size = CGSizeZero;
     if ([self isInSettingsSection]) {
-        size = CGSizeMake(540, 71);
+        size = [IAESettingsAboutAndOptionsCollectionViewCell sizeOfItem];
     } else if ([self isInAboutSection]) {
-        size = CGSizeMake(540, 525);
+        size = [IAEInfoAboutAndOptionsCollectionViewCell sizeOfItem];
     }
     
     return size;

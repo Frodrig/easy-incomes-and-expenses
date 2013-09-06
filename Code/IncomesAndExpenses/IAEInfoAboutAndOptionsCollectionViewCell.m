@@ -8,6 +8,7 @@
 
 #import "IAEInfoAboutAndOptionsCollectionViewCell.h"
 #import "IAEInfoAboutAndOptionsCollectionViewCellDelegate.h"
+#import "IAENibUtils.h"
 
 @interface IAEInfoAboutAndOptionsCollectionViewCell()
 
@@ -34,6 +35,20 @@ static NSString * const kLTextDeveloperName = @"LTEXT_SETTINGS_ABOUT_DEVELOPER";
 static NSString * const kLTextFeedback = @"LTEXT_SETTINGS_ABOUT_FEEDBACK";
 static NSString * const kLTextEmail = @"LTEXT_SETTINGS_ABOUT_EMAIL";
 static NSString * const kLTextProVersionInfo = @"LTEXT_SETTINGS_ABOUT_PROVERSIONINFO";
+
+static NSString * const kNibName = @"IAEInfoAboutAndOptionsCollectionViewCell";
+
+#pragma mark - Class
+
++ (CGSize)sizeOfItem
+{
+    static CGSize size;
+    if (CGSizeEqualToSize(size, CGSizeZero)) {
+        size = [IAENibUtils findSizeOfTheBaseViewOfNibNamed:kNibName];
+    }
+    
+    return size;
+}
 
 #pragma mark - Init
 

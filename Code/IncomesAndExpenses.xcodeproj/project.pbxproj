@@ -40,6 +40,7 @@
 		5B5544A2177460DD009CFC84 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B5544A1177460DD009CFC84 /* Main.storyboard */; };
 		5B55C406178AA8C20066F586 /* IAECategoryEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B55C404178AA8C20066F586 /* IAECategoryEditorViewController.m */; };
 		5B55C407178AA8C20066F586 /* IAECategoryEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B55C405178AA8C20066F586 /* IAECategoryEditorViewController.xib */; };
+		5B57275817D9A99B00552E98 /* IAENibUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B57275717D9A99B00552E98 /* IAENibUtils.m */; };
 		5B5C967B1781673A008CD851 /* IAEValueDecoratorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C967A1781673A008CD851 /* IAEValueDecoratorView.m */; };
 		5B5C967F17816A13008CD851 /* UIView+RoundedCorners.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C967E17816A13008CD851 /* UIView+RoundedCorners.m */; };
 		5B5C968217816D68008CD851 /* IAEValueDecoratorViewConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C968117816D68008CD851 /* IAEValueDecoratorViewConfigurator.m */; };
@@ -173,6 +174,8 @@
 		5B55C403178AA8C20066F586 /* IAECategoryEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategoryEditorViewController.h; sourceTree = "<group>"; };
 		5B55C404178AA8C20066F586 /* IAECategoryEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECategoryEditorViewController.m; sourceTree = "<group>"; };
 		5B55C405178AA8C20066F586 /* IAECategoryEditorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAECategoryEditorViewController.xib; sourceTree = "<group>"; };
+		5B57275617D9A99B00552E98 /* IAENibUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAENibUtils.h; sourceTree = "<group>"; };
+		5B57275717D9A99B00552E98 /* IAENibUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAENibUtils.m; sourceTree = "<group>"; };
 		5B5C96791781673A008CD851 /* IAEValueDecoratorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEValueDecoratorView.h; sourceTree = "<group>"; };
 		5B5C967A1781673A008CD851 /* IAEValueDecoratorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEValueDecoratorView.m; sourceTree = "<group>"; };
 		5B5C967D17816A13008CD851 /* UIView+RoundedCorners.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RoundedCorners.h"; sourceTree = "<group>"; };
@@ -575,6 +578,15 @@
 			name = "Category Editor";
 			sourceTree = "<group>";
 		};
+		5B57275517D9A97B00552E98 /* Nib */ = {
+			isa = PBXGroup;
+			children = (
+				5B57275617D9A99B00552E98 /* IAENibUtils.h */,
+				5B57275717D9A99B00552E98 /* IAENibUtils.m */,
+			);
+			name = Nib;
+			sourceTree = "<group>";
+		};
 		5B58A48217AA635A00697C70 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -587,6 +599,7 @@
 		5B5C967817816718008CD851 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5B57275517D9A97B00552E98 /* Nib */,
 				5BEA98A81793E36E00098AE0 /* Circle Decorator View */,
 				5BEA98A71793E36600098AE0 /* Value Decorator View */,
 				5B251FA217AACA76000957A5 /* Stroke Animatable View */,
@@ -1488,6 +1501,7 @@
 				5BA0130D179800AC00337E84 /* NSString+TwoDigitString.m in Sources */,
 				5BC7101717AC29F600E12953 /* IAEBook.m in Sources */,
 				5B6E9FA7177D9C950072EE34 /* UIView+LoadFromXib.m in Sources */,
+				5B57275817D9A99B00552E98 /* IAENibUtils.m in Sources */,
 				5BC7101C17AC29F600E12953 /* IAEYear.m in Sources */,
 				5BC7101B17AC29F600E12953 /* IAEMonth.m in Sources */,
 			);

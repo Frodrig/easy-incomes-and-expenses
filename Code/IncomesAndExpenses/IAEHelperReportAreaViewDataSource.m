@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Fernando Rodríguez Martínez. All rights reserved.
 //
 
+#import <Crashlytics/Crashlytics.h>
 #import "IAEHelperReportAreaViewDataSource.h"
 #import "IAEEasyIncomesAndExpensesViewControllerQuery.h"
 #import "IAEReportAreaView.h"
@@ -72,7 +73,6 @@ static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
 
 - (CGFloat)maxValueOfItemsInReportAreaView:(IAEReportAreaView *)reportAreaView
 {
-    // ToDo: Ojo, mas que float deberiamos de pensar en long long double
     CGFloat maxValue = 0;
     
     if ([self.iaeViewControllerQuery isTheBalancesOptionSelectedInReportMenu]) {
@@ -105,7 +105,6 @@ static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
 
 - (CGFloat)reportAreaView:(IAEReportAreaView *)reportAreaView valueOfItemWithIndex:(NSUInteger)itemIndex 
 {
-    // ToDo: Ojo, mas que float deberiamos de pensar en long long double
     CGFloat valueOfItem = 0;
     
     if ([self.iaeViewControllerQuery isTheBalancesOptionSelectedInReportMenu]) {

@@ -84,6 +84,8 @@
 @property (nonatomic) NSInteger lastContextIndexMenuPressed;
 @property (nonatomic, strong) UIAttachmentBehavior *attachBehaviorForContainerFX;
 @property (nonatomic, strong) UIDynamicAnimator *dynamicAnimator;
+@property (nonatomic, strong) NSIndexPath *pendingScrollToEditModeConceptCellIndexPath;
+
 
 @end
 
@@ -1244,11 +1246,29 @@ static const CGFloat kDurationModeFadeIn = 0.75;
             [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
             [UIView animateWithDuration:kDurationOfEditConceptCollectionViewTransition animations:^{
                 self.conceptsCollectionView.alpha = 1.0;
+            } completion:^(BOOL finished) {
+                [self executePendingScrollToEditModeConceptCellIfAppropiate];
             }];
         }];
     } else {
         [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:NO];
         [self reloadContentOfConceptsCollectionView];
+    }
+}
+
+- (void)executePendingScrollToEditModeConceptCellIfAppropiate
+{
+    if (self.pendingScrollToEditModeConceptCellIndexPath) {
+        [self.conceptsCollectionView performBatchUpdates:^{
+            [self.conceptsCollectionView scrollToItemAtIndexPath:self.pendingScrollToEditModeConceptCellIndexPath
+                                                atScrollPosition:UICollectionViewScrollPositionCenteredVertically
+                                                        animated:NO];
+            
+        } completion:^(BOOL finished) {
+            IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:self.pendingScrollToEditModeConceptCellIndexPath];
+            [cell doCallForAttentionAnimation];
+            self.pendingScrollToEditModeConceptCellIndexPath = nil;
+        }];
     }
 }
 
@@ -1511,13 +1531,18 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 {
     NSAssert(tapGestureRecognizer == self.tapConceptsRecognizer, @"");
     if ([self canTapOnConceptsCollectionView]) {
-        [self findCellOfConceptCollectionViewAndExecuteActionUnderTapGesture:tapGestureRecognizer];
+        IAEEditModeConceptCollectionViewCell *cell = [self findConceptCellUnderLocationOfGestureRecognizer:tapGestureRecognizer];
+        if ([self isActualSelectedContextAMonth] ) {
+            [self executeActionInMonthContextOnCellOfConceptCollectionView:cell underLocatonOfTapGestureRecognizer:tapGestureRecognizer];
+        } else if ([self isActualSelectedContextTheYearOpen]) {
+            [self executeActionInYearContextOnCellOfConceptCollectionView:cell];
+        }
     }
 }
 
 - (BOOL)canTapOnConceptsCollectionView
 {
-    BOOL can = [self isActualSelectedContextAMonth] && ![self.calculatorViewController isAnyTranslationActive];
+    const BOOL can = ![self.calculatorViewController isAnyTranslationActive];
     
     return can;
 }
@@ -1525,7 +1550,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 - (void)findCellOfConceptCollectionViewAndExecuteActionUnderTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer
 {
     IAEEditModeConceptCollectionViewCell *cell = [self findConceptCellUnderLocationOfGestureRecognizer:tapGestureRecognizer];
-    [self executeActionOnCellOfConceptCollectionView:cell underLocatonOfTapGestureRecognizer:tapGestureRecognizer];
+    [self executeActionInMonthContextOnCellOfConceptCollectionView:cell underLocatonOfTapGestureRecognizer:tapGestureRecognizer];
 }
 
 - (IAEEditModeConceptCollectionViewCell *)findConceptCellUnderLocationOfGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
@@ -1537,7 +1562,17 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     return cell;
 }
 
-- (void)executeActionOnCellOfConceptCollectionView:(IAEEditModeConceptCollectionViewCell *)cell
+- (void)executeActionInYearContextOnCellOfConceptCollectionView:(IAEEditModeConceptCollectionViewCell *)cell
+{
+    NSIndexPath *indexPathOfCell = [self.conceptsCollectionView indexPathForCell:cell];
+    NSArray *monthWithConcepts = [self findAllOrdererMonthsWithConceptsOfOpenYear];
+    IAEMonth *month = [monthWithConcepts objectAtIndex:indexPathOfCell.section];
+    self.pendingScrollToEditModeConceptCellIndexPath = [NSIndexPath indexPathForRow:indexPathOfCell.row inSection:0];
+
+    [self.selectorContextView changeToContextViewOfIndex:month.month withAnimation:YES];
+}
+
+- (void)executeActionInMonthContextOnCellOfConceptCollectionView:(IAEEditModeConceptCollectionViewCell *)cell
                    underLocatonOfTapGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
 {
     if ([self isCompletelyVisibleConceptCollectionViewCell:cell]) {

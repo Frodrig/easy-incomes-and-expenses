@@ -47,6 +47,8 @@ typedef NS_ENUM(NSUInteger, EditModeConceptElement) {
 
 - (void)setVisualAspectInEditMode:(BOOL)editMode forConceptElement:(EditModeConceptElement)conceptElement;
 
+- (void)doCallForAttentionAnimation;
+
 - (NSString *)description;
 
 @end

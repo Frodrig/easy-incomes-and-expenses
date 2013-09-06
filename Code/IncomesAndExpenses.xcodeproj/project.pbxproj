@@ -1297,8 +1297,8 @@
 		5BFDE72B17C5E6F900DF884B /* Context Views */ = {
 			isa = PBXGroup;
 			children = (
-				5B8CD5CE17A2623F00A353A5 /* Context View */,
 				5BFDE72717C5E25A00DF884B /* Selector Context View */,
+				5B8CD5CE17A2623F00A353A5 /* Context View */,
 			);
 			name = "Context Views";
 			sourceTree = "<group>";

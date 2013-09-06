@@ -15,7 +15,7 @@
 ** Ayuda
 ** Versión Pro
 
-* ToDos
+* ¡Puedo incrementar el valor máximo desde la zona de ajuste!
 
 * Refactorización
 ** En todos los sitios donde vuelvo a recrear la fuente y su tamaño… simplemente cambiar el campo text para la label asociada. Esto es válido a no ser que tenga que poner kern.

@@ -6,16 +6,14 @@
 * Inicio e iconos
 ** A la espera de solucionar el bug de la pantalla de inicio.
 
-* Conceptos
-** A lo mejor deberíamos de permitir, al menos, que en la pestaña global si se da a un concepto vayamos a su contexto inmediatamente.
-
 * Web
 ** Presentación
 ** Soporte
 ** Ayuda
 ** Versión Pro
 
-* ¡Puedo incrementar el valor máximo desde la zona de ajuste!
+* Error
+** ¡Puedo incrementar el valor máximo desde la zona de ajuste!
 
 * Refactorización
 ** En todos los sitios donde vuelvo a recrear la fuente y su tamaño… simplemente cambiar el campo text para la label asociada. Esto es válido a no ser que tenga que poner kern.

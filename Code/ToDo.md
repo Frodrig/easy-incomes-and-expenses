@@ -16,8 +16,6 @@
 
 * En años, al vaciar el único año que haya en "años con conceptos" debemos de pasar a Todos los años automáticamente. De hecho, deberíamos de deshabitar en ese caso esa pestaña
 
-* Iconos más pequeños de tamaño (29 y 40)
-
 * Refactorización
 ** En todos los sitios donde vuelvo a recrear la fuente y su tamaño… simplemente cambiar el campo text para la label asociada. Esto es válido a no ser que tenga que poner kern.
 *** En el caso de poner kern, la otra opción es obtener el diccionario de atributos, setear el kern y volver a recrear con esos atributos y el título que proceda.

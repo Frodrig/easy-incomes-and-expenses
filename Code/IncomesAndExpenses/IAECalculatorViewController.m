@@ -308,24 +308,27 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
     NSAssert(![self isInHideMode], @"");
     
     [self configureDisplayPanelWithActualCategory];
-    [self configureDisplayPanelWithActualDay];
+    [self configureDisplayPanelWithActualDayWithAnimation:NO];
     [self configureDisplayPanelWithActualAmount];
-    [self configureDisplayPanelWithAppropiateColorWithAnimation:NO];
+    [self doFXAnimationFlashInDisplayModeUsingAnimation:NO];
 }
 
 - (void)configureDisplayPanelWithActualCategory
 {
     [self.displayPanel setCategoryName:[self.actualCategory localizedTag]];
-    [self configureDisplayPanelWithAppropiateColorWithAnimation:YES];
+    [self doFXAnimationFlashInDisplayModeUsingAnimation:YES];
 }
 
-- (void)configureDisplayPanelWithActualDay
+- (void)configureDisplayPanelWithActualDayWithAnimation:(BOOL)animation
 {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsDayModeActive]) {
         [self.displayPanel setDay:self.actualDay
                   withDayweekName:[self findDayOfTheWeekName]
                       inMonthName:[self findMonthName]
                        ofYearName:[self findYearName]];
+        if (animation) {
+            [self doFXAnimationFlashInDisplayModeUsingAnimation:animation];
+        }
     } else {
         [self.displayPanel setMonthName:[self findMonthName]
                              ofYearName:[self findYearName]];
@@ -383,7 +386,7 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
     
     [self setDefaultCategoryForActualMode];
     [self configureDisplayPanelWithActualCategory];
-    [self configureDisplayPanelWithAppropiateColorWithAnimation:YES];
+    [self doFXAnimationFlashInDisplayModeUsingAnimation:YES];
 }
 
 - (void)hide
@@ -551,6 +554,9 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
 {
     BOOL validAction = [self createNewConcept];
     [self doFXAfterPressedButton:button withVaidAction:validAction];
+    if (validAction) {
+        [self doFXAnimationFlashInDisplayModeUsingAnimation:validAction];
+    }
 }
 
 - (BOOL)createNewConcept
@@ -747,7 +753,7 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
     return decimalRange.location == NSNotFound ? NO : YES;
 }
 
-- (void)configureDisplayPanelWithAppropiateColorWithAnimation:(BOOL)animation
+- (void)doFXAnimationFlashInDisplayModeUsingAnimation:(BOOL)animation
 {
     if ([self isInIncomeMode]) {
         [self.displayPanel setDisplayWithIncomeColorUsingAnimation:animation];
@@ -809,7 +815,7 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
                              didSelectDay:(NSUInteger)day
 {
     self.actualDay = day;
-    [self configureDisplayPanelWithActualDay];
+    [self configureDisplayPanelWithActualDayWithAnimation:YES];
     
     [self dismissPopover];
 }
@@ -845,13 +851,13 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
 
 - (void)notificationCenterOnDayModeOn:(NSNotification *)notification
 {
-    [self configureDisplayPanelWithActualDay];
+    [self configureDisplayPanelWithActualDayWithAnimation:NO];
 }
 
 - (void)notificationCenterOnDayModeOff:(NSNotification *)notification
 {
     self.actualDay = 0;
-    [self configureDisplayPanelWithActualDay];
+    [self configureDisplayPanelWithActualDayWithAnimation:NO];
 }
 
 #pragma mark - IAEDisplayCalculatorViewDelegate

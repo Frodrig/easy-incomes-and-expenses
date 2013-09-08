@@ -14,7 +14,11 @@
 *** Versión Pro
 ** Localización
 
-* Al validar un valor en la calculadora, borrar la cantidad y aplicar FX.
+* Reportes:
+** ¡Sale esquinas redondeadas!
+** Hay que ajustar el tamaño de las fuentes pues… salen demasiado pegadas a la zona inferior, se ve claramente con la y griega
+** Dudas sobre si dejar activado el Alpha con scroll ¿aporta algo?
+*** Incluso parece que aportaría más que dependiendo de la dirección del scroll, la alineación de los textos fuera a izquierda o derecha
 
 * Refactorización
 ** En todos los sitios donde vuelvo a recrear la fuente y su tamaño… simplemente cambiar el campo text para la label asociada. Esto es válido a no ser que tenga que poner kern.

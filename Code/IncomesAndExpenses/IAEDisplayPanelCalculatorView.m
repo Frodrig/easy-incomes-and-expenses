@@ -235,16 +235,14 @@ static const CGFloat kAlphaValueForColorDisplay = 0.5;
 
 - (void)setDisplayColor:(UIColor *)color withTransitionToColor:(UIColor *)transitionColor usingAnimation:(BOOL)animation
 {
-    if (![self.backgroundColor isEqual:color]) {
-        if (animation) {
-            self.backgroundColor = transitionColor;
-            [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-            [UIView animateWithDuration:kDurationOfColorTransitionChange animations:^{
-                self.backgroundColor = color;
-            }];
-        } else {
+    if (animation) {
+        self.backgroundColor = transitionColor;
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+        [UIView animateWithDuration:kDurationOfColorTransitionChange animations:^{
             self.backgroundColor = color;
-        }
+        }];
+    } else {
+        self.backgroundColor = color;
     }
 }
 

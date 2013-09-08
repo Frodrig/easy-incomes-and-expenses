@@ -7,15 +7,18 @@
 ** A la espera de solucionar el bug de la pantalla de inicio.
 
 * Web
-** Presentación
-** Soporte
-** Ayuda
-** Versión Pro
+** General
+*** Presentación
+*** Soporte
+*** Acerca de
+*** Versión Pro
+** Localización
 
-* Error
-** ¡Puedo incrementar el valor máximo desde la zona de ajuste!
+* En años, al vaciar el único año que haya en "años con conceptos" debemos de pasar a Todos los años automáticamente. De hecho, deberíamos de deshabitar en ese caso esa pestaña
 
 * Iconos más pequeños de tamaño
+
+* Enlace a web es o en según el idioma de la app
 
 * Refactorización
 ** En todos los sitios donde vuelvo a recrear la fuente y su tamaño… simplemente cambiar el campo text para la label asociada. Esto es válido a no ser que tenga que poner kern.

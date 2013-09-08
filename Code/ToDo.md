@@ -7,11 +7,7 @@
 ** A la espera de solucionar el bug de la pantalla de inicio.
 
 * Web
-** General
-*** Presentación
-*** Soporte
-*** Acerca de
-*** Versión Pro
+** Revisión textos acerca de
 ** Localización
 
 * Reportes:
@@ -19,6 +15,11 @@
 ** Hay que ajustar el tamaño de las fuentes pues… salen demasiado pegadas a la zona inferior, se ve claramente con la y griega
 ** Dudas sobre si dejar activado el Alpha con scroll ¿aporta algo?
 *** Incluso parece que aportaría más que dependiendo de la dirección del scroll, la alineación de los textos fuera a izquierda o derecha
+
+** Al arrastrar la calculadora se produce doble flash en el display
+
+* Se petó arrancando la aplicación y pulsando decimal y luego enter… hay que probarlo más.
+** 100% Poner decimal y dar a enter
 
 * Refactorización
 ** En todos los sitios donde vuelvo a recrear la fuente y su tamaño… simplemente cambiar el campo text para la label asociada. Esto es válido a no ser que tenga que poner kern.

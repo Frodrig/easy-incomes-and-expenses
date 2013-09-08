@@ -146,7 +146,14 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 - (void)configureYearsSegmentedControlInitialState
 {
     IAEYear *year = [[IAEBook sharedBook] findYearWithDate:[NSNumber numberWithUnsignedInteger:self.yearLoadedBeforeStart]];
-    self.yearsSegmentedControl.selectedSegmentIndex = [year findNumberOfConcepts] > 0 ? kYearsSegmentedControlYearsWithConceptsIndex : kYearsSegmentedControlAllYearsIndex;
+    const NSUInteger numberOfConceptsofOpenYear = [year findNumberOfConcepts];
+    self.yearsSegmentedControl.selectedSegmentIndex = numberOfConceptsofOpenYear > 0 ? kYearsSegmentedControlYearsWithConceptsIndex : kYearsSegmentedControlAllYearsIndex;
+    if (self.yearsSegmentedControl.selectedSegmentIndex == kYearsSegmentedControlAllYearsIndex) {
+        const NSUInteger numberOfYearsWithConcepts = [[IAEBook sharedBook] findAllYearWithConcepts].count;
+        if (numberOfYearsWithConcepts == 0) {
+            [self.yearsSegmentedControl setEnabled:NO forSegmentAtIndex:kYearsSegmentedControlYearsWithConceptsIndex];
+        }
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -215,17 +222,7 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 - (IBAction)yearSegmentedControlPressed:(id)sender
 {
     if ([self canChangeTheSelectedSegmentIndex]) {
-        [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
-        [UIView animateWithDuration:kDurationChangeModeFadeIn animations:^{
-            self.yearsCollectionView.alpha = 0.0;
-        } completion:^(BOOL finished) {
-            [self.yearsCollectionView reloadData];
-            [self goToOpenYearScrollPosition];
-            [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-            [UIView animateWithDuration:kDurationChangeModeFadeOut animations:^{
-                self.yearsCollectionView.alpha = 1.0;
-            }];
-        }];
+        [self changeToSelectedSegmentIndex];
     }
 }
 
@@ -237,6 +234,21 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 - (BOOL)inCleanYearStateAfterSwipeGesture
 {
     return self.selectedCellToClean != nil;
+}
+
+- (void)changeToSelectedSegmentIndex
+{
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+    [UIView animateWithDuration:kDurationChangeModeFadeIn animations:^{
+        self.yearsCollectionView.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        [self.yearsCollectionView reloadData];
+        [self goToOpenYearScrollPosition];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+        [UIView animateWithDuration:kDurationChangeModeFadeOut animations:^{
+            self.yearsCollectionView.alpha = 1.0;
+        }];
+    }];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -369,7 +381,8 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    NSUInteger numItems = [self findNumberOfItemsBasedInYearSegmentedControlValue];
+    const NSUInteger numItems = [self findNumberOfItemsBasedInYearSegmentedControlValue];
+    
     return numItems;
 }
 
@@ -476,16 +489,14 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == kAlertViewCleanButtonIndex) {
-        [self cleanYearSelected];
+        [self cleanYearSelectedAndUpdateControl];
     } else {
         [self.selectedCellToClean exitFromStrokeModeWithAnimation:YES];
         [self.strokeAnimatableLineView resetStroke];
     }
-    
-    self.selectedCellToClean = nil;
 }
 
-- (void)cleanYearSelected
+- (void)cleanYearSelectedAndUpdateControl
 {
     NSIndexPath *indexPathOfSelectedCellToClean = [self.yearsCollectionView indexPathForCell:self.selectedCellToClean];
     NSUInteger yearDateSelectedForClean = [self yearDateBasedInSegmentedControlStateFromCell:self.selectedCellToClean];
@@ -496,13 +507,35 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
     if (yearDateSelectedForClean == self.yearLoadedBeforeStart) {
         [self.delegate yearSelectorViewController:self didCleanOpenYearDate:yearDateSelectedForClean];
     }
-    
+
     if ([self isSegmentedControlInWithConceptsYearsState]) {
-        [self.yearsCollectionView deleteItemsAtIndexPaths:@[indexPathOfSelectedCellToClean]];
+        [self checkAndDisableYearSegmentedControlForYearsWithoutConceptsIfAppropiate];
+        if (self.yearsSegmentedControl.selectedSegmentIndex == kYearsSegmentedControlYearsWithConceptsIndex) {
+            [self.yearsCollectionView deleteItemsAtIndexPaths:@[indexPathOfSelectedCellToClean]];
+        }
     } else {
+        [self checkAndDisableYearSegmentedControlForYearsWithoutConceptsIfAppropiate];
         [self.selectedCellToClean exitFromStrokeModeWithAnimation:NO];
         [self.strokeAnimatableLineView resetStroke];
         [self.yearsCollectionView reloadItemsAtIndexPaths:@[indexPathOfSelectedCellToClean]];
+    }
+    
+    self.selectedCellToClean = nil;
+}
+
+- (void)checkAndDisableYearSegmentedControlForYearsWithoutConceptsIfAppropiate
+{
+    const NSUInteger numberOfYearsWithConcepts = [[IAEBook sharedBook] findAllYearWithConcepts].count;
+    if (numberOfYearsWithConcepts == 0) {
+        // Nota: Al deshabilitar la seccion se resta uno al indice y pasaria a ser menos uno. Guardamos la informacion antes.
+        NSLog(@"%d", self.yearsSegmentedControl.selectedSegmentIndex);
+        const BOOL wasInYearWithConceptsSection = self.yearsSegmentedControl.selectedSegmentIndex == kYearsSegmentedControlYearsWithConceptsIndex;
+        [self.yearsSegmentedControl setEnabled:NO forSegmentAtIndex:kYearsSegmentedControlYearsWithConceptsIndex];
+        NSLog(@"%d", self.yearsSegmentedControl.selectedSegmentIndex);
+        if (wasInYearWithConceptsSection) {
+            self.yearsSegmentedControl.selectedSegmentIndex = kYearsSegmentedControlAllYearsIndex;
+            [self changeToSelectedSegmentIndex];
+        }
     }
 }
 

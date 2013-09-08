@@ -528,10 +528,8 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
     const NSUInteger numberOfYearsWithConcepts = [[IAEBook sharedBook] findAllYearWithConcepts].count;
     if (numberOfYearsWithConcepts == 0) {
         // Nota: Al deshabilitar la seccion se resta uno al indice y pasaria a ser menos uno. Guardamos la informacion antes.
-        NSLog(@"%d", self.yearsSegmentedControl.selectedSegmentIndex);
         const BOOL wasInYearWithConceptsSection = self.yearsSegmentedControl.selectedSegmentIndex == kYearsSegmentedControlYearsWithConceptsIndex;
         [self.yearsSegmentedControl setEnabled:NO forSegmentAtIndex:kYearsSegmentedControlYearsWithConceptsIndex];
-        NSLog(@"%d", self.yearsSegmentedControl.selectedSegmentIndex);
         if (wasInYearWithConceptsSection) {
             self.yearsSegmentedControl.selectedSegmentIndex = kYearsSegmentedControlAllYearsIndex;
             [self changeToSelectedSegmentIndex];

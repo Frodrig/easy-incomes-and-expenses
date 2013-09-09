@@ -24,7 +24,7 @@ static const NSUInteger kXMarginForLabels = 10;
 static const CGFloat kWidthForHeightLine = 3.0;
 
 static const CGFloat kHeightForTitleLabel = 24;
-static const CGFloat kHeightForSubtitleLabel = 21;
+static const CGFloat kHeightForSubtitleLabel = 24;
 static const CGFloat kMinimumHeightForItem = kHeightForTitleLabel + kHeightForSubtitleLabel;
 
 static NSString * const kTitleFontFamilyName = @"HelveticaNeue-Thin";

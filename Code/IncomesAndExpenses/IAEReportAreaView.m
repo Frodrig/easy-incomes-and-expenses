@@ -36,7 +36,7 @@ static const CGFloat kWidthForLines = 1.0;
 static const CGFloat kColorWithWhiteValueForLines = 0.5;
 static const CGFloat kAlphaForColorWithWhiteValueForLines = 1.0;
 
-static const CGFloat kMaxNumberOfReportItemsInScreen = 3.0;
+static const CGFloat kMaxNumberOfReportItemsInScreen = 3;
 
 static const CGFloat kDurationOfReportItemViewAppear = 0.75;
 static const CGFloat kDurationOfReportItemViewDisappear = 0.75;

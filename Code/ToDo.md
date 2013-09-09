@@ -11,10 +11,10 @@
 ** Localización
 
 * Reportes:
-** ¡Sale esquinas redondeadas!
-** Hay que ajustar el tamaño de las fuentes pues… salen demasiado pegadas a la zona inferior, se ve claramente con la y griega
+** Al pasar a modo informe, no se colorean los valores a verde o rojo en primera instancia.
 ** Dudas sobre si dejar activado el Alpha con scroll ¿aporta algo?
 *** Incluso parece que aportaría más que dependiendo de la dirección del scroll, la alineación de los textos fuera a izquierda o derecha
+** Al pasar a reportes y volver a conceptos, si inserto y vuelvo a reportes, se me señala balance cuando lo que se me muestra es el ultimo modo que setee. El fallo está en que deberíamos de ir siempre a balances al pulsar en reportes desde conceptos.
 
 ** Al arrastrar la calculadora se produce doble flash en el display
 

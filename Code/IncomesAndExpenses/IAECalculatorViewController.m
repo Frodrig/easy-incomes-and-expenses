@@ -307,16 +307,16 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
 {
     NSAssert(![self isInHideMode], @"");
     
-    [self configureDisplayPanelWithActualCategory];
+    [self configureDisplayPanelWithActualCategoryWithAnimation:NO];
     [self configureDisplayPanelWithActualDayWithAnimation:NO];
     [self configureDisplayPanelWithActualAmount];
-    [self doFXAnimationFlashInDisplayModeUsingAnimation:NO];
+    [self setDisplayColorUsingAnimation:NO];
 }
 
-- (void)configureDisplayPanelWithActualCategory
+- (void)configureDisplayPanelWithActualCategoryWithAnimation:(BOOL)animation
 {
     [self.displayPanel setCategoryName:[self.actualCategory localizedTag]];
-    [self doFXAnimationFlashInDisplayModeUsingAnimation:YES];
+    [self setDisplayColorUsingAnimation:animation];
 }
 
 - (void)configureDisplayPanelWithActualDayWithAnimation:(BOOL)animation
@@ -327,7 +327,7 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
                       inMonthName:[self findMonthName]
                        ofYearName:[self findYearName]];
         if (animation) {
-            [self doFXAnimationFlashInDisplayModeUsingAnimation:animation];
+            [self setDisplayColorUsingAnimation:animation];
         }
     } else {
         [self.displayPanel setMonthName:[self findMonthName]
@@ -385,8 +385,8 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
     self.mode = mode;
     
     [self setDefaultCategoryForActualMode];
-    [self configureDisplayPanelWithActualCategory];
-    [self doFXAnimationFlashInDisplayModeUsingAnimation:YES];
+    [self configureDisplayPanelWithActualCategoryWithAnimation:YES];
+    [self setDisplayColorUsingAnimation:YES];
 }
 
 - (void)hide
@@ -560,7 +560,7 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
     BOOL validAction = [self createNewConcept];
     [self doFXAfterPressedButton:button withVaidAction:validAction];
     if (validAction) {
-        [self doFXAnimationFlashInDisplayModeUsingAnimation:validAction];
+        [self setDisplayColorUsingAnimation:validAction];
     }
 }
 
@@ -791,7 +791,7 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
     return decimalRange.location == NSNotFound ? NO : YES;
 }
 
-- (void)doFXAnimationFlashInDisplayModeUsingAnimation:(BOOL)animation
+- (void)setDisplayColorUsingAnimation:(BOOL)animation
 {
     if ([self isInIncomeMode]) {
         [self.displayPanel setDisplayWithIncomeColorUsingAnimation:animation];
@@ -832,7 +832,7 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
 {
     self.actualCategory = category;
     self.mode = category.categoryType == IncomeCategory ? CM_INCOME : CM_EXPENSE;
-    [self configureDisplayPanelWithActualCategory];
+    [self configureDisplayPanelWithActualCategoryWithAnimation:YES];
 }
 
 - (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController

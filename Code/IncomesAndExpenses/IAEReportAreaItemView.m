@@ -66,8 +66,8 @@ static const CGFloat kTextColorWithWhiteAlpha = 1.0;
     self = [super initWithFrame:adjustedFrame];
     if (self) {
         _lineColor = color;
-        [self initAndAddTitleLabel:title];
-        [self initAndAddSubtitleLabel:subtitle];
+        [self initAndAddTitleLabel:title withColor:color];
+        [self initAndAddSubtitleLabel:subtitle withColor:[UIColor colorWithWhite:kTextColorWithWhiteValue alpha:kTextColorWithWhiteAlpha]];
         [self configureBasicProperties];
     }
     
@@ -91,11 +91,14 @@ static const CGFloat kTextColorWithWhiteAlpha = 1.0;
     self.clipsToBounds = NO;
 }
 
-- (void)initAndAddTitleLabel:(NSString *)titleString
+- (void)initAndAddTitleLabel:(NSString *)titleString withColor:(UIColor *)color
 {
     CGRect labelFrame = CGRectMake(kXMarginForLabels, 0, self.bounds.size.width - kXMarginForLabels, kHeightForTitleLabel);
     _title = [[UILabel alloc] initWithFrame:labelFrame];
-    NSDictionary *attributes = [self createLabelAttributesWithFont:kTitleFontFamilyName size:kTitleFontSize andKern:kTitleFontKern];
+    NSDictionary *attributes = [self createLabelAttributesWithFont:kTitleFontFamilyName
+                                                              size:kTitleFontSize
+                                                             color:color
+                                                           andKern:kTitleFontKern];
     _title.attributedText = [[NSAttributedString alloc] initWithString:titleString attributes:attributes];
     _title.adjustsFontSizeToFitWidth = YES;
     _title.backgroundColor = [UIColor clearColor];
@@ -103,11 +106,14 @@ static const CGFloat kTextColorWithWhiteAlpha = 1.0;
     [self addSubview:_title];
 }
 
-- (void)initAndAddSubtitleLabel:(NSString *)subtitleString
+- (void)initAndAddSubtitleLabel:(NSString *)subtitleString withColor:(UIColor *)color
 {
     CGRect labelFrame = CGRectMake(kXMarginForLabels, _title.bounds.size.height, self.bounds.size.width - kXMarginForLabels, kHeightForSubtitleLabel);
     _subtitle = [[UILabel alloc] initWithFrame:labelFrame];
-    NSDictionary *attributes = [self createLabelAttributesWithFont:kSubtitleFontFamilyName size:kSubtitleFontSize andKern:kSubtitleFontKern];
+    NSDictionary *attributes = [self createLabelAttributesWithFont:kSubtitleFontFamilyName
+                                                              size:kSubtitleFontSize
+                                                             color:color
+                                                           andKern:kSubtitleFontKern];
     _subtitle.attributedText = [[NSAttributedString alloc] initWithString:subtitleString attributes:attributes];
     _subtitle.backgroundColor = [UIColor clearColor];
     _subtitle.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -115,10 +121,10 @@ static const CGFloat kTextColorWithWhiteAlpha = 1.0;
     [self addSubview:_subtitle];
 }
 
-- (NSDictionary *)createLabelAttributesWithFont:(NSString *)fontFamily size:(CGFloat)size andKern:(CGFloat)kern
+- (NSDictionary *)createLabelAttributesWithFont:(NSString *)fontFamily size:(CGFloat)size color:(UIColor *)color andKern:(CGFloat)kern
 {
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:fontFamily size:size],
-                                 NSForegroundColorAttributeName:[UIColor colorWithWhite:kTextColorWithWhiteValue alpha:kTextColorWithWhiteAlpha],
+                                 NSForegroundColorAttributeName: color,
                                  NSKernAttributeName: @(kern)};
     
     return attributes;
@@ -150,9 +156,11 @@ static const CGFloat kTextColorWithWhiteAlpha = 1.0;
 
 - (void)changeTitleLabel:(NSString *)title
 {
-    NSDictionary *attributes = [self createLabelAttributesWithFont:kTitleFontFamilyName size:kTitleFontSize andKern:kTitleFontKern];
+    NSDictionary *attributes = [self createLabelAttributesWithFont:kTitleFontFamilyName
+                                                              size:kTitleFontSize
+                                                             color:_title.textColor
+                                                           andKern:kTitleFontKern];
     _title.attributedText = [[NSAttributedString alloc] initWithString:title attributes:attributes];
-    
 }
 
 @end

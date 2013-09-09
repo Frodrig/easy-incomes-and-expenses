@@ -667,9 +667,9 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     } completion:^(BOOL finished) {
         [self.editAndReportModeContentContainerView addRoundedCorners:UIRectCornerAllCorners withRadius:0];
         self.withoutConceptsWarningInMonthEditModeView.alpha = 0;
+        self.reportMenuView.currentOptionIndexSelected = 0;
         self.reportAreaView.dataSource = self.helperReportAreaViewDataSource;
         self.reportAreaView.reportAreaViewDelegate = self;
-        self.reportMenuView.currentOptionIndexSelected = 0;
         self.reportMenuView.center = CGPointMake(self.reportMenuView.center.x, self.reportMenuView.center.y + self.reportMenuView.bounds.size.height);
         self.reportAreaView.hidden = NO;
         self.reportMenuView.hidden = NO;

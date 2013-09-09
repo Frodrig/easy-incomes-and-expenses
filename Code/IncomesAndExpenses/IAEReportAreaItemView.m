@@ -108,7 +108,10 @@ static const CGFloat kTextColorWithWhiteAlpha = 1.0;
 
 - (void)initAndAddSubtitleLabel:(NSString *)subtitleString withColor:(UIColor *)color
 {
-    CGRect labelFrame = CGRectMake(kXMarginForLabels, _title.bounds.size.height, self.bounds.size.width - kXMarginForLabels, kHeightForSubtitleLabel);
+    CGRect labelFrame = CGRectMake(kXMarginForLabels,
+                                   _title.bounds.size.height,
+                                   self.bounds.size.width - kXMarginForLabels,
+                                   kHeightForSubtitleLabel);
     _subtitle = [[UILabel alloc] initWithFrame:labelFrame];
     NSDictionary *attributes = [self createLabelAttributesWithFont:kSubtitleFontFamilyName
                                                               size:kSubtitleFontSize
@@ -117,6 +120,7 @@ static const CGFloat kTextColorWithWhiteAlpha = 1.0;
     _subtitle.attributedText = [[NSAttributedString alloc] initWithString:subtitleString attributes:attributes];
     _subtitle.backgroundColor = [UIColor clearColor];
     _subtitle.lineBreakMode = NSLineBreakByTruncatingTail;
+    _subtitle.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
     
     [self addSubview:_subtitle];
 }

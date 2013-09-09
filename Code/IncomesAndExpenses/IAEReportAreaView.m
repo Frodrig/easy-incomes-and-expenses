@@ -30,13 +30,13 @@ static NSString * const kReportAreaItemsNoItemsWarningFontName = @"HelveticaNeue
 static const CGFloat kReportAreaItemsNoItemsFontSize = 36;
 static const CGFloat kReportAreaItemsNoItemsWarningKern = 0;
 
-static const CGFloat kXOffsetToStartDrawingReportAreaItems =0;
+static const CGFloat kXOffsetToStartDrawingReportAreaItems = 0;
 
 static const CGFloat kWidthForLines = 1.0;
 static const CGFloat kColorWithWhiteValueForLines = 0.5;
 static const CGFloat kAlphaForColorWithWhiteValueForLines = 1.0;
 
-static const CGFloat kMaxNumberOfReportItemsInScreen = 3;
+static const CGFloat kMaxNumberOfReportItemsInScreen = 4;
 
 static const CGFloat kDurationOfReportItemViewAppear = 0.75;
 static const CGFloat kDurationOfReportItemViewDisappear = 0.75;
@@ -396,7 +396,7 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
 
 - (CGFloat)calculeWidthOfReportAreaItemViews
 {
-    CGFloat width = (self.bounds.size.width - kXOffsetToStartDrawingReportAreaItems) / kMaxNumberOfReportItemsInScreen;
+    const CGFloat width = (self.bounds.size.width - kXOffsetToStartDrawingReportAreaItems) / kMaxNumberOfReportItemsInScreen;
     
     return width;
 }
@@ -423,22 +423,11 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
                                    ofTotalNumber:(NSUInteger)totalNumber
                   withWidthOfReportAreaItemsView:(CGFloat)widthOfReportAreaItemsView
 {
-    CGFloat xPosition = 0;
+    NSAssert(totalNumber > 0, @"");
+    const NSUInteger widthTotalInterSpace = MAX(0, self.bounds.size.width - (widthOfReportAreaItemsView * totalNumber));
+    const NSUInteger widthUnitInterSpace = totalNumber < kMaxNumberOfReportItemsInScreen ? widthTotalInterSpace / (totalNumber + 1): 0;
+    const CGFloat xPosition = widthUnitInterSpace + reportAreaItemIndex * (widthOfReportAreaItemsView + widthUnitInterSpace);
     
-    if (totalNumber >= kMaxNumberOfReportItemsInScreen) {
-        xPosition = kXOffsetToStartDrawingReportAreaItems + reportAreaItemIndex * widthOfReportAreaItemsView;
-    } else {
-        const CGFloat xAbsoluteCenter = self.bounds.size.width / 2;
-        const CGFloat halfWidthOfReportAreaItem = widthOfReportAreaItemsView / 2;
-        if (totalNumber == 1) {
-            xPosition = xAbsoluteCenter - halfWidthOfReportAreaItem;
-        } else if (totalNumber == 2) {
-            const CGFloat halfCenterOfView = xAbsoluteCenter / 2;
-            xPosition = reportAreaItemIndex == 0 ? xAbsoluteCenter - halfCenterOfView - halfWidthOfReportAreaItem :
-                                                   xAbsoluteCenter + halfCenterOfView - halfWidthOfReportAreaItem;
-        }
-    }
-
     return xPosition;
 }
 

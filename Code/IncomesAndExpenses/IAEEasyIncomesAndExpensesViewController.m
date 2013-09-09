@@ -85,7 +85,7 @@
 @property (nonatomic, strong) UIAttachmentBehavior *attachBehaviorForContainerFX;
 @property (nonatomic, strong) UIDynamicAnimator *dynamicAnimator;
 @property (nonatomic, strong) NSIndexPath *pendingScrollToEditModeConceptCellIndexPath;
-
+@property (nonatomic, strong) NSIndexPath *indexPathOfCellWithPendingCallForAttentionAnimation;
 
 @end
 
@@ -2097,22 +2097,35 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     [self.conceptsCollectionView performBatchUpdates:^{
         [self.conceptsCollectionView insertItemsAtIndexPaths:@[indexPathOfInsertion]];
     } completion:^(BOOL finished) {
-        // Aquí debería de haber algún tipo de efecto especial para indicar la celda añadida
+        // Nota: En caso de que la posición a la que ir no esté visible, la resaltaremos al terminar el scroll
         [self.conceptsCollectionView scrollToItemAtIndexPath:indexPathOfInsertion atScrollPosition:UIScrollViewIndicatorStyleDefault animated:YES];
+        if (![self.conceptsCollectionView cellForItemAtIndexPath:indexPathOfInsertion]) {
+            self.indexPathOfCellWithPendingCallForAttentionAnimation = indexPathOfInsertion;
+        }
     }];
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
+{
+    if (scrollView == self.conceptsCollectionView) {
+        [self executeCallForAttentionAnimationInPendingCellIfAppropiate];
+    }
+}
+
+- (void)executeCallForAttentionAnimationInPendingCellIfAppropiate
+{
+    if (self.indexPathOfCellWithPendingCallForAttentionAnimation) {
+        IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:self.indexPathOfCellWithPendingCallForAttentionAnimation];
+        [cell doCallForAttentionAnimation];
+        self.indexPathOfCellWithPendingCallForAttentionAnimation = nil;
+    }
 }
 
 - (void)reloadConceptsCollectionViewWithoutDayModeAfterCreateNewConcept
 {
-    NSUInteger numberOfConceptsForActualContext = [self findNumberOfConceptsOfActualSelectedContextUsingSectionForYearContext:0];
-    NSIndexPath *indexPathOfInsertion = [NSIndexPath indexPathForRow:numberOfConceptsForActualContext - 1 inSection:0];
-    
-    [self.conceptsCollectionView performBatchUpdates:^{
-        [self.conceptsCollectionView insertItemsAtIndexPaths:@[indexPathOfInsertion]];
-        [self.conceptsCollectionView reloadItemsAtIndexPaths:self.conceptsCollectionView.indexPathsForVisibleItems];
-    } completion:^(BOOL finished) {
-        
-    }];
+    [self.conceptsCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]];
 }
 
 #pragma mark - IAETextRawSelectorMenuViewDelegate

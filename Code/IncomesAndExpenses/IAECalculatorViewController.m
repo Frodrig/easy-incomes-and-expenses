@@ -492,7 +492,7 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
 
 - (BOOL)canDeleteOneValueInAmount
 {
-    BOOL canDelete = self.actualAmount.length > 0;
+    BOOL canDelete = [self actualAmountWithData];
     if (canDelete) {
         NSDecimalNumber *actualNumberAmount = [self convertToDecimalNumberKeyboardAmountValue:self.actualAmount];
         canDelete = ![actualNumberAmount isEqualToValue:[NSDecimalNumber zero]];
@@ -502,6 +502,11 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
     }
     
     return canDelete;
+}
+
+- (BOOL)actualAmountWithData
+{
+    return self.actualAmount.length > 0;
 }
 
 - (NSDecimalNumber *)convertToDecimalNumberKeyboardAmountValue:(NSString *)amountValue
@@ -561,7 +566,7 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
 
 - (BOOL)createNewConcept
 {
-    BOOL validAction = self.actualAmount.length > 0;
+    const BOOL validAction = [self isActualAmountOverZero];
     if (validAction) {
         IAEMonth *month = [self.dataSource monthForCalculatorViewController:self];
         IAEConcept *newConcept = [month addConceptWithAmount:[self convertToDecimalNumberKeyboardAmountValue:self.actualAmount]
@@ -629,17 +634,50 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
 {
     NSAssert(value >= 0 && value < 10, @"");
 
-    BOOL withValueValidForActualState = (value > 0 || (value == 0 && [self isActualAmountOverZero])) || [self isDecimalPresent];
-    BOOL withSpaceForNewNumber = [self isActualAmountWithSpaceForNewValue];
-    BOOL withSpaceForDecimalNumber = [self isActualAmountWithSpaceForNewDecimalNumber];
-    BOOL withValueUnderMaxAllowed = [self isActualAmountUnderMaxDecimalNumberAllowedWithNewValue:value];
+    const BOOL withValueValidForActualState = [self isActualStateValidToAddValue:value];
+    const BOOL withSpaceForNewNumber = [self isActualAmountWithSpaceForNewValue];
+    const BOOL withSpaceForDecimalNumber = [self isActualAmountWithSpaceForNewDecimalNumber];
+    const BOOL withValueUnderMaxAllowed = [self isActualAmountUnderMaxDecimalNumberAllowedWithNewValue:value];
 
     return withValueValidForActualState && withSpaceForNewNumber && withSpaceForDecimalNumber && withValueUnderMaxAllowed;
 }
 
+- (BOOL)isActualStateValidToAddValue:(NSUInteger)value
+{
+    return (value > 0 || (value == 0 && [self isActualAmountOverZero])) || [self isDecimalPresent];
+}
+
 - (BOOL)isActualAmountOverZero
 {
-    return self.actualAmount.floatValue > 0;
+    BOOL overZero = NO;
+    if ([self actualAmountWithData]) {
+        NSDecimalNumber *actualAmount = nil;
+        if ([self isDecimalPresent]) {
+            NSString *validActualAmountString = [self createDecimalNumberConvertibleStringFromActualAmountString];
+            actualAmount = [NSDecimalNumber decimalNumberWithString:validActualAmountString];
+        } else {
+            actualAmount = [NSDecimalNumber decimalNumberWithString:self.actualAmount];
+        }
+        
+        overZero = [actualAmount compare:[NSDecimalNumber decimalNumberWithString:@"0"]] != NSOrderedSame ? YES : NO;
+    }
+    
+    return overZero;
+}
+
+- (NSString *)createDecimalNumberConvertibleStringFromActualAmountString
+{
+    NSString *validActualAmountString = [NSString stringWithString:self.actualAmount];
+    NSRange decimalRange = [self findDecimalRangeLocationInAmountString:self.actualAmount];
+    if (decimalRange.location == 0) {
+        validActualAmountString = [NSString stringWithFormat:@"0%@", validActualAmountString];
+    }
+    if (decimalRange.location == self.actualAmount.length - 1) {
+        validActualAmountString = [NSString stringWithFormat:@"%@0", validActualAmountString];
+    }
+    validActualAmountString = [validActualAmountString stringByReplacingOccurrencesOfString:@"," withString:@"."];
+    
+    return validActualAmountString;
 }
 
 - (BOOL)isActualAmountWithSpaceForNewValue
@@ -688,7 +726,7 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
     IAECurrencyManager *currencyManager = [IAECurrencyManager sharedManager];
     [currencyManager saveCurrencyFormatterFractionState];
 
-    if (self.actualAmount.length > 0) {
+    if ([self actualAmountWithData]) {
         NSUInteger maximumFractionDigits = [self findMaximumFractionDigitsToDisplayForAmountValue:self.actualAmount];
         currencyManager.currencyFormatter.maximumFractionDigits = maximumFractionDigits;
         amountStringToDisplay = [self convertToAmountStringDisplayableTheAmountString:self.actualAmount];

@@ -95,8 +95,8 @@
 
 static const NSUInteger kNumberOfMonths = 12;
 
-static const CGFloat kDurationInitializationAnimationFadeIn = 2.0;
-static const CGFloat kDurationInitializationAnimationTraslantion = 2.25;
+static const CGFloat kDurationInitializationAnimationFadeIn = 1.5;
+static const CGFloat kDurationInitializationAnimationTraslantion = 2;
 
 static NSString * const kLTextNavigationBarTitle = @"LTEXT_NAVIGATIONBAR_TITLE";
 static NSString * const kLTextVersionAppType = @"LTEXT_CATEGORY_VERSION";

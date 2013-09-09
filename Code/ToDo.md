@@ -18,10 +18,7 @@
 
 ** Al arrastrar la calculadora se produce doble flash en el display
 
-* Se petó arrancando la aplicación y pulsando decimal y luego enter… hay que probarlo más.
-** 100%: poner decimal y dar a enter
-
-* Revisar casos retaincycles con bloques
+* Revisar casos de posibles retaincycles con bloques
 
 * Refactorización
 ** En todos los sitios donde vuelvo a recrear la fuente y su tamaño… simplemente cambiar el campo text para la label asociada. Esto es válido a no ser que tenga que poner kern.

@@ -635,6 +635,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
         self.editAndReportModeContentContainerView.alpha = 0.0;
         self.reportMenuView.center = CGPointMake(self.reportMenuView.center.x, self.reportMenuView.center.y + self.reportMenuView.bounds.size.height);
     } completion:^(BOOL finished) {
+        [self.editAndReportModeContentContainerView addRoundedCorners:UIRectCornerAllCorners withRadius:kEditAndReportModeContentContainerRadius];
         self.withoutConceptsWarningInMonthReportModeView.alpha = 0;
         self.reportAreaView.dataSource = nil;
         self.reportAreaView.reportAreaViewDelegate = self;
@@ -664,6 +665,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
         self.editAndReportModeContentContainerView.alpha = 0.0;
         self.calculatorViewController.view.center = CGPointMake(self.calculatorViewController.view.center.x, self.calculatorViewController.view.center.y + self.calculatorViewController.dragPanel.bounds.size.height);
     } completion:^(BOOL finished) {
+        [self.editAndReportModeContentContainerView addRoundedCorners:UIRectCornerAllCorners withRadius:0];
         self.withoutConceptsWarningInMonthEditModeView.alpha = 0;
         self.reportAreaView.dataSource = self.helperReportAreaViewDataSource;
         self.reportAreaView.reportAreaViewDelegate = self;

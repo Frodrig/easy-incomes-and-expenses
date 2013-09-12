@@ -13,6 +13,7 @@
 #import "IAEMonth.h"
 #import "IAECategoryStore.h"
 #import "IAEEasyIncomesAndExpensesViewController.h"
+#import "IAERootLauchingViewController.h"
 
 @implementation IAEAppDelegate
 
@@ -70,10 +71,18 @@ static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
 
 - (void)createWindowAssignNavigationControlerAndMakeVisible
 {
+    /*
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = [self makeNavigationControllerWithRootController];
     [self.window makeKeyAndVisible];
+     */
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.rootViewController = [[IAERootLauchingViewController alloc] init];
+    [self.window makeKeyAndVisible];
+    
 }
 
 - (UINavigationController *)makeNavigationControllerWithRootController
@@ -134,6 +143,7 @@ static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
     [[IAEBook sharedBook] saveAll];
 }
 
+#pragma mark - Notifications
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

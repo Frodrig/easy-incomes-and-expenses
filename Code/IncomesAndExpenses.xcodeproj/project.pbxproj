@@ -52,6 +52,9 @@
 		5B5C968917816EE0008CD851 /* IAEValueDecoratorViewExpenseConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C968817816EE0008CD851 /* IAEValueDecoratorViewExpenseConfigurator.m */; };
 		5B5C968C17816EF0008CD851 /* IAEValueDecoratorViewZeroConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C968B17816EF0008CD851 /* IAEValueDecoratorViewZeroConfigurator.m */; };
 		5B5C96A91781E877008CD851 /* NSNumber+DefaultValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C96A81781E877008CD851 /* NSNumber+DefaultValues.m */; };
+		5B5DBB3117E1E9EB00716503 /* IAERootLauchingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5DBB3017E1E9EB00716503 /* IAERootLauchingViewController.m */; };
+		5B5DBB3C17E1F01400716503 /* ipadlandscape_launchimage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B5DBB3A17E1F01400716503 /* ipadlandscape_launchimage@2x.png */; };
+		5B5DBB3D17E1F01400716503 /* ipadlandscape_launchimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B5DBB3B17E1F01400716503 /* ipadlandscape_launchimage.png */; };
 		5B60EB5A17C4A3D5004E3D81 /* IAELocalizerPhraseComposer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B60EB5917C4A3D5004E3D81 /* IAELocalizerPhraseComposer.m */; };
 		5B62D85B178EA870009879A6 /* IAEYearSelectorCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B62D85A178EA870009879A6 /* IAEYearSelectorCollectionViewCell.m */; };
 		5B62D85D178EA8A2009879A6 /* IAEYearSelectorCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B62D85C178EA8A2009879A6 /* IAEYearSelectorCollectionViewCell.xib */; };
@@ -73,8 +76,6 @@
 		5B767E031636D7FC005315F8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B767E021636D7FC005315F8 /* main.m */; };
 		5B767E071636D7FC005315F8 /* IAEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B767E061636D7FC005315F8 /* IAEAppDelegate.m */; };
 		5B7A4D7F16B68062001751A9 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B7A4D7E16B68062001751A9 /* MessageUI.framework */; };
-		5B7FCE9017D63CF700624D25 /* ipadlandscape_launchimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B7FCE8E17D63CF700624D25 /* ipadlandscape_launchimage.png */; };
-		5B7FCE9117D63CF700624D25 /* ipadlandscape_launchimage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B7FCE8F17D63CF700624D25 /* ipadlandscape_launchimage@2x.png */; };
 		5B8CD5D117A262A800A353A5 /* IAEContextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8CD5D017A262A800A353A5 /* IAEContextView.m */; };
 		5B8CD5D317A262BC00A353A5 /* IAEContextViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B8CD5D217A262BC00A353A5 /* IAEContextViewContent.xib */; };
 		5B8CD5D917A2C6DB00A353A5 /* IAETextRawSelectorMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8CD5D817A2C6DB00A353A5 /* IAETextRawSelectorMenuView.m */; };
@@ -116,8 +117,6 @@
 		5BEA608217A6A36600520E09 /* IAEReportAreaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA608117A6A36600520E09 /* IAEReportAreaView.m */; };
 		5BEA608717A6A39400520E09 /* IAEReportAreaItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA608617A6A39400520E09 /* IAEReportAreaItemView.m */; };
 		5BEA98AB1793E3A500098AE0 /* IAECircleDecoratorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA98AA1793E3A500098AE0 /* IAECircleDecoratorView.m */; };
-		5BF6F23B17D6554D009B5D2C /* ipadlandscape_launchimagecrop.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BF6F23917D6554D009B5D2C /* ipadlandscape_launchimagecrop.png */; };
-		5BF6F23C17D6554D009B5D2C /* ipadlandscape_launchimagecrop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BF6F23A17D6554D009B5D2C /* ipadlandscape_launchimagecrop@2x.png */; };
 		5BF92541179554800002CF9F /* IAEAboutAndOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF9253F179554800002CF9F /* IAEAboutAndOptionsViewController.m */; };
 		5BF92542179554800002CF9F /* IAEAboutAndOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BF92540179554800002CF9F /* IAEAboutAndOptionsViewController.xib */; };
 		5BFDE72A17C5E27500DF884B /* IAESelectorContextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFDE72917C5E27500DF884B /* IAESelectorContextView.m */; };
@@ -199,6 +198,10 @@
 		5B5C968B17816EF0008CD851 /* IAEValueDecoratorViewZeroConfigurator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEValueDecoratorViewZeroConfigurator.m; sourceTree = "<group>"; };
 		5B5C96A71781E877008CD851 /* NSNumber+DefaultValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+DefaultValues.h"; sourceTree = "<group>"; };
 		5B5C96A81781E877008CD851 /* NSNumber+DefaultValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+DefaultValues.m"; sourceTree = "<group>"; };
+		5B5DBB2F17E1E9EB00716503 /* IAERootLauchingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAERootLauchingViewController.h; sourceTree = "<group>"; };
+		5B5DBB3017E1E9EB00716503 /* IAERootLauchingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAERootLauchingViewController.m; sourceTree = "<group>"; };
+		5B5DBB3A17E1F01400716503 /* ipadlandscape_launchimage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ipadlandscape_launchimage@2x.png"; sourceTree = "<group>"; };
+		5B5DBB3B17E1F01400716503 /* ipadlandscape_launchimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ipadlandscape_launchimage.png; sourceTree = "<group>"; };
 		5B60EB5817C4A3D5004E3D81 /* IAELocalizerPhraseComposer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAELocalizerPhraseComposer.h; sourceTree = "<group>"; };
 		5B60EB5917C4A3D5004E3D81 /* IAELocalizerPhraseComposer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAELocalizerPhraseComposer.m; sourceTree = "<group>"; };
 		5B62D859178EA870009879A6 /* IAEYearSelectorCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEYearSelectorCollectionViewCell.h; sourceTree = "<group>"; };
@@ -237,8 +240,6 @@
 		5B767E0A1636D7FC005315F8 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		5B767E0C1636D7FC005315F8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		5B7A4D7E16B68062001751A9 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		5B7FCE8E17D63CF700624D25 /* ipadlandscape_launchimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ipadlandscape_launchimage.png; sourceTree = "<group>"; };
-		5B7FCE8F17D63CF700624D25 /* ipadlandscape_launchimage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ipadlandscape_launchimage@2x.png"; sourceTree = "<group>"; };
 		5B8488F3178AB88C0001551F /* IAECategoryEditorDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategoryEditorDefs.h; sourceTree = "<group>"; };
 		5B8488F5178AB8B10001551F /* IAECategoryEditorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategoryEditorViewControllerDelegate.h; sourceTree = "<group>"; };
 		5B8CD5CF17A262A800A353A5 /* IAEContextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEContextView.h; sourceTree = "<group>"; };
@@ -328,8 +329,6 @@
 		5BEA608617A6A39400520E09 /* IAEReportAreaItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEReportAreaItemView.m; sourceTree = "<group>"; };
 		5BEA98A91793E3A500098AE0 /* IAECircleDecoratorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECircleDecoratorView.h; sourceTree = "<group>"; };
 		5BEA98AA1793E3A500098AE0 /* IAECircleDecoratorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECircleDecoratorView.m; sourceTree = "<group>"; };
-		5BF6F23917D6554D009B5D2C /* ipadlandscape_launchimagecrop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ipadlandscape_launchimagecrop.png; sourceTree = "<group>"; };
-		5BF6F23A17D6554D009B5D2C /* ipadlandscape_launchimagecrop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ipadlandscape_launchimagecrop@2x.png"; sourceTree = "<group>"; };
 		5BF9253E179554800002CF9F /* IAEAboutAndOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEAboutAndOptionsViewController.h; sourceTree = "<group>"; };
 		5BF9253F179554800002CF9F /* IAEAboutAndOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEAboutAndOptionsViewController.m; sourceTree = "<group>"; };
 		5BF92540179554800002CF9F /* IAEAboutAndOptionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEAboutAndOptionsViewController.xib; sourceTree = "<group>"; };
@@ -453,7 +452,8 @@
 		5B29ED30179FC2C300FCC5C6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				5B7FCE9317D63D1D00624D25 /* Apple */,
+				5B5DBB0817E1BF3800716503 /* Launch */,
+				5B5DBB0717E1BF2A00716503 /* Icons */,
 				5B7FCE9217D63D1200624D25 /* App */,
 			);
 			name = Resources;
@@ -515,6 +515,8 @@
 				5BF925381795540F0002CF9F /* About and Options */,
 				5B94035D178FEE9700F9C1D0 /* Category Selector */,
 				5B32D65A177C417A0070AC72 /* Year Selector */,
+				5B5DBB2F17E1E9EB00716503 /* IAERootLauchingViewController.h */,
+				5B5DBB3017E1E9EB00716503 /* IAERootLauchingViewController.m */,
 			);
 			name = "View, Controllers & ViewControllers";
 			sourceTree = "<group>";
@@ -648,6 +650,30 @@
 				5B5C96A81781E877008CD851 /* NSNumber+DefaultValues.m */,
 			);
 			name = NSNumber;
+			sourceTree = "<group>";
+		};
+		5B5DBB0717E1BF2A00716503 /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				5B2E93CD17DCDDF6007D4284 /* eiae_icon40@2x.png */,
+				5B2E93CE17DCDDF6007D4284 /* eiae_icon40.png */,
+				5B2E93CF17DCDDF6007D4284 /* eiae_icon29@2x.png */,
+				5B2E93D017DCDDF6007D4284 /* eiae_icon29.png */,
+				5B951F6A17D88F1700CCEACE /* icon.png */,
+				5B951F6B17D88F1700CCEACE /* icon@2x.png */,
+			);
+			name = Icons;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		5B5DBB0817E1BF3800716503 /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+				5B5DBB3A17E1F01400716503 /* ipadlandscape_launchimage@2x.png */,
+				5B5DBB3B17E1F01400716503 /* ipadlandscape_launchimage.png */,
+			);
+			name = Launch;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		5B60EB5717C4A39E004E3D81 /* Localizer Phrase Composer */ = {
@@ -885,24 +911,6 @@
 				5B2AAA3117C7747100E7C7A5 /* 747-minus-circle.png */,
 			);
 			name = App;
-			sourceTree = "<group>";
-		};
-		5B7FCE9317D63D1D00624D25 /* Apple */ = {
-			isa = PBXGroup;
-			children = (
-				5B7FCE8E17D63CF700624D25 /* ipadlandscape_launchimage.png */,
-				5B2E93CD17DCDDF6007D4284 /* eiae_icon40@2x.png */,
-				5B2E93CE17DCDDF6007D4284 /* eiae_icon40.png */,
-				5B2E93CF17DCDDF6007D4284 /* eiae_icon29@2x.png */,
-				5B2E93D017DCDDF6007D4284 /* eiae_icon29.png */,
-				5B7FCE8F17D63CF700624D25 /* ipadlandscape_launchimage@2x.png */,
-				5B951F6A17D88F1700CCEACE /* icon.png */,
-				5B951F6B17D88F1700CCEACE /* icon@2x.png */,
-				5BF6F23917D6554D009B5D2C /* ipadlandscape_launchimagecrop.png */,
-				5BF6F23A17D6554D009B5D2C /* ipadlandscape_launchimagecrop@2x.png */,
-			);
-			name = Apple;
-			path = ..;
 			sourceTree = "<group>";
 		};
 		5B8CD5CE17A2623F00A353A5 /* Context View */ = {
@@ -1391,12 +1399,11 @@
 			files = (
 				5B7319F31796A8AB00FAF632 /* IAEInfoAboutAndOptionsCollectionViewCell.xib in Resources */,
 				5B767E011636D7FC005315F8 /* InfoPlist.strings in Resources */,
-				5BF6F23B17D6554D009B5D2C /* ipadlandscape_launchimagecrop.png in Resources */,
 				5B2A41B017C77C8100C29036 /* 765-arrow-left.png in Resources */,
 				5B2A41B517C77E8500C29036 /* 709-plus@2x.png in Resources */,
-				5BF6F23C17D6554D009B5D2C /* ipadlandscape_launchimagecrop@2x.png in Resources */,
 				5B2AAA2C17C773C500E7C7A5 /* 746-plus-circle@2x.png in Resources */,
 				5B2E93D417DCDDF6007D4284 /* eiae_icon29.png in Resources */,
+				5B5DBB3C17E1F01400716503 /* ipadlandscape_launchimage@2x.png in Resources */,
 				5B23FD9217CFAB5100B4AD77 /* 727-more@2x.png in Resources */,
 				5B23FD9117CFAB5100B4AD77 /* 727-more.png in Resources */,
 				5B18053317BBC93500EB8ABF /* ToDo.md in Resources */,
@@ -1415,10 +1422,8 @@
 				5B0574C117AFE2F600B95D50 /* IAEWithoutConceptsTextWarningReportMode.xib in Resources */,
 				5B2A41B117C77C8100C29036 /* 765-arrow-left@2x.png in Resources */,
 				5B2AAA3017C773CF00E7C7A5 /* 747-minus-circle@2x.png in Resources */,
-				5B7FCE9017D63CF700624D25 /* ipadlandscape_launchimage.png in Resources */,
 				5B264613179684A5006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.xib in Resources */,
 				5BC1110017CD1DF500FF6D6B /* 730-envelope.png in Resources */,
-				5B7FCE9117D63CF700624D25 /* ipadlandscape_launchimage@2x.png in Resources */,
 				5B8CD5D317A262BC00A353A5 /* IAEContextViewContent.xib in Resources */,
 				5B0F8BC416B94ADD002D62A5 /* Localizable.strings in Resources */,
 				5B5544A2177460DD009CFC84 /* Main.storyboard in Resources */,
@@ -1430,6 +1435,7 @@
 				5B2AAA2B17C773C500E7C7A5 /* 746-plus-circle.png in Resources */,
 				5B62D85D178EA8A2009879A6 /* IAEYearSelectorCollectionViewCell.xib in Resources */,
 				5B2E93D217DCDDF6007D4284 /* eiae_icon40.png in Resources */,
+				5B5DBB3D17E1F01400716503 /* ipadlandscape_launchimage.png in Resources */,
 				5B951F6C17D88F1700CCEACE /* icon.png in Resources */,
 				5BC1110117CD1DF500FF6D6B /* 730-envelope@2x.png in Resources */,
 				5BA0131317983A9000337E84 /* IAEDayCalendarSelectorViewController.xib in Resources */,
@@ -1506,6 +1512,7 @@
 				5B8CD5D917A2C6DB00A353A5 /* IAETextRawSelectorMenuView.m in Sources */,
 				5B62D881178EC3CB009879A6 /* IAECurrencyInfo.m in Sources */,
 				5BC7101917AC29F600E12953 /* IAECategoryStore.m in Sources */,
+				5B5DBB3117E1E9EB00716503 /* IAERootLauchingViewController.m in Sources */,
 				5B36AFF11785874D00132475 /* IAEAdjustConceptAmountViewController.m in Sources */,
 				5B62D87D178EC27D009879A6 /* IAEDateHelper.m in Sources */,
 				5B90783C179D268000B2A0F7 /* IAEDisplayPanelCalculatorView.m in Sources */,
@@ -1631,7 +1638,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
@@ -1661,7 +1667,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";

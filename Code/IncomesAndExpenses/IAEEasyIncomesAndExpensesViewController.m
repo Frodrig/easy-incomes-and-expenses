@@ -49,7 +49,6 @@
 @interface IAEEasyIncomesAndExpensesViewController ()
 
 @property (strong, nonatomic) IBOutlet UILabel *navigationBarTitleLabel;
-@property (nonatomic, strong) UIImageView *launchImage;
 @property (weak, nonatomic) IBOutlet UIView *containerViewForDynamicFX;
 @property (weak, nonatomic) UIBarButtonItem *yearsButton;
 @property (weak, nonatomic) UIBarButtonItem *categoriesButton;
@@ -95,8 +94,9 @@
 
 static const NSUInteger kNumberOfMonths = 12;
 
-static const CGFloat kDurationInitializationAnimationFadeIn = 1.5;
-static const CGFloat kDurationInitializationAnimationTraslantion = 2;
+static const CGFloat kDurationInitializationAnimationNavigationFadeIn = 1.5;
+static const CGFloat kDurationInitializationAnimationContextAndModesFadeIn = 2;
+static const CGFloat kDurationInitializationAnimationTraslantionFadeIn = 2.25;
 
 static NSString * const kLTextNavigationBarTitle = @"LTEXT_NAVIGATIONBAR_TITLE";
 static NSString * const kLTextVersionAppType = @"LTEXT_CATEGORY_VERSION";
@@ -216,7 +216,6 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     self = [super initWithCoder:aDecoder];
     if (self) {
         [self initCommonProperties];
-        [self initLaunchImage];
         [self initTapConceptsGestureRecognizer];
         [self initSwipeConceptsGestureRecognizer];
         [self initPanCalculatorGestureRecognizer];
@@ -235,12 +234,6 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 {
     _initialPositioning = YES;
     _lastContextIndexMenuPressed = -1;
-}
-
-- (void)initLaunchImage
-{
-    self.launchImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ipadlandscape_launchimage"]];
-    self.launchImage.backgroundColor = [UIColor clearColor];
 }
 
 - (void)initTapConceptsGestureRecognizer
@@ -419,7 +412,6 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 {
     [super viewWillAppear:animated];
     
-    [self vinculeLaunchImage];
     [self vinculeSelectorContextViewContent];
     [self vinculeContextMenuView];
     [self vinculeCalculatorViewControllerView];
@@ -434,11 +426,6 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     [self prepareViewForInitialAnimation];
 }
 
-- (void)vinculeLaunchImage
-{
-    [self.view insertSubview:self.launchImage atIndex:0];
-}
-
 - (void)vinculeConceptsCollectionView
 {
     self.conceptsCollectionView.delegate = self;
@@ -448,6 +435,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 - (void)prepareViewForInitialAnimation
 {
     self.containerViewForDynamicFX.alpha = 0.0;
+    self.calculatorViewController.view.alpha = 0.0;
     self.calculatorViewController.view.center = CGPointMake(self.calculatorViewController.view.center.x,
                                                             self.calculatorViewController.view.center.y + self.calculatorViewController.dragPanel.bounds.size.height);
     self.navigationController.navigationBar.alpha = 0;
@@ -534,30 +522,33 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
+    self.navigationController.navigationBar.alpha = 0;
+
     [self executeInitialAnimation];
 }
 
 - (void)executeInitialAnimation
 {
-    self.navigationController.navigationBar.center = CGPointMake(self.navigationController.navigationBar.center.x,
-                                                                 self.navigationController.navigationBar.center.y - self.navigationController.navigationBar.bounds.size.height / 2);
+    //self.navigationController.navigationBar.center = CGPointMake(self.navigationController.navigationBar.center.x,
+    //                                                             self.navigationController.navigationBar.center.y - self.navigationController.navigationBar.bounds.size.height / 2);
     self.navigationController.navigationBar.alpha = 0.0;
+    self.calculatorViewController.view.alpha = 1.0;
     
     [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-    [UIView animateWithDuration:kDurationInitializationAnimationFadeIn animations:^{
-        self.containerViewForDynamicFX.alpha = 1.0;
-        self.launchImage.alpha = 0.0;
+    [UIView animateWithDuration:kDurationInitializationAnimationNavigationFadeIn animations:^{
+        self.navigationController.navigationBar.alpha = 1.0;
+
     }];
-    [UIView animateWithDuration:kDurationInitializationAnimationTraslantion animations:^{
+    
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    [UIView animateWithDuration:kDurationInitializationAnimationContextAndModesFadeIn animations:^{
+        self.containerViewForDynamicFX.alpha = 1.0;
+    }];
+    [UIView animateWithDuration:kDurationInitializationAnimationTraslantionFadeIn animations:^{
         self.calculatorViewController.view.center = CGPointMake(self.calculatorViewController.view.center.x,
                                                                 self.calculatorViewController.view.center.y - self.calculatorViewController.dragPanel.bounds.size.height);
-        self.navigationController.navigationBar.center = CGPointMake(self.navigationController.navigationBar.center.x,
-                                                                     self.navigationController.navigationBar.center.y + self.navigationController.navigationBar.bounds.size.height / 2);
-        self.navigationController.navigationBar.alpha = 1.0;
-    } completion:^(BOOL finished) {
-        [self.launchImage removeFromSuperview];
-        self.launchImage = nil;
+        //self.navigationController.navigationBar.center = CGPointMake(self.navigationController.navigationBar.center.x,
+          //                                                           self.navigationController.navigationBar.center.y + self.navigationController.navigationBar.bounds.size.height / 2);
     }];
 }
 

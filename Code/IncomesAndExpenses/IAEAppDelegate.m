@@ -12,15 +12,16 @@
 #import "IAEYear.h"
 #import "IAEMonth.h"
 #import "IAECategoryStore.h"
-#import "IAEEasyIncomesAndExpensesViewController.h"
 #import "IAERootLauchingViewController.h"
 
 @implementation IAEAppDelegate
 
-static NSString * const mainStoryBoardName = @"Main";
-static NSString * const easyIncomesAndExpensesViewControllerID = @"EasyIncomesAndExpensesViewControllerID";
+#pragma mark - Constants 
 
 static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
+
+
+#pragma mark - didFinishLaunching
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -28,7 +29,7 @@ static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
     [self processProcessInfoEnvironment];
     [self createYearBookIfProceed];
     [self prepareDefaults];
-    [self createWindowAssignNavigationControlerAndMakeVisible];
+    [self createWindowRootLaunchingViewControllerAndMakeVisible];
     
     return YES;
 }
@@ -69,78 +70,12 @@ static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 }
 
-- (void)createWindowAssignNavigationControlerAndMakeVisible
+- (void)createWindowRootLaunchingViewControllerAndMakeVisible
 {
-    /*
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.backgroundColor = [UIColor whiteColor];
-    self.window.rootViewController = [self makeNavigationControllerWithRootController];
-    [self.window makeKeyAndVisible];
-     */
-    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = [[IAERootLauchingViewController alloc] init];
     [self.window makeKeyAndVisible];
-    
-}
-
-- (UINavigationController *)makeNavigationControllerWithRootController
-{
-    UIViewController *rootViewController = [self instantiateFromStoryBoardEasyIncomesViewController];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:rootViewController];
-    navigationController.navigationBar.tintColor = [UIColor colorWithWhite:kGlobalTintColorForWhiteComponent alpha:1.0];
-    
-    return navigationController;
-}
-
-- (UIViewController *)instantiateFromStoryBoardEasyIncomesViewController
-{
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:mainStoryBoardName bundle:[NSBundle mainBundle]];
-    UIViewController *viewController = [storyBoard instantiateViewControllerWithIdentifier:easyIncomesAndExpensesViewControllerID];
-    
-    return viewController;
-}
-
-- (void)createYearTest
-{
-    [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2013]];
-    //[[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2012]];
-    //[[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2011]];
-    [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2010]];
-    //[[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2009]];
-    //[[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2008]];
-    [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2007]];
-    [[IAEBook sharedBook] loadAll];
-    
-    for (IAEYear *yearIt in [IAEBook sharedBook].years) {
-        for (IAEMonth *monthIt in yearIt.months) {
-            for (int i = 0; i < 3; ++i) {
-                [monthIt addConceptWithAmount:[NSDecimalNumber decimalNumberWithString:@"1000"] category:[[IAECategoryStore sharedCategoryStore] generalExpenseCategory] date:[NSDate timeIntervalSinceReferenceDate] dayOfTheMonth:arc4random_uniform(10) andDescription:@"Test concept"];
-            }
-            for (int i = 0; i < 3; ++i) {
-                [monthIt addConceptWithAmount:[NSDecimalNumber decimalNumberWithString:@"100"] category:[[IAECategoryStore sharedCategoryStore] generalIncomeCategory] date:[NSDate timeIntervalSinceReferenceDate] andDescription:@"Test concept"];
-            }
-        }
-    }
-    
-    [[IAEBook sharedBook] saveAll];
-}
-
-- (void)createYearTest2
-{
-    [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2013]];
-    [[IAEBook sharedBook] loadAll];
-
-    for (IAEYear *yearIt in [IAEBook sharedBook].years) {
-        for (IAEMonth *monthIt in yearIt.months) {
-            for (int i = 1; i < 27; ++i) {
-                [monthIt addConceptWithAmount:[NSDecimalNumber decimalNumberWithString:@"100"] category:[[IAECategoryStore sharedCategoryStore] generalExpenseCategory] date:[NSDate timeIntervalSinceReferenceDate] dayOfTheMonth:i andDescription:@"Test concept"];
-            }
-        }
-    }
-    
-    [[IAEBook sharedBook] saveAll];
 }
 
 #pragma mark - Notifications
@@ -174,5 +109,43 @@ static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
     [[IAEBook sharedBook] saveAll];
 }
 
+#pragma mark - Test
+
+- (void)createYearTest
+{
+    [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2013]];
+    [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2010]];
+    [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2007]];
+    [[IAEBook sharedBook] loadAll];
+    
+    for (IAEYear *yearIt in [IAEBook sharedBook].years) {
+        for (IAEMonth *monthIt in yearIt.months) {
+            for (int i = 0; i < 3; ++i) {
+                [monthIt addConceptWithAmount:[NSDecimalNumber decimalNumberWithString:@"1000"] category:[[IAECategoryStore sharedCategoryStore] generalExpenseCategory] date:[NSDate timeIntervalSinceReferenceDate] dayOfTheMonth:arc4random_uniform(10) andDescription:@"Test concept"];
+            }
+            for (int i = 0; i < 3; ++i) {
+                [monthIt addConceptWithAmount:[NSDecimalNumber decimalNumberWithString:@"100"] category:[[IAECategoryStore sharedCategoryStore] generalIncomeCategory] date:[NSDate timeIntervalSinceReferenceDate] andDescription:@"Test concept"];
+            }
+        }
+    }
+    
+    [[IAEBook sharedBook] saveAll];
+}
+
+- (void)createYearTest2
+{
+    [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2013]];
+    [[IAEBook sharedBook] loadAll];
+    
+    for (IAEYear *yearIt in [IAEBook sharedBook].years) {
+        for (IAEMonth *monthIt in yearIt.months) {
+            for (int i = 1; i < 27; ++i) {
+                [monthIt addConceptWithAmount:[NSDecimalNumber decimalNumberWithString:@"100"] category:[[IAECategoryStore sharedCategoryStore] generalExpenseCategory] date:[NSDate timeIntervalSinceReferenceDate] dayOfTheMonth:i andDescription:@"Test concept"];
+            }
+        }
+    }
+    
+    [[IAEBook sharedBook] saveAll];
+}
 
 @end

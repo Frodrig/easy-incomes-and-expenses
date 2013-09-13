@@ -69,8 +69,8 @@ static const CGFloat kDurationOfAnimationOfInvalidAdjustActionFadeOut = 0.25;
 
 - (NSNumber *)convertSliderValueToDesiredValue
 {
-    const float stepperRadius = 1.0 / 3.0;
-    float retValue = self.slider.value;
+    const CGFloat stepperRadius = 1.0 / 3.0;
+    CGFloat retValue = self.slider.value;
     if (retValue < 1.0 + stepperRadius) {
         retValue = 0.01;
     } else if (retValue > 3.0 - stepperRadius) {

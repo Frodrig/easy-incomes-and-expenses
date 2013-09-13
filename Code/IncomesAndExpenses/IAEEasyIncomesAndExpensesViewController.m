@@ -1002,12 +1002,12 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 - (BOOL)categorySelectorViewControllerWasLaunchedFromCategoryButton
 {
     // Nota: Solo tendra sentido si realmente se ha lanzado
-    return self.popover == nil;
+    return self.popover == nil && [self.calculatorViewController isClosed];
 }
 
 - (BOOL)categorySelectorViewControllerWasLaunchedFromConcept
 {
-    return self.popover != nil && [self.calculatorViewController isClosed];
+    return self.popover != nil;
 }
 
 - (IAEContextView *)findActualSelectedContext
@@ -1800,6 +1800,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     } else if ([self categorySelectorViewControllerWasLaunchedFromConcept]) {
         [self dismissPopoverAndChangeCategoryOfConceptAtIndexPath:categorySelectorViewController.conceptCellIndexPath toCategory:category];
     } else {
+        
         NSAssert(0, @"Nunca se deberia de llegar a este punto");
     }
 }

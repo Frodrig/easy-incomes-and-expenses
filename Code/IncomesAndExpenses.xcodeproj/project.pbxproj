@@ -1662,7 +1662,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "Easy Inc & Exp";
@@ -1694,7 +1694,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "Easy Inc & Exp";
 				PROVISIONING_PROFILE = "AEEA4E29-14E2-440B-B69B-E4BA3BA604F1";

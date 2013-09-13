@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Fernando Rodríguez Martínez. All rights reserved.
 //
 
+#import <Crashlytics/Crashlytics.h>
 #import "IAEEasyIncomesAndExpensesViewController.h"
 #import "IAEEasyIncomesAndExpensesViewControllerDelegate.h"
 #import "IAECurrencyManager.h"
@@ -1931,7 +1932,10 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     IAECategory *newCategory = [[IAECategoryStore sharedCategoryStore] createCategoryOfType:categoryType
                                                                                      andTag:categoryTag
                                                                        withValidityTagCheck:NO];
-    NSAssert(newCategory, @"");
+    if (!newCategory) {
+        CLSLog(@"No se creo la categoría con tag %@", categoryTag);
+        NSAssert(newCategory, @"");
+    }
     [[IAEBook sharedBook] saveAll];
     
     [self returnFromCategoryEditorViewController:categoryEditorViewController];

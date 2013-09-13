@@ -1517,7 +1517,9 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (BOOL)canSwipeOnConceptsCollectionView
 {
-    BOOL can = [self isActualSelectedContextAMonth] && ![self.calculatorViewController isAnyTranslationActive];
+    const BOOL can = [self isActualSelectedContextAMonth] &&
+                     ![self.calculatorViewController isAnyTranslationActive] &&
+                     !self.conceptCellToRemove;
     
     return can;
 }

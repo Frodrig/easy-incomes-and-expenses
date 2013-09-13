@@ -50,9 +50,9 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *navigationBarTitleLabel;
 @property (weak, nonatomic) IBOutlet UIView *containerViewForDynamicFX;
-@property (weak, nonatomic) UIBarButtonItem *yearsButton;
-@property (weak, nonatomic) UIBarButtonItem *categoriesButton;
-@property (weak, nonatomic) UIBarButtonItem *settingsButton;
+@property (strong, nonatomic) UIBarButtonItem *yearsButton;
+@property (strong, nonatomic) UIBarButtonItem *categoriesButton;
+@property (strong, nonatomic) UIBarButtonItem *settingsButton;
 @property (weak, nonatomic) IBOutlet IAESelectorContextView *selectorContextView;
 @property (weak, nonatomic) IBOutlet UIView *editAndReportModeContentContainerView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *modeSegmentedControl;

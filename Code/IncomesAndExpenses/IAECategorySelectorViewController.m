@@ -405,16 +405,34 @@ static const NSInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
 
 - (void)configureTableViewCell:(IAECategoryTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath withCategory:(IAECategory *)category
 {
+    [self configureCategoryLabelOfTableViewCell:cell atIndexPath:indexPath withCategory:category];
+    [self configureNumberOfConceptsLabelOfTableViewCell:cell atIndexPath:indexPath withCategory:category];
+    [self configureOpenDecoratorViewOfTableViewCell:cell atIndexPath:indexPath withCategory:category];
+}
+
+- (void)configureCategoryLabelOfTableViewCell:(IAECategoryTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath withCategory:(IAECategory *)category
+{
     NSDictionary *attributes = [self createAttributeDictionaryForCategoryNameAttributeTextWithCategory:category];
     cell.categoryLabel.attributedText = [[NSAttributedString alloc] initWithString:[category localizedTag]
                                                                         attributes:attributes];
+}
+
+- (void)configureNumberOfConceptsLabelOfTableViewCell:(IAECategoryTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath withCategory:(IAECategory *)category
+{
     if (self.showNumberOfConcepts) {
         NSUInteger numberOfConceptsOfCategory = [[IAEBook sharedBook] findAllConceptsWithCategory:category].count;
         cell.numberOfConceptsLabel.text = [IAELocalizerPhraseComposer stringPhraseWithNumberOfConcepts:numberOfConceptsOfCategory];
     }
-    
-    const BOOL selectedCategory = self.selectedCategoryIndexPath ? [self.selectedCategoryIndexPath compare:indexPath] == NSOrderedSame && category.categoryType == self.selectedCategoryType : NO;
-    cell.openDecoratorView.hidden = !selectedCategory;
+}
+
+- (void)configureOpenDecoratorViewOfTableViewCell:(IAECategoryTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath withCategory:(IAECategory *)category
+{
+    const BOOL checkForDecoratorView = ![self isCategorySelectionWithoutDecoratorFlagEnabled] && self.selectedCategoryIndexPath;
+    BOOL selectCategory = checkForDecoratorView;
+    if (checkForDecoratorView) {
+        selectCategory = [self.selectedCategoryIndexPath compare:indexPath] == NSOrderedSame && category.categoryType == self.selectedCategoryType;
+    }
+    cell.openDecoratorView.hidden = !selectCategory;
 }
 
 - (NSDictionary *)createAttributeDictionaryForCategoryNameAttributeTextWithCategory:(IAECategory *)category

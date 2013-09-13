@@ -176,7 +176,6 @@ static const NSInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
                          ofCategoryType:self.initialCategory.categoryType
                           withAnimation:NO
                 andLogicBlockWhenFinish:nil];
-        self.initialCategory = nil;
     } else {
         [self changeToSectionOfCategoryType:IncomeCategory];
     }
@@ -301,11 +300,33 @@ static const NSInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
                 
         };
         
-        [self makeOpenDecoratorViewAtIndexPath:self.selectedCategoryIndexPath
-                                       visible:NO
-                                 withAnimation:animation
-                                 andLogicBlock:animationCoordinationBlock];
+        if ([self isInitialCategorySelectedSameAsActualCategoryTypeSelected]) {
+            [self makeOpenDecoratorViewAtIndexPath:self.selectedCategoryIndexPath
+                                           visible:NO
+                                     withAnimation:animation
+                                     andLogicBlock:animationCoordinationBlock];
+        } else {
+            animationCoordinationBlock();
+        }
     }
+}
+
+- (BOOL)isInitialCategorySelectedSameAsActualCategoryTypeSelected
+{
+    CategoryType categoryTypeOfCategorySegmentedControl = [self categoryTypeOfCategorySegmentedControlSelectedIndex];
+    const BOOL isSame = categoryTypeOfCategorySegmentedControl == self.initialCategory.categoryType;
+    
+    return isSame;
+}
+
+- (CategoryType)categoryTypeOfCategorySegmentedControlSelectedIndex
+{
+    CategoryType categoryType = IncomeCategory;
+    if (self.categorySegmentedControl.selectedSegmentIndex == kExpenseSegmentedIndex) {
+        categoryType = ExpenseCategory;
+    }
+    
+    return categoryType;
 }
 
 - (void)makeOpenDecoratorViewAtIndexPath:(NSIndexPath *)indexPath

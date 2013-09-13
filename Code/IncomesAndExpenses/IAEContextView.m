@@ -25,7 +25,7 @@
 static const NSUInteger kTagViewContentName = 10;
 static const NSUInteger kTagViewBalance = 20;
 
-static const CGFloat kTimeAnimationBalanceUpdate = 1.55;
+static const CGFloat kTimeAnimationBalanceUpdate = 0.75;
 
 static NSString * const kXibContentViewContentName = @"IAEContextViewContent";
 

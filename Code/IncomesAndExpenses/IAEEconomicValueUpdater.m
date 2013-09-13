@@ -167,20 +167,20 @@ static const CGFloat kRationOfDurationByUpdateProcessEconomicLabel = 0.1;
     NSNumber *duration = [pendingLabelData objectForKey:@"duration"];
     NSNumber *startTime = [pendingLabelData objectForKey:@"startTime"];
 
-    float dt = (link.timestamp - startTime.floatValue) / duration.doubleValue;
+    CGFloat dt = (link.timestamp - startTime.floatValue) / duration.doubleValue;
     
     NSDecimalNumber *updatedValue = nil;
     if (dt >= 1) {
         updatedValue = to;
     } else {
-        NSString *deltaTimeNumberAsString = [[NSNumber numberWithFloat:dt] stringValue];
+        NSDecimalNumber *decimalNumberWithDeltaTime = [[NSDecimalNumber alloc] initWithFloat:dt];
         if ([to compare:from] == NSOrderedDescending) {
             updatedValue = [to decimalNumberBySubtracting:from];
-            updatedValue = [updatedValue decimalNumberByMultiplyingBy:[NSDecimalNumber decimalNumberWithString:deltaTimeNumberAsString]];
+            updatedValue = [updatedValue decimalNumberByMultiplyingBy:decimalNumberWithDeltaTime];
             updatedValue = [updatedValue decimalNumberByAdding:from];
         } else {
             updatedValue = [from decimalNumberBySubtracting:to];
-            updatedValue = [updatedValue decimalNumberByMultiplyingBy:[NSDecimalNumber decimalNumberWithString:deltaTimeNumberAsString]];
+            updatedValue = [updatedValue decimalNumberByMultiplyingBy:decimalNumberWithDeltaTime];
             updatedValue = [from decimalNumberBySubtracting:updatedValue];
         }
     }

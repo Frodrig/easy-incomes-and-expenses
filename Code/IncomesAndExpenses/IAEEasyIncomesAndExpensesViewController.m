@@ -95,6 +95,8 @@
 
 static const NSUInteger kNumberOfMonths = 12;
 
+static const CGFloat kSelectorContextViewYOutsideMargin = 100;
+
 static const CGFloat kDurationInitializationAnimationNavigationFadeIn = 1.5;
 static const CGFloat kDurationInitializationAnimationContextAndModesFadeIn = 2;
 static const CGFloat kDurationInitializationAnimationTraslantionFadeIn = 2.25;
@@ -151,7 +153,7 @@ static const CGFloat kDurationOfFrameUpdateWhenShowOrHideCalculator = 0.25;
 static const NSInteger kInvalidOptionIndex = -1;
 
 static const CGFloat kFrecuencyForContainerFXAttachBehavior = 0.7;
-static const CGFloat kDampingForContainerFXAttachBehavior = 0.35;
+static const CGFloat kDampingForContainerFXAttachBehavior = 0.4;
 
 static const CGFloat kDurationModeFadeOut = 0.35;
 static const CGFloat kDurationModeFadeIn = 0.75;
@@ -1102,7 +1104,10 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
                                             contextType:(IAEContextViewType)contextType
                                           andValueIndex:(NSUInteger)contextValueIndex
 {
-    CGRect frame = CGRectMake(0, 0, self.selectorContextView.bounds.size.width, self.selectorContextView.bounds.size.height);
+    CGRect frame = CGRectMake(0,
+                              kSelectorContextViewYOutsideMargin,
+                              self.selectorContextView.bounds.size.width,
+                              self.selectorContextView.bounds.size.height - kSelectorContextViewYOutsideMargin);
     IAEContextView *contextView = [[IAEContextView alloc] initWithFrame:frame type:contextType andValueIndex:contextValueIndex];
     contextView.dataSource = self;
     [contextView reloadDataWithoutAnimation];

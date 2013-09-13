@@ -19,7 +19,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                 <subviews>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" id="Dio-MI-59n" customClass="IAESelectorContextView">
-                                        <rect key="frame" x="0.0" y="20" width="1024" height="166"/>
+                                        <rect key="frame" x="0.0" y="-80" width="1024" height="266"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <color key="backgroundColor" red="0.97254908080000002" green="0.97254908080000002" blue="0.97254908080000002" alpha="1" colorSpace="deviceRGB"/>
                                     </view>

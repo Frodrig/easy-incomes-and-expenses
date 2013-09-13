@@ -272,6 +272,7 @@
 		5BA51A7B1796D81E00A3D923 /* IAEInfoAboutAndOptionsCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEInfoAboutAndOptionsCollectionViewCell.m; sourceTree = "<group>"; };
 		5BA51A7D1796DA2000A3D923 /* IAEInfoAboutAndOptionsCollectionViewCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEInfoAboutAndOptionsCollectionViewCellDelegate.h; sourceTree = "<group>"; };
 		5BAA5E46170988AC00B6B3F8 /* IncomesAndExpenses copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "IncomesAndExpenses copy-Info.plist"; path = "/Users/fernandorodriguezmartinez/Trabajo/Freelance/Git/Easy Incomes and Expenses/Code/IncomesAndExpenses copy-Info.plist"; sourceTree = "<absolute>"; };
+		5BB0222217E2F7BD00CF75B8 /* IAEEasyIncomesAndExpensesViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEasyIncomesAndExpensesViewControllerDelegate.h; sourceTree = "<group>"; };
 		5BB2048B17D47E7100563B7C /* IAEDisplayPanelCalculatorViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEDisplayPanelCalculatorViewDataSource.h; sourceTree = "<group>"; };
 		5BB2048D17D4C92700563B7C /* IAEReportAreaViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEReportAreaViewDelegate.h; sourceTree = "<group>"; };
 		5BC110FE17CD1DF500FF6D6B /* 730-envelope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "730-envelope.png"; sourceTree = "<group>"; };
@@ -1116,6 +1117,7 @@
 			isa = PBXGroup;
 			children = (
 				5BCE3AA417A95B7600CD01E7 /* IAEEasyIncomesAndExpensesViewControllerQuery.h */,
+				5BB0222217E2F7BD00CF75B8 /* IAEEasyIncomesAndExpensesViewControllerDelegate.h */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";

@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IAEEasyIncomesAndExpensesViewControllerDelegate.h"
 
-@interface IAERootLauchingViewController : UIViewController
+@interface IAERootLauchingViewController : UIViewController<IAEEasyIncomesAndExpensesViewControllerDelegate>
 
 @end

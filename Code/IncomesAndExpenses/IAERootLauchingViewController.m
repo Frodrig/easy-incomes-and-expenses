@@ -43,15 +43,17 @@ static NSString * const kEasyIncomesAndExpensesViewControllerID = @"EasyIncomesA
 
 - (void)initNavigationControllerWithRootController
 {
-    UIViewController *rootViewController = [self instantiateFromStoryBoardEasyIncomesViewController];
+    IAEEasyIncomesAndExpensesViewController *rootViewController = [self instantiateFromStoryBoardEasyIncomesViewController];
+    rootViewController.delegate = self;
+    
     _mainViewController = [[UINavigationController alloc] initWithRootViewController:rootViewController];
     _mainViewController.navigationBar.tintColor = [UIColor colorWithWhite:kGlobalTintColorForWhiteComponent alpha:1.0];
 }
 
-- (UIViewController *)instantiateFromStoryBoardEasyIncomesViewController
+- (IAEEasyIncomesAndExpensesViewController *)instantiateFromStoryBoardEasyIncomesViewController
 {
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:kMainStoryBoardName bundle:[NSBundle mainBundle]];
-    UIViewController *viewController = [storyBoard instantiateViewControllerWithIdentifier:kEasyIncomesAndExpensesViewControllerID];
+    IAEEasyIncomesAndExpensesViewController *viewController = [storyBoard instantiateViewControllerWithIdentifier:kEasyIncomesAndExpensesViewControllerID];
     
     return viewController;
 }
@@ -74,13 +76,11 @@ static NSString * const kEasyIncomesAndExpensesViewControllerID = @"EasyIncomesA
     [self.view insertSubview:self.mainViewController.view aboveSubview:self.launchImage];
 }
 
-#pragma mark - viewDidAppear
+#pragma mark - IAEEasyIncomesAndExpensesViewControllerDelegate
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)lauchCompleteInEasyIncomesAndExpensesViewController:(IAEEasyIncomesAndExpensesViewController *)easyIncomesAndExpensesViewController
 {
-    [super viewDidAppear:animated];
-    
-    [self.launchImage performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:10];
+    [self.launchImage removeFromSuperview];
 }
 
 @end

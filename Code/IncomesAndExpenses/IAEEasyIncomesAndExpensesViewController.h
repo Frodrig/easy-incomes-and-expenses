@@ -21,6 +21,8 @@
 #import "IAEReportAreaViewDelegate.h"
 #import "IAEAdjustConceptAmountViewControllerDataSource.h"
 
+@protocol IAEEasyIncomesAndExpensesViewControllerDelegate;
+
 @interface IAEEasyIncomesAndExpensesViewController : UIViewController<UIPopoverControllerDelegate,
                                                                       IAESelectorContextViewDelegate,
                                                                       UICollectionViewDelegate,
@@ -36,6 +38,8 @@
                                                                       IAEReportAreaViewDelegate,
                                                                       IAEAdjustConceptAmountViewControllerDataSource,
                                                                       IAEEasyIncomesAndExpensesViewControllerQuery>
+
+@property (nonatomic, weak) id<IAEEasyIncomesAndExpensesViewControllerDelegate> delegate;
 
 - (void)categoriesButtonPressed:(id)sender;
 - (void)yearsButtonPressed:(id)sender;

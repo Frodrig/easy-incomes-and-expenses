@@ -7,6 +7,7 @@
 //
 
 #import "IAEEasyIncomesAndExpensesViewController.h"
+#import "IAEEasyIncomesAndExpensesViewControllerDelegate.h"
 #import "IAECurrencyManager.h"
 #import "IAEBook.h"
 #import "IAEYear.h"
@@ -149,8 +150,8 @@ static const CGFloat kDurationOfFrameUpdateWhenShowOrHideCalculator = 0.25;
 
 static const NSInteger kInvalidOptionIndex = -1;
 
-static const CGFloat kFrecuencyForContainerFXAttachBehavior = 1.5;
-static const CGFloat kDampingForContainerFXAttachBehavior = 2;
+static const CGFloat kFrecuencyForContainerFXAttachBehavior = 0.7;
+static const CGFloat kDampingForContainerFXAttachBehavior = 0.35;
 
 static const CGFloat kDurationModeFadeOut = 0.35;
 static const CGFloat kDurationModeFadeIn = 0.75;
@@ -531,8 +532,6 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (void)executeInitialAnimation
 {
-    //self.navigationController.navigationBar.center = CGPointMake(self.navigationController.navigationBar.center.x,
-    //                                                             self.navigationController.navigationBar.center.y - self.navigationController.navigationBar.bounds.size.height / 2);
     self.navigationController.navigationBar.alpha = 0.0;
     self.calculatorViewController.view.alpha = 1.0;
     
@@ -546,11 +545,13 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     [UIView animateWithDuration:kDurationInitializationAnimationContextAndModesFadeIn animations:^{
         self.containerViewForDynamicFX.alpha = 1.0;
     }];
+
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
     [UIView animateWithDuration:kDurationInitializationAnimationTraslantionFadeIn animations:^{
         self.calculatorViewController.view.center = CGPointMake(self.calculatorViewController.view.center.x,
                                                                 self.calculatorViewController.view.center.y - self.calculatorViewController.dragPanel.bounds.size.height);
-        //self.navigationController.navigationBar.center = CGPointMake(self.navigationController.navigationBar.center.x,
-          //                                                           self.navigationController.navigationBar.center.y + self.navigationController.navigationBar.bounds.size.height / 2);
+    } completion:^(BOOL finished) {
+        [self.delegate lauchCompleteInEasyIncomesAndExpensesViewController:self];
     }];
 }
 

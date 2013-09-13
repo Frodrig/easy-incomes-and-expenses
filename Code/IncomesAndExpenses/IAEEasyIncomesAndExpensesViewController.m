@@ -155,6 +155,8 @@ static const CGFloat kDampingForContainerFXAttachBehavior = 2;
 static const CGFloat kDurationModeFadeOut = 0.35;
 static const CGFloat kDurationModeFadeIn = 0.75;
 
+static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
+
 #pragma mark - Properties
 
 - (IAEStrokeAnimatableLineView *)strokeAnimatableLineView
@@ -1623,7 +1625,7 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     viewController.dataSource = self;
     viewController.conceptCellIndexPath = [self.conceptsCollectionView indexPathForCell:cell];
 
-    [self createAndPresentPopoverForConceptCellView:[cell findAmountLabel] withViewController:viewController];
+    [self createAndPresentPopoverForAdjustConceptCellView:[cell findAmountLabel] withViewController:viewController];
 }
 
 - (void)openPopoverForEditCategoryOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
@@ -1641,22 +1643,50 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     [self createAndPresentPopoverForConceptCellView:[cell findCategoryLabel] withViewController:viewController];
 }
 
+- (void)createAndPresentPopoverForAdjustConceptCellView:(UILabel *)amountLabel withViewController:(UIViewController *)viewController
+{
+    CGFloat xMargin = kMarginBaseForConceptCellPopover;
+    CGSize textSize = [[amountLabel text] sizeWithAttributes:[amountLabel.attributedText attributesAtIndex:0 effectiveRange:NULL]];
+    if (textSize.width > amountLabel.bounds.size.width) {
+        textSize = CGSizeMake(amountLabel.bounds.size.width, textSize.height);
+    }
+    xMargin += textSize.width;
+    
+    CGRect translateViewFrameToGlobalCoordination = [amountLabel.superview convertRect:amountLabel.frame toView:amountLabel.superview];
+    CGRect presentPopoverFrame = CGRectMake(translateViewFrameToGlobalCoordination.origin.x - xMargin + translateViewFrameToGlobalCoordination.size.width,
+                                            translateViewFrameToGlobalCoordination.origin.y + kMarginBaseForConceptCellPopover,
+                                            translateViewFrameToGlobalCoordination.size.width,
+                                            translateViewFrameToGlobalCoordination.size.height - kMarginBaseForConceptCellPopover);
+    
+    [self presentPopoverForConceptCellView:amountLabel withViewController:viewController usingFrame:presentPopoverFrame andArrowDirection:UIPopoverArrowDirectionRight];
+}
+
 - (void)createAndPresentPopoverForConceptCellView:(UIView *)view withViewController:(UIViewController *)viewController
 {
     CGRect translateViewFrameToGlobalCoordination = [view.superview convertRect:view.frame toView:view.superview];
     CGRect presentPopoverFrame = CGRectMake(translateViewFrameToGlobalCoordination.origin.x,
-                                            translateViewFrameToGlobalCoordination.origin.y + 10.0,
+                                            translateViewFrameToGlobalCoordination.origin.y + kMarginBaseForConceptCellPopover,
                                             translateViewFrameToGlobalCoordination.size.width,
-                                            translateViewFrameToGlobalCoordination.size.height - 10.0);
-    UIPopoverArrowDirection arrowDirection = [self.calculatorViewController isInVisibleMode] ? UIPopoverArrowDirectionUp: UIPopoverArrowDirectionDown;
+                                            translateViewFrameToGlobalCoordination.size.height - kMarginBaseForConceptCellPopover);
     
+    UIPopoverArrowDirection arrowDirection = [self.calculatorViewController isInVisibleMode] ? UIPopoverArrowDirectionUp : UIPopoverArrowDirectionDown;
+    
+    [self presentPopoverForConceptCellView:view withViewController:viewController usingFrame:presentPopoverFrame andArrowDirection:arrowDirection];
+}
+
+- (void)presentPopoverForConceptCellView:(UIView *)view
+                      withViewController:(UIViewController *)viewController
+                              usingFrame:(CGRect)frame
+                       andArrowDirection:(UIPopoverArrowDirection)arrowDirection
+{
     self.popover = [[UIPopoverController alloc] initWithContentViewController:viewController];
     self.popover.delegate = self;
     self.popover.popoverContentSize = viewController.view.bounds.size;
-    [self.popover presentPopoverFromRect:presentPopoverFrame
+    [self.popover presentPopoverFromRect:frame
                                   inView:view.superview
                 permittedArrowDirections:arrowDirection
                                 animated:YES];
+    
 }
 
 - (void)openPopoverForSelectDayOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell

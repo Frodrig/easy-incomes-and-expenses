@@ -770,7 +770,10 @@ static const CGFloat kDurationModeFadeIn = 0.75;
     NSSet *allCategories = [NSSet setWithArray:incomeCategories];
     allCategories = [allCategories setByAddingObjectsFromArray:expenseCategories];
     
-    return [allCategories sortedArrayUsingDescriptors:[NSSortDescriptor sortDescriptorWithKey:@"categoryType" ascending:YES]];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"categoryType" ascending:YES];
+    NSArray *allSortedCategories = [allCategories sortedArrayUsingDescriptors:@[sortDescriptor]];
+    
+    return allSortedCategories;
 }
 
 - (NSDecimalNumber *)findIncomesOfActualSelectedContextView
@@ -1839,13 +1842,39 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 - (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
                didSelectRemoveCategory:(IAECategory *)category
 {
+    const BOOL actualContextHaveCategoriesOfThisType = [self actualContextHaveConceptsOfCategory:category];
     NSString *tagOfCategory = [category.tag copy];
+    const CategoryType categoryType = category.categoryType;
     [[IAECategoryStore sharedCategoryStore] removeCategoryByTag:tagOfCategory];
     [[IAEBook sharedBook] saveAll];
+
+    if (actualContextHaveCategoriesOfThisType) {
+        [self reloadActiveModeAfterRemoveCategoryWithTag:tagOfCategory andType:categoryType];
+    }
     
-    [self reloadContentOfConceptsCollectionView];
     NSAssert([self categorySelectorViewControllerWasLaunchedFromCategoryButton], @"");
     [categorySelectorViewController reloadAfterRemoveCellWithCategoryTag:tagOfCategory];
+}
+
+- (BOOL)actualContextHaveConceptsOfCategory:(IAECategory *)category
+{
+    NSArray *categoriesOfActualContextView = [self findAllCategoriesForActualSelectedContext];
+    const BOOL haveConcepts = [categoriesOfActualContextView indexOfObject:category] != NSNotFound;
+    
+    return haveConcepts;
+}
+
+- (void)reloadActiveModeAfterRemoveCategoryWithTag:(NSString *)tagOfCategory andType:(CategoryType)type
+{
+    if ([self isEditModeActive]) {
+        [self reloadContentOfConceptsCollectionView];
+    } else if ([self isReportModeActive]) {
+        const BOOL reload = (self.reportMenuView.currentOptionIndexSelected == kReportMenuIndexOfExpensesOption && type == ExpenseCategory) ||
+                            (self.reportMenuView.currentOptionIndexSelected == kReportMenuIndexOfIncomesOption && type == IncomeCategory);
+        if (reload) {
+            [self reloadContentOfConceptsReportViewWithAnimation:YES];
+        }
+    }
 }
 
 #pragma mark - IAECategoryEditorViewControllerDelegate

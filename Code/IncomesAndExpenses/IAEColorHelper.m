@@ -18,19 +18,31 @@
 + (UIColor *)colorForEconomicValueType:(EconomicValueType)economicValueType withAlpha:(CGFloat)alpha
 {
     UIColor *retColor = nil;
-    
+    static UIColor *incomeColor = nil;
+    static UIColor *expenseColor = nil;
+    static UIColor *neutralColor = nil;
+
     switch (economicValueType) {
         case ECONOMIC_INCOME_VALUE:
-            return [UIColor colorWithRed:120.0/255.0 green:191.0/255.0 blue:175.0/255.0 alpha:alpha];
+            if (!incomeColor) {
+                incomeColor = [UIColor colorWithRed:120.0/255.0 green:191.0/255.0 blue:175.0/255.0 alpha:alpha];
+            }
+            retColor = incomeColor;
             break;
             
         case ECONOMIC_EXPENSE_VALUE:
-            return [UIColor colorWithRed:255.0/255.0 green:154.0/255.0 blue:85.0/255.0 alpha:alpha];
+            if (!expenseColor) {
+                expenseColor = [UIColor colorWithRed:255.0/255.0 green:154.0/255.0 blue:85.0/255.0 alpha:alpha];
+            }
+            retColor = expenseColor;
             break;
             
         default:
             NSAssert(economicValueType == ECONOMIC_ZERO_VALUE, @"");
-            return [UIColor colorWithWhite:0.55 alpha:alpha];
+            if (!neutralColor) {
+                neutralColor = [UIColor colorWithWhite:0.55 alpha:alpha];
+            };
+            retColor = neutralColor;
             break;
     }
     

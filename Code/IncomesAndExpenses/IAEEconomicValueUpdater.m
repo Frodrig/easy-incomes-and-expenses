@@ -191,7 +191,7 @@ static const CGFloat kRationOfDurationByUpdateProcessEconomicLabel = 0.1;
 - (void)updatePendingLabelEntry:(NSDictionary *)pendingLabelEntry withValue:(NSDecimalNumber *)value
 {
     UILabel *label = [pendingLabelEntry objectForKey:@"label"];
-    NSString *updatedString = [NSString stringWithFormat:@"%@", [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:value]];
+    NSString *updatedString = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:value];
     UIColor *updatedColor = [IAEColorHelper colorForEconomicValueType:[IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:value]];
     label.text = updatedString;
     label.textColor = updatedColor;

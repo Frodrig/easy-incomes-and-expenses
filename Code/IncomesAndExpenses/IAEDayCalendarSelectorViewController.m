@@ -107,12 +107,13 @@ static const CGFloat kWhiteAlphaComponentForCircle = 1.0;
 
 - (void)configureDaysOfTheMonthContainerView
 {
+    const NSUInteger firstDayOfTheWeek = [self firstDayOfTheWeekNormalized];
+    const NSUInteger firstDayOfTheWeekIndex = firstDayOfTheWeek - 1;
+    const NSUInteger maxDaysInMonth = [IAEDateHelper findNumberOfDaysFromYearDate:self.yearDate andMonthIndex:self.monthIndex];
     const NSUInteger numberOfColumns = 7;
-    const NSUInteger numberOfRows = 5;
+    const NSUInteger numberOfRows = ceil(((maxDaysInMonth / 7.0) + (firstDayOfTheWeekIndex / 7.0)));
     const NSUInteger dayOfTheMonthWidthSize = self.daysOfTheMonthContainerView.bounds.size.width / numberOfColumns;
     const NSUInteger dayOfTheMonthHeightSize = self.daysOfTheMonthContainerView.bounds.size.height / numberOfRows;
-    const NSUInteger firstDayOfTheWeekIndex = [IAEDateHelper findFirstDayWeekFromYearDate:self.yearDate andMonthIndex:self.monthIndex] - 1;
-    const NSUInteger maxDaysInMonth = [IAEDateHelper findNumberOfDaysFromYearDate:self.yearDate andMonthIndex:self.monthIndex];
     
     NSUInteger dayIt = 1;
     for (NSUInteger rowIt = 0; rowIt < numberOfRows; rowIt++) {
@@ -139,6 +140,24 @@ static const CGFloat kWhiteAlphaComponentForCircle = 1.0;
             }
         }
     }
+}
+
+- (NSUInteger)firstDayOfTheWeekNormalized
+{
+    // El calendario siempre comienza en lunes visualmente
+    // Si esetamos en un formato regional que comienza en domingo (el primer dia de la semana es 1, domingo, en lugar de 2, lunes) deberemos de
+    // normalizar a lunes.
+    NSUInteger firstDayOfTheWeek = [IAEDateHelper findFirstDayWeekFromYearDate:self.yearDate andMonthIndex:self.monthIndex];
+    const NSUInteger firstWeekDayOfCurrentRegionalCalendar = [[IAEDateHelper findCurrentCalendar] firstWeekday];
+    if (firstWeekDayOfCurrentRegionalCalendar != 2) {
+        if (firstDayOfTheWeek == 1) {
+            firstDayOfTheWeek = 7;
+        } else {
+            firstDayOfTheWeek -= 1;
+        }
+    }
+
+    return firstDayOfTheWeek;
 }
 
 - (void)configureDaySelectedDecoratorView

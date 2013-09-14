@@ -141,7 +141,7 @@ static const CGFloat kColorWhiteAlphaComponentForStrokeAnimationForConcepts = 1.
 static const NSInteger kTypeStrokeAnimationForConcepts = STROKEANIMATABLE_TYPE_THIN;
 static const CGFloat kDelayToExecuteRemoveConceptCell = 0.2;
 
-static const CGFloat KDurationOfAnimationUpdateForEntryInstantIndex = 0.15;
+static const CGFloat KDurationOfAnimationUpdateForEntryInstantIndex = 0.5;
 
 static const CGFloat kDurationOfEditConceptCollectionViewTransition = 0.5;
 
@@ -1446,13 +1446,12 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (void)updateIdentifierWithEntryInstanIndexForVisibleConceptViewCellsBeforeIndexPath:(NSIndexPath *)indexPathLimit
 {
-    NSInteger cellUpdateCounter = 0;
     NSUInteger numberOfItems = [self findNumberOfConceptsOfActualSelectedContextUsingSectionForYearContext:indexPathLimit.section];
     for (IAEEditModeConceptCollectionViewCell *cellVisible in self.conceptsCollectionView.visibleCells) {
         NSIndexPath *indexPathOfVisibleCell = [self.conceptsCollectionView indexPathForCell:cellVisible];
         if (indexPathOfVisibleCell.row < indexPathLimit.row) {
             NSUInteger instantEntryIndex =  numberOfItems - indexPathOfVisibleCell.row;
-            CGFloat animationDuration = KDurationOfAnimationUpdateForEntryInstantIndex + 0.25 * cellUpdateCounter++;
+            CGFloat animationDuration = KDurationOfAnimationUpdateForEntryInstantIndex;
             [cellVisible setIdentifierWithEntryInstantIndex:instantEntryIndex withAnimationDuration:animationDuration];
         }
     }

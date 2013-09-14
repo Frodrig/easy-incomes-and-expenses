@@ -29,7 +29,7 @@ static const NSUInteger kTagKeyboardContainerView = 300;
 static const CGFloat kRadiusOfKeyboardContainerView = 5;
 static const CGFloat kRadiusForButtons = 15;
 
-static const CGFloat kWhiteColorComponentForExternalGratePanel = 0.8;
+static const CGFloat kWhiteColorComponentForExternalGratePanel = 0.9;
 static const CGFloat kWhiteColorAlphaComponentForExternalGratePanel = 1.0;
     
 static NSString * const kLTextAddButtonTitle = @"LTEXT_CALCULATOR_BUTTON_ADD";

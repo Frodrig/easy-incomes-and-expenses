@@ -2028,6 +2028,8 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
         [self reloadAllWithAnimation:YES];
         self.reloadAllPendingFromYearSelectorIfReturnWithSameYearDate = NO;
     }
+    
+    self.yearSelectorViewController = nil;
 }
 
 - (void)yearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController didCleanOpenYearDate:(NSUInteger)yearDate

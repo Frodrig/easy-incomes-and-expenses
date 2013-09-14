@@ -120,32 +120,36 @@ static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
     
     for (IAEYear *yearIt in [IAEBook sharedBook].years) {
         for (IAEMonth *monthIt in yearIt.months) {
-            for (int i = 0; i < 3; ++i) {
+            for (int i = 0; i < 50; ++i) {
                 [monthIt addConceptWithAmount:[NSDecimalNumber decimalNumberWithString:@"1000"] category:[[IAECategoryStore sharedCategoryStore] generalExpenseCategory] date:[NSDate timeIntervalSinceReferenceDate] dayOfTheMonth:arc4random_uniform(10) andDescription:@"Test concept"];
             }
-            for (int i = 0; i < 3; ++i) {
+            for (int i = 0; i < 50; ++i) {
                 [monthIt addConceptWithAmount:[NSDecimalNumber decimalNumberWithString:@"100"] category:[[IAECategoryStore sharedCategoryStore] generalIncomeCategory] date:[NSDate timeIntervalSinceReferenceDate] andDescription:@"Test concept"];
             }
         }
     }
     
     [[IAEBook sharedBook] saveAll];
+    [[IAEBook sharedBook] unloadAll];
 }
 
 - (void)createYearTest2
 {
     [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2013]];
+    [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2010]];
+    [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2007]];
     [[IAEBook sharedBook] loadAll];
     
     for (IAEYear *yearIt in [IAEBook sharedBook].years) {
         for (IAEMonth *monthIt in yearIt.months) {
-            for (int i = 1; i < 27; ++i) {
+            for (int i = 1; i < 100; ++i) {
                 [monthIt addConceptWithAmount:[NSDecimalNumber decimalNumberWithString:@"100"] category:[[IAECategoryStore sharedCategoryStore] generalExpenseCategory] date:[NSDate timeIntervalSinceReferenceDate] dayOfTheMonth:i andDescription:@"Test concept"];
             }
         }
     }
     
     [[IAEBook sharedBook] saveAll];
+    [[IAEBook sharedBook] unloadAll];
 }
 
 @end

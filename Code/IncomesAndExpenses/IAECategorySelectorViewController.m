@@ -43,8 +43,8 @@ static NSString * const kXibOfCategoryTableViewCellWithoutNumberOfConcepts = @"I
 static NSString * const kXibOfCategoryTableViewCellWithNumberOfConcepts = @"IAECategoryWithNumberOfConceptsTableView";
 static NSString * const kIDOfCategoryTableViewCell = @"CategoryTableViewCell";
 
-static NSString * const kFontOfGeneralCategoryLabel = @"HelveticaNeue-UltraLightitalic";
-static NSString * const kFontOfUserCategoryLabel = @"HelveticaNeue-UltraLight";
+static NSString * const kFontOfGeneralCategoryLabel = @"HelveticaNeue-Thin_Italic";
+static NSString * const kFontOfUserCategoryLabel = @"HelveticaNeue-Thin";
 static const CGFloat kSizeOfCategoryNameLabel = 28;
 static const CGFloat kHeightOfCategoriesWithoutNumberOfConceptsCell = 51;
 static const CGFloat kHeightOfCategoriesWithNumberOfConceptsCell = 78;

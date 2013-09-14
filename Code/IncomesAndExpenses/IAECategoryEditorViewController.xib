@@ -52,7 +52,7 @@
                             <color key="tintColor" red="0.74509803919999995" green="0.74509803919999995" blue="0.74509803919999995" alpha="1" colorSpace="deviceRGB"/>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                            <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="done"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
                         </textField>
                         <view contentMode="scaleToFill" id="s28-4b-m84">
                             <rect key="frame" x="0.0" y="0.0" width="35" height="132"/>

@@ -67,18 +67,18 @@
                     <autoresizingMask key="autoresizingMask"/>
                     <subviews>
                         <label opaque="NO" clipsSubviews="YES" tag="30" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Eef-Df-IuI">
-                            <rect key="frame" x="303" y="0.0" width="489" height="86"/>
+                            <rect key="frame" x="323" y="0.0" width="469" height="86"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="42"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <view tag="5" contentMode="scaleToFill" id="D8t-a2-I5v">
-                            <rect key="frame" x="20" y="0.0" width="275" height="43"/>
+                            <rect key="frame" x="20" y="0.0" width="295" height="43"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="jo5-Ky-7Wq">
-                                    <rect key="frame" x="0.0" y="0.0" width="275" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="295" height="43"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
@@ -97,11 +97,11 @@
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
                         <view tag="15" contentMode="scaleToFill" id="Yxz-0X-2QH">
-                            <rect key="frame" x="20" y="43" width="275" height="43"/>
+                            <rect key="frame" x="20" y="43" width="295" height="43"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                             <subviews>
                                 <button opaque="NO" tag="20" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="87f-F2-PTJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="275" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="295" height="43"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
                                     <state key="normal" title="Día">

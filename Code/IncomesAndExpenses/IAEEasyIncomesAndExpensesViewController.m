@@ -153,8 +153,8 @@ static const CGFloat kDurationOfFrameUpdateWhenShowOrHideCalculator = 0.25;
 
 static const NSInteger kInvalidOptionIndex = -1;
 
-static const CGFloat kFrecuencyForContainerFXAttachBehavior = 0.7;
-static const CGFloat kDampingForContainerFXAttachBehavior = 0.4;
+static const CGFloat kFrecuencyForContainerFXAttachBehavior = 1;
+static const CGFloat kDampingForContainerFXAttachBehavior = 0.6;
 
 static const CGFloat kDurationModeFadeOut = 0.35;
 static const CGFloat kDurationModeFadeIn = 0.75;

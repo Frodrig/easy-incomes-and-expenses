@@ -418,9 +418,23 @@ static const CGFloat kAlphaOfColorWhiteValueForAttractAttentionFadeIn = 0.3;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self changeToSelectedIndexPath:indexPath ofCategoryType:self.selectedCategoryType withAnimation:YES andLogicBlockWhenFinish:^{
-        [self.delegate categorySelectorViewController:self didSelectCategory:[self findCategoryOfCellAtIndexPath:indexPath]];
-    }];
+    const BOOL completelyVisible = [self isCompletelyVisibleCellIndexPath:indexPath];
+    if (!completelyVisible) {
+        [self.categoriesTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    } else {
+        [self changeToSelectedIndexPath:indexPath ofCategoryType:self.selectedCategoryType withAnimation:YES andLogicBlockWhenFinish:^{
+            [self.delegate categorySelectorViewController:self didSelectCategory:[self findCategoryOfCellAtIndexPath:indexPath]];
+        }];
+    }
+}
+
+- (BOOL)isCompletelyVisibleCellIndexPath:(NSIndexPath *)indexPath
+{
+    IAECategoryTableViewCell *cell = (IAECategoryTableViewCell *)[self.categoriesTableView cellForRowAtIndexPath:indexPath];
+    CGRect normalizedFrame = [self.categoriesTableView convertRect:cell.frame toView:self.categoriesTableView.superview];
+    const BOOL isCompletelyVisible = (CGRectContainsRect(self.categoriesTableView.frame, normalizedFrame));
+    
+    return isCompletelyVisible;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

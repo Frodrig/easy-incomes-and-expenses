@@ -234,7 +234,7 @@ static const CGFloat kWhiteAlphaComponentForCircle = 1.0;
 - (NSUInteger)findDayAtColumnAndRow:(CGPoint)columnAndRow
 {
     const NSUInteger numberOfColumns = 7;
-    const NSUInteger firstDayOfTheWeekIndex = [IAEDateHelper findFirstDayWeekFromYearDate:self.yearDate andMonthIndex:self.monthIndex];
+    const NSUInteger firstDayOfTheWeekIndex = [self firstDayOfTheWeekNormalized];
     NSUInteger day = (columnAndRow.y * numberOfColumns + columnAndRow.x + 1) - (firstDayOfTheWeekIndex - 1);
     
     return day;

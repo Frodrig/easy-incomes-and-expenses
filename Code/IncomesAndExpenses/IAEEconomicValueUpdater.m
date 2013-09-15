@@ -173,14 +173,13 @@ static const CGFloat kRationOfDurationByUpdateProcessEconomicLabel = 0.1;
     if (dt >= 1) {
         updatedValue = to;
     } else {
-        NSString *deltaTimeNumberAsString = [[NSNumber numberWithFloat:dt] stringValue];
         if ([to compare:from] == NSOrderedDescending) {
             updatedValue = [to decimalNumberBySubtracting:from];
-            updatedValue = [updatedValue decimalNumberByMultiplyingBy:[NSDecimalNumber decimalNumberWithString:deltaTimeNumberAsString]];
+            updatedValue = [updatedValue decimalNumberByMultiplyingBy:[[NSDecimalNumber alloc] initWithFloat:dt]];
             updatedValue = [updatedValue decimalNumberByAdding:from];
         } else {
             updatedValue = [from decimalNumberBySubtracting:to];
-            updatedValue = [updatedValue decimalNumberByMultiplyingBy:[NSDecimalNumber decimalNumberWithString:deltaTimeNumberAsString]];
+            updatedValue = [updatedValue decimalNumberByMultiplyingBy:[[NSDecimalNumber alloc] initWithFloat:dt]];
             updatedValue = [from decimalNumberBySubtracting:updatedValue];
         }
     }
@@ -195,9 +194,7 @@ static const CGFloat kRationOfDurationByUpdateProcessEconomicLabel = 0.1;
     UIColor *updatedColor = [IAEColorHelper colorForEconomicValueType:[IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:value]];
     NSMutableDictionary *updatedAttributes = [[label.attributedText attributesAtIndex:0 effectiveRange:nil] mutableCopy];
     [updatedAttributes setObject:updatedColor forKey:NSForegroundColorAttributeName];
-    
-    label.attributedText = [[NSAttributedString alloc] initWithString:updatedString
-                                                           attributes:updatedAttributes];
+    label.attributedText = [[NSAttributedString alloc] initWithString:updatedString attributes:updatedAttributes];
 }
 
 - (void)destroyDisplayLinkRunLoopIfAppropiate

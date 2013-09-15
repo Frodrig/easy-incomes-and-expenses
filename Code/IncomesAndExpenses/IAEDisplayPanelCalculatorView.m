@@ -200,8 +200,9 @@ static const CGFloat kAlphaValueForColorDisplay = 0.5;
 - (void)setAmountString:(NSString *)amount
 {
     NSString *amountToDisplay = amount.length > 0 ? amount : @"0";
-    self.amountLabel.attributedText = [[NSAttributedString alloc] initWithString:amountToDisplay
-                                                                      attributes:[self createAttributesForAmountLabel]];
+    self.amountLabel.text = amountToDisplay;
+   // self.amountLabel.attributedText = [[NSAttributedString alloc] initWithString:amountToDisplay
+     //                                                                 attributes:[self createAttributesForAmountLabel]];
 }
 
 - (NSDictionary *)createAttributesForAmountLabel

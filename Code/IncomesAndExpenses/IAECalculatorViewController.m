@@ -638,8 +638,9 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
     const BOOL withSpaceForNewNumber = [self isActualAmountWithSpaceForNewValue];
     const BOOL withSpaceForDecimalNumber = [self isActualAmountWithSpaceForNewDecimalNumber];
     const BOOL withValueUnderMaxAllowed = [self isActualAmountUnderMaxDecimalNumberAllowedWithNewValue:value];
-
-    return withValueValidForActualState && withSpaceForNewNumber && withSpaceForDecimalNumber && withValueUnderMaxAllowed;
+    const BOOL can = withValueValidForActualState && withSpaceForNewNumber && withSpaceForDecimalNumber && withValueUnderMaxAllowed;
+    
+    return can;
 }
 
 - (BOOL)isActualStateValidToAddValue:(NSUInteger)value
@@ -716,13 +717,14 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
     NSString *stringValue = [[NSNumber numberWithUnsignedInteger:value] stringValue];
     NSString *tmpValue = [NSMutableString stringWithFormat:@"%@%@", self.actualAmount, stringValue];
     NSDecimalNumber *tmpNumberValue = [NSDecimalNumber decimalNumberWithString:tmpValue];
+    const BOOL underActualAmount = [tmpNumberValue compare:self.maxDecimalNumberAllowed] != NSOrderedDescending;
     
-    return [tmpNumberValue compare:self.maxDecimalNumberAllowed] != NSOrderedDescending;
+    return underActualAmount;
 }
 
 - (void)configureDisplayPanelWithActualAmount
 {
-    NSString *amountStringToDisplay = [NSMutableString string];
+    NSString *amountStringToDisplay = nil;
     IAECurrencyManager *currencyManager = [IAECurrencyManager sharedManager];
     [currencyManager saveCurrencyFormatterFractionState];
 
@@ -773,7 +775,7 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
 
 - (NSUInteger)findMaximumFractionDigitsToDisplayForAmountValue:(NSString *)amountValue
 {
-    NSUInteger maximumFractionDigits = maximumFractionDigits;
+    NSUInteger maximumFractionDigits = 2;
     
     NSRange decimalRange = [self findDecimalRangeLocationInAmountString:amountValue];
     if (decimalRange.location == NSNotFound || decimalRange.location == amountValue.length - 1) {

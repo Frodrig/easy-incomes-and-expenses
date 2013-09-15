@@ -189,12 +189,14 @@ static const CGFloat kRationOfDurationByUpdateProcessEconomicLabel = 0.1;
 
 - (void)updatePendingLabelEntry:(NSDictionary *)pendingLabelEntry withValue:(NSDecimalNumber *)value
 {
-    UILabel *label = [pendingLabelEntry objectForKey:@"label"];
-    NSString *updatedString = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:value];
+    NSNumber *numberObject = [[NSNumber alloc] initWithFloat:value.floatValue];
+    NSString *updatedString = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:numberObject];
     UIColor *updatedColor = [IAEColorHelper colorForEconomicValueType:[IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:value]];
+    UILabel *label = [pendingLabelEntry objectForKey:@"label"];
     NSMutableDictionary *updatedAttributes = [[label.attributedText attributesAtIndex:0 effectiveRange:nil] mutableCopy];
     [updatedAttributes setObject:updatedColor forKey:NSForegroundColorAttributeName];
-    label.attributedText = [[NSAttributedString alloc] initWithString:updatedString attributes:updatedAttributes];
+    NSAttributedString *updatedAttributedString = [[NSAttributedString alloc] initWithString:updatedString attributes:updatedAttributes];
+    label.attributedText = updatedAttributedString;
 }
 
 - (void)destroyDisplayLinkRunLoopIfAppropiate

@@ -1918,7 +1918,8 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 #pragma mark - IAECategoryEditorViewControllerDelegate
 
-- (void)cancelButtonWasPressedInCategoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
+- (void)categoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
+             didCancelRenameCategory:(IAECategory *)category
 {
     if ([self categorySelectorViewControllerWasLaunchedFromCategoryButton]) {
         [categoryEditorViewController dismissViewControllerAnimated:YES completion:nil];
@@ -1928,7 +1929,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 }
 
 - (void)categoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
-           DidValidateNewCategoryTag:(NSString *)categoryTag
+           didValidateNewCategoryTag:(NSString *)categoryTag
                       ofCategoryType:(CategoryType)categoryType
 {
     IAECategory *newCategory = [[IAECategoryStore sharedCategoryStore] createCategoryOfType:categoryType
@@ -1940,25 +1941,30 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     }
     [[IAEBook sharedBook] saveAll];
     
-    [self returnFromCategoryEditorViewController:categoryEditorViewController];
+    [self returnFromCategoryEditorViewController:categoryEditorViewController atPositionOfCategory:newCategory];
 }
 
 - (void)returnFromCategoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
+                          atPositionOfCategory:(IAECategory *)newCategory
 {
     if ([self categorySelectorViewControllerWasLaunchedFromCategoryButton]) {
-        [self returnToUpdatedCategorySelectorViewControllerFromCategoryEditorViewController:categoryEditorViewController];
+        [self returnToUpdatedCategorySelectorViewControllerFromCategoryEditorViewController:categoryEditorViewController
+                                                                       atPositionOfCategory:newCategory];
     } else {
         [self returnToUpdatedEditModeViewControllerFromCategoryEditorViewController:categoryEditorViewController];
     }
 }
 
 - (void)returnToUpdatedCategorySelectorViewControllerFromCategoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
+                                                                 atPositionOfCategory:(IAECategory *)newCategory
 {
     IAECategorySelectorViewController *categorySelector = (IAECategorySelectorViewController *)categoryEditorViewController.presentingViewController;
     [categoryEditorViewController dismissViewControllerAnimated:YES completion:nil];
     [categorySelector reloadData];
     
     [self reloadContentOfConceptsCollectionView];
+    [categorySelector scrollToCategory:newCategory withAnimation:NO];
+    [categorySelector doAttractAttentionAnimationAtPositionOfCategory:newCategory];
 }
 
 - (void)returnToUpdatedEditModeViewControllerFromCategoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
@@ -1968,13 +1974,13 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 }
 
 - (void)categoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
-           DidValidateRenameCategory:(IAECategory *)category
+           didValidateRenameCategory:(IAECategory *)category
                              withTag:(NSString *)tag
 {
     category.tag = tag;
     [[IAEBook sharedBook] saveAll];
     
-    [self returnFromCategoryEditorViewController:categoryEditorViewController];
+    [self returnFromCategoryEditorViewController:categoryEditorViewController atPositionOfCategory:category];
 }
 
 #pragma mark - IAEYearSelectorViewControllerDelegate

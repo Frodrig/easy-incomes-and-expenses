@@ -16,6 +16,7 @@
 #import "IAECircleDecoratorView.h"
 #import "IAEStrokeAnimatableLineView.h"
 #import "IAELocalizerPhraseComposer.h"
+#import "IAEColorHelper.h"
 
 @interface IAECategorySelectorViewController ()
 
@@ -57,6 +58,11 @@ static const CGFloat kDurationStrokeAnimation = 0.25;
 static const CGFloat kColorWhiteComponentForStrokeAnimation = 0.8;
 static const CGFloat kColorWhiteAlphaComponentForStrokeAnimation = 1.0;
 static const NSInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
+
+static const CGFloat kDurationOfAttractAttentionAnimationFadeIn = 0.25;
+static const CGFloat kDurationOfAttractAttentionAnimationFadeOut = 0.5;
+static const CGFloat kColorWhiteValueForAttractAttentionFadeIn = 0.8;
+static const CGFloat kAlphaOfColorWhiteValueForAttractAttentionFadeIn = 0.3;
 
 #pragma mark - Properties
 
@@ -309,6 +315,39 @@ static const NSInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
             animationCoordinationBlock();
         }
     }
+}
+
+- (void)scrollToCategory:(IAECategory *)category withAnimation:(BOOL)animation
+{
+    NSIndexPath *indexPathOfCategory = [self findIndexPathOfCategory:category];
+    [self.categoriesTableView scrollToRowAtIndexPath:indexPathOfCategory atScrollPosition:UITableViewScrollPositionMiddle animated:animation];
+}
+
+- (void)doAttractAttentionAnimationAtPositionOfCategory:(IAECategory *)category
+{
+    NSIndexPath *indexPathOfCategory = [self findIndexPathOfCategory:category];
+    IAECategoryTableViewCell *cell = (IAECategoryTableViewCell *) [self.categoriesTableView cellForRowAtIndexPath:indexPathOfCategory];
+    [UIView animateWithDuration:kDurationOfAttractAttentionAnimationFadeIn animations:^{
+        cell.backgroundColor = [UIColor colorWithWhite:kColorWhiteValueForAttractAttentionFadeIn alpha:kAlphaOfColorWhiteValueForAttractAttentionFadeIn];
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:kDurationOfAttractAttentionAnimationFadeOut animations:^{
+            cell.backgroundColor = [UIColor clearColor];
+        }];
+    }];
+}
+     
+- (BOOL)isIncomeCategoryTypeSelected
+{
+    const BOOL isSelected = self.categorySegmentedControl.selectedSegmentIndex == kIncomeSegmentedIndex;
+    
+    return isSelected;
+}
+
+- (BOOL)isExpenseCategoryTypeSelected
+{
+    const BOOL isSelected = self.categorySegmentedControl.selectedSegmentIndex == kExpenseSegmentedIndex;
+    
+    return isSelected;
 }
 
 - (BOOL)isInitialCategorySelectedSameAsActualCategoryTypeSelected

@@ -44,5 +44,7 @@ typedef NS_ENUM(NSUInteger, CategorySelectorActionFlags) {
 
 - (void)changeToSectionOfCategoryType:(CategoryType)category;
 - (void)selectAndScrollToCategory:(IAECategory *)category withAnimation:(BOOL)animation;
+- (void)scrollToCategory:(IAECategory *)category withAnimation:(BOOL)animation;
+- (void)doAttractAttentionAnimationAtPositionOfCategory:(IAECategory *)category;
 
 @end

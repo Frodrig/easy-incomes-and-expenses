@@ -12,14 +12,15 @@
 
 @protocol IAECategoryEditorViewControllerDelegate <NSObject>
 
-- (void)cancelButtonWasPressedInCategoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController;
+- (void)categoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
+             didCancelRenameCategory:(IAECategory *)category;
 
 - (void)categoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
-           DidValidateNewCategoryTag:(NSString *)categoryTag
+           didValidateNewCategoryTag:(NSString *)categoryTag
                       ofCategoryType:(CategoryType)categoryType;
 
 - (void)categoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
-           DidValidateRenameCategory:(IAECategory *)category
+           didValidateRenameCategory:(IAECategory *)category
                              withTag:(NSString *)tag;
 
 @end

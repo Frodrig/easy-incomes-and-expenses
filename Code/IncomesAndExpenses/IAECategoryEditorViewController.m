@@ -210,7 +210,7 @@ static const NSUInteger kSizeRoundedRectCorners = 10;
 - (void)setCancelActionAndNotifyToDelegate
 {
     self.cancelButtonWasPressed = YES;
-    [self.delegate cancelButtonWasPressedInCategoryEditorViewController:self];
+    [self.delegate categoryEditorViewController:self didCancelRenameCategory:self.categoryToRename];
 }
 
 #pragma mark - UITextEditDelegate
@@ -309,9 +309,9 @@ static const NSUInteger kSizeRoundedRectCorners = 10;
 {
     NSString *normalizedCategoryTag = [self.categoryInputTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     if (self.editModeContext == EDITMODE_CATEGORY_ADD) {
-        [self.delegate categoryEditorViewController:self DidValidateNewCategoryTag:normalizedCategoryTag ofCategoryType:self.categoryTypeContext];
+        [self.delegate categoryEditorViewController:self didValidateNewCategoryTag:normalizedCategoryTag ofCategoryType:self.categoryTypeContext];
     } else if (self.editModeContext == EDITMODE_CATEGORY_RENAME) {
-        [self.delegate categoryEditorViewController:self DidValidateRenameCategory:self.categoryToRename withTag:normalizedCategoryTag];
+        [self.delegate categoryEditorViewController:self didValidateRenameCategory:self.categoryToRename withTag:normalizedCategoryTag];
     } else {
         NSAssert(0, @"");
     }

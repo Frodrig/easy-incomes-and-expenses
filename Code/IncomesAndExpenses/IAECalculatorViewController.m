@@ -860,13 +860,15 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
 
 #pragma mark - IAECategoryEditorViewControllerDelegate
 
-- (void)cancelButtonWasPressedInCategoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
+- (void)categoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
+             didCancelRenameCategory:(IAECategory *)category
 {
+    
     [categoryEditorViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)categoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
-           DidValidateNewCategoryTag:(NSString *)categoryTag
+           didValidateNewCategoryTag:(NSString *)categoryTag
                       ofCategoryType:(CategoryType)categoryType
 {
     IAECategory *category = [[IAECategoryStore sharedCategoryStore] createCategoryOfType:categoryType andTag:categoryTag withValidityTagCheck:NO];
@@ -879,7 +881,7 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
 }
 
 - (void)categoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
-           DidValidateRenameCategory:(IAECategory *)category
+           didValidateRenameCategory:(IAECategory *)category
                              withTag:(NSString *)tag
 {
     [categoryEditorViewController dismissViewControllerAnimated:YES completion:nil];

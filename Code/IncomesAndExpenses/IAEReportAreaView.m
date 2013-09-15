@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UILabel *noItemsLabel;
 @property (nonatomic, strong) NSMutableDictionary *reloadPendingInformation;
 @property (nonatomic, readonly) BOOL showingAllReportAreaItems;
+@property (nonatomic, strong) NSMutableSet *allReportAreaItems;
 
 @end
 
@@ -48,6 +49,15 @@ static NSString * const kReloadPendingKey = @"ReloadPending";
 static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
 
 #pragma mark - Properties
+
+- (NSMutableSet *)allReportAreaItems
+{
+    if (!_allReportAreaItems) {
+        _allReportAreaItems = [[NSMutableSet alloc] init];
+    }
+    
+    return _allReportAreaItems;
+}
 
 - (NSDictionary *)reloadPendingInformation
 {
@@ -211,10 +221,9 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
 
 - (void)removeAllReportAreaItemsWithAnimation:(BOOL)animation andExecuteBlockAtCompletion:(void(^)(void))block
 {
-    NSMutableSet *allReportAreaItems = [[NSMutableSet alloc] initWithSet:[self findAllReportAreaItems]];
-    __block NSUInteger numberOfAreaItemsToRemove = allReportAreaItems.count;
+    __block NSUInteger numberOfAreaItemsToRemove = self.allReportAreaItems.count;
     if (numberOfAreaItemsToRemove > 0) {
-        for (IAEReportAreaItemView *reportAreaItemView in allReportAreaItems) {
+        for (IAEReportAreaItemView *reportAreaItemView in self.allReportAreaItems) {
             if (animation) {
                 [[IAEEconomicValueUpdater defaultEconomicValueUpdater] processEconomicLabel:reportAreaItemView.title
                                                                                     toValue:[NSDecimalNumber zero]
@@ -238,23 +247,13 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
                 }
             }
         }
+        
+        [self.allReportAreaItems removeAllObjects];
     } else {
         if (block) {
             block();
         }
     }
-}
-
-- (NSSet *)findAllReportAreaItems
-{
-    NSMutableSet *allReportAreaItems = [[NSMutableSet alloc] initWithCapacity:self.subviews.count];
-    for (IAEReportAreaItemView *viewIt in self.subviews) {
-        if ([viewIt isMemberOfClass:[IAEReportAreaItemView class]]) {
-            [allReportAreaItems addObject:viewIt];
-        }
-    }
-
-    return [NSSet setWithSet:allReportAreaItems];
 }
 
 - (void)createAndAddAllReportAreaItemsIfAppropiateWithAnimation:(BOOL)animation
@@ -267,6 +266,7 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
         for (NSUInteger reportAreaItemIt = 0; reportAreaItemIt < numberOfReportAreaItems; reportAreaItemIt++) {
             IAEReportAreaItemView *reportAreaItem = [self createReportAreaItemWithIndex:reportAreaItemIt ofTotalNumber:numberOfReportAreaItems];
             [self addSubview:reportAreaItem];
+            [self.allReportAreaItems addObject:reportAreaItem];
         }
         
         if (animation) {
@@ -334,12 +334,11 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
 
 - (void)playShowAnimationOverActualLoadedData
 {
-    NSMutableSet *allReportAreaItems = [[NSMutableSet alloc] initWithSet:[self findAllReportAreaItems]];
-    __block NSUInteger numberOfReportAreaItemsPending = allReportAreaItems.count;
+    __block NSUInteger numberOfReportAreaItemsPending = self.allReportAreaItems.count;
     if (numberOfReportAreaItemsPending > 0) {
         [self beginShowingAllReportAreaItems];
         
-        for (IAEReportAreaItemView *reportAreaItemView in allReportAreaItems) {
+        for (IAEReportAreaItemView *reportAreaItemView in self.allReportAreaItems) {
             CGRect frameOfAreaItem = reportAreaItemView.frame;
             reportAreaItemView.frame = CGRectMake(frameOfAreaItem.origin.x, frameOfAreaItem.origin.y + frameOfAreaItem.size.height, frameOfAreaItem.size.width, 0.0);
             
@@ -450,9 +449,10 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
 
 #pragma mark - UIScrollViewDelegate
 
+/*
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    const NSUInteger numberOfReportAreaItems = [self findAllReportAreaItems].count;
+    const NSUInteger numberOfReportAreaItems = self.allReportAreaItems.count;
     const CGFloat widthOfAreaItemsView = [self calculeWidthOfReportAreaItemViews];
     const CGFloat maxNumberOfAreaItemsViewFullPresented = scrollView.frame.size.width / widthOfAreaItemsView;
     const BOOL performScrollDissolveFx = numberOfReportAreaItems > maxNumberOfAreaItemsViewFullPresented;
@@ -467,21 +467,43 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
         
         // Extremos
         const CGFloat alphaForLeftReportAreaItemView = onlyMaxNumberOfAreaIemsViewFullyPresented ? 1.0 : MAX(normalizedOffset, kMinAlphaValueForScrolledReportAreaItems);
-        [self viewWithTag:[self createReportAreaItemTagForIndex:leftViewIndex]].alpha = alphaForLeftReportAreaItemView;
+        [self findReportAreaItemWithTag:[self createReportAreaItemTagForIndex:leftViewIndex]].alpha = alphaForLeftReportAreaItemView;
+        //[self viewWithTag:[self createReportAreaItemTagForIndex:leftViewIndex]].alpha = alphaForLeftReportAreaItemView;
         if (rightViewIndex < numberOfReportAreaItems) {
             const CGFloat alphaForRightReportAreaItemView = onlyMaxNumberOfAreaIemsViewFullyPresented ? 0.0 : MAX(1 - normalizedOffset, kMinAlphaValueForScrolledReportAreaItems);
-            [self viewWithTag:[self createReportAreaItemTagForIndex:rightViewIndex]].alpha = alphaForRightReportAreaItemView;
+            [self findReportAreaItemWithTag:[self createReportAreaItemTagForIndex:rightViewIndex]].alpha = alphaForRightReportAreaItemView;
+            //[self viewWithTag:[self createReportAreaItemTagForIndex:rightViewIndex]].alpha = alphaForRightReportAreaItemView;
         }
         
         // izquierda extremo izquierdo, medio, derecha extremo derecho
         for (NSUInteger restOfAreaItemsViewIt = 0; restOfAreaItemsViewIt < numberOfReportAreaItems; ++restOfAreaItemsViewIt) {
             if (restOfAreaItemsViewIt < leftViewIndex || restOfAreaItemsViewIt > rightViewIndex) {
-                [self viewWithTag:[self createReportAreaItemTagForIndex:restOfAreaItemsViewIt]].alpha = kMinAlphaValueForScrolledReportAreaItems;
+                [self findReportAreaItemWithTag:[self createReportAreaItemTagForIndex:restOfAreaItemsViewIt]].alpha = kMinAlphaValueForScrolledReportAreaItems;
+                //[self viewWithTag:[self createReportAreaItemTagForIndex:restOfAreaItemsViewIt]].alpha = kMinAlphaValueForScrolledReportAreaItems;
             } else if (restOfAreaItemsViewIt > leftViewIndex && restOfAreaItemsViewIt < rightViewIndex) {
-                [self viewWithTag:[self createReportAreaItemTagForIndex:restOfAreaItemsViewIt]].alpha = 1.0;
+                [self findReportAreaItemWithTag:[self createReportAreaItemTagForIndex:restOfAreaItemsViewIt]].alpha = 1.0;
+                //[self viewWithTag:[self createReportAreaItemTagForIndex:restOfAreaItemsViewIt]].alpha = 1.0;
             }
         }
     }
 }
+
+- (IAEReportAreaItemView *)findReportAreaItemWithTag:(NSUInteger)tag
+{
+    IAEReportAreaItemView *reportAreaItem = nil;
+    
+    [self.allReportAreaItems objectsPassingTest:^BOOL(id obj, BOOL *stop) {
+        IAEReportAreaItemView *reportAreaItemIt = obj;
+        *stop = reportAreaItemIt.tag == tag;
+        if (*stop) {
+            reportAreaItemIt = reportAreaItemIt;
+        }
+        
+        return YES;
+    }];
+    
+    return reportAreaItem;
+}
+ */
 
 @end

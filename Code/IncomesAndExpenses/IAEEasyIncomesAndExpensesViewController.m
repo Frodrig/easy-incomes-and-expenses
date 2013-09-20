@@ -404,12 +404,14 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (void)configureReportAreaView
 {
-    self.reportAreaView.backgroundColor = [UIColor clearColor];
+    self.reportAreaView.backgroundColor = [UIColor whiteColor];
+    self.reportAreaView.opaque = YES;
 }
 
 - (void)configureReportMenuView
 {
-    self.reportMenuView.backgroundColor = [UIColor clearColor];
+    self.reportMenuView.backgroundColor = [self.view.backgroundColor copy];
+    self.reportMenuView.opaque = YES;
 }
 
 #pragma mark - ViewWillAppear

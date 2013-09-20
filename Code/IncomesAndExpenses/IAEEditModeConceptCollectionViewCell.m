@@ -251,7 +251,7 @@ static const CGFloat kCallForAttentionRationAlphaColor = 0.3;
     label.tag = tag;
     label.textAlignment = NSTextAlignmentCenter;
     label.numberOfLines = numberOfLines;
-    label.backgroundColor = [self.backgroundColor copy];
+    label.backgroundColor = [UIColor clearColor];
     label.opaque = YES;
     [label setMinimumScaleFactor:0.5];
     
@@ -450,9 +450,11 @@ static const CGFloat kCallForAttentionRationAlphaColor = 0.3;
 - (void)doCallForAttentionAnimation
 {
     __block UIColor *backgroundColor = [self.contentView.backgroundColor copy];
+    __block UIColor *destinationColor = [UIColor colorWithWhite:kCallForAttentionRatioWhiteColor alpha:kCallForAttentionRationAlphaColor];
+
     [UIView setAnimationCurve:UIViewAnimationCurveLinear];
     [UIView animateWithDuration:kDurationOfCallForAttentionAnimationIn animations:^{
-        self.contentView.backgroundColor = [UIColor colorWithWhite:kCallForAttentionRatioWhiteColor alpha:kCallForAttentionRationAlphaColor];
+        self.contentView.backgroundColor = destinationColor;
     } completion:^(BOOL finished) {
         [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
         [UIView animateWithDuration:kDurationOfCallForAttentionAnimationOut animations:^{
@@ -460,7 +462,5 @@ static const CGFloat kCallForAttentionRationAlphaColor = 0.3;
         }];
     }];
 }
-
-
 
 @end

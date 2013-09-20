@@ -30,6 +30,8 @@ static const CGFloat kContextMenuDefaultKernOfOptions = 1;
 static const CGFloat kContextMenuYearKernOfOptions = 0;
 static const NSUInteger kBorderMaskForOptions = UIRectCornerBottomLeft | UIRectCornerBottomRight;
 static const CGFloat kRadiusOfBorderForOptions = 15;
+static const CGFloat kColorWhiteForSelectorIndicatorBackground = 0.96;
+static const CGFloat kColorAlphaForSelectorIndicatorBackground = 1.0;
 
 #pragma mark - Init
 
@@ -117,7 +119,7 @@ static const CGFloat kRadiusOfBorderForOptions = 15;
 
 - (UIColor *)colorForSelectorIndicatorInTextRawSelectorMenu:(IAETextRawSelectorMenuView *)textRawSelectorMenu
 {
-    UIColor *color = [UIColor colorWithWhite:0.9 alpha:0.3];
+    UIColor *color = [UIColor colorWithWhite:kColorWhiteForSelectorIndicatorBackground alpha:kColorAlphaForSelectorIndicatorBackground];
     
     return color;
 }

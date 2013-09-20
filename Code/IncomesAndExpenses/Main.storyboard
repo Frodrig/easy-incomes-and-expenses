@@ -10,7 +10,7 @@
         <scene sceneID="ZOc-zz-2EG">
             <objects>
                 <viewController storyboardIdentifier="EasyIncomesAndExpensesViewControllerID" id="7Ea-79-0mi" customClass="IAEEasyIncomesAndExpensesViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="JJO-TL-5Gw">
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="JJO-TL-5Gw">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                         <subviews>
@@ -21,7 +21,7 @@
                                     <view clipsSubviews="YES" contentMode="scaleToFill" id="Dio-MI-59n" customClass="IAESelectorContextView">
                                         <rect key="frame" x="0.0" y="-80" width="1024" height="266"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <color key="backgroundColor" red="0.95686280727386475" green="0.95686280727386475" blue="0.95686280727386475" alpha="1" colorSpace="deviceRGB"/>
+                                        <color key="backgroundColor" red="0.96470588235294119" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="deviceRGB"/>
                                     </view>
                                     <view contentMode="scaleToFill" id="G41-3w-8Uv">
                                         <rect key="frame" x="37" y="320" width="950" height="340"/>

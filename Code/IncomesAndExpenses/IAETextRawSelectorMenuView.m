@@ -212,10 +212,9 @@ static const CGFloat kMinimumAlphaOfAnimationOptionDestroyWithGosth = 0.1;
 {
     UIButton *option = [[UIButton alloc] initWithFrame:[self calculeFrameForOptionButtonAtIndex:optionIt]];
     [option setAttributedTitle:[self createAttributedStringForOptionAtIndex:optionIt] forState:UIControlStateNormal];
-    option.backgroundColor = [UIColor clearColor];
+    option.backgroundColor = [self.backgroundColor copy];
+    option.opaque = YES;
     option.tag = [self createTagForButtonAtIndex:optionIt];
-    [option addRoundedCorners:[self.dataSource borderMaskForOptionsInTextRawSelectorMenu:self]
-                   withRadius:[self.dataSource radiusForOptionsInTextRawSelectorMenu:self]];
     [option addTarget:self action:@selector(optionButtonPressed:) forControlEvents:UIControlEventTouchDown];
     
     return option;
@@ -300,7 +299,8 @@ static const CGFloat kMinimumAlphaOfAnimationOptionDestroyWithGosth = 0.1;
     IAETextRawSelectorMenuViewSelectorType selectorType = [self.dataSource selectorTypeInTextRawSelectorMenu:self];
     UIButton *option = [self findMenuOptionWithIndex:optionIndex];
     if (selectorType == TEXTRAWMENUVIEW_SELECTOR_BACKGROUNDCOLOR) {
-        option.backgroundColor = [UIColor clearColor];
+        option.backgroundColor = [self.superview.backgroundColor copy];
+        [option addRoundedCorners:0 withRadius:0];
     } else {
         self.selectorLineView.hidden = YES;
     }
@@ -312,6 +312,8 @@ static const CGFloat kMinimumAlphaOfAnimationOptionDestroyWithGosth = 0.1;
     UIButton *option = [self findMenuOptionWithIndex:optionIndex];
     if (selectorType == TEXTRAWMENUVIEW_SELECTOR_BACKGROUNDCOLOR) {
         option.backgroundColor = [[self.dataSource colorForSelectorIndicatorInTextRawSelectorMenu:self] copy];
+        [option addRoundedCorners:[self.dataSource borderMaskForOptionsInTextRawSelectorMenu:self]
+         withRadius:[self.dataSource radiusForOptionsInTextRawSelectorMenu:self]];
     } else {
         self.selectorLineView.hidden = NO;
     }

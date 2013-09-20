@@ -251,7 +251,8 @@ static const CGFloat kCallForAttentionRationAlphaColor = 0.3;
     label.tag = tag;
     label.textAlignment = NSTextAlignmentCenter;
     label.numberOfLines = numberOfLines;
-    label.backgroundColor = [UIColor clearColor];
+    label.backgroundColor = [self.backgroundColor copy];
+    label.opaque = YES;
     [label setMinimumScaleFactor:0.5];
     
     return label;

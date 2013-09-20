@@ -19,13 +19,14 @@
             <rect key="frame" x="0.0" y="0.0" width="812" height="327"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <view contentMode="scaleToFill" id="dms-eI-2KD" customClass="IAEDragPanelCalculatorView">
+                <view clipsSubviews="YES" contentMode="scaleToFill" id="dms-eI-2KD" customClass="IAEDragPanelCalculatorView">
                     <rect key="frame" x="0.0" y="0.0" width="812" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="PjF-me-0zt">
+                        <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="PjF-me-0zt">
                             <rect key="frame" x="20" y="-1" width="28" height="45"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="deviceRGB"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="38"/>
                             <state key="normal" image="746-plus-circle.png">
                                 <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -38,9 +39,10 @@
                                 <action selector="incomeButtonPressed:" destination="-1" eventType="touchUpInside" id="IRF-Ot-eqX"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="3on-F9-yD1">
+                        <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="3on-F9-yD1">
                             <rect key="frame" x="764" y="-1" width="28" height="45"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="deviceRGB"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="38"/>
                             <state key="normal" image="747-minus-circle.png">
                                 <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -53,22 +55,24 @@
                                 <action selector="expenseButtonPressed:" destination="-1" eventType="touchUpInside" id="BVF-wr-zfX"/>
                             </connections>
                         </button>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="calculadora" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3bG-Jy-aUv">
+                        <label clipsSubviews="YES" userInteractionEnabled="NO" tag="5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="calculadora" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3bG-Jy-aUv">
                             <rect key="frame" x="164" y="0.0" width="484" height="44"/>
                             <autoresizingMask key="autoresizingMask"/>
+                            <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="deviceRGB"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="34"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" red="0.9215686917" green="0.9215686917" blue="0.9215686917" alpha="1" colorSpace="deviceRGB"/>
+                    <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="deviceRGB"/>
                 </view>
                 <view clipsSubviews="YES" contentMode="scaleToFill" id="xJU-jx-OgO" customClass="IAEDisplayPanelCalculatorView">
                     <rect key="frame" x="0.0" y="44" width="812" height="86"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <subviews>
-                        <label opaque="NO" clipsSubviews="YES" tag="30" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Eef-Df-IuI">
+                        <label clipsSubviews="YES" tag="30" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Eef-Df-IuI">
                             <rect key="frame" x="323" y="0.0" width="469" height="86"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="42"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
@@ -77,7 +81,7 @@
                             <rect key="frame" x="20" y="0.0" width="295" height="43"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="jo5-Ky-7Wq">
+                                <button tag="10" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="jo5-Ky-7Wq">
                                     <rect key="frame" x="0.0" y="0.0" width="295" height="43"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -100,9 +104,10 @@
                             <rect key="frame" x="20" y="43" width="295" height="43"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                             <subviews>
-                                <button opaque="NO" tag="20" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="87f-F2-PTJ">
+                                <button tag="20" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="87f-F2-PTJ">
                                     <rect key="frame" x="0.0" y="0.0" width="295" height="43"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
                                     <state key="normal" title="Día">
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -121,7 +126,7 @@
                     </subviews>
                     <color key="backgroundColor" red="0.96470588235294119" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
-                <view contentMode="scaleToFill" id="Lcs-vj-q38" customClass="IAEKeyboardPanelCalculatorView">
+                <view clipsSubviews="YES" contentMode="scaleToFill" id="Lcs-vj-q38" customClass="IAEKeyboardPanelCalculatorView">
                     <rect key="frame" x="0.0" y="130" width="812" height="196"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <subviews>
@@ -129,7 +134,7 @@
                             <rect key="frame" x="20" y="10" width="772" height="176"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
-                                <view userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="scaleToFill" id="oVs-mA-dr7">
+                                <view clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="scaleToFill" id="oVs-mA-dr7">
                                     <rect key="frame" x="0.0" y="0.0" width="772" height="176"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
@@ -194,12 +199,12 @@
                                             <color key="backgroundColor" red="0.90196084976196289" green="0.90196084976196289" blue="0.90196084976196289" alpha="1" colorSpace="deviceRGB"/>
                                         </view>
                                     </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.96470594409999999" green="0.96470594409999999" blue="0.96470594409999999" alpha="1" colorSpace="deviceRGB"/>
                                 </view>
-                                <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="tsN-Tr-vX8">
+                                <button tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="tsN-Tr-vX8">
                                     <rect key="frame" x="396" y="45" width="173" height="42"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.96470594409999999" green="0.96470594409999999" blue="0.96470594409999999" alpha="1" colorSpace="deviceRGB"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="34"/>
                                     <state key="normal" title="6">
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -211,10 +216,10 @@
                                         <action selector="keyboardNumberPressed:" destination="-1" eventType="touchUpInside" id="XHc-0r-Qfq"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" tag="200" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="dMS-9O-0t3">
+                                <button tag="200" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="dMS-9O-0t3">
                                     <rect key="frame" x="589" y="45" width="173" height="42"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.96470594409999999" green="0.96470594409999999" blue="0.96470594409999999" alpha="1" colorSpace="deviceRGB"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="34"/>
                                     <state key="normal" title=",">
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -226,10 +231,10 @@
                                         <action selector="keyboardDecimalPressed:" destination="-1" eventType="touchUpInside" id="fQw-yD-6lY"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" tag="9" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="qJZ-kB-F6j">
+                                <button tag="9" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="qJZ-kB-F6j">
                                     <rect key="frame" x="396" y="0.0" width="173" height="42"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.96470594409999999" green="0.96470594409999999" blue="0.96470594409999999" alpha="1" colorSpace="deviceRGB"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="34"/>
                                     <state key="normal" title="9">
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -241,10 +246,10 @@
                                         <action selector="keyboardNumberPressed:" destination="-1" eventType="touchUpInside" id="vDE-5W-omg"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="yMT-D1-I18">
+                                <button tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="yMT-D1-I18">
                                     <rect key="frame" x="204" y="90" width="173" height="42"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.96470594409999999" green="0.96470594409999999" blue="0.96470594409999999" alpha="1" colorSpace="deviceRGB"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="34"/>
                                     <state key="normal" title="2">
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -256,10 +261,10 @@
                                         <action selector="keyboardNumberPressed:" destination="-1" eventType="touchUpInside" id="HIg-Pb-Dza"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="4WS-rF-xNi">
+                                <button tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="4WS-rF-xNi">
                                     <rect key="frame" x="204" y="45" width="173" height="42"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.96470594409999999" green="0.96470594409999999" blue="0.96470594409999999" alpha="1" colorSpace="deviceRGB"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="34"/>
                                     <state key="normal" title="5">
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -271,10 +276,10 @@
                                         <action selector="keyboardNumberPressed:" destination="-1" eventType="touchUpInside" id="sAW-2u-G74"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="TaE-VB-Hr7">
+                                <button tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="TaE-VB-Hr7">
                                     <rect key="frame" x="204" y="0.0" width="173" height="42"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.96470594409999999" green="0.96470594409999999" blue="0.96470594409999999" alpha="1" colorSpace="deviceRGB"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="34"/>
                                     <state key="normal" title="8">
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -286,10 +291,10 @@
                                         <action selector="keyboardNumberPressed:" destination="-1" eventType="touchUpInside" id="ydD-5L-HU0"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="ERo-1F-leY">
+                                <button tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="ERo-1F-leY">
                                     <rect key="frame" x="10" y="90" width="173" height="42"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.96470594409999999" green="0.96470594409999999" blue="0.96470594409999999" alpha="1" colorSpace="deviceRGB"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="34"/>
                                     <state key="normal" title="1">
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -301,10 +306,10 @@
                                         <action selector="keyboardNumberPressed:" destination="-1" eventType="touchUpInside" id="MFa-4S-weL"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="gQi-lC-h11">
+                                <button tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="gQi-lC-h11">
                                     <rect key="frame" x="10" y="45" width="173" height="42"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.96470594409999999" green="0.96470594409999999" blue="0.96470594409999999" alpha="1" colorSpace="deviceRGB"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="34"/>
                                     <state key="normal" title="4">
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -316,10 +321,10 @@
                                         <action selector="keyboardNumberPressed:" destination="-1" eventType="touchUpInside" id="og8-mh-fx0"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="hML-TV-FBn">
+                                <button tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="hML-TV-FBn">
                                     <rect key="frame" x="10" y="0.0" width="173" height="42"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.96470594409999999" green="0.96470594409999999" blue="0.96470594409999999" alpha="1" colorSpace="deviceRGB"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="34"/>
                                     <state key="normal" title="7">
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -331,10 +336,10 @@
                                         <action selector="keyboardNumberPressed:" destination="-1" eventType="touchUpInside" id="Mda-pR-u2c"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="iwk-sN-Qx3">
+                                <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="iwk-sN-Qx3">
                                     <rect key="frame" x="10" y="135" width="559" height="41"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" red="0.81594786352040816" green="0.0087926841144096608" blue="0.035360654378883465" alpha="0.0" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" red="0.96470594409999999" green="0.96470594409999999" blue="0.96470594409999999" alpha="1" colorSpace="deviceRGB"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="34"/>
                                     <state key="normal" title="0">
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -346,10 +351,10 @@
                                         <action selector="keyboardNumberPressed:" destination="-1" eventType="touchUpInside" id="MJh-rH-CHe"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="zN9-Xl-tvO">
+                                <button tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="zN9-Xl-tvO">
                                     <rect key="frame" x="396" y="90" width="173" height="42"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.96470594409999999" green="0.96470594409999999" blue="0.96470594409999999" alpha="1" colorSpace="deviceRGB"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="34"/>
                                     <state key="normal" title="3">
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -361,10 +366,10 @@
                                         <action selector="keyboardNumberPressed:" destination="-1" eventType="touchUpInside" id="lOC-rb-Yny"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" tag="100" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="Gen-Te-pdY">
+                                <button tag="100" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="Gen-Te-pdY">
                                     <rect key="frame" x="589" y="0.0" width="173" height="42"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.96470594409999999" green="0.96470594409999999" blue="0.96470594409999999" alpha="1" colorSpace="deviceRGB"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="34"/>
                                     <state key="normal" image="765-arrow-left.png">
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -376,10 +381,10 @@
                                         <action selector="keyboardDeletePressed:" destination="-1" eventType="touchUpInside" id="4V5-5E-fjo"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" tag="400" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="IFp-Kj-z1C">
+                                <button tag="400" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="IFp-Kj-z1C">
                                     <rect key="frame" x="589" y="90" width="173" height="86"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.96470594409999999" green="0.96470594409999999" blue="0.96470594409999999" alpha="1" colorSpace="deviceRGB"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="34"/>
                                     <state key="normal" title="Añadir">
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>

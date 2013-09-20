@@ -92,11 +92,13 @@ static NSString * const kLTextAddButtonTitle = @"LTEXT_CALCULATOR_BUTTON_ADD";
 
 - (void)configureKeyboardButtons
 {
+    /*
     for (UIView *viewIt in self.keyboardContainerView.subviews) {
         if ([viewIt isKindOfClass:[UIButton class]]) {
             [viewIt addRoundedCorners:UIRectCornerAllCorners withRadius:kRadiusForButtons];
         }
     }
+    */
 }
 
 - (void)configureDecimalButton
@@ -111,6 +113,7 @@ static NSString * const kLTextAddButtonTitle = @"LTEXT_CALCULATOR_BUTTON_ADD";
 }
 
 #pragma mark - Draw
+
 
 - (void)drawRect:(CGRect)rect
 {

@@ -975,7 +975,6 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     const BOOL dayMode = [self isDayModeActiveForConcepts];
     NSArray *concepts = dayMode ? [concept.month allConceptsSortedByDay] : [concept.month allConceptsSortedByEntryInstant];
     NSUInteger conceptIndex = [concepts indexOfObject:concept];
-    NSLog(@"conceptIndex %d", conceptIndex);
     NSIndexPath *indexPathOfCell = [NSIndexPath indexPathForRow:conceptIndex inSection:0];
     IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell*) [self.conceptsCollectionView cellForItemAtIndexPath:indexPathOfCell];
 
@@ -1027,9 +1026,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 - (NSArray *)findCategoriesOfActualSelectedContextViewWithType:(CategoryType)type
 {
     id modelObj = [self findModelObjectOfActualSelectedContextView];
-    [modelObj beginCategoryConceptSearchMode];
     NSArray *categories = [modelObj findAllCategoriesSortedByAbsoluteValueOfAmountsInConceptsOfType:type];
-    [modelObj endCategoryConceptSearchMode];
     
     return categories;
 }

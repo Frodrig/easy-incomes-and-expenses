@@ -172,7 +172,7 @@ static NSString * const kLTextDecemberName = @"December";
 
 - (void)beginCategoryConceptSearchMode
 {
-    NSAssert(self.categoryConceptSearchCache == nil, @"");
+    NSAssert(nil == self.categoryConceptSearchCache, @"");
     self.categoryConceptSearchCache = [[NSMutableDictionary alloc] initWithCapacity:self.concepts.count];
     for (IAEConcept *concept in self.concepts) {
         NSArray *conceptsOfCategory = [self.categoryConceptSearchCache objectForKey:concept.category.tag];

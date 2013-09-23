@@ -1115,7 +1115,6 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
                               self.selectorContextView.bounds.size.height - kSelectorContextViewYOutsideMargin);
     IAEContextView *contextView = [[IAEContextView alloc] initWithFrame:frame type:contextType andValueIndex:contextValueIndex];
     contextView.dataSource = self;
-    [contextView reloadDataWithoutAnimation];
     
     [self.selectorContextView addContextView:contextView withIndex:globalPosition];
 }

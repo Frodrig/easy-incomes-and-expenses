@@ -16,8 +16,11 @@
 
 - (NSUInteger)numberOfItemsInReportAreaView:(IAEReportAreaView *)reportAreaView;
 - (CGFloat)maxValueOfItemsInReportAreaView:(IAEReportAreaView *)reportAreaView;
-- (UIColor *)reportAreaView:(IAEReportAreaView *)reportAreaView colorRepresentationOfItemWithIndex:(NSUInteger)itemIndex;
 
+- (void)reloadAllItemsWillBeginInReportAreaView:(IAEReportAreaView *)reportAreaView;
+- (void)reloadAllItemsDidEndInReportAreaView:(IAEReportAreaView *)reportAreaView;
+
+- (UIColor *)reportAreaView:(IAEReportAreaView *)reportAreaView colorRepresentationOfItemWithIndex:(NSUInteger)itemIndex;
 - (CGFloat)reportAreaView:(IAEReportAreaView *)reportAreaView valueOfItemWithIndex:(NSUInteger)itemIndex;
 - (NSString *)reportAreaView:(IAEReportAreaView *)reportAreaView titleOfItemWithIndex:(NSUInteger)itemIndex;
 - (NSString *)reportAreaView:(IAEReportAreaView *)reportAreaView subtitleOfItemWithIndex:(NSUInteger)itemIndex;

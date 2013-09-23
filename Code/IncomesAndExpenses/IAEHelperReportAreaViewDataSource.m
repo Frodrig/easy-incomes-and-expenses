@@ -20,6 +20,9 @@
 @interface IAEHelperReportAreaViewDataSource()
 
 @property (nonatomic, weak) id<IAEEasyIncomesAndExpensesViewControllerQuery> iaeViewControllerQuery;
+@property (nonatomic, strong) NSArray *allIncomeCategoriesOfActualContextCache;
+@property (nonatomic, strong) NSArray *allExpenseCategoriesOfActualContextCache;
+@property (nonatomic) CGFloat maxValueOfItemsCache;
 
 @end
 
@@ -73,19 +76,53 @@ static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
 
 - (CGFloat)maxValueOfItemsInReportAreaView:(IAEReportAreaView *)reportAreaView
 {
-    CGFloat maxValue = 0;
+    return self.maxValueOfItemsCache;
+}
+
+- (void)reloadAllItemsWillBeginInReportAreaView:(IAEReportAreaView *)reportAreaView
+{
+    [self createAllCategoriesCache];
+    [self createMaxValueOfItemsCache];
+}
+
+- (void)createAllCategoriesCache
+{
+    // Cacheamos categorias en modo ingresos y gastos
+    const BOOL findAllIncomeCategories = [self.iaeViewControllerQuery isTheIncomesOptionSelectedInReportMenu];
+    const BOOL findAllExpenseCategories = [self.iaeViewControllerQuery isTheExpensesOptionSelectedInReportMenu];
     
+    id modelObj = [self.iaeViewControllerQuery findModelObjectOfActualSelectedContextView];
+    if (findAllIncomeCategories) {
+        self.allIncomeCategoriesOfActualContextCache = [modelObj findAllCategoriesSortedByAbsoluteValueOfAmountsInConceptsOfType:IncomeCategory];
+    }
+    
+    if (findAllExpenseCategories) {
+        self.allExpenseCategoriesOfActualContextCache = [modelObj findAllCategoriesSortedByAbsoluteValueOfAmountsInConceptsOfType:ExpenseCategory];
+    }
+}
+
+- (void)createMaxValueOfItemsCache
+{
     if ([self.iaeViewControllerQuery isTheBalancesOptionSelectedInReportMenu]) {
         NSDecimalNumber *incomes = [self.iaeViewControllerQuery findIncomesOfActualSelectedContextView];
         NSDecimalNumber *expenses = [self.iaeViewControllerQuery findExpensesOfActualSelectedContextView];
-        maxValue = [[IAENumberUtils maxValueOfNumber:incomes andNumber:expenses] floatValue];
+        self.maxValueOfItemsCache = [[IAENumberUtils maxValueOfNumber:incomes andNumber:expenses] floatValue];
     } else {
         CategoryType categoryType = [self.iaeViewControllerQuery isTheIncomesOptionSelectedInReportMenu] ? IncomeCategory : ExpenseCategory;
         NSDecimalNumber *maxDecimalValue = [self.iaeViewControllerQuery findMaxValueForActualSelectedContextForCategoryType:categoryType];
-        maxValue = maxDecimalValue.floatValue;
+        self.maxValueOfItemsCache = maxDecimalValue.floatValue;
     }
-    
-    return maxValue;
+}
+
+- (void)reloadAllItemsDidEndInReportAreaView:(IAEReportAreaView *)reportAreaView
+{
+    [self releaseAllCategoriesCache];
+}
+
+- (void)releaseAllCategoriesCache
+{
+    self.allExpenseCategoriesOfActualContextCache = nil;
+    self.allIncomeCategoriesOfActualContextCache = nil;
 }
 
 - (UIColor *)reportAreaView:(IAEReportAreaView *)reportAreaView colorRepresentationOfItemWithIndex:(NSUInteger)itemIndex
@@ -113,9 +150,7 @@ static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
         valueOfItem = [decimalValue floatValue];
     } else {
         BOOL incomesOptionSelected = [self.iaeViewControllerQuery isTheIncomesOptionSelectedInReportMenu];
-        NSArray *categories = incomesOptionSelected ?
-                              [self.iaeViewControllerQuery findIncomesCategoriesOfActualSelectedContextView] :
-                              [self.iaeViewControllerQuery findExpensesCategoriesOfActualSelectedContextView];
+        NSArray *categories = incomesOptionSelected ? self.allIncomeCategoriesOfActualContextCache : self.allExpenseCategoriesOfActualContextCache;
         IAECategory *category = categories[itemIndex];
         id modelObj = [self.iaeViewControllerQuery findModelObjectOfActualSelectedContextView];
         NSDecimalNumber *balance = [modelObj balanceOfAllConceptsOfCategory:category];
@@ -138,8 +173,7 @@ static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
     } else {
         id modelObj = [self.iaeViewControllerQuery findModelObjectOfActualSelectedContextView];
         CategoryType categoryType = [self.iaeViewControllerQuery isTheIncomesOptionSelectedInReportMenu] ? IncomeCategory : ExpenseCategory;
-        incomeValue = categoryType == IncomeCategory;
-        NSArray *categories = [modelObj findAllCategoriesSortedByAbsoluteValueOfAmountsInConceptsOfType:categoryType];
+        NSArray *categories = categoryType == IncomeCategory ? self.allIncomeCategoriesOfActualContextCache : self.allExpenseCategoriesOfActualContextCache;
         IAECategory *category = categories[itemIndex];
         value = [modelObj sumAllAmountOfCategories:@[category]];
     }
@@ -161,9 +195,8 @@ static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
     if ([self.iaeViewControllerQuery isTheBalancesOptionSelectedInReportMenu]) {
         subtitle = itemIndex == 0 ? NSLocalizedString(kLTextIncomeCategoryTypeName, @"") : NSLocalizedString(kLTextExpenseCategoryTypeName, @"");
     } else {
-        NSArray *categories = [self.iaeViewControllerQuery isTheIncomesOptionSelectedInReportMenu] ?
-                              [self.iaeViewControllerQuery findIncomesCategoriesOfActualSelectedContextView] :
-                              [self.iaeViewControllerQuery findExpensesCategoriesOfActualSelectedContextView];
+        CategoryType categoryType = [self.iaeViewControllerQuery isTheIncomesOptionSelectedInReportMenu] ? IncomeCategory : ExpenseCategory;
+        NSArray *categories = categoryType == IncomeCategory ? self.allIncomeCategoriesOfActualContextCache : self.allExpenseCategoriesOfActualContextCache;
         IAECategory *category = categories[itemIndex];
         subtitle = category.tag;
     }

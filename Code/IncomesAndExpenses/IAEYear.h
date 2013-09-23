@@ -27,6 +27,9 @@
 - (NSDecimalNumber *)balance;
 - (NSDecimalNumber *)balanceOfAllConceptsOfCategory:(IAECategory *)category;
 
+- (void)beginCategoryConceptSearchMode;
+- (void)endCategoryConceptSearchMode;
+
 - (NSArray *)findAllOrdererMonthsWithConcepts;
 - (NSArray *)findAllConceptsWithCategory:(IAECategory *)category;
 - (NSArray *)findAllConcepts;

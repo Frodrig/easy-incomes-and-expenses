@@ -14,6 +14,12 @@
 #import "IAEBook.h"
 #import "IAEDateHelper.h"
 
+@interface IAEMonth()
+
+@property (nonatomic, strong) NSMutableDictionary *categoryConceptSearchCache;
+
+@end
+
 @implementation IAEMonth
 
 @dynamic month;
@@ -21,6 +27,7 @@
 @dynamic year;
 
 @synthesize delegate = _delegate;
+@synthesize categoryConceptSearchCache = _categoryConceptSearchCache;
 
 static const NSUInteger kInvalidDayOfTheMonth = 0;
 
@@ -156,16 +163,43 @@ static NSString * const kLTextDecemberName = @"December";
     return total;
 }
 
+- (void)beginCategoryConceptSearchMode
+{
+    NSAssert(self.categoryConceptSearchCache == nil, @"");
+    self.categoryConceptSearchCache = [[NSMutableDictionary alloc] initWithCapacity:self.concepts.count];
+    for (IAEConcept *concept in self.concepts) {
+        NSArray *conceptsOfCategory = [self.categoryConceptSearchCache objectForKey:concept.category.tag];
+        if (!conceptsOfCategory) {
+            [self.categoryConceptSearchCache setObject:[NSArray arrayWithObject:concept] forKey:concept.category.tag];
+        } else {
+            conceptsOfCategory = [conceptsOfCategory arrayByAddingObject:concept];
+            [self.categoryConceptSearchCache setObject:conceptsOfCategory forKey:concept.category.tag];
+        }
+    }
+}
+
+- (void)endCategoryConceptSearchMode
+{
+    self.categoryConceptSearchCache = nil;
+}
+
 - (NSArray *)findAllConceptsWithCategory:(IAECategory *)category
 {
-    NSMutableArray *concepts = [[NSMutableArray alloc] initWithCapacity:self.concepts.count];
-    for (IAEConcept *concept in self.concepts) {
-        if (concept.category == category) {
-            [concepts addObject:concept];
+    NSArray *foundConcepts = nil;
+    BOOL returnCopy = NO;
+    if (self.categoryConceptSearchCache) {
+        foundConcepts = [self.categoryConceptSearchCache objectForKey:category.tag];
+        returnCopy = YES;
+    } else {
+        foundConcepts = [[NSArray alloc] init];
+        for (IAEConcept *concept in self.concepts) {
+            if (concept.category == category) {
+                foundConcepts = [foundConcepts arrayByAddingObject:concept];
+            }
         }
     }
     
-    return concepts;
+    return returnCopy ? [foundConcepts copy] : foundConcepts;
 }
 
 - (NSArray *)findAllConceptsWithCategoryTag:(NSString *)tag

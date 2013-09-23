@@ -44,6 +44,9 @@
 - (NSDecimalNumber *)balanceOfAllConceptsOfCategory:(IAECategory *)category;
 - (NSDecimalNumber *)sumAllAmountOfCategories:(NSArray *)categories;
 
+- (void)beginCategoryConceptSearchMode;
+- (void)endCategoryConceptSearchMode;
+
 - (NSArray *)allConceptsSortedByEntryInstant;
 - (NSArray *)allConceptsSortedByDay;
 - (NSArray *)findAllConceptsWithCategory:(IAECategory *)category;

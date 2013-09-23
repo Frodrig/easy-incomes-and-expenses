@@ -1027,8 +1027,10 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 - (NSArray *)findCategoriesOfActualSelectedContextViewWithType:(CategoryType)type
 {
     id modelObj = [self findModelObjectOfActualSelectedContextView];
+    [modelObj beginCategoryConceptSearchMode];
     NSArray *categories = [modelObj findAllCategoriesSortedByAbsoluteValueOfAmountsInConceptsOfType:type];
-
+    [modelObj endCategoryConceptSearchMode];
+    
     return categories;
 }
 

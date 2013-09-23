@@ -260,6 +260,8 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
 {
     NSUInteger numberOfReportAreaItems = [self.dataSource numberOfItemsInReportAreaView:self];
     if (numberOfReportAreaItems > 0) {
+        [self.dataSource reloadAllItemsWillBeginInReportAreaView:self];
+       
         [self endReloadDataWithAnimation];
         [self showNoItemsLabel:NO withAnimation:animation completion:nil];
         
@@ -269,6 +271,8 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
             [self.allReportAreaItems addObject:reportAreaItem];
         }
         
+        [self.dataSource reloadAllItemsDidEndInReportAreaView:self];
+
         if (animation) {
             [self playShowAnimationOverActualLoadedData];
         }

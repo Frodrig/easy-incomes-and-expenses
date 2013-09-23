@@ -760,7 +760,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 - (NSDecimalNumber *)findForModelObject:(id)modelObject maxBalanceValueOfCategories:(NSArray *)categories
 {
     NSDecimalNumber *maxValue = [NSDecimalNumber zero];
-
+    
     for (IAECategory *category in categories) {
         NSDecimalNumber *categoryValue = [modelObject balanceOfAllConceptsOfCategory:category];
         if ([categoryValue compare:maxValue] == NSOrderedDescending) {

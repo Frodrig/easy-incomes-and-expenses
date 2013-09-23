@@ -81,6 +81,7 @@ static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
 
 - (void)reloadAllItemsWillBeginInReportAreaView:(IAEReportAreaView *)reportAreaView
 {
+    [self beginCategoryConceptSearchModeInActualContext];
     [self createAllCategoriesCache];
     [self createMaxValueOfItemsCache];
 }
@@ -114,15 +115,34 @@ static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
     }
 }
 
+- (void)beginCategoryConceptSearchModeInActualContext
+{
+    id modelObj = [self.iaeViewControllerQuery findModelObjectOfActualSelectedContextView];
+    [modelObj beginCategoryConceptSearchMode];
+}
+
 - (void)reloadAllItemsDidEndInReportAreaView:(IAEReportAreaView *)reportAreaView
 {
+    [self endCategoryConceptSearchModeInActualContext];
     [self releaseAllCategoriesCache];
+    [self releaseMaxValueOfItemsCache];
 }
 
 - (void)releaseAllCategoriesCache
 {
     self.allExpenseCategoriesOfActualContextCache = nil;
     self.allIncomeCategoriesOfActualContextCache = nil;
+}
+
+- (void)releaseMaxValueOfItemsCache
+{
+    self.maxValueOfItemsCache = 0;
+}
+
+- (void)endCategoryConceptSearchModeInActualContext
+{
+    id modelObj = [self.iaeViewControllerQuery findModelObjectOfActualSelectedContextView];
+    [modelObj endCategoryConceptSearchMode];
 }
 
 - (UIColor *)reportAreaView:(IAEReportAreaView *)reportAreaView colorRepresentationOfItemWithIndex:(NSUInteger)itemIndex

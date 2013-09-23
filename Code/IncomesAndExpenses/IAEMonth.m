@@ -116,9 +116,16 @@ static NSString * const kLTextDecemberName = @"December";
 - (NSDecimalNumber *)sumAllAmountOfCategory:(IAECategory *)category
 {
     NSDecimalNumber *sumDecimalNumber = [NSDecimalNumber zero];
-    for (IAEConcept *concept in self.concepts) {
-        if (concept.category == category) {
+    if (self.categoryConceptSearchCache) {
+        NSArray *cacheConcepts = self.categoryConceptSearchCache[category.tag];
+        for (IAEConcept *concept in cacheConcepts) {
             sumDecimalNumber = [sumDecimalNumber decimalNumberByAdding:concept.amount];
+        }
+    } else {
+        for (IAEConcept *concept in self.concepts) {
+            if (concept.category == category) {
+                sumDecimalNumber = [sumDecimalNumber decimalNumberByAdding:concept.amount];
+            }
         }
     }
     
@@ -273,8 +280,8 @@ static NSString * const kLTextDecemberName = @"December";
 - (NSDecimalNumber *)balanceOfAllConceptsOfCategory:(IAECategory *)category
 {
     NSDecimalNumber *balance = [NSDecimalNumber zero];
-    NSArray *concepts = [self findAllConceptsWithCategory:category];
     
+    NSArray *concepts = [self findAllConceptsWithCategory:category];
     for (IAEConcept *concept in concepts) {
         balance = [balance decimalNumberByAdding:concept.amount];
     }

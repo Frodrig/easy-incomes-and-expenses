@@ -1057,8 +1057,8 @@
 			children = (
 				5BC7102317AC2B0900E12953 /* CategoryDefs.h */,
 				5BC7102217AC2A5900E12953 /* IAECategoryEditorDefs.h */,
-				5BC7100A17AC29F600E12953 /* IAECategory.h */,
 				5BC7100B17AC29F600E12953 /* IAECategoryStore.h */,
+				5BC7100A17AC29F600E12953 /* IAECategory.h */,
 				5BC7101217AC29F600E12953 /* IAECategory.m */,
 				5BC7101317AC29F600E12953 /* IAECategoryStore.m */,
 			);

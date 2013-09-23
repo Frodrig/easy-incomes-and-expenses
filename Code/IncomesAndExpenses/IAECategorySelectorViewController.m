@@ -30,6 +30,8 @@
 @property (nonatomic, strong) NSIndexPath *selectedCategoryIndexPath;
 @property (nonatomic) CategoryType selectedCategoryType;
 @property (nonatomic, strong) IAEStrokeAnimatableLineView *strokeAnimatableView;
+@property (nonatomic, strong) NSDictionary *labelAttributesForGeneralCategory;
+@property (nonatomic, strong) NSDictionary *labelAttributesForUserCategory;
 
 @end
 
@@ -97,6 +99,7 @@ static const CGFloat kAlphaOfColorWhiteValueForAttractAttentionFadeIn = 0.3;
     if (self) {
         [self initActions:actions];
         [self initSwipeGestureRecognizer];
+        [self createAttributesForCategoryLabels];
         _initialCategory = category;
     }
     
@@ -136,6 +139,40 @@ static const CGFloat kAlphaOfColorWhiteValueForAttractAttentionFadeIn = 0.3;
     if ([self deleteActionFlagEnabled]) {
         _swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGestureRecognizerEvent:)];
     }
+}
+
+- (void)createAttributesForCategoryLabels
+{
+    self.labelAttributesForGeneralCategory = [self createAttributeDictionaryForGeneralCategory];
+    self.labelAttributesForUserCategory = [self createAttributeDictionaryForUserCategory];
+}
+
+- (NSDictionary *)createAttributeDictionaryForGeneralCategory
+{
+    NSDictionary *attributes =  @{NSFontAttributeName: [self createFontForCategoryNameWithGeneralCategory],
+                                  NSForegroundColorAttributeName:[UIColor blackColor],
+                                  NSKernAttributeName: [NSNumber numberWithInteger:0.0]};
+    
+    return attributes;
+}
+
+- (UIFont *)createFontForCategoryNameWithGeneralCategory
+{
+    return [UIFont fontWithName:kFontOfGeneralCategoryLabel size:kSizeOfCategoryNameLabel];
+}
+
+- (NSDictionary *)createAttributeDictionaryForUserCategory
+{
+    NSDictionary *attributes =  @{NSFontAttributeName: [self createFontForCategoryNameWithUserCategory],
+                                  NSForegroundColorAttributeName:[UIColor blackColor],
+                                  NSKernAttributeName: [NSNumber numberWithInteger:0.0]};
+    
+    return attributes;
+}
+
+- (UIFont *)createFontForCategoryNameWithUserCategory
+{
+    return [UIFont fontWithName:kFontOfUserCategoryLabel size:kSizeOfCategoryNameLabel];
 }
 
 - (void)dealloc
@@ -486,7 +523,8 @@ static const CGFloat kAlphaOfColorWhiteValueForAttractAttentionFadeIn = 0.3;
 
 - (void)configureCategoryLabelOfTableViewCell:(IAECategoryTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath withCategory:(IAECategory *)category
 {
-    NSDictionary *attributes = [self createAttributeDictionaryForCategoryNameAttributeTextWithCategory:category];
+    const BOOL isGeneralCategory = [[IAECategoryStore sharedCategoryStore] isGeneralCategory:category];
+    NSDictionary *attributes = isGeneralCategory ? self.labelAttributesForGeneralCategory : self.labelAttributesForUserCategory;
     cell.categoryLabel.attributedText = [[NSAttributedString alloc] initWithString:[category localizedTag]
                                                                         attributes:attributes];
 }
@@ -507,21 +545,6 @@ static const CGFloat kAlphaOfColorWhiteValueForAttractAttentionFadeIn = 0.3;
         selectCategory = [self.selectedCategoryIndexPath compare:indexPath] == NSOrderedSame && category.categoryType == self.selectedCategoryType;
     }
     cell.openDecoratorView.hidden = !selectCategory;
-}
-
-- (NSDictionary *)createAttributeDictionaryForCategoryNameAttributeTextWithCategory:(IAECategory *)category
-{
-    NSDictionary *attributes =  @{NSFontAttributeName: [self createFontForCategoryNameWithCategory:category],
-                                  NSForegroundColorAttributeName:[UIColor blackColor],
-                                  NSKernAttributeName: [NSNumber numberWithInteger:0.0]};
-    
-    return attributes;
-}
-
-- (UIFont *)createFontForCategoryNameWithCategory:(IAECategory *)category
-{
-    BOOL generalCategory = [[IAECategoryStore sharedCategoryStore] isGeneralCategory:category];
-    return [UIFont fontWithName:generalCategory ? kFontOfGeneralCategoryLabel : kFontOfUserCategoryLabel size:kSizeOfCategoryNameLabel];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

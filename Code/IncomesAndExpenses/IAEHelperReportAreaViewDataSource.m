@@ -192,8 +192,8 @@ static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
                               [self.iaeViewControllerQuery findExpensesOfActualSelectedContextView];
     } else {
         id modelObj = [self.iaeViewControllerQuery findModelObjectOfActualSelectedContextView];
-        CategoryType categoryType = [self.iaeViewControllerQuery isTheIncomesOptionSelectedInReportMenu] ? IncomeCategory : ExpenseCategory;
-        NSArray *categories = categoryType == IncomeCategory ? self.allIncomeCategoriesOfActualContextCache : self.allExpenseCategoriesOfActualContextCache;
+        incomeValue = [self.iaeViewControllerQuery isTheIncomesOptionSelectedInReportMenu];
+        NSArray *categories = incomeValue ? self.allIncomeCategoriesOfActualContextCache : self.allExpenseCategoriesOfActualContextCache;
         IAECategory *category = categories[itemIndex];
         value = [modelObj sumAllAmountOfCategories:@[category]];
     }

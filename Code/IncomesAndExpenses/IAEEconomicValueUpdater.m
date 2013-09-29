@@ -95,7 +95,12 @@ static const CGFloat kRationOfDurationByUpdateProcessEconomicLabel = 0.1;
 
 - (NSDecimalNumber *)extractDecimalNumberFromLabel:(UILabel *)label
 {
-    NSNumber *number = [[IAECurrencyManager sharedManager].currencyFormatter numberFromString:label.text];
+    NSString *stringNumberOfLabel = label.text;
+    NSNumber *number = [[IAECurrencyManager sharedManager].currencyFormatter numberFromString:stringNumberOfLabel];
+    if (!number) {
+        // ToDo: Parche para evitar crash. Estaba devolviendo nil ¿por qué? al cambiar de año.
+        number = [NSNumber numberWithInt:0];
+    }
     NSDecimalNumber *decimalNumber = [NSDecimalNumber decimalNumberWithString:number.stringValue];
 
      return decimalNumber;

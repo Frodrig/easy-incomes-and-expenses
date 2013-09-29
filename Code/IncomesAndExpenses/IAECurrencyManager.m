@@ -25,7 +25,7 @@
 {
     if (!currencyFormatter_) {
         currencyFormatter_ = [[NSNumberFormatter alloc] init];
-       [currencyFormatter_ setNumberStyle:NSNumberFormatterCurrencyStyle];
+        [currencyFormatter_ setNumberStyle:NSNumberFormatterCurrencyStyle];
         currencyFormatter_.locale = [NSLocale currentLocale];
         currencyFormatter_.minimumFractionDigits = 2;
         currencyFormatter_.maximumFractionDigits = 2;

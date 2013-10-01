@@ -218,7 +218,7 @@ static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
         CategoryType categoryType = [self.iaeViewControllerQuery isTheIncomesOptionSelectedInReportMenu] ? IncomeCategory : ExpenseCategory;
         NSArray *categories = categoryType == IncomeCategory ? self.allIncomeCategoriesOfActualContextCache : self.allExpenseCategoriesOfActualContextCache;
         IAECategory *category = categories[itemIndex];
-        subtitle = category.tag;
+        subtitle =  [category localizedTag];
     }
     
     return subtitle;

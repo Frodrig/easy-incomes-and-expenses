@@ -410,6 +410,7 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
         self.view.frame = show ? self.frameInVisibleMode : self.frameInHideMode;
     } completion:^(BOOL finished) {
         [self resetAmountPannel];
+        self.actualDay = 0;
         self.automaticDragMode = NO;
     }];
 }

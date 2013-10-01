@@ -22,6 +22,13 @@
 @property (weak, nonatomic) IBOutlet UIView *daysOfTheWeekContainerView;
 @property (weak, nonatomic) IBOutlet UIView *daysOfTheMonthContainerView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
+@property (nonatomic, readonly) NSUInteger firstDayOfTheWeek;
+@property (nonatomic, readonly) NSUInteger firstDayOfTheWeekIndex;
+@property (nonatomic, readonly) NSUInteger maxDaysInMonth;
+@property (nonatomic, readonly) NSUInteger numberOfColumns;
+@property (nonatomic, readonly) NSUInteger numberOfRows;
+@property (nonatomic, readonly) NSUInteger dayOfTheMonthWidthSize;
+@property (nonatomic, readonly) NSUInteger dayOfTheMonthHeightSize;
 
 @end
 
@@ -107,23 +114,23 @@ static const CGFloat kWhiteAlphaComponentForCircle = 1.0;
 
 - (void)configureDaysOfTheMonthContainerView
 {
-    const NSUInteger firstDayOfTheWeek = [self firstDayOfTheWeekNormalized];
-    const NSUInteger firstDayOfTheWeekIndex = firstDayOfTheWeek - 1;
-    const NSUInteger maxDaysInMonth = [IAEDateHelper findNumberOfDaysFromYearDate:self.yearDate andMonthIndex:self.monthIndex];
-    const NSUInteger numberOfColumns = 7;
-    const NSUInteger numberOfRows = ceil(((maxDaysInMonth / 7.0) + (firstDayOfTheWeekIndex / 7.0)));
-    const NSUInteger dayOfTheMonthWidthSize = self.daysOfTheMonthContainerView.bounds.size.width / numberOfColumns;
-    const NSUInteger dayOfTheMonthHeightSize = self.daysOfTheMonthContainerView.bounds.size.height / numberOfRows;
+    _firstDayOfTheWeek = [self firstDayOfTheWeekNormalized];
+    _firstDayOfTheWeekIndex = self.firstDayOfTheWeek - 1;
+    _maxDaysInMonth = [IAEDateHelper findNumberOfDaysFromYearDate:self.yearDate andMonthIndex:self.monthIndex];
+    _numberOfColumns = 7;
+    _numberOfRows = ceil(((self.maxDaysInMonth / 7.0) + (self.firstDayOfTheWeekIndex / 7.0)));
+    _dayOfTheMonthWidthSize = self.daysOfTheMonthContainerView.bounds.size.width / self.numberOfColumns;
+    _dayOfTheMonthHeightSize = self.daysOfTheMonthContainerView.bounds.size.height / self.numberOfRows;
     
     NSUInteger dayIt = 1;
-    for (NSUInteger rowIt = 0; rowIt < numberOfRows; rowIt++) {
-        for (NSUInteger columnIt = 0; columnIt < numberOfColumns; ++columnIt) {
-            const BOOL validDayForMonth = (rowIt > 0 || columnIt >= firstDayOfTheWeekIndex) && (dayIt <= maxDaysInMonth);
+    for (NSUInteger rowIt = 0; rowIt < self.numberOfRows; rowIt++) {
+        for (NSUInteger columnIt = 0; columnIt < self.numberOfColumns; ++columnIt) {
+            const BOOL validDayForMonth = (rowIt > 0 || columnIt >= self.firstDayOfTheWeekIndex) && (dayIt <= self.maxDaysInMonth);
             if (validDayForMonth) {
-                CGRect labelRect = CGRectMake(columnIt * dayOfTheMonthWidthSize,
-                                              rowIt * dayOfTheMonthHeightSize,
-                                              dayOfTheMonthWidthSize,
-                                              dayOfTheMonthHeightSize);
+                CGRect labelRect = CGRectMake(columnIt * self.dayOfTheMonthWidthSize,
+                                              rowIt * self.dayOfTheMonthHeightSize,
+                                              self.dayOfTheMonthWidthSize,
+                                              self.dayOfTheMonthHeightSize);
                 NSString *labelText = [NSString stringWithFormat:@"%d", dayIt];
                 NSDictionary *labelAttributes = @{NSFontAttributeName: [UIFont fontWithName:kDayOfTheMonthFontFamilyName size:kDayOfTheMonthFontSize],
                                                   NSForegroundColorAttributeName: [UIColor darkTextColor]};
@@ -222,20 +229,13 @@ static const CGFloat kWhiteAlphaComponentForCircle = 1.0;
 
 - (CGPoint)findColumnAndRowOfLocationInDayOfTheMonthContainer:(CGPoint)location
 {
-    const NSUInteger numberOfColumns = 7;
-    const NSUInteger numberOfRows = 5;
-    const NSUInteger dayOfTheMonthWidthSize = self.daysOfTheMonthContainerView.bounds.size.width / numberOfColumns;
-    const NSUInteger dayOfTheMonthHeightSize = self.daysOfTheMonthContainerView.bounds.size.height / numberOfRows;
-    
-    CGPoint columnAndRow = CGPointMake(floorf(location.x / dayOfTheMonthWidthSize), floorf(location.y / dayOfTheMonthHeightSize));
+    CGPoint columnAndRow = CGPointMake(floorf(location.x / self.dayOfTheMonthWidthSize), floorf(location.y / self.dayOfTheMonthHeightSize));
     return columnAndRow;
 }
 
 - (NSUInteger)findDayAtColumnAndRow:(CGPoint)columnAndRow
 {
-    const NSUInteger numberOfColumns = 7;
-    const NSUInteger firstDayOfTheWeekIndex = [self firstDayOfTheWeekNormalized];
-    NSUInteger day = (columnAndRow.y * numberOfColumns + columnAndRow.x + 1) - (firstDayOfTheWeekIndex - 1);
+    NSUInteger day = (columnAndRow.y * self.numberOfColumns + columnAndRow.x + 1) - self.firstDayOfTheWeekIndex;
     
     return day;
 }

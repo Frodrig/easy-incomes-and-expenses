@@ -44,6 +44,8 @@
 		5B55C406178AA8C20066F586 /* IAECategoryEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B55C404178AA8C20066F586 /* IAECategoryEditorViewController.m */; };
 		5B55C407178AA8C20066F586 /* IAECategoryEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B55C405178AA8C20066F586 /* IAECategoryEditorViewController.xib */; };
 		5B57275817D9A99B00552E98 /* IAENibUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B57275717D9A99B00552E98 /* IAENibUtils.m */; };
+		5B57A9C217FAD39500C7BFD3 /* calculatordragbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B57A9C017FAD39500C7BFD3 /* calculatordragbackground.png */; };
+		5B57A9C317FAD39500C7BFD3 /* calculatordragbackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B57A9C117FAD39500C7BFD3 /* calculatordragbackground@2x.png */; };
 		5B5C967B1781673A008CD851 /* IAEValueDecoratorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C967A1781673A008CD851 /* IAEValueDecoratorView.m */; };
 		5B5C967F17816A13008CD851 /* UIView+RoundedCorners.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C967E17816A13008CD851 /* UIView+RoundedCorners.m */; };
 		5B5C968217816D68008CD851 /* IAEValueDecoratorViewConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C968117816D68008CD851 /* IAEValueDecoratorViewConfigurator.m */; };
@@ -184,6 +186,8 @@
 		5B57275617D9A99B00552E98 /* IAENibUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAENibUtils.h; sourceTree = "<group>"; };
 		5B57275717D9A99B00552E98 /* IAENibUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAENibUtils.m; sourceTree = "<group>"; };
 		5B57275917D9FAD400552E98 /* IAEAdjustConceptAmountViewControllerDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEAdjustConceptAmountViewControllerDataSource.h; sourceTree = "<group>"; };
+		5B57A9C017FAD39500C7BFD3 /* calculatordragbackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calculatordragbackground.png; sourceTree = "<group>"; };
+		5B57A9C117FAD39500C7BFD3 /* calculatordragbackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calculatordragbackground@2x.png"; sourceTree = "<group>"; };
 		5B5C96791781673A008CD851 /* IAEValueDecoratorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEValueDecoratorView.h; sourceTree = "<group>"; };
 		5B5C967A1781673A008CD851 /* IAEValueDecoratorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEValueDecoratorView.m; sourceTree = "<group>"; };
 		5B5C967D17816A13008CD851 /* UIView+RoundedCorners.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RoundedCorners.h"; sourceTree = "<group>"; };
@@ -910,6 +914,8 @@
 			isa = PBXGroup;
 			children = (
 				5BB8AD1017FAC2F200BAAB96 /* editconceptcontainerviewbackground.png */,
+				5B57A9C017FAD39500C7BFD3 /* calculatordragbackground.png */,
+				5B57A9C117FAD39500C7BFD3 /* calculatordragbackground@2x.png */,
 				5BB8AD1117FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png */,
 				5B2AAA2E17C773CF00E7C7A5 /* 747-minus-circle@2x.png */,
 				5B2A41B217C77E8500C29036 /* 709-plus.png */,
@@ -1418,6 +1424,7 @@
 				5B2A41B017C77C8100C29036 /* 765-arrow-left.png in Resources */,
 				5B2A41B517C77E8500C29036 /* 709-plus@2x.png in Resources */,
 				5B2AAA2C17C773C500E7C7A5 /* 746-plus-circle@2x.png in Resources */,
+				5B57A9C217FAD39500C7BFD3 /* calculatordragbackground.png in Resources */,
 				5B2E93D417DCDDF6007D4284 /* eiae_icon29.png in Resources */,
 				5B5DBB3C17E1F01400716503 /* ipadlandscape_launchimage@2x.png in Resources */,
 				5B23FD9217CFAB5100B4AD77 /* 727-more@2x.png in Resources */,
@@ -1443,6 +1450,7 @@
 				5B0F8BC416B94ADD002D62A5 /* Localizable.strings in Resources */,
 				5B5544A2177460DD009CFC84 /* Main.storyboard in Resources */,
 				5BD94C0F1786B896009009B1 /* IAECategoryTableViewCell.xib in Resources */,
+				5B57A9C317FAD39500C7BFD3 /* calculatordragbackground@2x.png in Resources */,
 				5B55C407178AA8C20066F586 /* IAECategoryEditorViewController.xib in Resources */,
 				5BCE3AA117A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib in Resources */,
 				5BCCC91717D5008E00FC1A05 /* Images.xcassets in Resources */,

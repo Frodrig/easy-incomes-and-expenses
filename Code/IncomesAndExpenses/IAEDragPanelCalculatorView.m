@@ -24,8 +24,6 @@ static const NSUInteger kTagOfTitleLabel = 5;
 static NSString * const kLTextTitleLabel = @"LTEXT_CALCULATOR_TITLE";
 static const CGFloat kCalculatorTitleLabelKern = 5;
 
-static const NSUInteger kRadiusTopCorners = 20;
-
 #pragma mark - Properties
 
 - (UILabel *)title
@@ -41,13 +39,7 @@ static const NSUInteger kRadiusTopCorners = 20;
 
 - (void)awakeFromNib
 {
-    [self configureContainerView];
     [self configureTitleLabel];
-}
-
-- (void)configureContainerView
-{
-    [self addRoundedCorners:UIRectCornerTopLeft | UIRectCornerTopRight withRadius:kRadiusTopCorners];
 }
 
 - (void)configureTitleLabel

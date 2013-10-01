@@ -23,6 +23,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="812" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calculatordragbackground.png" id="PCW-Bg-wYU">
+                            <rect key="frame" x="0.0" y="0.0" width="812" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
                         <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="PjF-me-0zt">
                             <rect key="frame" x="20" y="-1" width="28" height="45"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -63,7 +67,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="deviceRGB"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
                 <view clipsSubviews="YES" contentMode="scaleToFill" id="xJU-jx-OgO" customClass="IAEDisplayPanelCalculatorView">
                     <rect key="frame" x="0.0" y="44" width="812" height="86"/>
@@ -412,5 +416,6 @@
         <image name="746-plus-circle.png" width="28" height="28"/>
         <image name="747-minus-circle.png" width="28" height="28"/>
         <image name="765-arrow-left.png" width="14" height="28"/>
+        <image name="calculatordragbackground.png" width="812" height="44"/>
     </resources>
 </document>

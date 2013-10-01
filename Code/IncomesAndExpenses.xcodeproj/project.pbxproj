@@ -91,6 +91,8 @@
 		5BA0131217983A9000337E84 /* IAEDayCalendarSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA0131017983A9000337E84 /* IAEDayCalendarSelectorViewController.m */; };
 		5BA0131317983A9000337E84 /* IAEDayCalendarSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA0131117983A9000337E84 /* IAEDayCalendarSelectorViewController.xib */; };
 		5BA51A7C1796D81E00A3D923 /* IAEInfoAboutAndOptionsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA51A7B1796D81E00A3D923 /* IAEInfoAboutAndOptionsCollectionViewCell.m */; };
+		5BB8AD1217FAC2F200BAAB96 /* editconceptcontainerviewbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BB8AD1017FAC2F200BAAB96 /* editconceptcontainerviewbackground.png */; };
+		5BB8AD1317FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BB8AD1117FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png */; };
 		5BC1110017CD1DF500FF6D6B /* 730-envelope.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BC110FE17CD1DF500FF6D6B /* 730-envelope.png */; };
 		5BC1110117CD1DF500FF6D6B /* 730-envelope@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BC110FF17CD1DF500FF6D6B /* 730-envelope@2x.png */; };
 		5BC31A8416651F1F009F23D6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BC31A8316651F1F009F23D6 /* QuartzCore.framework */; };
@@ -275,6 +277,8 @@
 		5BB0222217E2F7BD00CF75B8 /* IAEEasyIncomesAndExpensesViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEasyIncomesAndExpensesViewControllerDelegate.h; sourceTree = "<group>"; };
 		5BB2048B17D47E7100563B7C /* IAEDisplayPanelCalculatorViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEDisplayPanelCalculatorViewDataSource.h; sourceTree = "<group>"; };
 		5BB2048D17D4C92700563B7C /* IAEReportAreaViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEReportAreaViewDelegate.h; sourceTree = "<group>"; };
+		5BB8AD1017FAC2F200BAAB96 /* editconceptcontainerviewbackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = editconceptcontainerviewbackground.png; sourceTree = "<group>"; };
+		5BB8AD1117FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editconceptcontainerviewbackground@2x.png"; sourceTree = "<group>"; };
 		5BC110FE17CD1DF500FF6D6B /* 730-envelope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "730-envelope.png"; sourceTree = "<group>"; };
 		5BC110FF17CD1DF500FF6D6B /* 730-envelope@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "730-envelope@2x.png"; sourceTree = "<group>"; };
 		5BC31A8316651F1F009F23D6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -905,6 +909,8 @@
 		5B7FCE9217D63D1200624D25 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				5BB8AD1017FAC2F200BAAB96 /* editconceptcontainerviewbackground.png */,
+				5BB8AD1117FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png */,
 				5B2AAA2E17C773CF00E7C7A5 /* 747-minus-circle@2x.png */,
 				5B2A41B217C77E8500C29036 /* 709-plus.png */,
 				5BC110FE17CD1DF500FF6D6B /* 730-envelope.png */,
@@ -1408,6 +1414,7 @@
 			files = (
 				5B7319F31796A8AB00FAF632 /* IAEInfoAboutAndOptionsCollectionViewCell.xib in Resources */,
 				5B767E011636D7FC005315F8 /* InfoPlist.strings in Resources */,
+				5BB8AD1317FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png in Resources */,
 				5B2A41B017C77C8100C29036 /* 765-arrow-left.png in Resources */,
 				5B2A41B517C77E8500C29036 /* 709-plus@2x.png in Resources */,
 				5B2AAA2C17C773C500E7C7A5 /* 746-plus-circle@2x.png in Resources */,
@@ -1447,6 +1454,7 @@
 				5B951F6C17D88F1700CCEACE /* icon.png in Resources */,
 				5BC1110117CD1DF500FF6D6B /* 730-envelope@2x.png in Resources */,
 				5BA0131317983A9000337E84 /* IAEDayCalendarSelectorViewController.xib in Resources */,
+				5BB8AD1217FAC2F200BAAB96 /* editconceptcontainerviewbackground.png in Resources */,
 				5B1F0D3717841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

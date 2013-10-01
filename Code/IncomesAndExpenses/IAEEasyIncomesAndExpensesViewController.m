@@ -59,6 +59,7 @@
 @property (weak, nonatomic) IBOutlet UIView *editAndReportModeContentContainerView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *modeSegmentedControl;
 @property (weak, nonatomic) IBOutlet UICollectionView *conceptsCollectionView;
+@property (nonatomic, strong) UIImageView *editAndReportModeContentContainerViewBackground;
 @property (nonatomic, strong) IAEYearSelectorViewController *yearSelectorViewController;
 @property (nonatomic, strong) IAECategorySelectorViewController *categoriesSelectorViewController;
 @property (nonatomic, strong) IAEAboutAndOptionsViewController *aboutAndOptionsViewController;
@@ -322,7 +323,6 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     [self configureNavigationBar];
     [self configureSelectorContextView];
     [self configureEditModeSegmentedControl];
-    [self configureEditAndReportModeContentContainerView];
     [self configureCalculatorViewController];
     [self configureConceptsViews];
     [self configureReportAreaView];
@@ -377,9 +377,10 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (void)configureEditAndReportModeContentContainerView
 {
-    [self.editAndReportModeContentContainerView addRoundedCorners:UIRectCornerAllCorners withRadius:kEditAndReportModeContentContainerRadius];
-    self.editAndReportModeContentContainerView.backgroundColor = [UIColor colorWithWhite:kColorWithWhiteForEditAndReportModeContentContainerBackground
-                                                                                   alpha:1.0];
+    UIImage *backgroundImage = [UIImage imageNamed:@"editconceptcontainerviewbackground"];
+    self.editAndReportModeContentContainerViewBackground = [[UIImageView alloc] initWithImage:backgroundImage];
+    [self.editAndReportModeContentContainerView insertSubview:self.editAndReportModeContentContainerViewBackground
+                                                 belowSubview:self.conceptsCollectionView];
 }
 
 - (void)configureConceptsCollectionView
@@ -419,7 +420,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+
     [self vinculeSelectorContextViewContent];
     [self vinculeContextMenuView];
     [self vinculeCalculatorViewControllerView];
@@ -634,7 +635,6 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
         self.editAndReportModeContentContainerView.alpha = 0.0;
         self.reportMenuView.center = CGPointMake(self.reportMenuView.center.x, self.reportMenuView.center.y + self.reportMenuView.bounds.size.height);
     } completion:^(BOOL finished) {
-        [self.editAndReportModeContentContainerView addRoundedCorners:UIRectCornerAllCorners withRadius:kEditAndReportModeContentContainerRadius];
         self.withoutConceptsWarningInMonthReportModeView.alpha = 0;
         self.reportAreaView.dataSource = nil;
         self.reportAreaView.reportAreaViewDelegate = self;
@@ -644,8 +644,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
         [self reloadContentOfConceptsCollectionView];
         self.conceptsCollectionView.hidden = NO;
         self.calculatorViewController.view.hidden = NO;
-        self.editAndReportModeContentContainerView.backgroundColor = [UIColor colorWithWhite:kColorWithWhiteForEditAndReportModeContentContainerBackground
-                                                                                alpha:1.0];
+        self.editAndReportModeContentContainerViewBackground.hidden = NO;
         [UIView animateWithDuration:kDurationModeFadeIn animations:^{
             self.withoutConceptsWarningInMonthEditModeView.alpha = [self existConceptsInActualSelectedContext] > 0 ? 0.0 : 1.0;
             self.editAndReportModeContentContainerView.alpha = 1.0;
@@ -664,7 +663,6 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
         self.editAndReportModeContentContainerView.alpha = 0.0;
         self.calculatorViewController.view.center = CGPointMake(self.calculatorViewController.view.center.x, self.calculatorViewController.view.center.y + self.calculatorViewController.dragPanel.bounds.size.height);
     } completion:^(BOOL finished) {
-        [self.editAndReportModeContentContainerView addRoundedCorners:UIRectCornerAllCorners withRadius:0];
         self.withoutConceptsWarningInMonthEditModeView.alpha = 0;
         self.reportMenuView.currentOptionIndexSelected = 0;
         self.reportAreaView.dataSource = self.helperReportAreaViewDataSource;
@@ -674,7 +672,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
         self.reportMenuView.hidden = NO;
         self.conceptsCollectionView.hidden = YES;
         self.calculatorViewController.view.hidden = YES;
-        self.editAndReportModeContentContainerView.backgroundColor = [UIColor clearColor];
+        self.editAndReportModeContentContainerViewBackground.hidden = YES;
         [UIView animateWithDuration:kDurationModeFadeIn animations:^{
             self.withoutConceptsWarningInMonthReportModeView.alpha = [self existConceptsInActualSelectedContext] > 0 ? 0.0 : 1.0;
             self.editAndReportModeContentContainerView.alpha = 1.0;

@@ -57,6 +57,8 @@ static const CGFloat kDurationOfOpaqueTransitionOfAmountValueAfterStroke = 0.45;
 static const CGFloat kDurationOfColorTransitionChange = 0.75;
 static const CGFloat kAlphaValueForColorDisplay = 0.5;
 
+static const CGFloat kAlphaValueForDayButtonTitleDisabled = 0.2;
+
 #pragma mark - Init
 
 - (UIView *)categoryContainerView
@@ -192,6 +194,7 @@ static const CGFloat kAlphaValueForColorDisplay = 0.5;
 {
     NSString *monthAndYearPhrase = [self makeStringPhraseWithMonthName:monthName andYearName:yearName withDotAtEnd:NO];
     [self.dayButton setTitle:monthAndYearPhrase forState:UIControlStateNormal];
+    [self.dayButton setTitleColor:[UIColor colorWithWhite:0.0 alpha:kAlphaValueForDayButtonTitleDisabled] forState:UIControlStateDisabled];
     self.dayButton.enabled = NO;
 }
 
@@ -201,8 +204,6 @@ static const CGFloat kAlphaValueForColorDisplay = 0.5;
 {
     NSString *amountToDisplay = amount.length > 0 ? amount : @"0";
     self.amountLabel.text = amountToDisplay;
-   // self.amountLabel.attributedText = [[NSAttributedString alloc] initWithString:amountToDisplay
-     //                                                                 attributes:[self createAttributesForAmountLabel]];
 }
 
 - (NSDictionary *)createAttributesForAmountLabel

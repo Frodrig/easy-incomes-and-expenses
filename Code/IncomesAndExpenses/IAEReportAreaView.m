@@ -501,7 +501,6 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
         }
         
         [self.dataSource changeActualReportAmountModeDidOcurrInReportAreaView:self];
-        NSLog(@"ReportMode: %@", [[NSUserDefaults standardUserDefaults] stringForKey:kUserDefaultsReportAmountMode]);
     }
 }
 

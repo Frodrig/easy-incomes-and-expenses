@@ -26,6 +26,7 @@
 @property (nonatomic) CGFloat maxValueOfItemsCache;
 @property (nonatomic, strong) NSDecimalNumber *sumOfAllIncomesValues;
 @property (nonatomic, strong) NSDecimalNumber *sumOfAllExpensesValues;
+@property (nonatomic, strong) NSNumberFormatter *percentageFormatter;
 
 @end
 
@@ -33,6 +34,21 @@
 
 static NSString * const kLTextIncomeCategoryTypeName = @"LTEXT_CATEGORYTYPEINCOME_NAME";
 static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPENSE_NAME";
+
+#pragma mark - Properties
+
+- (NSNumberFormatter *)percentageFormatter
+{
+    if (!_percentageFormatter) {
+        _percentageFormatter = [[NSNumberFormatter alloc] init];
+        [_percentageFormatter setLocale:[NSLocale currentLocale]];
+        [_percentageFormatter setFormatterBehavior:NSNumberFormatterBehaviorDefault];
+        [_percentageFormatter setNumberStyle:NSNumberFormatterPercentStyle];
+        [_percentageFormatter setMaximumFractionDigits:2];
+    }
+    
+    return _percentageFormatter;
+}
 
 #pragma mark - Init
 
@@ -245,16 +261,12 @@ static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
 
 - (NSString *)titleForTheIncomeOrExpenseOptionInPercentageModeWithIndex:(NSUInteger)itemIndex usingMaxValueReference:(CGFloat)maxValueOfItems
 {
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    [formatter setFormatterBehavior:NSNumberFormatterBehaviorDefault];
-    [formatter setNumberStyle:NSNumberFormatterPercentStyle];
-    
     const BOOL incomeValue = [self.iaeViewControllerQuery isTheIncomesOptionSelectedInReportMenu];
     NSDecimalNumber *sumOfAllValues = incomeValue ? self.sumOfAllIncomesValues : self.sumOfAllExpensesValues;
     NSDecimalNumber *value = [self sumAllAmountOfConceptsWithCategoryOfOptionAtIndex:itemIndex];
     value = [value decimalNumberByDividingBy:[NSDecimalNumber decimalNumberWithString:sumOfAllValues.stringValue]];
     
-    NSString *title = [formatter stringFromNumber:value];
+    NSString *title = [self.percentageFormatter stringFromNumber:value];
     
     return title;
 }

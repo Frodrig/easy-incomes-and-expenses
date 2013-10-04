@@ -69,5 +69,4 @@ static NSString * const kUserDefaultsReportAmountModePercentageAmountValue = @"p
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-
 @end

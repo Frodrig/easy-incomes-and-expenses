@@ -24,6 +24,8 @@
 @property (nonatomic, strong) NSArray *allIncomeCategoriesOfActualContextCache;
 @property (nonatomic, strong) NSArray *allExpenseCategoriesOfActualContextCache;
 @property (nonatomic) CGFloat maxValueOfItemsCache;
+@property (nonatomic, strong) NSDecimalNumber *sumOfAllIncomesValues;
+@property (nonatomic, strong) NSDecimalNumber *sumOfAllExpensesValues;
 
 @end
 
@@ -91,6 +93,7 @@ static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
 {
     [self beginCategoryConceptSearchModeInActualContext];
     [self createAllCategoriesCache];
+    [self createSumOfAllIncomesAndExpensesCache];
     [self createMaxValueOfItemsCache];
 }
 
@@ -110,12 +113,16 @@ static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
     }
 }
 
+- (void)createSumOfAllIncomesAndExpensesCache
+{
+    self.sumOfAllIncomesValues = [self.iaeViewControllerQuery findIncomesOfActualSelectedContextView];
+    self.sumOfAllExpensesValues = [self.iaeViewControllerQuery findExpensesOfActualSelectedContextView];
+}
+
 - (void)createMaxValueOfItemsCache
 {
     if ([self.iaeViewControllerQuery isTheBalancesOptionSelectedInReportMenu]) {
-        NSDecimalNumber *incomes = [self.iaeViewControllerQuery findIncomesOfActualSelectedContextView];
-        NSDecimalNumber *expenses = [self.iaeViewControllerQuery findExpensesOfActualSelectedContextView];
-        self.maxValueOfItemsCache = [[IAENumberUtils maxValueOfNumber:incomes andNumber:expenses] floatValue];
+        self.maxValueOfItemsCache = [[IAENumberUtils maxValueOfNumber:self.sumOfAllIncomesValues andNumber:self.sumOfAllExpensesValues] floatValue];
     } else {
         CategoryType categoryType = [self.iaeViewControllerQuery isTheIncomesOptionSelectedInReportMenu] ? IncomeCategory : ExpenseCategory;
         NSDecimalNumber *maxDecimalValue = [self.iaeViewControllerQuery findMaxValueForActualSelectedContextForCategoryType:categoryType];
@@ -133,13 +140,32 @@ static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
 {
     [self endCategoryConceptSearchModeInActualContext];
     [self releaseAllCategoriesCache];
+    [self releaseSumOfAllIncomesAndExpensesCache];
     [self releaseMaxValueOfItemsCache];
+}
+
+- (void)changeActualReportAmountModeWillOcurrInReportAreaView:(IAEReportAreaView *)reportAreaView
+{
+    [self createAllCategoriesCache];
+    [self createSumOfAllIncomesAndExpensesCache];
+}
+
+- (void)changeActualReportAmountModeDidOcurrInReportAreaView:(IAEReportAreaView *)reportAreaView
+{
+    [self releaseAllCategoriesCache];
+    [self releaseSumOfAllIncomesAndExpensesCache];
 }
 
 - (void)releaseAllCategoriesCache
 {
     self.allExpenseCategoriesOfActualContextCache = nil;
     self.allIncomeCategoriesOfActualContextCache = nil;
+}
+
+- (void)releaseSumOfAllIncomesAndExpensesCache
+{
+    self.sumOfAllIncomesValues = nil;
+    self.sumOfAllExpensesValues = nil;
 }
 
 - (void)releaseMaxValueOfItemsCache
@@ -198,7 +224,8 @@ static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
         if ([[NSUserDefaults standardUserDefaults] isTotalAmountModeInReportSection]) {
             title = [self titleForTheIncomeOrExpenseOptionInAmountModeWithIndex:itemIndex];
         } else if ([[NSUserDefaults standardUserDefaults] isTotalPercentageModeInReportSection]) {
-            title = @"%";
+            CGFloat maxValueOfItems = [self maxValueOfItemsInReportAreaView:reportAreaView];
+            title = [self titleForTheIncomeOrExpenseOptionInPercentageModeWithIndex:itemIndex usingMaxValueReference:maxValueOfItems];
         }
     }
     
@@ -216,17 +243,40 @@ static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
     return title;
 }
 
+- (NSString *)titleForTheIncomeOrExpenseOptionInPercentageModeWithIndex:(NSUInteger)itemIndex usingMaxValueReference:(CGFloat)maxValueOfItems
+{
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    [formatter setFormatterBehavior:NSNumberFormatterBehaviorDefault];
+    [formatter setNumberStyle:NSNumberFormatterPercentStyle];
+    
+    const BOOL incomeValue = [self.iaeViewControllerQuery isTheIncomesOptionSelectedInReportMenu];
+    NSDecimalNumber *sumOfAllValues = incomeValue ? self.sumOfAllIncomesValues : self.sumOfAllExpensesValues;
+    NSDecimalNumber *value = [self sumAllAmountOfConceptsWithCategoryOfOptionAtIndex:itemIndex];
+    value = [value decimalNumberByDividingBy:[NSDecimalNumber decimalNumberWithString:sumOfAllValues.stringValue]];
+    
+    NSString *title = [formatter stringFromNumber:value];
+    
+    return title;
+}
+
 - (NSString *)titleForTheIncomeOrExpenseOptionInAmountModeWithIndex:(NSUInteger)itemIndex
+{
+    const BOOL incomeValue = [self.iaeViewControllerQuery isTheIncomesOptionSelectedInReportMenu];
+    NSDecimalNumber *value = [self sumAllAmountOfConceptsWithCategoryOfOptionAtIndex:itemIndex];
+    NSString *title = [self convertToStringTheEconomicValue:value asIncomeValue:incomeValue];
+    
+    return title;
+}
+
+- (NSDecimalNumber *)sumAllAmountOfConceptsWithCategoryOfOptionAtIndex:(NSUInteger)itemIndex
 {
     id modelObj = [self.iaeViewControllerQuery findModelObjectOfActualSelectedContextView];
     const BOOL incomeValue = [self.iaeViewControllerQuery isTheIncomesOptionSelectedInReportMenu];
     NSArray *categories = incomeValue ? self.allIncomeCategoriesOfActualContextCache : self.allExpenseCategoriesOfActualContextCache;
     IAECategory *category = categories[itemIndex];
     NSDecimalNumber *value = [modelObj sumAllAmountOfCategories:@[category]];
-    
-    NSString *title = [self convertToStringTheEconomicValue:value asIncomeValue:incomeValue];
-    
-    return title;
+ 
+    return value;
 }
 
 - (NSString *)convertToStringTheEconomicValue:(NSDecimalNumber *)value asIncomeValue:(BOOL)incomeValue

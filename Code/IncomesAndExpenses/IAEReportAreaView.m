@@ -489,7 +489,18 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
 - (void)processTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer
 {
     if ([self canChangeActualReportAmountMode]) {
+        [self.dataSource changeActualReportAmountModeWillOcurrInReportAreaView:self];
+        
         [[NSUserDefaults standardUserDefaults] changeToNextReportMode];
+        
+        for (NSUInteger reportAreaItemIt = 0; reportAreaItemIt < self.allReportAreaItems.count; ++reportAreaItemIt) {
+            NSString *title = [self.dataSource reportAreaView:self titleOfItemWithIndex:reportAreaItemIt];
+            
+            IAEReportAreaItemView *reportAreaItem = (IAEReportAreaItemView *)[self viewWithTag:[self createReportAreaItemTagForIndex:reportAreaItemIt]];
+            [reportAreaItem changeTitleLabel:title];
+        }
+        
+        [self.dataSource changeActualReportAmountModeDidOcurrInReportAreaView:self];
         NSLog(@"ReportMode: %@", [[NSUserDefaults standardUserDefaults] stringForKey:kUserDefaultsReportAmountMode]);
     }
 }

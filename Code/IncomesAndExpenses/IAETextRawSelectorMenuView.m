@@ -339,10 +339,31 @@ static const CGFloat kMinimumAlphaOfAnimationOptionDestroyWithGosth = 0.1;
 
 - (void)optionButtonPressed:(UIButton *)sender
 {
-    NSUInteger optionIndex = [self optionIndexFromTagOfOptionButton:sender];
-    if (optionIndex != self.currentOptionIndexSelected) {
-        self.currentOptionIndexSelected = optionIndex;
-        [self.delegate optionIndex:optionIndex wasSelectedInTextRawSelectorMenuView:self];
+    NSUInteger index = [self optionIndexFromTagOfOptionButton:sender];
+    [self changeToOptionIndex:index andSendToDelegate:YES];
+}
+
+- (void)changeToOptionIndex:(NSUInteger)index
+{
+    [self changeToOptionIndex:index andSendToDelegate:NO];
+}
+
+- (void)changeToOptionIndex:(NSUInteger)index andSendToDelegate:(BOOL)sendToDelegate
+{
+    const NSUInteger numberOfOptions = [self.dataSource numberOfOptionsInTextRawSelectorMenu:self];
+    if (index < numberOfOptions && index != self.currentOptionIndexSelected) {
+        BOOL permissionToSelectOptionIndex = YES;
+        if (sendToDelegate) {
+            permissionToSelectOptionIndex = [self.delegate canSelectOptionIndex:index inTextRawSelectorMenuView:self];
+        }
+        
+        if (permissionToSelectOptionIndex) {
+            self.currentOptionIndexSelected = index;
+            
+            if (sendToDelegate) {
+                [self.delegate optionIndex:index wasSelectedInTextRawSelectorMenuView:self];
+            }
+        }
     }
 }
 

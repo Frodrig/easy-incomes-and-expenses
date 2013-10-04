@@ -2190,15 +2190,25 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 #pragma mark - IAETextRawSelectorMenuViewDelegate
 
-- (void)optionIndex:(NSUInteger)optionIndex wasSelectedInTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenu
+- (BOOL)canSelectOptionIndex:(NSUInteger)optionIndex inTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenuView
 {
-    if ([self isTheContextMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
+    BOOL canSelect = YES;
+    if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenuView]) {
+        canSelect = ![self.reportAreaView existChangeTitleInProgressOnReportAreaItems];
+    }
+    
+    return canSelect;
+}
+
+- (void)optionIndex:(NSUInteger)optionIndex wasSelectedInTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenuView
+{
+    if ([self isTheContextMenuTheTextRawSelectorMenuView:textRawSelectorMenuView]) {
         if ([self isChangeOfContextRunning]) {
             self.lastContextIndexMenuPressed = optionIndex;
         } else {
             [self gotoToContextViewWithIndex:optionIndex];
         }
-    } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenu]) {
+    } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenuView]) {
         [self reloadContentOfConceptsReportViewWithAnimation:YES];
     }
 }

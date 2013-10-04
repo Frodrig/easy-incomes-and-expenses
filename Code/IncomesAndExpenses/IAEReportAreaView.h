@@ -28,4 +28,6 @@
 
 - (void)playShowAnimationOverActualLoadedData;
 
+- (BOOL)existChangeTitleInProgressOnReportAreaItems;
+
 @end

@@ -244,7 +244,6 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
     if (numberOfAreaItemsToRemove > 0) {
         for (IAEReportAreaItemView *reportAreaItemView in self.allReportAreaItems) {
             if (animation) {
-                // refactorizar
                 if ([self isLastReportModeOfTotalAmountType]) {
                     [[IAEAnimateValueUpdater defaultAnimateValueUpdater] processEconomicLabel:reportAreaItemView.title
                                                                                       toValue:[NSDecimalNumber zero]
@@ -385,8 +384,8 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
             CGRect frameOfAreaItem = reportAreaItemView.frame;
             reportAreaItemView.frame = CGRectMake(frameOfAreaItem.origin.x, frameOfAreaItem.origin.y + frameOfAreaItem.size.height, frameOfAreaItem.size.width, 0.0);
             
-            // refactorizar
-            if ([[NSUserDefaults standardUserDefaults] isTotalAmountModeInReportSection] || ![self.dataSource canChangeActualReportAmountModeInReportAreaView:self]) {
+            if ([[NSUserDefaults standardUserDefaults] isTotalAmountModeInReportSection] ||
+                ![self.dataSource canChangeActualReportAmountModeInReportAreaView:self]) {
                 NSNumber *numberValueOfItem = [[IAENumberFormatterManager sharedManager].currencyFormatter numberFromString:reportAreaItemView.title.text];
                 NSDecimalNumber *decimalNumberOfItem = [NSDecimalNumber decimalNumberWithString:numberValueOfItem.stringValue];
                 [reportAreaItemView changeTitleLabel:[[IAENumberFormatterManager sharedManager].currencyFormatter stringFromNumber:[NSDecimalNumber zero]] withAnimation:NO];

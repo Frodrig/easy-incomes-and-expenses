@@ -45,6 +45,7 @@
         [_percentageFormatter setFormatterBehavior:NSNumberFormatterBehaviorDefault];
         [_percentageFormatter setNumberStyle:NSNumberFormatterPercentStyle];
         [_percentageFormatter setMaximumFractionDigits:2];
+        [_percentageFormatter setMinimumFractionDigits:2];
     }
     
     return _percentageFormatter;

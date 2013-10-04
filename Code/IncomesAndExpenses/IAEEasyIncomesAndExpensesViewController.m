@@ -99,9 +99,9 @@ static const NSUInteger kNumberOfMonths = 12;
 
 static const CGFloat kSelectorContextViewYOutsideMargin = 100;
 
-static const CGFloat kDurationInitializationAnimationNavigationFadeIn = 1.5;
-static const CGFloat kDurationInitializationAnimationContextAndModesFadeIn = 2;
-static const CGFloat kDurationInitializationAnimationTraslantionFadeIn = 2.5;
+static const CGFloat kDurationInitializationAnimationNavigationFadeIn = 0.75;
+static const CGFloat kDurationInitializationAnimationContextAndModesFadeIn = 1;
+static const CGFloat kDurationInitializationAnimationTraslantionFadeIn = 1.25;
 
 static NSString * const kLTextNavigationBarTitle = @"LTEXT_NAVIGATIONBAR_TITLE";
 static NSString * const kLTextVersionAppType = @"LTEXT_CATEGORY_VERSION";

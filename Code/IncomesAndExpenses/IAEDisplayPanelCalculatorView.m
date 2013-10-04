@@ -7,7 +7,7 @@
 //
 
 #import "IAEDisplayPanelCalculatorView.h"
-#import "IAECurrencyManager.h"
+#import "IAENumberFormatterManager.h"
 #import "IAEColorHelper.h"
 #import "IAEStrokeAnimatableLineView.h"
 #import "IAEDisplayPanelCalculatorViewDelegate.h"
@@ -257,11 +257,11 @@ static const CGFloat kAlphaValueForDayButtonTitleDisabled = 0.2;
 
 - (BOOL)canApplyStrokeToAmountLabel
 {
-    NSNumber *amountNumber = [[IAECurrencyManager sharedManager].currencyFormatter numberFromString:self.amountLabel.text];
-    BOOL noZeroValue = [amountNumber compare:[NSNumber numberWithInteger:0]] != NSOrderedSame;
-    BOOL zeroValue = !noZeroValue;
-    BOOL isDecimalPresent = [self.dataSource isDecimalPresentForDisplayPanelCalculatorView:self];
-    BOOL canApply = noZeroValue || (zeroValue && isDecimalPresent);
+    NSNumber *amountNumber = [[IAENumberFormatterManager sharedManager].currencyFormatter numberFromString:self.amountLabel.text];
+    const BOOL noZeroValue = [amountNumber compare:[NSNumber numberWithInteger:0]] != NSOrderedSame;
+    const BOOL zeroValue = !noZeroValue;
+    const BOOL isDecimalPresent = [self.dataSource isDecimalPresentForDisplayPanelCalculatorView:self];
+    const BOOL canApply = noZeroValue || (zeroValue && isDecimalPresent);
     
     return canApply;
 }
@@ -313,7 +313,5 @@ static const CGFloat kAlphaValueForDayButtonTitleDisabled = 0.2;
         self.amountLabel.alpha = 1;
     }];
 }
-
-
 
 @end

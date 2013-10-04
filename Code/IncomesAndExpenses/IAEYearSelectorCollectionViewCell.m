@@ -10,7 +10,7 @@
 #import "IAEValueDecoratorView.h"
 #import "IAEEconomicValueTypeHelper.h"
 #import "UIView+RoundedCorners.h"
-#import "IAECurrencyManager.h"
+#import "IAENumberFormatterManager.h"
 #import "IAECircleDecoratorView.h"
 #import "IAELocalizerPhraseComposer.h"
 
@@ -60,7 +60,7 @@ static const NSUInteger kContainerViewRoundRectSize = 10;
 {
     [self configureBasicInformationWithYearDate:yearDate andShowingControlsAssociatedWithConcepts:YES];
     self.economicDecoratorView.economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:balance];
-    self.balanceLabel.text = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:balance];
+    self.balanceLabel.text = [[IAENumberFormatterManager sharedManager].currencyFormatter stringFromNumber:balance];
     self.numberOfConceptsLabel.text = [IAELocalizerPhraseComposer stringPhraseWithNumberOfConcepts:numberOfConcepts];
 }
 

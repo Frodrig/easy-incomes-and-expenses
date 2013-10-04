@@ -12,6 +12,7 @@
 		5B1F0D3517841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1F0D3417841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m */; };
 		5B1F0D3717841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B1F0D3617841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib */; };
 		5B23F04017FED21C00477D34 /* NSUserDefaults+EasyIncAndExp.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B23F03F17FED21C00477D34 /* NSUserDefaults+EasyIncAndExp.m */; };
+		5B23F04417FF099000477D34 /* IAENumberFormatterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B23F04317FF099000477D34 /* IAENumberFormatterManager.m */; };
 		5B23FD9117CFAB5100B4AD77 /* 727-more.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B23FD8F17CFAB5000B4AD77 /* 727-more.png */; };
 		5B23FD9217CFAB5100B4AD77 /* 727-more@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B23FD9017CFAB5100B4AD77 /* 727-more@2x.png */; };
 		5B251FA117AACA71000957A5 /* IAEStrokeAnimatableLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B251FA017AACA71000957A5 /* IAEStrokeAnimatableLineView.m */; };
@@ -61,7 +62,7 @@
 		5B62D85B178EA870009879A6 /* IAEYearSelectorCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B62D85A178EA870009879A6 /* IAEYearSelectorCollectionViewCell.m */; };
 		5B62D85D178EA8A2009879A6 /* IAEYearSelectorCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B62D85C178EA8A2009879A6 /* IAEYearSelectorCollectionViewCell.xib */; };
 		5B62D86E178EC20E009879A6 /* IAEEconomicValueTypeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B62D862178EC20E009879A6 /* IAEEconomicValueTypeHelper.m */; };
-		5B62D86F178EC20E009879A6 /* IAEEconomicValueUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B62D864178EC20E009879A6 /* IAEEconomicValueUpdater.m */; };
+		5B62D86F178EC20E009879A6 /* IAEAnimateValueUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B62D864178EC20E009879A6 /* IAEAnimateValueUpdater.m */; };
 		5B62D870178EC20E009879A6 /* IAEColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B62D866178EC20E009879A6 /* IAEColorHelper.m */; };
 		5B62D873178EC20E009879A6 /* IAECurrencyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B62D86A178EC20E009879A6 /* IAECurrencyManager.m */; };
 		5B62D874178EC20E009879A6 /* IAEOrientationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B62D86C178EC20E009879A6 /* IAEOrientationHelper.m */; };
@@ -137,6 +138,8 @@
 		5B1F0D3617841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEEditModeConceptCollectionViewCell.xib; sourceTree = "<group>"; };
 		5B23F03E17FED21C00477D34 /* NSUserDefaults+EasyIncAndExp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+EasyIncAndExp.h"; sourceTree = "<group>"; };
 		5B23F03F17FED21C00477D34 /* NSUserDefaults+EasyIncAndExp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+EasyIncAndExp.m"; sourceTree = "<group>"; };
+		5B23F04217FF099000477D34 /* IAENumberFormatterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAENumberFormatterManager.h; sourceTree = "<group>"; };
+		5B23F04317FF099000477D34 /* IAENumberFormatterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAENumberFormatterManager.m; sourceTree = "<group>"; };
 		5B23FD8F17CFAB5000B4AD77 /* 727-more.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "727-more.png"; sourceTree = "<group>"; };
 		5B23FD9017CFAB5100B4AD77 /* 727-more@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "727-more@2x.png"; sourceTree = "<group>"; };
 		5B251F9F17AACA71000957A5 /* IAEStrokeAnimatableLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEStrokeAnimatableLineView.h; sourceTree = "<group>"; };
@@ -216,12 +219,12 @@
 		5B62D85C178EA8A2009879A6 /* IAEYearSelectorCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEYearSelectorCollectionViewCell.xib; sourceTree = "<group>"; };
 		5B62D862178EC20E009879A6 /* IAEEconomicValueTypeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEconomicValueTypeHelper.m; sourceTree = "<group>"; };
 		5B62D863178EC20E009879A6 /* IAEEconomicValueTypeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEconomicValueTypeHelper.h; sourceTree = "<group>"; };
-		5B62D864178EC20E009879A6 /* IAEEconomicValueUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEconomicValueUpdater.m; sourceTree = "<group>"; };
+		5B62D864178EC20E009879A6 /* IAEAnimateValueUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEAnimateValueUpdater.m; sourceTree = "<group>"; };
 		5B62D865178EC20E009879A6 /* IAEColorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEColorHelper.h; sourceTree = "<group>"; };
 		5B62D866178EC20E009879A6 /* IAEColorHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEColorHelper.m; sourceTree = "<group>"; };
 		5B62D869178EC20E009879A6 /* IAECurrencyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECurrencyManager.h; sourceTree = "<group>"; };
 		5B62D86A178EC20E009879A6 /* IAECurrencyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECurrencyManager.m; sourceTree = "<group>"; };
-		5B62D86B178EC20E009879A6 /* IAEEconomicValueUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEconomicValueUpdater.h; sourceTree = "<group>"; };
+		5B62D86B178EC20E009879A6 /* IAEAnimateValueUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEAnimateValueUpdater.h; sourceTree = "<group>"; };
 		5B62D86C178EC20E009879A6 /* IAEOrientationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEOrientationHelper.m; sourceTree = "<group>"; };
 		5B62D86D178EC20E009879A6 /* IAEOrientationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEOrientationHelper.h; sourceTree = "<group>"; };
 		5B62D87B178EC27D009879A6 /* IAEDateHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEDateHelper.h; sourceTree = "<group>"; };
@@ -402,6 +405,15 @@
 				5B23F03F17FED21C00477D34 /* NSUserDefaults+EasyIncAndExp.m */,
 			);
 			name = NSUserDefaults;
+			sourceTree = "<group>";
+		};
+		5B23F04117FF097A00477D34 /* Formatters */ = {
+			isa = PBXGroup;
+			children = (
+				5B23F04217FF099000477D34 /* IAENumberFormatterManager.h */,
+				5B23F04317FF099000477D34 /* IAENumberFormatterManager.m */,
+			);
+			name = Formatters;
 			sourceTree = "<group>";
 		};
 		5B251FA217AACA76000957A5 /* Stroke Animatable View */ = {
@@ -737,6 +749,7 @@
 		5B62D861178EC1FA009879A6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5B23F04117FF097A00477D34 /* Formatters */,
 				5B60EB5717C4A39E004E3D81 /* Localizer Phrase Composer */,
 				5BCE3AA517A95D2A00CD01E7 /* Numbers Utils */,
 				5B2881311798580F006E4F9B /* Version Helper */,
@@ -764,8 +777,8 @@
 		5B62D876178EC226009879A6 /* Economic Value Updater */ = {
 			isa = PBXGroup;
 			children = (
-				5B62D864178EC20E009879A6 /* IAEEconomicValueUpdater.m */,
-				5B62D86B178EC20E009879A6 /* IAEEconomicValueUpdater.h */,
+				5B62D86B178EC20E009879A6 /* IAEAnimateValueUpdater.h */,
+				5B62D864178EC20E009879A6 /* IAEAnimateValueUpdater.m */,
 			);
 			name = "Economic Value Updater";
 			sourceTree = "<group>";
@@ -1537,11 +1550,12 @@
 				5B26461117968496006F6E58 /* IAEHeaderAboutAndOptionsCollectionReusableView.m in Sources */,
 				5B62D884178F1516009879A6 /* UIView+DrawBottomLine.m in Sources */,
 				5B5C968617816ED0008CD851 /* IAEValueDecoratorViewIncomeConfigurator.m in Sources */,
-				5B62D86F178EC20E009879A6 /* IAEEconomicValueUpdater.m in Sources */,
+				5B62D86F178EC20E009879A6 /* IAEAnimateValueUpdater.m in Sources */,
 				5B5C96A91781E877008CD851 /* NSNumber+DefaultValues.m in Sources */,
 				5B1F0D3517841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m in Sources */,
 				5B907840179D269E00B2A0F7 /* IAEKeyboardPanelCalculatorView.m in Sources */,
 				5BCE3AB917A9703B00CD01E7 /* IAEHelperCalculatorDataSource.m in Sources */,
+				5B23F04417FF099000477D34 /* IAENumberFormatterManager.m in Sources */,
 				5B5C967B1781673A008CD851 /* IAEValueDecoratorView.m in Sources */,
 				5B60EB5A17C4A3D5004E3D81 /* IAELocalizerPhraseComposer.m in Sources */,
 				5B5C968217816D68008CD851 /* IAEValueDecoratorViewConfigurator.m in Sources */,

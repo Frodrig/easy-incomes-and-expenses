@@ -17,6 +17,7 @@
 #import "IAECurrencyManager.h"
 #import "IAEYear.h"
 #import "IAEMonth.h"
+#import "IAENumberFormatterManager.h"
 
 @interface IAEHelperReportAreaViewDataSource()
 
@@ -26,7 +27,6 @@
 @property (nonatomic) CGFloat maxValueOfItemsCache;
 @property (nonatomic, strong) NSDecimalNumber *sumOfAllIncomesValues;
 @property (nonatomic, strong) NSDecimalNumber *sumOfAllExpensesValues;
-@property (nonatomic, strong) NSNumberFormatter *percentageFormatter;
 
 @end
 
@@ -36,19 +36,6 @@ static NSString * const kLTextIncomeCategoryTypeName = @"LTEXT_CATEGORYTYPEINCOM
 static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPENSE_NAME";
 
 #pragma mark - Properties
-
-- (NSNumberFormatter *)percentageFormatter
-{
-    if (!_percentageFormatter) {
-        _percentageFormatter = [[NSNumberFormatter alloc] init];
-        [_percentageFormatter setLocale:[NSLocale currentLocale]];
-        [_percentageFormatter setFormatterBehavior:NSNumberFormatterBehaviorDefault];
-        [_percentageFormatter setNumberStyle:NSNumberFormatterPercentStyle];
-        [_percentageFormatter setMaximumFractionDigits:2];
-    }
-    
-    return _percentageFormatter;
-}
 
 #pragma mark - Init
 
@@ -266,7 +253,7 @@ static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
     NSDecimalNumber *value = [self sumAllAmountOfConceptsWithCategoryOfOptionAtIndex:itemIndex];
     value = [value decimalNumberByDividingBy:[NSDecimalNumber decimalNumberWithString:sumOfAllValues.stringValue]];
     
-    NSString *title = [self.percentageFormatter stringFromNumber:value];
+    NSString *title = [[IAENumberFormatterManager sharedManager].percentageFormatter stringFromNumber:value];
     
     return title;
 }
@@ -298,7 +285,7 @@ static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
         value = [value decimalNumberByMultiplyingBy:[NSDecimalNumber decimalNumberWithString:minusOne]];
     }
     
-    NSString *stringValue = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:value];
+    NSString *stringValue = [[IAENumberFormatterManager sharedManager].currencyFormatter stringFromNumber:value];
 
     return stringValue;
 }

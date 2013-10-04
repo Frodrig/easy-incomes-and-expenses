@@ -9,7 +9,7 @@
 #import "IAEAdjustConceptAmountViewController.h"
 #import "IAEAdjustConceptAmountViewControllerDelegate.h"
 #import "IAEAdjustConceptAmountViewControllerDataSource.h"
-#import "IAECurrencyManager.h"
+#import "IAENumberFormatterManager.h"
 
 @interface IAEAdjustConceptAmountViewController ()
 
@@ -64,7 +64,7 @@ static const CGFloat kDurationOfAnimationOfInvalidAdjustActionFadeOut = 0.25;
 - (void)setIncrementAmountLabelValue
 {
     NSNumber *actualSliderValue = [self convertSliderValueToDesiredValue];
-    self.incrementAmountLabel.text = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:actualSliderValue];
+    self.incrementAmountLabel.text = [[IAENumberFormatterManager sharedManager].currencyFormatter stringFromNumber:actualSliderValue];
 }
 
 - (NSNumber *)convertSliderValueToDesiredValue

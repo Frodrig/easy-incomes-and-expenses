@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface IAEEconomicValueUpdater : NSObject
+@interface IAEAnimateValueUpdater : NSObject
 
-+ (IAEEconomicValueUpdater *)defaultEconomicValueUpdater;
++ (IAEAnimateValueUpdater *)defaultAnimateValueUpdater;
 
 - (void)processEconomicLabel:(UILabel *)label toValue:(NSDecimalNumber *)destinationValue withDuration:(CGFloat)duration;
+- (void)processPercentageLabel:(UILabel *)label toValue:(NSDecimalNumber *)destinationValue withDuration:(CGFloat)duration;
 
 @end

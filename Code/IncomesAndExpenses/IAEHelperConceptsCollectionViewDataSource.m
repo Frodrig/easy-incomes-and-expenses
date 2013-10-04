@@ -15,7 +15,7 @@
 #import "IAEYear.h"
 #import "IAEDateHelper.h"
 #import "IAEConcept.h"
-#import "IAECurrencyManager.h"
+#import "IAENumberFormatterManager.h"
 #import "IAEEconomicValueTypeHelper.h"
 #import "IAEColorHelper.h"
 #import "IAECategory.h"
@@ -95,7 +95,7 @@ static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
     NSArray *months = [self.iaeViewControllerQuery findAllOrdererMonthsWithConceptsOfOpenYear];
     IAEMonth *month = months[indexPath.section];
     NSString *monthName = [IAEDateHelper findMonthNameStringWithMonthIndex:month.month inShortForm:NO];
-    NSString *monthBalance = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:[month balance]];
+    NSString *monthBalance = [[IAENumberFormatterManager sharedManager].currencyFormatter stringFromNumber:[month balance]];
     NSString *info = [NSString stringWithFormat:NSLocalizedString(kLTextBaseTextForHeaderInfo, @""), monthBalance, month.concepts.count];
     header.title = monthName;
     header.info = info;
@@ -120,7 +120,7 @@ static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
     IAECategory *category = concept.category;
     NSAssert(category, @"");
     NSDecimalNumber *amountWithSign = [concept amountWithSign];
-    NSString *amountWithSignString = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:amountWithSign];
+    NSString *amountWithSignString = [[IAENumberFormatterManager sharedManager].currencyFormatter stringFromNumber:amountWithSign];
     const EconomicValueType economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:amountWithSign];
     UIColor *colorForEconomicValueType = [IAEColorHelper colorForEconomicValueType:economicValueType];
     const NSUInteger numberOfConcepts = [self.iaeViewControllerQuery findNumberOfConceptsOfActualSelectedContextUsingSectionForYearContext:indexPath.section];

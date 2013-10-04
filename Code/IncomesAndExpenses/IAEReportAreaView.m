@@ -10,8 +10,8 @@
 #import "NSUserDefaults+EasyIncAndExp.h"
 #import "IAEReportAreaViewDataSource.h"
 #import "IAEReportAreaItemView.h"
-#import "IAEEconomicValueUpdater.h"
-#import "IAECurrencyManager.h"
+#import "IAEAnimateValueUpdater.h"
+#import "IAENumberFormatterManager.h"
 #import "IAEReportAreaViewDelegate.h"
 
 @interface IAEReportAreaView()
@@ -21,7 +21,7 @@
 @property (nonatomic, readonly) BOOL showingAllReportAreaItems;
 @property (nonatomic, strong) NSMutableSet *allReportAreaItems;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
-
+@property (nonatomic, strong) NSString *lastReportModeUsed;
 @end
 
 @implementation IAEReportAreaView
@@ -148,9 +148,7 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
 - (void)drawRect:(CGRect)rect
 {
     CGContextRef contextRef = UIGraphicsGetCurrentContext();
-    //[self drawHeightLine:contextRef];
     [self drawWidthLine:contextRef];
-    //[self drawDotInCenterWithContextRef:contextRef];
 }
 
 - (void)drawHeightLine:(CGContextRef)contextRef
@@ -246,13 +244,17 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
     if (numberOfAreaItemsToRemove > 0) {
         for (IAEReportAreaItemView *reportAreaItemView in self.allReportAreaItems) {
             if (animation) {
-                
-                // ToDo
-                /*
-                [[IAEEconomicValueUpdater defaultEconomicValueUpdater] processEconomicLabel:reportAreaItemView.title
-                                                                                    toValue:[NSDecimalNumber zero]
-                                                                               withDuration:kDurationOfReportItemViewDisappear];
-                */
+                // refactorizar
+                if ([self isLastReportModeOfTotalAmountType]) {
+                    [[IAEAnimateValueUpdater defaultAnimateValueUpdater] processEconomicLabel:reportAreaItemView.title
+                                                                                      toValue:[NSDecimalNumber zero]
+                                                                                 withDuration:kDurationOfReportItemViewDisappear];
+                    
+                } else if ([self isLastReportModeOfTotalPercentageType]) {
+                    [[IAEAnimateValueUpdater defaultAnimateValueUpdater] processPercentageLabel:reportAreaItemView.title
+                                                                                        toValue:[NSDecimalNumber zero]
+                                                                                   withDuration:kDurationOfReportItemViewDisappear];
+                }
                 
                 [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
                 [UIView animateWithDuration:kDurationOfReportItemViewAppear animations:^{
@@ -291,6 +293,8 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
         [self endReloadDataWithAnimation];
         [self showNoItemsLabel:NO withAnimation:animation completion:nil];
         
+        [self updateLastReportModeUsed];
+        
         for (NSUInteger reportAreaItemIt = 0; reportAreaItemIt < numberOfReportAreaItems; reportAreaItemIt++) {
             IAEReportAreaItemView *reportAreaItem = [self createReportAreaItemWithIndex:reportAreaItemIt ofTotalNumber:numberOfReportAreaItems];
             [self addSubview:reportAreaItem];
@@ -310,6 +314,15 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
         [self showNoItemsLabel:NO withAnimation:animation completion:^{
             [self endReloadDataWithAnimation];
         }];
+    }
+}
+
+- (void)updateLastReportModeUsed
+{
+    self.lastReportModeUsed = [[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultsReportAmountMode];
+    if ([self.lastReportModeUsed compare:kUserDefaultsReportAmountModePercentageAmountValue] == NSOrderedSame &&
+        ![self.dataSource canChangeActualReportAmountModeInReportAreaView:self]) {
+        self.lastReportModeUsed = kUserDefaultsReportAmountModeTotalAmountValue;
     }
 }
 
@@ -372,19 +385,22 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
             CGRect frameOfAreaItem = reportAreaItemView.frame;
             reportAreaItemView.frame = CGRectMake(frameOfAreaItem.origin.x, frameOfAreaItem.origin.y + frameOfAreaItem.size.height, frameOfAreaItem.size.width, 0.0);
             
-            // ToDo
-            [reportAreaItemView changeTitleLabel:reportAreaItemView.title.text];
-
-            /*
-            NSNumber *numberValueOfItem = [[IAECurrencyManager sharedManager].currencyFormatter numberFromString:reportAreaItemView.title.text];
-            NSDecimalNumber *decimalNumberOfItem = [NSDecimalNumber decimalNumberWithString:numberValueOfItem.stringValue];
-            
-            [reportAreaItemView changeTitleLabel:[[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:[NSDecimalNumber zero]]];
-            [[IAEEconomicValueUpdater defaultEconomicValueUpdater] processEconomicLabel:reportAreaItemView.title
-                                                                                toValue:decimalNumberOfItem
-                                                                           withDuration:kDurationOfReportItemViewAppear];
-             */
-             
+            // refactorizar
+            if ([[NSUserDefaults standardUserDefaults] isTotalAmountModeInReportSection] || ![self.dataSource canChangeActualReportAmountModeInReportAreaView:self]) {
+                NSNumber *numberValueOfItem = [[IAENumberFormatterManager sharedManager].currencyFormatter numberFromString:reportAreaItemView.title.text];
+                NSDecimalNumber *decimalNumberOfItem = [NSDecimalNumber decimalNumberWithString:numberValueOfItem.stringValue];
+                [reportAreaItemView changeTitleLabel:[[IAENumberFormatterManager sharedManager].currencyFormatter stringFromNumber:[NSDecimalNumber zero]]];
+                [[IAEAnimateValueUpdater defaultAnimateValueUpdater] processEconomicLabel:reportAreaItemView.title
+                                                                                    toValue:decimalNumberOfItem
+                                                                               withDuration:kDurationOfReportItemViewAppear];
+            } else if ([[NSUserDefaults standardUserDefaults] isTotalPercentageModeInReportSection]) {
+                NSNumber *numberValueOfItem = [[IAENumberFormatterManager sharedManager].percentageFormatter numberFromString:reportAreaItemView.title.text];
+                NSDecimalNumber *decimalNumberOfItem = [NSDecimalNumber decimalNumberWithString:numberValueOfItem.stringValue];
+                [reportAreaItemView changeTitleLabel:[[IAENumberFormatterManager sharedManager].percentageFormatter stringFromNumber:[NSDecimalNumber zero]]];
+                [[IAEAnimateValueUpdater defaultAnimateValueUpdater] processPercentageLabel:reportAreaItemView.title
+                                                                                    toValue:decimalNumberOfItem
+                                                                               withDuration:kDurationOfReportItemViewAppear];
+            }
             
             [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
             [UIView animateWithDuration:kDurationOfReportItemViewDisappear animations:^{
@@ -492,6 +508,7 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
         [self.dataSource changeActualReportAmountModeWillOcurrInReportAreaView:self];
         
         [[NSUserDefaults standardUserDefaults] changeToNextReportMode];
+        [self updateLastReportModeUsed];
         
         for (NSUInteger reportAreaItemIt = 0; reportAreaItemIt < self.allReportAreaItems.count; ++reportAreaItemIt) {
             NSString *title = [self.dataSource reportAreaView:self titleOfItemWithIndex:reportAreaItemIt];
@@ -511,6 +528,20 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
     const BOOL canChange = [self.dataSource canChangeActualReportAmountModeInReportAreaView:self] && self.allReportAreaItems.count > 0;
     
     return canChange;
+}
+
+- (BOOL)isLastReportModeOfTotalAmountType
+{
+    const BOOL isTotalAmountMode = [self.lastReportModeUsed compare:kUserDefaultsReportAmountModeTotalAmountValue] == NSOrderedSame;
+    
+    return isTotalAmountMode;
+}
+
+- (BOOL)isLastReportModeOfTotalPercentageType
+{
+    const BOOL isTotalPercentageMode = [self.lastReportModeUsed compare:kUserDefaultsReportAmountModePercentageAmountValue] == NSOrderedSame;
+    
+    return isTotalPercentageMode;
 }
 
 #pragma mark - UIScrollViewDelegate

@@ -9,9 +9,9 @@
 #import "IAEContextView.h"
 #import "IAEContextViewDataSource.h"
 #import "UIView+LoadFromXib.h"
-#import "IAECurrencyManager.h"
+#import "IAENumberFormatterManager.h"
 #import "IAEColorHelper.h"
-#import "IAEEconomicValueUpdater.h"
+#import "IAEAnimateValueUpdater.h"
 #import "IAEEconomicValueTypeHelper.h"
 
 @interface IAEContextView()
@@ -95,7 +95,7 @@ static const CGFloat kKernForBalanceLabel = 4;
 
 - (NSString *)balanceStringValueForUpdateWithoutUsingAnimation
 {
-    NSString *balanceString = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:[self contentBalance]];
+    NSString *balanceString = [[IAENumberFormatterManager sharedManager].currencyFormatter stringFromNumber:[self contentBalance]];
     
     return balanceString;
 }
@@ -109,7 +109,7 @@ static const CGFloat kKernForBalanceLabel = 4;
 
 - (NSString *)balanceStringValueForUpdateUsingAnimationFromZeroValue:(BOOL)fromZero
 {
-    NSString *balanceString = fromZero ? [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:[NSDecimalNumber zero]] :
+    NSString *balanceString = fromZero ? [[IAENumberFormatterManager sharedManager].currencyFormatter stringFromNumber:[NSDecimalNumber zero]] :
                                          self.contentBalanceLabel.text;
 
     return balanceString;
@@ -137,7 +137,7 @@ static const CGFloat kKernForBalanceLabel = 4;
     self.contentBalanceLabel.attributedText = [[NSAttributedString alloc] initWithString:balanceStringValue attributes:attributes];
     
     if (animation) {
-        [[IAEEconomicValueUpdater defaultEconomicValueUpdater] processEconomicLabel:self.contentBalanceLabel
+        [[IAEAnimateValueUpdater defaultAnimateValueUpdater] processEconomicLabel:self.contentBalanceLabel
                                                                             toValue:contentBalance
                                                                        withDuration:kTimeAnimationBalanceUpdate];
     }
@@ -153,7 +153,7 @@ static const CGFloat kKernForBalanceLabel = 4;
 - (NSString *)contentBalanceString
 {
     NSDecimalNumber *contentBalance = [self contentBalance];
-    NSString *contentBalanceString = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:contentBalance];
+    NSString *contentBalanceString = [[IAENumberFormatterManager sharedManager].currencyFormatter stringFromNumber:contentBalance];
     
     return contentBalanceString;
 }

@@ -17,7 +17,7 @@
 #import "IAECategory.h"
 #import "IAEColorHelper.h"
 #import "IAEEconomicValueTypeHelper.h"
-#import "IAEEconomicValueUpdater.h"
+#import "IAEAnimateValueUpdater.h"
 #import "IAESelectorContextView.h"
 #import "IAEContextView.h"
 #import "IAEEditModeConceptCollectionViewCell.h"

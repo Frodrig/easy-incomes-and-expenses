@@ -6,20 +6,27 @@
 //  Copyright (c) 2013 Fernando Rodríguez Martínez. All rights reserved.
 //
 
-#import "IAEEconomicValueUpdater.h"
-#import "IAECurrencyManager.h"
+#import "IAEAnimateValueUpdater.h"
+#import "IAENumberFormatterManager.h"
 #import "IAEEconomicValueTypeHelper.h"
 #import "IAEColorHelper.h"
 
-@interface IAEEconomicValueUpdater()
+@interface IAEAnimateValueUpdater()
 
 @property (nonatomic, strong) NSMutableArray *pendingLabelUpdates;
 @property (nonatomic, strong) CADisplayLink  *displayLink;
 
 @end
 
-@implementation IAEEconomicValueUpdater
+@implementation IAEAnimateValueUpdater
 
+#pragma mark - Enumerators
+
+typedef NS_ENUM(NSUInteger, ValueType)
+{
+    VT_ECONOMIC,
+    VT_PERCENTAGE
+};
 
 #pragma mark - Constants
 
@@ -45,23 +52,33 @@ static const CGFloat kRationOfDurationByUpdateProcessEconomicLabel = 0.1;
     return _displayLink;
 }
 
-+ (IAEEconomicValueUpdater *)defaultEconomicValueUpdater
++ (IAEAnimateValueUpdater *)defaultAnimateValueUpdater
 {
-    static IAEEconomicValueUpdater *defaultEconomicValueUpdater = nil;
-    if (!defaultEconomicValueUpdater) {
-        defaultEconomicValueUpdater = [[IAEEconomicValueUpdater alloc] init];
+    static IAEAnimateValueUpdater *defaultAnimateValueUpdater = nil;
+    if (!defaultAnimateValueUpdater) {
+        defaultAnimateValueUpdater = [[IAEAnimateValueUpdater alloc] init];
     }
     
-    return defaultEconomicValueUpdater;
+    return defaultAnimateValueUpdater;
 }
 
 - (void)processEconomicLabel:(UILabel *)label toValue:(NSDecimalNumber *)destinationValue withDuration:(CGFloat)duration
 {
+    [self processLabel:label toValue:destinationValue withDuration:duration andValueType:VT_ECONOMIC];
+}
+
+- (void)processPercentageLabel:(UILabel *)label toValue:(NSDecimalNumber *)destinationValue withDuration:(CGFloat)duration
+{
+    [self processLabel:label toValue:destinationValue withDuration:duration andValueType:VT_PERCENTAGE];
+}
+
+- (void)processLabel:(UILabel *)label toValue:(NSDecimalNumber *)destinationValue withDuration:(CGFloat)duration andValueType:(ValueType)valueType
+{
     if (![self isLabelCounterProcessingAnimation:label]) {
         [self createDisplayLinkRunLoopIfAppropiate];
-        [self addNewEntryForEconomicLabel:label toValue:destinationValue withDuration:duration];
+        [self addNewEntryForLabel:label toValue:destinationValue withDuration:duration andValueType:valueType];
     } else {
-        [self updateProcessEconomicLabel:label withValue:destinationValue andDuration:duration];
+        [self updateProcessLabel:label withValue:destinationValue andDuration:duration];
     }
 }
 
@@ -72,31 +89,45 @@ static const CGFloat kRationOfDurationByUpdateProcessEconomicLabel = 0.1;
     }
 }
 
-- (void)addNewEntryForEconomicLabel:(UILabel *)label toValue:(NSDecimalNumber *)destinationValue withDuration:(CGFloat)duration
+- (void)addNewEntryForLabel:(UILabel *)label
+                    toValue:(NSDecimalNumber *)destinationValue
+               withDuration:(CGFloat)duration
+               andValueType:(EconomicValueType)valueType
 {
-    NSDictionary *newLabelToUpdateEntry = [self makeDictionaryEntryForLabel:label destinationValue:destinationValue andDurationValue:duration];
+    NSDictionary *newLabelToUpdateEntry = [self makeDictionaryEntryForLabel:label
+                                                           destinationValue:destinationValue
+                                                              durationValue:duration
+                                                               andValueType:valueType];
     [self.pendingLabelUpdates addObject:newLabelToUpdateEntry];
 }
 
 - (NSMutableDictionary *)makeDictionaryEntryForLabel:(UILabel *)label
                                     destinationValue:(NSDecimalNumber *)destValue
-                                    andDurationValue:(CGFloat)duration
+                                       durationValue:(CGFloat)duration
+                                        andValueType:(ValueType)valueType
 {
-    NSDecimalNumber *fromValue = [self extractDecimalNumberFromLabel:label];
+    NSDecimalNumber *fromValue = [self extractDecimalNumberFromLabel:label withValueType:valueType];
     NSNumber *durationNumber = [NSNumber numberWithFloat:duration];
     NSNumber *startTimeNumber = [NSNumber numberWithDouble:CACurrentMediaTime()];
     
-    NSArray *values = [NSArray arrayWithObjects:label, fromValue, [destValue copy], durationNumber, startTimeNumber, nil];
-    NSArray *keys = [NSArray arrayWithObjects:@"label", @"from", @"to", @"duration", @"startTime", nil];
+    NSArray *values = [NSArray arrayWithObjects:label, fromValue, [destValue copy], durationNumber, startTimeNumber, @(valueType), nil];
+    NSArray *keys = [NSArray arrayWithObjects:@"label", @"from", @"to", @"duration", @"startTime", @"valueType", nil];
     NSMutableDictionary *dictionaryEntry = [NSMutableDictionary dictionaryWithObjects:values forKeys:keys];
     
     return dictionaryEntry;
 }
 
-- (NSDecimalNumber *)extractDecimalNumberFromLabel:(UILabel *)label
+- (NSDecimalNumber *)extractDecimalNumberFromLabel:(UILabel *)label withValueType:(ValueType)valueType
 {
     NSString *stringNumberOfLabel = label.text;
-    NSNumber *number = [[IAECurrencyManager sharedManager].currencyFormatter numberFromString:stringNumberOfLabel];
+    
+    NSNumber *number = nil;
+    if (valueType == VT_ECONOMIC) {
+        number = [[IAENumberFormatterManager sharedManager].currencyFormatter numberFromString:stringNumberOfLabel];
+    } else if (valueType == VT_PERCENTAGE) {
+        number = [[IAENumberFormatterManager sharedManager].percentageFormatter numberFromString:stringNumberOfLabel];
+    }
+    
     if (!number) {
         // ToDo: Parche para evitar crash. Estaba devolviendo nil ¿por qué? al cambiar de año.
         number = [NSNumber numberWithInt:0];
@@ -106,7 +137,7 @@ static const CGFloat kRationOfDurationByUpdateProcessEconomicLabel = 0.1;
      return decimalNumber;
 }
 
-- (void)updateProcessEconomicLabel:(UILabel *)label withValue:(NSDecimalNumber *)destValue andDuration:(CGFloat)duration
+- (void)updateProcessLabel:(UILabel *)label withValue:(NSDecimalNumber *)destValue andDuration:(CGFloat)duration
 {
     NSMutableDictionary *informationOfLabel = [self findInPendingLabelUpdatesInformationOfLabel:label];
     NSAssert(informationOfLabel, @"En este punto DEBERIA de existir entrada para el label");
@@ -129,7 +160,6 @@ static const CGFloat kRationOfDurationByUpdateProcessEconomicLabel = 0.1;
     
     return information;
 }
-
 
 - (BOOL)isLabelCounterProcessingAnimation:(UILabel *)label
 {
@@ -156,7 +186,8 @@ static const CGFloat kRationOfDurationByUpdateProcessEconomicLabel = 0.1;
                 [pendingLabelsProcessed addObject:labelCounterData];
             }
             
-            [self updatePendingLabelEntry:labelCounterData withValue:newUpdateValueOfLabel];
+            NSNumber *valueType = labelCounterData[@"valueType"];
+            [self updatePendingLabelEntry:labelCounterData withValue:newUpdateValueOfLabel ofType:valueType.unsignedIntegerValue];
         }
         
         [self.pendingLabelUpdates removeObjectsInArray:pendingLabelsProcessed];
@@ -192,14 +223,23 @@ static const CGFloat kRationOfDurationByUpdateProcessEconomicLabel = 0.1;
     return updatedValue;
 }
 
-- (void)updatePendingLabelEntry:(NSDictionary *)pendingLabelEntry withValue:(NSDecimalNumber *)value
+- (void)updatePendingLabelEntry:(NSDictionary *)pendingLabelEntry
+                      withValue:(NSDecimalNumber *)value
+                         ofType:(ValueType)valueType
 {
     NSNumber *numberObject = [[NSNumber alloc] initWithFloat:value.floatValue];
-    NSString *updatedString = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:numberObject];
-    UIColor *updatedColor = [IAEColorHelper colorForEconomicValueType:[IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:value]];
     UILabel *label = [pendingLabelEntry objectForKey:@"label"];
     NSMutableDictionary *updatedAttributes = [[label.attributedText attributesAtIndex:0 effectiveRange:nil] mutableCopy];
-    [updatedAttributes setObject:updatedColor forKey:NSForegroundColorAttributeName];
+    NSString *updatedString = nil;
+    
+    if (valueType == VT_ECONOMIC) {
+        updatedString = [[IAENumberFormatterManager sharedManager].currencyFormatter stringFromNumber:numberObject];
+        UIColor *updatedColor = [IAEColorHelper colorForEconomicValueType:[IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:value]];
+        [updatedAttributes setObject:updatedColor forKey:NSForegroundColorAttributeName];
+    } else if (valueType == VT_PERCENTAGE) {
+        updatedString = [[IAENumberFormatterManager sharedManager].percentageFormatter stringFromNumber:numberObject];
+    }
+    
     NSAttributedString *updatedAttributedString = [[NSAttributedString alloc] initWithString:updatedString attributes:updatedAttributes];
     label.attributedText = updatedAttributedString;
 }

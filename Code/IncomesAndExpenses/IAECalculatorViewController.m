@@ -21,6 +21,7 @@
 #import "IAECategoryEditorViewController.h"
 #import "IAECurrencyManager.h"
 #import "IAEDateHelper.h"
+#import "IAENumberFormatterManager.h"
 
 @interface IAECalculatorViewController ()
 
@@ -726,7 +727,7 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
 - (void)configureDisplayPanelWithActualAmount
 {
     NSString *amountStringToDisplay = nil;
-    IAECurrencyManager *currencyManager = [IAECurrencyManager sharedManager];
+    IAENumberFormatterManager *currencyManager = [IAENumberFormatterManager sharedManager];
     [currencyManager saveCurrencyFormatterFractionState];
 
     if ([self actualAmountWithData]) {
@@ -747,7 +748,7 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
 - (NSString *)convertToAmountStringDisplayableTheAmountString:(NSString *)amountValue
 {
     NSDecimalNumber *actualAmountDecimal = [self convertToDecimalNumberKeyboardAmountValue:amountValue];
-    NSString *amountStringDisplayable = [NSMutableString stringWithString:[[IAECurrencyManager sharedManager].currencyFormatter
+    NSString *amountStringDisplayable = [NSMutableString stringWithString:[[IAENumberFormatterManager sharedManager].currencyFormatter
                                                                            stringFromNumber:actualAmountDecimal]];
     
     return amountStringDisplayable;

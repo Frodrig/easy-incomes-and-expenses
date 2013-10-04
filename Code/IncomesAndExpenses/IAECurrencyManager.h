@@ -12,16 +12,10 @@
 
 @interface IAECurrencyManager : NSObject
 
-//@property (nonatomic, strong, readonly) NSMutableArray *currencies;
-@property (nonatomic, strong, readonly) NSNumberFormatter *currencyFormatter;
-
 + (IAECurrencyManager *)sharedManager;
 
 - (NSString *)decimalSeparator;
 - (NSString *)groupingSeparator;
 - (NSString *)currencySymbol;
-
-- (void)saveCurrencyFormatterFractionState;
-- (void)restoreCurrencyFormatterFractionState;
 
 @end

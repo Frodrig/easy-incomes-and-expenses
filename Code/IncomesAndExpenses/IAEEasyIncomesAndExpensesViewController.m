@@ -856,6 +856,8 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 - (IAEConcept *)findConceptAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray *concepts = [self allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath:indexPath];
+    CLSLog(@"valid array of concepts: %@ indexPath.row: %d number of Concepts: %d", concepts ? @"Yes" : @"No", indexPath.row, concepts.count);
+    NSAssert(indexPath.row < concepts.count, @"");
     IAEConcept *concept = [concepts objectAtIndex:indexPath.row];
     
     return concept;
@@ -1350,22 +1352,6 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     [self.conceptsCollectionView reloadData];
 }
 
-- (void)reloadContentOfConceptsCollectionViewAndScrollToConcept:(IAEConcept *)concept
-{
-    [self.conceptsCollectionView performBatchUpdates:^{
-       // [self.conceptsCollectionView moveItemAtIndexPath:[self.conceptsCollectionView indexPathForCell:concept] toIndexPath:]
-
-    } completion:^(BOOL finished) {
-        IAEEditModeConceptCollectionViewCell *cell = [self findConceptCellOfConcept:concept];
-        NSIndexPath *cellIndexPath = [self.conceptsCollectionView indexPathForCell:cell];
-        [self.conceptsCollectionView scrollToItemAtIndexPath:cellIndexPath
-                                            atScrollPosition:UICollectionViewScrollPositionBottom
-                                                    animated:NO];
-
-    }];
-    
-}
-
 #pragma mark - IAEContextViewDataSource
 
 - (NSString *)nameForContextView:(IAEContextView *)contextView
@@ -1729,10 +1715,12 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     [self.conceptsCollectionView performBatchUpdates:^{
         // En algunas ocasiones nos ha dado fallo en este punto porque indexPathOfCell era nil
         // Se han colocado assertos pero vamos a proteger por si acaso
+        CLSLog(@"deleteItemsAtIndexPaths from removeConceptAndUpdateBalancesOfCell");
         [self.conceptsCollectionView deleteItemsAtIndexPaths:@[indexPathOfCell]];
         if (isLastCell && numberOfConceptsAfterRemove > 0) {
             NSIndexPath *indexPathOfNewLastCell = [NSIndexPath indexPathForRow:indexPathOfCell.row - 1
                                                                      inSection:indexPathOfCell.section];
+            CLSLog(@"reloadItemsAtIndexPaths from removeConceptAndUpdateBalancesOfCell");
             [self.conceptsCollectionView reloadItemsAtIndexPaths:@[indexPathOfNewLastCell]];
         }
     } completion:^(BOOL finished) {
@@ -1904,6 +1892,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 - (void)reloadActiveModeAfterRemoveCategoryWithTag:(NSString *)tagOfCategory andType:(CategoryType)type
 {
     if ([self isEditModeActive]) {
+        CLSLog(@"reloadData from reloadActiveModeAfterRemoveCategoryWithTag - if ([self isEditModeActive])");
         [self reloadContentOfConceptsCollectionView];
     } else if ([self isReportModeActive]) {
         const BOOL reload = (self.reportMenuView.currentOptionIndexSelected == kReportMenuIndexOfExpensesOption && type == ExpenseCategory) ||
@@ -2165,6 +2154,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     NSIndexPath *indexPathOfInsertion = [NSIndexPath indexPathForRow:indexOfConcept inSection:0];
     
     [self.conceptsCollectionView performBatchUpdates:^{
+        CLSLog(@"insertItemsAtIndexPaths from reloadConceptsCollectionViewWithDayModeAfterCreateNewConcept");
         [self.conceptsCollectionView insertItemsAtIndexPaths:@[indexPathOfInsertion]];
     } completion:^(BOOL finished) {
         // Nota: En caso de que la posición a la que ir no esté visible, la resaltaremos al terminar el scroll

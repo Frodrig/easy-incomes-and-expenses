@@ -11,9 +11,10 @@
 @interface IAEReportAreaItemView : UIView
 
 @property (nonatomic, strong) UILabel *title;
+@property (nonatomic, readonly) BOOL isChangeTitleInProgress;
 
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title subtitle:(NSString *)subtitle andColor:(UIColor *)color;
 
-- (void)changeTitleLabel:(NSString *)title;
+- (void)changeTitleLabel:(NSString *)title withAnimation:(BOOL)animation;
 
 @end

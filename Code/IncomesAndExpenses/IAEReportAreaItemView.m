@@ -12,6 +12,7 @@
 
 @property (nonatomic, copy) UIColor *lineColor;
 @property (nonatomic, strong) UILabel *subtitle;
+@property (nonatomic, readwrite) BOOL isChangeTitleInProgress;
 
 @end
 
@@ -39,6 +40,7 @@ static const CGFloat kBackgroundColorWithWhiteAlpha = 0.15;
 static const CGFloat kTextColorWithWhiteValue = 0;
 static const CGFloat kTextColorWithWhiteAlpha = 1.0;
 
+static const CGFloat kDurationOfChangeReportMode = 0.35;
 
 #pragma mark - Init
 
@@ -156,6 +158,29 @@ static const CGFloat kTextColorWithWhiteAlpha = 1.0;
     CGContextStrokePath(contextRef);
 
     CGContextRestoreGState(contextRef);
+}
+
+- (void)changeTitleLabel:(NSString *)title withAnimation:(BOOL)animation
+{
+    if (!self.isChangeTitleInProgress) {
+        if (animation) {
+            self.isChangeTitleInProgress = YES;
+            [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+            [UIView animateWithDuration:kDurationOfChangeReportMode animations:^{
+                self.title.alpha = 0;
+            } completion:^(BOOL finished) {
+                [self changeTitleLabel:title];
+                [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+                [UIView animateWithDuration:kDurationOfChangeReportMode animations:^{
+                    self.title.alpha = 1;
+                } completion:^(BOOL finished) {
+                    self.isChangeTitleInProgress = NO;
+                }];
+            }];
+        } else {
+            [self changeTitleLabel:title];
+        }
+    }
 }
 
 - (void)changeTitleLabel:(NSString *)title

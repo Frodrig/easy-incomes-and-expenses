@@ -389,14 +389,14 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
             if ([[NSUserDefaults standardUserDefaults] isTotalAmountModeInReportSection] || ![self.dataSource canChangeActualReportAmountModeInReportAreaView:self]) {
                 NSNumber *numberValueOfItem = [[IAENumberFormatterManager sharedManager].currencyFormatter numberFromString:reportAreaItemView.title.text];
                 NSDecimalNumber *decimalNumberOfItem = [NSDecimalNumber decimalNumberWithString:numberValueOfItem.stringValue];
-                [reportAreaItemView changeTitleLabel:[[IAENumberFormatterManager sharedManager].currencyFormatter stringFromNumber:[NSDecimalNumber zero]]];
+                [reportAreaItemView changeTitleLabel:[[IAENumberFormatterManager sharedManager].currencyFormatter stringFromNumber:[NSDecimalNumber zero]] withAnimation:NO];
                 [[IAEAnimateValueUpdater defaultAnimateValueUpdater] processEconomicLabel:reportAreaItemView.title
                                                                                     toValue:decimalNumberOfItem
                                                                                withDuration:kDurationOfReportItemViewAppear];
             } else if ([[NSUserDefaults standardUserDefaults] isTotalPercentageModeInReportSection]) {
                 NSNumber *numberValueOfItem = [[IAENumberFormatterManager sharedManager].percentageFormatter numberFromString:reportAreaItemView.title.text];
                 NSDecimalNumber *decimalNumberOfItem = [NSDecimalNumber decimalNumberWithString:numberValueOfItem.stringValue];
-                [reportAreaItemView changeTitleLabel:[[IAENumberFormatterManager sharedManager].percentageFormatter stringFromNumber:[NSDecimalNumber zero]]];
+                [reportAreaItemView changeTitleLabel:[[IAENumberFormatterManager sharedManager].percentageFormatter stringFromNumber:[NSDecimalNumber zero]] withAnimation:NO];
                 [[IAEAnimateValueUpdater defaultAnimateValueUpdater] processPercentageLabel:reportAreaItemView.title
                                                                                     toValue:decimalNumberOfItem
                                                                                withDuration:kDurationOfReportItemViewAppear];
@@ -512,9 +512,8 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
         
         for (NSUInteger reportAreaItemIt = 0; reportAreaItemIt < self.allReportAreaItems.count; ++reportAreaItemIt) {
             NSString *title = [self.dataSource reportAreaView:self titleOfItemWithIndex:reportAreaItemIt];
-            
             IAEReportAreaItemView *reportAreaItem = (IAEReportAreaItemView *)[self viewWithTag:[self createReportAreaItemTagForIndex:reportAreaItemIt]];
-            [reportAreaItem changeTitleLabel:title];
+            [reportAreaItem changeTitleLabel:title withAnimation:YES];
         }
         
         [self.dataSource changeActualReportAmountModeDidOcurrInReportAreaView:self];
@@ -525,9 +524,24 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
 
 - (BOOL)canChangeActualReportAmountMode
 {
-    const BOOL canChange = [self.dataSource canChangeActualReportAmountModeInReportAreaView:self] && self.allReportAreaItems.count > 0;
+    const BOOL canChange = [self.dataSource canChangeActualReportAmountModeInReportAreaView:self] &&
+                           self.allReportAreaItems.count > 0 &&
+                           ![self existChangeTitleInProgressOnReportAreaItems];
     
     return canChange;
+}
+
+- (BOOL)existChangeTitleInProgressOnReportAreaItems
+{
+    BOOL existChangeTitleInProgress = NO;
+    for (IAEReportAreaItemView *reportAreaItem in self.allReportAreaItems) {
+        existChangeTitleInProgress = reportAreaItem.isChangeTitleInProgress;
+        if (existChangeTitleInProgress) {
+            break;
+        }
+    }
+    
+    return existChangeTitleInProgress;
 }
 
 - (BOOL)isLastReportModeOfTotalAmountType

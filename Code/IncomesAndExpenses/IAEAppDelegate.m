@@ -19,7 +19,8 @@
 #pragma mark - Constants 
 
 static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
-
+static NSString * const kUserDefaultsReportAmountMode = @"reportAmountMode";
+static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalAmounts";
 
 #pragma mark - didFinishLaunching
 
@@ -66,7 +67,8 @@ static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
 - (void)prepareDefaults
 {
     // Defaults del registration  domain
-    NSDictionary *defaults = @{kUserDefaultsDayModeActiveKey: [NSNumber numberWithBool:NO]};
+    NSDictionary *defaults = @{ kUserDefaultsDayModeActiveKey: [NSNumber numberWithBool:NO],
+                                kUserDefaultsReportAmountMode: kUserDefaultsReportAmountModeTotalAmountValue };
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 }
 

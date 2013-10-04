@@ -12,6 +12,8 @@
 
 @protocol IAEReportAreaViewDataSource
 
+- (BOOL)canChangeActualReportAmountModeInReportAreaView:(IAEReportAreaView *)reportAreaView;
+
 - (BOOL)showNoItemsLabelIfAppropiateInReportAreaView:(IAEReportAreaView *)reportAreaView;
 
 - (NSUInteger)numberOfItemsInReportAreaView:(IAEReportAreaView *)reportAreaView;

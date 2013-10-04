@@ -7,6 +7,7 @@
 //
 
 #import "IAEReportAreaView.h"
+#import "NSUserDefaults+EasyIncAndExp.h"
 #import "IAEReportAreaViewDataSource.h"
 #import "IAEReportAreaItemView.h"
 #import "IAEEconomicValueUpdater.h"
@@ -19,12 +20,17 @@
 @property (nonatomic, strong) NSMutableDictionary *reloadPendingInformation;
 @property (nonatomic, readonly) BOOL showingAllReportAreaItems;
 @property (nonatomic, strong) NSMutableSet *allReportAreaItems;
+@property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 
 @end
 
 @implementation IAEReportAreaView
 
 #pragma mark - Constants
+
+static NSString * const kUserDefaultsReportAmountMode = @"reportAmountMode";
+static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalAmounts";
+static NSString * const kUserDefaultsReportAmountModePercentageAmountValue = @"percentageAmounts";
 
 static NSString * const kLTextReportAreaItemsNoItemsWarning = @"LTEXT_REPORTAREAITEMS_NOITEMSWARNING";
 static NSString * const kReportAreaItemsNoItemsWarningFontName = @"HelveticaNeue-Ultralight";
@@ -97,6 +103,13 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
     }
 }
 
+#pragma mark - Dealloc
+
+- (void)dealloc
+{
+    [self removeGestureRecognizer:self.tapGestureRecognizer];
+}
+
 #pragma mark - Init
 
 - (id)initWithFrame:(CGRect)frame
@@ -104,6 +117,8 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
     self = [super initWithFrame:frame];
     if (self) {
         [self initScrollViewProperties];
+        [self initTapGestureRecognizer];
+        
         self.delegate = self;
     }
     return self;
@@ -118,6 +133,12 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
     self.scrollEnabled = YES;
     self.showsHorizontalScrollIndicator = NO;
     self.showsVerticalScrollIndicator = NO;
+}
+
+- (void)initTapGestureRecognizer
+{
+    _tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(processTapGesture:)];
+    [self addGestureRecognizer:_tapGestureRecognizer];
 }
 
 #pragma mark - Draw
@@ -225,9 +246,14 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
     if (numberOfAreaItemsToRemove > 0) {
         for (IAEReportAreaItemView *reportAreaItemView in self.allReportAreaItems) {
             if (animation) {
+                
+                // ToDo
+                /*
                 [[IAEEconomicValueUpdater defaultEconomicValueUpdater] processEconomicLabel:reportAreaItemView.title
                                                                                     toValue:[NSDecimalNumber zero]
                                                                                withDuration:kDurationOfReportItemViewDisappear];
+                */
+                
                 [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
                 [UIView animateWithDuration:kDurationOfReportItemViewAppear animations:^{
                     reportAreaItemView.frame = CGRectMake(reportAreaItemView.frame.origin.x, reportAreaItemView.frame.origin.y + reportAreaItemView.frame.size.height, reportAreaItemView.frame.size.width, 0.0);
@@ -346,12 +372,19 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
             CGRect frameOfAreaItem = reportAreaItemView.frame;
             reportAreaItemView.frame = CGRectMake(frameOfAreaItem.origin.x, frameOfAreaItem.origin.y + frameOfAreaItem.size.height, frameOfAreaItem.size.width, 0.0);
             
+            // ToDo
+            [reportAreaItemView changeTitleLabel:reportAreaItemView.title.text];
+
+            /*
             NSNumber *numberValueOfItem = [[IAECurrencyManager sharedManager].currencyFormatter numberFromString:reportAreaItemView.title.text];
             NSDecimalNumber *decimalNumberOfItem = [NSDecimalNumber decimalNumberWithString:numberValueOfItem.stringValue];
+            
             [reportAreaItemView changeTitleLabel:[[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:[NSDecimalNumber zero]]];
             [[IAEEconomicValueUpdater defaultEconomicValueUpdater] processEconomicLabel:reportAreaItemView.title
                                                                                 toValue:decimalNumberOfItem
                                                                            withDuration:kDurationOfReportItemViewAppear];
+             */
+             
             
             [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
             [UIView animateWithDuration:kDurationOfReportItemViewDisappear animations:^{
@@ -449,6 +482,25 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
     }
     self.contentSize = CGSizeMake(width, self.bounds.size.height);
     self.contentOffset = CGPointMake(0.0, 0.0);
+}
+
+#pragma mark - Gesture Recognizer
+
+- (void)processTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer
+{
+    if ([self canChangeActualReportAmountMode]) {
+        [[NSUserDefaults standardUserDefaults] changeToNextReportMode];
+        NSLog(@"ReportMode: %@", [[NSUserDefaults standardUserDefaults] stringForKey:kUserDefaultsReportAmountMode]);
+    }
+}
+
+#pragma mark - Mode
+
+- (BOOL)canChangeActualReportAmountMode
+{
+    const BOOL canChange = [self.dataSource canChangeActualReportAmountModeInReportAreaView:self] && self.allReportAreaItems.count > 0;
+    
+    return canChange;
 }
 
 #pragma mark - UIScrollViewDelegate

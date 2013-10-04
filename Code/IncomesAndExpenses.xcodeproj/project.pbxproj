@@ -11,6 +11,7 @@
 		5B0F8BC416B94ADD002D62A5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5B0F8BC616B94ADD002D62A5 /* Localizable.strings */; };
 		5B1F0D3517841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1F0D3417841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m */; };
 		5B1F0D3717841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B1F0D3617841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib */; };
+		5B23F04017FED21C00477D34 /* NSUserDefaults+EasyIncAndExp.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B23F03F17FED21C00477D34 /* NSUserDefaults+EasyIncAndExp.m */; };
 		5B23FD9117CFAB5100B4AD77 /* 727-more.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B23FD8F17CFAB5000B4AD77 /* 727-more.png */; };
 		5B23FD9217CFAB5100B4AD77 /* 727-more@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B23FD9017CFAB5100B4AD77 /* 727-more@2x.png */; };
 		5B251FA117AACA71000957A5 /* IAEStrokeAnimatableLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B251FA017AACA71000957A5 /* IAEStrokeAnimatableLineView.m */; };
@@ -134,6 +135,8 @@
 		5B1F0D3317841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEditModeConceptCollectionViewCell.h; sourceTree = "<group>"; };
 		5B1F0D3417841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEditModeConceptCollectionViewCell.m; sourceTree = "<group>"; };
 		5B1F0D3617841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEEditModeConceptCollectionViewCell.xib; sourceTree = "<group>"; };
+		5B23F03E17FED21C00477D34 /* NSUserDefaults+EasyIncAndExp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+EasyIncAndExp.h"; sourceTree = "<group>"; };
+		5B23F03F17FED21C00477D34 /* NSUserDefaults+EasyIncAndExp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+EasyIncAndExp.m"; sourceTree = "<group>"; };
 		5B23FD8F17CFAB5000B4AD77 /* 727-more.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "727-more.png"; sourceTree = "<group>"; };
 		5B23FD9017CFAB5100B4AD77 /* 727-more@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "727-more@2x.png"; sourceTree = "<group>"; };
 		5B251F9F17AACA71000957A5 /* IAEStrokeAnimatableLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEStrokeAnimatableLineView.h; sourceTree = "<group>"; };
@@ -390,6 +393,15 @@
 				5B1F0D3617841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib */,
 			);
 			name = WithConceptCell;
+			sourceTree = "<group>";
+		};
+		5B23F03D17FED1FD00477D34 /* NSUserDefaults */ = {
+			isa = PBXGroup;
+			children = (
+				5B23F03E17FED21C00477D34 /* NSUserDefaults+EasyIncAndExp.h */,
+				5B23F03F17FED21C00477D34 /* NSUserDefaults+EasyIncAndExp.m */,
+			);
+			name = NSUserDefaults;
 			sourceTree = "<group>";
 		};
 		5B251FA217AACA76000957A5 /* Stroke Animatable View */ = {
@@ -814,6 +826,7 @@
 		5B6E9FA4177D9BAB0072EE34 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				5B23F03D17FED1FD00477D34 /* NSUserDefaults */,
 				5BA013091798007200337E84 /* String */,
 				5B36AFF41785BBC500132475 /* NSDecimalNumber */,
 				5B5C96A61781E861008CD851 /* NSNumber */,
@@ -1498,6 +1511,7 @@
 				5B767E071636D7FC005315F8 /* IAEAppDelegate.m in Sources */,
 				5BCE3ABD17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.m in Sources */,
 				5BA51A7C1796D81E00A3D923 /* IAEInfoAboutAndOptionsCollectionViewCell.m in Sources */,
+				5B23F04017FED21C00477D34 /* NSUserDefaults+EasyIncAndExp.m in Sources */,
 				5B907832179D1AA700B2A0F7 /* IAECalculatorViewController.m in Sources */,
 				5B32D65D177C41980070AC72 /* IAEYearSelectorViewController.m in Sources */,
 				5BD06157163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld in Sources */,

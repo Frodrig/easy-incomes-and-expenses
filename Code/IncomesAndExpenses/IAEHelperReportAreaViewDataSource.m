@@ -8,6 +8,7 @@
 
 #import <Crashlytics/Crashlytics.h>
 #import "IAEHelperReportAreaViewDataSource.h"
+#import "NSUserDefaults+EasyIncAndExp.h"
 #import "IAEEasyIncomesAndExpensesViewControllerQuery.h"
 #import "IAEReportAreaView.h"
 #import "IAENumberUtils.h"
@@ -51,6 +52,13 @@ static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
 }
 
 #pragma mark - IAEReportAreaViewDataSource
+
+- (BOOL)canChangeActualReportAmountModeInReportAreaView:(IAEReportAreaView *)reportAreaView
+{
+    const BOOL canChange = [self.iaeViewControllerQuery isTheBalancesOptionSelectedInReportMenu] ? NO : YES;
+    
+    return canChange;
+}
 
 - (BOOL)showNoItemsLabelIfAppropiateInReportAreaView:(IAEReportAreaView *)reportAreaView
 {
@@ -183,29 +191,54 @@ static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
 - (NSString *)reportAreaView:(IAEReportAreaView *)reportAreaView titleOfItemWithIndex:(NSUInteger)itemIndex
 {
     NSString *title = nil;
-    BOOL incomeValue =  NO;
-    NSDecimalNumber *value = nil;
     
     if ([self.iaeViewControllerQuery isTheBalancesOptionSelectedInReportMenu]) {
-        incomeValue = itemIndex == 0;
-        value = incomeValue ? [self.iaeViewControllerQuery findIncomesOfActualSelectedContextView] :
-                              [self.iaeViewControllerQuery findExpensesOfActualSelectedContextView];
+        title = [self titleForTheBalanceOptionWithIndex:itemIndex];
     } else {
-        id modelObj = [self.iaeViewControllerQuery findModelObjectOfActualSelectedContextView];
-        incomeValue = [self.iaeViewControllerQuery isTheIncomesOptionSelectedInReportMenu];
-        NSArray *categories = incomeValue ? self.allIncomeCategoriesOfActualContextCache : self.allExpenseCategoriesOfActualContextCache;
-        IAECategory *category = categories[itemIndex];
-        value = [modelObj sumAllAmountOfCategories:@[category]];
+        if ([[NSUserDefaults standardUserDefaults] isTotalAmountModeInReportSection]) {
+            title = [self titleForTheIncomeOrExpenseOptionInAmountModeWithIndex:itemIndex];
+        } else if ([[NSUserDefaults standardUserDefaults] isTotalPercentageModeInReportSection]) {
+            title = @"%";
+        }
     }
     
+    return title;
+}
+
+-(NSString *)titleForTheBalanceOptionWithIndex:(NSUInteger)itemIndex
+{
+    const BOOL incomeValue = itemIndex == 0;
+    NSDecimalNumber *value = incomeValue ? [self.iaeViewControllerQuery findIncomesOfActualSelectedContextView] :
+    [self.iaeViewControllerQuery findExpensesOfActualSelectedContextView];
+    
+    NSString *title = [self convertToStringTheEconomicValue:value asIncomeValue:incomeValue];
+    
+    return title;
+}
+
+- (NSString *)titleForTheIncomeOrExpenseOptionInAmountModeWithIndex:(NSUInteger)itemIndex
+{
+    id modelObj = [self.iaeViewControllerQuery findModelObjectOfActualSelectedContextView];
+    const BOOL incomeValue = [self.iaeViewControllerQuery isTheIncomesOptionSelectedInReportMenu];
+    NSArray *categories = incomeValue ? self.allIncomeCategoriesOfActualContextCache : self.allExpenseCategoriesOfActualContextCache;
+    IAECategory *category = categories[itemIndex];
+    NSDecimalNumber *value = [modelObj sumAllAmountOfCategories:@[category]];
+    
+    NSString *title = [self convertToStringTheEconomicValue:value asIncomeValue:incomeValue];
+    
+    return title;
+}
+
+- (NSString *)convertToStringTheEconomicValue:(NSDecimalNumber *)value asIncomeValue:(BOOL)incomeValue
+{
     if (!incomeValue) {
         NSString *minusOne = [NSNumber numberWithFloat:-1].stringValue;
         value = [value decimalNumberByMultiplyingBy:[NSDecimalNumber decimalNumberWithString:minusOne]];
     }
     
-    title = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:value];
+    NSString *stringValue = [[IAECurrencyManager sharedManager].currencyFormatter stringFromNumber:value];
 
-    return title;
+    return stringValue;
 }
 
 - (NSString *)reportAreaView:(IAEReportAreaView *)reportAreaView subtitleOfItemWithIndex:(NSUInteger)itemIndex

@@ -1467,6 +1467,20 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (void)panOnCalculatorView:(UIPanGestureRecognizer *)panGestureRecognizer
 {
+    if ([self canPanCalculator]) {
+        [self doPanCalculatorWithGesture:panGestureRecognizer];
+    }
+}
+
+- (BOOL)canPanCalculator
+{
+    const BOOL canPan = !self.calculatorViewController.isInDisableMode;
+    
+    return canPan;
+}
+
+- (void)doPanCalculatorWithGesture:(UIPanGestureRecognizer *)panGestureRecognizer
+{
     if (panGestureRecognizer.state == UIGestureRecognizerStateBegan) {
         [self.calculatorViewController beginDragTranslation];
     }

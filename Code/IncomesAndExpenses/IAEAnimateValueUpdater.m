@@ -237,7 +237,7 @@ static const CGFloat kRationOfDurationByUpdateProcessEconomicLabel = 0.1;
         UIColor *updatedColor = [IAEColorHelper colorForEconomicValueType:[IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:value]];
         [updatedAttributes setObject:updatedColor forKey:NSForegroundColorAttributeName];
     } else if (valueType == VT_PERCENTAGE) {
-        updatedString = [[IAENumberFormatterManager sharedManager].percentageFormatter stringFromNumber:numberObject];
+        updatedString = [[IAENumberFormatterManager sharedManager] convertNumberToDecoratePercentageString:numberObject];
     }
     
     NSAttributedString *updatedAttributedString = [[NSAttributedString alloc] initWithString:updatedString attributes:updatedAttributes];

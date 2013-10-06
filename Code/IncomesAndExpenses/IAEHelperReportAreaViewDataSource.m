@@ -253,7 +253,7 @@ static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
     NSDecimalNumber *value = [self sumAllAmountOfConceptsWithCategoryOfOptionAtIndex:itemIndex];
     value = [value decimalNumberByDividingBy:[NSDecimalNumber decimalNumberWithString:sumOfAllValues.stringValue]];
     
-    NSString *title = [[IAENumberFormatterManager sharedManager].percentageFormatter stringFromNumber:value];
+    NSString *title = [[IAENumberFormatterManager sharedManager] convertNumberToDecoratePercentageString:value];
     
     return title;
 }

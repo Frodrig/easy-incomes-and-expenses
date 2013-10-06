@@ -85,4 +85,17 @@
     self.minimumFractionDigitState = nil;
 }
 
+#pragma mark - Special cases
+
+- (NSString *)convertNumberToDecoratePercentageString:(NSNumber *)value
+{
+    NSString *stringValue = [[IAENumberFormatterManager sharedManager].percentageFormatter stringFromNumber:value];
+    if ([value compare:[NSNumber numberWithFloat:0]] == NSOrderedSame) {
+        stringValue = [NSString stringWithFormat:@"< %@", [[IAENumberFormatterManager sharedManager].percentageFormatter stringFromNumber:@0.0001]];
+    }
+    
+    return stringValue;
+}
+
+
 @end

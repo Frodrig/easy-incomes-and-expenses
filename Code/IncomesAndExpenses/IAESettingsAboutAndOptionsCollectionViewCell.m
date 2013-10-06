@@ -7,6 +7,7 @@
 //
 
 #import "IAESettingsAboutAndOptionsCollectionViewCell.h"
+#import <Crashlytics/Crashlytics.h>
 #import "IAENibUtils.h"
 
 @interface IAESettingsAboutAndOptionsCollectionViewCell()
@@ -85,6 +86,8 @@ static NSString * const kNibName = @"IAESettingsAboutAndOptionsCollectionViewCel
 {
     [[NSUserDefaults standardUserDefaults] setBool:self.dayModeSwitch.on forKey:kUserDefaultsDayModeActive];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [Crashlytics setObjectValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"dayModeActive"] forKey:@"Days Mode"];
 }
 
 #pragma mark - Acciones directas

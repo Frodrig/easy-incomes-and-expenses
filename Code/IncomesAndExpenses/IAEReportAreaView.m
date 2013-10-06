@@ -393,12 +393,14 @@ static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;
                                                                                     toValue:decimalNumberOfItem
                                                                                withDuration:kDurationOfReportItemViewAppear];
             } else if ([[NSUserDefaults standardUserDefaults] isTotalPercentageModeInReportSection]) {
-                NSNumber *numberValueOfItem = [[IAENumberFormatterManager sharedManager].percentageFormatter numberFromString:reportAreaItemView.title.text];
-                NSDecimalNumber *decimalNumberOfItem = [NSDecimalNumber decimalNumberWithString:numberValueOfItem.stringValue];
-                [reportAreaItemView changeTitleLabel:[[IAENumberFormatterManager sharedManager].percentageFormatter stringFromNumber:[NSDecimalNumber zero]] withAnimation:NO];
-                [[IAEAnimateValueUpdater defaultAnimateValueUpdater] processPercentageLabel:reportAreaItemView.title
-                                                                                    toValue:decimalNumberOfItem
-                                                                               withDuration:kDurationOfReportItemViewAppear];
+                if (![[IAENumberFormatterManager sharedManager] isPresentDecoratePercentageInNumberString:reportAreaItemView.title.text]) {
+                    NSNumber *numberValueOfItem = [[IAENumberFormatterManager sharedManager].percentageFormatter numberFromString:reportAreaItemView.title.text];
+                    NSDecimalNumber *decimalNumberOfItem = [NSDecimalNumber decimalNumberWithString:numberValueOfItem.stringValue];
+                    [reportAreaItemView changeTitleLabel:[[IAENumberFormatterManager sharedManager].percentageFormatter stringFromNumber:[NSDecimalNumber zero]] withAnimation:NO];
+                    [[IAEAnimateValueUpdater defaultAnimateValueUpdater] processPercentageLabel:reportAreaItemView.title
+                                                                                        toValue:decimalNumberOfItem
+                                                                                   withDuration:kDurationOfReportItemViewAppear];
+                }
             }
             
             [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];

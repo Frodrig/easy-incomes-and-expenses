@@ -19,5 +19,6 @@
 - (void)restoreCurrencyFormatterFractionState;
 
 - (NSString *)convertNumberToDecoratePercentageString:(NSNumber *)percentage;
+- (BOOL)isPresentDecoratePercentageInNumberString:(NSString *)percentage;
 
 @end

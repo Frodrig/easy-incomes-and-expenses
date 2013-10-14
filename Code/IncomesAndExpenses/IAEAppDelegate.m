@@ -7,6 +7,7 @@
 //
 
 #import <Crashlytics/Crashlytics.h>
+#import "Flurry.h"
 #import "IAEAppDelegate.h"
 #import "IAEBook.h"
 #import "IAEYear.h"
@@ -27,6 +28,7 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [self prepareCrashlytics];
+    [self prepareFlurry];
     [self processProcessInfoEnvironment];
     [self createYearBookIfProceed];
     [self prepareDefaults];
@@ -43,6 +45,13 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
     [Crashlytics setObjectValue:NSLocalizedString(@"LTEXT_CATEGORY_VERSION", @"") forKey:@"Version Type"];
     [Crashlytics setObjectValue:NSLocalizedString(@"LTEXT_LANGUAGE", @"") forKey:@"Language"];
     [Crashlytics setObjectValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"dayModeActive"] forKey:@"Days Mode"];
+}
+
+- (void)prepareFlurry
+{
+    //note: iOS only allows one crash reporting tool per app; if using another, set to: NO
+    [Flurry setCrashReportingEnabled:NO];
+    [Flurry startSession:@"KH93RSRMDFKFKGG3HS39"];
 }
 
 - (void)processProcessInfoEnvironment

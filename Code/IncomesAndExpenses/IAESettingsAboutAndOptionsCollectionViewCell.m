@@ -8,6 +8,7 @@
 
 #import "IAESettingsAboutAndOptionsCollectionViewCell.h"
 #import <Crashlytics/Crashlytics.h>
+#import "Flurry.h"
 #import "IAENibUtils.h"
 
 @interface IAESettingsAboutAndOptionsCollectionViewCell()
@@ -88,6 +89,7 @@ static NSString * const kNibName = @"IAESettingsAboutAndOptionsCollectionViewCel
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [Crashlytics setObjectValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"dayModeActive"] forKey:@"Days Mode"];
+    [Flurry logEvent:@"daymode_activation" withParameters:@{@"DayMode" : [NSNumber numberWithBool:self.dayModeSwitch.on]}];
 }
 
 #pragma mark - Acciones directas

@@ -44,6 +44,7 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
     [Crashlytics setObjectValue:NSLocalizedString(@"LTEXT_VERSION", @"") forKey:@"Version Number"];
     [Crashlytics setObjectValue:NSLocalizedString(@"LTEXT_CATEGORY_VERSION", @"") forKey:@"Version Type"];
     [Crashlytics setObjectValue:NSLocalizedString(@"LTEXT_LANGUAGE", @"") forKey:@"Language"];
+    [Crashlytics setObjectValue:@"Edit" forKey:@"Mode"];
     [Crashlytics setObjectValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"dayModeActive"] forKey:@"Days Mode"];
 }
 

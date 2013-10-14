@@ -630,6 +630,8 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (void)updateAfterChangeToEditMode
 {
+    [Crashlytics setObjectValue:@"Edit" forKey:@"Mode"];
+
     [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
     [UIView animateWithDuration:kDurationModeFadeOut animations:^{
         self.editAndReportModeContentContainerView.alpha = 0.0;
@@ -658,6 +660,8 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (void)updateAfterChangeToReportMode
 {
+    [Crashlytics setObjectValue:@"Report" forKey:@"Mode"];
+
     [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
     [UIView animateWithDuration:kDurationModeFadeOut animations:^{
         self.editAndReportModeContentContainerView.alpha = 0.0;
@@ -856,7 +860,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 - (IAEConcept *)findConceptAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray *concepts = [self allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath:indexPath];
-    CLSLog(@"valid array of concepts: %@ indexPath.row: %d number of Concepts: %d", concepts ? @"Yes" : @"No", indexPath.row, concepts.count);
+    CLSLog(@"valid array of concepts: %@ indexPath.row: %d section: %d number of Concepts: %d", concepts ? @"Yes" : @"No", indexPath.row, indexPath.section, concepts.count);
     NSAssert(indexPath.row < concepts.count, @"");
     IAEConcept *concept = [concepts objectAtIndex:indexPath.row];
     
@@ -952,13 +956,12 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 {
     IAEMonth *month = nil;
     if ([self isActualSelectedContextAMonth]) {
-        CLSLog(@"allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath - MONTH");
         month = [self findActualSelectedMonth];
+        CLSLog(@"allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath - MONTH: %d", month.month);
     } else {
-        CLSLog(@"allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath - YEAR");
-        NSAssert(indexPath, @"");
         NSArray *months = [self findAllOrdererMonthsWithConceptsOfOpenYear];
         month = months[indexPath.section];
+        CLSLog(@"allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath - YEAR: %d & MONTH: %d", month.year.yearDate, month.month);
     }
     
     NSArray *allConcepts = [self isDayModeActiveForConcepts] ? [month allConceptsSortedByDay] : [month allConceptsSortedByEntryInstant];

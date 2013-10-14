@@ -950,16 +950,18 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (NSArray *)allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray *allConcepts = nil;
+    IAEMonth *month = nil;
     if ([self isActualSelectedContextAMonth]) {
-        IAEMonth *actualMonth = [self findActualSelectedMonth];
-        allConcepts = [self isDayModeActiveForConcepts] ? [actualMonth  allConceptsSortedByDay] : [actualMonth allConceptsSortedByEntryInstant];
+        CLSLog(@"allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath - MONTH");
+        month = [self findActualSelectedMonth];
     } else {
+        CLSLog(@"allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath - YEAR");
         NSAssert(indexPath, @"");
         NSArray *months = [self findAllOrdererMonthsWithConceptsOfOpenYear];
-        IAEMonth *month = months[indexPath.section];
-        allConcepts = [self isDayModeActiveForConcepts] ? [month allConceptsSortedByDay] : [month allConceptsSortedByEntryInstant];
+        month = months[indexPath.section];
     }
+    
+    NSArray *allConcepts = [self isDayModeActiveForConcepts] ? [month allConceptsSortedByDay] : [month allConceptsSortedByEntryInstant];
     
     return allConcepts;
 }

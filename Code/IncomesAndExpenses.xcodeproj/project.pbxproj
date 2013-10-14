@@ -522,6 +522,10 @@
 		5BBD37CE180BFF990095A15A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		5BBD37D0180BFF9F0095A15A /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		5BBD37D2180C01850095A15A /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		5BBD37D4180C117B0095A15A /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5BBD37D5180C117B0095A15A /* ca */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ca; path = ca.lproj/IAEWithoutConceptsTextWarningReportMode.xib; sourceTree = "<group>"; };
+		5BBD37D6180C117B0095A15A /* ca */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ca; path = ca.lproj/IAEWithoutConceptsTextWarning.xib; sourceTree = "<group>"; };
+		5BBD37D7180C117B0095A15A /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5BC110FE17CD1DF500FF6D6B /* 730-envelope.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "730-envelope.png"; sourceTree = "<group>"; };
 		5BC110FF17CD1DF500FF6D6B /* 730-envelope@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "730-envelope@2x.png"; sourceTree = "<group>"; };
 		5BC31A8316651F1F009F23D6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -1868,6 +1872,7 @@
 			knownRegions = (
 				en,
 				es,
+				ca,
 			);
 			mainGroup = 5B767DE71636D7FC005315F8;
 			productRefGroup = 5B767DF31636D7FC005315F8 /* Products */;
@@ -2106,6 +2111,7 @@
 			children = (
 				5B0574C217AFE2F600B95D50 /* en */,
 				5B0574C417AFE2F900B95D50 /* es */,
+				5BBD37D5180C117B0095A15A /* ca */,
 			);
 			name = IAEWithoutConceptsTextWarningReportMode.xib;
 			sourceTree = "<group>";
@@ -2115,6 +2121,7 @@
 			children = (
 				5B0F8BC516B94ADD002D62A5 /* en */,
 				5B0F8BC716B94AE1002D62A5 /* es */,
+				5BBD37D4180C117B0095A15A /* ca */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -2124,6 +2131,7 @@
 			children = (
 				5B2D38B417AFA1B30056488B /* en */,
 				5B2D38B617AFA1B90056488B /* es */,
+				5BBD37D6180C117B0095A15A /* ca */,
 			);
 			name = IAEWithoutConceptsTextWarning.xib;
 			sourceTree = "<group>";
@@ -2133,6 +2141,7 @@
 			children = (
 				5B767E001636D7FC005315F8 /* en */,
 				5B021D3716B8363F000B8D4F /* es */,
+				5BBD37D7180C117B0095A15A /* ca */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

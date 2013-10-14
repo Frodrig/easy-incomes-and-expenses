@@ -207,6 +207,7 @@ static NSString * const kNotificationDayModeOffName = @"dayModeToOff";
 
 - (void)configureAboutCell:(IAEInfoAboutAndOptionsCollectionViewCell *)cell
 {
+    cell.canSendMail = [MFMailComposeViewController canSendMail];
     cell.delegate = self;
 }
 
@@ -265,11 +266,11 @@ static NSString * const kNotificationDayModeOffName = @"dayModeToOff";
 {
     MFMailComposeViewController *appEmailViewController = [[MFMailComposeViewController alloc] init];
     appEmailViewController.mailComposeDelegate = self;
-    
+        
     NSString *subject = [NSLocalizedString(@"LTEXT_EMAIL_SUBJECT", @"Email feedback") stringByAppendingString:NSLocalizedString(@"LTEXT_VERSION", @"")];
     [appEmailViewController setSubject:subject];
     [appEmailViewController setToRecipients:[NSArray arrayWithObject:NSLocalizedString(@"LTEXT_EMAIL", @"")]];
-
+        
     [self presentViewController:appEmailViewController animated:YES completion:nil];
 }
 

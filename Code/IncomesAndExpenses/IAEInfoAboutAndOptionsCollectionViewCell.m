@@ -12,6 +12,8 @@
 
 @interface IAEInfoAboutAndOptionsCollectionViewCell()
 
+@property (weak, nonatomic) IBOutlet UIButton *emailButton;
+
 @end
 
 @implementation IAEInfoAboutAndOptionsCollectionViewCell
@@ -48,6 +50,14 @@ static NSString * const kNibName = @"IAEInfoAboutAndOptionsCollectionViewCell";
     }
     
     return size;
+}
+
+#pragma mark - Properties
+
+- (void)setCanSendMail:(BOOL)canSendMail
+{
+    self.emailButton.enabled = canSendMail;
+    _canSendMail = canSendMail;
 }
 
 #pragma mark - Init

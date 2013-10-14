@@ -13,6 +13,7 @@
 @interface IAEInfoAboutAndOptionsCollectionViewCell : UICollectionViewCell
 
 @property(nonatomic, weak)id<IAEInfoAboutAndOptionsCollectionViewCellDelegate> delegate;
+@property(nonatomic) BOOL canSendMail;
 
 + (CGSize)sizeOfItem;
 

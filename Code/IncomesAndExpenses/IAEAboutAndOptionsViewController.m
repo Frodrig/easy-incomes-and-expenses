@@ -58,13 +58,22 @@ static NSString * const kNotificationDayModeOffName = @"dayModeToOff";
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
-        [self getGlobalSettingsInformation];
+        [self prepareGlobalSettingsInformation];
     }
     return self;
 }
 
-- (void)getGlobalSettingsInformation
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self prepareGlobalSettingsInformation];
+    }
+    
+    return self;
+}
+
+- (void)prepareGlobalSettingsInformation
 {
     _dayModeWasActiveAtStart = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsDayModeActive];
 }

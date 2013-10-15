@@ -199,6 +199,10 @@
 		5BD06168163A8CFF00A80BE3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD06167163A8CFF00A80BE3 /* CoreData.framework */; };
 		5BD94C0B1786B864009009B1 /* IAECategoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD94C0A1786B864009009B1 /* IAECategoryTableViewCell.m */; };
 		5BD94C0F1786B896009009B1 /* IAECategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BD94C0E1786B896009009B1 /* IAECategoryTableViewCell.xib */; };
+		5BE84E77180DA8CF00F4A80B /* IAEAboutAndOptions2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE84E75180DA8CF00F4A80B /* IAEAboutAndOptions2ViewController.m */; };
+		5BE84E78180DA8CF00F4A80B /* IAEAboutAndOptions2ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE84E76180DA8CF00F4A80B /* IAEAboutAndOptions2ViewController.xib */; };
+		5BE84E7C180DA8F500F4A80B /* IAEHelpIndexViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE84E7A180DA8F500F4A80B /* IAEHelpIndexViewController.m */; };
+		5BE84E7D180DA8F500F4A80B /* IAEHelpIndexViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE84E7B180DA8F500F4A80B /* IAEHelpIndexViewController.xib */; };
 		5BEA608217A6A36600520E09 /* IAEReportAreaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA608117A6A36600520E09 /* IAEReportAreaView.m */; };
 		5BEA608717A6A39400520E09 /* IAEReportAreaItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA608617A6A39400520E09 /* IAEReportAreaItemView.m */; };
 		5BEA98AB1793E3A500098AE0 /* IAECircleDecoratorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA98AA1793E3A500098AE0 /* IAECircleDecoratorView.m */; };
@@ -568,6 +572,12 @@
 		5BD94C0A1786B864009009B1 /* IAECategoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECategoryTableViewCell.m; sourceTree = "<group>"; };
 		5BD94C0E1786B896009009B1 /* IAECategoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAECategoryTableViewCell.xib; sourceTree = "<group>"; };
 		5BD94C111786D051009009B1 /* IAECategorySelectorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategorySelectorViewControllerDelegate.h; sourceTree = "<group>"; };
+		5BE84E74180DA8CF00F4A80B /* IAEAboutAndOptions2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEAboutAndOptions2ViewController.h; sourceTree = "<group>"; };
+		5BE84E75180DA8CF00F4A80B /* IAEAboutAndOptions2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEAboutAndOptions2ViewController.m; sourceTree = "<group>"; };
+		5BE84E76180DA8CF00F4A80B /* IAEAboutAndOptions2ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEAboutAndOptions2ViewController.xib; sourceTree = "<group>"; };
+		5BE84E79180DA8F500F4A80B /* IAEHelpIndexViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelpIndexViewController.h; sourceTree = "<group>"; };
+		5BE84E7A180DA8F500F4A80B /* IAEHelpIndexViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelpIndexViewController.m; sourceTree = "<group>"; };
+		5BE84E7B180DA8F500F4A80B /* IAEHelpIndexViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEHelpIndexViewController.xib; sourceTree = "<group>"; };
 		5BEA607E17A66BB000520E09 /* IAETextRawSelectorMenuViewDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAETextRawSelectorMenuViewDefs.h; sourceTree = "<group>"; };
 		5BEA608017A6A36600520E09 /* IAEReportAreaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEReportAreaView.h; sourceTree = "<group>"; };
 		5BEA608117A6A36600520E09 /* IAEReportAreaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEReportAreaView.m; sourceTree = "<group>"; };
@@ -939,6 +949,7 @@
 				5B8CD5D617A2C6B400A353A5 /* Text Raw Selector Menu */,
 				5BA0130E17983A6600337E84 /* Day Calendar Selector */,
 				5B36AFED1785872900132475 /* Adjust Concept Amout */,
+				5BE84E68180DA16200F4A80B /* About and Options 2 */,
 				5BF925381795540F0002CF9F /* About and Options */,
 				5B94035D178FEE9700F9C1D0 /* Category Selector */,
 				5B32D65A177C417A0070AC72 /* Year Selector */,
@@ -1731,6 +1742,27 @@
 			name = Cell;
 			sourceTree = "<group>";
 		};
+		5BE84E68180DA16200F4A80B /* About and Options 2 */ = {
+			isa = PBXGroup;
+			children = (
+				5BE84E6E180DA85900F4A80B /* IAEHelpIndex */,
+				5BE84E74180DA8CF00F4A80B /* IAEAboutAndOptions2ViewController.h */,
+				5BE84E75180DA8CF00F4A80B /* IAEAboutAndOptions2ViewController.m */,
+				5BE84E76180DA8CF00F4A80B /* IAEAboutAndOptions2ViewController.xib */,
+			);
+			name = "About and Options 2";
+			sourceTree = "<group>";
+		};
+		5BE84E6E180DA85900F4A80B /* IAEHelpIndex */ = {
+			isa = PBXGroup;
+			children = (
+				5BE84E79180DA8F500F4A80B /* IAEHelpIndexViewController.h */,
+				5BE84E7A180DA8F500F4A80B /* IAEHelpIndexViewController.m */,
+				5BE84E7B180DA8F500F4A80B /* IAEHelpIndexViewController.xib */,
+			);
+			name = IAEHelpIndex;
+			sourceTree = "<group>";
+		};
 		5BEA607F17A6A31E00520E09 /* Report Area View */ = {
 			isa = PBXGroup;
 			children = (
@@ -1887,6 +1919,7 @@
 				5B7319F31796A8AB00FAF632 /* IAEInfoAboutAndOptionsCollectionViewCell.xib in Resources */,
 				5B767E011636D7FC005315F8 /* InfoPlist.strings in Resources */,
 				5BB8AD1317FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png in Resources */,
+				5BE84E7D180DA8F500F4A80B /* IAEHelpIndexViewController.xib in Resources */,
 				5B2A41B017C77C8100C29036 /* 765-arrow-left.png in Resources */,
 				5B2A41B517C77E8500C29036 /* 709-plus@2x.png in Resources */,
 				5BBD37B9180BFF5B0095A15A /* sync_on.png in Resources */,
@@ -1984,6 +2017,7 @@
 				5BBD375C180BFF5B0095A15A /* ftv2mnode.png in Resources */,
 				5B5DBB3D17E1F01400716503 /* ipadlandscape_launchimage.png in Resources */,
 				5BBD3760180BFF5B0095A15A /* ftv2plastnode.png in Resources */,
+				5BE84E78180DA8CF00F4A80B /* IAEAboutAndOptions2ViewController.xib in Resources */,
 				5BBD37C5180BFF5B0095A15A /* Flurry AppCircle Advertiser TOS FINAL August 1, 2012.pdf in Resources */,
 				5B951F6C17D88F1700CCEACE /* icon.png in Resources */,
 				5BBD37BD180BFF5B0095A15A /* tab_s.png in Resources */,
@@ -2035,6 +2069,7 @@
 				5B767E071636D7FC005315F8 /* IAEAppDelegate.m in Sources */,
 				5BCE3ABD17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.m in Sources */,
 				5BA51A7C1796D81E00A3D923 /* IAEInfoAboutAndOptionsCollectionViewCell.m in Sources */,
+				5BE84E77180DA8CF00F4A80B /* IAEAboutAndOptions2ViewController.m in Sources */,
 				5B23F04017FED21C00477D34 /* NSUserDefaults+EasyIncAndExp.m in Sources */,
 				5B907832179D1AA700B2A0F7 /* IAECalculatorViewController.m in Sources */,
 				5B32D65D177C41980070AC72 /* IAEYearSelectorViewController.m in Sources */,
@@ -2046,6 +2081,7 @@
 				5B8F843417B1002200C17020 /* IAEGlobalConstants.m in Sources */,
 				5B55C406178AA8C20066F586 /* IAECategoryEditorViewController.m in Sources */,
 				5BCE3A9F17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m in Sources */,
+				5BE84E7C180DA8F500F4A80B /* IAEHelpIndexViewController.m in Sources */,
 				5B5C968917816EE0008CD851 /* IAEValueDecoratorViewExpenseConfigurator.m in Sources */,
 				5BC7101817AC29F600E12953 /* IAECategory.m in Sources */,
 				5B26461A17969084006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.m in Sources */,

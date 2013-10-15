@@ -624,13 +624,6 @@
 			name = Localizacion;
 			sourceTree = "<group>";
 		};
-		5B18053117BBC92C00EB8ABF /* ToDo */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = ToDo;
-			sourceTree = "<group>";
-		};
 		5B1F0D3217841C7400D0B4F1 /* WithConceptCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1103,12 +1096,11 @@
 		5B767DE71636D7FC005315F8 = {
 			isa = PBXGroup;
 			children = (
-				5BBD369F180BFF5B0095A15A /* Flurry-iOS-4.2.4 */,
 				5BBD3739180BFF5B0095A15A /* ProjectApiKey.txt */,
-				5B18053117BBC92C00EB8ABF /* ToDo */,
 				5B0F8BC116B94A7B002D62A5 /* Localizacion */,
 				5B29ED30179FC2C300FCC5C6 /* Resources */,
 				5B767DFC1636D7FC005315F8 /* IncomesAndExpenses */,
+				5BBD369F180BFF5B0095A15A /* Flurry-iOS-4.2.4 */,
 				5B767DF51636D7FC005315F8 /* Frameworks */,
 				5B767DF31636D7FC005315F8 /* Products */,
 				5BAA5E46170988AC00B6B3F8 /* IncomesAndExpenses copy-Info.plist */,

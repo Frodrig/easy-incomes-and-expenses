@@ -7,6 +7,7 @@
 //
 
 #import <Crashlytics/Crashlytics.h>
+#import "Flurry.h"
 #import "IAEEasyIncomesAndExpensesViewController.h"
 #import "IAEEasyIncomesAndExpensesViewControllerDelegate.h"
 #import "IAECurrencyManager.h"
@@ -1530,6 +1531,8 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (void)doStrokeOverConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
+    [Flurry logEvent:@"concept_stroke"];
+
     self.conceptCellToRemove = cell;
     self.conceptCellToRemove.durationOfStrokeStateTransition = self.strokeAnimatableLineView.durationOfStrokeAnimation;
     [self.strokeAnimatableLineView doStrokeOverTheView:self.conceptCellToRemove.conceptInformationContainerView];
@@ -1754,6 +1757,8 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 - (void)adjustConceptsAmountViewController:(IAEAdjustConceptAmountViewController *)adjustConceptsAmountViewController
           didPressedAdjustButtonWithAmount:(NSNumber *)amount
 {
+    [Flurry logEvent:@"changeconcept_amount"];
+
     IAEConcept *concept = [self findConceptAtIndexPath:adjustConceptsAmountViewController.conceptCellIndexPath];
     
     IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:adjustConceptsAmountViewController.conceptCellIndexPath];
@@ -1814,6 +1819,8 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 {
     [self dismisPopover];
     [self changeCategoryOfConceptAtIndexPath:indexPath toCategory:category];
+    
+    [Flurry logEvent:@"changeconcept_category"];
 }
 
 - (void)changeCategoryOfConceptAtIndexPath:(NSIndexPath *)indexPath toCategory:(IAECategory *)category
@@ -1949,6 +1956,8 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
            didValidateNewCategoryTag:(NSString *)categoryTag
                       ofCategoryType:(CategoryType)categoryType
 {
+    [Flurry logEvent:[self categorySelectorViewControllerWasLaunchedFromCategoryButton] ? @"modal_newcategorycreated" : @"concept_newcategorycreated"];
+    
     IAECategory *newCategory = [[IAECategoryStore sharedCategoryStore] createCategoryOfType:categoryType
                                                                                      andTag:categoryTag
                                                                        withValidityTagCheck:NO];
@@ -2103,6 +2112,8 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
     IAEConcept *concept = [self findConceptAtIndexPath:dayCalendarSelectorViewController.conceptCellIndexPath];
     if (concept.dayOfTheMonth != day) {
+        [Flurry logEvent:@"changeconcept_day"];
+
         concept.dayOfTheMonth = day;
         [[IAEBook sharedBook] saveAll];
 

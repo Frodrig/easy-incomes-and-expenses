@@ -7,6 +7,7 @@
 //
 
 #import "NSUserDefaults+EasyIncAndExp.h"
+#import "Flurry.h"
 
 @implementation NSUserDefaults (EasyIncAndExp)
 
@@ -65,6 +66,8 @@ static NSString * const kUserDefaultsReportAmountModePercentageAmountValue = @"p
 
 - (void)changeToReportAmountModeInReportSectionOfType:(NSString *)reportAmountModeType
 {
+    [Flurry logEvent:@"report_changemode" withParameters:@{@"mode" :reportAmountModeType}];
+    
     [[NSUserDefaults standardUserDefaults] setValue:reportAmountModeType forKey:kUserDefaultsReportAmountMode];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }

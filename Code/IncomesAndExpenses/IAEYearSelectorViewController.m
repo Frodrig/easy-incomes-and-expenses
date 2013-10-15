@@ -7,6 +7,7 @@
 //
 
 #import "IAEYearSelectorViewController.h"
+#import "Flurry.h"
 #import "IAEYearSelectorViewControllerDelegate.h"
 #import "IAEYearSelectorCollectionViewCell.h"
 #import "IAEDateHelper.h"
@@ -409,14 +410,15 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self sendToDelegateTheChosenActionAfterSelectCellWithYearDate:[self yearDateBasedInSegmentedControlStateUsingIndexPath:indexPath]];
+    NSUInteger yearDate = [self yearDateBasedInSegmentedControlStateUsingIndexPath:indexPath];
+    [self sendToDelegateTheChosenActionAfterSelectCellWithYearDate:yearDate];
     [self dismissViewControllerAnimated:YES completion:nil];
-
-    //[self launchMenuOfOptionsAtYearCellIndexPathIfProceed:indexPath];
 }
 
 - (void)sendToDelegateTheChosenActionAfterSelectCellWithYearDate:(NSUInteger)yearDateSelected
 {
+    [Flurry logEvent:@"year_open" withParameters:@{@"year" :@(yearDateSelected)}];
+
     if (yearDateSelected == self.yearLoadedBeforeStart) {
         [self sendToDelegateActionChosenSelectedActualYear];
     } else if ([[IAEBook sharedBook] findYearWithDate:[NSNumber numberWithUnsignedInteger:yearDateSelected]]) {
@@ -501,6 +503,7 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
     NSIndexPath *indexPathOfSelectedCellToClean = [self.yearsCollectionView indexPathForCell:self.selectedCellToClean];
     NSUInteger yearDateSelectedForClean = [self yearDateBasedInSegmentedControlStateFromCell:self.selectedCellToClean];
     IAEYear *yearSelectedForClean = [self yearBasedInSegmentedControlStateUsingCell:self.selectedCellToClean];
+    [Flurry logEvent:@"year_clean" withParameters:@{@"year" :@(yearSelectedForClean.yearDate)}];
     [[IAEBook sharedBook] deleteAllConceptsOfYear:yearSelectedForClean];
     [[IAEBook sharedBook] saveAll];
     

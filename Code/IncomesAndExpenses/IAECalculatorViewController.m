@@ -7,6 +7,7 @@
 //
 
 #import "IAECalculatorViewController.h"
+#import "Flurry.h"
 #import "IAEDragPanelCalculatorView.h"
 #import "IAEDisplayPanelCalculatorView.h"
 #import "IAECategoryStore.h"
@@ -875,6 +876,8 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
            didValidateNewCategoryTag:(NSString *)categoryTag
                       ofCategoryType:(CategoryType)categoryType
 {
+    [Flurry logEvent:@"calculator_newcategorycreated"];
+
     IAECategory *category = [[IAECategoryStore sharedCategoryStore] createCategoryOfType:categoryType andTag:categoryTag withValidityTagCheck:NO];
     NSAssert(category, @"");
     [[IAEBook sharedBook] saveAll];
@@ -908,6 +911,8 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
 
 - (void)amountLabelWasCleanInDisplayPanelCalculatorView:(IAEDisplayPanelCalculatorView *)displayPanelCalculatorView
 {
+    [Flurry logEvent:@"calculator_strokeamount"];
+
     [self resetAmountPannel];
 }
 

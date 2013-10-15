@@ -7,6 +7,7 @@
 //
 
 #import "IAEAboutAndOptionsViewController.h"
+#import "Flurry.h"
 #import "IAEHeaderAboutAndOptionsCollectionReusableView.h"
 #import "IAESettingsAboutAndOptionsCollectionViewCell.h"
 #import "IAEInfoAboutAndOptionsCollectionViewCell.h"
@@ -253,6 +254,8 @@ static NSString * const kNotificationDayModeOffName = @"dayModeToOff";
 
 - (void)launchSafariWithAppUrl
 {
+    [Flurry logEvent:@"safary_openoficialurl"];
+
     NSString *urlString = NSLocalizedString(kLTextAppUrl, @"");
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
 }

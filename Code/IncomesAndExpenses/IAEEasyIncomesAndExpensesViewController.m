@@ -1800,7 +1800,9 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 - (void)doneButtonWasPressedInCategorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
 {
     NSAssert([self categorySelectorViewControllerWasLaunchedFromCategoryButton], @"");
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        self.categoriesSelectorViewController = nil;
+    }];
 }
 
 - (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController

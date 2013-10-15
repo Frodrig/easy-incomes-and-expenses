@@ -1008,7 +1008,9 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 - (BOOL)categorySelectorViewControllerWasLaunchedFromCategoryButton
 {
     // Nota: Solo tendra sentido si realmente se ha lanzado
-    return self.popover == nil && [self.calculatorViewController isClosed];
+    const BOOL launchedFromCategoryButton = self.popover == nil && self.categoriesSelectorViewController != nil;
+    
+    return launchedFromCategoryButton;
 }
 
 - (BOOL)categorySelectorViewControllerWasLaunchedFromConcept
@@ -1645,7 +1647,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
     IAECategory *categoryOfCell = [self findCategoryOfConceptCell:cell];
     IAECategorySelectorViewController *viewController = [[IAECategorySelectorViewController alloc]
-                                                         initWithExtraActions:CATEGORYSELECTOR_EXTRAACTION_CATEGORYSELECTION
+                                                         initWithExtraActions:CATEGORYSELECTOR_EXTRAACTION_CATEGORYSELECTION | CATEGORYSELECTOR_EXTRAACTION_ADD
                                                          withSelectedCategory:categoryOfCell];
     viewController.showNumberOfConcepts = NO;
     viewController.delegate = self;
@@ -1804,7 +1806,6 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     } else if ([self categorySelectorViewControllerWasLaunchedFromConcept]) {
         [self dismissPopoverAndChangeCategoryOfConceptAtIndexPath:categorySelectorViewController.conceptCellIndexPath toCategory:category];
     } else {
-        
         NSAssert(0, @"Nunca se deberia de llegar a este punto");
     }
 }
@@ -1839,13 +1840,25 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     if ([self categorySelectorViewControllerWasLaunchedFromCategoryButton]) {
         [self launchCategoryEditorViewControllerModalToAddCategoryFromCategorySelectorViewController:categorySelectorViewController
                                                                         andCategoryType:categoryType];
-    } else {
-        [self dismissPopoverAndLaunchCategoryEditorViewControllerWithCategoryType:categoryType];
+    } else if ([self isPopoverAssociatedToConceptBecauseACategorySelectorViewController]) {
+        // En el caso de lanzar desde un concepto no queremos hacer dismiss del popover ya que sera pieza clave para saber que hacer al retornar
+        // de crear la categoria
+        [self dismissCategorySelectorPopoverAndlaunchCategoryEditorViewControllerAndPrepareInstanceToAddNewCategoryOfType:categoryType];
     }
+}
+
+- (BOOL)isPopoverAssociatedToConceptBecauseACategorySelectorViewController
+{
+    IAECategorySelectorViewController *categorySelector = (IAECategorySelectorViewController *)self.popover.contentViewController;
+    const BOOL isPopoverAssociated = self.popover != NULL && categorySelector && categorySelector.conceptCellIndexPath;
+    
+    return isPopoverAssociated;
 }
 
 - (void)launchCategoryEditorViewControllerModalToAddCategoryFromCategorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController andCategoryType:(CategoryType)categoryType
 {
+    [self dismisPopover];
+    
     IAECategoryEditorViewController *categoryEditorViewController = [[IAECategoryEditorViewController alloc] initToAddCategoryOfType:categoryType];
     categoryEditorViewController.delegate = self;
     categoryEditorViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
@@ -1853,14 +1866,12 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     [categorySelectorViewController presentViewController:categoryEditorViewController animated:YES completion:nil];
 }
 
-- (void)dismissPopoverAndLaunchCategoryEditorViewControllerWithCategoryType:(CategoryType)categoryType
+- (void)dismissCategorySelectorPopoverAndlaunchCategoryEditorViewControllerAndPrepareInstanceToAddNewCategoryOfType:(CategoryType)categoryType
 {
     [self dismisPopover];
-    [self launchCategoryEditorViewControllerAndPrepareInstanceToAddNewCategoryOfType:categoryType];
-}
-
-- (void)launchCategoryEditorViewControllerAndPrepareInstanceToAddNewCategoryOfType:(CategoryType)categoryType
-{
+    
+    [self.popover dismissPopoverAnimated:YES];
+    
     self.categoryRenaming = nil;
     
     IAECategoryEditorViewController *categoryEditorViewController = [[IAECategoryEditorViewController alloc] initToAddCategoryOfType:categoryType];
@@ -1957,8 +1968,16 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
         [self returnToUpdatedCategorySelectorViewControllerFromCategoryEditorViewController:categoryEditorViewController
                                                                        atPositionOfCategory:newCategory];
     } else {
-        [self returnToUpdatedEditModeViewControllerFromCategoryEditorViewController:categoryEditorViewController];
+        [self returnToUpdatedEditModeViewControllerFromCategoryEditorViewController:categoryEditorViewController changingConceptToNewCategory:newCategory];
     }
+}
+
+- (void)returnToUpdatedEditModeViewControllerFromCategoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
+                                                 changingConceptToNewCategory:(IAECategory *)newCategory
+{
+    [self changeCategoryOfConceptAtIndexPath:self.categoriesSelectorViewController.conceptCellIndexPath toCategory:newCategory];
+    [self reloadContentOfConceptsCollectionView];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)returnToUpdatedCategorySelectorViewControllerFromCategoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
@@ -1971,12 +1990,6 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     [self reloadContentOfConceptsCollectionView];
     [categorySelector scrollToCategory:newCategory withAnimation:NO];
     [categorySelector doAttractAttentionAnimationAtPositionOfCategory:newCategory];
-}
-
-- (void)returnToUpdatedEditModeViewControllerFromCategoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
-{
-    [self reloadContentOfConceptsCollectionView];
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)categoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController

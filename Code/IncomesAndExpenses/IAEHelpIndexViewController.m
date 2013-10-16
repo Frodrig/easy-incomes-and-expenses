@@ -7,6 +7,7 @@
 //
 
 #import "IAEHelpIndexViewController.h"
+#import "IAEHelpAboutViewController.h"
 
 @interface IAEHelpIndexViewController ()
 
@@ -17,6 +18,10 @@
 #pragma mark - Constants
 
 const NSInteger kIndexSize = 3;
+
+const NSUInteger kRowOfSettingsIndex = 0;
+const NSUInteger kRowOfHelpIndex = 1;
+const NSUInteger kRowOfAboutIndex = 2;
 
 #pragma mark - Init
 
@@ -90,6 +95,25 @@ const NSInteger kIndexSize = 3;
     NSString *imageName = [NSString stringWithFormat:@"helpindex_%d", indexSufix];
     cell.imageView.image = [UIImage imageNamed:imageName];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+}
+
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIViewController *nextViewController = [self createNextViewControllerBasedInSelectRowAtIndexPath:indexPath];
+    [self.navigationController pushViewController:nextViewController animated:YES];
+}
+
+- (UIViewController *)createNextViewControllerBasedInSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIViewController *viewController = nil;
+    
+    if (indexPath.row == kRowOfAboutIndex) {
+        viewController = [[IAEHelpAboutViewController alloc] initWithNibName:@"IAEHelpAboutViewController" bundle:[NSBundle mainBundle]];
+    }
+    
+    return viewController;
 }
 
 /*

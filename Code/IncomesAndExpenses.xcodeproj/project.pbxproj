@@ -85,6 +85,10 @@
 		5B879750180E7B1900554E13 /* helpindex_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B87974E180E7B1900554E13 /* helpindex_3@2x.png */; };
 		5B879753180E7B7D00554E13 /* helpindex_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B879751180E7B7D00554E13 /* helpindex_2.png */; };
 		5B879754180E7B7D00554E13 /* helpindex_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B879752180E7B7D00554E13 /* helpindex_2@2x.png */; };
+		5B879759180E7DCD00554E13 /* IAEHelpAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B879757180E7DCD00554E13 /* IAEHelpAboutViewController.m */; };
+		5B87975A180E7DCD00554E13 /* IAEHelpAboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B879758180E7DCD00554E13 /* IAEHelpAboutViewController.xib */; };
+		5B879760180E7E6F00554E13 /* IAEHelpAboutCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B87975E180E7E6F00554E13 /* IAEHelpAboutCollectionViewCell.xib */; };
+		5B879761180E7E6F00554E13 /* IAEHelpAboutCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B87975F180E7E6F00554E13 /* IAEHelpAboutCollectionViewCell.m */; };
 		5B8CD5D117A262A800A353A5 /* IAEContextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8CD5D017A262A800A353A5 /* IAEContextView.m */; };
 		5B8CD5D317A262BC00A353A5 /* IAEContextViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B8CD5D217A262BC00A353A5 /* IAEContextViewContent.xib */; };
 		5B8CD5D917A2C6DB00A353A5 /* IAETextRawSelectorMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8CD5D817A2C6DB00A353A5 /* IAETextRawSelectorMenuView.m */; };
@@ -345,6 +349,13 @@
 		5B87974E180E7B1900554E13 /* helpindex_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "helpindex_3@2x.png"; sourceTree = "<group>"; };
 		5B879751180E7B7D00554E13 /* helpindex_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = helpindex_2.png; sourceTree = "<group>"; };
 		5B879752180E7B7D00554E13 /* helpindex_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "helpindex_2@2x.png"; sourceTree = "<group>"; };
+		5B879756180E7DCD00554E13 /* IAEHelpAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelpAboutViewController.h; sourceTree = "<group>"; };
+		5B879757180E7DCD00554E13 /* IAEHelpAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelpAboutViewController.m; sourceTree = "<group>"; };
+		5B879758180E7DCD00554E13 /* IAEHelpAboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEHelpAboutViewController.xib; sourceTree = "<group>"; };
+		5B87975C180E7E6F00554E13 /* IAEHelpAboutCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelpAboutCollectionViewCell.h; sourceTree = "<group>"; };
+		5B87975D180E7E6F00554E13 /* IAEHelpAboutCollectionViewCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelpAboutCollectionViewCellDelegate.h; sourceTree = "<group>"; };
+		5B87975E180E7E6F00554E13 /* IAEHelpAboutCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEHelpAboutCollectionViewCell.xib; sourceTree = "<group>"; };
+		5B87975F180E7E6F00554E13 /* IAEHelpAboutCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelpAboutCollectionViewCell.m; sourceTree = "<group>"; };
 		5B8CD5CF17A262A800A353A5 /* IAEContextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEContextView.h; sourceTree = "<group>"; };
 		5B8CD5D017A262A800A353A5 /* IAEContextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEContextView.m; sourceTree = "<group>"; };
 		5B8CD5D217A262BC00A353A5 /* IAEContextViewContent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEContextViewContent.xib; sourceTree = "<group>"; };
@@ -1229,6 +1240,28 @@
 			name = App;
 			sourceTree = "<group>";
 		};
+		5B879755180E7D7A00554E13 /* IAEHelpAbout */ = {
+			isa = PBXGroup;
+			children = (
+				5B87975B180E7DF700554E13 /* Cell */,
+				5B879756180E7DCD00554E13 /* IAEHelpAboutViewController.h */,
+				5B879757180E7DCD00554E13 /* IAEHelpAboutViewController.m */,
+				5B879758180E7DCD00554E13 /* IAEHelpAboutViewController.xib */,
+			);
+			name = IAEHelpAbout;
+			sourceTree = "<group>";
+		};
+		5B87975B180E7DF700554E13 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				5B87975C180E7E6F00554E13 /* IAEHelpAboutCollectionViewCell.h */,
+				5B87975F180E7E6F00554E13 /* IAEHelpAboutCollectionViewCell.m */,
+				5B87975D180E7E6F00554E13 /* IAEHelpAboutCollectionViewCellDelegate.h */,
+				5B87975E180E7E6F00554E13 /* IAEHelpAboutCollectionViewCell.xib */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
 		5B8CD5CE17A2623F00A353A5 /* Context View */ = {
 			isa = PBXGroup;
 			children = (
@@ -1763,6 +1796,7 @@
 		5BE84E68180DA16200F4A80B /* About and Options 2 */ = {
 			isa = PBXGroup;
 			children = (
+				5B879755180E7D7A00554E13 /* IAEHelpAbout */,
 				5BE84E6E180DA85900F4A80B /* IAEHelpIndex */,
 				5BE84E74180DA8CF00F4A80B /* IAEAboutAndOptions2ViewController.h */,
 				5BE84E75180DA8CF00F4A80B /* IAEAboutAndOptions2ViewController.m */,
@@ -1996,6 +2030,7 @@
 				5BBD3757180BFF5B0095A15A /* ftv2folderclosed.png in Resources */,
 				5BC1110017CD1DF500FF6D6B /* 730-envelope.png in Resources */,
 				5BBD374B180BFF5B0095A15A /* dir_5f6c70842040d9fb1a41cb2ca8828a8e.html in Resources */,
+				5B87975A180E7DCD00554E13 /* IAEHelpAboutViewController.xib in Resources */,
 				5BBD37AF180BFF5B0095A15A /* mag_sel.png in Resources */,
 				5BBD3758180BFF5B0095A15A /* ftv2folderopen.png in Resources */,
 				5B8CD5D317A262BC00A353A5 /* IAEContextViewContent.xib in Resources */,
@@ -2031,6 +2066,7 @@
 				5BBD3744180BFF5B0095A15A /* classes.html in Resources */,
 				5BBD37B3180BFF5B0095A15A /* search.css in Resources */,
 				5B87974F180E7B1900554E13 /* helpindex_3.png in Resources */,
+				5B879760180E7E6F00554E13 /* IAEHelpAboutCollectionViewCell.xib in Resources */,
 				5B62D85D178EA8A2009879A6 /* IAEYearSelectorCollectionViewCell.xib in Resources */,
 				5BBD3763180BFF5B0095A15A /* ftv2vertline.png in Resources */,
 				5BBD376C180BFF5B0095A15A /* nav_f.png in Resources */,
@@ -2106,6 +2142,7 @@
 				5B55C406178AA8C20066F586 /* IAECategoryEditorViewController.m in Sources */,
 				5BCE3A9F17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m in Sources */,
 				5BE84E7C180DA8F500F4A80B /* IAEHelpIndexViewController.m in Sources */,
+				5B879759180E7DCD00554E13 /* IAEHelpAboutViewController.m in Sources */,
 				5B5C968917816EE0008CD851 /* IAEValueDecoratorViewExpenseConfigurator.m in Sources */,
 				5BC7101817AC29F600E12953 /* IAECategory.m in Sources */,
 				5B26461A17969084006F6E58 /* IAESettingsAboutAndOptionsCollectionViewCell.m in Sources */,
@@ -2126,6 +2163,7 @@
 				5B1F0D3517841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m in Sources */,
 				5B907840179D269E00B2A0F7 /* IAEKeyboardPanelCalculatorView.m in Sources */,
 				5BCE3AB917A9703B00CD01E7 /* IAEHelperCalculatorDataSource.m in Sources */,
+				5B879761180E7E6F00554E13 /* IAEHelpAboutCollectionViewCell.m in Sources */,
 				5B23F04417FF099000477D34 /* IAENumberFormatterManager.m in Sources */,
 				5B5C967B1781673A008CD851 /* IAEValueDecoratorView.m in Sources */,
 				5B60EB5A17C4A3D5004E3D81 /* IAELocalizerPhraseComposer.m in Sources */,

@@ -6,14 +6,14 @@
 //  Copyright (c) 2013 Fernando Rodríguez Martínez. All rights reserved.
 //
 
-#import "IAEAboutAndOptionsViewController.h"
+#import "IAESettingsViewController.h"
 #import "IAEHelpIndexViewController.h"
 
-@interface IAEAboutAndOptionsViewController ()
+@interface IAESettingsViewController ()
 
 @end
 
-@implementation IAEAboutAndOptionsViewController
+@implementation IAESettingsViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

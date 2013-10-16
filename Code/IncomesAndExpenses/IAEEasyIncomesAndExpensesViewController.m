@@ -29,7 +29,7 @@
 #import "IAECategoryEditorViewController.h"
 #import "IAEYearSelectorViewController.h"
 #import "IAEYearSelectorViewControllerDelegate.h"
-#import "IAEAboutAndOptionsViewController.h"
+#import "IAESettingsViewController.h"
 #import "IAEDayCalendarSelectorViewController.h"
 #import "IAECalculatorViewController.h"
 #import "IAETextRawSelectorMenuView.h"
@@ -63,7 +63,7 @@
 @property (nonatomic, strong) UIImageView *editAndReportModeContentContainerViewBackground;
 @property (nonatomic, strong) IAEYearSelectorViewController *yearSelectorViewController;
 @property (nonatomic, strong) IAECategorySelectorViewController *categoriesSelectorViewController;
-@property (nonatomic, strong) IAEAboutAndOptionsViewController *aboutAndOptions2ViewController;
+@property (nonatomic, strong) IAESettingsViewController *aboutAndOptions2ViewController;
 @property (nonatomic, strong) IAEReportAreaView *reportAreaView;
 @property (nonatomic, strong) IAETextRawSelectorMenuView *contextMenuView;
 @property (nonatomic, strong) IAETextRawSelectorMenuView *reportMenuView;
@@ -600,7 +600,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (void)settingsOptionPressed:(id)sender
 {
-    self.aboutAndOptions2ViewController = [[IAEAboutAndOptionsViewController alloc] initWithNibName:nil bundle:nil];
+    self.aboutAndOptions2ViewController = [[IAESettingsViewController alloc] initWithNibName:nil bundle:nil];
     self.aboutAndOptions2ViewController.modalPresentationStyle = UIModalPresentationFormSheet;
     
     [self presentViewController:self.aboutAndOptions2ViewController animated:YES completion:nil];

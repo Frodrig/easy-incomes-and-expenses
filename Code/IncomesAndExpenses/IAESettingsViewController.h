@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface IAEAboutAndOptionsViewController : UINavigationController
+@interface IAESettingsViewController : UINavigationController
 
 @end

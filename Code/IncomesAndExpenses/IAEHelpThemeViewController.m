@@ -46,11 +46,19 @@
 - (void)preparePageColors
 {
     _pagePairColor = [[IAEColorHelper colorForEconomicIncomeValue] copy];
-    CGFloat colors[4];
-    [_pagePairColor getRed:&colors[0] green:&colors[1] blue:&colors[2] alpha:&colors[3]];
-    _pagePairColor = [UIColor colorWithRed:colors[0] green:colors[1] blue:colors[2] alpha:0.2];
+    _pagePairColor = [self convertColorToColorWithPageAlpha:_pagePairColor];
     
     _pageOddColor = [[IAEColorHelper colorForEconomicExpenseValue] copy];
+    _pageOddColor = [self convertColorToColorWithPageAlpha:_pageOddColor];
+}
+
+- (UIColor *)convertColorToColorWithPageAlpha:(UIColor *)pageColor
+{
+    CGFloat colors[4];
+    [pageColor getRed:&colors[0] green:&colors[1] blue:&colors[2] alpha:&colors[3]];
+    UIColor *convertedColor = [UIColor colorWithRed:colors[0] green:colors[1] blue:colors[2] alpha:0.3];
+    
+    return convertedColor;
 }
 
 #pragma mark - ViewDidLoad
@@ -93,7 +101,7 @@
         IAEHelpPage *helpPage = [self.helpTheme.helpPages objectAtIndex:helpPageIndex];
         CGRect helpPageViewFrame = CGRectMake(self.scrollView.bounds.size.width * helpPageIndex, 0.0, self.view.bounds.size.width, self.view.bounds.size.height);
         IAEHelpPageView *pageView = [[IAEHelpPageView alloc] initWithFrame:helpPageViewFrame andTexts:helpPage.texts];
-        pageView.backgroundColor = [self colorForPageIndex:helpPageIndex];
+        //pageView.backgroundColor = [self colorForPageIndex:helpPageIndex];
         [self.scrollView addSubview:pageView];
     }
 }

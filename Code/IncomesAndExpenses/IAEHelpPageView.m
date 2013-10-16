@@ -36,7 +36,7 @@
                                            NSParagraphStyleAttributeName : paragraphStyle};
     
     const CGFloat widthOfLabels = self.bounds.size.width * 0.75;
-    const CGFloat heightOfLabels = (self.bounds.size.height / (CGFloat)texts.count) * 0.9;
+    const CGFloat heightOfLabels = (self.bounds.size.height / (CGFloat)texts.count) * 0.8;
     const CGFloat xPosition = (self.bounds.size.width - widthOfLabels) / 2.0;
     for (NSUInteger textIndex = 0; textIndex < texts.count; ++textIndex) {
         const CGFloat yPosition = heightOfLabels * textIndex;

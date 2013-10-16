@@ -16,8 +16,8 @@
             <rect key="frame" x="0.0" y="0.0" width="540" height="620"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" translatesAutoresizingMaskIntoConstraints="NO" id="M9b-Dh-Nac">
-                    <rect key="frame" x="0.0" y="0.0" width="576" height="620"/>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" directionalLockEnabled="YES" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" translatesAutoresizingMaskIntoConstraints="NO" id="M9b-Dh-Nac">
+                    <rect key="frame" x="0.0" y="0.0" width="540" height="555"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
@@ -33,13 +33,13 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="M9b-Dh-Nac" firstAttribute="centerX" secondItem="FLZ-1m-cb7" secondAttribute="centerX" id="FV1-7d-e5X"/>
                 <constraint firstAttribute="bottom" secondItem="FLZ-1m-cb7" secondAttribute="bottom" constant="20" symbolic="YES" id="HK1-2m-c4A"/>
-                <constraint firstAttribute="trailing" secondItem="M9b-Dh-Nac" secondAttribute="trailing" constant="-36" id="LHG-wr-PlC"/>
                 <constraint firstAttribute="trailing" secondItem="FLZ-1m-cb7" secondAttribute="trailing" constant="20" symbolic="YES" id="V1B-x9-Pzs"/>
+                <constraint firstItem="M9b-Dh-Nac" firstAttribute="top" secondItem="2" secondAttribute="top" id="Ymp-fP-6p8"/>
                 <constraint firstItem="FLZ-1m-cb7" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" symbolic="YES" id="ZL2-yv-uf1"/>
-                <constraint firstItem="M9b-Dh-Nac" firstAttribute="top" secondItem="2" secondAttribute="top" id="byH-Kg-7PY"/>
-                <constraint firstAttribute="bottom" secondItem="M9b-Dh-Nac" secondAttribute="bottom" id="gga-jl-lEU"/>
-                <constraint firstItem="M9b-Dh-Nac" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="qx5-De-nqJ"/>
+                <constraint firstAttribute="bottom" secondItem="M9b-Dh-Nac" secondAttribute="bottom" id="dCJ-f9-Wod"/>
+                <constraint firstItem="M9b-Dh-Nac" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="e3C-Ef-VgG"/>
             </constraints>
             <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>

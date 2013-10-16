@@ -9,6 +9,7 @@
 #import "IAEHelpViewController.h"
 #import "IAEHelpBook.h"
 #import "IAEHelpTheme.h"
+#import "IAEHelpThemeViewController.h"
 
 @interface IAEHelpViewController ()
 
@@ -85,6 +86,20 @@
     IAEHelpTheme *helpTheme = [[IAEHelpBook sharedHelpBook].themes objectAtIndex:indexPath.row];
     cell.textLabel.text = helpTheme.title;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+}
+
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self launchThemeViewControllerWithThemeIndex:indexPath.row];
+}
+
+- (void)launchThemeViewControllerWithThemeIndex:(NSUInteger)themeIndex
+{
+    IAEHelpTheme *theme = [[IAEHelpBook sharedHelpBook] findHelpThemeAtIndex:themeIndex];
+    IAEHelpThemeViewController *themeViewController = [[IAEHelpThemeViewController alloc] initWithHelpTheme:theme];
+    [self.navigationController pushViewController:themeViewController animated:YES];
 }
 
 @end

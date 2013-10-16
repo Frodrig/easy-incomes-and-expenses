@@ -12,6 +12,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class IAEHelpTheme;
+
 @interface IAEHelpBook : NSObject
 
 @property (nonatomic, strong, readonly) NSArray *themes;
@@ -21,5 +23,7 @@
 - (instancetype)init;
 
 - (void)description;
+
+- (IAEHelpTheme *)findHelpThemeAtIndex:(NSUInteger)index;
 
 @end

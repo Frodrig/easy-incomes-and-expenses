@@ -33,13 +33,15 @@ const NSInteger kIndexSize = 3;
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self configureNavigationController];
+}
+
+- (void)configureNavigationController
+{
     self.title = NSLocalizedString(@"LTEXT_HELPINDEX_TITLE", @"");
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonPressed:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                                          target:self
+                                                                                          action:@selector(doneButtonPressed:)];
 }
 
 #pragma mark - BarButtons
@@ -63,17 +65,31 @@ const NSInteger kIndexSize = 3;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    UITableViewCell *cell = [self newCellForTableView:tableView atIndexPath:indexPath];
+    [self configureCell:cell forIndexPath:indexPath];
+    
+    return cell;
+}
+
+- (UITableViewCell *)newCellForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath
+{
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    // Configure the cell...
-    NSString *ltext = [NSString stringWithFormat:@"LTEXT_HELPINDEX_%d", indexPath.row + 1];
-    cell.textLabel.text = NSLocalizedString(ltext, @"");
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
+}
+
+- (void)configureCell:(UITableViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
+{
+    const NSUInteger indexSufix = indexPath.row + 1;
+    NSString *ltext = [NSString stringWithFormat:@"LTEXT_HELPINDEX_%d", indexSufix];
+    cell.textLabel.text = NSLocalizedString(ltext, @"");
+    NSString *imageName = [NSString stringWithFormat:@"helpindex_%d", indexSufix];
+    cell.imageView.image = [UIImage imageNamed:imageName];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 }
 
 /*

@@ -79,6 +79,12 @@
 		5B767E031636D7FC005315F8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B767E021636D7FC005315F8 /* main.m */; };
 		5B767E071636D7FC005315F8 /* IAEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B767E061636D7FC005315F8 /* IAEAppDelegate.m */; };
 		5B7A4D7F16B68062001751A9 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B7A4D7E16B68062001751A9 /* MessageUI.framework */; };
+		5B87974B180E7AFD00554E13 /* helpindex_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B879749180E7AFD00554E13 /* helpindex_1.png */; };
+		5B87974C180E7AFD00554E13 /* helpindex_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B87974A180E7AFD00554E13 /* helpindex_1@2x.png */; };
+		5B87974F180E7B1900554E13 /* helpindex_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B87974D180E7B1900554E13 /* helpindex_3.png */; };
+		5B879750180E7B1900554E13 /* helpindex_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B87974E180E7B1900554E13 /* helpindex_3@2x.png */; };
+		5B879753180E7B7D00554E13 /* helpindex_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B879751180E7B7D00554E13 /* helpindex_2.png */; };
+		5B879754180E7B7D00554E13 /* helpindex_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B879752180E7B7D00554E13 /* helpindex_2@2x.png */; };
 		5B8CD5D117A262A800A353A5 /* IAEContextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8CD5D017A262A800A353A5 /* IAEContextView.m */; };
 		5B8CD5D317A262BC00A353A5 /* IAEContextViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B8CD5D217A262BC00A353A5 /* IAEContextViewContent.xib */; };
 		5B8CD5D917A2C6DB00A353A5 /* IAETextRawSelectorMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8CD5D817A2C6DB00A353A5 /* IAETextRawSelectorMenuView.m */; };
@@ -333,6 +339,12 @@
 		5B7A4D7E16B68062001751A9 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		5B8488F3178AB88C0001551F /* IAECategoryEditorDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategoryEditorDefs.h; sourceTree = "<group>"; };
 		5B8488F5178AB8B10001551F /* IAECategoryEditorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategoryEditorViewControllerDelegate.h; sourceTree = "<group>"; };
+		5B879749180E7AFD00554E13 /* helpindex_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = helpindex_1.png; sourceTree = "<group>"; };
+		5B87974A180E7AFD00554E13 /* helpindex_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "helpindex_1@2x.png"; sourceTree = "<group>"; };
+		5B87974D180E7B1900554E13 /* helpindex_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = helpindex_3.png; sourceTree = "<group>"; };
+		5B87974E180E7B1900554E13 /* helpindex_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "helpindex_3@2x.png"; sourceTree = "<group>"; };
+		5B879751180E7B7D00554E13 /* helpindex_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = helpindex_2.png; sourceTree = "<group>"; };
+		5B879752180E7B7D00554E13 /* helpindex_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "helpindex_2@2x.png"; sourceTree = "<group>"; };
 		5B8CD5CF17A262A800A353A5 /* IAEContextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEContextView.h; sourceTree = "<group>"; };
 		5B8CD5D017A262A800A353A5 /* IAEContextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEContextView.m; sourceTree = "<group>"; };
 		5B8CD5D217A262BC00A353A5 /* IAEContextViewContent.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEContextViewContent.xib; sourceTree = "<group>"; };
@@ -1191,6 +1203,12 @@
 		5B7FCE9217D63D1200624D25 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				5B879751180E7B7D00554E13 /* helpindex_2.png */,
+				5B879752180E7B7D00554E13 /* helpindex_2@2x.png */,
+				5B87974D180E7B1900554E13 /* helpindex_3.png */,
+				5B87974E180E7B1900554E13 /* helpindex_3@2x.png */,
+				5B879749180E7AFD00554E13 /* helpindex_1.png */,
+				5B87974A180E7AFD00554E13 /* helpindex_1@2x.png */,
 				5BB8AD1017FAC2F200BAAB96 /* editconceptcontainerviewbackground.png */,
 				5B57A9C017FAD39500C7BFD3 /* calculatordragbackground.png */,
 				5B57A9C117FAD39500C7BFD3 /* calculatordragbackground@2x.png */,
@@ -1941,6 +1959,7 @@
 				5B7602B617C3CC9E009920CD /* IAECategoryWithNumberOfConceptsTableView.xib in Resources */,
 				5B2A41B417C77E8500C29036 /* 709-plus.png in Resources */,
 				5BBD3745180BFF5B0095A15A /* closed.png in Resources */,
+				5B879753180E7B7D00554E13 /* helpindex_2.png in Resources */,
 				5BBD37CB180BFF5B0095A15A /* ProjectApiKey.txt in Resources */,
 				5BBD3768180BFF5B0095A15A /* index.html in Resources */,
 				5BBD3759180BFF5B0095A15A /* ftv2lastnode.png in Resources */,
@@ -1952,6 +1971,7 @@
 				5B36AFFD1785D73800132475 /* IAECategorySelectorViewController.xib in Resources */,
 				5BBD37B8180BFF5B0095A15A /* sync_off.png in Resources */,
 				5B36AFF21785874D00132475 /* IAEAdjustConceptAmountViewController.xib in Resources */,
+				5B87974C180E7AFD00554E13 /* helpindex_1@2x.png in Resources */,
 				5BBD37C6180BFF5B0095A15A /* Flurry AppSpot Publisher Platform TOS FINAL August 1, 2012.pdf in Resources */,
 				5B2E93D117DCDDF6007D4284 /* eiae_icon40@2x.png in Resources */,
 				5BBD37B1180BFF5B0095A15A /* pages_64.html in Resources */,
@@ -1964,8 +1984,10 @@
 				5BBD3743180BFF5B0095A15A /* class_flurry_ads-members.html in Resources */,
 				5BBD375D180BFF5B0095A15A /* ftv2mo.png in Resources */,
 				5B0574C117AFE2F600B95D50 /* IAEWithoutConceptsTextWarningReportMode.xib in Resources */,
+				5B87974B180E7AFD00554E13 /* helpindex_1.png in Resources */,
 				5BBD373C180BFF5B0095A15A /* _flurry_ad_delegate_8h_source.html in Resources */,
 				5B2A41B117C77C8100C29036 /* 765-arrow-left@2x.png in Resources */,
+				5B879754180E7B7D00554E13 /* helpindex_2@2x.png in Resources */,
 				5BBD376E180BFF5B0095A15A /* nav_h.png in Resources */,
 				5B2AAA3017C773CF00E7C7A5 /* 747-minus-circle@2x.png in Resources */,
 				5BBD37C9180BFF5B0095A15A /* Flurry_AppSpot_Publisher_Platform_TOS.pdf in Resources */,
@@ -1997,6 +2019,7 @@
 				5BBD376D180BFF5B0095A15A /* nav_g.png in Resources */,
 				5B55C407178AA8C20066F586 /* IAECategoryEditorViewController.xib in Resources */,
 				5BCE3AA117A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib in Resources */,
+				5B879750180E7B1900554E13 /* helpindex_3@2x.png in Resources */,
 				5BBD3747180BFF5B0095A15A /* dir_2c12105386bcc5c3935feab96f296a41.html in Resources */,
 				5BBD3773180BFF5B0095A15A /* pages.html in Resources */,
 				5BBD3741180BFF5B0095A15A /* bdwn.png in Resources */,
@@ -2007,6 +2030,7 @@
 				5B2AAA2B17C773C500E7C7A5 /* 746-plus-circle.png in Resources */,
 				5BBD3744180BFF5B0095A15A /* classes.html in Resources */,
 				5BBD37B3180BFF5B0095A15A /* search.css in Resources */,
+				5B87974F180E7B1900554E13 /* helpindex_3.png in Resources */,
 				5B62D85D178EA8A2009879A6 /* IAEYearSelectorCollectionViewCell.xib in Resources */,
 				5BBD3763180BFF5B0095A15A /* ftv2vertline.png in Resources */,
 				5BBD376C180BFF5B0095A15A /* nav_f.png in Resources */,

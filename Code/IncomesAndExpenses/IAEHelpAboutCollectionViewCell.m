@@ -1,5 +1,5 @@
 //
-//  IAEInfoAboutAndOptionsCollectionViewCell.m
+//  IAEHelpAboutCollectionViewCell
 //  IncomesAndExpenses
 //
 //  Created by Fernando Rodríguez on 17/07/13.
@@ -38,7 +38,7 @@ static NSString * const kLTextFeedback = @"LTEXT_SETTINGS_ABOUT_FEEDBACK";
 static NSString * const kLTextEmail = @"LTEXT_SETTINGS_ABOUT_EMAIL";
 static NSString * const kLTextProVersionInfo = @"LTEXT_SETTINGS_ABOUT_PROVERSIONINFO";
 
-static NSString * const kNibName = @"IAEInfoAboutAndOptionsCollectionViewCell";
+static NSString * const kNibName = @"IAEHelpAboutCollectionViewCell";
 
 #pragma mark - Class
 

@@ -1,5 +1,5 @@
 //
-//  IAEInfoAboutAndOptionsCollectionViewCell.h
+//  IAEHelpAboutCollectionViewCellDelegate.h
 //  IncomesAndExpenses
 //
 //  Created by Fernando Rodríguez on 17/07/13.

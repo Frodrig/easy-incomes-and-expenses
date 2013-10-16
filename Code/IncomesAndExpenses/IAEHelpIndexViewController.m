@@ -101,7 +101,7 @@ const NSUInteger kRowOfAboutIndex = 2;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [self newCellForTableView:tableView atIndexPath:indexPath];
-    [self configureCell:cell forIndexPath:indexPath];
+    [self configureCell:cell ofTableView:tableView forIndexPath:indexPath];
     
     return cell;
 }
@@ -117,7 +117,7 @@ const NSUInteger kRowOfAboutIndex = 2;
     return cell;
 }
 
-- (void)configureCell:(UITableViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
+- (void)configureCell:(UITableViewCell *)cell ofTableView:(UITableView *)tableView forIndexPath:(NSIndexPath *)indexPath
 {
     const NSUInteger indexSufix = indexPath.row + 1;
     NSString *ltext = [NSString stringWithFormat:@"LTEXT_SETTINGSINDEX_%d", indexSufix];

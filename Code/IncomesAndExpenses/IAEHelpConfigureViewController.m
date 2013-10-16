@@ -47,7 +47,7 @@ static NSString * const kCollectionviewSettingsCellIdentifier = @"IAEConfigureCe
 
 - (void)configureNavigationController
 {
-    self.title = NSLocalizedString(@"LTEXT_HELPINDEX_1", @"");
+    self.title = NSLocalizedString(@"LTEXT_SETTINGSINDEX_1", @"");
 }
 
 #pragma mark - UICollectionViewFlowDelegate

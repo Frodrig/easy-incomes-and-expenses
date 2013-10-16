@@ -50,7 +50,7 @@ static NSString * const kCollectionViewAboutCellIdentifier = @"IAEInfoCell";
 
 - (void)configureNavigationController
 {
-    self.title = NSLocalizedString(@"LTEXT_HELPINDEX_3", @"");
+    self.title = NSLocalizedString(@"LTEXT_SETTINGSINDEX_3", @"");
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout

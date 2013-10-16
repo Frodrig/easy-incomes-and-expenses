@@ -9,6 +9,7 @@
 #import "IAEHelpIndexViewController.h"
 #import "IAEHelpConfigureViewController.h"
 #import "IAEHelpAboutViewController.h"
+#import "IAEHelpViewController.h"
 
 @interface IAEHelpIndexViewController ()
 
@@ -56,7 +57,7 @@ const NSUInteger kRowOfAboutIndex = 2;
 
 - (void)configureNavigationController
 {
-    self.title = NSLocalizedString(@"LTEXT_HELPINDEX_TITLE", @"");
+    self.title = NSLocalizedString(@"LTEXT_SETTINGSINDEX_TITLE", @"");
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                           target:self
                                                                                           action:@selector(doneButtonPressed:)];
@@ -119,9 +120,9 @@ const NSUInteger kRowOfAboutIndex = 2;
 - (void)configureCell:(UITableViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
     const NSUInteger indexSufix = indexPath.row + 1;
-    NSString *ltext = [NSString stringWithFormat:@"LTEXT_HELPINDEX_%d", indexSufix];
+    NSString *ltext = [NSString stringWithFormat:@"LTEXT_SETTINGSINDEX_%d", indexSufix];
     cell.textLabel.text = NSLocalizedString(ltext, @"");
-    NSString *imageName = [NSString stringWithFormat:@"helpindex_%d", indexSufix];
+    NSString *imageName = [NSString stringWithFormat:@"settingsindex_%d", indexSufix];
     cell.imageView.image = [UIImage imageNamed:imageName];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 }
@@ -140,6 +141,8 @@ const NSUInteger kRowOfAboutIndex = 2;
     
     if (indexPath.row == kRowOfConfigureIndex) {
         viewController = [[IAEHelpConfigureViewController alloc] initWithNibName:@"IAEHelpConfigureViewController" bundle:[NSBundle mainBundle]];
+    } else if (indexPath.row == kRowOfHelpIndex) {
+        viewController = [[IAEHelpViewController alloc] initWithNibName:@"IAEHelpViewController" bundle:[NSBundle mainBundle]];
     } else if (indexPath.row == kRowOfAboutIndex) {
         viewController = [[IAEHelpAboutViewController alloc] initWithNibName:@"IAEHelpAboutViewController" bundle:[NSBundle mainBundle]];
     }

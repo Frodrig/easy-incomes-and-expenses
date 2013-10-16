@@ -33,7 +33,7 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
     [self createYearBookIfProceed];
     [self prepareDefaults];
     [self createWindowRootLaunchingViewControllerAndMakeVisible];
-    
+        
     return YES;
 }
     

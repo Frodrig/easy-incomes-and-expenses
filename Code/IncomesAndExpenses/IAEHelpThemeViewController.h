@@ -10,7 +10,7 @@
 
 @class IAEHelpTheme;
 
-@interface IAEHelpThemeViewController : UIViewController
+@interface IAEHelpThemeViewController : UIViewController<UIScrollViewDelegate>
 
 @property (nonatomic, weak, readonly) IAEHelpTheme *helpTheme;
 

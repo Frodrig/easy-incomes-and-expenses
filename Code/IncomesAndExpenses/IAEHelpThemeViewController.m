@@ -152,24 +152,37 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    NSUInteger currentPage = scrollView.contentOffset.x / self.scrollView.bounds.size.width;
-    self.pageControll.currentPage = currentPage;
+    [self updatePageControlPage];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    const CGFloat actualPosition = scrollView.contentOffset.x / self.scrollView.bounds.size.width;
-    self.pageControll.currentPage = actualPosition;
+    [self updatePageViewsTextAlpha];
+    [self updatePageControlPage];
+}
 
+- (void)updatePageViewsTextAlpha
+{
+    const CGFloat actualPosition = self.scrollView.contentOffset.x / self.scrollView.bounds.size.width;
     const CGFloat positionRight = ceilf(actualPosition);
     const CGFloat positionLeft = floorf(actualPosition);
-
-    if (positionLeft != positionRight && positionRight < self.pageViews.count && positionLeft > -1) {
-        IAEHelpPageView *rightPageView = [self.pageViews objectAtIndex:positionRight];
-        [rightPageView setTextLabelsWithAlpha:actualPosition - positionLeft];
-        IAEHelpPageView *leftPageView = [self.pageViews objectAtIndex:positionLeft];
-        [leftPageView setTextLabelsWithAlpha:positionRight - actualPosition];
+    const BOOL canUpdate = positionLeft != positionRight && positionRight < self.pageViews.count && positionLeft > -1;
+    if (canUpdate) {
+        [self updatePageViewAtIndex:positionRight withAlpha:actualPosition - positionLeft];
+        [self updatePageViewAtIndex:positionLeft withAlpha:positionRight - actualPosition];
     }
+}
+
+- (void)updatePageViewAtIndex:(NSUInteger)index withAlpha:(CGFloat)alpha
+{
+    IAEHelpPageView *pageView = [self.pageViews objectAtIndex:index];
+    [pageView setTextLabelsWithAlpha:alpha];
+}
+
+- (void)updatePageControlPage
+{
+    NSUInteger currentPage = self.scrollView.contentOffset.x / self.scrollView.bounds.size.width;
+    self.pageControll.currentPage = currentPage;
 }
 
 @end

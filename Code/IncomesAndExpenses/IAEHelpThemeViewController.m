@@ -18,10 +18,22 @@
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControll;
 @property (strong, nonatomic) UIColor *pagePairColor;
 @property (strong, nonatomic) UIColor *pageOddColor;
+@property (strong, nonatomic) NSMutableArray *pageViews;
 
 @end
 
 @implementation IAEHelpThemeViewController
+
+#pragma mark - Properties
+
+- (NSMutableArray *)pageViews
+{
+    if (!_pageViews) {
+        _pageViews = [[NSMutableArray alloc] init];
+    }
+    
+    return _pageViews;
+}
 
 #pragma mark - Init
 
@@ -120,6 +132,7 @@
         IAEHelpPageView *pageView = [[IAEHelpPageView alloc] initWithFrame:helpPageViewFrame andTexts:helpPage.texts];
         //pageView.backgroundColor = [self colorForPageIndex:helpPageIndex];
         [self.scrollView addSubview:pageView];
+        [self.pageViews addObject:pageView];
     }
 }
 
@@ -141,6 +154,22 @@
 {
     NSUInteger currentPage = scrollView.contentOffset.x / self.scrollView.bounds.size.width;
     self.pageControll.currentPage = currentPage;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    const CGFloat actualPosition = scrollView.contentOffset.x / self.scrollView.bounds.size.width;
+    self.pageControll.currentPage = actualPosition;
+
+    const CGFloat positionRight = ceilf(actualPosition);
+    const CGFloat positionLeft = floorf(actualPosition);
+
+    if (positionLeft != positionRight && positionRight < self.pageViews.count && positionLeft > -1) {
+        IAEHelpPageView *rightPageView = [self.pageViews objectAtIndex:positionRight];
+        [rightPageView setTextLabelsWithAlpha:actualPosition - positionLeft];
+        IAEHelpPageView *leftPageView = [self.pageViews objectAtIndex:positionLeft];
+        [leftPageView setTextLabelsWithAlpha:positionRight - actualPosition];
+    }
 }
 
 @end

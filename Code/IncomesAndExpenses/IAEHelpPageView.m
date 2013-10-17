@@ -11,6 +11,8 @@
 
 @interface IAEHelpPageView()
 
+@property (nonatomic, strong) NSMutableArray *textLabels;
+
 @end
 
 @implementation IAEHelpPageView
@@ -27,6 +29,15 @@ static NSString * const kFontOpenCloseKeysFamilyName = @"HelveticaNeue-Italic";
 static const CGFloat kPercentageWidthOfText = 0.8;
 
 #pragma mark - Properties
+
+- (NSMutableArray *)textLabels
+{
+    if (!_textLabels) {
+        _textLabels = [[NSMutableArray alloc] init];
+    }
+    
+    return _textLabels;
+}
 
 #pragma mark - Clase
 
@@ -77,6 +88,7 @@ static const CGFloat kPercentageWidthOfText = 0.8;
         NSString *originalText = [texts objectAtIndex:textIndex];
         [self applyAttributedStringInLabel:label withOriginalText:originalText];
         [self addSubview:label];
+        [self.textLabels addObject:label];
     }
 }
 
@@ -170,6 +182,15 @@ static const CGFloat kPercentageWidthOfText = 0.8;
     }
     
     return [NSArray arrayWithArray:rangesFound];
+}
+
+#pragma mark - Text Labels operations
+
+- (void)setTextLabelsWithAlpha:(CGFloat)alpha
+{
+    for (UILabel *label in self.textLabels) {
+        label.alpha = alpha;
+    }
 }
 
 @end

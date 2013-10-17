@@ -12,4 +12,6 @@
 
 - (instancetype)initWithFrame:(CGRect)frame andTexts:(NSArray *)text;
 
+- (void)setTextLabelsWithAlpha:(CGFloat)alpha;
+
 @end

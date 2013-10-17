@@ -17,7 +17,7 @@
 
 #pragma mark - Constants
 
-static const NSUInteger kTintValueForNavigation = 0.74;
+static const CGFloat kTintValueForNavigation = 0.74;
 
 #pragma mark - Init
 

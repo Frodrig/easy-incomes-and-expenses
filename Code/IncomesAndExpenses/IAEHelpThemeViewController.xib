@@ -7,7 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IAEHelpThemeViewController">
             <connections>
                 <outlet property="pageControll" destination="FLZ-1m-cb7" id="mOh-iv-DTm"/>
-                <outlet property="scrollView" destination="M9b-Dh-Nac" id="N0J-RP-980"/>
+                <outlet property="scrollView" destination="6YC-hI-l1K" id="uxW-sa-pdK"/>
                 <outlet property="view" destination="2" id="3"/>
             </connections>
         </placeholder>
@@ -16,30 +16,30 @@
             <rect key="frame" x="0.0" y="0.0" width="540" height="620"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" directionalLockEnabled="YES" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" translatesAutoresizingMaskIntoConstraints="NO" id="M9b-Dh-Nac">
-                    <rect key="frame" x="0.0" y="0.0" width="540" height="555"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <connections>
-                        <outlet property="delegate" destination="-1" id="wYh-fn-P2c"/>
-                    </connections>
-                </scrollView>
                 <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="FLZ-1m-cb7">
                     <rect key="frame" x="20" y="563" width="500" height="37"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="pageIndicatorTintColor" red="0.86274516580000005" green="0.86274516580000005" blue="0.86274516580000005" alpha="1" colorSpace="deviceRGB"/>
                     <color key="currentPageIndicatorTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                 </pageControl>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6YC-hI-l1K">
+                    <rect key="frame" x="0.0" y="40" width="540" height="515"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="PHz-9I-C4K"/>
+                    </connections>
+                </scrollView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="M9b-Dh-Nac" firstAttribute="centerX" secondItem="FLZ-1m-cb7" secondAttribute="centerX" id="FV1-7d-e5X"/>
-                <constraint firstAttribute="bottom" secondItem="FLZ-1m-cb7" secondAttribute="bottom" constant="20" symbolic="YES" id="HK1-2m-c4A"/>
-                <constraint firstAttribute="trailing" secondItem="FLZ-1m-cb7" secondAttribute="trailing" constant="20" symbolic="YES" id="V1B-x9-Pzs"/>
-                <constraint firstItem="M9b-Dh-Nac" firstAttribute="top" secondItem="2" secondAttribute="top" id="Ymp-fP-6p8"/>
-                <constraint firstItem="FLZ-1m-cb7" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" symbolic="YES" id="ZL2-yv-uf1"/>
-                <constraint firstAttribute="bottom" secondItem="M9b-Dh-Nac" secondAttribute="bottom" id="dCJ-f9-Wod"/>
-                <constraint firstItem="M9b-Dh-Nac" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="e3C-Ef-VgG"/>
+                <constraint firstAttribute="bottom" secondItem="6YC-hI-l1K" secondAttribute="bottom" constant="65" id="M7T-b0-rUb"/>
+                <constraint firstAttribute="trailing" secondItem="6YC-hI-l1K" secondAttribute="trailing" id="Mtp-Cr-FP7"/>
+                <constraint firstItem="6YC-hI-l1K" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="QAc-Jf-pzV"/>
+                <constraint firstItem="FLZ-1m-cb7" firstAttribute="centerX" secondItem="6YC-hI-l1K" secondAttribute="centerX" id="WtS-j9-JtG"/>
+                <constraint firstItem="FLZ-1m-cb7" firstAttribute="top" secondItem="6YC-hI-l1K" secondAttribute="bottom" constant="8" symbolic="YES" id="YK6-qK-sLA"/>
+                <constraint firstItem="FLZ-1m-cb7" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" symbolic="YES" id="jKw-Fw-Afw"/>
+                <constraint firstItem="6YC-hI-l1K" firstAttribute="top" secondItem="2" secondAttribute="top" constant="40" id="qAr-6e-qyH"/>
             </constraints>
             <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>

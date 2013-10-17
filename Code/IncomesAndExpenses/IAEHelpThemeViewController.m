@@ -69,7 +69,6 @@
     
     [self configureNavigationController];
     [self configurePageControll];
-    [self configureScrollView];
 }
 
 - (void)configureNavigationController
@@ -83,27 +82,34 @@
     self.pageControll.currentPage = 0;
 }
 
-- (void)configureScrollView
-{
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.bounds.size.width * self.helpTheme.helpPages.count, self.scrollView.bounds.size.height);
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
+    [self vinculeScrollViewSize];
     [self vinculeScrollViewContent];
+    //[self vinculeScrollViewInitialPosition];
+}
+
+- (void)vinculeScrollViewSize
+{
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.bounds.size.width * self.helpTheme.helpPages.count, self.scrollView.bounds.size.height);
 }
 
 - (void)vinculeScrollViewContent
 {
     for (NSUInteger helpPageIndex = 0; helpPageIndex < self.helpTheme.helpPages.count; ++helpPageIndex) {
         IAEHelpPage *helpPage = [self.helpTheme.helpPages objectAtIndex:helpPageIndex];
-        CGRect helpPageViewFrame = CGRectMake(self.scrollView.bounds.size.width * helpPageIndex, 0.0, self.view.bounds.size.width, self.view.bounds.size.height);
+        CGRect helpPageViewFrame = CGRectMake(self.scrollView.bounds.size.width * helpPageIndex, 0.0, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height);
         IAEHelpPageView *pageView = [[IAEHelpPageView alloc] initWithFrame:helpPageViewFrame andTexts:helpPage.texts];
         //pageView.backgroundColor = [self colorForPageIndex:helpPageIndex];
         [self.scrollView addSubview:pageView];
     }
+}
+
+- (void)vinculeScrollViewInitialPosition
+{
+    [self.scrollView scrollRectToVisible:CGRectZero animated:NO];
 }
 
 - (UIColor *)colorForPageIndex:(NSUInteger)pageIndex

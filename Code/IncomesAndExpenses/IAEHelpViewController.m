@@ -19,7 +19,8 @@
 
 #pragma mark - Constantes
 
-
+static NSString * const kFamilyFontNameForCells = @"HelveticaNeue-Light";
+static const NSUInteger kFamilyFontSizeForCells = 24;
 
 #pragma mark - Init
 
@@ -86,6 +87,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.textLabel.font = [UIFont fontWithName:kFamilyFontNameForCells size:kFamilyFontSizeForCells];
     }
     
     return cell;

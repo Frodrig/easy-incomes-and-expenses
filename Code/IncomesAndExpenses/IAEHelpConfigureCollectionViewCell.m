@@ -22,10 +22,6 @@
 
 static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 
-static NSString * const kFamilyFontForInformationLabelsName = @"HelveticaNeue-UltraLight";
-static const NSUInteger kFamilyFontForInformationLabelSize = 24;
-static const CGFloat kKernValueForInformationLabels = 1.0;
-
 static NSString * const kTagDayModeLabelText = @"LTEXT_ABOUTANDOPTIONS_DAYMODELABEL_TEXT";
 
 static NSString * const kNibName = @"IAEHelpConfigureCollectionViewCell";
@@ -57,23 +53,7 @@ static NSString * const kNibName = @"IAEHelpConfigureCollectionViewCell";
 
 - (void)initDayModeInformationLabel
 {
-    _dayModeInformationLabel.attributedText = [[NSAttributedString alloc] initWithString:NSLocalizedString(kTagDayModeLabelText, @"")
-                                                                              attributes:[self createAttributesForInformationLabels]];
-}
-
-- (NSDictionary *)createAttributesForInformationLabels
-{
-    NSDictionary *attributes = @{NSFontAttributeName: [self createFontForInformationLabels],
-                                 NSForegroundColorAttributeName: [UIColor blackColor],
-                                 NSKernAttributeName: [NSNumber numberWithInteger: kKernValueForInformationLabels]};
-    
-    return attributes;
-}
-
-- (UIFont *)createFontForInformationLabels
-{
-    UIFont *font = [UIFont fontWithName:kFamilyFontForInformationLabelsName size:kFamilyFontForInformationLabelSize];
-    return font;
+    _dayModeInformationLabel.text = NSLocalizedString(kTagDayModeLabelText, @"");
 }
 
 - (void)initDayModeInformationSwitch

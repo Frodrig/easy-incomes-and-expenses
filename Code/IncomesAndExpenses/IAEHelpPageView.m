@@ -18,13 +18,13 @@
 #pragma mark - Constants
 
 static NSString * const kBaseFontFamilyName = @"HelveticaNeue-Light";
-static NSUInteger kBaseFontSize = 34;
-static NSUInteger kBaseFontKern = 1.0;
+static const NSUInteger kBaseFontSize = 34;
+static const NSUInteger kBaseFontKern = 1.0;
 
 static NSString * const kFontOpenCloseBraketsFamilyName = @"HelveticaNeue";
 static NSString * const kFontOpenCloseKeysFamilyName = @"HelveticaNeue-Italic";
 
-static CGFloat kPercentageWidthOfText = 0.8;
+static const CGFloat kPercentageWidthOfText = 0.8;
 
 #pragma mark - Properties
 

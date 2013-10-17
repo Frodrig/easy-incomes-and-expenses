@@ -21,16 +21,19 @@
 
 #pragma mark - Constants
 
+static NSString * const kFamilyFontNameForCells = @"HelveticaNeue-Light";
+static const NSUInteger kFamilyFontSizeForCells = 24;
+
 static NSString * const kNotificationDayModeOnName = @"dayModeToOn";
 static NSString * const kNotificationDayModeOffName = @"dayModeToOff";
 
 static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 
-const NSInteger kIndexSize = 3;
+static const NSInteger kIndexSize = 3;
 
-const NSUInteger kRowOfConfigureIndex = 0;
-const NSUInteger kRowOfHelpIndex = 1;
-const NSUInteger kRowOfAboutIndex = 2;
+static const NSUInteger kRowOfConfigureIndex = 0;
+static const NSUInteger kRowOfHelpIndex = 1;
+static const NSUInteger kRowOfAboutIndex = 2;
 
 #pragma mark - Init
 
@@ -112,6 +115,7 @@ const NSUInteger kRowOfAboutIndex = 2;
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.textLabel.font = [UIFont fontWithName:kFamilyFontNameForCells size:kFamilyFontSizeForCells];
     }
     
     return cell;

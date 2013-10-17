@@ -9,7 +9,46 @@
 #import "IAEHelpPageView.h"
 #import "IAEColorHelper.h"
 
+@interface IAEHelpPageView()
+
+@end
+
 @implementation IAEHelpPageView
+
+#pragma mark - Constants
+
+static NSString * const kBaseFontFamilyName = @"HelveticaNeue-Light";
+static NSUInteger kBaseFontSize = 34;
+static NSUInteger kBaseFontKern = 1.0;
+
+static NSString * const kFontOpenCloseBraketsFamilyName = @"HelveticaNeue";
+static NSString * const kFontOpenCloseKeysFamilyName = @"HelveticaNeue-Italic";
+
+static CGFloat kPercentageWidthOfText = 0.8;
+
+#pragma mark - Properties
+
+#pragma mark - Clase
+
++ (NSDictionary *)baseAttributesForText
+{
+    static NSDictionary *baseAttributes = nil;
+    if (!baseAttributes) {
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.alignment = NSTextAlignmentJustified;
+        paragraphStyle.lineHeightMultiple = 1.1;
+        
+        baseAttributes = @{NSFontAttributeName: [UIFont fontWithName:kBaseFontFamilyName size:kBaseFontSize],
+                           NSForegroundColorAttributeName: [UIColor darkTextColor],
+                           NSKernAttributeName: @(kBaseFontKern),
+                           NSParagraphStyleAttributeName : paragraphStyle};
+
+    }
+    
+    return baseAttributes;
+}
+
+#pragma mark - Init
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -28,72 +67,91 @@
 
 - (void)createTexts:(NSArray *)texts
 {
-    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    paragraphStyle.alignment = NSTextAlignmentJustified;
-    paragraphStyle.lineHeightMultiple = 1.1;
-    NSDictionary *attributesForStrings = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:34],
-                                           NSForegroundColorAttributeName: [UIColor darkTextColor],
-                                           NSKernAttributeName: @1.0,
-                                           NSParagraphStyleAttributeName : paragraphStyle};
-    
-    const CGFloat widthOfLabels = self.bounds.size.width * 0.8;
+    const CGFloat widthOfLabels = self.bounds.size.width * kPercentageWidthOfText;
     const CGFloat heightOfLabels = (self.bounds.size.height / (CGFloat)texts.count) * 1;
     const CGFloat xPosition = (self.bounds.size.width - widthOfLabels) / 2.0;
     for (NSUInteger textIndex = 0; textIndex < texts.count; ++textIndex) {
         const CGFloat yPosition = heightOfLabels * textIndex;
         CGRect labelFrame = CGRectMake(xPosition, yPosition, widthOfLabels, heightOfLabels);
-        UILabel *label = [[UILabel alloc] initWithFrame:labelFrame];
-        label.numberOfLines = 0;
-        label.minimumScaleFactor = 0.5;
-        label.adjustsFontSizeToFitWidth = YES;
-
+        UILabel *label = [self createLabelWithFrame:labelFrame];
         NSString *originalText = [texts objectAtIndex:textIndex];
-        NSArray *rangesWithOpenCloseBrakets = [self rangesWithOpenCharacter:@"<" andCloseCharacter:@">" inTextString:originalText];
-        NSArray *rangesWithOpenCloseKeys = [self rangesWithOpenCharacter:@"{" andCloseCharacter:@"}" inTextString:originalText];
-        NSArray *rangesWithOpenCloseIncomes = [self rangesWithOpenCharacter:@"+[" andCloseCharacter:@"]+" inTextString:originalText];
-        NSArray *rangesWithOpenCloseExpenses = [self rangesWithOpenCharacter:@"-[" andCloseCharacter:@"]-" inTextString:originalText];
-        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:originalText
-                                                                                             attributes:attributesForStrings];
-        [attributedString beginEditing];
-        
-        for (NSValue *range in rangesWithOpenCloseBrakets) {
-            [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue" size:34] range:range.rangeValue];
-            [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithWhite:0.6 alpha:1.0] range:range.rangeValue];
-            [attributedString addAttribute:NSKernAttributeName value:@0 range:range.rangeValue];
-        }
-
-        for (NSValue *range in rangesWithOpenCloseKeys) {
-            [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"HelveticaNeue-Italic" size:34] range:range.rangeValue];
-            [attributedString addAttribute:NSKernAttributeName value:@0 range:range.rangeValue];
-        }
-        
-        for (NSValue *range in rangesWithOpenCloseIncomes) {
-            [attributedString addAttribute:NSForegroundColorAttributeName value:[IAEColorHelper colorForEconomicIncomeValue] range:range.rangeValue];
-            [attributedString addAttribute:NSKernAttributeName value:@0 range:range.rangeValue];
-        }
-
-        
-        for (NSValue *range in rangesWithOpenCloseExpenses) {
-            [attributedString addAttribute:NSForegroundColorAttributeName value:[IAEColorHelper colorForEconomicExpenseValue] range:range.rangeValue];
-            [attributedString addAttribute:NSKernAttributeName value:@0 range:range.rangeValue];
-        }
-
-        [attributedString.mutableString replaceOccurrencesOfString:@"<" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, attributedString.string.length)];
-        [attributedString.mutableString replaceOccurrencesOfString:@">" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, attributedString.string.length)];
-        [attributedString.mutableString replaceOccurrencesOfString:@"{" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, attributedString.string.length)];
-        [attributedString.mutableString replaceOccurrencesOfString:@"}" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, attributedString.string.length)];
-        [attributedString.mutableString replaceOccurrencesOfString:@"+[" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, attributedString.string.length)];
-        [attributedString.mutableString replaceOccurrencesOfString:@"]+" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, attributedString.string.length)];
-        [attributedString.mutableString replaceOccurrencesOfString:@"-[" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, attributedString.string.length)];
-        [attributedString.mutableString replaceOccurrencesOfString:@"]-" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, attributedString.string.length)];
-
-
-        [attributedString endEditing];
-        
-        label.attributedText = attributedString;
-        //[label sizeToFit];
-
+        [self applyAttributedStringInLabel:label withOriginalText:originalText];
         [self addSubview:label];
+    }
+}
+
+- (UILabel *)createLabelWithFrame:(CGRect)frame
+{
+    UILabel *label = [[UILabel alloc] initWithFrame:frame];
+    label.numberOfLines = 0;
+    label.minimumScaleFactor = 0.5;
+    label.adjustsFontSizeToFitWidth = YES;
+    
+    return label;
+}
+
+- (void)applyAttributedStringInLabel:(UILabel *)label withOriginalText:(NSString *)text
+{
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:[self.class baseAttributesForText]];
+
+    [attributedString beginEditing];
+    [self applyOpenCloseBraketsInAttributedString:attributedString withOriginalText:text];
+    [self applyOpenCloseKeysInAttributedString:attributedString withOriginalText:text];
+    [self applyOpenCloseIncomesInAttributedString:attributedString withOriginalText:text];
+    [self applyOpenCloseExpensesInAttributedString:attributedString withOriginalText:text];
+    [attributedString endEditing];
+
+    [self removeAllSpecialCharactersinAttributedString:attributedString];
+    
+    label.attributedText = attributedString;
+}
+
+- (void)applyOpenCloseBraketsInAttributedString:(NSMutableAttributedString *)attributedString withOriginalText:(NSString *)text
+{
+    NSArray *rangesWithOpenCloseBrakets = [self rangesWithOpenCharacter:@"<" andCloseCharacter:@">" inTextString:text];
+    for (NSValue *range in rangesWithOpenCloseBrakets) {
+        [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:kFontOpenCloseBraketsFamilyName size:kBaseFontSize] range:range.rangeValue];
+        [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithWhite:0.6 alpha:1.0] range:range.rangeValue];
+        [attributedString addAttribute:NSKernAttributeName value:@0 range:range.rangeValue];
+    }
+}
+
+- (void)applyOpenCloseKeysInAttributedString:(NSMutableAttributedString *)attributedString withOriginalText:(NSString *)text
+{
+    NSArray *rangesWithOpenCloseKeys = [self rangesWithOpenCharacter:@"{" andCloseCharacter:@"}" inTextString:text];
+    for (NSValue *range in rangesWithOpenCloseKeys) {
+        [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:kFontOpenCloseKeysFamilyName size:34] range:range.rangeValue];
+        [attributedString addAttribute:NSKernAttributeName value:@0 range:range.rangeValue];
+    }
+}
+
+- (void)applyOpenCloseIncomesInAttributedString:(NSMutableAttributedString *)attributedString withOriginalText:(NSString *)text
+{
+    NSArray *rangesWithOpenCloseIncomes = [self rangesWithOpenCharacter:@"+[" andCloseCharacter:@"]+" inTextString:text];
+    for (NSValue *range in rangesWithOpenCloseIncomes) {
+        [attributedString addAttribute:NSForegroundColorAttributeName value:[IAEColorHelper colorForEconomicIncomeValue] range:range.rangeValue];
+        [attributedString addAttribute:NSKernAttributeName value:@0 range:range.rangeValue];
+    }
+}
+
+- (void)applyOpenCloseExpensesInAttributedString:(NSMutableAttributedString *)attributedString withOriginalText:(NSString *)text
+{
+    NSArray *rangesWithOpenCloseExpenses = [self rangesWithOpenCharacter:@"-[" andCloseCharacter:@"]-" inTextString:text];
+    for (NSValue *range in rangesWithOpenCloseExpenses) {
+        [attributedString addAttribute:NSForegroundColorAttributeName value:[IAEColorHelper colorForEconomicExpenseValue] range:range.rangeValue];
+        [attributedString addAttribute:NSKernAttributeName value:@0 range:range.rangeValue];
+    }
+}
+
+- (void)removeAllSpecialCharactersinAttributedString:(NSMutableAttributedString *)attributedString
+{
+    NSSet *specialCharacters = [[NSSet alloc] initWithArray:@[@"<", @">", @"{", @"}", @"+[", @"]+", @"-[", @"]-"]];
+    for (NSString *specialCharacter in specialCharacters) {
+        [attributedString.mutableString replaceOccurrencesOfString:specialCharacter
+                                                        withString:@""
+                                                           options:NSCaseInsensitiveSearch
+                                                             range:NSMakeRange(0, attributedString.string.length)];
+
     }
 }
 
@@ -112,14 +170,6 @@
     }
     
     return [NSArray arrayWithArray:rangesFound];
-
-}
-
-- (NSString *)removeQuotesFromString:(NSString *)text
-{
-    NSString *newText = [text stringByReplacingOccurrencesOfString:@"\"" withString:@""];
-    
-    return newText;
 }
 
 @end

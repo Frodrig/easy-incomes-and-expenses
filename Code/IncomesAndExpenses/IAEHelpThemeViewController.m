@@ -69,6 +69,7 @@
     
     [self configureNavigationController];
     [self configurePageControll];
+    [self configureScrollView];
 }
 
 - (void)configureNavigationController
@@ -80,6 +81,11 @@
 {
     self.pageControll.numberOfPages = self.helpTheme.helpPages.count;
     self.pageControll.currentPage = 0;
+}
+
+- (void)configureScrollView
+{
+    self.scrollView.backgroundColor = [UIColor colorWithWhite:0.8 alpha:0.1];
 }
 
 - (void)viewWillAppear:(BOOL)animated

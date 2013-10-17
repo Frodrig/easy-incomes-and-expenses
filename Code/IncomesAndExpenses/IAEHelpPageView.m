@@ -21,7 +21,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self createTexts:text];
-        self.backgroundColor = [UIColor colorWithWhite:0.8 alpha:0.1];
     }
     
     return self;

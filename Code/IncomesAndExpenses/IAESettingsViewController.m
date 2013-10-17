@@ -15,6 +15,12 @@
 
 @implementation IAESettingsViewController
 
+#pragma mark - Constants
+
+static const NSUInteger kTintValueForNavigation = 0.74;
+
+#pragma mark - Init
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -31,6 +37,7 @@
     // Do any additional setup after loading the view from its nib.
     IAEHelpIndexViewController *helpIndexViewController = [[IAEHelpIndexViewController alloc] init];
     [self pushViewController:helpIndexViewController animated:NO];
+    self.view.tintColor = [UIColor colorWithWhite:kTintValueForNavigation alpha:1.0];
 }
 
 - (void)didReceiveMemoryWarning

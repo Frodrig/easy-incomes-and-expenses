@@ -42,6 +42,16 @@
 - (void)configureNavigationController
 {
     self.title = NSLocalizedString(@"LTEXT_SETTINGSINDEX_2", @"");
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                                           target:self
+                                                                                           action:@selector(doneButtonPressed:)];
+}
+
+#pragma mark - Navigation Bar
+
+- (void)doneButtonPressed:(UIBarButtonItem *)button
+{
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning

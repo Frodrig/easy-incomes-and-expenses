@@ -7,6 +7,7 @@
 //
 
 #import "IAEHelpThemeViewController.h"
+#import "Flurry.h"
 #import "IAEHelpTheme.h"
 #import "IAEHelpPage.h"
 #import "IAEHelpPageView.h"
@@ -82,6 +83,8 @@
     [self configureNavigationController];
     [self configurePageControll];
     [self configureScrollView];
+    
+    [Flurry logEvent:@"helpindex_themeselected" withParameters:@{@"theme" : self.title}];
 }
 
 - (void)configureNavigationController

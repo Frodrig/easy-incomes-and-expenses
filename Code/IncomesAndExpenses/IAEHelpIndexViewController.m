@@ -7,6 +7,7 @@
 //
 
 #import "IAEHelpIndexViewController.h"
+#import "Flurry.h"
 #import "IAEHelpConfigureViewController.h"
 #import "IAEHelpAboutViewController.h"
 #import "IAEHelpViewController.h"
@@ -144,10 +145,13 @@ static const NSUInteger kRowOfAboutIndex = 2;
     UIViewController *viewController = nil;
     
     if (indexPath.row == kRowOfConfigureIndex) {
+        [Flurry logEvent:@"settingsindex_configure"];
         viewController = [[IAEHelpConfigureViewController alloc] initWithNibName:@"IAEHelpConfigureViewController" bundle:[NSBundle mainBundle]];
     } else if (indexPath.row == kRowOfHelpIndex) {
+        [Flurry logEvent:@"settingsindex_help"];
         viewController = [[IAEHelpViewController alloc] initWithNibName:@"IAEHelpViewController" bundle:[NSBundle mainBundle]];
     } else if (indexPath.row == kRowOfAboutIndex) {
+        [Flurry logEvent:@"settingsindex_about"];
         viewController = [[IAEHelpAboutViewController alloc] initWithNibName:@"IAEHelpAboutViewController" bundle:[NSBundle mainBundle]];
     }
     

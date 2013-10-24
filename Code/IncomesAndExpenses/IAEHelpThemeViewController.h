@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol IAEHelpIndexViewControllerDelegate;
 @class IAEHelpTheme;
 
 @interface IAEHelpThemeViewController : UIViewController<UIScrollViewDelegate>
 
+@property (nonatomic, weak) id<IAEHelpIndexViewControllerDelegate> delegate;
 @property (nonatomic, weak, readonly) IAEHelpTheme *helpTheme;
 
 - (instancetype)initWithHelpTheme:(IAEHelpTheme *)helpTheme;

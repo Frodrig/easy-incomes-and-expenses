@@ -10,7 +10,11 @@
 #import "IAEHelpAboutCollectionViewCellDelegate.h"
 #import <MessageUI/MFMailComposeViewController.h>
 
+@protocol IAEHelpIndexViewControllerDelegate;
+
 @interface IAEHelpAboutViewController : UICollectionViewController<IAEHelpAboutCollectionViewCellDelegate,
                                                                    MFMailComposeViewControllerDelegate>
+
+@property (nonatomic, weak) id<IAEHelpIndexViewControllerDelegate> delegate;
 
 @end

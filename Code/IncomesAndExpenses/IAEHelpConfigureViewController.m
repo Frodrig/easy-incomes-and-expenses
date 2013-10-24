@@ -8,6 +8,7 @@
 
 #import "IAEHelpConfigureViewController.h"
 #import "IAEHelpConfigureCollectionViewCell.h"
+#import "IAEHelpIndexViewControllerDelegate.h"
 
 @interface IAEHelpConfigureViewController ()
 
@@ -57,7 +58,7 @@ static NSString * const kCollectionviewSettingsCellIdentifier = @"IAEConfigureCe
 
 - (void)doneButtonPressed:(UIBarButtonItem *)button
 {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self.delegate dismissAll];
 }
 
 #pragma mark - UICollectionViewFlowDelegate

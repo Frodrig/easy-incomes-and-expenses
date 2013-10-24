@@ -409,6 +409,7 @@
 		5BA0131017983A9000337E84 /* IAEDayCalendarSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEDayCalendarSelectorViewController.m; sourceTree = "<group>"; };
 		5BA0131117983A9000337E84 /* IAEDayCalendarSelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEDayCalendarSelectorViewController.xib; sourceTree = "<group>"; };
 		5BAA5E46170988AC00B6B3F8 /* IncomesAndExpenses copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "IncomesAndExpenses copy-Info.plist"; path = "/Users/fernandorodriguezmartinez/Trabajo/Freelance/Git/Easy Incomes and Expenses/Code/IncomesAndExpenses copy-Info.plist"; sourceTree = "<absolute>"; };
+		5BAD901C181903B700CE0124 /* IAEHelpIndexViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelpIndexViewControllerDelegate.h; sourceTree = "<group>"; };
 		5BB0222217E2F7BD00CF75B8 /* IAEEasyIncomesAndExpensesViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEasyIncomesAndExpensesViewControllerDelegate.h; sourceTree = "<group>"; };
 		5BB2048B17D47E7100563B7C /* IAEDisplayPanelCalculatorViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEDisplayPanelCalculatorViewDataSource.h; sourceTree = "<group>"; };
 		5BB2048D17D4C92700563B7C /* IAEReportAreaViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEReportAreaViewDelegate.h; sourceTree = "<group>"; };
@@ -1878,6 +1879,7 @@
 				5BE84E79180DA8F500F4A80B /* IAEHelpIndexViewController.h */,
 				5BE84E7A180DA8F500F4A80B /* IAEHelpIndexViewController.m */,
 				5BE84E7B180DA8F500F4A80B /* IAEHelpIndexViewController.xib */,
+				5BAD901C181903B700CE0124 /* IAEHelpIndexViewControllerDelegate.h */,
 			);
 			name = IAEIndex;
 			sourceTree = "<group>";

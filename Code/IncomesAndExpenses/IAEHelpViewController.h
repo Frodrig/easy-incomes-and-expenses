@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol IAEHelpIndexViewControllerDelegate;
+
 @interface IAEHelpViewController : UITableViewController
+
+@property (nonatomic, weak)id<IAEHelpIndexViewControllerDelegate> delegate;
 
 @end

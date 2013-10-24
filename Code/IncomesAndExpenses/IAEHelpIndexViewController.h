@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IAEHelpIndexViewControllerDelegate.h"
 
-@interface IAEHelpIndexViewController : UITableViewController
+@interface IAEHelpIndexViewController : UITableViewController<IAEHelpIndexViewControllerDelegate>
 
 @end

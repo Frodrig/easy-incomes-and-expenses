@@ -9,6 +9,7 @@
 #import "IAEHelpAboutViewController.h"
 #import "Flurry.h"
 #import "IAEHelpAboutCollectionViewCell.h"
+#import "IAEHelpIndexViewControllerDelegate.h"
 
 @interface IAEHelpAboutViewController ()
 
@@ -60,7 +61,7 @@ static NSString * const kCollectionViewAboutCellIdentifier = @"IAEInfoCell";
 
 - (void)doneButtonPressed:(UIBarButtonItem *)button
 {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self.delegate dismissAll];
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout

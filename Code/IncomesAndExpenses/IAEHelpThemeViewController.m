@@ -7,6 +7,7 @@
 //
 
 #import "IAEHelpThemeViewController.h"
+#import "IAEHelpIndexViewControllerDelegate.h"
 #import "Flurry.h"
 #import "IAEHelpTheme.h"
 #import "IAEHelpPage.h"
@@ -99,7 +100,7 @@
 
 - (void)doneButtonPressed:(UIBarButtonItem *)button
 {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self.delegate dismissAll];
 }
 
 - (void)configurePageControll

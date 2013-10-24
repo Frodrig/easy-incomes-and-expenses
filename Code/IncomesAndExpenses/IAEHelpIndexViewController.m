@@ -67,12 +67,19 @@ static const NSUInteger kRowOfAboutIndex = 2;
                                                                                           action:@selector(doneButtonPressed:)];
 }
 
+#pragma mark - IAEHelpIndexViewControllerDelegate
+
+- (void)dismissAll
+{
+    [self notifyGlobalValueChangesIfAppropiate];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark - BarButtons
 
 - (void)doneButtonPressed:(id)sender
 {
-    [self notifyGlobalValueChangesIfAppropiate];
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self dismissAll];
 }
 
 - (void)notifyGlobalValueChangesIfAppropiate
@@ -154,6 +161,8 @@ static const NSUInteger kRowOfAboutIndex = 2;
         [Flurry logEvent:@"settingsindex_about"];
         viewController = [[IAEHelpAboutViewController alloc] initWithNibName:@"IAEHelpAboutViewController" bundle:[NSBundle mainBundle]];
     }
+
+    [viewController performSelector:@selector(setDelegate:) withObject:self];
     
     return viewController;
 }

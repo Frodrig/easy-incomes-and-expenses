@@ -10,6 +10,7 @@
 #import "IAEHelpBook.h"
 #import "IAEHelpTheme.h"
 #import "IAEHelpThemeViewController.h"
+#import "IAEHelpIndexViewControllerDelegate.h"
 
 @interface IAEHelpViewController ()
 
@@ -52,7 +53,7 @@ static const NSUInteger kFamilyFontSizeForCells = 24;
 
 - (void)doneButtonPressed:(UIBarButtonItem *)button
 {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self.delegate dismissAll];
 }
 
 - (void)didReceiveMemoryWarning
@@ -111,6 +112,7 @@ static const NSUInteger kFamilyFontSizeForCells = 24;
 {
     IAEHelpTheme *theme = [[IAEHelpBook sharedHelpBook] findHelpThemeAtIndex:themeIndex];
     IAEHelpThemeViewController *themeViewController = [[IAEHelpThemeViewController alloc] initWithHelpTheme:theme];
+    themeViewController.delegate = self.delegate;
     [self.navigationController pushViewController:themeViewController animated:YES];
 }
 

@@ -24,7 +24,7 @@ static const NSUInteger kBaseFontSize = 34;
 static const NSUInteger kBaseFontKern = 1.0;
 
 static NSString * const kFontOpenCloseBraketsFamilyName = @"HelveticaNeue";
-static NSString * const kFontOpenCloseKeysFamilyName = @"HelveticaNeue-Italic";
+static NSString * const kFontOpenCloseKeysFamilyName = @"HelveticaNeue-LightItalic";
 
 static const CGFloat kPercentageWidthOfText = 0.8;
 

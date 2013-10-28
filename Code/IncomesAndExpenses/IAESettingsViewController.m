@@ -17,7 +17,7 @@
 
 #pragma mark - Constants
 
-static const CGFloat kTintValueForNavigation = 0.74;
+static const CGFloat kTintValueForNavigation = 0.6;
 
 #pragma mark - Init
 

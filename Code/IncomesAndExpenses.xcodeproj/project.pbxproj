@@ -66,6 +66,7 @@
 		5B62D881178EC3CB009879A6 /* IAECurrencyInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B62D87F178EC3CB009879A6 /* IAECurrencyInfo.m */; };
 		5B62D884178F1516009879A6 /* UIView+DrawBottomLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B62D883178F1516009879A6 /* UIView+DrawBottomLine.m */; };
 		5B6E9FA7177D9C950072EE34 /* UIView+LoadFromXib.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6E9FA6177D9C950072EE34 /* UIView+LoadFromXib.m */; };
+		5B6F45E5181ED29F0073B1AC /* IAEOpenYear.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6F45E4181ED29F0073B1AC /* IAEOpenYear.m */; };
 		5B7602B617C3CC9E009920CD /* IAECategoryWithNumberOfConceptsTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B7602B517C3CC9E009920CD /* IAECategoryWithNumberOfConceptsTableView.xib */; };
 		5B767DF71636D7FC005315F8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B767DF61636D7FC005315F8 /* UIKit.framework */; };
 		5B767DF91636D7FC005315F8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B767DF81636D7FC005315F8 /* Foundation.framework */; };
@@ -329,6 +330,8 @@
 		5B6E9FA5177D9C950072EE34 /* UIView+LoadFromXib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+LoadFromXib.h"; sourceTree = "<group>"; };
 		5B6E9FA6177D9C950072EE34 /* UIView+LoadFromXib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+LoadFromXib.m"; sourceTree = "<group>"; };
 		5B6F45E0181ECFE10073B1AC /* IAEYearObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEYearObject.h; sourceTree = "<group>"; };
+		5B6F45E3181ED29F0073B1AC /* IAEOpenYear.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEOpenYear.h; sourceTree = "<group>"; };
+		5B6F45E4181ED29F0073B1AC /* IAEOpenYear.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEOpenYear.m; sourceTree = "<group>"; };
 		5B7602B517C3CC9E009920CD /* IAECategoryWithNumberOfConceptsTableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAECategoryWithNumberOfConceptsTableView.xib; sourceTree = "<group>"; };
 		5B767DF21636D7FC005315F8 /* Easy Inc & Exp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Easy Inc & Exp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B767DF61636D7FC005315F8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -1096,6 +1099,8 @@
 		5B6F45DD181ECF5A0073B1AC /* OpenYear */ = {
 			isa = PBXGroup;
 			children = (
+				5B6F45E3181ED29F0073B1AC /* IAEOpenYear.h */,
+				5B6F45E4181ED29F0073B1AC /* IAEOpenYear.m */,
 			);
 			name = OpenYear;
 			sourceTree = "<group>";
@@ -2233,6 +2238,7 @@
 				5BCE3ABD17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.m in Sources */,
 				5BE84E77180DA8CF00F4A80B /* IAESettingsViewController.m in Sources */,
 				5B23F04017FED21C00477D34 /* NSUserDefaults+EasyIncAndExp.m in Sources */,
+				5B6F45E5181ED29F0073B1AC /* IAEOpenYear.m in Sources */,
 				5B907832179D1AA700B2A0F7 /* IAECalculatorViewController.m in Sources */,
 				5B32D65D177C41980070AC72 /* IAEYearSelectorViewController.m in Sources */,
 				5BD06157163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld in Sources */,

@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "CategoryDefs.h"
+#import "IAEYearObject.h"
 
 @class IAEMonth;
 @class IAECategory;
 
-@interface IAEYear : NSManagedObject
+@interface IAEYear : NSManagedObject<IAEYearObject>
 
 @property (nonatomic) int16_t yearDate;
 @property (nonatomic, retain) NSSet *months;
@@ -21,24 +21,6 @@
 
 - (NSComparisonResult)compare:(IAEYear *)aYear;
 - (NSComparisonResult)compareDescendingPriority:(IAEYear *)aYear;
-
-- (NSDecimalNumber *)expenses;
-- (NSDecimalNumber *)incomes;
-- (NSDecimalNumber *)balance;
-- (NSDecimalNumber *)balanceOfAllConceptsOfCategory:(IAECategory *)category;
-
-- (void)beginCategoryConceptSearchMode;
-- (void)endCategoryConceptSearchMode;
-
-- (NSArray *)findAllOrdererMonthsWithConcepts;
-- (NSArray *)findAllConceptsWithCategory:(IAECategory *)category;
-- (NSArray *)findAllConcepts;
-- (NSArray *)findAllConceptsSortedByEntryInstant;
-- (NSArray *)findAllConceptsSortedByDay;
-- (NSArray *)findAllCategoriesSortedByAbsoluteValueOfAmountsInConceptsOfType:(CategoryType)type;
-- (NSUInteger)findNumberOfConcepts;
-
-- (NSString *)yearDateAsString;
 
 @end
 

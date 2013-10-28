@@ -328,6 +328,7 @@
 		5B62D883178F1516009879A6 /* UIView+DrawBottomLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+DrawBottomLine.m"; sourceTree = "<group>"; };
 		5B6E9FA5177D9C950072EE34 /* UIView+LoadFromXib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+LoadFromXib.h"; sourceTree = "<group>"; };
 		5B6E9FA6177D9C950072EE34 /* UIView+LoadFromXib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+LoadFromXib.m"; sourceTree = "<group>"; };
+		5B6F45E0181ECFE10073B1AC /* IAEYearObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEYearObject.h; sourceTree = "<group>"; };
 		5B7602B517C3CC9E009920CD /* IAECategoryWithNumberOfConceptsTableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAECategoryWithNumberOfConceptsTableView.xib; sourceTree = "<group>"; };
 		5B767DF21636D7FC005315F8 /* Easy Inc & Exp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Easy Inc & Exp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B767DF61636D7FC005315F8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -1092,6 +1093,48 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
+		5B6F45DD181ECF5A0073B1AC /* OpenYear */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = OpenYear;
+			sourceTree = "<group>";
+		};
+		5B6F45DE181ECF780073B1AC /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				5B6F45E0181ECFE10073B1AC /* IAEYearObject.h */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		5B6F45DF181ECFA00073B1AC /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				5B6F45E1181ED00B0073B1AC /* Defs */,
+				5B6F45DE181ECF780073B1AC /* Protocols */,
+				5B6F45DD181ECF5A0073B1AC /* OpenYear */,
+				5B87977A180EADB200554E13 /* Core Data */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
+		5B6F45E1181ED00B0073B1AC /* Defs */ = {
+			isa = PBXGroup;
+			children = (
+				5BC7102217AC2A5900E12953 /* IAECategoryEditorDefs.h */,
+				5BC7102317AC2B0900E12953 /* CategoryDefs.h */,
+			);
+			name = Defs;
+			sourceTree = "<group>";
+		};
+		5B6F45E2181ED0460073B1AC /* Category */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Category;
+			sourceTree = "<group>";
+		};
 		5B7602B417C3CC7A009920CD /* Xibs */ = {
 			isa = PBXGroup;
 			children = (
@@ -1175,7 +1218,7 @@
 			isa = PBXGroup;
 			children = (
 				5B87977B180EADC400554E13 /* HelpBook */,
-				5B87977A180EADB200554E13 /* Core Data */,
+				5B6F45DF181ECFA00073B1AC /* Data */,
 			);
 			name = Model;
 			path = ..;
@@ -1270,7 +1313,7 @@
 			isa = PBXGroup;
 			children = (
 				5BC7101D17AC29FE00E12953 /* Book */,
-				5BC7101E17AC2A0800E12953 /* Category */,
+				5BC7101E17AC2A0800E12953 /* CategoryStore */,
 				5BC7101F17AC2A1100E12953 /* Concept */,
 				5BC7102117AC2A1F00E12953 /* Year */,
 				5BC7102017AC2A1900E12953 /* Month */,
@@ -1654,17 +1697,16 @@
 			name = Book;
 			sourceTree = "<group>";
 		};
-		5BC7101E17AC2A0800E12953 /* Category */ = {
+		5BC7101E17AC2A0800E12953 /* CategoryStore */ = {
 			isa = PBXGroup;
 			children = (
-				5BC7102317AC2B0900E12953 /* CategoryDefs.h */,
-				5BC7102217AC2A5900E12953 /* IAECategoryEditorDefs.h */,
 				5BC7100B17AC29F600E12953 /* IAECategoryStore.h */,
+				5BC7101317AC29F600E12953 /* IAECategoryStore.m */,
 				5BC7100A17AC29F600E12953 /* IAECategory.h */,
 				5BC7101217AC29F600E12953 /* IAECategory.m */,
-				5BC7101317AC29F600E12953 /* IAECategoryStore.m */,
+				5B6F45E2181ED0460073B1AC /* Category */,
 			);
-			name = Category;
+			name = CategoryStore;
 			sourceTree = "<group>";
 		};
 		5BC7101F17AC2A1100E12953 /* Concept */ = {

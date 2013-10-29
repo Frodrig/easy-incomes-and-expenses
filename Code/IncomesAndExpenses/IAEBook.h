@@ -30,7 +30,7 @@
 //- (void)loadYear:(NSUInteger)yearDate;
 //- (void)loadMoreRecientYear;
 //- (void)unloadAll;
-
+- (IAEOpenYear *)closeAllAndOpenYear:(NSNumber *)yearDate;
 - (IAEOpenYear *)openYear:(NSNumber *)yearDate;
 - (void)deleteAllConceptsOfOpenYear:(IAEOpenYear *)year;
 - (void)closeAllOpenYearsPreservingActualYear;

@@ -50,6 +50,9 @@ static const NSUInteger kMonthsPerYear = 12;
     
     _years = [years copy];
     _months = [self createMonthsWithYears:years andStartMonth:startMonth];
+    
+    IAEYear *firstOpenYear = _years[0];
+    _yearDate = firstOpenYear.yearDate;
 }
 
 - (NSArray *)createMonthsWithYears:(NSArray *)years andStartMonth:(MonthType)startMonth
@@ -71,6 +74,28 @@ static const NSUInteger kMonthsPerYear = 12;
     
     NSArray *retMonths = [NSArray arrayWithArray:ordererMonths];
     return retMonths;
+}
+
+#pragma mark - Compare
+
+- (NSComparisonResult)compare:(IAEOpenYear *)aOpenYear
+{
+    NSNumber *yearDateNumber = [NSNumber numberWithInt:self.yearDate];
+    const NSComparisonResult compareResult = [yearDateNumber compare:@(aOpenYear.yearDate)];
+    
+    return compareResult;
+}
+
+- (NSComparisonResult)compareDescendingPriority:(IAEOpenYear *)aOpenYear
+{
+    NSComparisonResult result = [self compare:aOpenYear];
+    if (result ==  NSOrderedAscending) {
+        result = NSOrderedDescending;
+    } else if (result == NSOrderedDescending) {
+        result = NSOrderedAscending;
+    }
+    
+    return result;
 }
 
 #pragma mark - Delete

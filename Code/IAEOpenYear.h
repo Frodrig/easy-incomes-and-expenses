@@ -20,4 +20,6 @@
 
 - (void)deleteAllConcepts;
 
+- (NSComparisonResult)compareDescendingPriority:(IAEOpenYear *)aOpenYear;
+
 @end

@@ -45,7 +45,7 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
 
 #pragma mark - Instance
 
-- (id) init
+- (id)init
 {
     self = [super init];
     if (self) {
@@ -195,6 +195,19 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     _openYears = [self createOpenYearsArrayFromYearsLoaded];
 }
 
+- (IAEOpenYear *)closeAllAndOpenYear:(NSNumber *)yearDate
+{
+    [self unloadAll];
+    [self loadYear:yearDate.integerValue];
+    if (![self findYearWithDate:yearDate]) {
+        [self createYear:yearDate];
+        _openYears = [self createOpenYearsArrayFromYearsLoaded];
+    }
+    
+    IAEOpenYear *openYear = [self findActualOpenYear];
+    return openYear;
+}
+
 - (IAEOpenYear *)openYear:(NSNumber *)yearDate
 {
     IAEOpenYear *yearOpened = [self findOpenYearWithDate:yearDate];
@@ -213,8 +226,8 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     return yearOpened;
 }
 
-/*
-- (IAEYear *)createYear:(NSNumber *)yearDate
+
+- (void)createYear:(NSNumber *)yearDate
 {
     IAEYear *newYear = nil;
     if (![self findYearWithDate:yearDate]) {
@@ -224,10 +237,7 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
         [self.years addObject:newYear];
         [self.years sortUsingSelector:@selector(compareDescendingPriority:)];
      }
-    
-    return newYear;
 }
-*/
 
 - (void)deleteYear:(NSNumber *)yearDate
 {

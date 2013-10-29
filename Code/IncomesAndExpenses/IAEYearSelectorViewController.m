@@ -430,20 +430,24 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 
 - (void)sendToDelegateActionChosenSelectedActualYear
 {
-    [[IAEBook sharedBook] openYear:@(self.openYearDateBeforeStart)];
+    //[[IAEBook sharedBook] openYear:@(self.openYearDateBeforeStart)];
+    [[IAEBook sharedBook] closeAllAndOpenYear:@(self.openYearDateBeforeStart)];
     [self.delegate openYearSelectedWasSelectedInYearSelectorViewController:self];
 }
 
 - (void)sendToDelegateActionChosenSelectedYearWithConceptsWithDate:(NSUInteger)yearDate
 {
-    [[IAEBook sharedBook] openYear:@(yearDate)];
+    //[[IAEBook sharedBook] openYear:@(yearDate)];
+    [[IAEBook sharedBook] closeAllAndOpenYear:@(yearDate)];
     [self.delegate yearSelectorViewController:self didLoadSelectedYearDate:yearDate];
 }
 
 - (void)sendToDelegateActionChosenSelectedYearWithoutConceptsWithDate:(NSUInteger)yearDate
 {
-    [[IAEBook sharedBook] openYear:@(yearDate)];
-    [[IAEBook sharedBook] saveAll];
+    [[IAEBook sharedBook] closeAllAndOpenYear:@(yearDate)];
+
+    //[[IAEBook sharedBook] openYear:@(yearDate)];
+    //[[IAEBook sharedBook] saveAll];
     
     [self.delegate yearSelectorViewController:self didCreateAndLoadSelectedYearDate:yearDate];
 }

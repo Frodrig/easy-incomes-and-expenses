@@ -8,6 +8,7 @@
 
 #import "IAEHelpConfigureViewController.h"
 #import "IAEHelpConfigureConceptsWithDaysCell.h"
+#import "IAEHelpConfigureStartMonthCell.h"
 #import "IAEHelpIndexViewControllerDelegate.h"
 
 @interface IAEHelpConfigureViewController ()
@@ -20,10 +21,13 @@
 
 static NSString * const kCollectionViewConceptsWithDaysCellNibName = @"IAEHelpConfigureConceptsWithDaysCell";
 static NSString * const kCollectionViewConceptsWithDaysCellIdentifier = @"IAEConfigureConceptsWithDaysCell";
+static NSString * const kCollectionViewStartMonthCellNibName = @"IAEHelpConfigureStartMonthCell";
+static NSString * const kCollectionViewStartMonthCellIdentifier = @"IAEConfigureStartMonthCell";
 
-static NSUInteger kNumberOfSections = 1;
+static NSUInteger kNumberOfSections = 2;
 static NSUInteger kNumberOfItemsInSection = 1;
 static NSUInteger kSectionOfConfigureConceptsWithDaysCell = 0;
+static NSUInteger kSectionOfConfigureStartMonthCell = 1;
 
 #pragma mark - Init
 
@@ -48,6 +52,8 @@ static NSUInteger kSectionOfConfigureConceptsWithDaysCell = 0;
 {
     [self.collectionView registerNib:[UINib nibWithNibName:kCollectionViewConceptsWithDaysCellNibName bundle:nil]
           forCellWithReuseIdentifier:kCollectionViewConceptsWithDaysCellIdentifier];
+    [self.collectionView registerNib:[UINib nibWithNibName:kCollectionViewStartMonthCellNibName bundle:nil]
+          forCellWithReuseIdentifier:kCollectionViewStartMonthCellIdentifier];
 }
 
 - (void)configureNavigationController
@@ -73,7 +79,12 @@ static NSUInteger kSectionOfConfigureConceptsWithDaysCell = 0;
                   layout:(UICollectionViewLayout*)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGSize size = [IAEHelpConfigureConceptsWithDaysCell sizeOfItem];
+    CGSize size = CGSizeMake(0, 0);
+    if (indexPath.section == kSectionOfConfigureConceptsWithDaysCell) {
+        size = [IAEHelpConfigureConceptsWithDaysCell sizeOfItem];
+    } else if (indexPath.section == kSectionOfConfigureStartMonthCell) {
+        size = [IAEHelpConfigureStartMonthCell sizeOfItem];
+    }
     
     return size;
 }
@@ -92,6 +103,9 @@ static NSUInteger kSectionOfConfigureConceptsWithDaysCell = 0;
     UICollectionViewCell *cell = nil;
     if (indexPath.section == kSectionOfConfigureConceptsWithDaysCell) {
         cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCollectionViewConceptsWithDaysCellIdentifier
+                                                         forIndexPath:indexPath];
+    } else if (indexPath.section == kSectionOfConfigureStartMonthCell) {
+        cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCollectionViewStartMonthCellIdentifier
                                                          forIndexPath:indexPath];
     }
     

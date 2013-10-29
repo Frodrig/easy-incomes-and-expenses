@@ -17,6 +17,12 @@
 		5B23FD9217CFAB5100B4AD77 /* 727-more@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B23FD9017CFAB5100B4AD77 /* 727-more@2x.png */; };
 		5B251FA117AACA71000957A5 /* IAEStrokeAnimatableLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B251FA017AACA71000957A5 /* IAEStrokeAnimatableLineView.m */; };
 		5B28813417985822006E4F9B /* IAEVersionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B28813317985822006E4F9B /* IAEVersionHelper.m */; };
+		5B28D1A9182007B000EF4D48 /* IAEHelpConfigureStartMonthCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B28D1A8182007B000EF4D48 /* IAEHelpConfigureStartMonthCell.m */; };
+		5B28D1AB182007BF00EF4D48 /* IAEHelpConfigureStartMonthCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B28D1AA182007BF00EF4D48 /* IAEHelpConfigureStartMonthCell.xib */; };
+		5B28D1AE18200C1300EF4D48 /* 766-arrow-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B28D1AC18200C1300EF4D48 /* 766-arrow-right.png */; };
+		5B28D1AF18200C1300EF4D48 /* 766-arrow-right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B28D1AD18200C1300EF4D48 /* 766-arrow-right@2x.png */; };
+		5B28D1B218200E6300EF4D48 /* 717-flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B28D1B018200E6300EF4D48 /* 717-flag.png */; };
+		5B28D1B318200E6300EF4D48 /* 717-flag@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B28D1B118200E6300EF4D48 /* 717-flag@2x.png */; };
 		5B2A41B017C77C8100C29036 /* 765-arrow-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B2A41AE17C77C8100C29036 /* 765-arrow-left.png */; };
 		5B2A41B117C77C8100C29036 /* 765-arrow-left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B2A41AF17C77C8100C29036 /* 765-arrow-left@2x.png */; };
 		5B2A41B417C77E8500C29036 /* 709-plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B2A41B217C77E8500C29036 /* 709-plus.png */; };
@@ -248,6 +254,13 @@
 		5B251FA317AACA8E000957A5 /* IAEStrokeAnimatableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEStrokeAnimatableViewDelegate.h; sourceTree = "<group>"; };
 		5B28813217985822006E4F9B /* IAEVersionHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEVersionHelper.h; sourceTree = "<group>"; };
 		5B28813317985822006E4F9B /* IAEVersionHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEVersionHelper.m; sourceTree = "<group>"; };
+		5B28D1A7182007B000EF4D48 /* IAEHelpConfigureStartMonthCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelpConfigureStartMonthCell.h; sourceTree = "<group>"; };
+		5B28D1A8182007B000EF4D48 /* IAEHelpConfigureStartMonthCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelpConfigureStartMonthCell.m; sourceTree = "<group>"; };
+		5B28D1AA182007BF00EF4D48 /* IAEHelpConfigureStartMonthCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEHelpConfigureStartMonthCell.xib; sourceTree = "<group>"; };
+		5B28D1AC18200C1300EF4D48 /* 766-arrow-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "766-arrow-right.png"; sourceTree = "<group>"; };
+		5B28D1AD18200C1300EF4D48 /* 766-arrow-right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "766-arrow-right@2x.png"; sourceTree = "<group>"; };
+		5B28D1B018200E6300EF4D48 /* 717-flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "717-flag.png"; sourceTree = "<group>"; };
+		5B28D1B118200E6300EF4D48 /* 717-flag@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "717-flag@2x.png"; sourceTree = "<group>"; };
 		5B2A41AE17C77C8100C29036 /* 765-arrow-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "765-arrow-left.png"; sourceTree = "<group>"; };
 		5B2A41AF17C77C8100C29036 /* 765-arrow-left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "765-arrow-left@2x.png"; sourceTree = "<group>"; };
 		5B2A41B217C77E8500C29036 /* 709-plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "709-plus.png"; sourceTree = "<group>"; };
@@ -731,6 +744,16 @@
 				5B23F03D17FED1FD00477D34 /* NSUserDefaults */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		5B28D1A61820077000EF4D48 /* IAEHelpConfigureStartMonthCell */ = {
+			isa = PBXGroup;
+			children = (
+				5B28D1A7182007B000EF4D48 /* IAEHelpConfigureStartMonthCell.h */,
+				5B28D1A8182007B000EF4D48 /* IAEHelpConfigureStartMonthCell.m */,
+				5B28D1AA182007BF00EF4D48 /* IAEHelpConfigureStartMonthCell.xib */,
+			);
+			name = IAEHelpConfigureStartMonthCell;
 			sourceTree = "<group>";
 		};
 		5B29ED30179FC2C300FCC5C6 /* Resources */ = {
@@ -1257,9 +1280,13 @@
 				5B2AAA2E17C773CF00E7C7A5 /* 747-minus-circle@2x.png */,
 				5B2A41B217C77E8500C29036 /* 709-plus.png */,
 				5BC110FE17CD1DF500FF6D6B /* 730-envelope.png */,
+				5B28D1AC18200C1300EF4D48 /* 766-arrow-right.png */,
+				5B28D1AD18200C1300EF4D48 /* 766-arrow-right@2x.png */,
 				5BC110FF17CD1DF500FF6D6B /* 730-envelope@2x.png */,
 				5B2A41B317C77E8500C29036 /* 709-plus@2x.png */,
 				5B2AAA2917C773C500E7C7A5 /* 746-plus-circle.png */,
+				5B28D1B018200E6300EF4D48 /* 717-flag.png */,
+				5B28D1B118200E6300EF4D48 /* 717-flag@2x.png */,
 				5B2A41AE17C77C8100C29036 /* 765-arrow-left.png */,
 				5B23FD8F17CFAB5000B4AD77 /* 727-more.png */,
 				5B23FD9017CFAB5100B4AD77 /* 727-more@2x.png */,
@@ -1295,7 +1322,8 @@
 		5B879762180E8FB100554E13 /* IAEConfigure */ = {
 			isa = PBXGroup;
 			children = (
-				5B879768180E8FE500554E13 /* Cell */,
+				5B28D1A61820077000EF4D48 /* IAEHelpConfigureStartMonthCell */,
+				5B879768180E8FE500554E13 /* IAEHelpConfigureConceptsWithDaysCell */,
 				5B879763180E8FCB00554E13 /* IAEHelpConfigureViewController.h */,
 				5B879764180E8FCB00554E13 /* IAEHelpConfigureViewController.m */,
 				5B879765180E8FCB00554E13 /* IAEHelpConfigureViewController.xib */,
@@ -1303,14 +1331,14 @@
 			name = IAEConfigure;
 			sourceTree = "<group>";
 		};
-		5B879768180E8FE500554E13 /* Cell */ = {
+		5B879768180E8FE500554E13 /* IAEHelpConfigureConceptsWithDaysCell */ = {
 			isa = PBXGroup;
 			children = (
 				5B879769180E904400554E13 /* IAEHelpConfigureConceptsWithDaysCell.h */,
 				5B87976B180E904400554E13 /* IAEHelpConfigureConceptsWithDaysCell.m */,
 				5B87976A180E904400554E13 /* IAEHelpConfigureConceptsWithDaysCell.xib */,
 			);
-			name = Cell;
+			name = IAEHelpConfigureConceptsWithDaysCell;
 			sourceTree = "<group>";
 		};
 		5B879774180EA88800554E13 /* IAEHelp */ = {
@@ -2083,6 +2111,7 @@
 				5BBD3752180BFF5B0095A15A /* files.html in Resources */,
 				5BBD3754180BFF5B0095A15A /* ftv2blank.png in Resources */,
 				5B767E011636D7FC005315F8 /* InfoPlist.strings in Resources */,
+				5B28D1AF18200C1300EF4D48 /* 766-arrow-right@2x.png in Resources */,
 				5BB8AD1317FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png in Resources */,
 				5BE84E7D180DA8F500F4A80B /* IAEHelpIndexViewController.xib in Resources */,
 				5B2A41B017C77C8100C29036 /* 765-arrow-left.png in Resources */,
@@ -2139,6 +2168,7 @@
 				5BBD37C9180BFF5B0095A15A /* Flurry_AppSpot_Publisher_Platform_TOS.pdf in Resources */,
 				5BBD373E180BFF5B0095A15A /* annotated.html in Resources */,
 				5BBD3757180BFF5B0095A15A /* ftv2folderclosed.png in Resources */,
+				5B28D1B218200E6300EF4D48 /* 717-flag.png in Resources */,
 				5BC1110017CD1DF500FF6D6B /* 730-envelope.png in Resources */,
 				5B879770180E948700554E13 /* 851-calendar.png in Resources */,
 				5BBD374B180BFF5B0095A15A /* dir_5f6c70842040d9fb1a41cb2ca8828a8e.html in Resources */,
@@ -2163,6 +2193,7 @@
 				5BBD37C4180BFF5B0095A15A /* Avro-LICENSE.txt in Resources */,
 				5BBD3772180BFF5B0095A15A /* open.png in Resources */,
 				5B879779180EA90500554E13 /* IAEHelpViewController.xib in Resources */,
+				5B28D1AE18200C1300EF4D48 /* 766-arrow-right.png in Resources */,
 				5BBD3794180BFF5B0095A15A /* close.png in Resources */,
 				5B57A9C317FAD39500C7BFD3 /* calculatordragbackground@2x.png in Resources */,
 				5BBD376D180BFF5B0095A15A /* nav_g.png in Resources */,
@@ -2202,6 +2233,7 @@
 				5BB8AD1217FAC2F200BAAB96 /* editconceptcontainerviewbackground.png in Resources */,
 				5B879773180E9EFA00554E13 /* IAEHelpAboutViewController.xib in Resources */,
 				5BBD3756180BFF5B0095A15A /* ftv2doc.png in Resources */,
+				5B28D1B318200E6300EF4D48 /* 717-flag@2x.png in Resources */,
 				5BBD3742180BFF5B0095A15A /* class_flurry-members.html in Resources */,
 				5BBD375E180BFF5B0095A15A /* ftv2node.png in Resources */,
 				5B1F0D3717841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib in Resources */,
@@ -2211,6 +2243,7 @@
 				5BBD3775180BFF5B0095A15A /* protocol_flurry_ad_delegate-p.html in Resources */,
 				5BBD374D180BFF5B0095A15A /* dir_6eaab3d1ed43da176b4154f610fa7bbe.html in Resources */,
 				5BBD3749180BFF5B0095A15A /* dir_44930cfa1d7ab51e956c5b15f90f708d.html in Resources */,
+				5B28D1AB182007BF00EF4D48 /* IAEHelpConfigureStartMonthCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2287,6 +2320,7 @@
 				5B60EB5A17C4A3D5004E3D81 /* IAELocalizerPhraseComposer.m in Sources */,
 				5B5C968217816D68008CD851 /* IAEValueDecoratorViewConfigurator.m in Sources */,
 				5B907838179D25BD00B2A0F7 /* IAEDragPanelCalculatorView.m in Sources */,
+				5B28D1A9182007B000EF4D48 /* IAEHelpConfigureStartMonthCell.m in Sources */,
 				5BCE3AA817A95D5300CD01E7 /* IAENumberUtils.m in Sources */,
 				5B8CD5D917A2C6DB00A353A5 /* IAETextRawSelectorMenuView.m in Sources */,
 				5B62D881178EC3CB009879A6 /* IAECurrencyInfo.m in Sources */,

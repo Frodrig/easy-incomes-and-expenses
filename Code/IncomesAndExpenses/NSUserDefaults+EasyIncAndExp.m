@@ -19,7 +19,6 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
 static NSString * const kUserDefaultsReportAmountModePercentageAmountValue = @"percentageAmounts";
 static NSString * const kUserDefaultInitialMonth = @"initialMonth";
 
-
 #pragma mark - Prepare
 
 - (void)prepareDefaults

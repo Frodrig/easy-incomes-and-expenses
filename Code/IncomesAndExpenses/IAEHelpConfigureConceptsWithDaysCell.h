@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface IAEHelpConfigureCollectionViewCell : UICollectionViewCell
+@interface IAEHelpConfigureConceptsWithDaysCell : UICollectionViewCell
 
 + (CGSize)sizeOfItem;
 

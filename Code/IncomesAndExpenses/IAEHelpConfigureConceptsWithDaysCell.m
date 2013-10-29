@@ -6,25 +6,25 @@
 //  Copyright (c) 2013 Fernando Rodríguez Martínez. All rights reserved.
 //
 
-#import "IAEHelpConfigureCollectionViewCell.h"
+#import "IAEHelpConfigureConceptsWithDaysCell.h"
 #import <Crashlytics/Crashlytics.h>
 #import "Flurry.h"
 #import "IAENibUtils.h"
 
-@interface IAEHelpConfigureCollectionViewCell()
+@interface IAEHelpConfigureConceptsWithDaysCell()
 
 @property (weak, nonatomic) IBOutlet UILabel *dayModeInformationLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *dayModeSwitch;
 
 @end
 
-@implementation IAEHelpConfigureCollectionViewCell
+@implementation IAEHelpConfigureConceptsWithDaysCell
 
 static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 
 static NSString * const kTagDayModeLabelText = @"LTEXT_ABOUTANDOPTIONS_DAYMODELABEL_TEXT";
 
-static NSString * const kNibName = @"IAEHelpConfigureCollectionViewCell";
+static NSString * const kNibName = @"IAEHelpConfigureConceptsWithDaysCell";
 
 #pragma mark - Class
 

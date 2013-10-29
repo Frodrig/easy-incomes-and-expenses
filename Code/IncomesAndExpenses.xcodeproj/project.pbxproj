@@ -86,8 +86,8 @@
 		5B879761180E7E6F00554E13 /* IAEHelpAboutCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B87975F180E7E6F00554E13 /* IAEHelpAboutCollectionViewCell.m */; };
 		5B879766180E8FCB00554E13 /* IAEHelpConfigureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B879764180E8FCB00554E13 /* IAEHelpConfigureViewController.m */; };
 		5B879767180E8FCB00554E13 /* IAEHelpConfigureViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B879765180E8FCB00554E13 /* IAEHelpConfigureViewController.xib */; };
-		5B87976C180E904400554E13 /* IAEHelpConfigureCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B87976A180E904400554E13 /* IAEHelpConfigureCollectionViewCell.xib */; };
-		5B87976D180E904400554E13 /* IAEHelpConfigureCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B87976B180E904400554E13 /* IAEHelpConfigureCollectionViewCell.m */; };
+		5B87976C180E904400554E13 /* IAEHelpConfigureConceptsWithDaysCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B87976A180E904400554E13 /* IAEHelpConfigureConceptsWithDaysCell.xib */; };
+		5B87976D180E904400554E13 /* IAEHelpConfigureConceptsWithDaysCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B87976B180E904400554E13 /* IAEHelpConfigureConceptsWithDaysCell.m */; };
 		5B879770180E948700554E13 /* 851-calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B87976E180E948700554E13 /* 851-calendar.png */; };
 		5B879771180E948700554E13 /* 851-calendar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B87976F180E948700554E13 /* 851-calendar@2x.png */; };
 		5B879773180E9EFA00554E13 /* IAEHelpAboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B879772180E9EFA00554E13 /* IAEHelpAboutViewController.xib */; };
@@ -361,9 +361,9 @@
 		5B879763180E8FCB00554E13 /* IAEHelpConfigureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelpConfigureViewController.h; sourceTree = "<group>"; };
 		5B879764180E8FCB00554E13 /* IAEHelpConfigureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelpConfigureViewController.m; sourceTree = "<group>"; };
 		5B879765180E8FCB00554E13 /* IAEHelpConfigureViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEHelpConfigureViewController.xib; sourceTree = "<group>"; };
-		5B879769180E904400554E13 /* IAEHelpConfigureCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelpConfigureCollectionViewCell.h; sourceTree = "<group>"; };
-		5B87976A180E904400554E13 /* IAEHelpConfigureCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEHelpConfigureCollectionViewCell.xib; sourceTree = "<group>"; };
-		5B87976B180E904400554E13 /* IAEHelpConfigureCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelpConfigureCollectionViewCell.m; sourceTree = "<group>"; };
+		5B879769180E904400554E13 /* IAEHelpConfigureConceptsWithDaysCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelpConfigureConceptsWithDaysCell.h; sourceTree = "<group>"; };
+		5B87976A180E904400554E13 /* IAEHelpConfigureConceptsWithDaysCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEHelpConfigureConceptsWithDaysCell.xib; sourceTree = "<group>"; };
+		5B87976B180E904400554E13 /* IAEHelpConfigureConceptsWithDaysCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelpConfigureConceptsWithDaysCell.m; sourceTree = "<group>"; };
 		5B87976E180E948700554E13 /* 851-calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "851-calendar.png"; sourceTree = "<group>"; };
 		5B87976F180E948700554E13 /* 851-calendar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "851-calendar@2x.png"; sourceTree = "<group>"; };
 		5B879772180E9EFA00554E13 /* IAEHelpAboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEHelpAboutViewController.xib; sourceTree = "<group>"; };
@@ -1306,9 +1306,9 @@
 		5B879768180E8FE500554E13 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				5B879769180E904400554E13 /* IAEHelpConfigureCollectionViewCell.h */,
-				5B87976B180E904400554E13 /* IAEHelpConfigureCollectionViewCell.m */,
-				5B87976A180E904400554E13 /* IAEHelpConfigureCollectionViewCell.xib */,
+				5B879769180E904400554E13 /* IAEHelpConfigureConceptsWithDaysCell.h */,
+				5B87976B180E904400554E13 /* IAEHelpConfigureConceptsWithDaysCell.m */,
+				5B87976A180E904400554E13 /* IAEHelpConfigureConceptsWithDaysCell.xib */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -2132,7 +2132,7 @@
 				5B87974B180E7AFD00554E13 /* settingsindex_1.png in Resources */,
 				5BBD373C180BFF5B0095A15A /* _flurry_ad_delegate_8h_source.html in Resources */,
 				5B2A41B117C77C8100C29036 /* 765-arrow-left@2x.png in Resources */,
-				5B87976C180E904400554E13 /* IAEHelpConfigureCollectionViewCell.xib in Resources */,
+				5B87976C180E904400554E13 /* IAEHelpConfigureConceptsWithDaysCell.xib in Resources */,
 				5B879754180E7B7D00554E13 /* settingsindex_2@2x.png in Resources */,
 				5BBD376E180BFF5B0095A15A /* nav_h.png in Resources */,
 				5B2AAA3017C773CF00E7C7A5 /* 747-minus-circle@2x.png in Resources */,
@@ -2265,7 +2265,7 @@
 				5B5C968917816EE0008CD851 /* IAEValueDecoratorViewExpenseConfigurator.m in Sources */,
 				5BC7101817AC29F600E12953 /* IAECategory.m in Sources */,
 				5B62D873178EC20E009879A6 /* IAECurrencyManager.m in Sources */,
-				5B87976D180E904400554E13 /* IAEHelpConfigureCollectionViewCell.m in Sources */,
+				5B87976D180E904400554E13 /* IAEHelpConfigureConceptsWithDaysCell.m in Sources */,
 				5BFDE72A17C5E27500DF884B /* IAESelectorContextView.m in Sources */,
 				5BEA608717A6A39400520E09 /* IAEReportAreaItemView.m in Sources */,
 				5BEA98AB1793E3A500098AE0 /* IAECircleDecoratorView.m in Sources */,

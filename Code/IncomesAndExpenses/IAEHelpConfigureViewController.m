@@ -7,7 +7,7 @@
 //
 
 #import "IAEHelpConfigureViewController.h"
-#import "IAEHelpConfigureCollectionViewCell.h"
+#import "IAEHelpConfigureConceptsWithDaysCell.h"
 #import "IAEHelpIndexViewControllerDelegate.h"
 
 @interface IAEHelpConfigureViewController ()
@@ -18,8 +18,12 @@
 
 #pragma mark - Constantes
 
-static NSString * const kCollectionViewSettingsCellNibName = @"IAEHelpConfigureCollectionViewCell";
-static NSString * const kCollectionviewSettingsCellIdentifier = @"IAEConfigureCell";
+static NSString * const kCollectionViewConceptsWithDaysCellNibName = @"IAEHelpConfigureConceptsWithDaysCell";
+static NSString * const kCollectionViewConceptsWithDaysCellIdentifier = @"IAEConfigureConceptsWithDaysCell";
+
+static NSUInteger kNumberOfSections = 1;
+static NSUInteger kNumberOfItemsInSection = 1;
+static NSUInteger kSectionOfConfigureConceptsWithDaysCell = 0;
 
 #pragma mark - Init
 
@@ -42,8 +46,8 @@ static NSString * const kCollectionviewSettingsCellIdentifier = @"IAEConfigureCe
 
 - (void)configureCollectionView
 {
-    [self.collectionView registerNib:[UINib nibWithNibName:kCollectionViewSettingsCellNibName bundle:nil]
-          forCellWithReuseIdentifier:kCollectionviewSettingsCellIdentifier];
+    [self.collectionView registerNib:[UINib nibWithNibName:kCollectionViewConceptsWithDaysCellNibName bundle:nil]
+          forCellWithReuseIdentifier:kCollectionViewConceptsWithDaysCellIdentifier];
 }
 
 - (void)configureNavigationController
@@ -69,7 +73,7 @@ static NSString * const kCollectionviewSettingsCellIdentifier = @"IAEConfigureCe
                   layout:(UICollectionViewLayout*)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGSize size = [IAEHelpConfigureCollectionViewCell sizeOfItem];
+    CGSize size = [IAEHelpConfigureConceptsWithDaysCell sizeOfItem];
     
     return size;
 }
@@ -85,20 +89,23 @@ static NSString * const kCollectionviewSettingsCellIdentifier = @"IAEConfigureCe
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCollectionviewSettingsCellIdentifier
-                                                                           forIndexPath:indexPath];
+    UICollectionViewCell *cell = nil;
+    if (indexPath.section == kSectionOfConfigureConceptsWithDaysCell) {
+        cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCollectionViewConceptsWithDaysCellIdentifier
+                                                         forIndexPath:indexPath];
+    }
     
     return cell;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 1;
+    return kNumberOfItemsInSection;
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return 1;
+    return kNumberOfSections;
 }
 
 @end

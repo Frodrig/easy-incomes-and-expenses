@@ -9,6 +9,8 @@
 #ifndef IncomesAndExpenses_MonthDefs_h
 #define IncomesAndExpenses_MonthDefs_h
 
+const NSUInteger kMonthsPerYear = 12;
+
 typedef enum
 {
     January = 1,

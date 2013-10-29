@@ -183,7 +183,7 @@ static NSString * const kEntityNameMonth = @"IAEMonth";
         [concepts addObjectsFromArray:conceptsOfMonth];
     }
     
-    return concepts;
+    return [[NSArray alloc] initWithArray:concepts];
 }
 
 - (NSUInteger)findNumberOfConcepts

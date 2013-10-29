@@ -27,6 +27,10 @@ _Pragma("clang diagnostic pop");
 
 @implementation IAEOpenYear
 
+#pragma mark - Constantes
+
+static const NSUInteger kMonthsPerYear = 12;
+
 #pragma mark - Init
 
 - (instancetype)initWithYears:(NSArray *)years andStartMonth:(MonthType)startMonth

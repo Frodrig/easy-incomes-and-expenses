@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "CategoryDefs.h"
 
-@class IAEYear;
+@class IAEOpenYear;
 @class IAEMonth;
 @class IAEConcept;
 @class IAETextRawSelectorMenuView;
@@ -18,7 +18,7 @@
 
 - (UICollectionView *)findConceptsCollectionView;
 
-- (IAEYear *)findOpenYear;
+- (IAEOpenYear *)findOpenYear;
 - (IAEMonth *)findActualSelectedMonth;
 
 - (BOOL)isActualSelectedContextTheYearOpen;

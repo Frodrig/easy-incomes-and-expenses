@@ -103,6 +103,11 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     }
 }
 
+- (void)closeAll
+{
+    [self unloadAll];
+}
+
 - (void)unloadAll
 {    
     [self doRefreshObjectMergeChangesExceptForObjects:nil];
@@ -130,6 +135,11 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     }
     
     return yearsLoaded;
+}
+
+- (void)openAll
+{
+    [self loadAll];
 }
 
 - (void)loadAll
@@ -171,6 +181,11 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     }
     
     _openYears = [self createOpenYearsArrayFromYearsLoaded];
+}
+
+- (void)openMoreRecientYear
+{
+    [self loadMoreRecientYear];
 }
 
 - (void)loadMoreRecientYear

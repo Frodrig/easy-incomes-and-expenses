@@ -534,7 +534,7 @@ static const CGFloat kAlphaOfColorWhiteValueForAttractAttentionFadeIn = 0.3;
 - (void)configureNumberOfConceptsLabelOfTableViewCell:(IAECategoryTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath withCategory:(IAECategory *)category
 {
     if (self.showNumberOfConcepts) {
-        NSUInteger numberOfConceptsOfCategory = [[IAEBook sharedBook] findAllConceptsWithCategory:category].count;
+        NSUInteger numberOfConceptsOfCategory = [[IAEBook sharedBook] findInOpenYearsAllConceptsWithCategory:category].count;
         cell.numberOfConceptsLabel.text = [IAELocalizerPhraseComposer stringPhraseWithNumberOfConcepts:numberOfConceptsOfCategory];
     }
 }
@@ -609,7 +609,7 @@ static const CGFloat kAlphaOfColorWhiteValueForAttractAttentionFadeIn = 0.3;
 
 - (void)removeCategoryOfCellSelectedIfAppropiateLaunchingConfirmation
 {
-    BOOL categoryOfCellSelectedHaveConcepts = [[IAEBook sharedBook] findAllConceptsWithCategory:self.categoryOfCellSelectedToRemove].count > 0;
+    BOOL categoryOfCellSelectedHaveConcepts = [[IAEBook sharedBook] findInOpenYearsAllConceptsWithCategory:self.categoryOfCellSelectedToRemove].count > 0;
     if (categoryOfCellSelectedHaveConcepts) {
         [self launchAlertViewBeforeDeleteCategory];
     } else {

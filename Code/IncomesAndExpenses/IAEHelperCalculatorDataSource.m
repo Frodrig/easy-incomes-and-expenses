@@ -37,7 +37,7 @@
 
 #pragma mark - IAECalculatorViewControllerDataSource
 
-- (IAEYear *)yearForCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
+- (IAEOpenYear *)yearForCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
 {
     return [self.iaeViewControllerQuery findOpenYear];
 }

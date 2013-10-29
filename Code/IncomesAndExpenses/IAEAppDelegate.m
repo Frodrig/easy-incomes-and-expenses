@@ -67,11 +67,11 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
 - (void)createYearBookIfProceed
 {
     // Si no hay ningun año registrado, se crea
-    [[IAEBook sharedBook] loadMoreRecientYear];
-    if (0 == [IAEBook sharedBook].years.count) {
+    [[IAEBook sharedBook] openMoreRecientYear];
+    if (0 == [IAEBook sharedBook].openYears.count) {
         NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
         NSDateComponents *yearComponent = [gregorian components:NSYearCalendarUnit fromDate:[NSDate date]];
-        [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:yearComponent.year]];
+        [[IAEBook sharedBook] openYear:[NSNumber numberWithInteger:yearComponent.year]];
     }
 }
 
@@ -126,6 +126,7 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
 
 - (void)createYearTest
 {
+    /*
     [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2013]];
     [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2010]];
     [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2007]];
@@ -144,10 +145,12 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
     
     [[IAEBook sharedBook] saveAll];
     [[IAEBook sharedBook] unloadAll];
+     */
 }
 
 - (void)createYearTest2
 {
+    /*
     [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2013]];
     [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2010]];
     [[IAEBook sharedBook] createYear:[NSNumber numberWithInteger:2007]];
@@ -163,6 +166,7 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
     
     [[IAEBook sharedBook] saveAll];
     [[IAEBook sharedBook] unloadAll];
+     */
 }
 
 @end

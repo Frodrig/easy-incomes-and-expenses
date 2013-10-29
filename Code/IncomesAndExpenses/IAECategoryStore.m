@@ -136,7 +136,7 @@ static NSString * const kCategoryPropertyNameTag = @"tag";
 {
     if (category && category != self.generalIncomeCategory && category != self.generalExpenseCategory) {
         IAECategory *baseCategory = category.categoryType == IncomeCategory ? self.generalIncomeCategory : self.generalExpenseCategory;
-        NSArray *conceptsWithCategory = [[IAEBook sharedBook] findAllConceptsWithCategory:category];
+        NSArray *conceptsWithCategory = [[IAEBook sharedBook] findInOpenYearsAllConceptsWithCategory:category];
         for (IAEConcept *concept in conceptsWithCategory) {
             concept.category = baseCategory;
         }

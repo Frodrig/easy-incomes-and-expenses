@@ -12,7 +12,7 @@
 #import "IAEEditModeConceptCollectionViewHeader.h"
 #import "IAEValueDecoratorView.h"
 #import "IAEMonth.h"
-#import "IAEYear.h"
+#import "IAEOpenYear.h"
 #import "IAEDateHelper.h"
 #import "IAEConcept.h"
 #import "IAENumberFormatterManager.h"

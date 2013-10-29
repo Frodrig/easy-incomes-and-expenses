@@ -12,13 +12,13 @@
 #import "IAEYearSelectorCollectionViewCell.h"
 #import "IAEDateHelper.h"
 #import "IAEBook.h"
-#import "IAEYear.h"
+#import "IAEOpenYear.h"
 #import "IAEStrokeAnimatableLineView.h"
 
 @interface IAEYearSelectorViewController ()
 @property (weak, nonatomic) IBOutlet UISegmentedControl *yearsSegmentedControl;
 @property (weak, nonatomic) IBOutlet UICollectionView *yearsCollectionView;
-@property (nonatomic) NSUInteger yearLoadedBeforeStart;
+@property (nonatomic) NSUInteger openYearDateBeforeStart;
 @property (weak, nonatomic) IBOutlet UILabel *actualYearOpenLabel;
 @property (nonatomic, weak) IAEYearSelectorCollectionViewCell *selectedCellToClean;
 @property (nonatomic, strong) UISwipeGestureRecognizer *swipeGestureRecognizer;
@@ -120,18 +120,18 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 
 - (void)configureYearBookAndSaveYearLoadedBeforeStart
 {
-    if ([IAEBook sharedBook].years.count > 0) {
-        IAEYear *yearLoadedBeforeStart = [[IAEBook sharedBook] findActualYear];
-        self.yearLoadedBeforeStart = yearLoadedBeforeStart.yearDate;
+    if ([IAEBook sharedBook].openYears.count > 0) {
+        IAEOpenYear *openYearBeforeStart = [[IAEBook sharedBook] findActualOpenYear];
+        self.openYearDateBeforeStart = openYearBeforeStart.yearDate;
     }
     
-    [[IAEBook sharedBook] deleteYearsWithZeroConceptsPreservingActualYear];
-    [[IAEBook sharedBook] loadAll];
+    [[IAEBook sharedBook] closeAllOpenYearsPreservingActualYear];
+    [[IAEBook sharedBook] openAll];
 }
 
 - (void)configureActualYearOpenLabel
 {
-    NSString *textLabel = [NSString stringWithFormat:NSLocalizedString(kTitleTagYearOpen, @""), self.yearLoadedBeforeStart];
+    NSString *textLabel = [NSString stringWithFormat:NSLocalizedString(kTitleTagYearOpen, @""), self.openYearDateBeforeStart];
     self.actualYearOpenLabel.attributedText = [[NSAttributedString alloc] initWithString:textLabel
                                                                               attributes:[self createAttributeDictionaryForActualYearOpenLabel]];
 }
@@ -146,11 +146,11 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 
 - (void)configureYearsSegmentedControlInitialState
 {
-    IAEYear *year = [[IAEBook sharedBook] findYearWithDate:[NSNumber numberWithUnsignedInteger:self.yearLoadedBeforeStart]];
+    IAEOpenYear *year = [[IAEBook sharedBook] findOpenYearWithDate:@(self.openYearDateBeforeStart)];
     const NSUInteger numberOfConceptsofOpenYear = [year findNumberOfConcepts];
     self.yearsSegmentedControl.selectedSegmentIndex = numberOfConceptsofOpenYear > 0 ? kYearsSegmentedControlYearsWithConceptsIndex : kYearsSegmentedControlAllYearsIndex;
     if (self.yearsSegmentedControl.selectedSegmentIndex == kYearsSegmentedControlAllYearsIndex) {
-        const NSUInteger numberOfYearsWithConcepts = [[IAEBook sharedBook] findAllYearWithConcepts].count;
+        const NSUInteger numberOfYearsWithConcepts = [[IAEBook sharedBook] findAllOpenYearsWithConcepts].count;
         if (numberOfYearsWithConcepts == 0) {
             [self.yearsSegmentedControl setEnabled:NO forSegmentAtIndex:kYearsSegmentedControlYearsWithConceptsIndex];
         }
@@ -167,7 +167,7 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 - (void)goToOpenYearScrollPosition
 {
     if ([self canGoToOpenYearScrollPosition]) {
-        NSIndexPath *indexPath = [self findIndexPathBasedInSegmentedControlIndexUsingYearDate:self.yearLoadedBeforeStart];
+        NSIndexPath *indexPath = [self findIndexPathBasedInSegmentedControlIndexUsingYearDate:self.openYearDateBeforeStart];
         [self.yearsCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
     }
 }
@@ -176,7 +176,7 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 {
     BOOL can = [self isSegmentedControlInAllYearsState];
     if (!can) {
-        IAEYear *year = [[IAEBook sharedBook] findYearWithDate:@(self.yearLoadedBeforeStart)];
+        IAEOpenYear *year = [[IAEBook sharedBook] findOpenYearWithDate:@(self.openYearDateBeforeStart)];
         can = [self isSegmentedControlInWithConceptsYearsState] && [year findNumberOfConcepts] > 0;
     }
     
@@ -187,8 +187,8 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 {
     NSIndexPath *indexPath = nil;
     if ([self isSegmentedControlInWithConceptsYearsState]) {
-        IAEYear *year = [[IAEBook sharedBook] findYearWithDate:[NSNumber numberWithUnsignedInteger:yearDate]];
-        indexPath = [NSIndexPath indexPathForRow:[[[IAEBook sharedBook] findAllYearWithConcepts] indexOfObject:year] inSection:0];
+        IAEOpenYear *year = [[IAEBook sharedBook] findOpenYearWithDate:@(yearDate)];
+        indexPath = [NSIndexPath indexPathForRow:[[[IAEBook sharedBook] findAllOpenYearsWithConcepts] indexOfObject:year] inSection:0];
     } else if ([self isSegmentedControlInAllYearsState]) {
         indexPath = [NSIndexPath indexPathForRow:[IAEDateHelper findActualYearDate] - yearDate inSection:0];
     }
@@ -214,8 +214,8 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 
 - (IBAction)closeButtonPressed:(id)sender
 {
-    NSAssert(self.yearLoadedBeforeStart != 0, @"");
-    [[IAEBook sharedBook] loadYear:self.yearLoadedBeforeStart];
+    NSAssert(self.openYearDateBeforeStart != 0, @"");
+    [[IAEBook sharedBook] openYear:@(self.openYearDateBeforeStart)];
     [self.delegate closeButtonWasPressedInYearSelectorViewController:self];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -266,7 +266,7 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 
 - (void)configureCell:(IAEYearSelectorCollectionViewCell *)cell WithIndexPath:(NSIndexPath *)indexPath
 {
-    IAEYear *year = [self yearBasedInSegmentedControlStateUsingIndexPath:indexPath];
+    IAEOpenYear *year = [self yearBasedInSegmentedControlStateUsingIndexPath:indexPath];
     BOOL isAValidYearAndHaveConcepts = year && [year findNumberOfConcepts] > 0;
     
     if (isAValidYearAndHaveConcepts) {
@@ -275,12 +275,12 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
         [cell configureWithYearDate:[self yearDateFromIndexPath:indexPath]];
     }
     
-    cell.showOpenYearDecorator = year.yearDate == self.yearLoadedBeforeStart;
+    cell.showOpenYearDecorator = year.yearDate == self.openYearDateBeforeStart;
 }
 
-- (IAEYear *)yearBasedInSegmentedControlStateUsingIndexPath:(NSIndexPath *)indexPath
+- (IAEOpenYear *)yearBasedInSegmentedControlStateUsingIndexPath:(NSIndexPath *)indexPath
 {
-    IAEYear *year = nil;
+    IAEOpenYear *year = nil;
     if ([self isSegmentedControlInWithConceptsYearsState]) {
         year = [self findYearUsingIndexAccessOfIndexPath:indexPath];
     } else if ([self isSegmentedControlInAllYearsState]) {
@@ -302,7 +302,7 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
     return yearDate;
 }
 
-- (IAEYear *)yearBasedInSegmentedControlStateUsingCell:(IAEYearSelectorCollectionViewCell *)cell
+- (IAEOpenYear *)yearBasedInSegmentedControlStateUsingCell:(IAEYearSelectorCollectionViewCell *)cell
 {
     return [self yearBasedInSegmentedControlStateUsingIndexPath:[self.yearsCollectionView indexPathForCell:cell]];
 }
@@ -322,32 +322,32 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
     return self.yearsSegmentedControl.selectedSegmentIndex == kYearsSegmentedControlAllYearsIndex;
 }
 
-- (IAEYear *)findYearUsingYearDate:(NSUInteger)yearDate
+- (IAEOpenYear *)findYearUsingYearDate:(NSUInteger)yearDate
 {
-    IAEYear *year = [[IAEBook sharedBook] findYearWithDate:[NSNumber numberWithUnsignedInteger:yearDate]];
+    IAEOpenYear *year = [[IAEBook sharedBook] findOpenYearWithDate:@(yearDate)];
     
     return year;
 }
 
-- (IAEYear *)findYearUsingIndexAccessOfIndexPath:(NSIndexPath *)indexPath
+- (IAEOpenYear *)findYearUsingIndexAccessOfIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray *years = [[IAEBook sharedBook] findAllYearWithConcepts];
-    IAEYear *year = years.count > indexPath.row ? [years objectAtIndex:indexPath.row] : nil;
+    NSArray *years = [[IAEBook sharedBook] findAllOpenYearsWithConcepts];
+    IAEOpenYear *year = years.count > indexPath.row ? [years objectAtIndex:indexPath.row] : nil;
     
     return year;
 }
 
 - (NSUInteger)findDateYearUsingIndexAccessOfIndexPath:(NSIndexPath *)indexPath
 {
-    IAEYear *year = [self findYearUsingIndexAccessOfIndexPath:indexPath];
+    IAEOpenYear *year = [self findYearUsingIndexAccessOfIndexPath:indexPath];
     return year ? year.yearDate : 0;
 }
 
-- (IAEYear *)findYearUsingYearDateOfIndexPath:(NSIndexPath *)indexPath
+- (IAEOpenYear *)findYearUsingYearDateOfIndexPath:(NSIndexPath *)indexPath
 {
     NSUInteger yearDate = [self yearDateFromIndexPath:indexPath];
     NSNumber *numberWithYearDate = [NSNumber numberWithUnsignedInteger:yearDate];
-    IAEYear *year = [[IAEBook sharedBook] findYearWithDate:numberWithYearDate];
+    IAEOpenYear *year = [[IAEBook sharedBook] findOpenYearWithDate:numberWithYearDate];
     
     return year;
 }
@@ -375,7 +375,7 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 
 - (NSUInteger)yearDateBasedInSegmentedControlStateFromIndexPath:(NSIndexPath *)indexPath
 {
-    IAEYear *year = [self yearBasedInSegmentedControlStateUsingIndexPath:indexPath];
+    IAEOpenYear *year = [self yearBasedInSegmentedControlStateUsingIndexPath:indexPath];
     
     return year != nil ? year.yearDate : [self yearDateFromIndexPath:indexPath];
 }
@@ -391,7 +391,7 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 {
     NSUInteger numberOfItems = 0;
     if ([self isSegmentedControlInWithConceptsYearsState]) {
-        numberOfItems = [[IAEBook sharedBook] findAllYearWithConcepts].count;
+        numberOfItems = [[IAEBook sharedBook] findAllOpenYearsWithConcepts].count;
     } else if ([self isSegmentedControlInAllYearsState]) {
         numberOfItems = [IAEDateHelper findActualYearDate];
     }
@@ -419,9 +419,9 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 {
     [Flurry logEvent:@"year_open" withParameters:@{@"year" :@(yearDateSelected)}];
 
-    if (yearDateSelected == self.yearLoadedBeforeStart) {
+    if (yearDateSelected == self.openYearDateBeforeStart) {
         [self sendToDelegateActionChosenSelectedActualYear];
-    } else if ([[IAEBook sharedBook] findYearWithDate:[NSNumber numberWithUnsignedInteger:yearDateSelected]]) {
+    } else if ([[IAEBook sharedBook] findOpenYearWithDate:@(yearDateSelected)]) {
         [self sendToDelegateActionChosenSelectedYearWithConceptsWithDate:yearDateSelected];
     } else {
         [self sendToDelegateActionChosenSelectedYearWithoutConceptsWithDate:yearDateSelected];
@@ -430,21 +430,20 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 
 - (void)sendToDelegateActionChosenSelectedActualYear
 {
-    [[IAEBook sharedBook] loadYear:self.yearLoadedBeforeStart];
+    [[IAEBook sharedBook] openYear:@(self.openYearDateBeforeStart)];
     [self.delegate openYearSelectedWasSelectedInYearSelectorViewController:self];
 }
 
 - (void)sendToDelegateActionChosenSelectedYearWithConceptsWithDate:(NSUInteger)yearDate
 {
-    [[IAEBook sharedBook] loadYear:yearDate];
+    [[IAEBook sharedBook] openYear:@(yearDate)];
     [self.delegate yearSelectorViewController:self didLoadSelectedYearDate:yearDate];
 }
 
 - (void)sendToDelegateActionChosenSelectedYearWithoutConceptsWithDate:(NSUInteger)yearDate
 {
-    [[IAEBook sharedBook] createYear:[NSNumber numberWithUnsignedInteger:yearDate]];
+    [[IAEBook sharedBook] openYear:@(yearDate)];
     [[IAEBook sharedBook] saveAll];
-    [[IAEBook sharedBook] loadYear:yearDate];
     
     [self.delegate yearSelectorViewController:self didCreateAndLoadSelectedYearDate:yearDate];
 }
@@ -471,7 +470,7 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 
 - (BOOL)canCleanYearAtIndexPath:(NSIndexPath *)indexPath
 {
-    IAEYear *year = [self yearBasedInSegmentedControlStateUsingIndexPath:indexPath];
+    IAEOpenYear *year = [self yearBasedInSegmentedControlStateUsingIndexPath:indexPath];
     
     return [year findNumberOfConcepts] > 0;
 }
@@ -502,12 +501,12 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 {
     NSIndexPath *indexPathOfSelectedCellToClean = [self.yearsCollectionView indexPathForCell:self.selectedCellToClean];
     NSUInteger yearDateSelectedForClean = [self yearDateBasedInSegmentedControlStateFromCell:self.selectedCellToClean];
-    IAEYear *yearSelectedForClean = [self yearBasedInSegmentedControlStateUsingCell:self.selectedCellToClean];
+    IAEOpenYear *yearSelectedForClean = [self yearBasedInSegmentedControlStateUsingCell:self.selectedCellToClean];
     [Flurry logEvent:@"year_clean" withParameters:@{@"year" :@(yearSelectedForClean.yearDate)}];
-    [[IAEBook sharedBook] deleteAllConceptsOfYear:yearSelectedForClean];
+    [[IAEBook sharedBook] deleteAllConceptsOfOpenYear:yearSelectedForClean];
     [[IAEBook sharedBook] saveAll];
     
-    if (yearDateSelectedForClean == self.yearLoadedBeforeStart) {
+    if (yearDateSelectedForClean == self.openYearDateBeforeStart) {
         [self.delegate yearSelectorViewController:self didCleanOpenYearDate:yearDateSelectedForClean];
     }
 
@@ -528,7 +527,7 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 
 - (void)checkAndDisableYearSegmentedControlForYearsWithoutConceptsIfAppropiate
 {
-    const NSUInteger numberOfYearsWithConcepts = [[IAEBook sharedBook] findAllYearWithConcepts].count;
+    const NSUInteger numberOfYearsWithConcepts = [[IAEBook sharedBook] findAllOpenYearsWithConcepts].count;
     if (numberOfYearsWithConcepts == 0) {
         // Nota: Al deshabilitar la seccion se resta uno al indice y pasaria a ser menos uno. Guardamos la informacion antes.
         const BOOL wasInYearWithConceptsSection = self.yearsSegmentedControl.selectedSegmentIndex == kYearsSegmentedControlYearsWithConceptsIndex;

@@ -9,12 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @class IAECalculatorViewController;
-@class IAEYear;
+@class IAEOpenYear;
 @class IAEMonth;
 
 @protocol IAECalculatorViewControllerDataSource <NSObject>
 
-- (IAEYear *)yearForCalculatorViewController:(IAECalculatorViewController *)calculatorViewController;
+- (IAEOpenYear *)yearForCalculatorViewController:(IAECalculatorViewController *)calculatorViewController;
 - (IAEMonth *)monthForCalculatorViewController:(IAECalculatorViewController *)calculatorViewController;
 
 @end

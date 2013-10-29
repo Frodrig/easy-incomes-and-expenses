@@ -12,9 +12,10 @@
 #import "IAEDisplayPanelCalculatorView.h"
 #import "IAECategoryStore.h"
 #import "IAECategory.h"
-#import "IAEYear.h"
 #import "IAEMonth.h"
 #import "IAEBook.h"
+#import "IAEYear.h"
+#import "IAEOpenYear.h"
 #import "IAECalculatorViewControllerDelegate.h"
 #import "IAECalculatorViewControllerDataSource.h"
 #import "IAECategorySelectorViewController.h"
@@ -346,7 +347,7 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
 
 - (NSString *)findYearName
 {
-    IAEYear *actualYear = [self.dataSource yearForCalculatorViewController:self];
+    IAEOpenYear *actualYear = [self.dataSource yearForCalculatorViewController:self];
     
     return [actualYear yearDateAsString];
 }
@@ -451,7 +452,7 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
 
 - (void)launchPopoverForSelectDayFromRect:(CGRect)rect
 {
-    IAEYear *year = [self.dataSource yearForCalculatorViewController:self];
+    IAEOpenYear *year = [self.dataSource yearForCalculatorViewController:self];
     IAEMonth *month = [self.dataSource monthForCalculatorViewController:self];
     IAEDayCalendarSelectorViewController *viewController = [[IAEDayCalendarSelectorViewController alloc] initWithYearDate:year.yearDate
                                                                                                                monthIndex:month.month

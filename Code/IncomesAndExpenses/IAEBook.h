@@ -22,10 +22,14 @@
 
 + (IAEBook *)sharedBook;
 
-- (void)loadAll;
-- (void)loadYear:(NSUInteger)yearDate;
-- (void)loadMoreRecientYear;
-- (void)unloadAll;
+- (void)openAll;
+- (void)openMoreRecientYear;
+- (void)closeAll;
+
+//- (void)loadAll;
+//- (void)loadYear:(NSUInteger)yearDate;
+//- (void)loadMoreRecientYear;
+//- (void)unloadAll;
 
 - (IAEOpenYear *)openYear:(NSNumber *)yearDate;
 - (void)deleteAllConceptsOfOpenYear:(IAEOpenYear *)year;

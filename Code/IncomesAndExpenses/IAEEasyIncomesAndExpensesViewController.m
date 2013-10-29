@@ -13,6 +13,7 @@
 #import "IAECurrencyManager.h"
 #import "IAEBook.h"
 #import "IAEYear.h"
+#import "IAEOpenYear.h"
 #import "IAEMonth.h"
 #import "IAEConcept.h"
 #import "IAECategory.h"
@@ -698,9 +699,9 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 #pragma mark - IAEEasyIncomesAndExpensesViewControllerQuery
 
-- (IAEYear *)findOpenYear
+- (IAEOpenYear *)findOpenYear
 {
-    return [[IAEBook sharedBook] findActualYear];
+    return [[IAEBook sharedBook] findActualOpenYear];
 }
 
 - (IAEMonth *)findActualSelectedMonth
@@ -854,7 +855,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (NSArray *)findAllOrdererMonthsWithConceptsOfOpenYear
 {
-    IAEYear *openYear = [self findOpenYear];
+    IAEOpenYear *openYear = [self findOpenYear];
     NSArray *months = [openYear findAllOrdererMonthsWithConcepts];
     
     return months;
@@ -956,8 +957,8 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (IAEMonth *)findMonthForOpenYearAtIndex:(NSUInteger)index
 {
-    IAEYear *year = [self findOpenYear];
-    return [year.ordererMonths objectAtIndex:index];
+    IAEOpenYear *year = [self findOpenYear];
+    return [year.months objectAtIndex:index];
 }
 
 - (NSArray *)allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath:(NSIndexPath *)indexPath
@@ -1373,9 +1374,9 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 {
     NSString *name = nil;
     
-    IAEYear *year = [self findOpenYear];
+    IAEOpenYear *year = [self findOpenYear];
     if (contextView.contextType == CONTEXT_VIEW_MONTH) {
-        IAEMonth *month = [year.ordererMonths objectAtIndex:contextView.valueIndex - 1];
+        IAEMonth *month = [year.months objectAtIndex:contextView.valueIndex - 1];
         name = [month monthAsString];
     } else if (contextView.contextType == CONTEXT_VIEW_YEAR) {
         name = [year yearDateAsString];
@@ -1388,9 +1389,9 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 {
     NSDecimalNumber *balance = nil;
     
-    IAEYear *openYear = [self findOpenYear];
+    IAEOpenYear *openYear = [self findOpenYear];
     if (contextView.contextType == CONTEXT_VIEW_MONTH) {
-        IAEMonth *month = [openYear.ordererMonths objectAtIndex:contextView.valueIndex - 1];
+        IAEMonth *month = [openYear.months objectAtIndex:contextView.valueIndex - 1];
         balance = [month balance];
     } else if (contextView.contextType == CONTEXT_VIEW_YEAR) {
         balance = [openYear balance];
@@ -1403,8 +1404,8 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 {
     NSAssert(monthIndex >= 0, @"");
     NSAssert(monthIndex < kNumberOfMonths, @"");
-    IAEYear *year = [self findOpenYear];
-    IAEMonth *month = [year.ordererMonths objectAtIndex:monthIndex];
+    IAEOpenYear *year = [self findOpenYear];
+    IAEMonth *month = [year.months objectAtIndex:monthIndex];
 
     return month;
 }
@@ -1716,7 +1717,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 {
     [cell setVisualAspectInEditMode:YES forConceptElement:EditModeConceptElement_DayOrNumberInstance];
     
-    IAEYear *year = [self findOpenYear];
+    IAEOpenYear *year = [self findOpenYear];
     IAEMonth *month = [self findActualSelectedMonth];
     NSUInteger selectedDay = [self findDayOfTheMonthForConceptCell:cell];
     

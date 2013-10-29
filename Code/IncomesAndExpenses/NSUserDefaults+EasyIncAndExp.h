@@ -7,13 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MonthDefs.h"
 
 @interface NSUserDefaults (EasyIncAndExp)
+
+- (void)prepareDefaults;
 
 - (BOOL)isTotalAmountModeInReportSection;
 - (BOOL)isTotalPercentageModeInReportSection;
 - (void)changeToNextReportMode;
 - (void)changeToReportTotalAmountModeInReportSection;
 - (void)changeToReportTotalPercentageModeInReportSection;
+
+- (void)changeInitialMonthTo:(MonthType)startMonth;
+- (MonthType)actualInitialMonth;
 
 @end

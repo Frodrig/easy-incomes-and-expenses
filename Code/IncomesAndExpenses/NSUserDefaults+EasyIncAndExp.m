@@ -13,9 +13,22 @@
 
 #pragma mark - Constants
 
+static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
 static NSString * const kUserDefaultsReportAmountMode = @"reportAmountMode";
 static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalAmounts";
 static NSString * const kUserDefaultsReportAmountModePercentageAmountValue = @"percentageAmounts";
+static NSString * const kUserDefaultInitialMonth = @"initialMonth";
+
+
+#pragma mark - Prepare
+
+- (void)prepareDefaults
+{
+    NSDictionary *defaults = @{ kUserDefaultsDayModeActiveKey: [NSNumber numberWithBool:NO],
+                                kUserDefaultsReportAmountMode: kUserDefaultsReportAmountModeTotalAmountValue,
+                                kUserDefaultInitialMonth: @(January)};
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];    
+}
 
 #pragma mark - ReportSection
 
@@ -70,6 +83,24 @@ static NSString * const kUserDefaultsReportAmountModePercentageAmountValue = @"p
     
     [[NSUserDefaults standardUserDefaults] setValue:reportAmountModeType forKey:kUserDefaultsReportAmountMode];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+#pragma mark - Initial Month
+
+- (void)changeInitialMonthTo:(MonthType)startMonth
+{
+    NSAssert(startMonth != InvalidMonth, @"");
+    [Flurry logEvent:@"initalmonth_change" withParameters:@{@"month" : @(startMonth)}];
+    
+    [[NSUserDefaults standardUserDefaults] setValue:@(startMonth) forKey:kUserDefaultInitialMonth];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (MonthType)actualInitialMonth
+{
+    NSNumber *startMonth = [[NSUserDefaults standardUserDefaults] valueForKey:kUserDefaultInitialMonth];
+    
+    return startMonth.integerValue;
 }
 
 @end

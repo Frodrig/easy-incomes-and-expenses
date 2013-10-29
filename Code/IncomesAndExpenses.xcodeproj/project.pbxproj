@@ -694,6 +694,7 @@
 				5B23F03F17FED21C00477D34 /* NSUserDefaults+EasyIncAndExp.m */,
 			);
 			name = NSUserDefaults;
+			path = IncomesAndExpenses;
 			sourceTree = "<group>";
 		};
 		5B23F04117FF097A00477D34 /* Formatters */ = {
@@ -722,6 +723,14 @@
 				5B28813317985822006E4F9B /* IAEVersionHelper.m */,
 			);
 			name = "Version Helper";
+			sourceTree = "<group>";
+		};
+		5B28D1A5182001C000EF4D48 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				5B23F03D17FED1FD00477D34 /* NSUserDefaults */,
+			);
+			name = Categories;
 			sourceTree = "<group>";
 		};
 		5B29ED30179FC2C300FCC5C6 /* Resources */ = {
@@ -1087,7 +1096,6 @@
 		5B6E9FA4177D9BAB0072EE34 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				5B23F03D17FED1FD00477D34 /* NSUserDefaults */,
 				5BA013091798007200337E84 /* String */,
 				5B36AFF41785BBC500132475 /* NSDecimalNumber */,
 				5B5C96A61781E861008CD851 /* NSNumber */,
@@ -1223,6 +1231,7 @@
 		5B767E231636E797005315F8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5B28D1A5182001C000EF4D48 /* Categories */,
 				5B87977B180EADC400554E13 /* HelpBook */,
 				5B6F45DF181ECFA00073B1AC /* Data */,
 			);

@@ -14,14 +14,9 @@
 #import "IAEMonth.h"
 #import "IAECategoryStore.h"
 #import "IAERootLauchingViewController.h"
+#import "NSUserDefaults+EasyIncAndExp.h"
 
 @implementation IAEAppDelegate
-
-#pragma mark - Constants 
-
-static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
-static NSString * const kUserDefaultsReportAmountMode = @"reportAmountMode";
-static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalAmounts";
 
 #pragma mark - didFinishLaunching
 
@@ -31,7 +26,7 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
     [self prepareFlurry];
     [self processProcessInfoEnvironment];
     [self createYearBookIfProceed];
-    [self prepareDefaults];
+    [[NSUserDefaults standardUserDefaults] prepareDefaults];
     [self createWindowRootLaunchingViewControllerAndMakeVisible];
         
     return YES;
@@ -73,14 +68,6 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
         NSDateComponents *yearComponent = [gregorian components:NSYearCalendarUnit fromDate:[NSDate date]];
         [[IAEBook sharedBook] openYear:[NSNumber numberWithInteger:yearComponent.year]];
     }
-}
-
-- (void)prepareDefaults
-{
-    // Defaults del registration  domain
-    NSDictionary *defaults = @{ kUserDefaultsDayModeActiveKey: [NSNumber numberWithBool:NO],
-                                kUserDefaultsReportAmountMode: kUserDefaultsReportAmountModeTotalAmountValue };
-    [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 }
 
 - (void)createWindowRootLaunchingViewControllerAndMakeVisible

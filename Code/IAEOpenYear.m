@@ -8,8 +8,39 @@
 
 #import "IAEOpenYear.h"
 
+@interface IAEOpenYear()
+
+@property (nonatomic) NSInteger yearDate;
+@property (nonatomic, strong) NSArray *years;
+@property (nonatomic, strong) NSArray *months;
+
+@end
+
 @implementation IAEOpenYear
 
+#pragma mark - Init
+
+- (instancetype)initWithYears:(NSArray *)years andStartMonth:(MonthType)startMonth
+{
+    self = [super init];
+    if (self) {
+        [self setYears:years andStartMonth:startMonth];
+    }
+    
+    return self;
+}
+
+- (void)setYears:(NSArray *)years andStartMonth:(MonthType)startMonth
+{
+    NSAssert(startMonth != InvalidMonth, @"");
+    NSAssert((startMonth == January && years.count == 1) || (startMonth > January && years.count == 2) , @"");
+    
+    _years = [years copy];
+    
+    // ...
+}
+
+#pragma mark - Balances
 
 - (NSDecimalNumber *)expenses
 {
@@ -31,6 +62,8 @@
     return nil;
 }
 
+#pragma mark - SearchMode
+
 - (void)beginCategoryConceptSearchMode
 {
 }
@@ -38,6 +71,8 @@
 - (void)endCategoryConceptSearchMode
 {
 }
+
+#pragma mark - Find
 
 - (NSArray *)findAllOrdererMonthsWithConcepts
 {
@@ -73,6 +108,8 @@
 {
     return 0;
 }
+
+#pragma mark - String
 
 - (NSString *)yearDateAsString
 {

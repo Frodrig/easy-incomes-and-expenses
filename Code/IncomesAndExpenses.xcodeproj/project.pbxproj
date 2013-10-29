@@ -1127,6 +1127,7 @@
 		5B6F45E1181ED00B0073B1AC /* Defs */ = {
 			isa = PBXGroup;
 			children = (
+				5BC7101017AC29F600E12953 /* MonthDefs.h */,
 				5BC7102217AC2A5900E12953 /* IAECategoryEditorDefs.h */,
 				5BC7102317AC2B0900E12953 /* CategoryDefs.h */,
 			);
@@ -1729,7 +1730,6 @@
 				5BC7100D17AC29F600E12953 /* IAEMonth.h */,
 				5BC7101517AC29F600E12953 /* IAEMonth.m */,
 				5BC7100E17AC29F600E12953 /* IAEMonthDelegate.h */,
-				5BC7101017AC29F600E12953 /* MonthDefs.h */,
 			);
 			name = Month;
 			sourceTree = "<group>";

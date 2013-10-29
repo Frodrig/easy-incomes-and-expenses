@@ -8,7 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "IAEYearObject.h"
+#import "MonthDefs.h"
 
 @interface IAEOpenYear : NSObject<IAEYearObject>
+
+@property (nonatomic, readonly) NSInteger yearDate;
+@property (nonatomic, strong, readonly) NSArray *months;
+
+- (instancetype)initWithYears:(NSArray *)years andStartMonth:(MonthType)month;
 
 @end

@@ -306,6 +306,7 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
+/*
 - (void)closeAllOpenYearsPreservingActualYear
 {
     IAEOpenYear *actualOpenYear = [self findActualOpenYear];
@@ -325,6 +326,7 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     
     _openYears = [NSArray arrayWithObject:actualOpenYear];
 }
+*/
 
 // Nota: Preserva siempre el año actual aunque no tenga conceptos
 /*

@@ -28,12 +28,11 @@
 
 - (void)closeAll;
 - (IAEOpenYear *)closeAllAndOpenYear:(NSNumber *)yearDate;
-- (void)closeAllOpenYearsPreservingActualYear;
 
 - (void)deleteAllConceptsOfOpenYear:(IAEOpenYear *)year;
 
-- (IAEOpenYear *)findOpenYearWithDate:(NSNumber *)yearDate;
 - (IAEOpenYear *)findActualOpenYear;
+- (IAEOpenYear *)findOpenYearWithDate:(NSNumber *)yearDate;
 - (NSArray *)findInOpenYearsAllConceptsWithCategory:(IAECategory *)category;
 - (NSArray *)findAllOpenYearsWithConcepts;
 

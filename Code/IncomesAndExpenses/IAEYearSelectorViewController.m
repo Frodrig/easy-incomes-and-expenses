@@ -125,7 +125,6 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
         self.openYearDateBeforeStart = openYearBeforeStart.yearDate;
     }
     
-    [[IAEBook sharedBook] closeAllOpenYearsPreservingActualYear];
     [[IAEBook sharedBook] openAll];
 }
 

@@ -24,29 +24,13 @@
 
 - (void)openAll;
 - (void)openMoreRecientYear;
-- (void)closeAll;
-
-//- (void)loadAll;
-//- (void)loadYear:(NSUInteger)yearDate;
-//- (void)loadMoreRecientYear;
-//- (void)unloadAll;
-- (IAEOpenYear *)closeAllAndOpenYear:(NSNumber *)yearDate;
 - (IAEOpenYear *)openYear:(NSNumber *)yearDate;
-- (void)deleteAllConceptsOfOpenYear:(IAEOpenYear *)year;
+
+- (void)closeAll;
+- (IAEOpenYear *)closeAllAndOpenYear:(NSNumber *)yearDate;
 - (void)closeAllOpenYearsPreservingActualYear;
 
-//- (IAEYear *)createYear:(NSNumber *)yearDate;
-//- (void)deleteYear:(NSNumber *)yearDate;
-//- (void)deleteYearsWithZeroConceptsPreservingActualYear;
-//- (void)deleteAllConceptsOfYear:(IAEYear *)year;
-
-// OJO: La funcion mas destructiva
-/*
-- (IAEYear *)findYearWithDate:(NSNumber *)yearDate;
-- (IAEYear *)findActualYear;
-- (NSArray *)findAllConceptsWithCategory:(IAECategory *)category;
-- (NSArray *)findAllYearWithConcepts;
-*/
+- (void)deleteAllConceptsOfOpenYear:(IAEOpenYear *)year;
 
 - (IAEOpenYear *)findOpenYearWithDate:(NSNumber *)yearDate;
 - (IAEOpenYear *)findActualOpenYear;

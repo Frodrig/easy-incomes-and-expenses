@@ -215,7 +215,7 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 - (IBAction)closeButtonPressed:(id)sender
 {
     NSAssert(self.openYearDateBeforeStart != 0, @"");
-    [[IAEBook sharedBook] openYear:@(self.openYearDateBeforeStart)];
+    [[IAEBook sharedBook] closeAllAndOpenYear:@(self.openYearDateBeforeStart)];
     [self.delegate closeButtonWasPressedInYearSelectorViewController:self];
     [self dismissViewControllerAnimated:YES completion:nil];
 }

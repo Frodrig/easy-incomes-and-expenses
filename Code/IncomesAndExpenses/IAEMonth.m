@@ -91,14 +91,29 @@ static NSString * const kLTextDecemberName = @"December";
     return newConcept;
 }
 
+- (void)removeAllConceptsWithNotification:(BOOL)notification
+{
+    while (self.concepts.count > 0) {
+        IAEConcept *concept = [self.concepts anyObject];
+        if (notification) {
+            [self removeConcept:concept];
+        } else {
+            [self performRemoveConcept:concept];
+        }
+    }
+}
+
 - (void)removeConcept:(IAEConcept *)concept
 {
     [self.delegate month:self willRemoveConcept:concept];
-    
+    [self performRemoveConcept:concept];
+    [self.delegate conceptRemovedFromMonth:self];
+}
+
+- (void)performRemoveConcept:(IAEConcept *)concept
+{
     [self removeConceptsObject:concept];
     [[IAEBook sharedBook].context deleteObject:concept];
-    
-    [self.delegate conceptRemovedFromMonth:self];
 }
 
 - (NSDecimalNumber *)sumAllAmountOfCategoryType:(CategoryType)category

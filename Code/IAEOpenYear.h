@@ -13,8 +13,11 @@
 @interface IAEOpenYear : NSObject<IAEYearObject>
 
 @property (nonatomic, readonly) NSInteger yearDate;
+@property (nonatomic, strong, readonly) NSArray *years;
 @property (nonatomic, strong, readonly) NSArray *months;
 
 - (instancetype)initWithYears:(NSArray *)years andStartMonth:(MonthType)month;
+
+- (void)deleteAllConcepts;
 
 @end

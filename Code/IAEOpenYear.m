@@ -69,6 +69,15 @@ _Pragma("clang diagnostic pop");
     return retMonths;
 }
 
+#pragma mark - Delete
+
+- (void)deleteAllConcepts
+{
+    for (IAEMonth *month in self.months) {
+        [month removeAllConceptsWithNotification:NO];
+    }
+}
+
 #pragma mark - Balances
 
 - (NSDecimalNumber *)expenses

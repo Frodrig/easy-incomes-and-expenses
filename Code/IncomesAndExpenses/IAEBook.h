@@ -10,12 +10,13 @@
 
 #import <Foundation/Foundation.h>
 
+@class IAEOpenYear;
 @class IAEYear;
 @class IAECategory;
 
 @interface IAEBook : NSObject
 
-@property (nonatomic, readonly, strong) NSMutableArray *years;
+@property (nonatomic, strong) NSArray *openYears;
 @property (nonatomic, readonly, strong) NSManagedObjectContext *context;
 @property (nonatomic, readonly, strong) NSManagedObjectModel *model;
 
@@ -26,19 +27,30 @@
 - (void)loadMoreRecientYear;
 - (void)unloadAll;
 
-- (IAEYear *)createYear:(NSNumber *)yearDate;
-- (void)deleteYear:(NSNumber *)yearDate;
-- (void)deleteYearsWithZeroConceptsPreservingActualYear;
-- (void)deleteAllConceptsOfYear:(IAEYear *)year;
+- (IAEOpenYear *)openYear:(NSNumber *)yearDate;
+- (void)deleteAllConceptsOfOpenYear:(IAEOpenYear *)year;
+- (void)closeAllOpenYearsPreservingActualYear;
+
+//- (IAEYear *)createYear:(NSNumber *)yearDate;
+//- (void)deleteYear:(NSNumber *)yearDate;
+//- (void)deleteYearsWithZeroConceptsPreservingActualYear;
+//- (void)deleteAllConceptsOfYear:(IAEYear *)year;
 
 // OJO: La funcion mas destructiva
-- (void)deleteAllAndSave;
-
+/*
 - (IAEYear *)findYearWithDate:(NSNumber *)yearDate;
 - (IAEYear *)findActualYear;
 - (NSArray *)findAllConceptsWithCategory:(IAECategory *)category;
 - (NSArray *)findAllYearWithConcepts;
+*/
+
+- (IAEOpenYear *)findOpenYearWithDate:(NSNumber *)yearDate;
+- (IAEOpenYear *)findActualOpenYear;
+- (NSArray *)findInOpenYearsAllConceptsWithCategory:(IAECategory *)category;
+- (NSArray *)findAllOpenYearsWithConcepts;
 
 - (BOOL)saveAll;
+
+- (void)deleteAllAndSave;
 
 @end

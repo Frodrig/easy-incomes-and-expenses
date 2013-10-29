@@ -35,6 +35,7 @@
                        dayOfTheMonth:(NSUInteger)dayOfTheMonth
                       andDescription:(NSString *)description;
 
+- (void)removeAllConceptsWithNotification:(BOOL)notification;
 - (void)removeConcept:(IAEConcept *)concept;
 
 - (NSDecimalNumber *)expenses;

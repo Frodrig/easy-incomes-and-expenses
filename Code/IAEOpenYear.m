@@ -269,6 +269,22 @@ static const NSUInteger kMonthsPerYear = 12;
     return numberOfConcepts;
 }
 
+- (NSUInteger)findIndexOfMonth:(MonthType)month
+{
+    NSAssert(month != InvalidMonth, @"");
+    
+    __block NSUInteger indexOfMonth = 0;
+    [self.months enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        IAEMonth *monthIt = obj;
+        *stop = monthIt.month == month;
+        if (*stop) {
+            indexOfMonth = idx;
+        }
+    }];
+    
+    return indexOfMonth;
+}
+
 #pragma mark - String
 
 - (NSString *)yearDateAsString

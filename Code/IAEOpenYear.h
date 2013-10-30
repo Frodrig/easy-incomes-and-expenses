@@ -22,6 +22,8 @@
 
 - (void)deleteAllConcepts;
 
+- (NSUInteger)findIndexOfMonth:(MonthType)month;
+
 - (NSComparisonResult)compareDescendingPriority:(IAEOpenYear *)aOpenYear;
 
 @end

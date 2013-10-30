@@ -118,6 +118,7 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 
 static NSString * const kNotificationDayModeOnName = @"dayModeToOn";
 static NSString * const kNotificationDayModeOffName = @"dayModeToOff";
+static NSString * const kNotificationInitialMonthChanged = @"initialMonthChange";
 
 static NSString * const kLTextModeSegmentedControlEditMode = @"LTEXT_MODESEGMENTEDCONTROL_EDITMODE";
 static NSString * const kLTextModeSegmentedControlReportMode = @"LTEXT_MODESEGMENTEDCONTROL_REPORTMODE";
@@ -282,6 +283,11 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(notificationCenterOnDayModeOff:)
                                                  name:kNotificationDayModeOffName
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notificationCenterInitialMonthChanged:)
+                                                 name:kNotificationInitialMonthChanged
                                                object:nil];
 }
 
@@ -955,7 +961,10 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *monthComponents = [gregorian components:NSMonthCalendarUnit fromDate:today];
     
-    return [monthComponents month] - 1;
+    IAEOpenYear *openYear = [self findOpenYear];
+    const NSUInteger todayLocalMonthIndex = [openYear findIndexOfMonth:[monthComponents month]];
+    
+    return todayLocalMonthIndex;
 }
 
 - (IAEMonth *)findMonthOfPresentDay
@@ -1600,7 +1609,9 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     IAEMonth *month = [monthWithConcepts objectAtIndex:indexPathOfCell.section];
     self.pendingScrollToEditModeConceptCellIndexPath = [NSIndexPath indexPathForRow:indexPathOfCell.row inSection:0];
 
-    [self.selectorContextView changeToContextViewOfIndex:month.month withAnimation:YES];
+    IAEOpenYear *openYear = [self findOpenYear];
+    const NSUInteger monthIndex = [openYear findIndexOfMonth:month.month];
+    [self.selectorContextView changeToContextViewOfIndex:monthIndex + 1 withAnimation:YES];
 }
 
 - (void)executeActionInMonthContextOnCellOfConceptCollectionView:(IAEEditModeConceptCollectionViewCell *)cell
@@ -2108,6 +2119,21 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     [self reloadContentOfConceptsCollectionView];
 }
 
+- (void)notificationCenterInitialMonthChanged:(NSNotification *)notification
+{
+    NSNumber *newMonth = [[notification userInfo] objectForKey:@"newInitialMonth"];
+    [self recalculeVisibleMonthsInOpenYearWithInitialMonth:newMonth.integerValue];
+    [self.contextMenuView reloadOptionsStringNames];
+    [self goToTodayMonth];
+    //[self updateContentInformationOfActualModeWithAnimation:YES];
+}
+
+- (void)recalculeVisibleMonthsInOpenYearWithInitialMonth:(MonthType)initialMonth
+{
+    IAEOpenYear *openYear = [self findOpenYear];
+    [openYear recalculeVisibleMonthsWithStartMonth:initialMonth];
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
 }
@@ -2274,7 +2300,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
         [self reloadContentOfConceptsReportViewWithAnimation:YES];
     }
 }
-
+ 
 - (BOOL)isChangeOfContextRunning
 {
     return [self.selectorContextView isAnimationInProgress];

@@ -30,6 +30,7 @@ static const NSUInteger kFamilyFontSizeForCells = 24;
 
 static NSString * const kNotificationDayModeOnName = @"dayModeToOn";
 static NSString * const kNotificationDayModeOffName = @"dayModeToOff";
+static NSString * const kNotificationInitialMonthChanged = @"initialMonthChange";
 
 static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 
@@ -111,14 +112,11 @@ static const NSUInteger kRowOfAboutIndex = 2;
 {
     MonthType actualInitialMonth = [[NSUserDefaults standardUserDefaults] actualInitialMonth];
     if (actualInitialMonth != self.monthInitialAtStart) {
-        [self notifyInitialMonthChanged:actualInitialMonth];
+        NSNotification *notification = [NSNotification notificationWithName:kNotificationInitialMonthChanged
+                                                                     object:nil
+                                                                   userInfo:@{@"newInitialMonth": @(actualInitialMonth)}];
+        [[NSNotificationCenter defaultCenter] postNotification:notification];
     }
-}
-
-- (void)notifyInitialMonthChanged:(MonthType)initialMonth
-{
-    // ToDo
-    // ...
 }
 
 #pragma mark - Table view data source

@@ -452,9 +452,8 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
 
 - (void)launchPopoverForSelectDayFromRect:(CGRect)rect
 {
-    IAEOpenYear *year = [self.dataSource yearForCalculatorViewController:self];
     IAEMonth *month = [self.dataSource monthForCalculatorViewController:self];
-    IAEDayCalendarSelectorViewController *viewController = [[IAEDayCalendarSelectorViewController alloc] initWithYearDate:year.yearDate
+    IAEDayCalendarSelectorViewController *viewController = [[IAEDayCalendarSelectorViewController alloc] initWithYearDate:month.year.yearDate
                                                                                                                monthIndex:month.month
                                                                                                            andDaySelected:self.actualDay];
     viewController.delegate = self;

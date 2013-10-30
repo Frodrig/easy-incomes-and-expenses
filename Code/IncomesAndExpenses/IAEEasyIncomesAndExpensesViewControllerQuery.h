@@ -50,6 +50,8 @@
 
 - (CGSize)findMainViewSize;
 
+- (NSString *)findInActualOpenYearMonthNameWithMonthIndex:(NSUInteger)monthIndex inShortForm:(BOOL)shortForm;
+
 - (BOOL)isDayModeActiveForConcepts;
 
 @end

@@ -699,6 +699,15 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 #pragma mark - IAEEasyIncomesAndExpensesViewControllerQuery
 
+- (NSString *)findInActualOpenYearMonthNameWithMonthIndex:(NSUInteger)monthIndex inShortForm:(BOOL)shortForm
+{
+    IAEOpenYear *openYear = [self findOpenYear];
+    IAEMonth *month = [openYear.months objectAtIndex:monthIndex - 1];
+    NSString *monthName = [IAEDateHelper findMonthNameStringWithMonthIndex:month.month inShortForm:shortForm];
+    
+    return monthName;
+}
+
 - (IAEOpenYear *)findOpenYear
 {
     return [[IAEBook sharedBook] findActualOpenYear];

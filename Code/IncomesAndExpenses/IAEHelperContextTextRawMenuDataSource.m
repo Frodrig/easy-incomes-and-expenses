@@ -65,9 +65,9 @@ static const CGFloat kColorAlphaForSelectorIndicatorBackground = 1.0;
     NSString *optionStringName = nil;
     
     if (optionIndex == kContextMenuIndexOfYearOption) {
-        optionStringName =[[self.iaeViewControllerQuery findOpenYear] yearDateAsString];
+        optionStringName = [[self.iaeViewControllerQuery findOpenYear] yearDateAsString];
     } else {
-        optionStringName = [IAEDateHelper findMonthNameStringWithMonthIndex:optionIndex inShortForm:YES];
+        optionStringName = [self.iaeViewControllerQuery findInActualOpenYearMonthNameWithMonthIndex:optionIndex inShortForm:YES];
     }
 
     return optionStringName;

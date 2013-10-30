@@ -7,6 +7,8 @@
 //
 
 #import "IAEDateHelper.h"
+#import "MonthDefs.h"
+#import "NSUserDefaults+EasyIncAndExp.h"
 
 @implementation IAEDateHelper
 
@@ -137,5 +139,21 @@
     return dateComponents;
 }
 
++ (NSString *)createYearIdentificationTagFromYearDate:(NSUInteger)yearDate
+{
+    NSString *yearString = nil;
+    
+    const MonthType initialMonth = [[NSUserDefaults standardUserDefaults] actualInitialMonth];
+    const BOOL usingTwoYears = initialMonth != January;
+    if (usingTwoYears) {
+        NSString *firstYearString = [[NSString stringWithFormat:@"%d", yearDate] substringWithRange:NSMakeRange(2, 2)];
+        NSString *secondYearString = [[NSString stringWithFormat:@"%d", yearDate + 1] substringWithRange:NSMakeRange(2, 2)];
+        yearString = [NSString stringWithFormat:@"%@/%@", firstYearString, secondYearString];
+    } else {
+        yearString = [NSString stringWithFormat:@"%d", yearDate];
+    }
+    
+    return yearString;
+}
 
 @end

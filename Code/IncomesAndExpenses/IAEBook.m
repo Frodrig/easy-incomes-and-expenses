@@ -11,6 +11,8 @@
 #import "IAEConcept.h"
 #import "IAEMonth.h"
 #import "IAEOpenYear.h"
+#import "MonthDefs.h"
+#import "NSUserDefaults+EasyIncAndExp.h"
 
 @interface IAEBook()
 
@@ -50,6 +52,7 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     self = [super init];
     if (self) {
         [self prepareModelAndContextOfDB];
+        [self prepareYearContainers];
     }
     
     return self;
@@ -83,6 +86,12 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     _context.undoManager = nil;
 }
 
+- (void)prepareYearContainers
+{
+    _years = [NSMutableArray array];
+    _openYears = [NSArray array];
+}
+
 - (void)doRefreshObjectMergeChangesExceptForObjects:(NSSet *)exceptObjects
 {
     for (IAEYear *yearIt in self.years) {
@@ -103,21 +112,95 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     }
 }
 
-- (void)closeAll
+- (IAEOpenYear *)openYear:(NSNumber *)yearDate
 {
-    [self unloadAll];
+    IAEOpenYear *openYear = nil;
+    
+    const BOOL isPresentOrPastYearDate = [self isPresentOrPastYearTheYearDate:yearDate.unsignedIntegerValue];
+    if (isPresentOrPastYearDate) {
+        const NSUInteger firstYearDate = yearDate.unsignedIntegerValue;
+        const NSUInteger secondYearDate = yearDate.unsignedIntegerValue + 1;
+        
+        IAEYear *firstYear = [self findLoadOrCreateYearObjectWithDate:firstYearDate];
+        IAEYear *secondYear = [self findLoadOrCreateYearObjectWithDate:secondYearDate];
+        openYear = [self findOrCreateOpenYearObjectWithFirstYear:firstYear andSecondYear:secondYear];
+    }
+    
+    return openYear;
 }
 
-- (void)unloadAll
-{    
-    [self doRefreshObjectMergeChangesExceptForObjects:nil];
-    [self releaseYears];
+- (BOOL)isPresentOrPastYearTheYearDate:(NSUInteger)yearDate
+{
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *components = [gregorian components:NSYearCalendarUnit fromDate:[NSDate date]];
+    const BOOL isPresentOrPastYearDate = yearDate <= components.year;
+    
+    return isPresentOrPastYearDate;
 }
 
-- (void)releaseYears
+- (IAEYear *)findLoadOrCreateYearObjectWithDate:(NSUInteger)yearDate
 {
-    _openYears = nil;
-    _years = nil;
+    IAEYear *year = [self findYearObjectWithDate:yearDate];
+    
+    if (!year) {
+        year = [self loadYearObjectWithDate:yearDate];
+    }
+    
+    if (!year) {
+        year = [self createYearObjectWithDate:yearDate];
+    }
+    
+    return year;
+}
+
+- (IAEYear *)findYearObjectWithDate:(NSUInteger)yearDate
+{
+    __block IAEYear *year = nil;
+    [self.years enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        IAEYear *yearObjectIt = obj;
+        *stop = yearObjectIt.yearDate == yearDate;
+        if (*stop) {
+            year = yearObjectIt;
+        }
+    }];
+    
+    return year;
+}
+
+- (IAEYear *)loadYearObjectWithDate:(NSUInteger)yearDate
+{
+    NSAssert(![self findYearObjectWithDate:yearDate], @"");
+    
+    IAEYear *yearObject = nil;
+    
+    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"yearDate == %d", yearDate];
+    NSArray *searchResult = [self loadYearsWithLimit:1 andPredicate:searchPredicate];
+    if (searchResult.count == 1) {
+        yearObject = searchResult[0];
+        [self addYearObject:yearObject];
+    }
+    
+    return yearObject;
+}
+
+- (void)addYearObject:(IAEYear *)year
+{
+    NSAssert([self.years indexOfObject:year] == NSNotFound, @"");
+    
+    [_years addObject:year];
+    [_years sortUsingSelector:@selector(compareDescendingPriority:)];
+}
+
+- (IAEYear *)createYearObjectWithDate:(NSUInteger)yearDate
+{
+    NSAssert(![self findYearObjectWithDate:yearDate], @"");
+    NSAssert(![self loadYearObjectWithDate:yearDate], @"");
+    
+    IAEYear *newYear = [NSEntityDescription insertNewObjectForEntityForName:@"IAEYear" inManagedObjectContext:self.context];
+    newYear.yearDate = yearDate;
+    [self addYearObject:newYear];
+    
+    return newYear;
 }
 
 - (NSArray *)loadYearsWithLimit:(NSUInteger)limit andPredicate:(NSPredicate *)predicate
@@ -127,7 +210,7 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"yearDate" ascending:NO]];
     request.fetchLimit = limit;
     request.predicate = predicate;
-
+    
     NSError *error;
     NSArray *yearsLoaded = [self.context executeFetchRequest:request error:&error];
     if (nil != error) {
@@ -137,228 +220,130 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     return yearsLoaded;
 }
 
-- (void)openAll
+- (IAEOpenYear *)findOrCreateOpenYearObjectWithFirstYear:(IAEYear *)firstYear andSecondYear:(IAEYear *)secondYear
 {
-    [self loadAll];
-}
-
-- (void)loadAll
-{
-    [self doRefreshObjectMergeChangesExceptForObjects:[NSSet setWithArray:self.years]];
-
-    _years = [NSMutableArray arrayWithArray:[self loadYearsWithLimit:UINT_MAX andPredicate:nil]];
-    _openYears = [self createOpenYearsArrayFromYearsLoaded];
-}
-
-- (NSArray *)createOpenYearsArrayFromYearsLoaded
-{
-    NSMutableArray *openYears = [[NSMutableArray alloc] initWithCapacity:_years.count];
-    for (IAEYear *year in _years) {
-        IAEOpenYear *openYear = [[IAEOpenYear alloc] initWithYears:@[year] andStartMonth:January];
-        [openYears addObject:openYear];
+    IAEOpenYear *openYear = [self findOpenYearObjectWithDate:firstYear.yearDate];
+    
+    if (!openYear) {
+        MonthType startMonth = [[NSUserDefaults standardUserDefaults] actualInitialMonth];
+        IAEOpenYear *openYear = [[IAEOpenYear alloc] initWithYears:@[firstYear, secondYear] andStartMonth:startMonth];
+        _openYears = _openYears ? [_openYears arrayByAddingObject:openYear] : [NSArray arrayWithObject:openYear];
+        _openYears = [self.openYears sortedArrayUsingSelector:@selector(compareDescendingPriority:)];
     }
     
-    NSArray *resultOpenYears = [NSArray arrayWithArray:openYears];
-    return resultOpenYears;
-}
-
-- (void)loadYear:(NSUInteger)year
-{
-    IAEYear *yearFound;
-    for (IAEYear *yearIt in self.years) {
-        if (yearIt.yearDate == year) {
-            yearFound = yearIt;
-            break;
-        }
-    }
-    
-    if (yearFound) {
-        [self doRefreshObjectMergeChangesExceptForObjects:[NSSet setWithObject:yearFound]];
-        _years = [NSMutableArray arrayWithObject:yearFound];
-    } else {
-        [self doRefreshObjectMergeChangesExceptForObjects:nil];
-        _years = [NSMutableArray arrayWithArray:[self loadYearsWithLimit:1 andPredicate:[NSPredicate predicateWithFormat:@"yearDate == %@", [NSNumber numberWithUnsignedInteger:year]]]];
-    }
-    
-    _openYears = [self createOpenYearsArrayFromYearsLoaded];
-}
-
-- (void)openMoreRecientYear
-{
-    [self loadMoreRecientYear];
-}
-
-- (void)loadMoreRecientYear
-{
-    [self doRefreshObjectMergeChangesExceptForObjects:nil];
-    _years = [NSMutableArray arrayWithArray:[self loadYearsWithLimit:1 andPredicate:nil]];
-    _openYears = [self createOpenYearsArrayFromYearsLoaded];
-}
-
-- (IAEOpenYear *)closeAllAndOpenYear:(NSNumber *)yearDate
-{
-    [self unloadAll];
-    [self loadYear:yearDate.integerValue];
-    if (![self findYearWithDate:yearDate]) {
-        [self createYear:yearDate];
-        _openYears = [self createOpenYearsArrayFromYearsLoaded];
-    }
-    
-    IAEOpenYear *openYear = [self findActualOpenYear];
     return openYear;
 }
 
-- (IAEOpenYear *)openYear:(NSNumber *)yearDate
+- (IAEOpenYear *)findOpenYearObjectWithDate:(NSUInteger)yearDate
 {
-    IAEOpenYear *yearOpened = [self findOpenYearWithDate:yearDate];
-    if (!yearOpened) {
-        IAEYear *newYear = [NSEntityDescription insertNewObjectForEntityForName:@"IAEYear" inManagedObjectContext:self.context];
-        newYear.yearDate = yearDate.intValue;
-        
-        yearOpened = [[IAEOpenYear alloc] initWithYears:@[newYear] andStartMonth:January];
-        
-        [self.years addObject:newYear];
-        [self.years sortUsingSelector:@selector(compareDescendingPriority:)];
-        self.openYears = [self.openYears arrayByAddingObject:yearOpened];
-        self.openYears = [self.openYears sortedArrayUsingSelector:@selector(compareDescendingPriority:)];
-    }
+    __block IAEOpenYear *openYear = nil;
+    [self.openYears enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        IAEOpenYear *openYearIt = obj;
+        *stop = openYearIt.yearDate == yearDate;
+        if (*stop) {
+            openYear = openYearIt;
+        }
+    }];
     
-    return yearOpened;
+    return openYear;
 }
 
-
-- (void)createYear:(NSNumber *)yearDate
+- (void)closeYearWithYearDate:(NSUInteger)yearDate
 {
-    IAEYear *newYear = nil;
-    if (![self findYearWithDate:yearDate]) {
-        newYear = [NSEntityDescription insertNewObjectForEntityForName:@"IAEYear" inManagedObjectContext:self.context];
-        newYear.yearDate = yearDate.intValue;
-        
-        [self.years addObject:newYear];
-        [self.years sortUsingSelector:@selector(compareDescendingPriority:)];
-     }
-}
-
-- (void)deleteYear:(NSNumber *)yearDate
-{
-    IAEYear *year = [self findYearWithDate:yearDate];
-    [self deleteYearObject:year];
-}
-
-- (IAEYear *)findYearWithDate:(NSNumber *)yearDate
-{
-    NSAssert(yearDate.unsignedIntegerValue, @"");
+    [self removeOpenYearObjectWithoutUnloadYearObjectsWithDate:yearDate];
     
-    IAEYear *resultYear = nil;
-    for (IAEYear *year in self.years) {
-        if (year.yearDate == yearDate.unsignedIntegerValue) {
-            resultYear = year;
-            break;
+    [self unloadOrDestroyIfNoConceptsOrOpenYearReferencesYearObjectWithDate:yearDate];
+    [self unloadOrDestroyIfNoConceptsOrOpenYearReferencesYearObjectWithDate:yearDate + 1];
+}
+
+- (void)removeOpenYearObjectWithoutUnloadYearObjectsWithDate:(NSUInteger)yearDate
+{
+    IAEOpenYear *openYear = [self findOpenYearObjectWithDate:yearDate];
+    NSMutableArray *newOpenYear = [NSMutableArray arrayWithArray:self.openYears];
+    [newOpenYear removeObject:openYear];
+    
+    self.openYears = [NSArray arrayWithArray:newOpenYear];
+}
+
+- (void)unloadOrDestroyIfNoConceptsOrOpenYearReferencesYearObjectWithDate:(NSUInteger)yearDate
+{
+    IAEYear *yearObject = [self findYearObjectWithDate:yearDate];
+    if (yearObject) {
+        NSArray *openYearsWithReferences = [self findOpenYearsObjectsWithReferencesToYearObject:yearObject];
+        const BOOL canUnloadOrDestroy = openYearsWithReferences.count <= 1;
+        
+        if (canUnloadOrDestroy) {
+            const NSUInteger numberOfConcepts = [yearObject findNumberOfConcepts];
+            const BOOL permanentDelete = 0 == numberOfConcepts;
+            [self deleteYearObject:yearObject permanent:permanentDelete];
         }
     }
-    
-    return resultYear;
 }
 
-- (void)deleteYearObject:(IAEYear *)year
+- (void)deleteYearObject:(IAEYear *)year permanent:(BOOL)permanent
 {
-    if (year) {
-        [self updateOpenYearsWithoutYear:year];
-        [self.years removeObjectIdenticalTo:year];
+    [self.years removeObject:year];
+    [self doRefreshObjectMergeChangesExceptForObjects:[NSSet setWithArray:self.years]];
+    if (permanent) {
         [self.context deleteObject:year];
     }
 }
 
-- (void)updateOpenYearsWithoutYear:(IAEYear *)year
+- (NSArray *)findOpenYearsObjectsWithReferencesToYearObject:(IAEYear *)yearObject
 {
-    NSAssert(year, @"");
+    NSMutableArray *openYearReferencesFound = [NSMutableArray arrayWithCapacity:self.openYears.count];
+    for (IAEOpenYear *openYear in self.openYears) {
+        if ([openYear.years indexOfObject:yearObject] != NSNotFound) {
+            [openYearReferencesFound addObject:openYear];
+        }
+    }
     
-    IAEOpenYear *openYear = [self findOpenYearWithDate:@(year.yearDate)];
-    NSAssert(openYear, @"");
-    NSMutableArray *updatedOpenYears = [NSMutableArray arrayWithArray:self.openYears];
-    [updatedOpenYears removeObject:openYear];
-    self.openYears = [NSArray arrayWithArray:updatedOpenYears];
+    NSArray *result = [NSArray arrayWithArray:openYearReferencesFound];
+    return result;
 }
 
-- (void)deleteAllConceptsOfOpenYear:(IAEOpenYear *)year
+- (void)openAll
 {
-    [year deleteAllConcepts];
+    [self closeAll];
+
+    _years = [NSMutableArray arrayWithArray:[self loadYearsWithLimit:UINT_MAX andPredicate:nil]];
+    
+    NSMutableArray *allExistingYearsDates = [[NSMutableArray alloc] initWithCapacity:_years.count];
+    for (IAEYear *year in _years) {
+        [allExistingYearsDates addObject:@(year.yearDate)];
+    }
+    
+    for (NSNumber *yearDate in allExistingYearsDates) {
+        [self openYear:yearDate];
+    }
+}
+
+- (void)closeAll
+{
+    while (self.openYears.count > 0) {
+        IAEOpenYear *openYear = [self.years objectAtIndex:0];
+        [self closeYearWithYearDate:openYear.yearDate];
+    }
+}
+
+- (void)saveCloseAllAndOpenYearWithDate:(NSNumber *)yearDate
+{
     [self saveAll];
+    [self closeAll];
+    [self openYear:yearDate];
 }
 
-/*
-- (void)deleteAllConceptsOfYear:(IAEYear *)year
+- (void)openMostRecientCreatedYear
 {
-    if ([year findNumberOfConcepts] > 0) {
-        NSNumber *yearDate = [NSNumber numberWithUnsignedInteger:year.yearDate];
-        [self deleteYear:yearDate];
-        [self createYear:yearDate];
-    }
-}
-*/
-- (void)postYearRemovedNotificationWithYearDate:(NSUInteger)yearDate
-{
-    NSArray *objectsForExtraInfoDictionary = [NSArray arrayWithObjects:[NSNumber numberWithUnsignedInteger:yearDate], nil];
-    NSArray *keysForExtraInfoDictionary = [NSArray arrayWithObjects:@"YearDate", nil];
-    NSDictionary *extraInfo = [NSDictionary dictionaryWithObjects:objectsForExtraInfoDictionary forKeys:keysForExtraInfoDictionary];
-    NSNotification *notification = [NSNotification notificationWithName:@"YearRemoved" object:self userInfo:extraInfo];
-    
-    [[NSNotificationCenter defaultCenter] postNotification:notification];
-}
-
-/*
-- (void)closeAllOpenYearsPreservingActualYear
-{
-    IAEOpenYear *actualOpenYear = [self findActualOpenYear];
-    NSAssert(actualOpenYear, @"");
-    NSMutableSet *yearsToClose = [[NSMutableSet alloc] initWithCapacity:self.years.count];
-    for (IAEYear *year in self.years) {
-        if ([actualOpenYear.years indexOfObject:year] == NSNotFound) {
-            [yearsToClose addObject:year];
-        }
-    }
-    
-    while (yearsToClose.count > 0) {
-        IAEYear *year = [yearsToClose anyObject];
-        [yearsToClose removeObject:year];
-        [self.years removeObjectIdenticalTo:year];
-    }
-    
-    _openYears = [NSArray arrayWithObject:actualOpenYear];
-}
-*/
-
-// Nota: Preserva siempre el año actual aunque no tenga conceptos
-/*
-- (void)deleteYearsWithZeroConceptsPreservingActualYear
-{
-    IAEYear *actualYear = [self findActualYear];
-    if (actualYear) {
-        NSMutableArray *actualLoadedYears = [NSMutableArray arrayWithArray:self.years];
-        
-        [self loadAll];
-
-        NSMutableSet *yearsToDelete = [[NSMutableSet alloc] initWithCapacity:self.years.count];
-        for (IAEYear *year in self.years) {
-            if ([year findNumberOfConcepts] == 0 && actualYear != year) {
-                [yearsToDelete addObject:year];
-            }
-        }
-        
-        while (yearsToDelete.count > 0) {
-            IAEYear *yearObjectToDelete = [yearsToDelete anyObject];
-            [yearsToDelete removeObject:yearObjectToDelete];
-            
-            [actualLoadedYears removeObjectIdenticalTo:yearObjectToDelete];
-            [self deleteYearObject:yearObjectToDelete];
-        }
-        
-        if (actualLoadedYears.count > 0) {
-            _years = [NSMutableArray arrayWithArray:actualLoadedYears];
+    NSArray *twoLastYears = [NSMutableArray arrayWithArray:[self loadYearsWithLimit:1 andPredicate:nil]];
+    for (IAEYear *year in twoLastYears) {
+        if ([self isPresentOrPastYearTheYearDate:year.yearDate]) {
+            [self openYear:@(year.yearDate)];
+            break;
         }
     }
 }
-*/
+
 - (BOOL)saveAll
 {
     NSError *error = nil;
@@ -370,78 +355,19 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     return saveResult;
 }
 
-
 - (void)deleteAllAndSave
 {
-    _openYears = nil;
-    [self loadAll];
-    
-    while (self.years.count > 0) {
-        IAEYear *year = [self.years objectAtIndex:0];
-        [self deleteYear:[NSNumber numberWithUnsignedInteger:year.yearDate]];
-    }
-    
-    NSAssert(self.years.count == 0, @"");
     [self saveAll];
-    
-    _openYears = [NSArray array];
+    [self openAll];
+    self.openYears = [NSArray array];
+    while (self.years.count > 0) {
+        IAEYear *yearObject = self.years[0];
+        [self deleteYearObject:yearObject permanent:YES];
+    }
+    [self.years removeAllObjects];
 }
 
 #pragma mark - Find
-
-/*
-- (IAEYear *)findActualYear
-{
-    // Cuando estamos fuera de la pantalla de seleccion de año solo hay un año cargado y es el primero del array
-    NSAssert(self.years.count == 1, @"O no hay años o bien hay mas de uno cargado");
-    return [self.years objectAtIndex:0];
-}
-
-- (NSArray *)findAllYearWithConcepts
-{
-    NSMutableArray *yearsSelected = [NSMutableArray arrayWithCapacity:self.years.count];
-    for (IAEYear *year in self.years) {
-        if ([year findNumberOfConcepts] > 0) {
-            [yearsSelected addObject:year];
-        }
-    }
-    
-    return [NSArray arrayWithArray:yearsSelected];
-}
-
-// Nota: Solo para los años cargados
-- (NSArray *)findAllConceptsWithCategory:(IAECategory *)category
-{
-    NSMutableArray *concepts = [[NSMutableArray alloc] initWithCapacity:self.years.count];
-    for (IAEYear *year in self.years) {
-        [concepts addObjectsFromArray:[year findAllConceptsWithCategory:category]];
-    }
-    
-    return concepts;
-}
-
-- (IAEYear *)findYearWithDate:(NSNumber *)yearDate
-{
-    NSAssert(yearDate.unsignedIntegerValue, @"");
-    
-    IAEYear *resultYear = nil;
-    for (IAEYear *year in self.years) {
-        if (year.yearDate == yearDate.unsignedIntegerValue) {
-            resultYear = year;
-            break;
-        }
-    }
-    
-    if (!resultYear) {
-        NSArray *result = [self loadYearsWithLimit:1 andPredicate:[NSPredicate predicateWithFormat:@"yearDate == %d", yearDate.unsignedIntegerValue]];
-        if (result.count > 0) {
-            resultYear = [result objectAtIndex:0];
-        }
-    }
-    
-    return resultYear;
-}
-*/
 
 - (IAEOpenYear *)findOpenYearWithDate:(NSNumber *)yearDate
 {
@@ -465,7 +391,6 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     // Cuando estamos fuera de la pantalla de seleccion de año solo hay un año cargado y es el primero del array
     NSAssert(self.openYears.count == 1, @"O no hay años o bien hay mas de uno cargado");
     return [self.openYears objectAtIndex:0];
-
 }
 
 - (NSArray *)findInOpenYearsAllConceptsWithCategory:(IAECategory *)category

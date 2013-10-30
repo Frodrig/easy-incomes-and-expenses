@@ -22,4 +22,6 @@
 + (NSUInteger)findNumberOfDaysFromYearDate:(NSUInteger)yearDate andMonthIndex:(NSUInteger)monthIndex;
 + (NSUInteger)findFirstDayWeekFromYearDate:(NSUInteger)yearDate andMonthIndex:(NSUInteger)monthIndex;
 
++ (NSString *)createYearIdentificationTagFromYearDate:(NSUInteger)yearDate;
+
 @end

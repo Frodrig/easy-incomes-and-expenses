@@ -9,6 +9,7 @@
 #import "IAEOpenYear.h"
 #import "IAEYear.h"
 #import "IAEMonth.h"
+#import "IAEDateHelper.h"
 
 #define DISABLE_PERFORM_SELECTOR_WARNING \
 _Pragma("clang diagnostic push");\
@@ -46,7 +47,7 @@ static const NSUInteger kMonthsPerYear = 12;
 - (void)setYears:(NSArray *)years andStartMonth:(MonthType)startMonth
 {
     NSAssert(startMonth != InvalidMonth, @"");
-    NSAssert((startMonth == January && years.count == 1) || (startMonth > January && years.count == 2) , @"");
+    NSAssert(years.count == 2, @"");
     
     _years = [years copy];
     _months = [self createMonthsWithYears:years andStartMonth:startMonth];
@@ -60,7 +61,7 @@ static const NSUInteger kMonthsPerYear = 12;
     NSMutableArray *ordererMonths = [[NSMutableArray alloc] initWithCapacity:kMonthsPerYear];
     MonthType startMonthForIteration = startMonth;
     for (IAEYear *year in years) {
-        for (MonthType monthIt = startMonthForIteration; monthIt != InvalidMonth || ordererMonths.count < kMonthsPerYear ; ++monthIt) {
+        for (MonthType monthIt = startMonthForIteration; monthIt != InvalidMonth && ordererMonths.count < kMonthsPerYear ; ++monthIt) {
             NSUInteger monthIndex = monthIt - 1;
             IAEMonth *month = [year.ordererMonths objectAtIndex:monthIndex];
             [ordererMonths addObject:month];
@@ -69,6 +70,8 @@ static const NSUInteger kMonthsPerYear = 12;
         if (ordererMonths.count != kMonthsPerYear) {
             NSAssert(years.count == 2, @"Si no se ha llenado el array de meses con doce meses es que la vista tiene dos años involucrados");
             startMonthForIteration = January;
+        } else {
+            break;
         }
     }
     
@@ -270,14 +273,10 @@ static const NSUInteger kMonthsPerYear = 12;
 
 - (NSString *)yearDateAsString
 {
-    NSAssert(self.years.count == 1 || self.years.count == 2, @"");
-    NSString *resultString = nil;
-    if (self.years.count == 1) {
-        resultString = [NSString stringWithFormat:@"%d", self.yearDate];
-    } else {
-        resultString = [NSString stringWithFormat:@"%d - %d", self.yearDate, self.yearDate + 1];
-    }
+    NSAssert(self.years.count == 2, @"");
     
+    NSString *resultString = [IAEDateHelper createYearIdentificationTagFromYearDate:self.yearDate];
+
     return resultString;
 }
 

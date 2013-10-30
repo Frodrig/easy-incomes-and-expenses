@@ -24,9 +24,9 @@
 {
     [self prepareCrashlytics];
     [self prepareFlurry];
+    [[NSUserDefaults standardUserDefaults] prepareDefaults];
     [self processProcessInfoEnvironment];
     [self createYearBookIfProceed];
-    [[NSUserDefaults standardUserDefaults] prepareDefaults];
     [self createWindowRootLaunchingViewControllerAndMakeVisible];
         
     return YES;
@@ -62,11 +62,11 @@
 - (void)createYearBookIfProceed
 {
     // Si no hay ningun año registrado, se crea
-    [[IAEBook sharedBook] openMoreRecientYear];
+    [[IAEBook sharedBook] openMostRecientCreatedYear];
     if (0 == [IAEBook sharedBook].openYears.count) {
         NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
         NSDateComponents *yearComponent = [gregorian components:NSYearCalendarUnit fromDate:[NSDate date]];
-        [[IAEBook sharedBook] openYear:[NSNumber numberWithInteger:yearComponent.year]];
+        [[IAEBook sharedBook] openYear:@(yearComponent.year)];
     }
 }
 

@@ -13,6 +13,9 @@
 #import "IAENumberFormatterManager.h"
 #import "IAECircleDecoratorView.h"
 #import "IAELocalizerPhraseComposer.h"
+#import "MonthDefs.h"
+#import "NSUserDefaults+EasyIncAndExp.h"
+#import "IAEDateHelper.h"
 
 @interface IAEYearSelectorCollectionViewCell()
 
@@ -90,7 +93,7 @@ static const NSUInteger kContainerViewRoundRectSize = 10;
 
 - (NSString *)yearStringFromYearDate:(NSUInteger)yearDate
 {
-    NSString *yearString = [NSString stringWithFormat:@"%d", yearDate];
+    NSString *yearString = [IAEDateHelper createYearIdentificationTagFromYearDate:yearDate];
     
     return yearString;
 }

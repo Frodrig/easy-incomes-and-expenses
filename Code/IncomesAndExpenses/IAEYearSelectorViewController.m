@@ -214,7 +214,7 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 - (IBAction)closeButtonPressed:(id)sender
 {
     NSAssert(self.openYearDateBeforeStart != 0, @"");
-    [[IAEBook sharedBook] closeAllAndOpenYear:@(self.openYearDateBeforeStart)];
+    [[IAEBook sharedBook] saveCloseAllAndOpenYearWithDate:@(self.openYearDateBeforeStart)];
     [self.delegate closeButtonWasPressedInYearSelectorViewController:self];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -429,25 +429,20 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 
 - (void)sendToDelegateActionChosenSelectedActualYear
 {
-    //[[IAEBook sharedBook] openYear:@(self.openYearDateBeforeStart)];
-    [[IAEBook sharedBook] closeAllAndOpenYear:@(self.openYearDateBeforeStart)];
+    [[IAEBook sharedBook] saveCloseAllAndOpenYearWithDate:@(self.openYearDateBeforeStart)];
     [self.delegate openYearSelectedWasSelectedInYearSelectorViewController:self];
 }
 
 - (void)sendToDelegateActionChosenSelectedYearWithConceptsWithDate:(NSUInteger)yearDate
 {
-    //[[IAEBook sharedBook] openYear:@(yearDate)];
-    [[IAEBook sharedBook] closeAllAndOpenYear:@(yearDate)];
+    [[IAEBook sharedBook] saveCloseAllAndOpenYearWithDate:@(yearDate)];
     [self.delegate yearSelectorViewController:self didLoadSelectedYearDate:yearDate];
 }
 
 - (void)sendToDelegateActionChosenSelectedYearWithoutConceptsWithDate:(NSUInteger)yearDate
 {
-    [[IAEBook sharedBook] closeAllAndOpenYear:@(yearDate)];
+    [[IAEBook sharedBook] saveCloseAllAndOpenYearWithDate:@(yearDate)];
 
-    //[[IAEBook sharedBook] openYear:@(yearDate)];
-    //[[IAEBook sharedBook] saveAll];
-    
     [self.delegate yearSelectorViewController:self didCreateAndLoadSelectedYearDate:yearDate];
 }
 
@@ -506,7 +501,7 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
     NSUInteger yearDateSelectedForClean = [self yearDateBasedInSegmentedControlStateFromCell:self.selectedCellToClean];
     IAEOpenYear *yearSelectedForClean = [self yearBasedInSegmentedControlStateUsingCell:self.selectedCellToClean];
     [Flurry logEvent:@"year_clean" withParameters:@{@"year" :@(yearSelectedForClean.yearDate)}];
-    [[IAEBook sharedBook] deleteAllConceptsOfOpenYear:yearSelectedForClean];
+    [yearSelectedForClean deleteAllConcepts];
     [[IAEBook sharedBook] saveAll];
     
     if (yearDateSelectedForClean == self.openYearDateBeforeStart) {

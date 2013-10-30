@@ -23,13 +23,11 @@
 + (IAEBook *)sharedBook;
 
 - (void)openAll;
-- (void)openMoreRecientYear;
+- (void)openMostRecientCreatedYear;
 - (IAEOpenYear *)openYear:(NSNumber *)yearDate;
 
 - (void)closeAll;
-- (IAEOpenYear *)closeAllAndOpenYear:(NSNumber *)yearDate;
-
-- (void)deleteAllConceptsOfOpenYear:(IAEOpenYear *)year;
+- (void)saveCloseAllAndOpenYearWithDate:(NSNumber *)yearDate;
 
 - (IAEOpenYear *)findActualOpenYear;
 - (IAEOpenYear *)findOpenYearWithDate:(NSNumber *)yearDate;

@@ -18,6 +18,8 @@
 
 - (instancetype)initWithYears:(NSArray *)years andStartMonth:(MonthType)month;
 
+- (void)recalculeVisibleMonthsWithStartMonth:(MonthType)month;
+
 - (void)deleteAllConcepts;
 
 - (NSComparisonResult)compareDescendingPriority:(IAEOpenYear *)aOpenYear;

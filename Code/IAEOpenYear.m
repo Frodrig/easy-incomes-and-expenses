@@ -76,6 +76,13 @@ static const NSUInteger kMonthsPerYear = 12;
     return retMonths;
 }
 
+#pragma mark - Update
+
+- (void)recalculeVisibleMonthsWithStartMonth:(MonthType)month
+{
+    self.months = [self createMonthsWithYears:self.years andStartMonth:month];
+}
+
 #pragma mark - Compare
 
 - (NSComparisonResult)compare:(IAEOpenYear *)aOpenYear

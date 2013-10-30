@@ -11,10 +11,13 @@
 #import "IAEHelpConfigureViewController.h"
 #import "IAEHelpAboutViewController.h"
 #import "IAEHelpViewController.h"
+#import "MonthDefs.h"
+#import "NSUserDefaults+EasyIncAndExp.h"
 
 @interface IAEHelpIndexViewController ()
 
 @property (nonatomic) BOOL dayModeWasActiveAtStart;
+@property (nonatomic) MonthType monthInitialAtStart;
 
 @end
 
@@ -50,6 +53,7 @@ static const NSUInteger kRowOfAboutIndex = 2;
 - (void)prepareGlobalSettingsInformation
 {
     _dayModeWasActiveAtStart = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsDayModeActive];
+    _monthInitialAtStart = [[NSUserDefaults standardUserDefaults] actualInitialMonth];
 }
 
 - (void)viewDidLoad
@@ -84,6 +88,12 @@ static const NSUInteger kRowOfAboutIndex = 2;
 
 - (void)notifyGlobalValueChangesIfAppropiate
 {
+    [self notifyDayModeActiveIfAppropiate];
+    [self notifyNewInitialMonthIfAppropiate];
+}
+
+- (void)notifyDayModeActiveIfAppropiate
+{
     const BOOL actualDayModeActive = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsDayModeActive];
     if (actualDayModeActive != self.dayModeWasActiveAtStart) {
         [self notifyDayModeChanged:actualDayModeActive];
@@ -95,6 +105,20 @@ static const NSUInteger kRowOfAboutIndex = 2;
     NSString *notificationName = dayModeOn ? kNotificationDayModeOnName : kNotificationDayModeOffName;
     NSNotification *notification = [NSNotification notificationWithName:notificationName object:nil];
     [[NSNotificationCenter defaultCenter] postNotification:notification];
+}
+
+- (void)notifyNewInitialMonthIfAppropiate
+{
+    MonthType actualInitialMonth = [[NSUserDefaults standardUserDefaults] actualInitialMonth];
+    if (actualInitialMonth != self.monthInitialAtStart) {
+        [self notifyInitialMonthChanged:actualInitialMonth];
+    }
+}
+
+- (void)notifyInitialMonthChanged:(MonthType)initialMonth
+{
+    // ToDo
+    // ...
 }
 
 #pragma mark - Table view data source

@@ -10,8 +10,15 @@
 #import "IAEHelpConfigureConceptsWithDaysCell.h"
 #import "IAEHelpConfigureStartMonthCell.h"
 #import "IAEHelpIndexViewControllerDelegate.h"
+#import "IAEHelpConfigureStartMonthSelectorTableViewController.h"
+#import "MonthDefs.h"
+#import "NSUserDefaults+EasyIncAndExp.h"
 
 @interface IAEHelpConfigureViewController ()
+
+@property (nonatomic, strong) NSIndexPath *lastIndexPathHighlighted;
+
+@property (nonatomic) MonthType actualInitialMonth;
 
 @end
 
@@ -36,6 +43,7 @@ static NSUInteger kSectionOfConfigureStartMonthCell = 1;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        _actualInitialMonth = [[NSUserDefaults standardUserDefaults] actualInitialMonth];
     }
     return self;
 }
@@ -64,6 +72,24 @@ static NSUInteger kSectionOfConfigureStartMonthCell = 1;
                                                                                            action:@selector(doneButtonPressed:)];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self adjustValuesBeforeViewAppear];
+}
+
+- (void)adjustValuesBeforeViewAppear
+{
+    MonthType actualInitialMonth = [[NSUserDefaults standardUserDefaults] actualInitialMonth];
+    if (actualInitialMonth != self.actualInitialMonth) {
+        self.actualInitialMonth = actualInitialMonth;
+        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:kSectionOfConfigureStartMonthCell]];
+    }
+    
+    [self backgroundColorInCellAtIndexPath:self.lastIndexPathHighlighted highlighted:NO];
+}
+
 #pragma mark - Navigation Bar
 
 - (void)doneButtonPressed:(UIBarButtonItem *)button
@@ -90,10 +116,36 @@ static NSUInteger kSectionOfConfigureStartMonthCell = 1;
 }
 
 - (NSUInteger)findNumberOfItemsBasedInSegmentedControl
+{    
+    return 1;
+}
+
+#pragma mark - UICollectionViewDelegate
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSUInteger numberOfItems = 1;
+    if (indexPath.section == kSectionOfConfigureStartMonthCell) {
+        [self backgroundColorInCellAtIndexPath:indexPath highlighted:YES];
+        [self launchStartMonthSelector];
+    }
+}
+
+- (void)backgroundColorInCellAtIndexPath:(NSIndexPath *)indexPath highlighted:(BOOL)highlighted
+{
+    UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    [UIView animateWithDuration:0.3 animations:^{
+        cell.backgroundColor = highlighted ? [UIColor colorWithWhite:0.9 alpha:1.0] : [UIColor clearColor];
+    }];
     
-    return numberOfItems;
+    self.lastIndexPathHighlighted = highlighted ? indexPath : nil;
+}
+
+- (void)launchStartMonthSelector
+{
+    IAEHelpConfigureStartMonthSelectorTableViewController *startMonthSelectorViewController = [[IAEHelpConfigureStartMonthSelectorTableViewController alloc] initWithNibName:nil bundle:nil];
+    startMonthSelectorViewController.delegate = self.delegate;
+    [self.navigationController pushViewController:startMonthSelectorViewController animated:YES];
 }
 
 #pragma mark - UICollectionViewDataSource

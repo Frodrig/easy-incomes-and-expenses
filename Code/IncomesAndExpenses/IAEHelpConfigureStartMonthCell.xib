@@ -14,32 +14,26 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="717-flag.png" translatesAutoresizingMaskIntoConstraints="NO" id="jcU-8L-Oxa">
-                        <rect key="frame" x="20" y="14" width="44" height="44"/>
+                        <rect key="frame" x="20" y="12" width="44" height="44"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="766-arrow-right.png" translatesAutoresizingMaskIntoConstraints="NO" id="8Je-Jq-Wht">
-                        <rect key="frame" x="476" y="14" width="44" height="44"/>
+                        <rect key="frame" x="476" y="12" width="44" height="44"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ynx-qX-6nQ">
-                        <rect key="frame" x="72" y="12" width="448" height="44"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MGt-M7-HRT">
+                        <rect key="frame" x="72" y="12" width="396" height="44"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
-                        <state key="normal" title="Button">
-                            <color key="titleColor" red="0.84313725490000002" green="0.84313725490000002" blue="0.84313725490000002" alpha="1" colorSpace="deviceRGB"/>
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="startMonthButtonPressed:" destination="aKe-FO-dIq" eventType="touchUpInside" id="12X-fC-3dx"/>
-                        </connections>
-                    </button>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <size key="customSize" width="540" height="994"/>
             <connections>
-                <outlet property="startMonthButton" destination="ynx-qX-6nQ" id="KHP-6d-wj4"/>
-                <outlet property="startMonthButtonPressed" destination="ynx-qX-6nQ" id="3MQ-TU-gnE"/>
+                <outlet property="startMonthLabel" destination="MGt-M7-HRT" id="YZI-Li-quh"/>
             </connections>
         </collectionViewCell>
     </objects>

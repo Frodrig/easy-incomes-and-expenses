@@ -12,6 +12,4 @@
 
 + (CGSize)sizeOfItem;
 
-- (IBAction)startMonthButtonPressed:(id)sender;
-
 @end

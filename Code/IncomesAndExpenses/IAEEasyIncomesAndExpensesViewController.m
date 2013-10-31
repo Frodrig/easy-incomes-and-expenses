@@ -49,6 +49,7 @@
 #import "NSDecimalNumber+AbsoluteValue.h"
 #import "IAEStrokeAnimatableLineView.h"
 #import "IAEDragPanelCalculatorView.h"
+#import "IAEExportViewController.h"
 
 @interface IAEEasyIncomesAndExpensesViewController ()
 
@@ -66,6 +67,7 @@
 @property (nonatomic, strong) IAEYearSelectorViewController *yearSelectorViewController;
 @property (nonatomic, strong) IAECategorySelectorViewController *categoriesSelectorViewController;
 @property (nonatomic, strong) IAESettingsViewController *aboutAndOptions2ViewController;
+@property (nonatomic, strong) IAEExportViewController *exportViewController;
 @property (nonatomic, strong) IAEReportAreaView *reportAreaView;
 @property (nonatomic, strong) IAETextRawSelectorMenuView *contextMenuView;
 @property (nonatomic, strong) IAETextRawSelectorMenuView *reportMenuView;
@@ -601,7 +603,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (void)exportButtonPressed:(id)sender
 {
-    
+    [self openModalForExportViewController];
 }
 
 - (void)openModalForPresentYearSelectorViewController
@@ -619,13 +621,14 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     self.aboutAndOptions2ViewController.modalPresentationStyle = UIModalPresentationFormSheet;
     
     [self presentViewController:self.aboutAndOptions2ViewController animated:YES completion:nil];
+}
+
+- (void)openModalForExportViewController
+{
+    self.exportViewController = [[IAEExportViewController alloc] initWithNibName:nil bundle:nil];
+    self.exportViewController.modalPresentationStyle = UIModalPresentationFormSheet;
     
-    /*
-    self.aboutAndOptionsViewController = [[IAEAboutAndOptionsViewController alloc] initWithNibName:nil bundle:nil];
-    self.aboutAndOptionsViewController.modalPresentationStyle = UIModalPresentationFormSheet;
-    
-    [self presentViewController:self.aboutAndOptionsViewController animated:YES completion:nil];
-    */
+    [self presentViewController:self.exportViewController animated:YES completion:nil];
 }
 
 - (IBAction)segmentedControlPressed:(UISegmentedControl *)sender

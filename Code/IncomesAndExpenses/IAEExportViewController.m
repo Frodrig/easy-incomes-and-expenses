@@ -1,25 +1,23 @@
 //
-//  IAEAboutAndOptions2ViewController.m
+//  IAEExportViewController.m
 //  IncomesAndExpenses
 //
-//  Created by Fernando Rodríguez on 15/10/13.
+//  Created by Fernando Rodríguez on 31/10/13.
 //  Copyright (c) 2013 Fernando Rodríguez Martínez. All rights reserved.
 //
 
-#import "IAESettingsViewController.h"
-#import "IAEHelpIndexViewController.h"
+#import "IAEExportViewController.h"
+#import "IAEExportStepOneViewController.h"
 
-@interface IAESettingsViewController ()
+@interface IAEExportViewController ()
 
 @end
 
-@implementation IAESettingsViewController
+@implementation IAEExportViewController
 
 #pragma mark - Constants
 
 static const CGFloat kTintValueForNavigation = 0.6;
-
-#pragma mark - Init
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,9 +31,9 @@ static const CGFloat kTintValueForNavigation = 0.6;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-   
+    
     [self configureView];
-    [self launchIndexViewController];
+    [self launchExportStepOneViewController];
 }
 
 - (void)configureView
@@ -43,10 +41,10 @@ static const CGFloat kTintValueForNavigation = 0.6;
     self.view.tintColor = [UIColor colorWithWhite:kTintValueForNavigation alpha:1.0];
 }
 
--(void)launchIndexViewController
+- (void)launchExportStepOneViewController
 {
-    IAEHelpIndexViewController *helpIndexViewController = [[IAEHelpIndexViewController alloc] init];
-    [self pushViewController:helpIndexViewController animated:NO];
+    IAEExportStepOneViewController *exportStepOneViewController = [[IAEExportStepOneViewController alloc] initWithNibName:nil bundle:nil];
+    [self pushViewController:exportStepOneViewController animated:NO];
 }
 
 @end

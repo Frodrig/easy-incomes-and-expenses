@@ -213,6 +213,8 @@
 		5BC7101A17AC29F600E12953 /* IAEConcept.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC7101417AC29F600E12953 /* IAEConcept.m */; };
 		5BC7101B17AC29F600E12953 /* IAEMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC7101517AC29F600E12953 /* IAEMonth.m */; };
 		5BC7101C17AC29F600E12953 /* IAEYear.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC7101617AC29F600E12953 /* IAEYear.m */; };
+		5BCB5F3E1822640C00A37013 /* 702-share.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BCB5F3C1822640C00A37013 /* 702-share.png */; };
+		5BCB5F3F1822640C00A37013 /* 702-share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BCB5F3D1822640C00A37013 /* 702-share@2x.png */; };
 		5BCCC91717D5008E00FC1A05 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BCCC91617D5008E00FC1A05 /* Images.xcassets */; };
 		5BCE3A9F17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3A9E17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m */; };
 		5BCE3AA117A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BCE3AA017A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib */; };
@@ -613,6 +615,8 @@
 		5BC7101617AC29F600E12953 /* IAEYear.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IAEYear.m; path = IncomesAndExpenses/IAEYear.m; sourceTree = "<group>"; };
 		5BC7102217AC2A5900E12953 /* IAECategoryEditorDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IAECategoryEditorDefs.h; path = IncomesAndExpenses/IAECategoryEditorDefs.h; sourceTree = "<group>"; };
 		5BC7102317AC2B0900E12953 /* CategoryDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryDefs.h; sourceTree = "<group>"; };
+		5BCB5F3C1822640C00A37013 /* 702-share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "702-share.png"; sourceTree = "<group>"; };
+		5BCB5F3D1822640C00A37013 /* 702-share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "702-share@2x.png"; sourceTree = "<group>"; };
 		5BCCC91617D5008E00FC1A05 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5BCE3A9D17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEditModeConceptCollectionViewHeader.h; sourceTree = "<group>"; };
 		5BCE3A9E17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEditModeConceptCollectionViewHeader.m; sourceTree = "<group>"; };
@@ -1315,6 +1319,8 @@
 				5B28D1AC18200C1300EF4D48 /* 766-arrow-right.png */,
 				5B28D1AD18200C1300EF4D48 /* 766-arrow-right@2x.png */,
 				5BC110FF17CD1DF500FF6D6B /* 730-envelope@2x.png */,
+				5BCB5F3C1822640C00A37013 /* 702-share.png */,
+				5BCB5F3D1822640C00A37013 /* 702-share@2x.png */,
 				5B2A41B317C77E8500C29036 /* 709-plus@2x.png */,
 				5B2AAA2917C773C500E7C7A5 /* 746-plus-circle.png */,
 				5B28D1B018200E6300EF4D48 /* 717-flag.png */,
@@ -2220,6 +2226,7 @@
 				5BBD3755180BFF5B0095A15A /* ftv2cl.png in Resources */,
 				5BBD3792180BFF5B0095A15A /* classes_66.html in Resources */,
 				5BBD3766180BFF5B0095A15A /* hierarchy.html in Resources */,
+				5BCB5F3E1822640C00A37013 /* 702-share.png in Resources */,
 				5B5544A2177460DD009CFC84 /* Main.storyboard in Resources */,
 				5BD94C0F1786B896009009B1 /* IAECategoryTableViewCell.xib in Resources */,
 				5BBD37BB180BFF5B0095A15A /* tab_b.png in Resources */,
@@ -2256,6 +2263,7 @@
 				5BBD375C180BFF5B0095A15A /* ftv2mnode.png in Resources */,
 				5B5DBB3D17E1F01400716503 /* ipadlandscape_launchimage.png in Resources */,
 				5BBD3760180BFF5B0095A15A /* ftv2plastnode.png in Resources */,
+				5BCB5F3F1822640C00A37013 /* 702-share@2x.png in Resources */,
 				5BE84E78180DA8CF00F4A80B /* IAESettingsViewController.xib in Resources */,
 				5BBD37C5180BFF5B0095A15A /* Flurry AppCircle Advertiser TOS FINAL August 1, 2012.pdf in Resources */,
 				5B951F6C17D88F1700CCEACE /* icon.png in Resources */,

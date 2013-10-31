@@ -120,7 +120,7 @@ static const NSUInteger kOptionIndexCSV = 3;
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     cell.accessoryType = cell.accessoryType == UITableViewCellAccessoryCheckmark ? UITableViewCellAccessoryNone : UITableViewCellAccessoryCheckmark;
     
-    [self updateSelectedExportDestinations];
+    [self updateSelectedExportDestinations]; 
     [self updateNextStepButton];
 }
 

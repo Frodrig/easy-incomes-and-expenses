@@ -160,6 +160,13 @@ static const NSUInteger kMonthsPerYear = 12;
     return result;
 }
 
+- (NSDecimalNumber *)sumAllAmountOfCategories:(NSArray *)categories
+{
+    NSDecimalNumber *result = [self decimalNumberOperationInMonthsWithSelector:@selector(sumAllAmountOfCategories:) andObject:categories];
+    
+    return result;
+}
+
 #pragma mark - SearchMode
 
 - (void)beginCategoryConceptSearchMode

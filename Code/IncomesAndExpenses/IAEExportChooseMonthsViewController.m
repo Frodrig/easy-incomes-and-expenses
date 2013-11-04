@@ -8,6 +8,7 @@
 
 #import "IAEExportChooseMonthsViewController.h"
 #import "IAEEasyIncomesAndExpensesViewControllerQuery.h"
+#import "IAEExportChooseHowAndWhatViewController.h"
 #import "IAEOpenYear.h"
 #import "IAEDateHelper.h"
 #import "IAEMonth.h"
@@ -26,7 +27,7 @@ static const NSUInteger kNumberOfMonth = 12;
 static NSString * const kFamilyFontNameForCells = @"HelveticaNeue-Light";
 static const NSUInteger kFamilyFontSizeForCells = 24;
 
-static NSString * const kSelectedMonths = @"selectedMonths";
+static NSString * const kSelectedMonths = @"month_selected";
 
 #pragma mark - Init
 
@@ -57,11 +58,20 @@ static NSString * const kSelectedMonths = @"selectedMonths";
     self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
+#pragma mark - BarButtonsActions
 
-- (void)didReceiveMemoryWarning
+- (void)nextStepButtonPressed:(id)sender
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self lauchChooseHowAndWhatViewController];
+}
+
+- (void)lauchChooseHowAndWhatViewController
+{
+    IAEExportChooseHowAndWhatViewController *howAndWhatViewController = [[IAEExportChooseHowAndWhatViewController alloc] initWithNibName:nil bundle:nil];
+    howAndWhatViewController.userConfiguration = self.userConfiguration;
+    howAndWhatViewController.query = self.query;
+    
+    [self.navigationController pushViewController:howAndWhatViewController animated:YES];
 }
 
 #pragma mark - Table view data source
@@ -111,7 +121,6 @@ static NSString * const kSelectedMonths = @"selectedMonths";
     
     return title;
 }
-
 
 #pragma mark - Table view delegate
 

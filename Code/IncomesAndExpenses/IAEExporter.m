@@ -32,6 +32,7 @@ static NSString * const kValueWhatOptionCategoryIncomes = @"categoryIncomes";
 static NSString * const kValueWhatOptionCategoryExpenses = @"categoryExpenses";
 static NSString * const kValueWhatOptionConcepts = @"concepts";
 
+static NSString * const kKeyExportedDataTotals = @"Totals";
 static NSString * const kKeyExportedDataBalance = @"balance";
 static NSString * const kKeyExportedDataIncomes = @"expenses";
 static NSString * const kKeyExportedDataExpenses = @"incomes";
@@ -62,9 +63,10 @@ static NSString * const kKeyExportedDataConcepts = @"conceptsBytMonth";
     NSAssert(userConfiguration[kKeyMonthSelected], @"");
     NSAssert(userConfiguration[kKeyWhatOptions], @"");
     
+    NSString *mode = userConfiguration[kKeyHowOption];
     NSDictionary *convertedData = [self convertToExportDataFromYearDate:yearDate andUserConfiguration:userConfiguration];
     if ([userConfiguration[kKeyWhereCSV] boolValue]) {
-        [self exportToCSVInYearDate:yearDate convertedData:convertedData];
+        [self exportToCSVUsingMode:mode inYearDate:yearDate withConvertedData:convertedData];
     }
     
     NSLog(@"%@", convertedData);
@@ -87,7 +89,7 @@ static NSString * const kKeyExportedDataConcepts = @"conceptsBytMonth";
     
     if ([self isPresentWhatOption:kValueWhatOptionTotals inUserConfiguration:userConfiguration]) {
         NSDictionary *convertedData = [self convertTotalsToExportDataFromYearDate:yearDate andUserConfiguration:userConfiguration];
-        [exportData addEntriesFromDictionary:convertedData];
+        exportData[kKeyExportedDataTotals] = convertedData;
     }
     
     if ([self isPresentWhatOption:kValueWhatOptionCategoryIncomes inUserConfiguration:userConfiguration]) {
@@ -177,9 +179,15 @@ static NSString * const kKeyExportedDataConcepts = @"conceptsBytMonth";
 
 #pragma mark - Export
 
-- (void)exportToCSVInYearDate:(NSUInteger)yearDate convertedData:(NSDictionary *)convertedData
+- (void)exportToCSVUsingMode:(NSString *)keyMode inYearDate:(NSUInteger)yearDate withConvertedData:(NSDictionary *)convertedData
 {
-    
+    if ([keyMode isEqualToString:kValueHowOptionGlobalResume]) {
+        
+    } else if ([keyMode isEqualToString:kValueHowOptionMonthByMonth]) {
+        
+    } else if ([keyMode isEqualToString:kValueHowOptionMonthByMonthAndGlobalResume]) {
+        
+    }
 }
 
 

@@ -106,12 +106,11 @@ static NSString * const kWhereCSVKey = @"where_csv";
     }
     
     // Configure the cell...
-    const NSUInteger optionIndex = indexPath.row;
-    NSString *lTextExportOption = [NSString stringWithFormat:@"LTEXT_EXPORTSTEPONE_OPTION_%d", optionIndex + 1];
+    NSString *lTextExportOption = [NSString stringWithFormat:@"LTEXT_EXPORTSTEPONE_OPTION_%d", indexPath.row + 1];
     cell.textLabel.text = NSLocalizedString(lTextExportOption, @"");
-    if (optionIndex == kOptionIndexPrint) {
+    if (indexPath.row == kOptionIndexPrint) {
         cell.imageView.image = [UIImage imageNamed:@"743-printer"];
-    } else if (optionIndex == kOptionIndexPDF || optionIndex == kOptionIndexCSV) {
+    } else if (indexPath.row == kOptionIndexPDF || indexPath.row == kOptionIndexCSV) {
         cell.imageView.image = [UIImage imageNamed:@"738-document-1"];
     }
     

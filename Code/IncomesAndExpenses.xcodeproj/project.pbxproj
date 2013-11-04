@@ -52,6 +52,7 @@
 		5B57275817D9A99B00552E98 /* IAENibUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B57275717D9A99B00552E98 /* IAENibUtils.m */; };
 		5B57A9C217FAD39500C7BFD3 /* calculatordragbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B57A9C017FAD39500C7BFD3 /* calculatordragbackground.png */; };
 		5B57A9C317FAD39500C7BFD3 /* calculatordragbackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B57A9C117FAD39500C7BFD3 /* calculatordragbackground@2x.png */; };
+		5B5BEAF41827E6CA00A00BE0 /* IAEExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5BEAF31827E6CA00A00BE0 /* IAEExporter.m */; };
 		5B5C967B1781673A008CD851 /* IAEValueDecoratorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C967A1781673A008CD851 /* IAEValueDecoratorView.m */; };
 		5B5C967F17816A13008CD851 /* UIView+RoundedCorners.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C967E17816A13008CD851 /* UIView+RoundedCorners.m */; };
 		5B5C968217816D68008CD851 /* IAEValueDecoratorViewConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C968117816D68008CD851 /* IAEValueDecoratorViewConfigurator.m */; };
@@ -320,6 +321,8 @@
 		5B57275917D9FAD400552E98 /* IAEAdjustConceptAmountViewControllerDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEAdjustConceptAmountViewControllerDataSource.h; sourceTree = "<group>"; };
 		5B57A9C017FAD39500C7BFD3 /* calculatordragbackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calculatordragbackground.png; sourceTree = "<group>"; };
 		5B57A9C117FAD39500C7BFD3 /* calculatordragbackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calculatordragbackground@2x.png"; sourceTree = "<group>"; };
+		5B5BEAF21827E6CA00A00BE0 /* IAEExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEExporter.h; sourceTree = "<group>"; };
+		5B5BEAF31827E6CA00A00BE0 /* IAEExporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEExporter.m; sourceTree = "<group>"; };
 		5B5C96791781673A008CD851 /* IAEValueDecoratorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEValueDecoratorView.h; sourceTree = "<group>"; };
 		5B5C967A1781673A008CD851 /* IAEValueDecoratorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEValueDecoratorView.m; sourceTree = "<group>"; };
 		5B5C967D17816A13008CD851 /* UIView+RoundedCorners.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RoundedCorners.h"; sourceTree = "<group>"; };
@@ -970,6 +973,15 @@
 			name = Protocols;
 			sourceTree = "<group>";
 		};
+		5B5BEAF11827E6B400A00BE0 /* Exporter */ = {
+			isa = PBXGroup;
+			children = (
+				5B5BEAF21827E6CA00A00BE0 /* IAEExporter.h */,
+				5B5BEAF31827E6CA00A00BE0 /* IAEExporter.m */,
+			);
+			name = Exporter;
+			sourceTree = "<group>";
+		};
 		5B5C967817816718008CD851 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1094,6 +1106,7 @@
 		5B62D861178EC1FA009879A6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5B5BEAF11827E6B400A00BE0 /* Exporter */,
 				5B23F04117FF097A00477D34 /* Formatters */,
 				5B60EB5717C4A39E004E3D81 /* Localizer Phrase Composer */,
 				5BCE3AA517A95D2A00CD01E7 /* Numbers Utils */,
@@ -2401,6 +2414,7 @@
 				5BC7101A17AC29F600E12953 /* IAEConcept.m in Sources */,
 				5B767E031636D7FC005315F8 /* main.m in Sources */,
 				5BCE3AB417A9689600CD01E7 /* IAEHelperReportTextRawMenuDataSource.m in Sources */,
+				5B5BEAF41827E6CA00A00BE0 /* IAEExporter.m in Sources */,
 				5B767E071636D7FC005315F8 /* IAEAppDelegate.m in Sources */,
 				5BCE3ABD17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.m in Sources */,
 				5BE84E77180DA8CF00F4A80B /* IAESettingsViewController.m in Sources */,

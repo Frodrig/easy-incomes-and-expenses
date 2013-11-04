@@ -31,6 +31,13 @@ static NSString * const kUserDefaultInitialMonth = @"initialMonth";
 
 #pragma mark - ReportSection
 
+- (BOOL)isDayModeActive
+{
+    const BOOL isDayModeActive = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsDayModeActiveKey];
+    
+    return isDayModeActive;
+}
+
 - (BOOL)isTotalAmountModeInReportSection
 {
     const BOOL isTotalAmountMode = [self isReportAmountModeInReportSectionOfType:kUserDefaultsReportAmountModeTotalAmountValue];

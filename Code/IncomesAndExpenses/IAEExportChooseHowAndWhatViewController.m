@@ -7,6 +7,9 @@
 //
 
 #import "IAEExportChooseHowAndWhatViewController.h"
+#import "IAEEasyIncomesAndExpensesViewControllerQuery.h"
+#import "IAEExporter.h"
+#import "IAEOpenYear.h"
 
 @interface IAEExportChooseHowAndWhatViewController ()
 
@@ -77,7 +80,9 @@ static const NSUInteger kFamilyFontSizeForCells = 24;
 
 - (void)readyButtonPressed:(id)sender
 {
-    NSLog(@"%@", self.userConfiguration);
+    IAEOpenYear *openYear = [self.query findOpenYear];
+    [[IAEExporter sharedExporter] exportYearDate:openYear.yearDate withUserConfiguration:self.userConfiguration];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

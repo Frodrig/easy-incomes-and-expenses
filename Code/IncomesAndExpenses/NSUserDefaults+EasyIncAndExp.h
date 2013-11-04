@@ -13,6 +13,8 @@
 
 - (void)prepareDefaults;
 
+- (BOOL)isDayModeActive;
+
 - (BOOL)isTotalAmountModeInReportSection;
 - (BOOL)isTotalPercentageModeInReportSection;
 - (void)changeToNextReportMode;

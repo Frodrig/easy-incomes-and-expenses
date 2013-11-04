@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface IAEExportStepOneViewController : UITableViewController
+@interface IAEExportChooseWhereViewController : UITableViewController
+
+@property (nonatomic, weak) NSMutableDictionary *userConfiguration;
 
 - (void)cancelButtonPressed:(id)sender;
 

@@ -6,15 +6,13 @@
 //  Copyright (c) 2013 Fernando Rodríguez Martínez. All rights reserved.
 //
 
-#import "IAEExportStepOneViewController.h"
+#import "IAEExportChooseWhereViewController.h"
 
-@interface IAEExportStepOneViewController ()
-
-@property (nonatomic, strong) NSSet *selectedExportDestinations;
+@interface IAEExportChooseWhereViewController ()
 
 @end
 
-@implementation IAEExportStepOneViewController
+@implementation IAEExportChooseWhereViewController
 
 #pragma mark - Constants
 
@@ -23,12 +21,15 @@ static const NSUInteger kNumberOfExportOptions = 3;
 static NSString * const kFamilyFontNameForCells = @"HelveticaNeue-Light";
 static const NSUInteger kFamilyFontSizeForCells = 24;
 
-static const NSUInteger kOptionIndexPrint = 1;
-static const NSUInteger kOptionIndexPDF = 2;
-static const NSUInteger kOptionIndexCSV = 3;
+static const NSUInteger kOptionIndexPrint = 0;
+static const NSUInteger kOptionIndexPDF = 1;
+static const NSUInteger kOptionIndexCSV = 2;
+
+static NSString * const kWherePrintKey = @"where_print";
+static NSString * const kWherePDFKey = @"where_pdf";
+static NSString * const kWhereCSVKey = @"where_csv";
 
 #pragma mark - Properties
-
 
 #pragma mark - Init
 
@@ -71,6 +72,11 @@ static const NSUInteger kOptionIndexCSV = 3;
 
 - (void)nextStepButtonPressed:(id)sender
 {
+    [self lauchChooseHowViewController];
+}
+
+- (void)lauchChooseHowViewController
+{
     
 }
 
@@ -100,8 +106,8 @@ static const NSUInteger kOptionIndexCSV = 3;
     }
     
     // Configure the cell...
-    const NSUInteger optionIndex = indexPath.row + 1;
-    NSString *lTextExportOption = [NSString stringWithFormat:@"LTEXT_EXPORTSTEPONE_OPTION_%d", optionIndex];
+    const NSUInteger optionIndex = indexPath.row;
+    NSString *lTextExportOption = [NSString stringWithFormat:@"LTEXT_EXPORTSTEPONE_OPTION_%d", optionIndex + 1];
     cell.textLabel.text = NSLocalizedString(lTextExportOption, @"");
     if (optionIndex == kOptionIndexPrint) {
         cell.imageView.image = [UIImage imageNamed:@"743-printer"];
@@ -126,20 +132,39 @@ static const NSUInteger kOptionIndexCSV = 3;
 
 - (void)updateSelectedExportDestinations
 {
-    NSMutableSet *selectedExportDestinations = [NSMutableSet set];
     for (UITableViewCell *cell in self.tableView.visibleCells) {
-        if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
-            NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
-            [selectedExportDestinations addObject:@(cellIndexPath.row)];
-        }
+        NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
+        NSString *keyForCellAtIndexPath = [self convertCellIndexPathToKey:cellIndexPath];
+        self.userConfiguration[keyForCellAtIndexPath] = cell.accessoryType == UITableViewCellAccessoryCheckmark ? [NSNumber numberWithBool:YES] : [NSNumber numberWithBool:NO];
+    }
+}
+
+- (NSString *)convertCellIndexPathToKey:(NSIndexPath *)indexPath
+{    
+    NSString *key = nil;
+    if (indexPath.row == kOptionIndexPrint) {
+        key = [NSString stringWithString:kWherePrintKey];
+    } else if (indexPath.row == kOptionIndexPDF) {
+        key = [NSString stringWithString:kWherePDFKey];
+    } else if (indexPath.row == kOptionIndexCSV) {
+        key = [NSString stringWithString:kWhereCSVKey];
     }
     
-    self.selectedExportDestinations = [NSSet setWithSet:selectedExportDestinations];
+    return key;
 }
 
 - (void)updateNextStepButton
 {
-    self.navigationItem.rightBarButtonItem.enabled = self.selectedExportDestinations.count > 0;
+    self.navigationItem.rightBarButtonItem.enabled = [self isAnyWhereToExportMarked];
+}
+
+- (BOOL)isAnyWhereToExportMarked
+{
+    const BOOL isAnyWhereMarked = [self.userConfiguration[kWherePrintKey] boolValue] ||
+                                  [self.userConfiguration[kWherePDFKey] boolValue] ||
+                                  [self.userConfiguration[kWhereCSVKey] boolValue];
+    
+    return isAnyWhereMarked;
 }
  
 @end

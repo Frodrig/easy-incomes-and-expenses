@@ -7,9 +7,11 @@
 //
 
 #import "IAEExportViewController.h"
-#import "IAEExportStepOneViewController.h"
+#import "IAEExportChooseWhereViewController.h"
 
 @interface IAEExportViewController ()
+
+@property (nonatomic, strong) NSMutableDictionary *userConfiguration;
 
 @end
 
@@ -19,12 +21,25 @@
 
 static const CGFloat kTintValueForNavigation = 0.6;
 
+#pragma mark - Properties
+- (NSMutableDictionary *)userConfiguration
+{
+    if (!_userConfiguration) {
+        _userConfiguration = [NSMutableDictionary dictionary];
+    }
+    
+    return _userConfiguration;
+}
+
+#pragma mark - Init
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
     }
+    
     return self;
 }
 
@@ -43,8 +58,9 @@ static const CGFloat kTintValueForNavigation = 0.6;
 
 - (void)launchExportStepOneViewController
 {
-    IAEExportStepOneViewController *exportStepOneViewController = [[IAEExportStepOneViewController alloc] initWithNibName:nil bundle:nil];
-    [self pushViewController:exportStepOneViewController animated:NO];
+    IAEExportChooseWhereViewController *chooseWhereViewController = [[IAEExportChooseWhereViewController alloc] initWithNibName:nil bundle:nil];
+    chooseWhereViewController.userConfiguration = self.userConfiguration;
+    [self pushViewController:chooseWhereViewController animated:NO];
 }
 
 @end

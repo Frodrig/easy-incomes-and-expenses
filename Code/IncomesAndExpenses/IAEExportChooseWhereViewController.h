@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol IAEEasyIncomesAndExpensesViewControllerQuery;
+
 @interface IAEExportChooseWhereViewController : UITableViewController
 
 @property (nonatomic, weak) NSMutableDictionary *userConfiguration;
+@property(nonatomic, weak) id<IAEEasyIncomesAndExpensesViewControllerQuery> query;
 
 - (void)cancelButtonPressed:(id)sender;
 

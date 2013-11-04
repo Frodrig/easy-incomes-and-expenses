@@ -8,6 +8,7 @@
 
 #import "IAEExportViewController.h"
 #import "IAEExportChooseWhereViewController.h"
+#import "IAEEasyIncomesAndExpensesViewControllerQuery.h"
 
 @interface IAEExportViewController ()
 
@@ -22,6 +23,7 @@
 static const CGFloat kTintValueForNavigation = 0.6;
 
 #pragma mark - Properties
+
 - (NSMutableDictionary *)userConfiguration
 {
     if (!_userConfiguration) {
@@ -60,6 +62,8 @@ static const CGFloat kTintValueForNavigation = 0.6;
 {
     IAEExportChooseWhereViewController *chooseWhereViewController = [[IAEExportChooseWhereViewController alloc] initWithNibName:nil bundle:nil];
     chooseWhereViewController.userConfiguration = self.userConfiguration;
+    chooseWhereViewController.query = self.query;
+    
     [self pushViewController:chooseWhereViewController animated:NO];
 }
 

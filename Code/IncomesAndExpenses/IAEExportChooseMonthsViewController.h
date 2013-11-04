@@ -1,8 +1,8 @@
 //
-//  IAEExportViewController.h
+//  IAEChooseMonthsViewController.h
 //  IncomesAndExpenses
 //
-//  Created by Fernando Rodríguez on 31/10/13.
+//  Created by Fernando Rodríguez on 04/11/13.
 //  Copyright (c) 2013 Fernando Rodríguez Martínez. All rights reserved.
 //
 
@@ -10,8 +10,9 @@
 
 @protocol IAEEasyIncomesAndExpensesViewControllerQuery;
 
-@interface IAEExportViewController : UINavigationController
+@interface IAEExportChooseMonthsViewController : UITableViewController
 
+@property (nonatomic, weak) NSMutableDictionary * userConfiguration;
 @property(nonatomic, weak) id<IAEEasyIncomesAndExpensesViewControllerQuery> query;
 
 @end

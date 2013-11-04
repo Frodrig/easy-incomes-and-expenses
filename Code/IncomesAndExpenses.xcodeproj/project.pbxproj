@@ -110,6 +110,8 @@
 		5B8CD5D117A262A800A353A5 /* IAEContextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8CD5D017A262A800A353A5 /* IAEContextView.m */; };
 		5B8CD5D317A262BC00A353A5 /* IAEContextViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B8CD5D217A262BC00A353A5 /* IAEContextViewContent.xib */; };
 		5B8CD5D917A2C6DB00A353A5 /* IAETextRawSelectorMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8CD5D817A2C6DB00A353A5 /* IAETextRawSelectorMenuView.m */; };
+		5B8E924618279DE2007868DE /* IAEExportChooseMonthsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8E924418279DE1007868DE /* IAEExportChooseMonthsViewController.m */; };
+		5B8E924718279DE2007868DE /* IAEExportChooseMonthsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B8E924518279DE2007868DE /* IAEExportChooseMonthsViewController.xib */; };
 		5B8F843417B1002200C17020 /* IAEGlobalConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8F843317B1002200C17020 /* IAEGlobalConstants.m */; };
 		5B907832179D1AA700B2A0F7 /* IAECalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B907830179D1AA700B2A0F7 /* IAECalculatorViewController.m */; };
 		5B907833179D1AA700B2A0F7 /* IAECalculatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B907831179D1AA700B2A0F7 /* IAECalculatorViewController.xib */; };
@@ -223,8 +225,8 @@
 		5BCB5F4F1822C1B500A37013 /* 738-document-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BCB5F4D1822C1B500A37013 /* 738-document-1@2x.png */; };
 		5BCB5F521822C1BD00A37013 /* 743-printer.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BCB5F501822C1BD00A37013 /* 743-printer.png */; };
 		5BCB5F531822C1BD00A37013 /* 743-printer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BCB5F511822C1BD00A37013 /* 743-printer@2x.png */; };
-		5BCB5F5A1822C75C00A37013 /* IAEExportStepTwoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCB5F581822C75C00A37013 /* IAEExportStepTwoViewController.m */; };
-		5BCB5F5B1822C75C00A37013 /* IAEExportStepTwoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BCB5F591822C75C00A37013 /* IAEExportStepTwoViewController.xib */; };
+		5BCB5F5A1822C75C00A37013 /* IAEExportChooseHowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCB5F581822C75C00A37013 /* IAEExportChooseHowViewController.m */; };
+		5BCB5F5B1822C75C00A37013 /* IAEExportChooseHowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BCB5F591822C75C00A37013 /* IAEExportChooseHowViewController.xib */; };
 		5BCCC91717D5008E00FC1A05 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BCCC91617D5008E00FC1A05 /* Images.xcassets */; };
 		5BCE3A9F17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3A9E17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m */; };
 		5BCE3AA117A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BCE3AA017A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib */; };
@@ -420,6 +422,9 @@
 		5B8CD5D817A2C6DB00A353A5 /* IAETextRawSelectorMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAETextRawSelectorMenuView.m; sourceTree = "<group>"; };
 		5B8CD5DA17A2C6EF00A353A5 /* IAETextRawSelectorMenuViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAETextRawSelectorMenuViewDelegate.h; sourceTree = "<group>"; };
 		5B8CD5DB17A2C6FE00A353A5 /* IAETextRawSelectorMenuViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAETextRawSelectorMenuViewDataSource.h; sourceTree = "<group>"; };
+		5B8E924318279DE1007868DE /* IAEExportChooseMonthsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEExportChooseMonthsViewController.h; sourceTree = "<group>"; };
+		5B8E924418279DE1007868DE /* IAEExportChooseMonthsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEExportChooseMonthsViewController.m; sourceTree = "<group>"; };
+		5B8E924518279DE2007868DE /* IAEExportChooseMonthsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEExportChooseMonthsViewController.xib; sourceTree = "<group>"; };
 		5B8F843017B0FF2800C17020 /* IAEGlobalConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IAEGlobalConstants.h; sourceTree = "<group>"; };
 		5B8F843317B1002200C17020 /* IAEGlobalConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEGlobalConstants.m; sourceTree = "<group>"; };
 		5B90782F179D1AA700B2A0F7 /* IAECalculatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECalculatorViewController.h; sourceTree = "<group>"; };
@@ -637,9 +642,9 @@
 		5BCB5F4D1822C1B500A37013 /* 738-document-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "738-document-1@2x.png"; sourceTree = "<group>"; };
 		5BCB5F501822C1BD00A37013 /* 743-printer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "743-printer.png"; sourceTree = "<group>"; };
 		5BCB5F511822C1BD00A37013 /* 743-printer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "743-printer@2x.png"; sourceTree = "<group>"; };
-		5BCB5F571822C75C00A37013 /* IAEExportStepTwoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEExportStepTwoViewController.h; sourceTree = "<group>"; };
-		5BCB5F581822C75C00A37013 /* IAEExportStepTwoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEExportStepTwoViewController.m; sourceTree = "<group>"; };
-		5BCB5F591822C75C00A37013 /* IAEExportStepTwoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEExportStepTwoViewController.xib; sourceTree = "<group>"; };
+		5BCB5F571822C75C00A37013 /* IAEExportChooseHowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEExportChooseHowViewController.h; sourceTree = "<group>"; };
+		5BCB5F581822C75C00A37013 /* IAEExportChooseHowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEExportChooseHowViewController.m; sourceTree = "<group>"; };
+		5BCB5F591822C75C00A37013 /* IAEExportChooseHowViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEExportChooseHowViewController.xib; sourceTree = "<group>"; };
 		5BCCC91617D5008E00FC1A05 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5BCE3A9D17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEditModeConceptCollectionViewHeader.h; sourceTree = "<group>"; };
 		5BCE3A9E17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEditModeConceptCollectionViewHeader.m; sourceTree = "<group>"; };
@@ -1502,6 +1507,16 @@
 			name = "Text Raw Selector Menu";
 			sourceTree = "<group>";
 		};
+		5B8E924218279DBD007868DE /* ExportChooseMonthViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5B8E924318279DE1007868DE /* IAEExportChooseMonthsViewController.h */,
+				5B8E924418279DE1007868DE /* IAEExportChooseMonthsViewController.m */,
+				5B8E924518279DE2007868DE /* IAEExportChooseMonthsViewController.xib */,
+			);
+			name = ExportChooseMonthViewController;
+			sourceTree = "<group>";
+		};
 		5B8F842F17B0FEA800C17020 /* Global constants */ = {
 			isa = PBXGroup;
 			children = (
@@ -1849,9 +1864,8 @@
 		5BCB5F40182267B700A37013 /* Export */ = {
 			isa = PBXGroup;
 			children = (
-				5BCB5F561822C6FE00A37013 /* ExportStepFourViewController */,
-				5BCB5F551822C6E700A37013 /* ExportStepThreeViewController */,
-				5BCB5F541822C65800A37013 /* ExportStepTwoViewController */,
+				5BCB5F541822C65800A37013 /* ExportChooseHowViewController */,
+				5B8E924218279DBD007868DE /* ExportChooseMonthViewController */,
 				5BCB5F461822B37200A37013 /* ExportChooseWhereViewController */,
 				5BCB5F41182267E400A37013 /* IAEExportViewController.h */,
 				5BCB5F42182267E400A37013 /* IAEExportViewController.m */,
@@ -1870,28 +1884,14 @@
 			name = ExportChooseWhereViewController;
 			sourceTree = "<group>";
 		};
-		5BCB5F541822C65800A37013 /* ExportStepTwoViewController */ = {
+		5BCB5F541822C65800A37013 /* ExportChooseHowViewController */ = {
 			isa = PBXGroup;
 			children = (
-				5BCB5F571822C75C00A37013 /* IAEExportStepTwoViewController.h */,
-				5BCB5F581822C75C00A37013 /* IAEExportStepTwoViewController.m */,
-				5BCB5F591822C75C00A37013 /* IAEExportStepTwoViewController.xib */,
+				5BCB5F571822C75C00A37013 /* IAEExportChooseHowViewController.h */,
+				5BCB5F581822C75C00A37013 /* IAEExportChooseHowViewController.m */,
+				5BCB5F591822C75C00A37013 /* IAEExportChooseHowViewController.xib */,
 			);
-			name = ExportStepTwoViewController;
-			sourceTree = "<group>";
-		};
-		5BCB5F551822C6E700A37013 /* ExportStepThreeViewController */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = ExportStepThreeViewController;
-			sourceTree = "<group>";
-		};
-		5BCB5F561822C6FE00A37013 /* ExportStepFourViewController */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = ExportStepFourViewController;
+			name = ExportChooseHowViewController;
 			sourceTree = "<group>";
 		};
 		5BCE3A9B17A8FBB300CD01E7 /* Header */ = {
@@ -2316,7 +2316,7 @@
 				5BBD3794180BFF5B0095A15A /* close.png in Resources */,
 				5B57A9C317FAD39500C7BFD3 /* calculatordragbackground@2x.png in Resources */,
 				5BBD376D180BFF5B0095A15A /* nav_g.png in Resources */,
-				5BCB5F5B1822C75C00A37013 /* IAEExportStepTwoViewController.xib in Resources */,
+				5BCB5F5B1822C75C00A37013 /* IAEExportChooseHowViewController.xib in Resources */,
 				5B55C407178AA8C20066F586 /* IAECategoryEditorViewController.xib in Resources */,
 				5BCE3AA117A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib in Resources */,
 				5B879750180E7B1900554E13 /* settingsindex_3@2x.png in Resources */,
@@ -2339,6 +2339,7 @@
 				5BBD3763180BFF5B0095A15A /* ftv2vertline.png in Resources */,
 				5BBD376C180BFF5B0095A15A /* nav_f.png in Resources */,
 				5BBD3750180BFF5B0095A15A /* doxygen.png in Resources */,
+				5B8E924718279DE2007868DE /* IAEExportChooseMonthsViewController.xib in Resources */,
 				5BBD376A180BFF5B0095A15A /* interface_flurry_ads.html in Resources */,
 				5BBD3761180BFF5B0095A15A /* ftv2pnode.png in Resources */,
 				5B2E93D217DCDDF6007D4284 /* eiae_icon40.png in Resources */,
@@ -2412,6 +2413,7 @@
 				5BD94C0B1786B864009009B1 /* IAECategoryTableViewCell.m in Sources */,
 				5B62D874178EC20E009879A6 /* IAEOrientationHelper.m in Sources */,
 				5B36AFFC1785D73800132475 /* IAECategorySelectorViewController.m in Sources */,
+				5B8E924618279DE2007868DE /* IAEExportChooseMonthsViewController.m in Sources */,
 				5B8F843417B1002200C17020 /* IAEGlobalConstants.m in Sources */,
 				5B879778180EA90500554E13 /* IAEHelpViewController.m in Sources */,
 				5B55C406178AA8C20066F586 /* IAECategoryEditorViewController.m in Sources */,
@@ -2464,7 +2466,7 @@
 				5B62D85B178EA870009879A6 /* IAEYearSelectorCollectionViewCell.m in Sources */,
 				5BCE3AAB17A95EDB00CD01E7 /* IAEHelperReportAreaViewDataSource.m in Sources */,
 				5BCE3AB117A9688700CD01E7 /* IAEHelperContextTextRawMenuDataSource.m in Sources */,
-				5BCB5F5A1822C75C00A37013 /* IAEExportStepTwoViewController.m in Sources */,
+				5BCB5F5A1822C75C00A37013 /* IAEExportChooseHowViewController.m in Sources */,
 				5BCB5F4A1822B39400A37013 /* IAEExportChooseWhereViewController.m in Sources */,
 				5B87978B180EEC7200554E13 /* IAEHelpThemeViewController.m in Sources */,
 				5BA0130D179800AC00337E84 /* NSString+TwoDigitString.m in Sources */,

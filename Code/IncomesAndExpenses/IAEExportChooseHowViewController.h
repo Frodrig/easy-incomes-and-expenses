@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface IAEExportStepTwoViewController : UITableViewController
+@interface IAEExportChooseHowViewController : UITableViewController
 
 @end

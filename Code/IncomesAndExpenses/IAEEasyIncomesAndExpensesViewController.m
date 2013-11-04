@@ -627,6 +627,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 {
     self.exportViewController = [[IAEExportViewController alloc] initWithNibName:nil bundle:nil];
     self.exportViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+    self.exportViewController.query = self;
     
     [self presentViewController:self.exportViewController animated:YES completion:nil];
 }

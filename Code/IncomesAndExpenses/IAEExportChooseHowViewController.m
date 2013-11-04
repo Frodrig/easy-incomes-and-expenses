@@ -6,13 +6,13 @@
 //  Copyright (c) 2013 Fernando Rodríguez Martínez. All rights reserved.
 //
 
-#import "IAEExportStepTwoViewController.h"
+#import "IAEExportChooseHowViewController.h"
 
-@interface IAEExportStepTwoViewController ()
+@interface IAEExportChooseHowViewController ()
 
 @end
 
-@implementation IAEExportStepTwoViewController
+@implementation IAEExportChooseHowViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {

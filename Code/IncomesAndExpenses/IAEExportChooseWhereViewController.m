@@ -7,6 +7,8 @@
 //
 
 #import "IAEExportChooseWhereViewController.h"
+#import "IAEExportChooseMonthsViewController.h"
+#import "IAEEasyIncomesAndExpensesViewControllerQuery.h"
 
 @interface IAEExportChooseWhereViewController ()
 
@@ -51,11 +53,11 @@ static NSString * const kWhereCSVKey = @"where_csv";
 
 - (void)configureNavigationController
 {
-    self.title = NSLocalizedString(@"LTEXT_EXPORTSTEPONE_TITLE", @"");
+    self.title = NSLocalizedString(@"LTEXT_EXPORTCHOOSEWHERE_TITLE", @"");
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
                                                                                           target:self
                                                                                           action:@selector(cancelButtonPressed:)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"LTEXT_EXPORTSTEPONE_NEXTBUTTONTITLE", @"")
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"LTEXT_EXPORTCHOOSEWHERE_NEXTBUTTONTITLE", @"")
                                                                               style:UIBarButtonSystemItemAction
                                                                              target:self
                                                                              action:@selector(nextStepButtonPressed:)];
@@ -77,7 +79,10 @@ static NSString * const kWhereCSVKey = @"where_csv";
 
 - (void)lauchChooseHowViewController
 {
-    
+    IAEExportChooseMonthsViewController *chooseMonthsViewController = [[IAEExportChooseMonthsViewController alloc] initWithNibName:nil bundle:nil];
+    chooseMonthsViewController.userConfiguration = self.userConfiguration;
+    chooseMonthsViewController.query = self.query;
+    [self.navigationController pushViewController:chooseMonthsViewController animated:YES];
 }
 
 #pragma mark - Table view data source
@@ -106,7 +111,7 @@ static NSString * const kWhereCSVKey = @"where_csv";
     }
     
     // Configure the cell...
-    NSString *lTextExportOption = [NSString stringWithFormat:@"LTEXT_EXPORTSTEPONE_OPTION_%d", indexPath.row + 1];
+    NSString *lTextExportOption = [NSString stringWithFormat:@"LTEXT_EXPORTCHOOSEWHERE_OPTION_%d", indexPath.row + 1];
     cell.textLabel.text = NSLocalizedString(lTextExportOption, @"");
     if (indexPath.row == kOptionIndexPrint) {
         cell.imageView.image = [UIImage imageNamed:@"743-printer"];
@@ -125,11 +130,11 @@ static NSString * const kWhereCSVKey = @"where_csv";
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     cell.accessoryType = cell.accessoryType == UITableViewCellAccessoryCheckmark ? UITableViewCellAccessoryNone : UITableViewCellAccessoryCheckmark;
     
-    [self updateSelectedExportDestinations]; 
+    [self updateUserConfiguration]; 
     [self updateNextStepButton];
 }
 
-- (void)updateSelectedExportDestinations
+- (void)updateUserConfiguration
 {
     for (UITableViewCell *cell in self.tableView.visibleCells) {
         NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];

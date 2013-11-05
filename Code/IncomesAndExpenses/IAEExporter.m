@@ -11,6 +11,7 @@
 #import "IAEMonth.h"
 #import "IAECategoryStore.h"
 #import "IAECategory.h"
+#import "IAEConcept.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
 #import "IAENumberFormatterManager.h"
 
@@ -82,7 +83,7 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
 // "totalsByMonth", {idxMonth: {"self": IAEMonth, "balance": NSDecimalNumber, "expenses": NSDecimalNumber, "incomes": NSDecimalNumber}}
 // "incomesByMonthAndCategories", {idxMonth: {"self": IAEMonth, "categoryTag": NSDecimalNumber}}
 // "expensesByMonthAndCategories", {idxMonth: {"self": IAEMonth, "categoryTag": NSDecimalNumber}}
-// "conceptsByMonth", {idxMonth, {"self": IAEMonth, "concepts": @[concepts]}}
+// "conceptsByMonth", {idxMonth: {"self": IAEMonth, "concepts": @[concepts]}}
 //
 - (NSDictionary *)convertToExportDataFromYearDate:(NSUInteger)yearDate andUserConfiguration:(NSDictionary *)userConfiguration
 {
@@ -172,7 +173,7 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
         for (IAECategory *category in allCategoriesOfType) {
             NSDecimalNumber *balance = [month balanceOfAllConceptsOfCategory:category];
             if (![balance isEqualToNumber:[NSDecimalNumber zero]]) {
-                amountOfCategoriesInMonth[category.tag] = balance;
+                amountOfCategoriesInMonth[[category localizedTag]] = balance;
             }
         }
         convertedData[@(month.month)] = [NSDictionary dictionaryWithDictionary:amountOfCategoriesInMonth];
@@ -227,11 +228,11 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
         for (IAECategory *category in allCategoriesOfType) {
             NSDecimalNumber *balance = [month balanceOfAllConceptsOfCategory:category];
             if (![balance isEqualToNumber:[NSDecimalNumber zero]]) {
-                NSDecimalNumber *actualBalance = amountOfCategories[category.tag];
+                NSDecimalNumber *actualBalance = amountOfCategories[[category localizedTag]];
                 if (actualBalance) {
-                    amountOfCategories[category.tag] = [actualBalance decimalNumberByAdding:balance];
+                    amountOfCategories[[category localizedTag]] = [actualBalance decimalNumberByAdding:balance];
                 } else {
-                    amountOfCategories[category.tag] = balance;
+                    amountOfCategories[[category localizedTag]] = balance;
                 }
             }
         }
@@ -283,13 +284,14 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
             
             const BOOL exportMonthReport = [modes containsObject:kValueWhatOptionMonthsReport];
             if (exportMonthReport) {
-                NSData *monthReport = [self generateDatatoExportCSVMonthReportWithConvertedUserConfiguration:convertedUserConfiguration];
+                NSData *monthReport = [self generateDataToExportCSVMonthReportWithConvertedUserConfiguration:convertedUserConfiguration];
                 [fileHandle writeData:monthReport];
             }
             
             const BOOL exportConceptsReport = [modes containsObject:kValueWhatOptionConceptsReport];
             if (exportConceptsReport) {
-                
+                NSData *conceptReport = [self generateDataToExportCSVConceptReportWithConvertedUserConfiguration:convertedUserConfiguration];
+                [fileHandle writeData:conceptReport];
             }
             
             [fileHandle closeFile];
@@ -302,7 +304,7 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
     NSString *dataStr = [NSString stringWithFormat:NSLocalizedString(@"LTEXT_EXPORTCSV_HEADER", ""), yearDate];
     dataStr = [dataStr stringByAppendingString:@"\n\n"];
     
-    NSData *data = [dataStr dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *data = [dataStr dataUsingEncoding:NSUTF16StringEncoding];
     return data;
 }
 
@@ -323,11 +325,11 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
     
     [dataStr appendString:@"\n"];
     
-    NSData *data = [dataStr dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *data = [dataStr dataUsingEncoding:NSUTF16StringEncoding];
     return data;
 }
 
-- (NSData *)generateDatatoExportCSVMonthReportWithConvertedUserConfiguration:(NSDictionary *)convertedUserConfiguration
+- (NSData *)generateDataToExportCSVMonthReportWithConvertedUserConfiguration:(NSDictionary *)convertedUserConfiguration
 {
     __block NSMutableArray *monthsTotals = [NSMutableArray array];
     NSDictionary *totalsByMonths = convertedUserConfiguration[kKeyExportedDataTotalsByMonths];
@@ -349,7 +351,7 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
     
     NSAssert(monthsTotals.count == monthsIncomeCategories.count &&  monthsIncomeCategories.count == monthsExpenseCategories.count, @"");
     
-    __block NSMutableString *dataStr = [NSMutableString stringWithFormat:@"%@\n\n", NSLocalizedString(@"LTEXT_EXPORTCSV_MONTHREPORT_HEADER", @"")];
+    __block NSMutableString *dataStr = [NSMutableString stringWithFormat:@"%@\n", NSLocalizedString(@"LTEXT_EXPORTCSV_MONTHREPORT_HEADER", @"")];
     
     const NSUInteger maxMonths = monthsTotals.count;
     for (NSUInteger monthsIdx = 0; monthsIdx < maxMonths; ++monthsIdx) {
@@ -359,17 +361,52 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
         
         IAEMonth *month = totals[kKeyExportedDataSelfMonth];
         
-        [dataStr appendString:[NSString stringWithFormat:@"%@\n", [month monthAsString]]];
+        [dataStr appendString:[NSString stringWithFormat:@"\n%@\n\n", [month monthAsString]]];
         [dataStr appendString:[self generateStringDataToExportCSVTotalsFromSource:totals]];
         
+        [dataStr appendString:@"\n"];
         [incomeCategories removeObjectForKey:kKeyExportedDataSelfMonth];
         [dataStr appendString:[self generateStringDataToExportCSVCategoriesFromSource:incomeCategories withHeader:NSLocalizedString(@"LTEXT_EXPORTCSV_INCOMECATEGORIES", @"")]];
-        
+
+        [dataStr appendString:@"\n"];
         [expenseCategories removeObjectForKey:kKeyExportedDataSelfMonth];
         [dataStr appendString:[self generateStringDataToExportCSVCategoriesFromSource:expenseCategories withHeader:NSLocalizedString(@"LTEXT_EXPORTCSV_EXPENSECATEGORIES", @"")]];
     }
     
-    NSData *data = [dataStr dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *data = [dataStr dataUsingEncoding:NSUTF16StringEncoding];
+    return data;
+}
+
+- (NSData *)generateDataToExportCSVConceptReportWithConvertedUserConfiguration:(NSDictionary *)convertedUserConfiguration
+{
+    NSNumberFormatter *formatter = [IAENumberFormatterManager sharedManager].currencyFormatter;
+
+    __block NSMutableString *dataStr = [NSMutableString stringWithFormat:@"\n%@\n", NSLocalizedString(@"LTEXT_EXPORTCSV_CONCEPTREPORT_HEADER", @"")];
+
+    const BOOL dayModeActive = [[NSUserDefaults standardUserDefaults] isDayModeActive];
+    
+    NSDictionary *conceptsOfMonths = convertedUserConfiguration[kKeyExportedDataConceptsByMonth];
+    
+    [conceptsOfMonths enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        NSDictionary *monthData = obj;
+        IAEMonth *month = monthData[kKeyExportedDataSelfMonth];
+        NSArray *concepts = monthData[kKeyExportedDataConcepts];
+        [dataStr appendString:[NSString stringWithFormat:@"\n%@\n\n", [month monthAsString]]];
+        NSUInteger idxConcept = 1;
+        for (IAEConcept *concept in concepts) {
+            NSString *indicator = nil;
+            if (dayModeActive) {
+                indicator = concept.dayOfTheMonth != 0 ? [NSString stringWithFormat:NSLocalizedString(@"LTEXT_EXPORTCSV_CONCEPTREPORT_DAY", ""), concept.dayOfTheMonth] :
+                                                         [NSString stringWithFormat:NSLocalizedString(@"LTEXT_EXPORTCSV_CONCEPTREPORT_NODAY", "")];
+            } else {
+                indicator = [NSString stringWithFormat:@"%d", idxConcept];
+            }
+            [dataStr appendString:[NSString stringWithFormat:@"\"%@\",\"%@\",\"%@\"\n", indicator, [concept.category localizedTag], [formatter stringFromNumber:[concept amountWithSign]]]];
+            ++idxConcept;
+        }
+    }];
+    
+    NSData *data = [dataStr dataUsingEncoding:NSUTF16StringEncoding];
     return data;
 }
 

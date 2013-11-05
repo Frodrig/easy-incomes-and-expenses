@@ -10,7 +10,7 @@
 
 @protocol IAEEasyIncomesAndExpensesViewControllerQuery;
 
-@interface IAEExportChooseHowAndWhatViewController : UITableViewController
+@interface IAEExportChooseWhatViewController : UITableViewController
 
 @property (nonatomic, weak) NSMutableDictionary * userConfiguration;
 @property(nonatomic, weak) id<IAEEasyIncomesAndExpensesViewControllerQuery> query;

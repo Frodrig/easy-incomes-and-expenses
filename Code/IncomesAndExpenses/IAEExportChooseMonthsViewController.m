@@ -8,7 +8,7 @@
 
 #import "IAEExportChooseMonthsViewController.h"
 #import "IAEEasyIncomesAndExpensesViewControllerQuery.h"
-#import "IAEExportChooseHowAndWhatViewController.h"
+#import "IAEExportChooseWhatViewController.h"
 #import "IAEOpenYear.h"
 #import "IAEDateHelper.h"
 #import "IAEMonth.h"
@@ -67,11 +67,11 @@ static NSString * const kSelectedMonths = @"month_selected";
 
 - (void)lauchChooseHowAndWhatViewController
 {
-    IAEExportChooseHowAndWhatViewController *howAndWhatViewController = [[IAEExportChooseHowAndWhatViewController alloc] initWithNibName:nil bundle:nil];
-    howAndWhatViewController.userConfiguration = self.userConfiguration;
-    howAndWhatViewController.query = self.query;
+    IAEExportChooseWhatViewController *whatViewController = [[IAEExportChooseWhatViewController alloc] initWithNibName:nil bundle:nil];
+    whatViewController.userConfiguration = self.userConfiguration;
+    whatViewController.query = self.query;
     
-    [self.navigationController pushViewController:howAndWhatViewController animated:YES];
+    [self.navigationController pushViewController:whatViewController animated:YES];
 }
 
 #pragma mark - Table view data source

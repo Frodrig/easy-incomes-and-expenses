@@ -20,25 +20,22 @@
 static NSString * const kKeyWhereCSV = @"where_csv";
 static NSString * const kKeyWherePDF = @"where_pdf";
 static NSString * const kKeyWherePrint = @"where_print";
-static NSString * const kKeyHowOption = @"how_option";
 static NSString * const kKeyWhatOptions = @"what_options";
 static NSString * const kKeyMonthSelected = @"month_selected";
 
-static NSString * const kValueHowOptionGlobalResume = @"globalResume";
-static NSString * const kValueHowOptionMonthByMonth = @"monthByMonth";
-static NSString * const kValueHowOptionMonthByMonthAndGlobalResume = @"globalResumeAndMonthByMonth";
-static NSString * const kValueWhatOptionTotals = @"totals";
-static NSString * const kValueWhatOptionCategoryIncomes = @"categoryIncomes";
-static NSString * const kValueWhatOptionCategoryExpenses = @"categoryExpenses";
-static NSString * const kValueWhatOptionConcepts = @"concepts";
+static NSString * const kValueWhatOptionGlobalsReport = @"globals_report";
+static NSString * const kValueWhatOptionMonthsReport = @"moths_report";
+static NSString * const kValueWhatOptionConceptsReport = @"concepts_report";
 
-static NSString * const kKeyExportedDataTotals = @"Totals";
+static NSString * const kKeyExportedDataTotals = @"totals";
 static NSString * const kKeyExportedDataBalance = @"balance";
 static NSString * const kKeyExportedDataIncomes = @"expenses";
 static NSString * const kKeyExportedDataExpenses = @"incomes";
-static NSString * const kKeyExportedDataCategoryIncomes = @"incomesByMonthAndCategories";
-static NSString * const kKeyExportedDataCategoryExpenses = @"expensesByMonthAndCategories";
-static NSString * const kKeyExportedDataConcepts = @"conceptsBytMonth";
+static NSString * const kKeyExportedDataIncomeCategories = @"incomesByCategory";
+static NSString * const kKeyExportedDataExpenseCategories = @"expenseByCategory";
+static NSString * const kKeyExportedDataIncomeCategoriesByMonth = @"incomesByMonthAndCategories";
+static NSString * const kKeyExportedDataExpenseCategoriesByMonth = @"expensesByMonthAndCategories";
+static NSString * const kKeyExportedDataConceptsByMonth = @"conceptsBytMonth";
 
 #pragma mark - Class
 
@@ -59,14 +56,12 @@ static NSString * const kKeyExportedDataConcepts = @"conceptsBytMonth";
 {
     NSAssert(userConfiguration, @"");
     NSAssert(userConfiguration[kKeyWherePrint] || userConfiguration[kKeyWherePDF] || userConfiguration[kKeyWhereCSV], @"");
-    NSAssert(userConfiguration[kKeyHowOption], @"");
     NSAssert(userConfiguration[kKeyMonthSelected], @"");
     NSAssert(userConfiguration[kKeyWhatOptions], @"");
     
-    NSString *mode = userConfiguration[kKeyHowOption];
     NSDictionary *convertedData = [self convertToExportDataFromYearDate:yearDate andUserConfiguration:userConfiguration];
     if ([userConfiguration[kKeyWhereCSV] boolValue]) {
-        [self exportToCSVUsingMode:mode inYearDate:yearDate withConvertedData:convertedData];
+        [self exportToCSVUsingMode:@"" inYearDate:yearDate withConvertedData:convertedData];
     }
     
     NSLog(@"%@", convertedData);
@@ -76,35 +71,37 @@ static NSString * const kKeyExportedDataConcepts = @"conceptsBytMonth";
 
 // Formato:
 //
-// "balance", NSDecimalNumber
-// "expenses", NSDecimalNumber
-// "incomes", NSDecimalNumber
-// "incomesByMonthAndCategories", {idxMonth, {categoryTag, NSDecimalNumber} }
-// "expensesByMonthAndCategories", {idxMonth, {categoryTag, NSDecimalNumber} }
-// "conceptsByMonth", {idxMonth, [concepts] }
+// "totals". {"balance": NSDecimal, "expenses": NSDecimal, "incomes": NSDecimal}
+// "incomesByCategory", {categoryTag: value}
+// "expensesByCategory", {categoryTag: value}
+// "incomesByMonthAndCategories", {idxMonth: {categoryTag: NSDecimalNumber}}
+// "expensesByMonthAndCategories", {idxMonth: {categoryTag: NSDecimalNumber}}
+// "conceptsByMonth", {idxMonth, [concepts]}
 //
 - (NSDictionary *)convertToExportDataFromYearDate:(NSUInteger)yearDate andUserConfiguration:(NSDictionary *)userConfiguration
 {
+    const BOOL globalsReport = [self isPresentWhatOption:kValueWhatOptionGlobalsReport inUserConfiguration:userConfiguration];
+    const BOOL monthsReport = [self isPresentWhatOption:kValueWhatOptionMonthsReport inUserConfiguration:userConfiguration];
+    const BOOL conceptsReport = [self isPresentWhatOption:kValueWhatOptionConceptsReport inUserConfiguration:userConfiguration];
+    
     NSMutableDictionary *exportData = [NSMutableDictionary dictionary];
     
-    if ([self isPresentWhatOption:kValueWhatOptionTotals inUserConfiguration:userConfiguration]) {
-        NSDictionary *convertedData = [self convertTotalsToExportDataFromYearDate:yearDate andUserConfiguration:userConfiguration];
-        exportData[kKeyExportedDataTotals] = convertedData;
+    if (monthsReport) {
+        NSDictionary *convertedData = [self convertCategoryTypesToAmountPerMonthExportDataFromYear:yearDate andUserConfiguration:userConfiguration];
+        [exportData addEntriesFromDictionary:convertedData];
     }
     
-    if ([self isPresentWhatOption:kValueWhatOptionCategoryIncomes inUserConfiguration:userConfiguration]) {
-        NSDictionary *convertedData = [self convertCategoryType:IncomeCategory toAmountPerMonthExportDataFromYear:yearDate andUserConfiguration:userConfiguration];
-        exportData[kKeyExportedDataCategoryIncomes] = convertedData;
+    if (globalsReport) {
+        NSDictionary *totals = [self convertTotalsToExportDataFromYearDate:yearDate andUserConfiguration:userConfiguration];
+        exportData[kKeyExportedDataTotals] = totals;
+        
+        NSDictionary *incomesByCategory = [self convertCategoryTypesToAmountGlobalExportDataFromYear:yearDate andUserConfiguration:userConfiguration];
+        [exportData addEntriesFromDictionary:incomesByCategory];
     }
     
-    if ([self isPresentWhatOption:kValueWhatOptionCategoryExpenses inUserConfiguration:userConfiguration]) {
-        NSDictionary *convertedData = [self convertCategoryType:ExpenseCategory toAmountPerMonthExportDataFromYear:yearDate andUserConfiguration:userConfiguration];
-        exportData[kKeyExportedDataCategoryExpenses] = convertedData;
-    }
-    
-    if ([self isPresentWhatOption:kValueWhatOptionConcepts inUserConfiguration:userConfiguration]) {
+    if (conceptsReport) {
         NSDictionary *convertedData = [self convertConceptsToExportDataFromYearDate:yearDate andUserConfiguration:userConfiguration];
-        exportData[kKeyExportedDataConcepts] = convertedData;
+        exportData[kKeyExportedDataConceptsByMonth] = convertedData;
     }
     
     NSDictionary *resultExport = [NSDictionary dictionaryWithDictionary:exportData];
@@ -139,6 +136,19 @@ static NSString * const kKeyExportedDataConcepts = @"conceptsBytMonth";
     return convertedData;
 }
 
+- (NSDictionary *)convertCategoryTypesToAmountPerMonthExportDataFromYear:(NSUInteger)yearDate andUserConfiguration:(NSDictionary *)userConfiguration
+{
+    NSDictionary *incomeCategories = [self convertCategoryType:IncomeCategory toAmountPerMonthExportDataFromYear:yearDate andUserConfiguration:userConfiguration];
+    NSDictionary *expenseCategories = [self convertCategoryType:ExpenseCategory toAmountPerMonthExportDataFromYear:yearDate andUserConfiguration:userConfiguration];
+    
+    NSMutableDictionary *incomeAndExpenseCategories = [NSMutableDictionary dictionary];
+    incomeAndExpenseCategories[kKeyExportedDataIncomeCategoriesByMonth] = incomeCategories;
+    incomeAndExpenseCategories[kKeyExportedDataExpenseCategoriesByMonth] = expenseCategories;
+    
+    NSDictionary *resultDictionary = [NSDictionary dictionaryWithDictionary:incomeAndExpenseCategories];
+    return resultDictionary;
+}
+
 - (NSDictionary *)convertCategoryType:(CategoryType)categoryType toAmountPerMonthExportDataFromYear:(NSUInteger)yearDate andUserConfiguration:(NSDictionary *)userConfiguration
 {
     NSAssert(categoryType != InvalidCategory, @"");
@@ -163,6 +173,45 @@ static NSString * const kKeyExportedDataConcepts = @"conceptsBytMonth";
     return resultConvertedData;
 }
 
+- (NSDictionary *)convertCategoryTypesToAmountGlobalExportDataFromYear:(NSUInteger)yearDate andUserConfiguration:(NSDictionary *)userConfiguration
+{
+    NSDictionary *globalAmountOfIncomeCategories = [self convertCategoriesOfType:IncomeCategory toGlobalAmountWithUserConfiguration:userConfiguration];
+    NSDictionary *globalAmountOfExpenseCategories = [self convertCategoriesOfType:ExpenseCategory toGlobalAmountWithUserConfiguration:userConfiguration];
+    
+    NSMutableDictionary *incomeAndExpenseCategories = [NSMutableDictionary dictionary];
+    incomeAndExpenseCategories[kKeyExportedDataIncomeCategories] = globalAmountOfIncomeCategories;
+    incomeAndExpenseCategories[kKeyExportedDataExpenseCategories] = globalAmountOfExpenseCategories;
+    
+    NSDictionary *resultDictionary = [NSDictionary dictionaryWithDictionary:incomeAndExpenseCategories];
+    return resultDictionary;
+}
+
+- (NSDictionary *)convertCategoriesOfType:(CategoryType)categoryType toGlobalAmountWithUserConfiguration:(NSDictionary *)userConfiguration
+{
+    NSAssert(categoryType != InvalidCategory, @"");
+    
+    NSMutableDictionary *amountOfCategories = [NSMutableDictionary dictionary];
+    
+    NSArray *allCategoriesOfType = [[IAECategoryStore sharedCategoryStore] generalCategoryAndAllUserCategoriesOfType:categoryType];
+    NSArray *monthsSelected = userConfiguration[kKeyMonthSelected];
+    for (IAEMonth *month in monthsSelected) {
+        for (IAECategory *category in allCategoriesOfType) {
+            NSDecimalNumber *balance = [month balanceOfAllConceptsOfCategory:category];
+            if (![balance isEqualToNumber:[NSDecimalNumber zero]]) {
+                NSDecimalNumber *actualBalance = amountOfCategories[category.tag];
+                if (actualBalance) {
+                    amountOfCategories[category.tag] = [actualBalance decimalNumberByAdding:balance];
+                } else {
+                    amountOfCategories[category.tag] = balance;
+                }
+            }
+        }
+    }
+    
+    NSDictionary *resultConvertedData = [NSDictionary dictionaryWithDictionary:amountOfCategories];
+    return resultConvertedData;
+}
+
 - (NSDictionary *)convertConceptsToExportDataFromYearDate:(NSUInteger)yearDate andUserConfiguration:(NSDictionary *)userConfiguration
 {
     NSMutableDictionary *convertedData = [NSMutableDictionary dictionary];
@@ -181,14 +230,6 @@ static NSString * const kKeyExportedDataConcepts = @"conceptsBytMonth";
 
 - (void)exportToCSVUsingMode:(NSString *)keyMode inYearDate:(NSUInteger)yearDate withConvertedData:(NSDictionary *)convertedData
 {
-    if ([keyMode isEqualToString:kValueHowOptionGlobalResume]) {
-        
-    } else if ([keyMode isEqualToString:kValueHowOptionMonthByMonth]) {
-        
-    } else if ([keyMode isEqualToString:kValueHowOptionMonthByMonthAndGlobalResume]) {
-        
-    }
 }
-
 
 @end

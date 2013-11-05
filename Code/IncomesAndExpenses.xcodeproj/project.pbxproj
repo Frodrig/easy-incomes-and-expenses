@@ -226,8 +226,8 @@
 		5BCB5F4F1822C1B500A37013 /* 738-document-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BCB5F4D1822C1B500A37013 /* 738-document-1@2x.png */; };
 		5BCB5F521822C1BD00A37013 /* 743-printer.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BCB5F501822C1BD00A37013 /* 743-printer.png */; };
 		5BCB5F531822C1BD00A37013 /* 743-printer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BCB5F511822C1BD00A37013 /* 743-printer@2x.png */; };
-		5BCB5F5A1822C75C00A37013 /* IAEExportChooseHowAndWhatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCB5F581822C75C00A37013 /* IAEExportChooseHowAndWhatViewController.m */; };
-		5BCB5F5B1822C75C00A37013 /* IAEExportChooseHowAndWhatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BCB5F591822C75C00A37013 /* IAEExportChooseHowAndWhatViewController.xib */; };
+		5BCB5F5A1822C75C00A37013 /* IAEExportChooseWhatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCB5F581822C75C00A37013 /* IAEExportChooseWhatViewController.m */; };
+		5BCB5F5B1822C75C00A37013 /* IAEExportChooseWhatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BCB5F591822C75C00A37013 /* IAEExportChooseWhatViewController.xib */; };
 		5BCCC91717D5008E00FC1A05 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BCCC91617D5008E00FC1A05 /* Images.xcassets */; };
 		5BCE3A9F17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3A9E17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m */; };
 		5BCE3AA117A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BCE3AA017A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib */; };
@@ -645,9 +645,9 @@
 		5BCB5F4D1822C1B500A37013 /* 738-document-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "738-document-1@2x.png"; sourceTree = "<group>"; };
 		5BCB5F501822C1BD00A37013 /* 743-printer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "743-printer.png"; sourceTree = "<group>"; };
 		5BCB5F511822C1BD00A37013 /* 743-printer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "743-printer@2x.png"; sourceTree = "<group>"; };
-		5BCB5F571822C75C00A37013 /* IAEExportChooseHowAndWhatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEExportChooseHowAndWhatViewController.h; sourceTree = "<group>"; };
-		5BCB5F581822C75C00A37013 /* IAEExportChooseHowAndWhatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEExportChooseHowAndWhatViewController.m; sourceTree = "<group>"; };
-		5BCB5F591822C75C00A37013 /* IAEExportChooseHowAndWhatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEExportChooseHowAndWhatViewController.xib; sourceTree = "<group>"; };
+		5BCB5F571822C75C00A37013 /* IAEExportChooseWhatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEExportChooseWhatViewController.h; sourceTree = "<group>"; };
+		5BCB5F581822C75C00A37013 /* IAEExportChooseWhatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEExportChooseWhatViewController.m; sourceTree = "<group>"; };
+		5BCB5F591822C75C00A37013 /* IAEExportChooseWhatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEExportChooseWhatViewController.xib; sourceTree = "<group>"; };
 		5BCCC91617D5008E00FC1A05 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5BCE3A9D17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEditModeConceptCollectionViewHeader.h; sourceTree = "<group>"; };
 		5BCE3A9E17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEditModeConceptCollectionViewHeader.m; sourceTree = "<group>"; };
@@ -1900,9 +1900,9 @@
 		5BCB5F541822C65800A37013 /* ExportChooseHowAndWhatViewController */ = {
 			isa = PBXGroup;
 			children = (
-				5BCB5F571822C75C00A37013 /* IAEExportChooseHowAndWhatViewController.h */,
-				5BCB5F581822C75C00A37013 /* IAEExportChooseHowAndWhatViewController.m */,
-				5BCB5F591822C75C00A37013 /* IAEExportChooseHowAndWhatViewController.xib */,
+				5BCB5F571822C75C00A37013 /* IAEExportChooseWhatViewController.h */,
+				5BCB5F581822C75C00A37013 /* IAEExportChooseWhatViewController.m */,
+				5BCB5F591822C75C00A37013 /* IAEExportChooseWhatViewController.xib */,
 			);
 			name = ExportChooseHowAndWhatViewController;
 			sourceTree = "<group>";
@@ -2329,7 +2329,7 @@
 				5BBD3794180BFF5B0095A15A /* close.png in Resources */,
 				5B57A9C317FAD39500C7BFD3 /* calculatordragbackground@2x.png in Resources */,
 				5BBD376D180BFF5B0095A15A /* nav_g.png in Resources */,
-				5BCB5F5B1822C75C00A37013 /* IAEExportChooseHowAndWhatViewController.xib in Resources */,
+				5BCB5F5B1822C75C00A37013 /* IAEExportChooseWhatViewController.xib in Resources */,
 				5B55C407178AA8C20066F586 /* IAECategoryEditorViewController.xib in Resources */,
 				5BCE3AA117A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib in Resources */,
 				5B879750180E7B1900554E13 /* settingsindex_3@2x.png in Resources */,
@@ -2480,7 +2480,7 @@
 				5B62D85B178EA870009879A6 /* IAEYearSelectorCollectionViewCell.m in Sources */,
 				5BCE3AAB17A95EDB00CD01E7 /* IAEHelperReportAreaViewDataSource.m in Sources */,
 				5BCE3AB117A9688700CD01E7 /* IAEHelperContextTextRawMenuDataSource.m in Sources */,
-				5BCB5F5A1822C75C00A37013 /* IAEExportChooseHowAndWhatViewController.m in Sources */,
+				5BCB5F5A1822C75C00A37013 /* IAEExportChooseWhatViewController.m in Sources */,
 				5BCB5F4A1822B39400A37013 /* IAEExportChooseWhereViewController.m in Sources */,
 				5B87978B180EEC7200554E13 /* IAEHelpThemeViewController.m in Sources */,
 				5BA0130D179800AC00337E84 /* NSString+TwoDigitString.m in Sources */,

@@ -130,7 +130,7 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 
 - (void)configureActualYearOpenLabel
 {
-    NSString *openYearIdentificationTag = [IAEDateHelper createYearIdentificationTagFromYearDate:self.openYearDateBeforeStart];
+    NSString *openYearIdentificationTag = [IAEDateHelper createYearIdentificationTagFromYearDate:self.openYearDateBeforeStart withShortForm:YES];
     NSString *textLabel = [NSString stringWithFormat:NSLocalizedString(kTitleTagYearOpen, @""), openYearIdentificationTag];
     self.actualYearOpenLabel.attributedText = [[NSAttributedString alloc] initWithString:textLabel
                                                                               attributes:[self createAttributeDictionaryForActualYearOpenLabel]];

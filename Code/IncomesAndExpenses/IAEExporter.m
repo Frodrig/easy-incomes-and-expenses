@@ -14,6 +14,7 @@
 #import "IAEConcept.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
 #import "IAENumberFormatterManager.h"
+#import "IAEDateHelper.h"
 
 @implementation IAEExporter
 
@@ -353,7 +354,7 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
 
 - (NSData *)generateDataToExportCSVHeaderWithYear:(NSUInteger)yearDate andConvertedUserConfiguration:(NSDictionary *)convertedUserConfiguration
 {
-    NSString *dataStr = [NSString stringWithFormat:NSLocalizedString(@"LTEXT_EXPORTCSV_HEADER", ""), yearDate];
+    NSString *dataStr = [NSString stringWithFormat:NSLocalizedString(@"LTEXT_EXPORTCSV_HEADER", ""), [IAEDateHelper createYearIdentificationTagFromYearDate:yearDate withShortForm:NO]];
     dataStr = [dataStr stringByAppendingString:@"\n\n"];
     
     NSData *data = [dataStr dataUsingEncoding:NSUTF16StringEncoding];

@@ -93,7 +93,7 @@ static const NSUInteger kContainerViewRoundRectSize = 10;
 
 - (NSString *)yearStringFromYearDate:(NSUInteger)yearDate
 {
-    NSString *yearString = [IAEDateHelper createYearIdentificationTagFromYearDate:yearDate];
+    NSString *yearString = [IAEDateHelper createYearIdentificationTagFromYearDate:yearDate withShortForm:YES];
     
     return yearString;
 }

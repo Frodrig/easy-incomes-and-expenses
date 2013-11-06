@@ -117,7 +117,7 @@ static NSString * const kSelectedMonths = @"month_selected";
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     IAEOpenYear *openYear = [self.query findOpenYear];
-    NSString *title = [IAEDateHelper createYearIdentificationTagFromYearDate:openYear.yearDate];
+    NSString *title = [IAEDateHelper createYearIdentificationTagFromYearDate:openYear.yearDate withShortForm:YES];
     
     return title;
 }

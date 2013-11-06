@@ -139,15 +139,19 @@
     return dateComponents;
 }
 
-+ (NSString *)createYearIdentificationTagFromYearDate:(NSUInteger)yearDate
++ (NSString *)createYearIdentificationTagFromYearDate:(NSUInteger)yearDate withShortForm:(BOOL)shortForm
 {
     NSString *yearString = nil;
     
     const MonthType initialMonth = [[NSUserDefaults standardUserDefaults] actualInitialMonth];
     const BOOL usingTwoYears = initialMonth != January;
     if (usingTwoYears) {
-        NSString *firstYearString = [[NSString stringWithFormat:@"%d", yearDate] substringWithRange:NSMakeRange(2, 2)];
-        NSString *secondYearString = [[NSString stringWithFormat:@"%d", yearDate + 1] substringWithRange:NSMakeRange(2, 2)];
+        NSString *firstYearString = [NSString stringWithFormat:@"%d", yearDate];
+        NSString *secondYearString = [NSString stringWithFormat:@"%d", yearDate + 1];
+        if (shortForm) {
+            firstYearString = [firstYearString substringWithRange:NSMakeRange(2, 2)];
+            secondYearString = [secondYearString substringWithRange:NSMakeRange(2, 2)];
+        }
         yearString = [NSString stringWithFormat:@"%@/%@", firstYearString, secondYearString];
     } else {
         yearString = [NSString stringWithFormat:@"%d", yearDate];

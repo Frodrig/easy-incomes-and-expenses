@@ -298,7 +298,7 @@ static const NSUInteger kMonthsPerYear = 12;
 {
     NSAssert(self.years.count == 2, @"");
     
-    NSString *resultString = [IAEDateHelper createYearIdentificationTagFromYearDate:self.yearDate];
+    NSString *resultString = [IAEDateHelper createYearIdentificationTagFromYearDate:self.yearDate withShortForm:YES];
 
     return resultString;
 }

@@ -334,4 +334,14 @@ static NSString * const kLTextDecemberName = @"December";
     return retDescription;
 }
 
+- (NSComparisonResult)compare:(IAEMonth *)month
+{
+    NSComparisonResult result = [self.year compare:month.year];
+    if (result == NSOrderedSame) {
+        result = self.month < month.month ? NSOrderedAscending : NSOrderedDescending;
+    }
+    
+    return result;
+}
+
 @end

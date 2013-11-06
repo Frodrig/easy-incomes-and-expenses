@@ -443,6 +443,14 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
         [foundMonths addObject:obj];
     }];
     
+    [foundMonths sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        IAEMonth *month1 = [obj1 objectForKey:kKeyExportedDataSelfMonth];
+        IAEMonth *month2 = [obj2 objectForKey:kKeyExportedDataSelfMonth];
+        NSComparisonResult result = [month1 compare:month2];
+        
+        return result;
+    }];
+    
     NSArray *retMonths = [NSArray arrayWithArray:foundMonths];
     return retMonths;
 }

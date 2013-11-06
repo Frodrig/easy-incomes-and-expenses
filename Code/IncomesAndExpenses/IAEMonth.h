@@ -22,6 +22,8 @@
 
 @property (nonatomic, weak) id<IAEMonthDelegate> delegate;
 
+- (NSComparisonResult)compare:(IAEMonth *)month;
+
 - (NSDecimalNumber *)daysOfTheMonth;
 
 - (IAEConcept *)addConceptWithAmount:(NSDecimalNumber *)amount

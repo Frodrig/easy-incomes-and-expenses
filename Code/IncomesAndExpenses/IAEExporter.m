@@ -19,6 +19,8 @@
 
 #pragma mark - Constants
 
+static NSString * const kExportCSVFileNameWithExtension = @"export.csv";
+
 static NSString * const kKeyWhereCSV = @"where_csv";
 static NSString * const kKeyWherePDF = @"where_pdf";
 static NSString * const kKeyWherePrint = @"where_print";
@@ -64,13 +66,24 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
     NSAssert(userConfiguration[kKeyMonthSelected], @"");
     NSAssert(userConfiguration[kKeyWhatOptions], @"");
     
-    NSSet *modes = userConfiguration[kKeyWhatOptions];
     NSDictionary *convertedData = [self convertToExportDataFromYearDate:yearDate andUserConfiguration:userConfiguration];
-    if ([userConfiguration[kKeyWhereCSV] boolValue]) {
+    
+    NSSet *modes = userConfiguration[kKeyWhatOptions];
+    
+    const BOOL exportToCSV = [userConfiguration[kKeyWhereCSV] boolValue];
+    if (exportToCSV) {
         [self exportToCSVUsingModes:modes inYearDate:yearDate withConvertedUserConfiguration:convertedData];
     }
     
-    NSLog(@"%@", convertedData);
+    const BOOL exportToPDF = [userConfiguration[kKeyWherePDF] boolValue];
+    if (exportToPDF) {
+        
+    }
+    
+    const BOOL exportToPrint = [userConfiguration[kKeyWherePrint] boolValue];
+    if (exportToPrint) {
+        
+    }
 }
 
 #pragma mark - Convert
@@ -94,28 +107,43 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
     NSMutableDictionary *exportData = [NSMutableDictionary dictionary];
     
     if (monthsReport) {
-        NSDictionary *totalsByMonth = [self convertTotalsByMonthToExportDataFromYearDate:yearDate andUserConfiguration:userConfiguration];
-        [exportData addEntriesFromDictionary:totalsByMonth];
-        
-        NSDictionary *categoryTypesByMonth = [self convertCategoryTypesToAmountPerMonthExportDataFromYear:yearDate andUserConfiguration:userConfiguration];
-        [exportData addEntriesFromDictionary:categoryTypesByMonth];
+        [self exportMonthReportsFromUserConfiguration:userConfiguration toDestination:exportData];
     }
     
     if (globalsReport) {
-        NSDictionary *totals = [self convertTotalsToExportDataFromYearDate:yearDate andUserConfiguration:userConfiguration];
-        exportData[kKeyExportedDataTotals] = totals;
-        
-        NSDictionary *incomesByCategory = [self convertCategoryTypesToAmountGlobalExportDataFromYear:yearDate andUserConfiguration:userConfiguration];
-        [exportData addEntriesFromDictionary:incomesByCategory];
+        [self exportGlobalReportFromUserConfiguration:userConfiguration toDestination:exportData];
     }
     
     if (conceptsReport) {
-        NSDictionary *convertedData = [self convertConceptsToExportDataFromYearDate:yearDate andUserConfiguration:userConfiguration];
-        exportData[kKeyExportedDataConceptsByMonth] = convertedData;
+        [self exportConceptsReportFromUserConfiguration:userConfiguration toDestination:exportData];
     }
     
     NSDictionary *resultExport = [NSDictionary dictionaryWithDictionary:exportData];
     return resultExport;
+}
+
+- (void)exportMonthReportsFromUserConfiguration:(NSDictionary *)userConfiguration toDestination:(NSMutableDictionary *)destination
+{
+    NSDictionary *totalsByMonth = [self convertTotalsByMonthToExportDataFromUserConfiguration:userConfiguration];
+    [destination addEntriesFromDictionary:totalsByMonth];
+    
+    NSDictionary *categoryTypesByMonth = [self convertCategoryTypesToAmountPerMonthExportDataFromUserConfiguration:userConfiguration];
+    [destination addEntriesFromDictionary:categoryTypesByMonth];
+}
+
+- (void)exportGlobalReportFromUserConfiguration:(NSDictionary *)userConfiguration toDestination:(NSMutableDictionary *)destination
+{
+    NSDictionary *totals = [self convertTotalsToExportDataFromUserConfiguration:userConfiguration];
+    destination[kKeyExportedDataTotals] = totals;
+    
+    NSDictionary *incomesAndExpensesByCategories = [self convertCategoryTypesToAmountGlobalExportDataFromUserConfiguration:userConfiguration];
+    [destination addEntriesFromDictionary:incomesAndExpensesByCategories];
+}
+
+- (void)exportConceptsReportFromUserConfiguration:(NSDictionary *)userConfiguration toDestination:(NSMutableDictionary *)exportData
+{
+    NSDictionary *convertedData = [self convertConceptsToExportDataFromUserConfiguration:userConfiguration];
+    exportData[kKeyExportedDataConceptsByMonth] = convertedData;
 }
 
 - (BOOL)isPresentWhatOption:(NSString *)whatOption inUserConfiguration:(NSDictionary *)userConfiguration
@@ -126,7 +154,7 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
     return isPresent;
 }
 
-- (NSDictionary *)convertTotalsToExportDataFromYearDate:(NSUInteger)yearDate andUserConfiguration:(NSDictionary *)userConfiguration
+- (NSDictionary *)convertTotalsToExportDataFromUserConfiguration:(NSDictionary *)userConfiguration
 {
     NSDecimalNumber *balance = [NSDecimalNumber zero];
     NSDecimalNumber *incomes = [NSDecimalNumber zero];
@@ -146,10 +174,10 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
     return convertedData;
 }
 
-- (NSDictionary *)convertCategoryTypesToAmountPerMonthExportDataFromYear:(NSUInteger)yearDate andUserConfiguration:(NSDictionary *)userConfiguration
+- (NSDictionary *)convertCategoryTypesToAmountPerMonthExportDataFromUserConfiguration:(NSDictionary *)userConfiguration
 {
-    NSDictionary *incomeCategories = [self convertCategoryType:IncomeCategory toAmountPerMonthExportDataFromYear:yearDate andUserConfiguration:userConfiguration];
-    NSDictionary *expenseCategories = [self convertCategoryType:ExpenseCategory toAmountPerMonthExportDataFromYear:yearDate andUserConfiguration:userConfiguration];
+    NSDictionary *incomeCategories = [self convertCategoryType:IncomeCategory toAmountPerMonthExportDataFromUserConfiguration:userConfiguration];
+    NSDictionary *expenseCategories = [self convertCategoryType:ExpenseCategory toAmountPerMonthExportDataFromUserConfiguration:userConfiguration];
     
     NSMutableDictionary *incomeAndExpenseCategories = [NSMutableDictionary dictionary];
     incomeAndExpenseCategories[kKeyExportedDataIncomeCategoriesByMonth] = incomeCategories;
@@ -159,7 +187,7 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
     return resultDictionary;
 }
 
-- (NSDictionary *)convertCategoryType:(CategoryType)categoryType toAmountPerMonthExportDataFromYear:(NSUInteger)yearDate andUserConfiguration:(NSDictionary *)userConfiguration
+- (NSDictionary *)convertCategoryType:(CategoryType)categoryType toAmountPerMonthExportDataFromUserConfiguration:(NSDictionary *)userConfiguration
 {
     NSAssert(categoryType != InvalidCategory, @"");
 
@@ -183,7 +211,7 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
     return resultConvertedData;
 }
 
-- (NSDictionary *)convertTotalsByMonthToExportDataFromYearDate:(NSUInteger)yearDate andUserConfiguration:(NSDictionary *)userConfiguration
+- (NSDictionary *)convertTotalsByMonthToExportDataFromUserConfiguration:(NSDictionary *)userConfiguration
 {
     NSMutableDictionary *convertedData = [NSMutableDictionary dictionary];
     
@@ -203,7 +231,7 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
     return resultConvertedData;
 }
 
-- (NSDictionary *)convertCategoryTypesToAmountGlobalExportDataFromYear:(NSUInteger)yearDate andUserConfiguration:(NSDictionary *)userConfiguration
+- (NSDictionary *)convertCategoryTypesToAmountGlobalExportDataFromUserConfiguration:(NSDictionary *)userConfiguration
 {
     NSDictionary *globalAmountOfIncomeCategories = [self convertCategoriesOfType:IncomeCategory toGlobalAmountWithUserConfiguration:userConfiguration];
     NSDictionary *globalAmountOfExpenseCategories = [self convertCategoriesOfType:ExpenseCategory toGlobalAmountWithUserConfiguration:userConfiguration];
@@ -242,7 +270,7 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
     return resultConvertedData;
 }
 
-- (NSDictionary *)convertConceptsToExportDataFromYearDate:(NSUInteger)yearDate andUserConfiguration:(NSDictionary *)userConfiguration
+- (NSDictionary *)convertConceptsToExportDataFromUserConfiguration:(NSDictionary *)userConfiguration
 {
     NSMutableDictionary *convertedData = [NSMutableDictionary dictionary];
 
@@ -265,37 +293,61 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
 {
     NSAssert(modes.count > 0, @"");
     
-    NSString * pathForTMPDirectory = [NSTemporaryDirectory() stringByAppendingPathComponent:@"export_csv.csv"];
+    NSString * pathForTMPDirectory = [NSTemporaryDirectory() stringByAppendingPathComponent:kExportCSVFileNameWithExtension];
     const BOOL fileManagerOk = [[NSFileManager defaultManager] createFileAtPath:pathForTMPDirectory contents:nil attributes:nil];
     if (fileManagerOk) {
         NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:pathForTMPDirectory];
         const BOOL fileHandleOk = fileHandle != nil;
         if (fileHandleOk) {
             [fileHandle seekToEndOfFile];
-            
-            NSData *headerData = [self generateDataToExportCSVHeaderWithYear:yearDate andConvertedUserConfiguration:convertedUserConfiguration];
-            [fileHandle writeData:headerData];
-            
-            const BOOL exportGlobalsReport = [modes containsObject:kValueWhatOptionGlobalsReport];
-            if (exportGlobalsReport) {
-                NSData *globalReport = [self generateDataToExportCSVGlobalReportWithConvertedUserConfiguration:convertedUserConfiguration];
-                [fileHandle writeData:globalReport];
-            }
-            
-            const BOOL exportMonthReport = [modes containsObject:kValueWhatOptionMonthsReport];
-            if (exportMonthReport) {
-                NSData *monthReport = [self generateDataToExportCSVMonthReportWithConvertedUserConfiguration:convertedUserConfiguration];
-                [fileHandle writeData:monthReport];
-            }
-            
-            const BOOL exportConceptsReport = [modes containsObject:kValueWhatOptionConceptsReport];
-            if (exportConceptsReport) {
-                NSData *conceptReport = [self generateDataToExportCSVConceptReportWithConvertedUserConfiguration:convertedUserConfiguration];
-                [fileHandle writeData:conceptReport];
-            }
-            
+            [self writeCSVToFile:fileHandle withModes:modes yearDate:yearDate andConvertedUserConfiguration:convertedUserConfiguration];
             [fileHandle closeFile];
+        } else {
+            // Fallo creando el FileHandle
         }
+    } else {
+        // Fallo creando el FileManager
+    }
+}
+
+- (void)writeCSVToFile:(NSFileHandle *)fileHandle withModes:(NSSet *)modes yearDate:(NSUInteger)yearDate andConvertedUserConfiguration:(NSDictionary *)convertedUserConfiguration
+{
+    [self writeCSVHeaderToFile:fileHandle withYearDate:yearDate andConvertedUserConfiguration:convertedUserConfiguration];
+    [self writeCSVGlobalReportIfModePresentInModes:modes toFile:fileHandle withYearDate:yearDate andConvertedUserConfiguration:convertedUserConfiguration];
+    [self writeCSVMonthsReportIfModePresentInModes:modes toFile:fileHandle withYearDate:yearDate andConvertedUserConfiguration:convertedUserConfiguration];
+    [self writeCSVConceptsReportIfModePresentInModes:modes toFile:fileHandle withYearDate:yearDate andConvertedUserConfiguration:convertedUserConfiguration];
+}
+
+- (void)writeCSVHeaderToFile:(NSFileHandle *)fileHandle withYearDate:(NSUInteger)yearDate andConvertedUserConfiguration:(NSDictionary *)convertedUserConfiguration
+{
+    NSData *headerData = [self generateDataToExportCSVHeaderWithYear:yearDate andConvertedUserConfiguration:convertedUserConfiguration];
+    [fileHandle writeData:headerData];
+}
+
+- (void)writeCSVGlobalReportIfModePresentInModes:(NSSet *)modes toFile:(NSFileHandle *)fileHandle withYearDate:(NSUInteger)yearDate andConvertedUserConfiguration:(NSDictionary *)convertedUserConfiguration
+{
+    const BOOL exportGlobalsReport = [modes containsObject:kValueWhatOptionGlobalsReport];
+    if (exportGlobalsReport) {
+        NSData *globalReport = [self generateDataToExportCSVGlobalReportWithConvertedUserConfiguration:convertedUserConfiguration];
+        [fileHandle writeData:globalReport];
+    }
+}
+
+- (void)writeCSVMonthsReportIfModePresentInModes:(NSSet *)modes toFile:(NSFileHandle *)fileHandle withYearDate:(NSUInteger)yearDate andConvertedUserConfiguration:(NSDictionary *)convertedUserConfiguration
+{
+    const BOOL exportMonthReport = [modes containsObject:kValueWhatOptionMonthsReport];
+    if (exportMonthReport) {
+        NSData *monthReport = [self generateDataToExportCSVMonthReportWithConvertedUserConfiguration:convertedUserConfiguration];
+        [fileHandle writeData:monthReport];
+    }
+}
+
+- (void)writeCSVConceptsReportIfModePresentInModes:(NSSet *)modes toFile:(NSFileHandle *)fileHandle withYearDate:(NSUInteger)yearDate andConvertedUserConfiguration:(NSDictionary *)convertedUserConfiguration
+{
+    const BOOL exportConceptsReport = [modes containsObject:kValueWhatOptionConceptsReport];
+    if (exportConceptsReport) {
+        NSData *conceptReport = [self generateDataToExportCSVConceptReportWithConvertedUserConfiguration:convertedUserConfiguration];
+        [fileHandle writeData:conceptReport];
     }
 }
 
@@ -331,24 +383,9 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
 
 - (NSData *)generateDataToExportCSVMonthReportWithConvertedUserConfiguration:(NSDictionary *)convertedUserConfiguration
 {
-    __block NSMutableArray *monthsTotals = [NSMutableArray array];
-    NSDictionary *totalsByMonths = convertedUserConfiguration[kKeyExportedDataTotalsByMonths];
-    [totalsByMonths enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-        [monthsTotals addObject:obj];
-    }];
-    
-    __block NSMutableArray *monthsIncomeCategories = [NSMutableArray array];
-    NSDictionary *incomeCategoriesByMonths = convertedUserConfiguration[kKeyExportedDataIncomeCategoriesByMonth];
-    [incomeCategoriesByMonths enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-        [monthsIncomeCategories addObject:obj];
-    }];
-    
-    __block NSMutableArray *monthsExpenseCategories = [NSMutableArray array];
-    NSDictionary *expenseCategoriesByMonths = convertedUserConfiguration[kKeyExportedDataExpenseCategoriesByMonth];
-    [expenseCategoriesByMonths enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-        [monthsExpenseCategories addObject:obj];
-    }];
-    
+    __block NSArray *monthsTotals = [self extractOrdererMonthsWithTotalsFromConvertedUserConfiguration:convertedUserConfiguration];
+    __block NSArray *monthsIncomeCategories = [self extractOrdererMonthsIncomeCategoriesFromConvertedUserConfiguration:convertedUserConfiguration];
+    __block NSArray *monthsExpenseCategories = [self extractOrdererMonthsExpenseCategoriesFromConvertedUserConfiguration:convertedUserConfiguration];
     NSAssert(monthsTotals.count == monthsIncomeCategories.count &&  monthsIncomeCategories.count == monthsExpenseCategories.count, @"");
     
     __block NSMutableString *dataStr = [NSMutableString stringWithFormat:@"%@\n", NSLocalizedString(@"LTEXT_EXPORTCSV_MONTHREPORT_HEADER", @"")];
@@ -375,6 +412,39 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
     
     NSData *data = [dataStr dataUsingEncoding:NSUTF16StringEncoding];
     return data;
+}
+
+- (NSArray *)extractOrdererMonthsWithTotalsFromConvertedUserConfiguration:(NSDictionary *)convertedUserConfiguration
+{
+    NSArray *retMonthsTotals = [self extractOrdererMonthsFromConvertedUserConfiguration:convertedUserConfiguration
+                                                                    associatedToDataKey:kKeyExportedDataTotalsByMonths];
+    return retMonthsTotals;
+}
+
+- (NSArray *)extractOrdererMonthsIncomeCategoriesFromConvertedUserConfiguration:(NSDictionary *)convertedUserConfiguration
+{
+    NSArray *retMonthIncomeCategories = [self extractOrdererMonthsFromConvertedUserConfiguration:convertedUserConfiguration
+                                                                             associatedToDataKey:kKeyExportedDataIncomeCategoriesByMonth];
+    return retMonthIncomeCategories;
+}
+
+- (NSArray *)extractOrdererMonthsExpenseCategoriesFromConvertedUserConfiguration:(NSDictionary *)convertedUserConfiguration
+{
+    NSArray *retMonthExpenseCategories = [self extractOrdererMonthsFromConvertedUserConfiguration:convertedUserConfiguration
+                                                                              associatedToDataKey:kKeyExportedDataExpenseCategoriesByMonth];
+    return retMonthExpenseCategories;
+}
+
+- (NSArray *)extractOrdererMonthsFromConvertedUserConfiguration:(NSDictionary *)convertedUserConfiguration associatedToDataKey:(NSString *)dataKey
+{
+    __block NSMutableArray *foundMonths = [NSMutableArray array];
+    NSDictionary *dataAssociatedWithKey = convertedUserConfiguration[dataKey];
+    [dataAssociatedWithKey enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        [foundMonths addObject:obj];
+    }];
+    
+    NSArray *retMonths = [NSArray arrayWithArray:foundMonths];
+    return retMonths;
 }
 
 - (NSData *)generateDataToExportCSVConceptReportWithConvertedUserConfiguration:(NSDictionary *)convertedUserConfiguration

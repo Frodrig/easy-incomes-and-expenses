@@ -32,6 +32,7 @@ static NSString * const kValueWhatOptionGlobalsReport = @"globals_report";
 static NSString * const kValueWhatOptionMonthsReport = @"months_report";
 static NSString * const kValueWhatOptionConceptsReport = @"concepts_report";
 
+static NSString * const kKeyExportedDataSelectedMonths = @"selectedMonths";
 static NSString * const kKeyExportedDataTotals = @"totals";
 static NSString * const kKeyExportedDataBalance = @"balance";
 static NSString * const kKeyExportedDataIncomes = @"expenses";
@@ -91,6 +92,7 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
 
 // Formato:
 //
+// "selectedMonths": @[IAEMonth]
 // "totals". {"balance": NSDecimal, "expenses": NSDecimal, "incomes": NSDecimal}
 // "incomesByCategory", {categoryTag: value}
 // "expensesByCategory", {categoryTag: value}
@@ -107,6 +109,8 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
     
     NSMutableDictionary *exportData = [NSMutableDictionary dictionary];
     
+    [self exportSelectedMonthsFromUserConfiguration:userConfiguration toDestination:exportData];
+    
     if (monthsReport) {
         [self exportMonthReportsFromUserConfiguration:userConfiguration toDestination:exportData];
     }
@@ -121,6 +125,12 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
     
     NSDictionary *resultExport = [NSDictionary dictionaryWithDictionary:exportData];
     return resultExport;
+}
+
+- (void)exportSelectedMonthsFromUserConfiguration:(NSDictionary *)userConfiguration toDestination:(NSMutableDictionary *)destination
+{
+    NSArray *monthsSelected = userConfiguration[kKeyMonthSelected];
+    destination[kKeyExportedDataSelectedMonths] = monthsSelected;
 }
 
 - (void)exportMonthReportsFromUserConfiguration:(NSDictionary *)userConfiguration toDestination:(NSMutableDictionary *)destination
@@ -354,9 +364,25 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
 
 - (NSData *)generateDataToExportCSVHeaderWithYear:(NSUInteger)yearDate andConvertedUserConfiguration:(NSDictionary *)convertedUserConfiguration
 {
-    NSString *dataStr = [NSString stringWithFormat:NSLocalizedString(@"LTEXT_EXPORTCSV_HEADER", ""), [IAEDateHelper createYearIdentificationTagFromYearDate:yearDate withShortForm:NO]];
-    dataStr = [dataStr stringByAppendingString:@"\n\n"];
+    NSMutableString *dataStr = [NSMutableString stringWithFormat:NSLocalizedString(@"LTEXT_EXPORTCSV_HEADER", ""), [IAEDateHelper createYearIdentificationTagFromYearDate:yearDate withShortForm:NO]];
+    [dataStr appendString:@"\n"];
     
+    const NSUInteger kNumberOfMonthsPerYear = 12;
+    
+    NSArray *selectedMonths = convertedUserConfiguration[kKeyExportedDataSelectedMonths];
+    if (selectedMonths.count < kNumberOfMonthsPerYear) {
+        [dataStr appendString:NSLocalizedString(@"LTEXT_EXPORTCSV_HEADER_MONTHS", @"")];
+        for (IAEMonth *month in selectedMonths) {
+            const BOOL lastMonth = [selectedMonths indexOfObject:month] == selectedMonths.count - 1;
+            NSString *stringFormat = lastMonth ? @"%@" : @"\"%@, \"";
+            [dataStr appendString:[NSString stringWithFormat:stringFormat, [[month monthAsString] lowercaseString]]];
+        }
+    } else {
+        [dataStr appendString:NSLocalizedString(@"LTEXT_EXPORTCSV_HEADER_ALLMONTHS", @"")];
+    }
+
+    [dataStr appendString:@"\n\n"];
+
     NSData *data = [dataStr dataUsingEncoding:NSUTF16StringEncoding];
     return data;
 }

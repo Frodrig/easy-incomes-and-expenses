@@ -369,11 +369,11 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
     
     NSDictionary *incomeCategories = convertedUserConfiguration[kKeyExportedDataIncomeCategories];
     [dataStr appendString:@"\n"];
-    [dataStr appendString:[self generateStringDataToExportCSVCategoriesFromSource:incomeCategories withHeader:NSLocalizedString(@"LTEXT_EXPORTCSV_EXPENSECATEGORIES", @"")]];
+    [dataStr appendString:[self generateStringDataToExportCSVCategoriesFromSource:incomeCategories withHeader:NSLocalizedString(@"LTEXT_EXPORTCSV_INCOMESCATEGORIES", @"")]];
     
     NSDictionary *expenseCategories = convertedUserConfiguration[kKeyExportedDataExpenseCategories];
     [dataStr appendString:@"\n"];
-    [dataStr appendString:[self generateStringDataToExportCSVCategoriesFromSource:expenseCategories withHeader:NSLocalizedString(@"LTEXT_EXPORTCSV_INCOMECATEGORIES", @"")]];
+    [dataStr appendString:[self generateStringDataToExportCSVCategoriesFromSource:expenseCategories withHeader:NSLocalizedString(@"LTEXT_EXPORTCSV_EXPENSECATEGORIES", @"")]];
     
     [dataStr appendString:@"\n"];
     
@@ -512,10 +512,13 @@ static NSString * const kKeyExportedDataConcepts = @"concepts";
     __block NSMutableString *dataStr = [NSMutableString string];
 
     [dataStr appendString:[NSString stringWithFormat:@"\"%@\"\n", header]];
-    [source enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-        NSString *categoryAmount = [formatter stringFromNumber:obj];
+    NSArray *keysSortedByValue = [source keysSortedByValueUsingSelector:@selector(compare:)];
+    
+    for (NSString *key in keysSortedByValue.reverseObjectEnumerator) {
+        NSDecimalNumber *value = source[key];
+        NSString *categoryAmount = [formatter stringFromNumber:value];
         [dataStr appendString:[NSString stringWithFormat:@"%@,\"%@\"\n", key, categoryAmount]];
-    }];
+    }
     
     return dataStr;
 }

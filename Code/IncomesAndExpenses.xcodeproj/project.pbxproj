@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B0002B2182A5DA700CE7843 /* IAEExporterConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0002B1182A5DA700CE7843 /* IAEExporterConverter.m */; };
+		5B0002B6182A5FB900CE7843 /* IAEExporterWritter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0002B5182A5FB900CE7843 /* IAEExporterWritter.m */; };
 		5B0574C117AFE2F600B95D50 /* IAEWithoutConceptsTextWarningReportMode.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B0574C317AFE2F600B95D50 /* IAEWithoutConceptsTextWarningReportMode.xib */; };
 		5B0F8BC416B94ADD002D62A5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5B0F8BC616B94ADD002D62A5 /* Localizable.strings */; };
 		5B1F0D3517841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1F0D3417841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m */; };
@@ -252,6 +254,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5B0002B0182A5DA700CE7843 /* IAEExporterConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEExporterConverter.h; sourceTree = "<group>"; };
+		5B0002B1182A5DA700CE7843 /* IAEExporterConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEExporterConverter.m; sourceTree = "<group>"; };
+		5B0002B4182A5FB900CE7843 /* IAEExporterWritter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEExporterWritter.h; sourceTree = "<group>"; };
+		5B0002B5182A5FB900CE7843 /* IAEExporterWritter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEExporterWritter.m; sourceTree = "<group>"; };
+		5B0002B7182A615600CE7843 /* IAEExporterDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEExporterDefs.h; sourceTree = "<group>"; };
 		5B021D3716B8363F000B8D4F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5B0574C217AFE2F600B95D50 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/IAEWithoutConceptsTextWarningReportMode.xib; sourceTree = "<group>"; };
 		5B0574C417AFE2F900B95D50 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/IAEWithoutConceptsTextWarningReportMode.xib; sourceTree = "<group>"; };
@@ -714,6 +721,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5B0002AF182A5D9B00CE7843 /* ExporterConverter */ = {
+			isa = PBXGroup;
+			children = (
+				5B0002B0182A5DA700CE7843 /* IAEExporterConverter.h */,
+				5B0002B1182A5DA700CE7843 /* IAEExporterConverter.m */,
+			);
+			name = ExporterConverter;
+			sourceTree = "<group>";
+		};
+		5B0002B3182A5F8C00CE7843 /* ExporterWritter */ = {
+			isa = PBXGroup;
+			children = (
+				5B0002B4182A5FB900CE7843 /* IAEExporterWritter.h */,
+				5B0002B5182A5FB900CE7843 /* IAEExporterWritter.m */,
+			);
+			name = ExporterWritter;
+			sourceTree = "<group>";
+		};
 		5B0574BE17AFE0CA00B95D50 /* SinConceptosEnModoReporte */ = {
 			isa = PBXGroup;
 			children = (
@@ -976,8 +1001,11 @@
 		5B5BEAF11827E6B400A00BE0 /* Exporter */ = {
 			isa = PBXGroup;
 			children = (
+				5B0002B3182A5F8C00CE7843 /* ExporterWritter */,
+				5B0002AF182A5D9B00CE7843 /* ExporterConverter */,
 				5B5BEAF21827E6CA00A00BE0 /* IAEExporter.h */,
 				5B5BEAF31827E6CA00A00BE0 /* IAEExporter.m */,
+				5B0002B7182A615600CE7843 /* IAEExporterDefs.h */,
 			);
 			name = Exporter;
 			sourceTree = "<group>";
@@ -2439,10 +2467,12 @@
 				5BC7101817AC29F600E12953 /* IAECategory.m in Sources */,
 				5B62D873178EC20E009879A6 /* IAECurrencyManager.m in Sources */,
 				5B87976D180E904400554E13 /* IAEHelpConfigureConceptsWithDaysCell.m in Sources */,
+				5B0002B2182A5DA700CE7843 /* IAEExporterConverter.m in Sources */,
 				5BFDE72A17C5E27500DF884B /* IAESelectorContextView.m in Sources */,
 				5BEA608717A6A39400520E09 /* IAEReportAreaItemView.m in Sources */,
 				5BEA98AB1793E3A500098AE0 /* IAECircleDecoratorView.m in Sources */,
 				5B36AFF71785BBF400132475 /* NSDecimalNumber+AbsoluteValue.m in Sources */,
+				5B0002B6182A5FB900CE7843 /* IAEExporterWritter.m in Sources */,
 				5BA0131217983A9000337E84 /* IAEDayCalendarSelectorViewController.m in Sources */,
 				5B62D86E178EC20E009879A6 /* IAEEconomicValueTypeHelper.m in Sources */,
 				5B62D870178EC20E009879A6 /* IAEColorHelper.m in Sources */,

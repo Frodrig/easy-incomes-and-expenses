@@ -1274,6 +1274,8 @@
 		5B6F45E2181ED0460073B1AC /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				5BC7100A17AC29F600E12953 /* IAECategory.h */,
+				5BC7101217AC29F600E12953 /* IAECategory.m */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -1867,8 +1869,6 @@
 			children = (
 				5BC7100B17AC29F600E12953 /* IAECategoryStore.h */,
 				5BC7101317AC29F600E12953 /* IAECategoryStore.m */,
-				5BC7100A17AC29F600E12953 /* IAECategory.h */,
-				5BC7101217AC29F600E12953 /* IAECategory.m */,
 				5B6F45E2181ED0460073B1AC /* Category */,
 			);
 			name = CategoryStore;

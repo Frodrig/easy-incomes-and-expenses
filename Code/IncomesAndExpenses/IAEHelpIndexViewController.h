@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "IAEHelpIndexViewControllerDelegate.h"
+#import <MessageUI/MFMailComposeViewController.h>
 
-@interface IAEHelpIndexViewController : UITableViewController<IAEHelpIndexViewControllerDelegate>
+@interface IAEHelpIndexViewController : UITableViewController<IAEHelpIndexViewControllerDelegate,
+                                                              MFMailComposeViewControllerDelegate>
 
 @end

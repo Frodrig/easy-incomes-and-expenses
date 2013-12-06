@@ -13,6 +13,7 @@
 #import "IAEHelpViewController.h"
 #import "MonthDefs.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
+#import "IAEExporter.h"
 
 @interface IAEHelpIndexViewController ()
 
@@ -40,6 +41,8 @@ static const NSUInteger kRowOfConfigureIndex = 0;
 static const NSUInteger kRowOfCSVExportIndex = 1;
 static const NSUInteger kRowOfHelpIndex = 2;
 static const NSUInteger kRowOfAboutIndex = 3;
+
+static NSString * const kExportCSVFileWithExtension = @"export.csv";
 
 #pragma mark - Init
 
@@ -179,6 +182,12 @@ static const NSUInteger kRowOfAboutIndex = 3;
         viewController = [[IAEHelpConfigureViewController alloc] initWithNibName:@"IAEHelpConfigureViewController" bundle:[NSBundle mainBundle]];
     } else if (indexPath.row == kRowOfCSVExportIndex) {
         [Flurry logEvent:@"settingsindex_csvexport"];
+        
+        // Lanzar en paralelo
+        if ([[IAEExporter sharedExporter] exportAllYearsToTMPCSVFile]) {
+            [self lauchMailComposerViewControllerForSendCSVExport];
+        }
+        
     } else if (indexPath.row == kRowOfHelpIndex) {
         [Flurry logEvent:@"settingsindex_help"];
         viewController = [[IAEHelpViewController alloc] initWithNibName:@"IAEHelpViewController" bundle:[NSBundle mainBundle]];
@@ -191,5 +200,35 @@ static const NSUInteger kRowOfAboutIndex = 3;
     
     return viewController;
 }
+
+
+- (void)lauchMailComposerViewControllerForSendCSVExport
+{
+    MFMailComposeViewController *appEmailViewController = [[MFMailComposeViewController alloc] init];
+    appEmailViewController.mailComposeDelegate = self;
+    
+    [appEmailViewController setSubject:NSLocalizedString(@"LTEXT_EMAIL_SUBJECTCSVEXPORT", @"")];
+    
+    NSString * pathForTMPDirectory = [NSTemporaryDirectory() stringByAppendingPathComponent:kExportCSVFileWithExtension];
+    NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:pathForTMPDirectory];
+    const BOOL fileHandleOk = fileHandle != nil;
+    if (fileHandleOk) {
+        NSData *fileData = [fileHandle readDataToEndOfFile];
+        [appEmailViewController addAttachmentData:fileData mimeType:@"text/csv" fileName:@"Easy_Incomes_and_Expenses.csv"];
+        
+        [self presentViewController:appEmailViewController animated:YES completion:nil];
+    } else {
+        [appEmailViewController dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+#pragma mark - MFMailComposeViewControllerDelegate
+
+-(void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    [controller dismissViewControllerAnimated:YES completion:nil];
+    [self dismissAll];
+}
+
 
 @end

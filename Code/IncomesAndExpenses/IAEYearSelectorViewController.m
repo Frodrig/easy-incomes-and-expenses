@@ -215,7 +215,7 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 - (IBAction)closeButtonPressed:(id)sender
 {
     NSAssert(self.openYearDateBeforeStart != 0, @"");
-    [[IAEBook sharedBook] saveCloseAllAndOpenYearWithDate:@(self.openYearDateBeforeStart)];
+    [[IAEBook sharedBook] saveAndCloseAllAndOpenYearWithDate:@(self.openYearDateBeforeStart)];
     [self.delegate closeButtonWasPressedInYearSelectorViewController:self];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -430,19 +430,19 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 
 - (void)sendToDelegateActionChosenSelectedActualYear
 {
-    [[IAEBook sharedBook] saveCloseAllAndOpenYearWithDate:@(self.openYearDateBeforeStart)];
+    [[IAEBook sharedBook] saveAndCloseAllAndOpenYearWithDate:@(self.openYearDateBeforeStart)];
     [self.delegate openYearSelectedWasSelectedInYearSelectorViewController:self];
 }
 
 - (void)sendToDelegateActionChosenSelectedYearWithConceptsWithDate:(NSUInteger)yearDate
 {
-    [[IAEBook sharedBook] saveCloseAllAndOpenYearWithDate:@(yearDate)];
+    [[IAEBook sharedBook] saveAndCloseAllAndOpenYearWithDate:@(yearDate)];
     [self.delegate yearSelectorViewController:self didLoadSelectedYearDate:yearDate];
 }
 
 - (void)sendToDelegateActionChosenSelectedYearWithoutConceptsWithDate:(NSUInteger)yearDate
 {
-    [[IAEBook sharedBook] saveCloseAllAndOpenYearWithDate:@(yearDate)];
+    [[IAEBook sharedBook] saveAndCloseAllAndOpenYearWithDate:@(yearDate)];
 
     [self.delegate yearSelectorViewController:self didCreateAndLoadSelectedYearDate:yearDate];
 }

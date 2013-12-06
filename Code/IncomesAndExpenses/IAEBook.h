@@ -27,7 +27,8 @@
 - (IAEOpenYear *)openYear:(NSNumber *)yearDate;
 
 - (void)closeAll;
-- (void)saveCloseAllAndOpenYearWithDate:(NSNumber *)yearDate;
+- (void)saveAndCloseAllAndOpenYearWithDate:(NSNumber *)yearDate;
+- (void)closeAllAndOpenYearWithDate:(NSNumber *)yearDate;
 
 - (IAEOpenYear *)findActualOpenYear;
 - (IAEOpenYear *)findOpenYearWithDate:(NSNumber *)yearDate;

@@ -326,9 +326,14 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     }
 }
 
-- (void)saveCloseAllAndOpenYearWithDate:(NSNumber *)yearDate
+- (void)saveAndCloseAllAndOpenYearWithDate:(NSNumber *)yearDate
 {
     [self saveAll];
+    [self closeAllAndOpenYearWithDate:yearDate];
+}
+
+- (void)closeAllAndOpenYearWithDate:(NSNumber *)yearDate
+{
     [self closeAll];
     [self openYear:yearDate];
 }

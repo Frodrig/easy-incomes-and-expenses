@@ -34,11 +34,12 @@ static NSString * const kNotificationInitialMonthChanged = @"initialMonthChange"
 
 static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 
-static const NSInteger kIndexSize = 3;
+static const NSInteger kIndexSize = 4;
 
 static const NSUInteger kRowOfConfigureIndex = 0;
-static const NSUInteger kRowOfHelpIndex = 1;
-static const NSUInteger kRowOfAboutIndex = 2;
+static const NSUInteger kRowOfCSVExportIndex = 1;
+static const NSUInteger kRowOfHelpIndex = 2;
+static const NSUInteger kRowOfAboutIndex = 3;
 
 #pragma mark - Init
 
@@ -158,7 +159,7 @@ static const NSUInteger kRowOfAboutIndex = 2;
     cell.textLabel.text = NSLocalizedString(ltext, @"");
     NSString *imageName = [NSString stringWithFormat:@"settingsindex_%d", indexSufix];
     cell.imageView.image = [UIImage imageNamed:imageName];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.accessoryType = indexPath.row == kRowOfCSVExportIndex ? UITableViewCellAccessoryNone : UITableViewCellAccessoryDisclosureIndicator;
 }
 
 #pragma mark - Table view delegate
@@ -176,6 +177,8 @@ static const NSUInteger kRowOfAboutIndex = 2;
     if (indexPath.row == kRowOfConfigureIndex) {
         [Flurry logEvent:@"settingsindex_configure"];
         viewController = [[IAEHelpConfigureViewController alloc] initWithNibName:@"IAEHelpConfigureViewController" bundle:[NSBundle mainBundle]];
+    } else if (indexPath.row == kRowOfCSVExportIndex) {
+        [Flurry logEvent:@"settingsindex_csvexport"];
     } else if (indexPath.row == kRowOfHelpIndex) {
         [Flurry logEvent:@"settingsindex_help"];
         viewController = [[IAEHelpViewController alloc] initWithNibName:@"IAEHelpViewController" bundle:[NSBundle mainBundle]];

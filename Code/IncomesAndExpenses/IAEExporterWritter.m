@@ -20,7 +20,7 @@
 #pragma mark - Constants
 
 
-#pragma mark - Export
+#pragma mark - Export CSV
 
 + (void)exportToCSVUsingModes:(NSSet *)modes inYearDate:(NSUInteger)yearDate withConvertedUserConfiguration:(NSDictionary *)convertedUserConfiguration
 {
@@ -36,10 +36,10 @@
             [self writeCSVToFile:fileHandle withModes:modes yearDate:yearDate andConvertedUserConfiguration:convertedUserConfiguration];
             [fileHandle closeFile];
         } else {
-            // Fallo creando el FileHandle
+            // TODO: Fallo creando el FileHandle
         }
     } else {
-        // Fallo creando el FileManager
+        // TODO: Fallo creando el FileManager
     }
 }
 
@@ -86,6 +86,14 @@
 
 + (NSData *)generateDataToExportCSVHeaderWithYear:(NSUInteger)yearDate andConvertedUserConfiguration:(NSDictionary *)convertedUserConfiguration
 {
+    NSString *dataStr = [self generateStringToExportHeaderWithYear:yearDate andConvertedUserConfiguration:convertedUserConfiguration];
+    NSData *data = [dataStr dataUsingEncoding:NSUTF16StringEncoding];
+    
+    return data;
+}
+
++ (NSString *)generateStringToExportHeaderWithYear:(NSUInteger)yearDate andConvertedUserConfiguration:(NSDictionary *)convertedUserConfiguration
+{
     NSMutableString *dataStr = [NSMutableString stringWithFormat:NSLocalizedString(@"LTEXT_EXPORTCSV_HEADER", ""), [IAEDateHelper createYearIdentificationTagFromYearDate:yearDate withShortForm:NO]];
     [dataStr appendString:@"\n"];
     
@@ -105,8 +113,7 @@
     
     [dataStr appendString:@"\n\n"];
     
-    NSData *data = [dataStr dataUsingEncoding:NSUTF16StringEncoding];
-    return data;
+    return dataStr;
 }
 
 + (NSData *)generateDataToExportCSVGlobalReportWithConvertedUserConfiguration:(NSDictionary *)convertedUserConfiguration
@@ -118,7 +125,7 @@
     
     NSDictionary *incomeCategories = convertedUserConfiguration[kKeyExportedDataIncomeCategories];
     [dataStr appendString:@"\n"];
-    [dataStr appendString:[self generateStringDataToExportCSVCategoriesFromSource:incomeCategories withHeader:NSLocalizedString(@"LTEXT_EXPORTCSV_INCOMESCATEGORIES", @"")]];
+    [dataStr appendString:[self generateStringDataToExportCSVCategoriesFromSource:incomeCategories withHeader:NSLocalizedString(@"LTEXT_EXPORTCSV_INCOMECATEGORIES", @"")]];
     
     NSDictionary *expenseCategories = convertedUserConfiguration[kKeyExportedDataExpenseCategories];
     [dataStr appendString:@"\n"];
@@ -270,6 +277,62 @@
     }
     
     return dataStr;
+}
+
+#pragma mark - Export PDF
+
++ (void)exportToPDFUsingModes:(NSSet *)modes inYearDate:(NSUInteger)yearDate withConvertedUserConfiguration:(NSDictionary *)convertedUserConfiguration
+{
+    /*
+    NSString *dataStr = [self generateStringToExportHeaderWithYear:yearDate andConvertedUserConfiguration:convertedUserConfiguration];
+
+    
+    ///////////
+    
+    
+    CGSize pageSize = CGSizeMake(612, 792);
+    NSString *pdfFileName = [NSTemporaryDirectory() stringByAppendingPathComponent:kExportPDFVFileNameWithExtension];
+    
+    UIGraphicsBeginPDFContextToFile(pdfFileName, CGRectZero, nil);
+    
+    UIGraphicsBeginPDFPageWithInfo(CGRectMake(0, 0, pageSize.width, pageSize.height), nil);
+    UIGraphicsBeginPDFPageWithInfo(CGRectMake(0, 0, pageSize.width, pageSize.height), nil);
+    
+    const NSUInteger kBorderInset = 2;
+    const NSUInteger kBorderWidth = 10;
+
+    CGContextRef    currentContext = UIGraphicsGetCurrentContext();
+
+    UIColor *borderColor = [UIColor brownColor];
+    CGRect rectFrame = CGRectMake(kBorderInset, kBorderInset, pageSize.width-kBorderInset*2, pageSize.height-kBorderInset*2);
+    CGContextSetStrokeColorWithColor(currentContext, borderColor.CGColor);
+    CGContextSetLineWidth(currentContext, kBorderWidth);
+    CGContextStrokeRect(currentContext, rectFrame);
+    
+    CGContextSetRGBFillColor(currentContext, 0.0, 0.0, 0.0, 1.0);
+    
+    NSString *textToDraw = @"Lorem ipsum dolor sit amet.";
+    
+    const NSUInteger kMarginInset = 10;
+    
+    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+    CGRect stringSize = [textToDraw boundingRectWithSize:CGSizeMake(pageSize.width - 2*kBorderInset-2*kMarginInset, pageSize.height - 2*kBorderInset - 2*kMarginInset)
+                                                 options:NSStringDrawingUsesLineFragmentOrigin
+                                              attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14],
+                                                           NSParagraphStyleAttributeName: paragraphStyle}
+                                                 context:nil];
+    CGRect renderingRect = CGRectMake(kBorderInset + kMarginInset, kBorderInset + kMarginInset + 50.0, pageSize.width - 2*kBorderInset - 2*kMarginInset, stringSize.size.height);
+
+    NSLog(@"ORIGINAL SIZE %@", NSStringFromCGSize(pageSize));
+    NSLog(@"STRING SIZE %@", NSStringFromCGRect(stringSize));
+    NSLog(@"RENDERING %@", NSStringFromCGRect(renderingRect));
+    
+    [textToDraw drawInRect:renderingRect withAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14], NSParagraphStyleAttributeName: paragraphStyle}];
+    
+    UIGraphicsEndPDFContext();
+    
+   */
 }
 
 @end

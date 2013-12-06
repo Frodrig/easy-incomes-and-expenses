@@ -10,6 +10,10 @@
 #define IncomesAndExpenses_IAEExporterDefs_h
 
 static NSString * const kExportCSVFileNameWithExtension = @"export.csv";
+static NSString * const kExportPDFVFileNameWithExtension = @"export.pdf";
+
+static NSString * const kPDFExportTitle = @"";
+static NSString * const KPDFExportName = @"";
 
 static NSString * const kKeyWhereCSV = @"where_csv";
 static NSString * const kKeyWherePDF = @"where_pdf";

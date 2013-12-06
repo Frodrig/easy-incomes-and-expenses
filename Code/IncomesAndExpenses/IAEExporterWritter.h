@@ -12,5 +12,6 @@
 @interface IAEExporterWritter : NSObject
 
 + (void)exportToCSVUsingModes:(NSSet *)modes inYearDate:(NSUInteger)yearDate withConvertedUserConfiguration:(NSDictionary *)convertedUserConfiguration;
++ (void)exportToPDFUsingModes:(NSSet *)modes inYearDate:(NSUInteger)yearDate withConvertedUserConfiguration:(NSDictionary *)convertedUserConfiguration;
 
 @end

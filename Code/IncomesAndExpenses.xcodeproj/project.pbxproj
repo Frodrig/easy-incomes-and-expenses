@@ -86,12 +86,6 @@
 		5B767E031636D7FC005315F8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B767E021636D7FC005315F8 /* main.m */; };
 		5B767E071636D7FC005315F8 /* IAEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B767E061636D7FC005315F8 /* IAEAppDelegate.m */; };
 		5B7A4D7F16B68062001751A9 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B7A4D7E16B68062001751A9 /* MessageUI.framework */; };
-		5B87974B180E7AFD00554E13 /* settingsindex_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B879749180E7AFD00554E13 /* settingsindex_1.png */; };
-		5B87974C180E7AFD00554E13 /* settingsindex_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B87974A180E7AFD00554E13 /* settingsindex_1@2x.png */; };
-		5B87974F180E7B1900554E13 /* settingsindex_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B87974D180E7B1900554E13 /* settingsindex_3.png */; };
-		5B879750180E7B1900554E13 /* settingsindex_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B87974E180E7B1900554E13 /* settingsindex_3@2x.png */; };
-		5B879753180E7B7D00554E13 /* settingsindex_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B879751180E7B7D00554E13 /* settingsindex_2.png */; };
-		5B879754180E7B7D00554E13 /* settingsindex_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B879752180E7B7D00554E13 /* settingsindex_2@2x.png */; };
 		5B879759180E7DCD00554E13 /* IAEHelpAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B879757180E7DCD00554E13 /* IAEHelpAboutViewController.m */; };
 		5B879760180E7E6F00554E13 /* IAEHelpAboutCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B87975E180E7E6F00554E13 /* IAEHelpAboutCollectionViewCell.xib */; };
 		5B879761180E7E6F00554E13 /* IAEHelpAboutCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B87975F180E7E6F00554E13 /* IAEHelpAboutCollectionViewCell.m */; };
@@ -224,8 +218,6 @@
 		5BCB5F45182267E400A37013 /* IAEExportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BCB5F43182267E400A37013 /* IAEExportViewController.xib */; };
 		5BCB5F4A1822B39400A37013 /* IAEExportChooseWhereViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCB5F481822B39400A37013 /* IAEExportChooseWhereViewController.m */; };
 		5BCB5F4B1822B39400A37013 /* IAEExportChooseWhereViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BCB5F491822B39400A37013 /* IAEExportChooseWhereViewController.xib */; };
-		5BCB5F4E1822C1B500A37013 /* 738-document-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BCB5F4C1822C1B500A37013 /* 738-document-1.png */; };
-		5BCB5F4F1822C1B500A37013 /* 738-document-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BCB5F4D1822C1B500A37013 /* 738-document-1@2x.png */; };
 		5BCB5F521822C1BD00A37013 /* 743-printer.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BCB5F501822C1BD00A37013 /* 743-printer.png */; };
 		5BCB5F531822C1BD00A37013 /* 743-printer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BCB5F511822C1BD00A37013 /* 743-printer@2x.png */; };
 		5BCB5F5A1822C75C00A37013 /* IAEExportChooseWhatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCB5F581822C75C00A37013 /* IAEExportChooseWhatViewController.m */; };
@@ -388,12 +380,6 @@
 		5B7A4D7E16B68062001751A9 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		5B8488F3178AB88C0001551F /* IAECategoryEditorDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategoryEditorDefs.h; sourceTree = "<group>"; };
 		5B8488F5178AB8B10001551F /* IAECategoryEditorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategoryEditorViewControllerDelegate.h; sourceTree = "<group>"; };
-		5B879749180E7AFD00554E13 /* settingsindex_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsindex_1.png; sourceTree = "<group>"; };
-		5B87974A180E7AFD00554E13 /* settingsindex_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsindex_1@2x.png"; sourceTree = "<group>"; };
-		5B87974D180E7B1900554E13 /* settingsindex_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsindex_3.png; sourceTree = "<group>"; };
-		5B87974E180E7B1900554E13 /* settingsindex_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsindex_3@2x.png"; sourceTree = "<group>"; };
-		5B879751180E7B7D00554E13 /* settingsindex_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsindex_2.png; sourceTree = "<group>"; };
-		5B879752180E7B7D00554E13 /* settingsindex_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsindex_2@2x.png"; sourceTree = "<group>"; };
 		5B879756180E7DCD00554E13 /* IAEHelpAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelpAboutViewController.h; sourceTree = "<group>"; };
 		5B879757180E7DCD00554E13 /* IAEHelpAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelpAboutViewController.m; sourceTree = "<group>"; };
 		5B87975C180E7E6F00554E13 /* IAEHelpAboutCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelpAboutCollectionViewCell.h; sourceTree = "<group>"; };
@@ -648,8 +634,6 @@
 		5BCB5F471822B39400A37013 /* IAEExportChooseWhereViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEExportChooseWhereViewController.h; sourceTree = "<group>"; };
 		5BCB5F481822B39400A37013 /* IAEExportChooseWhereViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEExportChooseWhereViewController.m; sourceTree = "<group>"; };
 		5BCB5F491822B39400A37013 /* IAEExportChooseWhereViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEExportChooseWhereViewController.xib; sourceTree = "<group>"; };
-		5BCB5F4C1822C1B500A37013 /* 738-document-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "738-document-1.png"; sourceTree = "<group>"; };
-		5BCB5F4D1822C1B500A37013 /* 738-document-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "738-document-1@2x.png"; sourceTree = "<group>"; };
 		5BCB5F501822C1BD00A37013 /* 743-printer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "743-printer.png"; sourceTree = "<group>"; };
 		5BCB5F511822C1BD00A37013 /* 743-printer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "743-printer@2x.png"; sourceTree = "<group>"; };
 		5BCB5F571822C75C00A37013 /* IAEExportChooseWhatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEExportChooseWhatViewController.h; sourceTree = "<group>"; };
@@ -1371,12 +1355,6 @@
 		5B7FCE9217D63D1200624D25 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				5B879751180E7B7D00554E13 /* settingsindex_2.png */,
-				5B879752180E7B7D00554E13 /* settingsindex_2@2x.png */,
-				5B87974D180E7B1900554E13 /* settingsindex_3.png */,
-				5B87974E180E7B1900554E13 /* settingsindex_3@2x.png */,
-				5B879749180E7AFD00554E13 /* settingsindex_1.png */,
-				5B87974A180E7AFD00554E13 /* settingsindex_1@2x.png */,
 				5BB8AD1017FAC2F200BAAB96 /* editconceptcontainerviewbackground.png */,
 				5B87976E180E948700554E13 /* 851-calendar.png */,
 				5B87976F180E948700554E13 /* 851-calendar@2x.png */,
@@ -1385,8 +1363,6 @@
 				5BB8AD1117FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png */,
 				5B2AAA2E17C773CF00E7C7A5 /* 747-minus-circle@2x.png */,
 				5B2A41B217C77E8500C29036 /* 709-plus.png */,
-				5BCB5F4C1822C1B500A37013 /* 738-document-1.png */,
-				5BCB5F4D1822C1B500A37013 /* 738-document-1@2x.png */,
 				5BCB5F501822C1BD00A37013 /* 743-printer.png */,
 				5BCB5F511822C1BD00A37013 /* 743-printer@2x.png */,
 				5BC110FE17CD1DF500FF6D6B /* 730-envelope.png */,
@@ -2272,7 +2248,6 @@
 				5B2A41B017C77C8100C29036 /* 765-arrow-left.png in Resources */,
 				5B2A41B517C77E8500C29036 /* 709-plus@2x.png in Resources */,
 				5BBD37B9180BFF5B0095A15A /* sync_on.png in Resources */,
-				5BCB5F4E1822C1B500A37013 /* 738-document-1.png in Resources */,
 				5B2AAA2C17C773C500E7C7A5 /* 746-plus-circle@2x.png in Resources */,
 				5BBD3762180BFF5B0095A15A /* ftv2splitbar.png in Resources */,
 				5BBD3746180BFF5B0095A15A /* deprecated.html in Resources */,
@@ -2291,7 +2266,6 @@
 				5B7602B617C3CC9E009920CD /* IAECategoryWithNumberOfConceptsTableView.xib in Resources */,
 				5B2A41B417C77E8500C29036 /* 709-plus.png in Resources */,
 				5BBD3745180BFF5B0095A15A /* closed.png in Resources */,
-				5B879753180E7B7D00554E13 /* settingsindex_2.png in Resources */,
 				5BBD37CB180BFF5B0095A15A /* ProjectApiKey.txt in Resources */,
 				5BBD3768180BFF5B0095A15A /* index.html in Resources */,
 				5BBD3759180BFF5B0095A15A /* ftv2lastnode.png in Resources */,
@@ -2302,7 +2276,6 @@
 				5B36AFFD1785D73800132475 /* IAECategorySelectorViewController.xib in Resources */,
 				5BBD37B8180BFF5B0095A15A /* sync_off.png in Resources */,
 				5B36AFF21785874D00132475 /* IAEAdjustConceptAmountViewController.xib in Resources */,
-				5B87974C180E7AFD00554E13 /* settingsindex_1@2x.png in Resources */,
 				5BBD37C6180BFF5B0095A15A /* Flurry AppSpot Publisher Platform TOS FINAL August 1, 2012.pdf in Resources */,
 				5BCB5F4B1822B39400A37013 /* IAEExportChooseWhereViewController.xib in Resources */,
 				5B2E93D117DCDDF6007D4284 /* eiae_icon40@2x.png in Resources */,
@@ -2315,13 +2288,11 @@
 				5BBD3743180BFF5B0095A15A /* class_flurry_ads-members.html in Resources */,
 				5BBD375D180BFF5B0095A15A /* ftv2mo.png in Resources */,
 				5B0574C117AFE2F600B95D50 /* IAEWithoutConceptsTextWarningReportMode.xib in Resources */,
-				5B87974B180E7AFD00554E13 /* settingsindex_1.png in Resources */,
 				5BCB5F531822C1BD00A37013 /* 743-printer@2x.png in Resources */,
 				5BBD373C180BFF5B0095A15A /* _flurry_ad_delegate_8h_source.html in Resources */,
 				5B2A41B117C77C8100C29036 /* 765-arrow-left@2x.png in Resources */,
 				5B5497B81820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.xib in Resources */,
 				5B87976C180E904400554E13 /* IAEHelpConfigureConceptsWithDaysCell.xib in Resources */,
-				5B879754180E7B7D00554E13 /* settingsindex_2@2x.png in Resources */,
 				5BBD376E180BFF5B0095A15A /* nav_h.png in Resources */,
 				5B2AAA3017C773CF00E7C7A5 /* 747-minus-circle@2x.png in Resources */,
 				5BBD37C9180BFF5B0095A15A /* Flurry_AppSpot_Publisher_Platform_TOS.pdf in Resources */,
@@ -2360,7 +2331,6 @@
 				5BCB5F5B1822C75C00A37013 /* IAEExportChooseWhatViewController.xib in Resources */,
 				5B55C407178AA8C20066F586 /* IAECategoryEditorViewController.xib in Resources */,
 				5BCE3AA117A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib in Resources */,
-				5B879750180E7B1900554E13 /* settingsindex_3@2x.png in Resources */,
 				5BBD3747180BFF5B0095A15A /* dir_2c12105386bcc5c3935feab96f296a41.html in Resources */,
 				5BBD3773180BFF5B0095A15A /* pages.html in Resources */,
 				5BBD3741180BFF5B0095A15A /* bdwn.png in Resources */,
@@ -2372,7 +2342,6 @@
 				5B2AAA2B17C773C500E7C7A5 /* 746-plus-circle.png in Resources */,
 				5BBD3744180BFF5B0095A15A /* classes.html in Resources */,
 				5BBD37B3180BFF5B0095A15A /* search.css in Resources */,
-				5B87974F180E7B1900554E13 /* settingsindex_3.png in Resources */,
 				5B879760180E7E6F00554E13 /* IAEHelpAboutCollectionViewCell.xib in Resources */,
 				5B62D85D178EA8A2009879A6 /* IAEYearSelectorCollectionViewCell.xib in Resources */,
 				5BCB5F45182267E400A37013 /* IAEExportViewController.xib in Resources */,
@@ -2408,7 +2377,6 @@
 				5BBD3775180BFF5B0095A15A /* protocol_flurry_ad_delegate-p.html in Resources */,
 				5BBD374D180BFF5B0095A15A /* dir_6eaab3d1ed43da176b4154f610fa7bbe.html in Resources */,
 				5BBD3749180BFF5B0095A15A /* dir_44930cfa1d7ab51e956c5b15f90f708d.html in Resources */,
-				5BCB5F4F1822C1B500A37013 /* 738-document-1@2x.png in Resources */,
 				5B28D1AB182007BF00EF4D48 /* IAEHelpConfigureStartMonthCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

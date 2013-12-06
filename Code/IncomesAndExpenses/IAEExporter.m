@@ -46,7 +46,7 @@
     
     const BOOL exportToPDF = [userConfiguration[kKeyWherePDF] boolValue];
     if (exportToPDF) {
-        
+        [IAEExporterWritter exportToPDFUsingModes:modes inYearDate:yearDate withConvertedUserConfiguration:convertedData];
     }
     
     const BOOL exportToPrint = [userConfiguration[kKeyWherePrint] boolValue];

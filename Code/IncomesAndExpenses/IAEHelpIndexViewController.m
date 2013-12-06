@@ -173,34 +173,47 @@ static NSString * const kExportCSVFileWithExtension = @"export.csv";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == kRowOfCSVExportIndex) {
-        [Flurry logEvent:@"settingsindex_csvexport"];
-        if ([[IAEExporter sharedExporter] exportAllYearsToTMPCSVFile]) {
-            [self lauchMailComposerViewControllerForSendCSVExport];
-        }
-    } else {
-        UIViewController *nextViewController = [self createNextViewControllerBasedInSelectRowAtIndexPath:indexPath];
-        [self.navigationController pushViewController:nextViewController animated:YES];
+        [self executeCSVExportOption];
+    } else if (indexPath.row == kRowOfConfigureIndex) {
+        [self executeConfigureOption];
+    } else if (indexPath.row == kRowOfHelpIndex) {
+        [self executeHelpOption];
+    } else if (indexPath.row == kRowOfAboutIndex) {
+        [self executeAboutOption];
     }
 }
 
-- (UIViewController *)createNextViewControllerBasedInSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)executeCSVExportOption
 {
-    UIViewController *viewController = nil;
-    
-    if (indexPath.row == kRowOfConfigureIndex) {
-        [Flurry logEvent:@"settingsindex_configure"];
-        viewController = [[IAEHelpConfigureViewController alloc] initWithNibName:@"IAEHelpConfigureViewController" bundle:[NSBundle mainBundle]];
-    } else if (indexPath.row == kRowOfHelpIndex) {
-        [Flurry logEvent:@"settingsindex_help"];
-        viewController = [[IAEHelpViewController alloc] initWithNibName:@"IAEHelpViewController" bundle:[NSBundle mainBundle]];
-    } else if (indexPath.row == kRowOfAboutIndex) {
-        [Flurry logEvent:@"settingsindex_about"];
-        viewController = [[IAEHelpAboutViewController alloc] initWithNibName:@"IAEHelpAboutViewController" bundle:[NSBundle mainBundle]];
+    [Flurry logEvent:@"settingsindex_csvexport"];
+    if ([[IAEExporter sharedExporter] exportAllYearsToTMPCSVFile]) {
+        [self lauchMailComposerViewControllerForSendCSVExport];
     }
+}
 
-    [viewController performSelector:@selector(setDelegate:) withObject:self];
-    
-    return viewController;
+- (void)executeConfigureOption
+{
+    [Flurry logEvent:@"settingsindex_configure"];
+    [self createAndLaunchOptionViewControllerOfClass:[IAEHelpConfigureViewController class] andNibName:@"IAEHelpConfigureViewController"];
+}
+
+- (void)executeHelpOption
+{
+    [Flurry logEvent:@"settingsindex_help"];
+    [self createAndLaunchOptionViewControllerOfClass:[IAEHelpViewController class] andNibName:@"IAEHelpViewController"];
+}
+
+- (void)executeAboutOption
+{
+    [Flurry logEvent:@"settingsindex_about"];
+    [self createAndLaunchOptionViewControllerOfClass:[IAEHelpAboutViewController class] andNibName:@"IAEHelpAboutViewController"];
+}
+
+- (void)createAndLaunchOptionViewControllerOfClass:(Class)class andNibName:(NSString *)nibName
+{
+    UIViewController *optionViewController = [[class alloc] initWithNibName:nibName bundle:[NSBundle mainBundle]];
+    [optionViewController performSelector:@selector(setDelegate:) withObject:self];
+    [self.navigationController pushViewController:(UIViewController *)optionViewController animated:YES];
 }
 
 - (void)lauchMailComposerViewControllerForSendCSVExport

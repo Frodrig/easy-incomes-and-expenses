@@ -139,7 +139,6 @@ static NSString * const kExportCSVFileWithExtension = @"export.csv";
     [fileHandle writeData:dataToWrite];
 }
 
-
 - (NSData *)dataOfTMPCSVFile
 {
     NSData *fileData = nil;

@@ -157,8 +157,8 @@ static const NSUInteger kRowOfAboutIndex = 3;
     const NSUInteger indexSufix = indexPath.row + 1;
     NSString *ltext = [NSString stringWithFormat:@"LTEXT_SETTINGSINDEX_%d", indexSufix];
     cell.textLabel.text = NSLocalizedString(ltext, @"");
-    NSString *imageName = [NSString stringWithFormat:@"settingsindex_%d", indexSufix];
-    //cell.imageView.image = [UIImage imageNamed:imageName];
+    NSString *imageName = [NSString stringWithFormat:@"settingsindex_img_%d", indexSufix];
+    cell.imageView.image = [UIImage imageNamed:imageName];
     cell.accessoryType = indexPath.row == kRowOfCSVExportIndex ? UITableViewCellAccessoryNone : UITableViewCellAccessoryDisclosureIndicator;
 }
 

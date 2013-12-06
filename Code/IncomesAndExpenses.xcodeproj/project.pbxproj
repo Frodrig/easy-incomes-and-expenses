@@ -17,6 +17,14 @@
 		5B23F04417FF099000477D34 /* IAENumberFormatterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B23F04317FF099000477D34 /* IAENumberFormatterManager.m */; };
 		5B23FD9117CFAB5100B4AD77 /* 727-more.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B23FD8F17CFAB5000B4AD77 /* 727-more.png */; };
 		5B23FD9217CFAB5100B4AD77 /* 727-more@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B23FD9017CFAB5100B4AD77 /* 727-more@2x.png */; };
+		5B2512711851DFCA00669AE6 /* settingsindex_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B2512691851DFCA00669AE6 /* settingsindex_1.png */; };
+		5B2512721851DFCA00669AE6 /* settingsindex_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B25126A1851DFCA00669AE6 /* settingsindex_1@2x.png */; };
+		5B2512731851DFCA00669AE6 /* settingsindex_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B25126B1851DFCA00669AE6 /* settingsindex_2.png */; };
+		5B2512741851DFCA00669AE6 /* settingsindex_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B25126C1851DFCA00669AE6 /* settingsindex_2@2x.png */; };
+		5B2512751851DFCA00669AE6 /* settingsindex_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B25126D1851DFCA00669AE6 /* settingsindex_3.png */; };
+		5B2512761851DFCA00669AE6 /* settingsindex_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B25126E1851DFCA00669AE6 /* settingsindex_3@2x.png */; };
+		5B2512771851DFCA00669AE6 /* settingsindex_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B25126F1851DFCA00669AE6 /* settingsindex_4.png */; };
+		5B2512781851DFCA00669AE6 /* settingsindex_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B2512701851DFCA00669AE6 /* settingsindex_4@2x.png */; };
 		5B251FA117AACA71000957A5 /* IAEStrokeAnimatableLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B251FA017AACA71000957A5 /* IAEStrokeAnimatableLineView.m */; };
 		5B28813417985822006E4F9B /* IAEVersionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B28813317985822006E4F9B /* IAEVersionHelper.m */; };
 		5B28D1A9182007B000EF4D48 /* IAEHelpConfigureStartMonthCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B28D1A8182007B000EF4D48 /* IAEHelpConfigureStartMonthCell.m */; };
@@ -265,6 +273,14 @@
 		5B23F04317FF099000477D34 /* IAENumberFormatterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAENumberFormatterManager.m; sourceTree = "<group>"; };
 		5B23FD8F17CFAB5000B4AD77 /* 727-more.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "727-more.png"; sourceTree = "<group>"; };
 		5B23FD9017CFAB5100B4AD77 /* 727-more@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "727-more@2x.png"; sourceTree = "<group>"; };
+		5B2512691851DFCA00669AE6 /* settingsindex_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsindex_1.png; sourceTree = "<group>"; };
+		5B25126A1851DFCA00669AE6 /* settingsindex_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsindex_1@2x.png"; sourceTree = "<group>"; };
+		5B25126B1851DFCA00669AE6 /* settingsindex_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsindex_2.png; sourceTree = "<group>"; };
+		5B25126C1851DFCA00669AE6 /* settingsindex_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsindex_2@2x.png"; sourceTree = "<group>"; };
+		5B25126D1851DFCA00669AE6 /* settingsindex_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsindex_3.png; sourceTree = "<group>"; };
+		5B25126E1851DFCA00669AE6 /* settingsindex_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsindex_3@2x.png"; sourceTree = "<group>"; };
+		5B25126F1851DFCA00669AE6 /* settingsindex_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsindex_4.png; sourceTree = "<group>"; };
+		5B2512701851DFCA00669AE6 /* settingsindex_4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsindex_4@2x.png"; sourceTree = "<group>"; };
 		5B251F9F17AACA71000957A5 /* IAEStrokeAnimatableLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEStrokeAnimatableLineView.h; sourceTree = "<group>"; };
 		5B251FA017AACA71000957A5 /* IAEStrokeAnimatableLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEStrokeAnimatableLineView.m; sourceTree = "<group>"; };
 		5B251FA317AACA8E000957A5 /* IAEStrokeAnimatableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEStrokeAnimatableViewDelegate.h; sourceTree = "<group>"; };
@@ -1361,6 +1377,14 @@
 				5B57A9C017FAD39500C7BFD3 /* calculatordragbackground.png */,
 				5B57A9C117FAD39500C7BFD3 /* calculatordragbackground@2x.png */,
 				5BB8AD1117FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png */,
+				5B2512691851DFCA00669AE6 /* settingsindex_1.png */,
+				5B25126A1851DFCA00669AE6 /* settingsindex_1@2x.png */,
+				5B25126B1851DFCA00669AE6 /* settingsindex_2.png */,
+				5B25126C1851DFCA00669AE6 /* settingsindex_2@2x.png */,
+				5B25126D1851DFCA00669AE6 /* settingsindex_3.png */,
+				5B25126E1851DFCA00669AE6 /* settingsindex_3@2x.png */,
+				5B25126F1851DFCA00669AE6 /* settingsindex_4.png */,
+				5B2512701851DFCA00669AE6 /* settingsindex_4@2x.png */,
 				5B2AAA2E17C773CF00E7C7A5 /* 747-minus-circle@2x.png */,
 				5B2A41B217C77E8500C29036 /* 709-plus.png */,
 				5BCB5F501822C1BD00A37013 /* 743-printer.png */,
@@ -2269,6 +2293,7 @@
 				5BBD37CB180BFF5B0095A15A /* ProjectApiKey.txt in Resources */,
 				5BBD3768180BFF5B0095A15A /* index.html in Resources */,
 				5BBD3759180BFF5B0095A15A /* ftv2lastnode.png in Resources */,
+				5B2512781851DFCA00669AE6 /* settingsindex_4@2x.png in Resources */,
 				5BBD375B180BFF5B0095A15A /* ftv2mlastnode.png in Resources */,
 				5BBD37BF180BFF5B0095A15A /* Flurry iOS-4.x-Upgrade-README .pdf in Resources */,
 				5B2E93D317DCDDF6007D4284 /* eiae_icon29@2x.png in Resources */,
@@ -2299,9 +2324,11 @@
 				5BBD373E180BFF5B0095A15A /* annotated.html in Resources */,
 				5BBD3757180BFF5B0095A15A /* ftv2folderclosed.png in Resources */,
 				5B28D1B218200E6300EF4D48 /* 717-flag.png in Resources */,
+				5B2512741851DFCA00669AE6 /* settingsindex_2@2x.png in Resources */,
 				5BC1110017CD1DF500FF6D6B /* 730-envelope.png in Resources */,
 				5B879770180E948700554E13 /* 851-calendar.png in Resources */,
 				5BBD374B180BFF5B0095A15A /* dir_5f6c70842040d9fb1a41cb2ca8828a8e.html in Resources */,
+				5B2512731851DFCA00669AE6 /* settingsindex_2.png in Resources */,
 				5BBD37AF180BFF5B0095A15A /* mag_sel.png in Resources */,
 				5BBD3758180BFF5B0095A15A /* ftv2folderopen.png in Resources */,
 				5B879767180E8FCB00554E13 /* IAEHelpConfigureViewController.xib in Resources */,
@@ -2314,6 +2341,7 @@
 				5B879771180E948700554E13 /* 851-calendar@2x.png in Resources */,
 				5BBD37BE180BFF5B0095A15A /* tabs.css in Resources */,
 				5B0F8BC416B94ADD002D62A5 /* Localizable.strings in Resources */,
+				5B2512751851DFCA00669AE6 /* settingsindex_3.png in Resources */,
 				5BBD3755180BFF5B0095A15A /* ftv2cl.png in Resources */,
 				5BBD3792180BFF5B0095A15A /* classes_66.html in Resources */,
 				5BBD3766180BFF5B0095A15A /* hierarchy.html in Resources */,
@@ -2343,6 +2371,7 @@
 				5BBD3744180BFF5B0095A15A /* classes.html in Resources */,
 				5BBD37B3180BFF5B0095A15A /* search.css in Resources */,
 				5B879760180E7E6F00554E13 /* IAEHelpAboutCollectionViewCell.xib in Resources */,
+				5B2512711851DFCA00669AE6 /* settingsindex_1.png in Resources */,
 				5B62D85D178EA8A2009879A6 /* IAEYearSelectorCollectionViewCell.xib in Resources */,
 				5BCB5F45182267E400A37013 /* IAEExportViewController.xib in Resources */,
 				5BCB5F521822C1BD00A37013 /* 743-printer.png in Resources */,
@@ -2359,14 +2388,17 @@
 				5BCB5F3F1822640C00A37013 /* 702-share@2x.png in Resources */,
 				5BE84E78180DA8CF00F4A80B /* IAESettingsViewController.xib in Resources */,
 				5BBD37C5180BFF5B0095A15A /* Flurry AppCircle Advertiser TOS FINAL August 1, 2012.pdf in Resources */,
+				5B2512721851DFCA00669AE6 /* settingsindex_1@2x.png in Resources */,
 				5B951F6C17D88F1700CCEACE /* icon.png in Resources */,
 				5BBD37BD180BFF5B0095A15A /* tab_s.png in Resources */,
+				5B2512761851DFCA00669AE6 /* settingsindex_3@2x.png in Resources */,
 				5BC1110117CD1DF500FF6D6B /* 730-envelope@2x.png in Resources */,
 				5BBD376F180BFF5B0095A15A /* navtree.css in Resources */,
 				5BA0131317983A9000337E84 /* IAEDayCalendarSelectorViewController.xib in Resources */,
 				5BB8AD1217FAC2F200BAAB96 /* editconceptcontainerviewbackground.png in Resources */,
 				5B879773180E9EFA00554E13 /* IAEHelpAboutViewController.xib in Resources */,
 				5BBD3756180BFF5B0095A15A /* ftv2doc.png in Resources */,
+				5B2512771851DFCA00669AE6 /* settingsindex_4.png in Resources */,
 				5B28D1B318200E6300EF4D48 /* 717-flag@2x.png in Resources */,
 				5BBD3742180BFF5B0095A15A /* class_flurry-members.html in Resources */,
 				5BBD375E180BFF5B0095A15A /* ftv2node.png in Resources */,

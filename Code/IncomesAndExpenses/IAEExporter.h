@@ -13,7 +13,6 @@
 + (IAEExporter *)sharedExporter;
 
 - (BOOL)exportAllYearsToTMPCSVFile;
-
-- (void)exportYearDate:(NSUInteger)yearDate withUserConfiguration:(NSDictionary *)userConfiguration;
+- (NSData *)dataOfTMPCSVFile;
 
 @end

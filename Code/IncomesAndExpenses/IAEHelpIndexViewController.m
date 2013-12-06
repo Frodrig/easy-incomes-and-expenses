@@ -167,10 +167,20 @@ static NSString * const kExportCSVFileWithExtension = @"export.csv";
 
 #pragma mark - Table view delegate
 
+
+// TODO: Refactorizar bien
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIViewController *nextViewController = [self createNextViewControllerBasedInSelectRowAtIndexPath:indexPath];
-    [self.navigationController pushViewController:nextViewController animated:YES];
+    if (indexPath.row == kRowOfCSVExportIndex) {
+        [Flurry logEvent:@"settingsindex_csvexport"];
+        if ([[IAEExporter sharedExporter] exportAllYearsToTMPCSVFile]) {
+            [self lauchMailComposerViewControllerForSendCSVExport];
+        }
+    } else {
+        UIViewController *nextViewController = [self createNextViewControllerBasedInSelectRowAtIndexPath:indexPath];
+        [self.navigationController pushViewController:nextViewController animated:YES];
+    }
 }
 
 - (UIViewController *)createNextViewControllerBasedInSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -180,14 +190,6 @@ static NSString * const kExportCSVFileWithExtension = @"export.csv";
     if (indexPath.row == kRowOfConfigureIndex) {
         [Flurry logEvent:@"settingsindex_configure"];
         viewController = [[IAEHelpConfigureViewController alloc] initWithNibName:@"IAEHelpConfigureViewController" bundle:[NSBundle mainBundle]];
-    } else if (indexPath.row == kRowOfCSVExportIndex) {
-        [Flurry logEvent:@"settingsindex_csvexport"];
-        
-        // Lanzar en paralelo
-        if ([[IAEExporter sharedExporter] exportAllYearsToTMPCSVFile]) {
-            [self lauchMailComposerViewControllerForSendCSVExport];
-        }
-        
     } else if (indexPath.row == kRowOfHelpIndex) {
         [Flurry logEvent:@"settingsindex_help"];
         viewController = [[IAEHelpViewController alloc] initWithNibName:@"IAEHelpViewController" bundle:[NSBundle mainBundle]];
@@ -201,24 +203,14 @@ static NSString * const kExportCSVFileWithExtension = @"export.csv";
     return viewController;
 }
 
-
 - (void)lauchMailComposerViewControllerForSendCSVExport
 {
-    MFMailComposeViewController *appEmailViewController = [[MFMailComposeViewController alloc] init];
-    appEmailViewController.mailComposeDelegate = self;
-    
-    [appEmailViewController setSubject:NSLocalizedString(@"LTEXT_EMAIL_SUBJECTCSVEXPORT", @"")];
-    
-    NSString * pathForTMPDirectory = [NSTemporaryDirectory() stringByAppendingPathComponent:kExportCSVFileWithExtension];
-    NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:pathForTMPDirectory];
-    const BOOL fileHandleOk = fileHandle != nil;
-    if (fileHandleOk) {
-        NSData *fileData = [fileHandle readDataToEndOfFile];
+    NSData *fileData = [[IAEExporter sharedExporter] dataOfTMPCSVFile];
+    if (fileData) {
+        MFMailComposeViewController *appEmailViewController = [[MFMailComposeViewController alloc] init];
+        appEmailViewController.mailComposeDelegate = self;
         [appEmailViewController addAttachmentData:fileData mimeType:@"text/csv" fileName:@"Easy_Incomes_and_Expenses.csv"];
-        
         [self presentViewController:appEmailViewController animated:YES completion:nil];
-    } else {
-        [appEmailViewController dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
@@ -226,9 +218,15 @@ static NSString * const kExportCSVFileWithExtension = @"export.csv";
 
 -(void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
+    [self deselectExportOptionCell];
     [controller dismissViewControllerAnimated:YES completion:nil];
-    [self dismissAll];
 }
 
+- (void)deselectExportOptionCell
+{
+    NSIndexPath *exportCellOptionIndexPath = [NSIndexPath indexPathForRow:kRowOfCSVExportIndex inSection:0];
+    UITableViewCell *exportCell = [self.tableView cellForRowAtIndexPath:exportCellOptionIndexPath];
+    exportCell.selected = NO;
+}
 
 @end

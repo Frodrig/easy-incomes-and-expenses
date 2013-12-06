@@ -7,9 +7,6 @@
 //
 
 #import "IAEExporter.h"
-#import "IAEExporterConverter.h"
-#import "IAEExporterWritter.h"
-#import "IAEExporterDefs.h"
 #import "IAEBook.h"
 #import "IAEOpenYear.h"
 #import "IAEMonth.h"
@@ -142,33 +139,19 @@ static NSString * const kExportCSVFileWithExtension = @"export.csv";
     [fileHandle writeData:dataToWrite];
 }
 
-/////////
 
-- (void)exportYearDate:(NSUInteger)yearDate withUserConfiguration:(NSDictionary *)userConfiguration
+- (NSData *)dataOfTMPCSVFile
 {
-    NSAssert(userConfiguration, @"");
-    NSAssert(userConfiguration[kKeyWherePrint] || userConfiguration[kKeyWherePDF] || userConfiguration[kKeyWhereCSV], @"");
-    NSAssert(userConfiguration[kKeyMonthSelected], @"");
-    NSAssert(userConfiguration[kKeyWhatOptions], @"");
+    NSData *fileData = nil;
     
-    NSDictionary *convertedData = [IAEExporterConverter convertToExportDataFromYearDate:yearDate andUserConfiguration:userConfiguration];
-    
-    NSSet *modes = userConfiguration[kKeyWhatOptions];
-    
-    const BOOL exportToCSV = [userConfiguration[kKeyWhereCSV] boolValue];
-    if (exportToCSV) {
-        [IAEExporterWritter exportToCSVUsingModes:modes inYearDate:yearDate withConvertedUserConfiguration:convertedData];
+    NSString * pathForTMPDirectory = [NSTemporaryDirectory() stringByAppendingPathComponent:kExportCSVFileWithExtension];
+    NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:pathForTMPDirectory];
+    const BOOL fileHandleOk = fileHandle != nil;
+    if (fileHandleOk) {
+        fileData = [fileHandle readDataToEndOfFile];
     }
     
-    const BOOL exportToPDF = [userConfiguration[kKeyWherePDF] boolValue];
-    if (exportToPDF) {
-        [IAEExporterWritter exportToPDFUsingModes:modes inYearDate:yearDate withConvertedUserConfiguration:convertedData];
-    }
-    
-    const BOOL exportToPrint = [userConfiguration[kKeyWherePrint] boolValue];
-    if (exportToPrint) {
-        
-    }
+    return fileData;
 }
 
 @end

@@ -7,8 +7,6 @@
 //
 
 #import "IAEExporter.h"
-#import "IAEExporterConverter.h"
-#import "IAEExporterWritter.h"
 #import "IAEExporterDefs.h"
 #import "IAEBook.h"
 #import "IAEOpenYear.h"
@@ -140,35 +138,6 @@ static NSString * const kExportCSVFileWithExtension = @"export.csv";
     
     NSData *dataToWrite = [conceptToWrite dataUsingEncoding:NSUnicodeStringEncoding];
     [fileHandle writeData:dataToWrite];
-}
-
-/////////
-
-- (void)exportYearDate:(NSUInteger)yearDate withUserConfiguration:(NSDictionary *)userConfiguration
-{
-    NSAssert(userConfiguration, @"");
-    NSAssert(userConfiguration[kKeyWherePrint] || userConfiguration[kKeyWherePDF] || userConfiguration[kKeyWhereCSV], @"");
-    NSAssert(userConfiguration[kKeyMonthSelected], @"");
-    NSAssert(userConfiguration[kKeyWhatOptions], @"");
-    
-    NSDictionary *convertedData = [IAEExporterConverter convertToExportDataFromYearDate:yearDate andUserConfiguration:userConfiguration];
-    
-    NSSet *modes = userConfiguration[kKeyWhatOptions];
-    
-    const BOOL exportToCSV = [userConfiguration[kKeyWhereCSV] boolValue];
-    if (exportToCSV) {
-        [IAEExporterWritter exportToCSVUsingModes:modes inYearDate:yearDate withConvertedUserConfiguration:convertedData];
-    }
-    
-    const BOOL exportToPDF = [userConfiguration[kKeyWherePDF] boolValue];
-    if (exportToPDF) {
-        [IAEExporterWritter exportToPDFUsingModes:modes inYearDate:yearDate withConvertedUserConfiguration:convertedData];
-    }
-    
-    const BOOL exportToPrint = [userConfiguration[kKeyWherePrint] boolValue];
-    if (exportToPrint) {
-        
-    }
 }
 
 @end

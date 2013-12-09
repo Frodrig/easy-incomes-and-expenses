@@ -49,7 +49,6 @@
 #import "NSDecimalNumber+AbsoluteValue.h"
 #import "IAEStrokeAnimatableLineView.h"
 #import "IAEDragPanelCalculatorView.h"
-#import "IAEExportViewController.h"
 
 @interface IAEEasyIncomesAndExpensesViewController ()
 
@@ -57,7 +56,6 @@
 @property (weak, nonatomic) IBOutlet UIView *containerViewForDynamicFX;
 @property (strong, nonatomic) UIBarButtonItem *yearsButton;
 @property (strong, nonatomic) UIBarButtonItem *categoriesButton;
-@property (strong, nonatomic) UIBarButtonItem *shareButton;
 @property (strong, nonatomic) UIBarButtonItem *settingsButton;
 @property (weak, nonatomic) IBOutlet IAESelectorContextView *selectorContextView;
 @property (weak, nonatomic) IBOutlet UIView *editAndReportModeContentContainerView;
@@ -67,7 +65,6 @@
 @property (nonatomic, strong) IAEYearSelectorViewController *yearSelectorViewController;
 @property (nonatomic, strong) IAECategorySelectorViewController *categoriesSelectorViewController;
 @property (nonatomic, strong) IAESettingsViewController *aboutAndOptions2ViewController;
-@property (nonatomic, strong) IAEExportViewController *exportViewController;
 @property (nonatomic, strong) IAEReportAreaView *reportAreaView;
 @property (nonatomic, strong) IAETextRawSelectorMenuView *contextMenuView;
 @property (nonatomic, strong) IAETextRawSelectorMenuView *reportMenuView;
@@ -113,7 +110,6 @@ static NSString * const kLTextVersionAppType = @"LTEXT_CATEGORY_VERSION";
 static NSString * const kLTextSettingsBarButtonTitle = @"LTEXT_BARBUTTON_SETTINGS_TITLE";
 static NSString * const kLTextYearsBarButtonTitle = @"LTEXT_BARBUTTON_YEARS_TITLE";
 static NSString * const kLTextCategoriesBarButtonTitle = @"LTEXT_BARBUTTON_CATEGORIES_TITLE";
-static NSString * const kLTextExportBarButtonTitle = @"LTEXT_BARBUTTON_EXPORT_TITLE";
 
 static const CGFloat kEditAndReportModeContentContainerRadius = 15;
 static const CGFloat kColorWithWhiteForEditAndReportModeContentContainerBackground = 0.97;
@@ -350,8 +346,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     self.navigationItem.rightBarButtonItems = @[self.categoriesButton, self.yearsButton];
     
     self.settingsButton = [self makeBarButtonWithTitle:kLTextSettingsBarButtonTitle andSelector:@selector(settingsOptionPressed:)];
-    self.shareButton = [self makeBarButtonWithTitle:kLTextExportBarButtonTitle andSelector:@selector(exportButtonPressed:)];
-    self.navigationItem.leftBarButtonItems = @[self.settingsButton, self.shareButton];
+    self.navigationItem.leftBarButtonItems = @[self.settingsButton];
 }
 
 - (UIBarButtonItem *)makeBarButtonWithTitle:(NSString *)title andSelector:(SEL)selector
@@ -601,11 +596,6 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     [self openModalForPresentYearSelectorViewController];
 }
 
-- (void)exportButtonPressed:(id)sender
-{
-    [self openModalForExportViewController];
-}
-
 - (void)openModalForPresentYearSelectorViewController
 {
     self.yearSelectorViewController = [[IAEYearSelectorViewController alloc] initWithNibName:nil bundle:nil];
@@ -621,15 +611,6 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     self.aboutAndOptions2ViewController.modalPresentationStyle = UIModalPresentationFormSheet;
     
     [self presentViewController:self.aboutAndOptions2ViewController animated:YES completion:nil];
-}
-
-- (void)openModalForExportViewController
-{
-    self.exportViewController = [[IAEExportViewController alloc] initWithNibName:nil bundle:nil];
-    self.exportViewController.modalPresentationStyle = UIModalPresentationFormSheet;
-    self.exportViewController.query = self;
-    
-    [self presentViewController:self.exportViewController animated:YES completion:nil];
 }
 
 - (IBAction)segmentedControlPressed:(UISegmentedControl *)sender

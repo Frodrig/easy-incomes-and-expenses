@@ -14,6 +14,4 @@
 
 - (BOOL)exportAllYearsToTMPCSVFile;
 
-- (void)exportYearDate:(NSUInteger)yearDate withUserConfiguration:(NSDictionary *)userConfiguration;
-
 @end

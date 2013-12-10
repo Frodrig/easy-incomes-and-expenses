@@ -10,6 +10,8 @@
 #import "IAEPasswordPanelScreenView.h"
 #import "UIView+LoadFromXib.m"
 #import "IAESettingsViewControllerDefs.h"
+#import "NSUserDefaults+EasyIncAndExp.h"
+#import "IAEHelpIndexViewControllerDelegate.h"
 
 @interface IAEPasswordPanelViewController ()
 
@@ -151,7 +153,7 @@ static const NSInteger kBasePanelPasswordTag = 100;
 
 - (NSUInteger)findScrollViewSubstate
 {
-    const NSUInteger substate = self.scrollView.contentOffset.x / self.scrollView.contentSize.width;
+    const NSUInteger substate = self.scrollView.contentOffset.x / self.scrollView.bounds.size.width;
     
     return substate;
 }
@@ -172,7 +174,9 @@ static const NSInteger kBasePanelPasswordTag = 100;
     if (self.insertedPassword.length < 4) {
         [self addToInsertedPasswordTheCode:[sender titleForState:UIControlStateNormal]];
         [self updatePanelScreenWithInsertedPassword];
-        [self checkStateAndPerformActions];
+        if (self.insertedPassword.length == 4) {
+            [self checkStateAfterPasswordInsertedAndPerformActions];
+        }
     }
 }
 
@@ -181,7 +185,44 @@ static const NSInteger kBasePanelPasswordTag = 100;
     self.insertedPassword = [self.insertedPassword stringByAppendingString:code];
 }
 
-- (void)checkStateAndPerformActions
+- (void)checkStateAfterPasswordInsertedAndPerformActions
+{
+    if (self.mode == MT_Activate) {
+        [self performActionsAfterPasswordInsertedInActivateMode];
+    } else if (self.mode == MT_Change) {
+        [self performActionsAfterPasswordInsertedInChangeMode];
+    } else if (self.mode == MT_Deactivate) {
+        [self performActionsAfterPasswordInsertedInDeactivateMode];
+    }
+}
+
+- (void)performActionsAfterPasswordInsertedInActivateMode
+{
+    const NSUInteger subState = [self findScrollViewSubstate];
+    if (subState == 0) {
+        self.pendingConfirmationPassword = self.insertedPassword;
+        self.insertedPassword = @"";
+        [self.scrollView scrollRectToVisible:CGRectMake(self.scrollView.bounds.size.width * (subState + 1), 0, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height) animated:YES];
+    } else if (subState == 1) {
+        const BOOL passwordOk = [self.pendingConfirmationPassword isEqualToString:self.insertedPassword];
+        if (passwordOk) {
+            [[NSUserDefaults standardUserDefaults] setNewPassword:self.pendingConfirmationPassword];
+            [self.delegate dismissAll];
+        } else {
+            IAEPasswordPanelScreenView *panel = [self findPasswordPanelOfScrollViewSubstate];
+            [panel setMessage:NSLocalizedString(@"LTEXT_PASSWORDPANEL_SCREENMESSAGE_INVALIDPASSWORDINCONFIRM", @"")];
+            self.insertedPassword = @"";
+            [panel clearAllCodes];
+        }
+    }
+}
+
+- (void)performActionsAfterPasswordInsertedInChangeMode
+{
+    
+}
+
+- (void)performActionsAfterPasswordInsertedInDeactivateMode
 {
     
 }

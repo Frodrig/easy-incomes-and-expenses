@@ -112,6 +112,7 @@ static const NSUInteger kChangePasswordIndex = 1;
 {
     ModeType mode = [self findModeTypeBasedInSelectedRowAtIndexPath:indexPath];
     IAEPasswordPanelViewController *passwordPanelViewController = [[IAEPasswordPanelViewController alloc] initWithMode:mode];
+    passwordPanelViewController.delegate = self.delegate;
     
     [self.navigationController pushViewController:passwordPanelViewController animated:YES];
 }

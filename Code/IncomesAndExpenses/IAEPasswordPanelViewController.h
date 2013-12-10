@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol IAEHelpIndexViewControllerDelegate;
+
 typedef NS_ENUM(NSUInteger, ModeType)
 {
     MT_Activate,
@@ -16,6 +18,8 @@ typedef NS_ENUM(NSUInteger, ModeType)
 };
 
 @interface IAEPasswordPanelViewController : UIViewController
+
+@property (nonatomic, weak)id<IAEHelpIndexViewControllerDelegate> delegate;
 
 - (instancetype)initWithMode:(ModeType)mode;
 

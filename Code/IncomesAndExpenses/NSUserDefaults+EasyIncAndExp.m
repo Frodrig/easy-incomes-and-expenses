@@ -123,7 +123,8 @@ static NSString * const kUserDefaultsReportAmountModePercentageAmountValue = @"p
 
 - (void)clearPassword
 {
-    [[NSUserDefaults standardUserDefaults] setValue:kUserDefaultPasswordKey forKey:@""];
+    [[NSUserDefaults standardUserDefaults] setValue:kUserDefaultPasswordKey forKey:kUserDefaultPasswordKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)setNewPassword:(NSString *)password
@@ -131,7 +132,8 @@ static NSString * const kUserDefaultsReportAmountModePercentageAmountValue = @"p
     NSAssert(![password isEqualToString:@""], @"");
     NSAssert(password.length == 4, @"");
     
-    [[NSUserDefaults standardUserDefaults] setValue:kUserDefaultInitialMonthKey forKey:@""];
+    [[NSUserDefaults standardUserDefaults] setValue:password forKey:kUserDefaultPasswordKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (BOOL)isPasswordActivated

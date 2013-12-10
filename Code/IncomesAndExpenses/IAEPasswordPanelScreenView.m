@@ -58,6 +58,13 @@ static NSString * const kClearCodeSymbol = @"";
     [self vinculeCodeSymbol:kClearCodeSymbol toLabelCodeAtPosition:position];
 }
 
+- (void)clearAllCodes
+{
+    for (NSUInteger position = 0; position < 4; position++) {
+        [self vinculeCodeSymbol:kClearCodeSymbol toLabelCodeAtPosition:position];
+    }
+}
+
 - (void)vinculeCodeSymbol:(NSString *)codeSymbol toLabelCodeAtPosition:(NSUInteger)position
 {
     UILabel *label = [self findLabelCodeAtPosition:position];

@@ -14,5 +14,6 @@
 
 - (void)addCodeAtPosition:(NSInteger)position;
 - (void)clearCodeAtPosition:(NSInteger)position;
+- (void)clearAllCodes;
 
 @end

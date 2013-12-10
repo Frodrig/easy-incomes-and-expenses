@@ -16,6 +16,8 @@
 @property (nonatomic) ModeType mode;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *keyboardView;
+@property (nonatomic, strong) NSString *insertedPassword;
+@property (nonatomic, copy) NSString *pendingConfirmationPassword;
 
 @end
 
@@ -43,6 +45,8 @@ static const NSInteger kBasePanelPasswordTag = 100;
     self = [super initWithNibName:@"IAEPasswordPanelViewController" bundle:[NSBundle mainBundle]];
     if (self) {
         _mode = mode;
+        _insertedPassword = @"";
+        _pendingConfirmationPassword = @"";
     }
     
     return self;
@@ -149,9 +153,66 @@ static const NSInteger kBasePanelPasswordTag = 100;
     return tag;
 }
 
+- (NSUInteger)findScrollViewSubstate
+{
+    const NSUInteger substate = self.scrollView.contentOffset.x / self.scrollView.contentSize.width;
+    
+    return substate;
+}
 
+- (IAEPasswordPanelScreenView *)findPasswordPanelOfScrollViewSubstate
+{
+    const NSUInteger subState = [self findScrollViewSubstate];
+    const NSUInteger panelTag = [self createTagForPasswordPanelAtPosition:subState];
+    IAEPasswordPanelScreenView *panel = (IAEPasswordPanelScreenView *)[self.scrollView viewWithTag:panelTag];
+    
+    return panel;
+}
 
+#pragma mark - Keyboard Events
 
+- (IBAction)keyboardCodePressed:(UIButton *)sender
+{
+    if (self.insertedPassword.length < 4) {
+        [self addToInsertedPasswordTheCode:[sender titleForState:UIControlStateNormal]];
+        [self updatePanelScreenWithInsertedPassword];
+        [self checkStateAndPerformActions];
+    }
+}
 
+- (void)addToInsertedPasswordTheCode:(NSString *)code
+{
+    self.insertedPassword = [self.insertedPassword stringByAppendingString:code];
+}
+
+- (void)checkStateAndPerformActions
+{
+    
+}
+
+- (IBAction)keyboardDeletePressed:(id)sender
+{
+    [self deleteLastCodeInInsertedPassword];
+    [self updatePanelScreenWithInsertedPassword];
+}
+
+- (void)deleteLastCodeInInsertedPassword
+{
+    if (self.insertedPassword.length > 0) {
+        self.insertedPassword = [self.insertedPassword substringToIndex:self.insertedPassword.length - 1];
+    }
+}
+
+- (void)updatePanelScreenWithInsertedPassword
+{
+    IAEPasswordPanelScreenView *panel = [self findPasswordPanelOfScrollViewSubstate];
+    for (NSUInteger index = 0; index < 4; ++index) {
+        if (self.insertedPassword.length > index) {
+            [panel addCodeAtPosition:index];
+        } else {
+            [panel clearCodeAtPosition:index];
+        }
+    }
+}
 
 @end

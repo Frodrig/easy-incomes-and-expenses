@@ -35,12 +35,13 @@ static NSString * const kNotificationInitialMonthChanged = @"initialMonthChange"
 
 static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 
-static const NSInteger kIndexSize = 4;
+static const NSInteger kIndexSize = 5;
 
 static const NSUInteger kRowOfConfigureIndex = 0;
-static const NSUInteger kRowOfCSVExportIndex = 1;
-static const NSUInteger kRowOfHelpIndex = 2;
-static const NSUInteger kRowOfAboutIndex = 3;
+static const NSUInteger kRowOfPassword = 1;
+static const NSUInteger kRowOfCSVExportIndex = 2;
+static const NSUInteger kRowOfHelpIndex = 3;
+static const NSUInteger kRowOfAboutIndex = 4;
 
 static NSString * const kExportCSVFileWithExtension = @"export.csv";
 
@@ -180,6 +181,8 @@ static NSString * const kExportCSVFileWithExtension = @"export.csv";
     if (indexPath.row == kRowOfConfigureIndex) {
         [Flurry logEvent:@"settingsindex_configure"];
         viewController = [[IAEHelpConfigureViewController alloc] initWithNibName:@"IAEHelpConfigureViewController" bundle:[NSBundle mainBundle]];
+    } else if (indexPath.row == kRowOfPassword) {
+        [Flurry logEvent:@"settingsindex_password"];
     } else if (indexPath.row == kRowOfCSVExportIndex) {
         [Flurry logEvent:@"settingsindex_csvexport"];
         

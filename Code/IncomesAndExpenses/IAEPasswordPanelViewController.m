@@ -9,6 +9,7 @@
 #import "IAEPasswordPanelViewController.h"
 #import "IAEPasswordPanelScreenView.h"
 #import "UIView+LoadFromXib.m"
+#import "IAESettingsViewControllerDefs.h"
 
 @interface IAEPasswordPanelViewController ()
 
@@ -50,15 +51,16 @@ static const NSInteger kBasePanelPasswordTag = 100;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     [self configureNavigationController];
-    [self configureScrollViewBasedInMode];
 }
 
 - (void)configureNavigationController
 {
-    NSString *title = [self findTitleForNavigationControllerWithModeType:self.mode];
-    self.navigationItem.title = title;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.extendedLayoutIncludesOpaqueBars = NO;
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.navigationItem.title = [self findTitleForNavigationControllerWithModeType:self.mode];
 }
 
 -(NSString *)findTitleForNavigationControllerWithModeType:(ModeType)mode
@@ -78,6 +80,13 @@ static const NSInteger kBasePanelPasswordTag = 100;
     return retTitle;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self configureScrollViewBasedInMode];
+}
+
 - (void)configureScrollViewBasedInMode
 {
     if (self.mode == MT_Activate) {
@@ -87,6 +96,8 @@ static const NSInteger kBasePanelPasswordTag = 100;
     } else if (self.mode == MT_Change) {
         [self addInsertToChangePasswordPanelScreen];
     }
+    
+    NSLog(@"SV: %@", NSStringFromCGSize(self.scrollView.contentSize));
 }
 
 - (void)addCreatePasswordPanelScreen
@@ -114,10 +125,12 @@ static const NSInteger kBasePanelPasswordTag = 100;
 - (void)createAndInsertPasswordPanelScreenViewWithMessage:(NSString *)message atScrollViewPosition:(NSInteger)position
 {
     IAEPasswordPanelScreenView *panel = (IAEPasswordPanelScreenView *)[UIView viewFromXib:@"IAEPasswordPanelScreenView" withOwner:self];
-    panel.frame = CGRectMake(panel.bounds.size.width * position, 0, panel.bounds.size.width, panel.bounds.size.height);
+    panel.frame = CGRectMake(self.scrollView.bounds.size.width * position, 0, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height);
     panel.tag = [self createTagForPasswordPanelAtPosition:position];
     [panel setMessage:NSLocalizedString(message, @"")];
     
+    NSLog(@"PP: %@", NSStringFromCGRect(panel.frame));
+
     [self.scrollView addSubview:panel];
 }
 

@@ -9,6 +9,7 @@
 #ifndef IncomesAndExpenses_IAESettingsViewControllerDefs_h
 #define IncomesAndExpenses_IAESettingsViewControllerDefs_h
 
+static const CGFloat kTintValueForNavigation = 0.6;
 
 static NSString * const kFamilyFontNameForCells = @"HelveticaNeue-Light";
 static const NSUInteger kFamilyFontSizeForCells = 24;

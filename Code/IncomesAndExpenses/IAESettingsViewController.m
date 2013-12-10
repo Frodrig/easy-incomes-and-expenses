@@ -8,6 +8,7 @@
 
 #import "IAESettingsViewController.h"
 #import "IAEHelpIndexViewController.h"
+#import "IAESettingsViewControllerDefs.h"
 
 @interface IAESettingsViewController ()
 
@@ -17,7 +18,6 @@
 
 #pragma mark - Constants
 
-static const CGFloat kTintValueForNavigation = 0.6;
 
 #pragma mark - Init
 
@@ -34,8 +34,14 @@ static const CGFloat kTintValueForNavigation = 0.6;
 {
     [super viewDidLoad];
    
+    [self configureController];
     [self configureView];
     [self launchIndexViewController];
+}
+
+- (void)configureController
+{
+    self.edgesForExtendedLayout = UIRectEdgeNone;
 }
 
 - (void)configureView

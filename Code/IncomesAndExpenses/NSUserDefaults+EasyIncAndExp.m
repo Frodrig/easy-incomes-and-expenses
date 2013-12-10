@@ -16,6 +16,7 @@
 static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
 static NSString * const kUserDefaultsReportAmountModeKey = @"reportAmountMode";
 static NSString * const kUserDefaultInitialMonthKey = @"initialMonth";
+static NSString * const kUserDefaultPasswordKey = @"password";
 
 static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalAmounts";
 static NSString * const kUserDefaultsReportAmountModePercentageAmountValue = @"percentageAmounts";
@@ -26,7 +27,8 @@ static NSString * const kUserDefaultsReportAmountModePercentageAmountValue = @"p
 {
     NSDictionary *defaults = @{ kUserDefaultsDayModeActiveKey: [NSNumber numberWithBool:NO],
                                 kUserDefaultsReportAmountModeKey: kUserDefaultsReportAmountModeTotalAmountValue,
-                                kUserDefaultInitialMonthKey: @(January)};
+                                kUserDefaultInitialMonthKey: @(January),
+                                kUserDefaultPasswordKey: @""};
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];    
 }
 
@@ -55,7 +57,7 @@ static NSString * const kUserDefaultsReportAmountModePercentageAmountValue = @"p
 
 - (BOOL)isReportAmountModeInReportSectionOfType:(NSString *)reportAmountModeType
 {
-    NSString *actualAmountMode = [[NSUserDefaults standardUserDefaults] stringForKey:kUserDefaultsReportAmountMode];
+    NSString *actualAmountMode = [[NSUserDefaults standardUserDefaults] stringForKey:kUserDefaultsReportAmountModeKey];
     const BOOL isTheSameMode = [actualAmountMode compare:reportAmountModeType] == NSOrderedSame;
     
     return isTheSameMode;
@@ -88,7 +90,7 @@ static NSString * const kUserDefaultsReportAmountModePercentageAmountValue = @"p
 {
     [Flurry logEvent:@"report_changemode" withParameters:@{@"mode" :reportAmountModeType}];
     
-    [[NSUserDefaults standardUserDefaults] setValue:reportAmountModeType forKey:kUserDefaultsReportAmountMode];
+    [[NSUserDefaults standardUserDefaults] setValue:reportAmountModeType forKey:kUserDefaultsReportAmountModeKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -99,15 +101,46 @@ static NSString * const kUserDefaultsReportAmountModePercentageAmountValue = @"p
     NSAssert(startMonth != InvalidMonth, @"");
     [Flurry logEvent:@"initalmonth_change" withParameters:@{@"month" : @(startMonth)}];
     
-    [[NSUserDefaults standardUserDefaults] setValue:@(startMonth) forKey:kUserDefaultInitialMonth];
+    [[NSUserDefaults standardUserDefaults] setValue:@(startMonth) forKey:kUserDefaultInitialMonthKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (MonthType)actualInitialMonth
 {
-    NSNumber *startMonth = [[NSUserDefaults standardUserDefaults] valueForKey:kUserDefaultInitialMonth];
+    NSNumber *startMonth = [[NSUserDefaults standardUserDefaults] valueForKey:kUserDefaultInitialMonthKey];
     
     return startMonth.integerValue;
 }
+
+#pragma mark - Password
+
+- (NSString *)findPassword
+{
+    NSString *password = [[NSUserDefaults standardUserDefaults] valueForKey:kUserDefaultPasswordKey];
+    
+    return password;
+}
+
+- (void)clearPassword
+{
+    [[NSUserDefaults standardUserDefaults] setValue:kUserDefaultPasswordKey forKey:@""];
+}
+
+- (void)setNewPassword:(NSString *)password
+{
+    NSAssert(![password isEqualToString:@""], @"");
+    NSAssert(password.length == 4, @"");
+    
+    [[NSUserDefaults standardUserDefaults] setValue:kUserDefaultInitialMonthKey forKey:@""];
+}
+
+- (BOOL)isPasswordActivated
+{
+    NSString *password = [self findPassword];
+    const BOOL isActivated = password.length == 4;
+    
+    return isActivated;
+}
+
 
 @end

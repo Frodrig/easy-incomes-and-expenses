@@ -7,10 +7,14 @@
 //
 
 #import "IAEPasswordPanelViewController.h"
+#import "IAEPasswordPanelScreenView.h"
+#import "UIView+LoadFromXib.m"
 
 @interface IAEPasswordPanelViewController ()
 
 @property (nonatomic) ModeType mode;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIView *keyboardView;
 
 @end
 
@@ -50,6 +54,19 @@
 {
     NSString *title = [self findTitleForNavigationControllerWithModeType:self.mode];
     self.navigationItem.title = title;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self configureScrollViewBasedInMode];
+}
+
+- (void)configureScrollViewBasedInMode
+{
+    IAEPasswordPanelScreenView *view = (IAEPasswordPanelScreenView *)[UIView viewFromXib:@"IAEPasswordPanelScreenView" withOwner:self];
+    [self.scrollView addSubview:view];
 }
 
 -(NSString *)findTitleForNavigationControllerWithModeType:(ModeType)mode

@@ -241,6 +241,8 @@
 		5BDD9A2718571B60001A6CEF /* IAEHelpPasswordIndexViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BDD9A2518571B60001A6CEF /* IAEHelpPasswordIndexViewController.xib */; };
 		5BDD9A2D18572256001A6CEF /* IAEPasswordPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BDD9A2B18572256001A6CEF /* IAEPasswordPanelViewController.m */; };
 		5BDD9A2E18572256001A6CEF /* IAEPasswordPanelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BDD9A2C18572256001A6CEF /* IAEPasswordPanelViewController.xib */; };
+		5BDD9A3218572F99001A6CEF /* IAEPasswordPanelScreenView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BDD9A3118572F99001A6CEF /* IAEPasswordPanelScreenView.m */; };
+		5BDD9A3418572FB3001A6CEF /* IAEPasswordPanelScreenView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BDD9A3318572FB3001A6CEF /* IAEPasswordPanelScreenView.xib */; };
 		5BE84E77180DA8CF00F4A80B /* IAESettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE84E75180DA8CF00F4A80B /* IAESettingsViewController.m */; };
 		5BE84E78180DA8CF00F4A80B /* IAESettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE84E76180DA8CF00F4A80B /* IAESettingsViewController.xib */; };
 		5BE84E7C180DA8F500F4A80B /* IAEHelpIndexViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE84E7A180DA8F500F4A80B /* IAEHelpIndexViewController.m */; };
@@ -671,6 +673,9 @@
 		5BDD9A2A18572256001A6CEF /* IAEPasswordPanelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEPasswordPanelViewController.h; sourceTree = "<group>"; };
 		5BDD9A2B18572256001A6CEF /* IAEPasswordPanelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEPasswordPanelViewController.m; sourceTree = "<group>"; };
 		5BDD9A2C18572256001A6CEF /* IAEPasswordPanelViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEPasswordPanelViewController.xib; sourceTree = "<group>"; };
+		5BDD9A3018572F99001A6CEF /* IAEPasswordPanelScreenView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEPasswordPanelScreenView.h; sourceTree = "<group>"; };
+		5BDD9A3118572F99001A6CEF /* IAEPasswordPanelScreenView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEPasswordPanelScreenView.m; sourceTree = "<group>"; };
+		5BDD9A3318572FB3001A6CEF /* IAEPasswordPanelScreenView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEPasswordPanelScreenView.xib; sourceTree = "<group>"; };
 		5BE84E74180DA8CF00F4A80B /* IAESettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAESettingsViewController.h; sourceTree = "<group>"; };
 		5BE84E75180DA8CF00F4A80B /* IAESettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAESettingsViewController.m; sourceTree = "<group>"; };
 		5BE84E76180DA8CF00F4A80B /* IAESettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAESettingsViewController.xib; sourceTree = "<group>"; };
@@ -2045,11 +2050,22 @@
 		5BDD9A2918572239001A6CEF /* IAEPasswordPanel */ = {
 			isa = PBXGroup;
 			children = (
+				5BDD9A2F18572F66001A6CEF /* IAEPasswordPanelScreenView */,
 				5BDD9A2A18572256001A6CEF /* IAEPasswordPanelViewController.h */,
 				5BDD9A2B18572256001A6CEF /* IAEPasswordPanelViewController.m */,
 				5BDD9A2C18572256001A6CEF /* IAEPasswordPanelViewController.xib */,
 			);
 			name = IAEPasswordPanel;
+			sourceTree = "<group>";
+		};
+		5BDD9A2F18572F66001A6CEF /* IAEPasswordPanelScreenView */ = {
+			isa = PBXGroup;
+			children = (
+				5BDD9A3018572F99001A6CEF /* IAEPasswordPanelScreenView.h */,
+				5BDD9A3118572F99001A6CEF /* IAEPasswordPanelScreenView.m */,
+				5BDD9A3318572FB3001A6CEF /* IAEPasswordPanelScreenView.xib */,
+			);
+			name = IAEPasswordPanelScreenView;
 			sourceTree = "<group>";
 		};
 		5BE84E68180DA16200F4A80B /* About and Options */ = {
@@ -2302,6 +2318,7 @@
 				5BBD37BE180BFF5B0095A15A /* tabs.css in Resources */,
 				5B0F8BC416B94ADD002D62A5 /* Localizable.strings in Resources */,
 				5BBD3755180BFF5B0095A15A /* ftv2cl.png in Resources */,
+				5BDD9A3418572FB3001A6CEF /* IAEPasswordPanelScreenView.xib in Resources */,
 				5BBD3792180BFF5B0095A15A /* classes_66.html in Resources */,
 				5B2512851851E07600669AE6 /* settingsindex_img_4.png in Resources */,
 				5BBD3766180BFF5B0095A15A /* hierarchy.html in Resources */,
@@ -2462,6 +2479,7 @@
 				5BEA608217A6A36600520E09 /* IAEReportAreaView.m in Sources */,
 				5B32D654177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m in Sources */,
 				5B5C967F17816A13008CD851 /* UIView+RoundedCorners.m in Sources */,
+				5BDD9A3218572F99001A6CEF /* IAEPasswordPanelScreenView.m in Sources */,
 				5B879783180EB2C700554E13 /* IAEHelpTheme.m in Sources */,
 				5B62D85B178EA870009879A6 /* IAEYearSelectorCollectionViewCell.m in Sources */,
 				5BCE3AAB17A95EDB00CD01E7 /* IAEHelperReportAreaViewDataSource.m in Sources */,

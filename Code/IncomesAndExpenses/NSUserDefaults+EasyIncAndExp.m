@@ -14,18 +14,19 @@
 #pragma mark - Constants
 
 static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
-static NSString * const kUserDefaultsReportAmountMode = @"reportAmountMode";
+static NSString * const kUserDefaultsReportAmountModeKey = @"reportAmountMode";
+static NSString * const kUserDefaultInitialMonthKey = @"initialMonth";
+
 static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalAmounts";
 static NSString * const kUserDefaultsReportAmountModePercentageAmountValue = @"percentageAmounts";
-static NSString * const kUserDefaultInitialMonth = @"initialMonth";
 
 #pragma mark - Prepare
 
 - (void)prepareDefaults
 {
     NSDictionary *defaults = @{ kUserDefaultsDayModeActiveKey: [NSNumber numberWithBool:NO],
-                                kUserDefaultsReportAmountMode: kUserDefaultsReportAmountModeTotalAmountValue,
-                                kUserDefaultInitialMonth: @(January)};
+                                kUserDefaultsReportAmountModeKey: kUserDefaultsReportAmountModeTotalAmountValue,
+                                kUserDefaultInitialMonthKey: @(January)};
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];    
 }
 

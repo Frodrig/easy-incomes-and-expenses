@@ -72,13 +72,21 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     _model = [NSManagedObjectModel mergedModelFromBundles:nil];
     NSPersistentStoreCoordinator *persistentStore = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_model];
     
+    NSURL *storeURL = [self storeFileURLWithPath];
+    
     NSError *error;
     if (![persistentStore addPersistentStoreWithType:NSSQLiteStoreType
                                        configuration:nil
-                                                 URL:[self storeFileURLWithPath]
+                                                 URL:storeURL
                                              options:nil
                                                error:&error]) {
         [NSException raise:@"Open DB failed" format:@"Reason: %@", [error localizedDescription]];
+    }
+    
+    if (![[NSFileManager defaultManager] setAttributes:@{NSFileProtectionKey: NSFileProtectionComplete}
+                                          ofItemAtPath:storeURL.path
+                                                 error:&error]) {
+        [NSException raise:@"Set protection attribute failed" format:@"Reason: %@", [error localizedDescription]];
     }
     
     _context = [[NSManagedObjectContext alloc] init];

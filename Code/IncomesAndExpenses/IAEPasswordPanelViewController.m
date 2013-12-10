@@ -100,8 +100,6 @@ static const NSInteger kBasePanelPasswordTag = 100;
     } else if (self.mode == MT_Change) {
         [self addInsertToChangePasswordPanelScreen];
     }
-    
-    NSLog(@"SV: %@", NSStringFromCGSize(self.scrollView.contentSize));
 }
 
 - (void)addCreatePasswordPanelScreen
@@ -133,8 +131,6 @@ static const NSInteger kBasePanelPasswordTag = 100;
     panel.tag = [self createTagForPasswordPanelAtPosition:position];
     [panel setMessage:NSLocalizedString(message, @"")];
     
-    NSLog(@"PP: %@", NSStringFromCGRect(panel.frame));
-
     [self.scrollView addSubview:panel];
 }
 

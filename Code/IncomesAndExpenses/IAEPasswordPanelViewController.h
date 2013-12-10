@@ -1,0 +1,22 @@
+//
+//  IAEPasswordPanelViewController.h
+//  IncomesAndExpenses
+//
+//  Created by Fernando Rodríguez on 10/12/13.
+//  Copyright (c) 2013 Fernando Rodríguez Martínez. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+typedef NS_ENUM(NSUInteger, ModeType)
+{
+    MT_Activate,
+    MT_Deactivate,
+    MT_Change
+};
+
+@interface IAEPasswordPanelViewController : UIViewController
+
+- (instancetype)initWithMode:(ModeType)mode;
+
+@end

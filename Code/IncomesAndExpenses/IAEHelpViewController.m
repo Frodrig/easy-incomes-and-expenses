@@ -11,6 +11,7 @@
 #import "IAEHelpTheme.h"
 #import "IAEHelpThemeViewController.h"
 #import "IAEHelpIndexViewControllerDelegate.h"
+#import "IAESettingsViewControllerDefs.h"
 
 @interface IAEHelpViewController ()
 
@@ -19,9 +20,6 @@
 @implementation IAEHelpViewController
 
 #pragma mark - Constantes
-
-static NSString * const kFamilyFontNameForCells = @"HelveticaNeue-Light";
-static const NSUInteger kFamilyFontSizeForCells = 24;
 
 #pragma mark - Init
 

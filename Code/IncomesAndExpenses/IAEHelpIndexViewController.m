@@ -11,9 +11,11 @@
 #import "IAEHelpConfigureViewController.h"
 #import "IAEHelpAboutViewController.h"
 #import "IAEHelpViewController.h"
+#import "IAEHelpPasswordIndexViewController.h"
 #import "MonthDefs.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
 #import "IAEExporter.h"
+#import "IAESettingsViewControllerDefs.h"
 
 @interface IAEHelpIndexViewController ()
 
@@ -26,8 +28,6 @@
 
 #pragma mark - Constants
 
-static NSString * const kFamilyFontNameForCells = @"HelveticaNeue-Light";
-static const NSUInteger kFamilyFontSizeForCells = 24;
 
 static NSString * const kNotificationDayModeOnName = @"dayModeToOn";
 static NSString * const kNotificationDayModeOffName = @"dayModeToOff";
@@ -183,6 +183,7 @@ static NSString * const kExportCSVFileWithExtension = @"export.csv";
         viewController = [[IAEHelpConfigureViewController alloc] initWithNibName:@"IAEHelpConfigureViewController" bundle:[NSBundle mainBundle]];
     } else if (indexPath.row == kRowOfPassword) {
         [Flurry logEvent:@"settingsindex_password"];
+        viewController = [[IAEHelpPasswordIndexViewController alloc] initWithNibName:@"IAEHelpPasswordIndexViewController" bundle:[NSBundle mainBundle]];
     } else if (indexPath.row == kRowOfCSVExportIndex) {
         [Flurry logEvent:@"settingsindex_csvexport"];
         

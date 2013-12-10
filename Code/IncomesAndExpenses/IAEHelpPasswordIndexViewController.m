@@ -9,6 +9,7 @@
 #import "IAEHelpPasswordIndexViewController.h"
 #import "IAESettingsViewControllerDefs.h"
 #import "IAEPasswordPanelViewController.h"
+#import "NSUserDefaults+EasyIncAndExp.h"
 
 @interface IAEHelpPasswordIndexViewController ()
 
@@ -84,13 +85,24 @@ static const NSUInteger kChangePasswordIndex = 1;
 
 - (void)configureCell:(UITableViewCell *)cell ofTableView:(UITableView *)tableView forIndexPath:(NSIndexPath *)indexPath
 {
+    const BOOL passwordActivated = [self isPasswordActivated];
     if (indexPath.row == kActivateDeactivatePasswordIndex) {
-        cell.textLabel.text = NSLocalizedString(@"LTEXT_PASSWORDINDEX_ACTIVATE", @"");
+        cell.textLabel.text =  passwordActivated ? NSLocalizedString(@"LTEXT_PASSWORDINDEX_DEACTIVATE", @"") : NSLocalizedString(@"LTEXT_PASSWORDINDEX_ACTIVATE", @"");
     } else if (indexPath.row == kChangePasswordIndex) {
         cell.textLabel.text = NSLocalizedString(@"LTEXT_PASSWORDINDEX_CHANGE", @"");
+        cell.userInteractionEnabled = passwordActivated;
+        cell.textLabel.enabled = passwordActivated;
+        cell.detailTextLabel.enabled = passwordActivated;
     }
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+}
+
+- (BOOL)isPasswordActivated
+{
+    const BOOL isPasswordActivated = [[NSUserDefaults standardUserDefaults] isPasswordActivated];
+    
+    return isPasswordActivated;
 }
 
 #pragma mark - Table view delegate
@@ -106,9 +118,10 @@ static const NSUInteger kChangePasswordIndex = 1;
 
 - (ModeType)findModeTypeBasedInSelectedRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ModeType retMode = indexPath.row == kActivateDeactivatePasswordIndex ? MT_Activate : MT_Change;
-    
-    // ToDo: Comprobacion de si hay una contraseña ya vinculada para cambiar activar por desactivar
+    ModeType retMode = MT_Change;
+    if (indexPath.row == kActivateDeactivatePasswordIndex) {
+        retMode = [self isPasswordActivated] ? MT_Deactivate : MT_Activate;
+    }
     
     return retMode;
 }

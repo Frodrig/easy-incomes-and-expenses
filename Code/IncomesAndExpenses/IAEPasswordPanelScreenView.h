@@ -10,4 +10,9 @@
 
 @interface IAEPasswordPanelScreenView : UIView
 
+- (void)setMessage:(NSString *)message;
+
+- (void)addCodeAtPosition:(NSInteger)position;
+- (void)clearCodeAtPosition:(NSInteger)position;
+
 @end

@@ -8,7 +8,21 @@
 
 #import "IAEPasswordPanelScreenView.h"
 
+@interface IAEPasswordPanelScreenView()
+
+@property (weak, nonatomic) IBOutlet UILabel *messageLabel;
+@property (weak, nonatomic) IBOutlet UIView *labelCodesContainerView;
+
+@end
+
 @implementation IAEPasswordPanelScreenView
+
+#pragma mark - Constants
+
+static NSString * const kCodeSymbol = @"*";
+static NSString * const kClearCodeSymbol = @"";
+
+#pragma mark - Init
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -27,5 +41,38 @@
     // Drawing code
 }
 */
+
+
+- (void)setMessage:(NSString *)message
+{
+    self.messageLabel.text = message;
+}
+
+- (void)addCodeAtPosition:(NSInteger)position
+{
+    [self vinculeCodeSymbol:kCodeSymbol toLabelCodeAtPosition:position];
+}
+
+- (void)clearCodeAtPosition:(NSInteger)position
+{
+    [self vinculeCodeSymbol:kClearCodeSymbol toLabelCodeAtPosition:position];
+}
+
+- (void)vinculeCodeSymbol:(NSString *)codeSymbol toLabelCodeAtPosition:(NSUInteger)position
+{
+    UILabel *label = [self findLabelCodeAtPosition:position];
+    label.text = codeSymbol;
+}
+
+- (UILabel *)findLabelCodeAtPosition:(NSInteger)position
+{
+    const NSUInteger labelTag = position + 1;
+    NSAssert(labelTag > 0, @"");
+    NSAssert(labelTag < 5, @"");
+    
+    UILabel *label = (UILabel *)[self.labelCodesContainerView viewWithTag:labelTag];
+    return label;
+}
+
 
 @end

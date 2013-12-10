@@ -196,14 +196,19 @@ static const NSInteger kBasePanelPasswordTag = 100;
     }
 }
 
+// TODO: Refactorizar
+
 - (void)performActionsAfterPasswordInsertedInActivateMode
 {
+    const NSUInteger insertSubstate = 0;
+    const NSUInteger confirmSubstate = 1;
+    
     const NSUInteger subState = [self findScrollViewSubstate];
-    if (subState == 0) {
+    if (subState == insertSubstate) {
         self.pendingConfirmationPassword = self.insertedPassword;
         self.insertedPassword = @"";
         [self.scrollView scrollRectToVisible:CGRectMake(self.scrollView.bounds.size.width * (subState + 1), 0, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height) animated:YES];
-    } else if (subState == 1) {
+    } else if (subState == confirmSubstate) {
         const BOOL passwordOk = [self.pendingConfirmationPassword isEqualToString:self.insertedPassword];
         if (passwordOk) {
             [[NSUserDefaults standardUserDefaults] setNewPassword:self.pendingConfirmationPassword];
@@ -217,14 +222,66 @@ static const NSInteger kBasePanelPasswordTag = 100;
     }
 }
 
+// TODO: Refactorizar
+
 - (void)performActionsAfterPasswordInsertedInChangeMode
 {
-    
+    const NSUInteger insertOldSubstate = 0;
+    const NSUInteger insertNewSubstate = 1;
+    const NSUInteger confirmSubstate = 2;
+
+    const NSUInteger subState = [self findScrollViewSubstate];
+    if (subState == insertOldSubstate) {
+        NSString *actualPassword = [[NSUserDefaults standardUserDefaults] findPassword];
+        const BOOL passwordOk = [self.insertedPassword isEqualToString:actualPassword];
+        if (passwordOk) {
+            self.insertedPassword = @"";
+            [self.scrollView scrollRectToVisible:CGRectMake(self.scrollView.bounds.size.width * (subState + 1), 0, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height) animated:YES];
+        } else {
+            IAEPasswordPanelScreenView *panel = [self findPasswordPanelOfScrollViewSubstate];
+            [panel setMessage:NSLocalizedString(@"LTEXT_PASSWORDPANEL_SCREENMESSAGE_INVALIDPASSWORDINCHANGE", @"")];
+            self.insertedPassword = @"";
+            [panel clearAllCodes];
+        }
+    } else if (subState == insertNewSubstate) {
+        self.pendingConfirmationPassword = self.insertedPassword;
+        self.insertedPassword = @"";
+        [self.scrollView scrollRectToVisible:CGRectMake(self.scrollView.bounds.size.width * (subState + 1), 0, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height) animated:YES];
+    } else if (subState == confirmSubstate) {
+        const BOOL passwordOk = [self.pendingConfirmationPassword isEqualToString:self.insertedPassword];
+        if (passwordOk) {
+            [[NSUserDefaults standardUserDefaults] setNewPassword:self.pendingConfirmationPassword];
+            [self.delegate dismissAll];
+        } else {
+            IAEPasswordPanelScreenView *panel = [self findPasswordPanelOfScrollViewSubstate];
+            [panel setMessage:NSLocalizedString(@"LTEXT_PASSWORDPANEL_SCREENMESSAGE_INVALIDPASSWORDINCONFIRM", @"")];
+            self.insertedPassword = @"";
+            [panel clearAllCodes];
+        }
+    }
+
 }
+
+// TODO: Refactorizar
 
 - (void)performActionsAfterPasswordInsertedInDeactivateMode
 {
+    const NSUInteger insertSubstate = 0;
     
+    const NSUInteger subState = [self findScrollViewSubstate];
+    if (subState == insertSubstate) {
+        NSString *actualPassword = [[NSUserDefaults standardUserDefaults] findPassword];
+        const BOOL passwordOk = [self.insertedPassword isEqualToString:actualPassword];
+        if (passwordOk) {
+            [[NSUserDefaults standardUserDefaults] clearPassword];
+            [self.delegate dismissAll];
+        } else {
+            IAEPasswordPanelScreenView *panel = [self findPasswordPanelOfScrollViewSubstate];
+            [panel setMessage:NSLocalizedString(@"LTEXT_PASSWORDPANEL_SCREENMESSAGE_INVALIDPASSWORDINDEACTIVATE", @"")];
+            self.insertedPassword = @"";
+            [panel clearAllCodes];
+        }
+    }
 }
 
 - (IBAction)keyboardDeletePressed:(id)sender

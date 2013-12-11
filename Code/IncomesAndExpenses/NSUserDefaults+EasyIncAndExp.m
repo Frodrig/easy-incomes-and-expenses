@@ -16,7 +16,6 @@
 static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
 static NSString * const kUserDefaultsReportAmountModeKey = @"reportAmountMode";
 static NSString * const kUserDefaultInitialMonthKey = @"initialMonth";
-static NSString * const kUserDefaultPasswordKey = @"password";
 
 static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalAmounts";
 static NSString * const kUserDefaultsReportAmountModePercentageAmountValue = @"percentageAmounts";
@@ -27,8 +26,7 @@ static NSString * const kUserDefaultsReportAmountModePercentageAmountValue = @"p
 {
     NSDictionary *defaults = @{ kUserDefaultsDayModeActiveKey: [NSNumber numberWithBool:NO],
                                 kUserDefaultsReportAmountModeKey: kUserDefaultsReportAmountModeTotalAmountValue,
-                                kUserDefaultInitialMonthKey: @(January),
-                                kUserDefaultPasswordKey: @""};
+                                kUserDefaultInitialMonthKey: @(January)};
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];    
 }
 

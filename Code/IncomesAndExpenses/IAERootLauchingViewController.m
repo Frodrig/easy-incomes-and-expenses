@@ -58,7 +58,7 @@ static NSString * const kEasyIncomesAndExpensesViewControllerID = @"EasyIncomesA
 
 - (void)initPasswordController
 {
-    _passwordViewController = [[IAEPasswordPanelViewController alloc] initWithMode:MT_Activate];
+    _passwordViewController = [[IAEPasswordPanelViewController alloc] initWithMode:MT_Validate];
     _passwordViewController.delegate = self;
     _passwordViewController.modalPresentationStyle = UIModalPresentationFormSheet;
 }

@@ -79,6 +79,8 @@ static const NSInteger kBasePanelPasswordTag = 100;
         retTitle = @"LTEXT_PASSWORDPANEL_DEACTIVATEMODETITLE";
     } else if (mode == MT_Change) {
         retTitle = @"LTEXT_PASSWORDPANEL_CHANGEMODETITLE";
+    } else if (mode == MT_Validate) {
+        retTitle = @"";
     }
     
     retTitle = NSLocalizedString(retTitle, @"");
@@ -101,6 +103,8 @@ static const NSInteger kBasePanelPasswordTag = 100;
         [self addInsertToValidatePasswordPanelScreen];
     } else if (self.mode == MT_Change) {
         [self addInsertToChangePasswordPanelScreen];
+    } else if (self.mode == MT_Validate) {
+        [self addInsertToValidatePasswordPanelScreenToEnter];
     }
 }
 
@@ -115,6 +119,11 @@ static const NSInteger kBasePanelPasswordTag = 100;
 - (void)addInsertToValidatePasswordPanelScreen
 {
     [self createAndInsertPasswordPanelScreenViewWithMessage:@"LTEXT_PASSWORDPANEL_SCREENMESSAGE_INSERTOVALIDATE" atScrollViewPosition:0];
+}
+
+- (void)addInsertToValidatePasswordPanelScreenToEnter
+{
+    [self createAndInsertPasswordPanelScreenViewWithMessage:@"LTEXT_PASSWORDPANEL_SCREENMESSAGE_INSERTTOVALIDATETOENTER" atScrollViewPosition:0];
 }
 
 - (void)addInsertToChangePasswordPanelScreen
@@ -193,6 +202,8 @@ static const NSInteger kBasePanelPasswordTag = 100;
         [self performActionsAfterPasswordInsertedInChangeMode];
     } else if (self.mode == MT_Deactivate) {
         [self performActionsAfterPasswordInsertedInDeactivateMode];
+    } else if (self.mode == MT_Validate) {
+        [self performActionsAfterPasswordInsertedInValidateMode];
     }
 }
 
@@ -278,6 +289,27 @@ static const NSInteger kBasePanelPasswordTag = 100;
         } else {
             IAEPasswordPanelScreenView *panel = [self findPasswordPanelOfScrollViewSubstate];
             [panel setMessage:NSLocalizedString(@"LTEXT_PASSWORDPANEL_SCREENMESSAGE_INVALIDPASSWORDINDEACTIVATE", @"")];
+            self.insertedPassword = @"";
+            [panel clearAllCodes];
+        }
+    }
+}
+
+// TODO: Refactorizar
+
+- (void)performActionsAfterPasswordInsertedInValidateMode
+{
+    const NSUInteger insertSubstate = 0;
+    
+    const NSUInteger subState = [self findScrollViewSubstate];
+    if (subState == insertSubstate) {
+        NSString *actualPassword = [[NSUserDefaults standardUserDefaults] findPassword];
+        const BOOL passwordOk = [self.insertedPassword isEqualToString:actualPassword];
+        if (passwordOk) {
+            [self.delegate dismissAll];
+        } else {
+            IAEPasswordPanelScreenView *panel = [self findPasswordPanelOfScrollViewSubstate];
+            [panel setMessage:NSLocalizedString(@"LTEXT_PASSWORDPANEL_SCREENMESSAGE_INVALIDPASSWORDINVALIDATETOENTER", @"")];
             self.insertedPassword = @"";
             [panel clearAllCodes];
         }

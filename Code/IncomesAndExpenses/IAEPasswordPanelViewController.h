@@ -14,7 +14,8 @@ typedef NS_ENUM(NSUInteger, ModeType)
 {
     MT_Activate,
     MT_Deactivate,
-    MT_Change
+    MT_Change,
+    MT_Validate
 };
 
 @interface IAEPasswordPanelViewController : UIViewController

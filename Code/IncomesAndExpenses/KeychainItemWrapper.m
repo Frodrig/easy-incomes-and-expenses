@@ -97,6 +97,8 @@
     NSMutableDictionary *genericPasswordQuery;	// A placeholder for the generic keychain item query used to locate the item.
 }
 
+static NSUInteger kMaxPasswordCodes = 4;
+
 + (id)defaultKeychain
 {
     static KeychainItemWrapper *keychain = nil;
@@ -123,7 +125,7 @@
 - (void)setNewPassword:(NSString *)password
 {
     NSAssert(![password isEqualToString:@""], @"");
-    NSAssert(password.length == 4, @"");
+    NSAssert(password.length == kMaxPasswordCodes, @"");
 
     [self setObject:password forKey:(__bridge id)(kSecValueData)];
 }
@@ -131,7 +133,7 @@
 - (BOOL)isPasswordActivated
 {
     NSString *password = [self objectForKey:(__bridge id)kSecValueData];
-    const BOOL isActivated = password.length == 4;
+    const BOOL isActivated = password.length == kMaxPasswordCodes;
     
     return isActivated;
 }

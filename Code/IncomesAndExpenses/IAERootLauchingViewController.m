@@ -100,13 +100,13 @@ static NSString * const kEasyIncomesAndExpensesViewControllerID = @"EasyIncomesA
 - (void)performActionsAfterInsertedAsRootViewController
 {
     if (self.mainViewController) {
-        [self showMainViewController];
+        [self insertMainViewControllerView];
     } else if (self.passwordViewController) {
         [self presentViewController:self.passwordViewController animated:YES completion:nil];
     }
 }
 
-- (void)showMainViewController
+- (void)insertMainViewControllerView
 {
     [self.view insertSubview:self.mainViewController.view aboveSubview:self.launchImage];
     self.mainViewController.view.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
@@ -115,6 +115,11 @@ static NSString * const kEasyIncomesAndExpensesViewControllerID = @"EasyIncomesA
 #pragma mark - IAEEasyIncomesAndExpensesViewControllerDelegate
 
 - (void)lauchCompleteInEasyIncomesAndExpensesViewController:(IAEEasyIncomesAndExpensesViewController *)easyIncomesAndExpensesViewController
+{
+    [self removeImageFromView];
+}
+
+- (void)removeImageFromView
 {
     [self.launchImage removeFromSuperview];
     self.launchImage = nil;
@@ -126,7 +131,7 @@ static NSString * const kEasyIncomesAndExpensesViewControllerID = @"EasyIncomesA
 {
     if ([[KeychainItemWrapper defaultKeychain] isPasswordActivated]) {
         if (!self.launchImage) {
-            [self.mainViewController.view removeFromSuperview];
+            self.mainViewController.view.hidden = YES;
             [self initLaunchImage];
             [self.view addSubview:self.launchImage];
         }
@@ -147,13 +152,23 @@ static NSString * const kEasyIncomesAndExpensesViewControllerID = @"EasyIncomesA
 {
     [self.passwordViewController dismissViewControllerAnimated:YES completion:^{
         if (self.mainViewController) {
-            [self showMainViewController];
+            self.mainViewController.view.hidden = NO;
+            [self dissolveLaunchImageSmooth];
         } else {
             [self initNavigationControllerWithRootController];
-            [self showMainViewController];
+            [self insertMainViewControllerView];
         }
         
         self.passwordViewController = nil;
+    }];
+}
+
+- (void)dissolveLaunchImageSmooth
+{
+    [UIView animateWithDuration:0.5 animations:^{
+        self.launchImage.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        [self removeImageFromView];
     }];
 }
 

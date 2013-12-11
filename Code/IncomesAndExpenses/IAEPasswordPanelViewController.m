@@ -277,8 +277,9 @@ static const NSInteger kBasePanelPasswordTag = 100;
     [panel setMessage:NSLocalizedString(incorrectPasswordMessage, @"")];
     self.insertedPassword = @"";
     [panel clearAllCodes];
+    
+    [panel executeFXInvalidPassword];
 }
-
 - (void)performActionsAfterPasswordInsertedInDeactivateMode
 {
     [self performActionsAfterPasswordInsertedCleaningUserPassword:YES

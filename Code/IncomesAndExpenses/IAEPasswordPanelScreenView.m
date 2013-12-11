@@ -22,6 +22,8 @@
 static NSString * const kCodeSymbol = @"*";
 static NSString * const kClearCodeSymbol = @"";
 
+static float kFXInvalidPasswordDuration = 0.25;
+
 #pragma mark - Init
 
 - (id)initWithFrame:(CGRect)frame
@@ -79,6 +81,17 @@ static NSString * const kClearCodeSymbol = @"";
     
     UILabel *label = (UILabel *)[self.labelCodesContainerView viewWithTag:labelTag];
     return label;
+}
+
+- (void)executeFXInvalidPassword
+{
+    [UIView animateWithDuration:kFXInvalidPasswordDuration animations:^{
+        self.backgroundColor = [UIColor colorWithRed:1 green:0.0 blue:0.0 alpha:0.2];
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:kFXInvalidPasswordDuration animations:^{
+            self.backgroundColor = [UIColor whiteColor];
+        } completion:nil];
+    }];
 }
 
 

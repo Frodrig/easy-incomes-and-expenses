@@ -16,4 +16,6 @@
 - (void)clearCodeAtPosition:(NSInteger)position;
 - (void)clearAllCodes;
 
+- (void)executeFXInvalidPassword;
+
 @end

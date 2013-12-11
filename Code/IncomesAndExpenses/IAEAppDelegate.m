@@ -87,7 +87,7 @@
     self.window.rootViewController = _launchingViewController;
     [self.window makeKeyAndVisible];
     
-    [_launchingViewController execute];
+    [_launchingViewController performActionsAfterInsertedAsRootViewController];
 }
 
 #pragma mark - Notifications

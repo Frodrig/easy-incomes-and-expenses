@@ -13,6 +13,6 @@
 @interface IAERootLauchingViewController : UIViewController<IAEEasyIncomesAndExpensesViewControllerDelegate,
                                                             IAEHelpIndexViewControllerDelegate>
 
-- (void)execute;
+- (void)performActionsAfterInsertedAsRootViewController;
 
 @end

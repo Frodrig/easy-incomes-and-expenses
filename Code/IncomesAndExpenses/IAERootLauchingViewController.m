@@ -97,7 +97,7 @@ static NSString * const kEasyIncomesAndExpensesViewControllerID = @"EasyIncomesA
 
 #pragma mark - viewWillAppear
 
-- (void)execute
+- (void)performActionsAfterInsertedAsRootViewController
 {
     if (self.mainViewController) {
         [self showMainViewController];
@@ -117,18 +117,28 @@ static NSString * const kEasyIncomesAndExpensesViewControllerID = @"EasyIncomesA
 - (void)lauchCompleteInEasyIncomesAndExpensesViewController:(IAEEasyIncomesAndExpensesViewController *)easyIncomesAndExpensesViewController
 {
     [self.launchImage removeFromSuperview];
+    self.launchImage = nil;
 }
 
 #pragma mark - Notifications
 
 - (void)notificationApplicationDidEnterBackground:(NSNotification *)notification
 {
-    
+    if ([[NSUserDefaults standardUserDefaults] isPasswordActivated]) {
+        if (!self.launchImage) {
+            [self.mainViewController.view removeFromSuperview];
+            [self initLaunchImage];
+            [self.view addSubview:self.launchImage];
+        }
+    }
 }
 
 - (void)notificationApplicationWillEnterForeground:(NSNotification *)notification
 {
-    
+    if ([[NSUserDefaults standardUserDefaults] isPasswordActivated]) {
+        [self initPasswordController];
+        [self presentViewController:self.passwordViewController animated:YES completion:nil];
+    }
 }
 
 #pragma mark - IAEHelpIndexViewControllerDelegate
@@ -137,11 +147,13 @@ static NSString * const kEasyIncomesAndExpensesViewControllerID = @"EasyIncomesA
 {
     [self.passwordViewController dismissViewControllerAnimated:YES completion:^{
         if (self.mainViewController) {
-            
+            [self showMainViewController];
         } else {
             [self initNavigationControllerWithRootController];
             [self showMainViewController];
         }
+        
+        self.passwordViewController = nil;
     }];
 }
 

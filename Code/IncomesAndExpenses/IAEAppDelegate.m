@@ -16,6 +16,12 @@
 #import "IAERootLauchingViewController.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
 
+@interface IAEAppDelegate()
+
+@property (nonatomic, strong) IAERootLauchingViewController *launchingViewController;
+
+@end
+
 @implementation IAEAppDelegate
 
 #pragma mark - didFinishLaunching
@@ -28,6 +34,8 @@
     [self processProcessInfoEnvironment];
     [self createYearBookIfProceed];
     [self createWindowRootLaunchingViewControllerAndMakeVisible];
+    
+    NSLog(@"didFinishLaunchingWithOptions");
         
     return YES;
 }
@@ -72,10 +80,14 @@
 
 - (void)createWindowRootLaunchingViewControllerAndMakeVisible
 {
+    _launchingViewController = [[IAERootLauchingViewController alloc] init];
+
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-    self.window.rootViewController = [[IAERootLauchingViewController alloc] init];
+    self.window.rootViewController = _launchingViewController;
     [self.window makeKeyAndVisible];
+    
+    [_launchingViewController execute];
 }
 
 #pragma mark - Notifications
@@ -95,6 +107,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    NSLog(@"willEnterForeground");
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

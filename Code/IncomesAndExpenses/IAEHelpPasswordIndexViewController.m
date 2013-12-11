@@ -10,6 +10,7 @@
 #import "IAESettingsViewControllerDefs.h"
 #import "IAEPasswordPanelViewController.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
+#import "KeychainItemWrapper.h"
 
 @interface IAEHelpPasswordIndexViewController ()
 
@@ -100,7 +101,7 @@ static const NSUInteger kChangePasswordIndex = 1;
 
 - (BOOL)isPasswordActivated
 {
-    const BOOL isPasswordActivated = [[NSUserDefaults standardUserDefaults] isPasswordActivated];
+    const BOOL isPasswordActivated = [[KeychainItemWrapper defaultKeychain] isPasswordActivated];
     
     return isPasswordActivated;
 }

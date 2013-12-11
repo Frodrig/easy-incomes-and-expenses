@@ -112,37 +112,4 @@ static NSString * const kUserDefaultsReportAmountModePercentageAmountValue = @"p
     return startMonth.integerValue;
 }
 
-#pragma mark - Password
-
-- (NSString *)findPassword
-{
-    NSString *password = [[NSUserDefaults standardUserDefaults] valueForKey:kUserDefaultPasswordKey];
-    
-    return password;
-}
-
-- (void)clearPassword
-{
-    [[NSUserDefaults standardUserDefaults] setValue:kUserDefaultPasswordKey forKey:kUserDefaultPasswordKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (void)setNewPassword:(NSString *)password
-{
-    NSAssert(![password isEqualToString:@""], @"");
-    NSAssert(password.length == 4, @"");
-    
-    [[NSUserDefaults standardUserDefaults] setValue:password forKey:kUserDefaultPasswordKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (BOOL)isPasswordActivated
-{
-    NSString *password = [self findPassword];
-    const BOOL isActivated = password.length == 4;
-    
-    return isActivated;
-}
-
-
 @end

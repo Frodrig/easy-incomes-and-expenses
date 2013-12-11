@@ -24,9 +24,4 @@
 - (void)changeInitialMonthTo:(MonthType)startMonth;
 - (MonthType)actualInitialMonth;
 
-- (NSString *)findPassword;
-- (void)clearPassword;
-- (void)setNewPassword:(NSString *)password;
-- (BOOL)isPasswordActivated;
-
 @end

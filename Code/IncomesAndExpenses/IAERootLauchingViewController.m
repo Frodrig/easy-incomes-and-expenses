@@ -8,8 +8,8 @@
 
 #import "IAERootLauchingViewController.h"
 #import "IAEEasyIncomesAndExpensesViewController.h"
-#import "NSUserDefaults+EasyIncAndExp.h"
 #import "IAEPasswordPanelViewController.h"
+#import "KeychainItemWrapper.h"
 
 @interface IAERootLauchingViewController ()
 
@@ -33,7 +33,7 @@ static NSString * const kEasyIncomesAndExpensesViewControllerID = @"EasyIncomesA
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         [self initSuscriptionToGlobalNotifications];
-        if ([[NSUserDefaults standardUserDefaults] isPasswordActivated]) {
+        if ([[KeychainItemWrapper defaultKeychain] isPasswordActivated]) {
             [self initPasswordController];
         } else {
             [self initNavigationControllerWithRootController];
@@ -124,7 +124,7 @@ static NSString * const kEasyIncomesAndExpensesViewControllerID = @"EasyIncomesA
 
 - (void)notificationApplicationDidEnterBackground:(NSNotification *)notification
 {
-    if ([[NSUserDefaults standardUserDefaults] isPasswordActivated]) {
+    if ([[KeychainItemWrapper defaultKeychain] isPasswordActivated]) {
         if (!self.launchImage) {
             [self.mainViewController.view removeFromSuperview];
             [self initLaunchImage];
@@ -135,7 +135,7 @@ static NSString * const kEasyIncomesAndExpensesViewControllerID = @"EasyIncomesA
 
 - (void)notificationApplicationWillEnterForeground:(NSNotification *)notification
 {
-    if ([[NSUserDefaults standardUserDefaults] isPasswordActivated]) {
+    if ([[KeychainItemWrapper defaultKeychain] isPasswordActivated]) {
         [self initPasswordController];
         [self presentViewController:self.passwordViewController animated:YES completion:nil];
     }

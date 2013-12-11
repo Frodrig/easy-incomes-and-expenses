@@ -10,8 +10,8 @@
 #import "IAEPasswordPanelScreenView.h"
 #import "UIView+LoadFromXib.m"
 #import "IAESettingsViewControllerDefs.h"
-#import "NSUserDefaults+EasyIncAndExp.h"
 #import "IAEHelpIndexViewControllerDelegate.h"
+#import "KeychainItemWrapper.h"
 
 @interface IAEPasswordPanelViewController ()
 
@@ -247,7 +247,7 @@ static const NSInteger kBasePanelPasswordTag = 100;
 
 - (void)dismissAndChangeUserPassword:(NSString *)newPasswordCode
 {
-    [[NSUserDefaults standardUserDefaults] setNewPassword:self.pendingConfirmationPassword];
+    [[KeychainItemWrapper defaultKeychain] setNewPassword:self.pendingConfirmationPassword];
     [self.delegate dismissAll];
 }
 
@@ -300,7 +300,7 @@ static const NSInteger kBasePanelPasswordTag = 100;
     if (subState == insertSubstate) {
         if ([self isInsertedPasswordEqualToUserPassword]) {
             if (clearUserPassword) {
-                [[NSUserDefaults standardUserDefaults] clearPassword];
+                [[KeychainItemWrapper defaultKeychain] clearPassword];
             }
             [self.delegate dismissAll];
         } else {
@@ -311,7 +311,7 @@ static const NSInteger kBasePanelPasswordTag = 100;
 
 - (BOOL)isInsertedPasswordEqualToUserPassword
 {
-    NSString *actualPassword = [[NSUserDefaults standardUserDefaults] findPassword];
+    NSString *actualPassword = [[KeychainItemWrapper defaultKeychain] findPassword];
     const BOOL passwordEqual = [self.insertedPassword isEqualToString:actualPassword];
 
     return passwordEqual;

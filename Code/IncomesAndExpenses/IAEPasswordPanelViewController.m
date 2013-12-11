@@ -216,24 +216,40 @@ static const NSInteger kBasePanelPasswordTag = 100;
     
     const NSUInteger subState = [self findScrollViewSubstate];
     if (subState == insertSubstate) {
-        self.pendingConfirmationPassword = self.insertedPassword;
-        self.insertedPassword = @"";
-        [self.scrollView scrollRectToVisible:CGRectMake(self.scrollView.bounds.size.width * (subState + 1), 0, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height) animated:YES];
+        [self advanceScrollViewSavingInsertedPassword:YES andCleaningInsertedPassword:YES];
     } else if (subState == confirmSubstate) {
-        const BOOL passwordOk = [self.pendingConfirmationPassword isEqualToString:self.insertedPassword];
-        if (passwordOk) {
-            [[NSUserDefaults standardUserDefaults] setNewPassword:self.pendingConfirmationPassword];
-            [self.delegate dismissAll];
-        } else {
-            IAEPasswordPanelScreenView *panel = [self findPasswordPanelOfScrollViewSubstate];
-            [panel setMessage:NSLocalizedString(@"LTEXT_PASSWORDPANEL_SCREENMESSAGE_INVALIDPASSWORDINCONFIRM", @"")];
-            self.insertedPassword = @"";
-            [panel clearAllCodes];
-        }
+        [self checkInsertedPasswordWithPendingConfirmationPasswordAndPerformActions];
     }
 }
 
-// TODO: Refactorizar
+- (void)advanceScrollViewSavingInsertedPassword:(BOOL)saveInsertedPassword andCleaningInsertedPassword:(BOOL)cleanInsertedPassword
+{
+    [self.scrollView scrollRectToVisible:CGRectMake(self.scrollView.bounds.size.width + self.scrollView.contentOffset.x, 0, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height) animated:YES];
+    
+    if (saveInsertedPassword) {
+        self.pendingConfirmationPassword = self.insertedPassword;
+    }
+    
+    if (cleanInsertedPassword) {
+        self.insertedPassword = @"";
+    }
+}
+
+- (void)checkInsertedPasswordWithPendingConfirmationPasswordAndPerformActions
+{
+    const BOOL passwordOk = [self.pendingConfirmationPassword isEqualToString:self.insertedPassword];
+    if (passwordOk) {
+        [self dismissAndChangeUserPassword:self.pendingConfirmationPassword];
+    } else {
+        [self performActionsAfterInvalidPasswordInsertedWithIncorrectPasswordMessage:@"LTEXT_PASSWORDPANEL_SCREENMESSAGE_INVALIDPASSWORDINCONFIRM"];
+    }
+}
+
+- (void)dismissAndChangeUserPassword:(NSString *)newPasswordCode
+{
+    [[NSUserDefaults standardUserDefaults] setNewPassword:self.pendingConfirmationPassword];
+    [self.delegate dismissAll];
+}
 
 - (void)performActionsAfterPasswordInsertedInChangeMode
 {
@@ -243,77 +259,62 @@ static const NSInteger kBasePanelPasswordTag = 100;
 
     const NSUInteger subState = [self findScrollViewSubstate];
     if (subState == insertOldSubstate) {
-        NSString *actualPassword = [[NSUserDefaults standardUserDefaults] findPassword];
-        const BOOL passwordOk = [self.insertedPassword isEqualToString:actualPassword];
-        if (passwordOk) {
-            self.insertedPassword = @"";
-            [self.scrollView scrollRectToVisible:CGRectMake(self.scrollView.bounds.size.width * (subState + 1), 0, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height) animated:YES];
+       if ([self isInsertedPasswordEqualToUserPassword]) {
+           [self advanceScrollViewSavingInsertedPassword:NO andCleaningInsertedPassword:YES];
         } else {
-            IAEPasswordPanelScreenView *panel = [self findPasswordPanelOfScrollViewSubstate];
-            [panel setMessage:NSLocalizedString(@"LTEXT_PASSWORDPANEL_SCREENMESSAGE_INVALIDPASSWORDINCHANGE", @"")];
-            self.insertedPassword = @"";
-            [panel clearAllCodes];
+            [self performActionsAfterInvalidPasswordInsertedWithIncorrectPasswordMessage:@"LTEXT_PASSWORDPANEL_SCREENMESSAGE_INVALIDPASSWORDINCHANGE"];
         }
     } else if (subState == insertNewSubstate) {
-        self.pendingConfirmationPassword = self.insertedPassword;
-        self.insertedPassword = @"";
-        [self.scrollView scrollRectToVisible:CGRectMake(self.scrollView.bounds.size.width * (subState + 1), 0, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height) animated:YES];
+        [self advanceScrollViewSavingInsertedPassword:YES andCleaningInsertedPassword:YES];
     } else if (subState == confirmSubstate) {
-        const BOOL passwordOk = [self.pendingConfirmationPassword isEqualToString:self.insertedPassword];
-        if (passwordOk) {
-            [[NSUserDefaults standardUserDefaults] setNewPassword:self.pendingConfirmationPassword];
-            [self.delegate dismissAll];
-        } else {
-            IAEPasswordPanelScreenView *panel = [self findPasswordPanelOfScrollViewSubstate];
-            [panel setMessage:NSLocalizedString(@"LTEXT_PASSWORDPANEL_SCREENMESSAGE_INVALIDPASSWORDINCONFIRM", @"")];
-            self.insertedPassword = @"";
-            [panel clearAllCodes];
-        }
+        [self checkInsertedPasswordWithPendingConfirmationPasswordAndPerformActions];
     }
-
 }
 
-// TODO: Refactorizar
+- (void)performActionsAfterInvalidPasswordInsertedWithIncorrectPasswordMessage:(NSString *)incorrectPasswordMessage
+{
+    IAEPasswordPanelScreenView *panel = [self findPasswordPanelOfScrollViewSubstate];
+    [panel setMessage:NSLocalizedString(incorrectPasswordMessage, @"")];
+    self.insertedPassword = @"";
+    [panel clearAllCodes];
+}
 
 - (void)performActionsAfterPasswordInsertedInDeactivateMode
 {
-    const NSUInteger insertSubstate = 0;
-    
-    const NSUInteger subState = [self findScrollViewSubstate];
-    if (subState == insertSubstate) {
-        NSString *actualPassword = [[NSUserDefaults standardUserDefaults] findPassword];
-        const BOOL passwordOk = [self.insertedPassword isEqualToString:actualPassword];
-        if (passwordOk) {
-            [[NSUserDefaults standardUserDefaults] clearPassword];
-            [self.delegate dismissAll];
-        } else {
-            IAEPasswordPanelScreenView *panel = [self findPasswordPanelOfScrollViewSubstate];
-            [panel setMessage:NSLocalizedString(@"LTEXT_PASSWORDPANEL_SCREENMESSAGE_INVALIDPASSWORDINDEACTIVATE", @"")];
-            self.insertedPassword = @"";
-            [panel clearAllCodes];
-        }
-    }
+    [self performActionsAfterPasswordInsertedCleaningUserPassword:YES
+                               andShowingIncorrectPasswordMessage:@"LTEXT_PASSWORDPANEL_SCREENMESSAGE_INVALIDPASSWORDINDEACTIVATE"];
+
 }
 
-// TODO: Refactorizar
-
 - (void)performActionsAfterPasswordInsertedInValidateMode
+{
+    [self performActionsAfterPasswordInsertedCleaningUserPassword:NO
+                               andShowingIncorrectPasswordMessage:@"LTEXT_PASSWORDPANEL_SCREENMESSAGE_INVALIDPASSWORDINVALIDATETOENTER"];
+}
+
+- (void)performActionsAfterPasswordInsertedCleaningUserPassword:(BOOL)clearUserPassword andShowingIncorrectPasswordMessage:(NSString *)incorrectPasswordMessage
 {
     const NSUInteger insertSubstate = 0;
     
     const NSUInteger subState = [self findScrollViewSubstate];
     if (subState == insertSubstate) {
-        NSString *actualPassword = [[NSUserDefaults standardUserDefaults] findPassword];
-        const BOOL passwordOk = [self.insertedPassword isEqualToString:actualPassword];
-        if (passwordOk) {
+        if ([self isInsertedPasswordEqualToUserPassword]) {
+            if (clearUserPassword) {
+                [[NSUserDefaults standardUserDefaults] clearPassword];
+            }
             [self.delegate dismissAll];
         } else {
-            IAEPasswordPanelScreenView *panel = [self findPasswordPanelOfScrollViewSubstate];
-            [panel setMessage:NSLocalizedString(@"LTEXT_PASSWORDPANEL_SCREENMESSAGE_INVALIDPASSWORDINVALIDATETOENTER", @"")];
-            self.insertedPassword = @"";
-            [panel clearAllCodes];
+            [self performActionsAfterInvalidPasswordInsertedWithIncorrectPasswordMessage:incorrectPasswordMessage];
         }
     }
+}
+
+- (BOOL)isInsertedPasswordEqualToUserPassword
+{
+    NSString *actualPassword = [[NSUserDefaults standardUserDefaults] findPassword];
+    const BOOL passwordEqual = [self.insertedPassword isEqualToString:actualPassword];
+
+    return passwordEqual;
 }
 
 - (IBAction)keyboardDeletePressed:(id)sender

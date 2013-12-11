@@ -34,7 +34,7 @@
     [self processProcessInfoEnvironment];
     [self createYearBookIfProceed];
     [self createWindowRootLaunchingViewControllerAndMakeVisible];
-            
+    
     return YES;
 }
     

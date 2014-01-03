@@ -16,6 +16,13 @@
 
 @protocol IAEEasyIncomesAndExpensesViewControllerQuery <NSObject>
 
+- (BOOL)isEditModeActive;
+- (BOOL)isReportModeActive;
+- (BOOL)isCalculatorOpen;
+- (BOOL)isCalculatorClosed;
+- (BOOL)isCalculatorInHideMode;
+- (BOOL)isCalculatorInVisibleMode;
+
 - (UICollectionView *)findConceptsCollectionView;
 
 - (IAEOpenYear *)findOpenYear;

@@ -11,7 +11,6 @@
 
 @implementation IAEValueDecoratorView
 
-
 - (void)setEconomicValueType:(EconomicValueType)economicValueType
 {
     if (economicValueType != _economicValueType) {

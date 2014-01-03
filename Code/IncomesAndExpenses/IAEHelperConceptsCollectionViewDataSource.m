@@ -19,6 +19,7 @@
 #import "IAEEconomicValueTypeHelper.h"
 #import "IAEColorHelper.h"
 #import "IAECategory.h"
+#import "IAEFavoriteConceptsStock.h"
 
 @interface IAEHelperConceptsCollectionViewDataSource()
 
@@ -132,6 +133,7 @@ static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
     [cell configureCategoryLabelWithName:[category localizedTag]];
     [cell configureAmountLabelWithValue:amountWithSignString andColor:colorForEconomicValueType];
     [self configureIdentifierOfConceptCell:cell atIndexPath:indexPath withIndex:instantEntryIndex];
+    [self configureFavoritePinOfConceptCell:cell withConcept:concept];
 }
 
 - (void)configureIdentifierOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
@@ -163,5 +165,20 @@ static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
     [cell setIdentifierWithDayOfTheMonthIndex:concept.dayOfTheMonth andDayOfTheWeekName:dayOfTheWeekName];
 }
 
+- (void)configureFavoritePinOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell withConcept:(IAEConcept *)concept
+{
+    const BOOL editModeActive = [self.iaeViewControllerQuery isEditModeActive] && [self.iaeViewControllerQuery isCalculatorOpen];
+    if (editModeActive) {
+        [cell showFavoritePin];
+        const BOOL isAFavoriteConcept = [[IAEFavoriteConceptsStock sharedInstance] isMarkedAsFavorite:concept];
+        if (isAFavoriteConcept) {
+            [cell enableFavoritePin];
+        } else {
+            [cell disableFavoritePin];
+        }
+    } else {
+        [cell hideFavoritePin];
+    }
+}
 
 @end

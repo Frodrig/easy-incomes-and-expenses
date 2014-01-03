@@ -21,6 +21,7 @@ typedef NS_ENUM(NSUInteger, EditModeConceptElement) {
 @property (weak, nonatomic) IBOutlet UIView *conceptInformationContainerView;
 @property (weak, nonatomic) IBOutlet IAEValueDecoratorView *valueDecoratorView;
 @property (weak, nonatomic) IBOutlet UIView *identifierContainerView;
+@property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
 @property (nonatomic) CGFloat durationOfStrokeStateTransition;
 @property (nonatomic, readonly, getter = isInStrokeState) BOOL strokeState;
 @property (nonatomic) BOOL drawSeparatorLine;
@@ -37,6 +38,11 @@ typedef NS_ENUM(NSUInteger, EditModeConceptElement) {
 
 - (void)setTagWithIndex:(NSUInteger)index;
 - (NSUInteger)extractIndexFromTag;
+
+- (void)hideFavoritePin;
+- (void)showFavoritePin;
+- (void)enableFavoritePin;
+- (void)disableFavoritePin;
 
 - (BOOL)isAmountLabelContainingLocationPoint:(CGPoint)location;
 - (BOOL)isCategoryNameOrTypeContainingLocationPoint:(CGPoint)location;

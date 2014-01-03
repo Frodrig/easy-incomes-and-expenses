@@ -622,20 +622,6 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     }
 }
 
-- (BOOL)isEditModeActive
-{
-    BOOL isEditMode = self.modeSegmentedControl.selectedSegmentIndex == kSegmentedControlIndexEditMode;
-    
-    return isEditMode;
-}
-
-- (BOOL)isReportModeActive
-{
-    BOOL isReportMode = self.modeSegmentedControl.selectedSegmentIndex == kSegmentedControlIndexReportMode;
-    
-    return isReportMode;
-}
-
 - (void)updateAfterChangeToEditMode
 {
     [Crashlytics setObjectValue:@"Edit" forKey:@"Mode"];
@@ -697,6 +683,40 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 }
 
 #pragma mark - IAEEasyIncomesAndExpensesViewControllerQuery
+
+- (BOOL)isEditModeActive
+{
+    BOOL isEditMode = self.modeSegmentedControl.selectedSegmentIndex == kSegmentedControlIndexEditMode;
+    
+    return isEditMode;
+}
+
+- (BOOL)isReportModeActive
+{
+    BOOL isReportMode = self.modeSegmentedControl.selectedSegmentIndex == kSegmentedControlIndexReportMode;
+    
+    return isReportMode;
+}
+
+- (BOOL)isCalculatorOpen
+{
+    return [self.calculatorViewController isOpen];
+}
+
+- (BOOL)isCalculatorClosed
+{
+    return [self.calculatorViewController isClosed];
+}
+
+- (BOOL)isCalculatorInHideMode
+{
+    return [self.calculatorViewController isInHideMode];
+}
+
+- (BOOL)isCalculatorInVisibleMode
+{
+    return [self.calculatorViewController isInVisibleMode];
+}
 
 - (NSString *)findInActualOpenYearMonthNameWithMonthIndex:(NSUInteger)monthIndex inShortForm:(BOOL)shortForm
 {
@@ -2180,6 +2200,9 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     [self setNavigationButtonsEnabled:NO];
     
     self.attachBehaviorForContainerFX.anchorPoint = self.calculatorViewController.view.center;
+    
+    // ToDo: Momento de mostrar calculadora eliminamos botones de favorito
+    [self.conceptsCollectionView reloadData];
 }
 
 - (void)hideButtonWasPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
@@ -2189,6 +2212,9 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     [self setNavigationButtonsEnabled:YES];
     
     self.attachBehaviorForContainerFX.anchorPoint = self.calculatorViewController.view.center;
+    
+    // ToDo: Momento de ocultar calculadora eliminamos botones de favorito
+    [self.conceptsCollectionView reloadData];
 }
 
 - (void)updateFramePositionBeforeShowCalculatorForView:(UIView *)view
@@ -2208,8 +2234,6 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
                             view.frame.size.width,
                             view.frame.size.height);
 }
-
-#pragma mark - IAECalculatorViewControllerDelegate
 
 - (void)calculatorViewController:(IAECalculatorViewController *)calculatorViewController didCreateNewConcept:(IAEConcept *)concept
 {

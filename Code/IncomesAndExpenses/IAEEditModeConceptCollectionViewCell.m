@@ -463,4 +463,29 @@ static const CGFloat kCallForAttentionRationAlphaColor = 0.3;
     }];
 }
 
+#pragma mark - Favorite Pin
+
+- (void)hideFavoritePin
+{
+    self.favoriteButton.hidden = YES;
+}
+
+- (void)showFavoritePin
+{
+    self.favoriteButton.hidden = NO;
+}
+
+- (void)enableFavoritePin
+{
+    NSAssert(!self.favoriteButton.hidden, @"");
+    self.favoriteButton.enabled = YES;
+}
+
+- (void)disableFavoritePin
+{
+    NSAssert(!self.favoriteButton.hidden, @"");
+    self.favoriteButton.enabled = NO;
+}
+
+
 @end

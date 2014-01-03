@@ -135,8 +135,12 @@ static const CGFloat kCallForAttentionRationAlphaColor = 0.3;
     return font;
 }
 
-
 #pragma mark - Location Test
+
+- (BOOL)isFavoritePinContainingLocationPoint:(CGPoint)location
+{
+    return CGRectContainsPoint(self.favoritePinImage.frame, location);
+}
 
 - (BOOL)isAmountLabelContainingLocationPoint:(CGPoint)location
 {
@@ -467,25 +471,35 @@ static const CGFloat kCallForAttentionRationAlphaColor = 0.3;
 
 - (void)hideFavoritePin
 {
-    self.favoriteButton.hidden = YES;
+    self.favoritePinImage.hidden = YES;
 }
 
 - (void)showFavoritePin
 {
-    self.favoriteButton.hidden = NO;
+    self.favoritePinImage.hidden = NO;
 }
 
 - (void)enableFavoritePin
 {
-    NSAssert(!self.favoriteButton.hidden, @"");
-    self.favoriteButton.enabled = YES;
+    NSAssert(!self.favoritePinImage.hidden, @"");
+    self.favoritePinImage.alpha = 1.0;
 }
 
 - (void)disableFavoritePin
 {
-    NSAssert(!self.favoriteButton.hidden, @"");
-    self.favoriteButton.enabled = NO;
+    NSAssert(!self.favoritePinImage.hidden, @"");
+    self.favoritePinImage.alpha = 0.5;
 }
 
+- (void)changeStateOfFavoritePin
+{
+    NSAssert(!self.favoritePinImage.hidden, @"");
+    self.favoritePinImage.alpha = self.favoritePinImage.alpha < 1.0 ? 1.0 : 0.5;
+}
+
+- (BOOL)isFavoritePinEnabled
+{
+    return self.favoritePinImage.alpha < 1.0 ? NO : YES;
+}
 
 @end

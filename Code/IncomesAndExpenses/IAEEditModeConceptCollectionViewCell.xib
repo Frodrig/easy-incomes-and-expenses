@@ -52,13 +52,10 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
-                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kiQ-u3-r0U">
+                    <imageView userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="869-pin.png" id="P3u-Jy-SE5">
                         <rect key="frame" x="0.0" y="10" width="40" height="90"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" image="869-pin.png">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                    </button>
+                    </imageView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -67,7 +64,7 @@
                 <outlet property="amountLabel" destination="HqS-Bo-sDV" id="0eP-4g-Hm4"/>
                 <outlet property="categoryLabel" destination="FwU-Ko-eR6" id="Hh5-4l-DIc"/>
                 <outlet property="conceptInformationContainerView" destination="XdT-BY-TUN" id="6wF-SQ-rdo"/>
-                <outlet property="favoriteButton" destination="kiQ-u3-r0U" id="Rkd-vx-EeB"/>
+                <outlet property="favoritePinImage" destination="P3u-Jy-SE5" id="hja-Gx-7mV"/>
                 <outlet property="identifierContainerView" destination="0jx-Qr-cEo" id="e3U-B0-Uj6"/>
                 <outlet property="valueDecoratorView" destination="L7q-OU-jlD" id="C88-Rr-fh6"/>
             </connections>

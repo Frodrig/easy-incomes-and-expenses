@@ -49,6 +49,7 @@
 #import "NSDecimalNumber+AbsoluteValue.h"
 #import "IAEStrokeAnimatableLineView.h"
 #import "IAEDragPanelCalculatorView.h"
+#import "IAEFavoriteConceptsStock.h"
 
 @interface IAEEasyIncomesAndExpensesViewController ()
 
@@ -1631,8 +1632,8 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
                    underLocatonOfTapGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
 {
     if ([self isCompletelyVisibleConceptCollectionViewCell:cell]) {
-        [self openAppropiatePopoverForManipulateConceptsCollectionViewCell:cell
-                                        underLocatonOfTapGestureRecognizer:gestureRecognizer];
+        [self executeLogicForManipulateConceptsCollectionViewCell:cell
+                               underLocatonOfTapGestureRecognizer:gestureRecognizer];
     } else {
         [self scrollToConceptsCollectionViewCell:cell];
     }
@@ -1652,11 +1653,20 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     [self.conceptsCollectionView scrollToItemAtIndexPath:cellIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
 }
 
-- (void)openAppropiatePopoverForManipulateConceptsCollectionViewCell:(IAEEditModeConceptCollectionViewCell *)cell
+- (void)executeLogicForManipulateConceptsCollectionViewCell:(IAEEditModeConceptCollectionViewCell *)cell
                                   underLocatonOfTapGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
 {
     CGPoint location = [self convertLocationToCellArea:cell fromGestureRecognizer:gestureRecognizer];
-    if ([cell isAmountLabelContainingLocationPoint:location]) {
+    if ([cell isFavoritePinContainingLocationPoint:location]) {
+        [cell changeStateOfFavoritePin];
+        IAEConcept *conceptOfCell = [self findConceptOfCell:cell];
+        if ([cell isFavoritePinEnabled]) {
+            [[IAEFavoriteConceptsStock sharedInstance] addFavorite:conceptOfCell];
+        } else {
+            [[IAEFavoriteConceptsStock sharedInstance] removeFavoriteOfConcept:conceptOfCell];
+        }
+        [[IAEFavoriteConceptsStock sharedInstance] save];
+    } else if ([cell isAmountLabelContainingLocationPoint:location]) {
         [self openPopoverForAdjustAmountOfConceptCell:cell];
     } else if ([cell isCategoryNameOrTypeContainingLocationPoint:location]) {
         [self openPopoverForEditCategoryOfConceptCell:cell];

@@ -429,6 +429,8 @@ static const NSUInteger kPopoverYOffsetForFavoriteConceptsViewController = 24;
 - (void)launchPopoverForSelectFavoriteConceptsFromAddButton:(UIButton *)addButton
 {
     IAEFavoriteConceptsViewController *favoriteConceptsViewController = [[IAEFavoriteConceptsViewController alloc] initWithOptions:FC_ADD];
+    favoriteConceptsViewController.delegate = self;
+    
     self.popover = [[UIPopoverController alloc] initWithContentViewController:favoriteConceptsViewController];
     self.popover.popoverContentSize = favoriteConceptsViewController.view.frame.size;
     self.popover.delegate = self;
@@ -1034,5 +1036,47 @@ static const NSUInteger kPopoverYOffsetForFavoriteConceptsViewController = 24;
 {
     return !self.pinFavoriteImage.hidden;
 }
+
+#pragma mark - IAEFavoriteConceptsViewControllerDelegate
+
+- (void)favoriteConceptsViewController:(IAEFavoriteConceptsViewController *)favoriteConceptsViewController
+didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
+                           andExpenses:(NSArray *)expenses
+{
+    // TODO: Favorites
+    
+    NSLog(@"favorite incomes selected %@", incomes);
+    NSLog(@"favorite expenses selected %@", expenses);
+
+    [self createNewConcepts:incomes ofType:IncomeCategory];
+    [self createNewConcepts:expenses ofType:ExpenseCategory];
+    
+    [self.popover dismissPopoverAnimated:YES];
+}
+
+- (void)createNewConcepts:(NSArray *)concepts ofType:(CategoryType)type
+{
+    // TODO: Favorites
+
+    NSMutableArray *newConcepts = [NSMutableArray arrayWithCapacity:concepts.count];
+    
+    IAEMonth *month = [self.dataSource monthForCalculatorViewController:self];
+    for (NSDictionary *conceptIt in concepts) {
+        NSString *category = conceptIt[@"category"];
+        NSString *value = conceptIt[@"value"];
+        IAEConcept *newConcept = [month addConceptWithAmount:[self convertToDecimalNumberKeyboardAmountValue:value]
+                                                    category:[[IAECategoryStore sharedCategoryStore] findCategoryByTag:category]
+                                                        date:[[NSDate date] timeIntervalSince1970]
+                                               dayOfTheMonth:self.actualDay
+                                              andDescription:@""];
+        [newConcepts addObject:newConcept];
+    }
+    
+    self.numberConceptsCreatedInSession += concepts.count;
+    [[IAEBook sharedBook] saveAll];
+    
+    [self.delegate calculatorViewController:self didCreateNewConcepts:[NSArray arrayWithArray:newConcepts]];
+}
+
 
 @end

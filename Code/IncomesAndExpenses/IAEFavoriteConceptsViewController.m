@@ -10,6 +10,7 @@
 #import "IAEFavoriteConceptsStock.h"
 #import "IAECategoryStore.h"
 #import "IAECategory.h"
+#import "IAEFavoriteConceptsViewControllerDelegate.h"
 
 static const NSUInteger kNumberOfSections = 2;
 static const NSUInteger kIncomesSection = 0;
@@ -151,11 +152,12 @@ static const NSUInteger kExpenseSection = 1;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tableViewCell"];
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"tableViewCell"];
     CategoryType categoryTypeOfIndexPath = [self findCategoryTypeOfIndexPath:indexPath];
     NSArray *favoriteContainer = [self findFavoriteContainerOfType:categoryTypeOfIndexPath];
     NSDictionary *favoriteItem = favoriteContainer[indexPath.row];
     cell.textLabel.text = favoriteItem[@"category"];
+    cell.detailTextLabel.text = favoriteItem[@"value"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.accessoryType = [self isSelectedCellInTableView:tableView forRowAtIndexPath:indexPath] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
     
@@ -219,6 +221,38 @@ static const NSUInteger kExpenseSection = 1;
 
 - (void)addButtonPressed:(id)sender
 {
+    NSArray *favoriteIncomes = [self findFavoriteIncomesSelected];
+    NSArray *favoriteExpenses = [self findFavoriteExpensesSelected];
+    [self.delegate favoriteConceptsViewController:self didPressedAddOptionWithFavoriteIncomes:favoriteIncomes andExpenses:favoriteExpenses];
+}
+
+- (NSArray *)findFavoriteIncomesSelected
+{
+    NSArray *favorites = [self findFavoriteConceptsSelectedOfType:IncomeCategory];
+    return favorites;
+}
+
+- (NSArray *)findFavoriteExpensesSelected
+{
+    NSArray *favorites = [self findFavoriteConceptsSelectedOfType:ExpenseCategory];
+    return favorites;
+}
+
+- (NSArray *)findFavoriteConceptsSelectedOfType:(CategoryType)categoryType
+{
+    NSMutableArray *conceptsFound = [NSMutableArray array];
+    
+    const NSUInteger sectionToCheck = categoryType == IncomeCategory ? kIncomesSection : kExpenseSection;
+    
+    NSArray *selectedIndexPaths = [self.tableView indexPathsForSelectedRows];
+    for (NSIndexPath *indexPath in selectedIndexPaths) {
+        if (indexPath.section == sectionToCheck) {
+            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+            [conceptsFound addObject:@{@"category": cell.textLabel.text, @"value" : cell.detailTextLabel.text}];
+        }
+    }
+    
+    return [NSArray arrayWithArray:conceptsFound];
     
 }
 

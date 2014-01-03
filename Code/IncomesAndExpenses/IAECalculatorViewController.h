@@ -12,6 +12,7 @@
 #import "IAECategoryEditorViewControllerDelegate.h"
 #import "IAEDisplayPanelCalculatorViewDelegate.h"
 #import "IAEDisplayPanelCalculatorViewDataSource.h"
+#import "IAEFavoriteConceptsViewControllerDelegate.h"
 
 @class IAEDragPanelCalculatorView;
 @protocol IAECalculatorViewControllerDelegate;
@@ -22,7 +23,8 @@
                                                           IAEDayCalendarSelectorViewControllerDelegate,
                                                           IAECategoryEditorViewControllerDelegate,
                                                           IAEDisplayPanelCalculatorViewDelegate,
-                                                          IAEDisplayPanelCalculatorViewDataSource>
+                                                          IAEDisplayPanelCalculatorViewDataSource,
+                                                          IAEFavoriteConceptsViewControllerDelegate>
 
 @property (nonatomic, weak) id<IAECalculatorViewControllerDelegate> delegate;
 @property (nonatomic, weak) id<IAECalculatorViewControllerDataSource> dataSource;

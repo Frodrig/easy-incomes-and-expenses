@@ -2245,6 +2245,16 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
                             view.frame.size.height);
 }
 
+- (void)calculatorViewController:(IAECalculatorViewController *)calculatorViewController didCreateNewConcepts:(NSArray *)concepts
+{
+    // TODO: Favorites
+    [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES andExecuteAfterAnimationTheLogicBlock:^{
+        [self.conceptsCollectionView reloadData];
+        [self updateBalancesWithAnimation:NO];
+    }];
+
+}
+
 - (void)calculatorViewController:(IAECalculatorViewController *)calculatorViewController didCreateNewConcept:(IAEConcept *)concept
 {
     [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES andExecuteAfterAnimationTheLogicBlock:^{

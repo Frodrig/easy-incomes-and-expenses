@@ -474,6 +474,7 @@
 		5BAEAE151876B8C300271B47 /* IAEFavoriteConceptsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEFavoriteConceptsViewController.h; sourceTree = "<group>"; };
 		5BAEAE161876B8C300271B47 /* IAEFavoriteConceptsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEFavoriteConceptsViewController.m; sourceTree = "<group>"; };
 		5BAEAE171876B8C300271B47 /* IAEFavoriteConceptsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEFavoriteConceptsViewController.xib; sourceTree = "<group>"; };
+		5BAEAE1A1876F97300271B47 /* IAEFavoriteConceptsViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEFavoriteConceptsViewControllerDelegate.h; sourceTree = "<group>"; };
 		5BB0222217E2F7BD00CF75B8 /* IAEEasyIncomesAndExpensesViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEasyIncomesAndExpensesViewControllerDelegate.h; sourceTree = "<group>"; };
 		5BB2048B17D47E7100563B7C /* IAEDisplayPanelCalculatorViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEDisplayPanelCalculatorViewDataSource.h; sourceTree = "<group>"; };
 		5BB2048D17D4C92700563B7C /* IAEReportAreaViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEReportAreaViewDelegate.h; sourceTree = "<group>"; };
@@ -1685,6 +1686,7 @@
 				5BAEAE151876B8C300271B47 /* IAEFavoriteConceptsViewController.h */,
 				5BAEAE161876B8C300271B47 /* IAEFavoriteConceptsViewController.m */,
 				5BAEAE171876B8C300271B47 /* IAEFavoriteConceptsViewController.xib */,
+				5BAEAE1A1876F97300271B47 /* IAEFavoriteConceptsViewControllerDelegate.h */,
 			);
 			name = "Favorite Concepts";
 			sourceTree = "<group>";

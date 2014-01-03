@@ -13,7 +13,11 @@ typedef NS_ENUM(NSUInteger, FavoriteConceptsOptions) {
     FC_REMOVE = 1 << 1
 };
 
+@protocol IAEFavoriteConceptsViewControllerDelegate;
+
 @interface IAEFavoriteConceptsViewController : UIViewController
+
+@property (nonatomic, weak)id<IAEFavoriteConceptsViewControllerDelegate> delegate;
 
 - (instancetype)initWithOptions:(NSUInteger)options;
 

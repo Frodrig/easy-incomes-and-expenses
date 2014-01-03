@@ -79,8 +79,13 @@ static const NSUInteger kExpenseSection = 1;
 {
     [super viewDidLoad];
     
-    // Do any additional setup after loading the view from its nib.
+    [self configureTableView];
+}
+
+- (void)configureTableView
+{
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"tableViewCell"];
+    self.tableView.allowsMultipleSelection = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -110,8 +115,23 @@ static const NSUInteger kExpenseSection = 1;
     NSArray *favoriteContainer = [self findFavoriteContainerOfType:categoryTypeOfIndexPath];
     NSDictionary *favoriteItem = favoriteContainer[indexPath.row];
     cell.textLabel.text = favoriteItem[@"category"];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.accessoryType = [self isSelectedCellInTableView:tableView forRowAtIndexPath:indexPath] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
     
     return cell;
+}
+
+- (BOOL)isSelectedCellInTableView:(UITableView *)tableView forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray *selectedCells = [tableView indexPathsForSelectedRows];
+    NSUInteger indexOfSelectedCell = [selectedCells indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        NSIndexPath *indexPathIt = obj;
+        *stop = [indexPathIt compare:indexPath];
+        return *stop;
+    }];
+    
+    const BOOL isSelected = selectedCells && indexOfSelectedCell != NSNotFound;
+    return isSelected;
 }
 
 - (CategoryType)findCategoryTypeOfIndexPath:(NSIndexPath *)indexPath
@@ -122,6 +142,18 @@ static const NSUInteger kExpenseSection = 1;
 }
 
 #pragma mark - TableView Delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryNone;
+}
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {

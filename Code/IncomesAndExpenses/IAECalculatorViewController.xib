@@ -11,7 +11,8 @@
                 <outlet property="dragPanel" destination="dms-eI-2KD" id="gqm-Is-eUm"/>
                 <outlet property="expenseButton" destination="3on-F9-yD1" id="fZy-HM-fE5"/>
                 <outlet property="incomeButton" destination="PjF-me-0zt" id="Vly-DB-zTN"/>
-                <outlet property="pinFavoriteButton" destination="hul-D4-wbn" id="lxH-ip-Qpg"/>
+                <outlet property="keyboardPanel" destination="Lcs-vj-q38" id="12g-0b-6ZX"/>
+                <outlet property="pinFavoriteImage" destination="hul-D4-wbn" id="k8P-au-4ZU"/>
                 <outlet property="view" destination="uGo-IA-Aba" id="119-QN-C61"/>
             </connections>
         </placeholder>

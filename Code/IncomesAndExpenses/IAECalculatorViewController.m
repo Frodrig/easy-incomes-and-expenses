@@ -24,6 +24,8 @@
 #import "IAECurrencyManager.h"
 #import "IAEDateHelper.h"
 #import "IAENumberFormatterManager.h"
+#import "IAEFavoriteConceptsViewController.h"
+#import "IAEKeyboardPanelCalculatorView.h"
 
 @interface IAECalculatorViewController ()
 
@@ -34,9 +36,10 @@ typedef NS_ENUM(NSUInteger, CalculatorMode) {
 };
 
 @property (weak, nonatomic) IBOutlet IAEDisplayPanelCalculatorView *displayPanel;
+@property (weak, nonatomic) IBOutlet IAEKeyboardPanelCalculatorView *keyboardPanel;
 @property (weak, nonatomic) IBOutlet UIButton *incomeButton;
 @property (weak, nonatomic) IBOutlet UIButton *expenseButton;
-@property (weak, nonatomic) IBOutlet UIImageView *pinFavoriteButton;
+@property (weak, nonatomic) IBOutlet UIImageView *pinFavoriteImage;
 @property (nonatomic) CalculatorMode mode;
 @property (nonatomic, strong) IAECategory *actualCategory;
 @property (nonatomic) NSUInteger actualDay;
@@ -80,6 +83,8 @@ static const CGFloat kRatioToDecideHideInDrag = 1.4;
 
 static const CGFloat kDurationInvalidActionFXFadeIn = 0.05;
 static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
+
+static const NSUInteger kPopoverYOffsetForFavoriteConceptsViewController = 24;
 
 #pragma mark - Properties
 
@@ -421,6 +426,20 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
 
 #pragma mark - Display Panel Events
 
+- (void)launchPopoverForSelectFavoriteConceptsFromAddButton:(UIButton *)addButton
+{
+    IAEFavoriteConceptsViewController *favoriteConceptsViewController = [[IAEFavoriteConceptsViewController alloc] initWithNibName:nil bundle:nil];
+    self.popover = [[UIPopoverController alloc] initWithContentViewController:favoriteConceptsViewController];
+    self.popover.popoverContentSize = favoriteConceptsViewController.view.frame.size;
+    self.popover.delegate = self;
+    
+    CGRect presentRect = CGRectMake(addButton.frame.origin.x,
+                                    addButton.frame.origin.y + kPopoverYOffsetForFavoriteConceptsViewController,
+                                    addButton.frame.size.width,
+                                    addButton.frame.size.height);
+    [self.popover presentPopoverFromRect:presentRect inView:self.keyboardPanel permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
+}
+
 - (IBAction)categoryButtonPressed:(UIButton *)button
 {
     CGRect rect = [button convertRect:button.frame toView:self.displayPanel];
@@ -489,7 +508,7 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
     BOOL canDelete = [self canDeleteOneValueInAmount];
     if (canDelete) {
         [self.actualAmount deleteCharactersInRange:NSMakeRange(self.actualAmount.length - 1, 1)];
-        [self updateFavoritePinImage];
+        [self updateFavoritePin];
     }
     
     return canDelete;
@@ -543,7 +562,7 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
     if (canAppend) {
         NSString *decimalSeparator = [[IAECurrencyManager sharedManager] decimalSeparator];
         self.actualAmount = [NSMutableString stringWithFormat:@"%@%@", self.actualAmount, decimalSeparator];
-        [self updateFavoritePinImage];
+        [self updateFavoritePin];
     }
     
     return canAppend;
@@ -563,32 +582,35 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
 
 - (IBAction)keyboardEnterPressed:(UIButton *)button
 {
-    BOOL validAction = [self createNewConcept];
-    [self doFXAfterPressedButton:button withVaidAction:validAction];
-    if (validAction) {
-        [self setDisplayColorUsingAnimation:validAction];
+    BOOL validAddAction = YES;
+    if ([self isActualAmountOverZero]) {
+        [self createNewConcept];
+    } else if ([self isFavoritePinActive]) {
+        [self launchPopoverForSelectFavoriteConceptsFromAddButton:button];
+    } else {
+        validAddAction = NO;
+    }
+    
+    [self doFXAfterPressedButton:button withVaidAction:validAddAction];
+    if (validAddAction) {
+        [self setDisplayColorUsingAnimation:validAddAction];
     }
 }
 
-- (BOOL)createNewConcept
+- (void)createNewConcept
 {
-    const BOOL validAction = [self isActualAmountOverZero];
-    if (validAction) {
-        IAEMonth *month = [self.dataSource monthForCalculatorViewController:self];
-        IAEConcept *newConcept = [month addConceptWithAmount:[self convertToDecimalNumberKeyboardAmountValue:self.actualAmount]
-                                                    category:self.actualCategory
-                                                        date:[[NSDate date] timeIntervalSince1970]
-                                               dayOfTheMonth:self.actualDay
-                                              andDescription:@""];
-        self.numberConceptsCreatedInSession++;
-        [[IAEBook sharedBook] saveAll];
-        
-        [self resetAmountPannel];
-        
-        [self.delegate calculatorViewController:self didCreateNewConcept:newConcept];
-    }
+    IAEMonth *month = [self.dataSource monthForCalculatorViewController:self];
+    IAEConcept *newConcept = [month addConceptWithAmount:[self convertToDecimalNumberKeyboardAmountValue:self.actualAmount]
+                                                category:self.actualCategory
+                                                    date:[[NSDate date] timeIntervalSince1970]
+                                           dayOfTheMonth:self.actualDay
+                                          andDescription:@""];
+    self.numberConceptsCreatedInSession++;
+    [[IAEBook sharedBook] saveAll];
     
-    return validAction;
+    [self resetAmountPannel];
+    
+    [self.delegate calculatorViewController:self didCreateNewConcept:newConcept];
 }
 
 - (void)doFXAfterPressedButton:(UIButton *)button withVaidAction:(BOOL)action
@@ -631,7 +653,7 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
     if (canAppend) {
         NSString *stringValue = [[NSNumber numberWithUnsignedInteger:value] stringValue];
         self.actualAmount = [NSMutableString stringWithFormat:@"%@%@", self.actualAmount, stringValue];
-        [self updateFavoritePinImage];
+        [self updateFavoritePin];
     }
     
     return canAppend;
@@ -813,7 +835,7 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
 {
     self.actualAmount = nil;
     [self configureDisplayPanelWithActualAmount];
-    [self updateFavoritePinImage];
+    [self updateFavoritePin];
 }
 
 #pragma mark - UIPopoverControllerDelegate
@@ -1003,9 +1025,14 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
 
 #pragma mark - FavoritePinImage
 
-- (void)updateFavoritePinImage
+- (void)updateFavoritePin
 {
-    self.pinFavoriteButton.hidden = [self actualAmountWithData];
+    self.pinFavoriteImage.hidden = [self actualAmountWithData];
+}
+
+- (BOOL)isFavoritePinActive
+{
+    return !self.pinFavoriteImage.hidden;
 }
 
 @end

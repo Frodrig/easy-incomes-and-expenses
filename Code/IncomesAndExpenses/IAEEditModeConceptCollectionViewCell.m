@@ -488,13 +488,13 @@ static const CGFloat kCallForAttentionRationAlphaColor = 0.3;
 - (void)disableFavoritePin
 {
     NSAssert(!self.favoritePinImage.hidden, @"");
-    self.favoritePinImage.alpha = 0.5;
+    self.favoritePinImage.alpha = 0.3;
 }
 
 - (void)changeStateOfFavoritePin
 {
     NSAssert(!self.favoritePinImage.hidden, @"");
-    self.favoritePinImage.alpha = self.favoritePinImage.alpha < 1.0 ? 1.0 : 0.5;
+    self.favoritePinImage.alpha = self.favoritePinImage.alpha < 1.0 ? 1.0 : 0.3;
 }
 
 - (BOOL)isFavoritePinEnabled

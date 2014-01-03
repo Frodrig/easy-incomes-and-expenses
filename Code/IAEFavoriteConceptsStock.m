@@ -43,7 +43,9 @@ static NSString * const kFavoriteConceptsFile = @"favorite_concepts.data";
 - (void)load
 {
     NSString *pathToFile = [self makePathForFavoriteConceptsFile];
-    _favorites = [NSMutableDictionary dictionaryWithContentsOfFile:pathToFile];
+    //[[NSFileManager defaultManager] removeItemAtPath:pathToFile error:NULL];
+    const BOOL fileExist = [[NSFileManager defaultManager] fileExistsAtPath:pathToFile];
+    _favorites = fileExist ? [NSMutableDictionary dictionaryWithContentsOfFile:pathToFile] : [NSMutableDictionary new];
 }
 
 - (NSString *)makePathForFavoriteConceptsFile
@@ -62,9 +64,9 @@ static NSString * const kFavoriteConceptsFile = @"favorite_concepts.data";
         NSString *categoryTag = [concept.category localizedTag];
         NSMutableArray *valuesForCategory = [self.favorites valueForKey:categoryTag];
         if (!valuesForCategory) {
-            self.favorites[categoryTag] = [NSMutableArray arrayWithObject:@[[concept.amount stringValue]]];
+            self.favorites[categoryTag] = [NSMutableArray arrayWithObject:[concept.amount stringValue]];
         } else {
-            [valuesForCategory addObject:@[[concept.amount stringValue]]];
+            [valuesForCategory addObject:[concept.amount stringValue]];
         }
     }
 }
@@ -100,7 +102,7 @@ static NSString * const kFavoriteConceptsFile = @"favorite_concepts.data";
     const NSUInteger indexOfValue = [values indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
         NSString *valueIt = obj;
         *stop = [valueIt isEqualToString:value];
-        return *stop ? idx : NSNotFound;
+        return *stop;
     }];
     
     return indexOfValue;

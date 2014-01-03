@@ -126,6 +126,7 @@
 		5BA0130D179800AC00337E84 /* NSString+TwoDigitString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA0130C179800AC00337E84 /* NSString+TwoDigitString.m */; };
 		5BA0131217983A9000337E84 /* IAEDayCalendarSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA0131017983A9000337E84 /* IAEDayCalendarSelectorViewController.m */; };
 		5BA0131317983A9000337E84 /* IAEDayCalendarSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA0131117983A9000337E84 /* IAEDayCalendarSelectorViewController.xib */; };
+		5BAEAE0B1876828A00271B47 /* IAEFavoriteConceptsStock.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BAEAE0A1876828A00271B47 /* IAEFavoriteConceptsStock.m */; };
 		5BB8AD1217FAC2F200BAAB96 /* editconceptcontainerviewbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BB8AD1017FAC2F200BAAB96 /* editconceptcontainerviewbackground.png */; };
 		5BB8AD1317FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BB8AD1117FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png */; };
 		5BBD373A180BFF5B0095A15A /* libFlurry_4.2.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BBD36A2180BFF5B0095A15A /* libFlurry_4.2.4.a */; };
@@ -458,6 +459,8 @@
 		5BA0131117983A9000337E84 /* IAEDayCalendarSelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEDayCalendarSelectorViewController.xib; sourceTree = "<group>"; };
 		5BAA5E46170988AC00B6B3F8 /* IncomesAndExpenses copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "IncomesAndExpenses copy-Info.plist"; path = "/Users/fernandorodriguezmartinez/Trabajo/Freelance/Git/Easy Incomes and Expenses/Code/IncomesAndExpenses copy-Info.plist"; sourceTree = "<absolute>"; };
 		5BAD901C181903B700CE0124 /* IAEHelpIndexViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelpIndexViewControllerDelegate.h; sourceTree = "<group>"; };
+		5BAEAE091876828A00271B47 /* IAEFavoriteConceptsStock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEFavoriteConceptsStock.h; sourceTree = "<group>"; };
+		5BAEAE0A1876828A00271B47 /* IAEFavoriteConceptsStock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEFavoriteConceptsStock.m; sourceTree = "<group>"; };
 		5BB0222217E2F7BD00CF75B8 /* IAEEasyIncomesAndExpensesViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEasyIncomesAndExpensesViewControllerDelegate.h; sourceTree = "<group>"; };
 		5BB2048B17D47E7100563B7C /* IAEDisplayPanelCalculatorViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEDisplayPanelCalculatorViewDataSource.h; sourceTree = "<group>"; };
 		5BB2048D17D4C92700563B7C /* IAEReportAreaViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEReportAreaViewDelegate.h; sourceTree = "<group>"; };
@@ -1240,6 +1243,7 @@
 			children = (
 				5B6F45E1181ED00B0073B1AC /* Defs */,
 				5B6F45DE181ECF780073B1AC /* Protocols */,
+				5BAEAE081876825500271B47 /* Favorite Concepts */,
 				5B6F45DD181ECF5A0073B1AC /* OpenYear */,
 				5B87977A180EADB200554E13 /* Core Data */,
 			);
@@ -1646,6 +1650,15 @@
 				5BCE3AC317A978CA00CD01E7 /* Protocols */,
 			);
 			name = "Day Calendar Selector";
+			sourceTree = "<group>";
+		};
+		5BAEAE081876825500271B47 /* Favorite Concepts */ = {
+			isa = PBXGroup;
+			children = (
+				5BAEAE091876828A00271B47 /* IAEFavoriteConceptsStock.h */,
+				5BAEAE0A1876828A00271B47 /* IAEFavoriteConceptsStock.m */,
+			);
+			name = "Favorite Concepts";
 			sourceTree = "<group>";
 		};
 		5BBD369F180BFF5B0095A15A /* Flurry-iOS-4.2.4 */ = {
@@ -2484,6 +2497,7 @@
 				5B62D86F178EC20E009879A6 /* IAEAnimateValueUpdater.m in Sources */,
 				5B5C96A91781E877008CD851 /* NSNumber+DefaultValues.m in Sources */,
 				5B1F0D3517841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m in Sources */,
+				5BAEAE0B1876828A00271B47 /* IAEFavoriteConceptsStock.m in Sources */,
 				5B907840179D269E00B2A0F7 /* IAEKeyboardPanelCalculatorView.m in Sources */,
 				5BCE3AB917A9703B00CD01E7 /* IAEHelperCalculatorDataSource.m in Sources */,
 				5B879761180E7E6F00554E13 /* IAEHelpAboutCollectionViewCell.m in Sources */,

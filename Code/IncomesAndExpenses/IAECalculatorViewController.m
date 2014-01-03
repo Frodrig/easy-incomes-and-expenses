@@ -36,6 +36,7 @@ typedef NS_ENUM(NSUInteger, CalculatorMode) {
 @property (weak, nonatomic) IBOutlet IAEDisplayPanelCalculatorView *displayPanel;
 @property (weak, nonatomic) IBOutlet UIButton *incomeButton;
 @property (weak, nonatomic) IBOutlet UIButton *expenseButton;
+@property (weak, nonatomic) IBOutlet UIImageView *pinFavoriteButton;
 @property (nonatomic) CalculatorMode mode;
 @property (nonatomic, strong) IAECategory *actualCategory;
 @property (nonatomic) NSUInteger actualDay;
@@ -488,6 +489,7 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
     BOOL canDelete = [self canDeleteOneValueInAmount];
     if (canDelete) {
         [self.actualAmount deleteCharactersInRange:NSMakeRange(self.actualAmount.length - 1, 1)];
+        [self updateFavoritePinImage];
     }
     
     return canDelete;
@@ -541,6 +543,7 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
     if (canAppend) {
         NSString *decimalSeparator = [[IAECurrencyManager sharedManager] decimalSeparator];
         self.actualAmount = [NSMutableString stringWithFormat:@"%@%@", self.actualAmount, decimalSeparator];
+        [self updateFavoritePinImage];
     }
     
     return canAppend;
@@ -628,6 +631,7 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
     if (canAppend) {
         NSString *stringValue = [[NSNumber numberWithUnsignedInteger:value] stringValue];
         self.actualAmount = [NSMutableString stringWithFormat:@"%@%@", self.actualAmount, stringValue];
+        [self updateFavoritePinImage];
     }
     
     return canAppend;
@@ -809,6 +813,7 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
 {
     self.actualAmount = nil;
     [self configureDisplayPanelWithActualAmount];
+    [self updateFavoritePinImage];
 }
 
 #pragma mark - UIPopoverControllerDelegate
@@ -994,6 +999,13 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
 - (BOOL)isAnyTranslationActive
 {
     return self.isInDragMode || self.automaticDragMode;
+}
+
+#pragma mark - FavoritePinImage
+
+- (void)updateFavoritePinImage
+{
+    self.pinFavoriteButton.hidden = [self actualAmountWithData];
 }
 
 @end

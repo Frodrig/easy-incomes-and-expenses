@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="4510" systemVersion="13B42" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
     <dependencies>
         <development version="5000" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
@@ -11,6 +11,7 @@
                 <outlet property="dragPanel" destination="dms-eI-2KD" id="gqm-Is-eUm"/>
                 <outlet property="expenseButton" destination="3on-F9-yD1" id="fZy-HM-fE5"/>
                 <outlet property="incomeButton" destination="PjF-me-0zt" id="Vly-DB-zTN"/>
+                <outlet property="pinFavoriteButton" destination="hul-D4-wbn" id="lxH-ip-Qpg"/>
                 <outlet property="view" destination="uGo-IA-Aba" id="119-QN-C61"/>
             </connections>
         </placeholder>
@@ -400,6 +401,10 @@
                                         <action selector="keyboardEnterPressed:" destination="-1" eventType="touchUpInside" id="ZkX-x9-32F"/>
                                     </connections>
                                 </button>
+                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="869-pin.png" id="hul-D4-wbn">
+                                    <rect key="frame" x="718" y="113" width="44" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
@@ -416,6 +421,7 @@
         <image name="746-plus-circle.png" width="28" height="28"/>
         <image name="747-minus-circle.png" width="28" height="28"/>
         <image name="765-arrow-left.png" width="14" height="28"/>
+        <image name="869-pin.png" width="14" height="28"/>
         <image name="calculatordragbackground.png" width="812" height="44"/>
     </resources>
 </document>

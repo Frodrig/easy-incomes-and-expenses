@@ -131,6 +131,8 @@
 		5BAEAE0F1876926700271B47 /* 726-star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BAEAE0D1876926700271B47 /* 726-star@2x.png */; };
 		5BAEAE1218769A7400271B47 /* 869-pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BAEAE1018769A7400271B47 /* 869-pin.png */; };
 		5BAEAE1318769A7400271B47 /* 869-pin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BAEAE1118769A7400271B47 /* 869-pin@2x.png */; };
+		5BAEAE181876B8C300271B47 /* IAEFavoriteConceptsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BAEAE161876B8C300271B47 /* IAEFavoriteConceptsViewController.m */; };
+		5BAEAE191876B8C300271B47 /* IAEFavoriteConceptsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BAEAE171876B8C300271B47 /* IAEFavoriteConceptsViewController.xib */; };
 		5BB8AD1217FAC2F200BAAB96 /* editconceptcontainerviewbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BB8AD1017FAC2F200BAAB96 /* editconceptcontainerviewbackground.png */; };
 		5BB8AD1317FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BB8AD1117FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png */; };
 		5BBD373A180BFF5B0095A15A /* libFlurry_4.2.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BBD36A2180BFF5B0095A15A /* libFlurry_4.2.4.a */; };
@@ -469,6 +471,9 @@
 		5BAEAE0D1876926700271B47 /* 726-star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "726-star@2x.png"; sourceTree = "<group>"; };
 		5BAEAE1018769A7400271B47 /* 869-pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "869-pin.png"; sourceTree = "<group>"; };
 		5BAEAE1118769A7400271B47 /* 869-pin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "869-pin@2x.png"; sourceTree = "<group>"; };
+		5BAEAE151876B8C300271B47 /* IAEFavoriteConceptsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEFavoriteConceptsViewController.h; sourceTree = "<group>"; };
+		5BAEAE161876B8C300271B47 /* IAEFavoriteConceptsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEFavoriteConceptsViewController.m; sourceTree = "<group>"; };
+		5BAEAE171876B8C300271B47 /* IAEFavoriteConceptsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEFavoriteConceptsViewController.xib; sourceTree = "<group>"; };
 		5BB0222217E2F7BD00CF75B8 /* IAEEasyIncomesAndExpensesViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEasyIncomesAndExpensesViewControllerDelegate.h; sourceTree = "<group>"; };
 		5BB2048B17D47E7100563B7C /* IAEDisplayPanelCalculatorViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEDisplayPanelCalculatorViewDataSource.h; sourceTree = "<group>"; };
 		5BB2048D17D4C92700563B7C /* IAEReportAreaViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEReportAreaViewDelegate.h; sourceTree = "<group>"; };
@@ -1077,6 +1082,7 @@
 		5B5DBB3E17E1FA5400716503 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				5BAEAE141876B5D200271B47 /* Favorite Concepts */,
 				5B32D659177C41170070AC72 /* Easy Incomes and Expenses */,
 				5B90782E179D1A8B00B2A0F7 /* Calculator */,
 				5B8CD5D617A2C6B400A353A5 /* Text Raw Selector Menu */,
@@ -1669,6 +1675,16 @@
 			children = (
 				5BAEAE091876828A00271B47 /* IAEFavoriteConceptsStock.h */,
 				5BAEAE0A1876828A00271B47 /* IAEFavoriteConceptsStock.m */,
+			);
+			name = "Favorite Concepts";
+			sourceTree = "<group>";
+		};
+		5BAEAE141876B5D200271B47 /* Favorite Concepts */ = {
+			isa = PBXGroup;
+			children = (
+				5BAEAE151876B8C300271B47 /* IAEFavoriteConceptsViewController.h */,
+				5BAEAE161876B8C300271B47 /* IAEFavoriteConceptsViewController.m */,
+				5BAEAE171876B8C300271B47 /* IAEFavoriteConceptsViewController.xib */,
 			);
 			name = "Favorite Concepts";
 			sourceTree = "<group>";
@@ -2388,6 +2404,7 @@
 				5BAEAE0F1876926700271B47 /* 726-star@2x.png in Resources */,
 				5BBD376D180BFF5B0095A15A /* nav_g.png in Resources */,
 				5B55C407178AA8C20066F586 /* IAECategoryEditorViewController.xib in Resources */,
+				5BAEAE191876B8C300271B47 /* IAEFavoriteConceptsViewController.xib in Resources */,
 				5B2512871851E07600669AE6 /* settingsindex_img_5.png in Resources */,
 				5BCE3AA117A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib in Resources */,
 				5BBD3747180BFF5B0095A15A /* dir_2c12105386bcc5c3935feab96f296a41.html in Resources */,
@@ -2537,6 +2554,7 @@
 				5BEA608217A6A36600520E09 /* IAEReportAreaView.m in Sources */,
 				5B32D654177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m in Sources */,
 				5B5C967F17816A13008CD851 /* UIView+RoundedCorners.m in Sources */,
+				5BAEAE181876B8C300271B47 /* IAEFavoriteConceptsViewController.m in Sources */,
 				5BDD9A3218572F99001A6CEF /* IAEPasswordPanelScreenView.m in Sources */,
 				5B879783180EB2C700554E13 /* IAEHelpTheme.m in Sources */,
 				5B62D85B178EA870009879A6 /* IAEYearSelectorCollectionViewCell.m in Sources */,

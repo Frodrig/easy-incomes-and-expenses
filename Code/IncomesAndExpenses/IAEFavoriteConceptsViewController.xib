@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IAEFavoriteConceptsViewController">
             <connections>
+                <outlet property="tableView" destination="y5x-0r-dHp" id="gdt-Eg-dRd"/>
                 <outlet property="view" destination="2" id="3"/>
             </connections>
         </placeholder>
@@ -25,6 +26,10 @@
                     <rect key="frame" x="0.0" y="44" width="460" height="556"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="y6Q-RC-724"/>
+                        <outlet property="delegate" destination="-1" id="5Ce-45-ZAR"/>
+                    </connections>
                 </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

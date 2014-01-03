@@ -27,6 +27,7 @@
 - (void)removeCategory:(IAECategory *)category;
 
 - (IAECategory *)findCategoryByTag:(NSString *)tag;
+- (CategoryType)findTypeOfCategoryTag:(NSString *)tag;
 - (NSArray *)allUserCategoriesOfType:(CategoryType)type;
 - (NSArray *)generalCategoryAndAllUserCategoriesOfType:(CategoryType)type;
 

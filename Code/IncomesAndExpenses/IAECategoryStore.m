@@ -220,6 +220,14 @@ static NSString * const kCategoryPropertyNameTag = @"tag";
     return requestResult.count > 0 ? [requestResult objectAtIndex:0] : nil;
 }
 
+- (CategoryType)findTypeOfCategoryTag:(NSString *)tag
+{
+    IAECategory *category = [self findCategoryByTag:tag];
+    CategoryType type = category ? category.categoryType : InvalidCategory;
+    
+    return type;
+}
+
 #pragma mark - Key-Value Observing
 
 - (void)observeValueForKeyPath:(NSString *)keyPath

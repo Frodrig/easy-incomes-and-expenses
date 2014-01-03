@@ -428,7 +428,7 @@ static const NSUInteger kPopoverYOffsetForFavoriteConceptsViewController = 24;
 
 - (void)launchPopoverForSelectFavoriteConceptsFromAddButton:(UIButton *)addButton
 {
-    IAEFavoriteConceptsViewController *favoriteConceptsViewController = [[IAEFavoriteConceptsViewController alloc] initWithNibName:nil bundle:nil];
+    IAEFavoriteConceptsViewController *favoriteConceptsViewController = [[IAEFavoriteConceptsViewController alloc] initWithOptions:FC_ADD];
     self.popover = [[UIPopoverController alloc] initWithContentViewController:favoriteConceptsViewController];
     self.popover.popoverContentSize = favoriteConceptsViewController.view.frame.size;
     self.popover.delegate = self;

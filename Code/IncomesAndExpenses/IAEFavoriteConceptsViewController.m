@@ -20,6 +20,8 @@ static const NSUInteger kExpenseSection = 1;
 @property (strong, nonatomic) NSMutableArray *favoriteIncomes;
 @property (strong, nonatomic) NSMutableArray *favoriteExpenses;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UINavigationItem *navItem;
+@property (nonatomic) NSUInteger initOptions;
 
 @end
 
@@ -27,14 +29,25 @@ static const NSUInteger kExpenseSection = 1;
 
 #pragma mark - Init
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (instancetype)initWithOptions:(NSUInteger)options
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    NSAssert(options, @"");
+    
+    self = [super initWithNibName:nil bundle:nil];
     if (self) {
+        _initOptions = options;
         [self createFavoriteConcepts];
         [self sortFavoriteConcepts];
     }
     return self;
+
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    NSAssert(0, @"");
+    
+    return nil;
 }
 
 - (void)createFavoriteConcepts
@@ -79,7 +92,35 @@ static const NSUInteger kExpenseSection = 1;
 {
     [super viewDidLoad];
     
+    [self configureWithOptions];
     [self configureTableView];
+}
+
+- (void)configureWithOptions
+{
+    if (self.initOptions & FC_ADD) {
+        [self enableAddOption];
+    }
+    
+    if (self.initOptions & FC_REMOVE) {
+        [self enableRemoveOption];
+    }
+}
+
+- (void)enableAddOption
+{
+    NSAssert(self.navItem, @"");
+    NSLog(@"%@", self.navItem.title);
+    self.navItem.rightBarButtonItem = [[UIBarButtonItem alloc]  initWithTitle:NSLocalizedString(@"LTEXT_CALCULATOR_BUTTON_ADD", @"")
+                                                                        style:UIBarButtonItemStylePlain
+                                                                       target:self
+                                                                       action:@selector(addButtonPressed:)];
+    self.navItem.rightBarButtonItem.enabled = NO;
+}
+
+- (void)enableRemoveOption
+{
+    
 }
 
 - (void)configureTableView
@@ -145,14 +186,26 @@ static const NSUInteger kExpenseSection = 1;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    [self tableView:tableView setCellSelected:YES forRowAtIndexPath:indexPath];
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self tableView:tableView setCellSelected:NO forRowAtIndexPath:indexPath];
+}
+
+- (void)tableView:(UITableView *)tableView setCellSelected:(BOOL)selected forRowAtIndexPath:(NSIndexPath *)indexPath
+{
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    cell.accessoryType = UITableViewCellAccessoryNone;
+    cell.accessoryType = selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+    
+    [self updateAddButtonEnabledState];
+}
+
+- (void)updateAddButtonEnabledState
+{
+    const BOOL rowsSelected = [self.tableView indexPathsForSelectedRows].count > 0;
+    self.navItem.rightBarButtonItem.enabled = rowsSelected;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -160,6 +213,13 @@ static const NSUInteger kExpenseSection = 1;
     NSString *title = section == kIncomesSection ? NSLocalizedString(@"LTEXT_CATEGORYTYPEINCOME_NAME", @"") : NSLocalizedString(@"LTEXT_CATEGORYTYPEEXPENSE_NAME", @"");
     
     return title;
+}
+
+#pragma mark - NavigationItem Events
+
+- (void)addButtonPressed:(id)sender
+{
+    
 }
 
 @end

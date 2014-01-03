@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IAEFavoriteConceptsViewController">
             <connections>
+                <outlet property="navItem" destination="OiL-hG-JLn" id="hwu-Bf-1o8"/>
                 <outlet property="tableView" destination="y5x-0r-dHp" id="gdt-Eg-dRd"/>
                 <outlet property="view" destination="2" id="3"/>
             </connections>

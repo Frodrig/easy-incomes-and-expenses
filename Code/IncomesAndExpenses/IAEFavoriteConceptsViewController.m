@@ -120,7 +120,7 @@ static const NSUInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+        
     [self configureWithOptions];
     [self configureTableView];
     
@@ -183,7 +183,7 @@ static const NSUInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"tableViewCell"];
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"tableViewCell"];
     CategoryType categoryTypeOfIndexPath = [self findCategoryTypeOfIndexPath:indexPath];
     NSArray *favoriteContainer = [self findFavoriteContainerOfType:categoryTypeOfIndexPath];
     NSDictionary *favoriteItem = favoriteContainer[indexPath.row];

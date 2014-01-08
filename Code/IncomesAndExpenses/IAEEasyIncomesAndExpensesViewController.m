@@ -1658,14 +1658,17 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 {
     CGPoint location = [self convertLocationToCellArea:cell fromGestureRecognizer:gestureRecognizer];
     if ([cell isFavoritePinContainingLocationPoint:location]) {
-        [cell changeStateOfFavoritePin];
-        IAEConcept *conceptOfCell = [self findConceptOfCell:cell];
-        if ([cell isFavoritePinEnabled]) {
-            [[IAEFavoriteConceptsStock sharedInstance] addFavorite:conceptOfCell];
-        } else {
-            [[IAEFavoriteConceptsStock sharedInstance] removeFavoriteOfConcept:conceptOfCell];
+        // ToDo: Refactorizar
+        if ([self.calculatorViewController isOpen]) {
+            [cell changeStateOfFavoritePin];
+            IAEConcept *conceptOfCell = [self findConceptOfCell:cell];
+            if ([cell isFavoritePinEnabled]) {
+                [[IAEFavoriteConceptsStock sharedInstance] addFavorite:conceptOfCell];
+            } else {
+                [[IAEFavoriteConceptsStock sharedInstance] removeFavoriteOfConcept:conceptOfCell];
+            }
+            [[IAEFavoriteConceptsStock sharedInstance] save];
         }
-        [[IAEFavoriteConceptsStock sharedInstance] save];
     } else if ([cell isAmountLabelContainingLocationPoint:location]) {
         [self openPopoverForAdjustAmountOfConceptCell:cell];
     } else if ([cell isCategoryNameOrTypeContainingLocationPoint:location]) {
@@ -2203,6 +2206,23 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 {
     self.yearsButton.enabled = enabled;
     self.categoriesButton.enabled = enabled;
+}
+
+- (void)calculatorViewController:(IAECalculatorViewController *)calculatorViewController didRemoveFavoriteConceptWithCategory:(NSString *)category andValue:(NSString *)value
+{
+    [self updateVisibleCollectionViewCellsAfterRemoveFavoriteConceptWithCategory:category andValue:value];
+}
+
+- (void)updateVisibleCollectionViewCellsAfterRemoveFavoriteConceptWithCategory:(NSString *)category andValue:(NSString *)value
+{
+    NSArray *visibleCells = self.conceptsCollectionView.visibleCells;
+    for (IAEEditModeConceptCollectionViewCell *cell in visibleCells) {
+        NSIndexPath *indexPathForCell = [self.conceptsCollectionView indexPathForCell:cell];
+        IAEConcept *conceptOfCell = [self findConceptAtIndexPath:indexPathForCell];
+        if ([[conceptOfCell.category localizedTag] isEqualToString:category] && [[conceptOfCell.amount stringValue] isEqualToString:value]) {
+            [cell disableFavoritePin];
+        }
+    }
 }
 
 - (void)showButtonWasPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController

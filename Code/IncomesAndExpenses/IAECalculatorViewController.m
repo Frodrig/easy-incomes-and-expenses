@@ -428,7 +428,7 @@ static const NSUInteger kPopoverYOffsetForFavoriteConceptsViewController = 24;
 
 - (void)launchPopoverForSelectFavoriteConceptsFromAddButton:(UIButton *)addButton
 {
-    IAEFavoriteConceptsViewController *favoriteConceptsViewController = [[IAEFavoriteConceptsViewController alloc] initWithOptions:FC_ADD];
+    IAEFavoriteConceptsViewController *favoriteConceptsViewController = [[IAEFavoriteConceptsViewController alloc] initWithOptions:FC_ADD | FC_REMOVE];
     favoriteConceptsViewController.delegate = self;
     
     self.popover = [[UIPopoverController alloc] initWithContentViewController:favoriteConceptsViewController];
@@ -1077,6 +1077,17 @@ didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
     
     [self.delegate calculatorViewController:self didCreateNewConcepts:[NSArray arrayWithArray:newConcepts]];
 }
+
+- (void)favoriteConceptsViewController:(IAEFavoriteConceptsViewController *)favoriteConceptsViewController willRemoveFavoriteWithCategory:(NSString *)category andValue:(NSString *)value
+{
+    // ...
+}
+
+- (void)favoriteConceptsViewController:(IAEFavoriteConceptsViewController *)favoriteConceptsViewController didRemoveFavoriteWithCategory:(NSString *)category andValue:(NSString *)value
+{
+    [self.delegate calculatorViewController:self didRemoveFavoriteConceptWithCategory:category andValue:value];
+}
+
 
 
 @end

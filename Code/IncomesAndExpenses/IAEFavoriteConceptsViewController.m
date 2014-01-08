@@ -11,22 +11,48 @@
 #import "IAECategoryStore.h"
 #import "IAECategory.h"
 #import "IAEFavoriteConceptsViewControllerDelegate.h"
+#import "IAEStrokeAnimatableLineView.h"
 
 static const NSUInteger kNumberOfSections = 2;
 static const NSUInteger kIncomesSection = 0;
 static const NSUInteger kExpenseSection = 1;
 
+static const CGFloat kDurationStrokeAnimation = 0.25;
+static const CGFloat kColorWhiteComponentForStrokeAnimation = 0.8;
+static const CGFloat kColorWhiteAlphaComponentForStrokeAnimation = 1.0;
+static const NSUInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
+
 @interface IAEFavoriteConceptsViewController ()
 
-@property (strong, nonatomic) NSMutableArray *favoriteIncomes;
-@property (strong, nonatomic) NSMutableArray *favoriteExpenses;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navItem;
+@property (nonatomic, strong) IAEStrokeAnimatableLineView *strokeAnimatableLineView;
+@property (nonatomic, strong) UISwipeGestureRecognizer *swipeGestureRecognizer;
+@property (nonatomic, strong) NSIndexPath *strokedCellIndexPath;
+@property (strong, nonatomic) NSMutableArray *favoriteIncomes;
+@property (strong, nonatomic) NSMutableArray *favoriteExpenses;
 @property (nonatomic) NSUInteger initOptions;
 
 @end
 
 @implementation IAEFavoriteConceptsViewController
+
+#pragma mark - Properties
+
+- (IAEStrokeAnimatableLineView *)strokeAnimatableLineView
+{
+    // ToDo: Refactor
+    if (!_strokeAnimatableLineView) {
+        _strokeAnimatableLineView = [[IAEStrokeAnimatableLineView alloc] init];
+        _strokeAnimatableLineView.durationOfStrokeAnimation = kDurationStrokeAnimation;
+        _strokeAnimatableLineView.strokeColor = [UIColor colorWithWhite:kColorWhiteComponentForStrokeAnimation
+                                                                  alpha:kColorWhiteAlphaComponentForStrokeAnimation];
+        _strokeAnimatableLineView.strokeType = kTypeStrokeAnimation;
+        _strokeAnimatableLineView.delegate = self;
+    }
+    
+    return _strokeAnimatableLineView;
+}
 
 #pragma mark - Init
 
@@ -37,6 +63,8 @@ static const NSUInteger kExpenseSection = 1;
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         _initOptions = options;
+        // ToDo: Refactor
+        _swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGestureRecognizerEvent:)];
         [self createFavoriteConcepts];
         [self sortFavoriteConcepts];
     }
@@ -95,6 +123,7 @@ static const NSUInteger kExpenseSection = 1;
     
     [self configureWithOptions];
     [self configureTableView];
+    
 }
 
 - (void)configureWithOptions
@@ -121,7 +150,7 @@ static const NSUInteger kExpenseSection = 1;
 
 - (void)enableRemoveOption
 {
-    
+    [self.tableView addGestureRecognizer:self.swipeGestureRecognizer];
 }
 
 - (void)configureTableView
@@ -253,6 +282,34 @@ static const NSUInteger kExpenseSection = 1;
     }
     
     return [NSArray arrayWithArray:conceptsFound];
+}
+
+#pragma mark - Swipe Gesture Recognizer
+
+- (void)swipeGestureRecognizerEvent:(UIGestureRecognizer *)gesture
+{
+    CGPoint location = [gesture locationInView:self.tableView];
+    self.strokedCellIndexPath = [self.tableView indexPathForRowAtPoint:location];
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:self.strokedCellIndexPath];
+    [self.strokeAnimatableLineView doStrokeOverTheView:cell];
+}
+
+#pragma mark - StrokeAnimatabeLinewView Delegate
+
+- (void)strokeAnimatableView:(IAEStrokeAnimatableLineView *)strokeAnimatableView didStrokeOverTheView:(UIView *)view;
+{
+    // Remove
+    
+    NSMutableArray *favoriteConceptContainer = self.strokedCellIndexPath.section == kIncomesSection ? self.favoriteIncomes : self.favoriteExpenses;
+    NSDictionary *favoriteItem = [favoriteConceptContainer objectAtIndex:self.strokedCellIndexPath.row];
+    [self.delegate favoriteConceptsViewController:self willRemoveFavoriteWithCategory:favoriteItem[@"category"] andValue:favoriteItem[@"value"]];
+    [[IAEFavoriteConceptsStock sharedInstance] removeAndSaveFavoriteWithCategory:favoriteItem[@"category"] andValue:favoriteItem[@"value"]];
+    [favoriteConceptContainer removeObjectAtIndex:self.strokedCellIndexPath.row];
+    [self.delegate favoriteConceptsViewController:self didRemoveFavoriteWithCategory:favoriteItem[@"category"] andValue:favoriteItem[@"value"]];
+
+    [self.tableView deleteRowsAtIndexPaths:@[self.strokedCellIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    self.strokedCellIndexPath = nil;
+    [self.strokeAnimatableLineView resetStroke];
     
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IAEStrokeAnimatableViewDelegate.h"
 
 typedef NS_ENUM(NSUInteger, FavoriteConceptsOptions) {
     FC_ADD = 1 << 0,
@@ -15,7 +16,7 @@ typedef NS_ENUM(NSUInteger, FavoriteConceptsOptions) {
 
 @protocol IAEFavoriteConceptsViewControllerDelegate;
 
-@interface IAEFavoriteConceptsViewController : UIViewController
+@interface IAEFavoriteConceptsViewController : UIViewController<IAEStrokeAnimatableViewDelegate>
 
 @property (nonatomic, weak)id<IAEFavoriteConceptsViewControllerDelegate> delegate;
 

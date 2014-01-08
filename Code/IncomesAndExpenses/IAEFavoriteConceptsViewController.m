@@ -64,7 +64,6 @@ static const NSUInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
     if (self) {
         _initOptions = options;
         // ToDo: Refactor
-        _swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGestureRecognizerEvent:)];
         [self createFavoriteConcepts];
         [self sortFavoriteConcepts];
     }
@@ -128,15 +127,25 @@ static const NSUInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
 
 - (void)configureWithOptions
 {
-    if (self.initOptions & FC_ADD) {
+    if ([self isAddOptionEnabled]) {
         [self enableAddOption];
     }
     
-    if (self.initOptions & FC_REMOVE) {
+    if ([self isRemoveOptionEnabled]) {
         [self enableRemoveOption];
     } else {
         self.navItem.leftBarButtonItem = nil;
     }
+}
+
+- (BOOL)isAddOptionEnabled
+{
+    return self.initOptions & FC_ADD;
+}
+
+- (BOOL)isRemoveOptionEnabled
+{
+    return self.initOptions & FC_REMOVE;
 }
 
 - (void)enableAddOption
@@ -152,6 +161,7 @@ static const NSUInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
 
 - (void)enableRemoveOption
 {
+    _swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGestureRecognizerEvent:)];
     [self.tableView addGestureRecognizer:self.swipeGestureRecognizer];
 }
 
@@ -219,12 +229,16 @@ static const NSUInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self tableView:tableView setCellSelected:YES forRowAtIndexPath:indexPath];
+    if ([self isAddOptionEnabled]) {
+        [self tableView:tableView setCellSelected:YES forRowAtIndexPath:indexPath];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self tableView:tableView setCellSelected:NO forRowAtIndexPath:indexPath];
+    if ([self isAddOptionEnabled]) {
+        [self tableView:tableView setCellSelected:NO forRowAtIndexPath:indexPath];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView setCellSelected:(BOOL)selected forRowAtIndexPath:(NSIndexPath *)indexPath

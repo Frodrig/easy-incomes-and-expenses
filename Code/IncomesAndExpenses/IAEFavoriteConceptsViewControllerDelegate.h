@@ -12,6 +12,8 @@
 
 @protocol IAEFavoriteConceptsViewControllerDelegate <NSObject>
 
+@optional
+
 - (void)favoriteConceptsViewController:(IAEFavoriteConceptsViewController *)favoriteConceptsViewController
 didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
                            andExpenses:(NSArray *)expenses;
@@ -22,5 +24,7 @@ didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
 - (void)favoriteConceptsViewController:(IAEFavoriteConceptsViewController *)favoriteConceptsViewController
          didRemoveFavoriteWithCategory:(NSString *)category
                               andValue:(NSString *)value;
+
+- (void)doneButtonWasPressedInfavoriteConceptsViewController:(IAEFavoriteConceptsViewController *)favoriteConceptsViewController;
 
 @end

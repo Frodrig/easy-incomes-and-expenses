@@ -134,6 +134,8 @@ static const NSUInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
     
     if (self.initOptions & FC_REMOVE) {
         [self enableRemoveOption];
+    } else {
+        self.navItem.leftBarButtonItem = nil;
     }
 }
 
@@ -299,7 +301,6 @@ static const NSUInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
 - (void)strokeAnimatableView:(IAEStrokeAnimatableLineView *)strokeAnimatableView didStrokeOverTheView:(UIView *)view;
 {
     // Remove
-    
     NSMutableArray *favoriteConceptContainer = self.strokedCellIndexPath.section == kIncomesSection ? self.favoriteIncomes : self.favoriteExpenses;
     NSDictionary *favoriteItem = [favoriteConceptContainer objectAtIndex:self.strokedCellIndexPath.row];
     [self.delegate favoriteConceptsViewController:self willRemoveFavoriteWithCategory:favoriteItem[@"category"] andValue:favoriteItem[@"value"]];
@@ -310,7 +311,15 @@ static const NSUInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
     [self.tableView deleteRowsAtIndexPaths:@[self.strokedCellIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     self.strokedCellIndexPath = nil;
     [self.strokeAnimatableLineView resetStroke];
+}
+
+#pragma mark - Bar Button Events
+
+- (IBAction)doneButtonPressed:(id)sender
+{
+    [self.delegate doneButtonWasPressedInfavoriteConceptsViewController:self];
     
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

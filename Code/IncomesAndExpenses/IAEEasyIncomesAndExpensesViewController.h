@@ -20,6 +20,7 @@
 #import "IAEEasyIncomesAndExpensesViewControllerQuery.h"
 #import "IAEReportAreaViewDelegate.h"
 #import "IAEAdjustConceptAmountViewControllerDataSource.h"
+#import "IAEFavoriteConceptsViewControllerDelegate.h"
 
 @protocol IAEEasyIncomesAndExpensesViewControllerDelegate;
 
@@ -37,7 +38,8 @@
                                                                       IAEStrokeAnimatableViewDelegate,
                                                                       IAEReportAreaViewDelegate,
                                                                       IAEAdjustConceptAmountViewControllerDataSource,
-                                                                      IAEEasyIncomesAndExpensesViewControllerQuery>
+                                                                      IAEEasyIncomesAndExpensesViewControllerQuery,
+                                                                      IAEFavoriteConceptsViewControllerDelegate>
 
 @property (nonatomic, weak) id<IAEEasyIncomesAndExpensesViewControllerDelegate> delegate;
 

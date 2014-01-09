@@ -86,6 +86,9 @@ static const CGFloat kDurationInvalidActionFXFadeOut = 0.15;
 
 static const NSUInteger kPopoverYOffsetForFavoriteConceptsViewController = 24;
 
+static NSString * const kCategoryKey = @"category";
+static NSString * const kValueKey = @"value";
+
 #pragma mark - Properties
 
 - (NSString *)actualAmount
@@ -1043,11 +1046,6 @@ static const NSUInteger kPopoverYOffsetForFavoriteConceptsViewController = 24;
 didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
                            andExpenses:(NSArray *)expenses
 {
-    // TODO: Favorites
-    
-    NSLog(@"favorite incomes selected %@", incomes);
-    NSLog(@"favorite expenses selected %@", expenses);
-
     [self createNewConcepts:incomes ofType:IncomeCategory];
     [self createNewConcepts:expenses ofType:ExpenseCategory];
     
@@ -1056,14 +1054,12 @@ didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
 
 - (void)createNewConcepts:(NSArray *)concepts ofType:(CategoryType)type
 {
-    // TODO: Favorites
-
     NSMutableArray *newConcepts = [NSMutableArray arrayWithCapacity:concepts.count];
     
     IAEMonth *month = [self.dataSource monthForCalculatorViewController:self];
     for (NSDictionary *conceptIt in concepts) {
-        NSString *category = conceptIt[@"category"];
-        NSString *value = conceptIt[@"value"];
+        NSString *category = conceptIt[kCategoryKey];
+        NSString *value = conceptIt[kValueKey];
         IAEConcept *newConcept = [month addConceptWithAmount:[self convertToDecimalNumberKeyboardAmountValue:value]
                                                     category:[[IAECategoryStore sharedCategoryStore] findCategoryByTag:category]
                                                         date:[[NSDate date] timeIntervalSince1970]

@@ -15,6 +15,8 @@
 #import "IAEFavoriteConceptsTableHeader.h"
 #import "UIView+LoadFromXib.h"
 #import "IAEValueDecoratorView.h"
+#import "IAEColorHelper.h"
+#import "IAENumberFormatterManager.h"
 
 static const NSUInteger kNumberOfSections = 2;
 static const NSUInteger kIncomesSection = 0;
@@ -202,8 +204,16 @@ static const CGFloat kHeaderViewHeight = 54.0;
     CategoryType categoryTypeOfIndexPath = [self findCategoryTypeOfIndexPath:indexPath];
     NSArray *favoriteContainer = [self findFavoriteContainerOfType:categoryTypeOfIndexPath];
     NSDictionary *favoriteItem = favoriteContainer[indexPath.row];
+    cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:21];
     cell.textLabel.text = favoriteItem[@"category"];
-    cell.detailTextLabel.text = favoriteItem[@"value"];
+    NSDecimalNumber *valueNumber = [NSDecimalNumber decimalNumberWithString:favoriteItem[@"value"]];
+    if (indexPath.section == kExpenseSection) {
+        NSDecimalNumber *minusOne = [NSDecimalNumber decimalNumberWithString:@"-1"];
+        valueNumber = [valueNumber decimalNumberByMultiplyingBy:minusOne];
+    }
+    cell.detailTextLabel.text = [[IAENumberFormatterManager sharedManager].currencyFormatter stringFromNumber:valueNumber];
+    cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:18];
+    cell.detailTextLabel.textColor = indexPath.section == kIncomesSection ? [IAEColorHelper colorForEconomicIncomeValue] : [IAEColorHelper colorForEconomicExpenseValue];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.accessoryType = [self isSelectedCellInTableView:tableView forRowAtIndexPath:indexPath] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
     

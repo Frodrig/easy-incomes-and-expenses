@@ -1670,18 +1670,8 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
                                   underLocatonOfTapGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
 {
     CGPoint location = [self convertLocationToCellArea:cell fromGestureRecognizer:gestureRecognizer];
-    if ([cell isFavoritePinContainingLocationPoint:location]) {
-        // ToDo: Refactorizar
-        if ([self.calculatorViewController isOpen]) {
-            [cell changeStateOfFavoritePin];
-            IAEConcept *conceptOfCell = [self findConceptOfCell:cell];
-            if ([cell isFavoritePinEnabled]) {
-                [[IAEFavoriteConceptsStock sharedInstance] addFavorite:conceptOfCell];
-            } else {
-                [[IAEFavoriteConceptsStock sharedInstance] removeFavoriteOfConcept:conceptOfCell];
-            }
-            [[IAEFavoriteConceptsStock sharedInstance] save];
-        }
+    if ([cell isFavoritePinContainingLocationPoint:location] && [self isFavoritePintInteractionEnabledInConcepts]) {
+        [self executeLogicAfterFavoritePinTapForCell:cell];
     } else if ([cell isAmountLabelContainingLocationPoint:location]) {
         [self openPopoverForAdjustAmountOfConceptCell:cell];
     } else if ([cell isCategoryNameOrTypeContainingLocationPoint:location]) {
@@ -1689,6 +1679,23 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     } else if ([cell isIdentifierOrDayContainingLocationPoint:location] && [self isDayModeActiveForConcepts]) {
         [self openPopoverForSelectDayOfConceptCell:cell];
     }
+}
+
+- (BOOL)isFavoritePintInteractionEnabledInConcepts
+{
+    return [self.calculatorViewController isOpen];
+}
+
+- (void)executeLogicAfterFavoritePinTapForCell:(IAEEditModeConceptCollectionViewCell *)cell
+{
+    [cell changeStateOfFavoritePin];
+    IAEConcept *conceptOfCell = [self findConceptOfCell:cell];
+    if ([cell isFavoritePinEnabled]) {
+        [[IAEFavoriteConceptsStock sharedInstance] addFavorite:conceptOfCell];
+    } else {
+        [[IAEFavoriteConceptsStock sharedInstance] removeFavoriteOfConcept:conceptOfCell];
+    }
+    [[IAEFavoriteConceptsStock sharedInstance] save];
 }
 
 - (CGPoint)convertLocationToCellArea:(UICollectionViewCell *)cell fromGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
@@ -2281,12 +2288,10 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (void)calculatorViewController:(IAECalculatorViewController *)calculatorViewController didCreateNewConcepts:(NSArray *)concepts
 {
-    // TODO: Favorites
     [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES andExecuteAfterAnimationTheLogicBlock:^{
         [self.conceptsCollectionView reloadData];
         [self updateBalancesWithAnimation:NO];
     }];
-
 }
 
 - (void)calculatorViewController:(IAECalculatorViewController *)calculatorViewController didCreateNewConcept:(IAEConcept *)concept

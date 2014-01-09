@@ -12,6 +12,9 @@
 #import "IAECategory.h"
 #import "IAEFavoriteConceptsViewControllerDelegate.h"
 #import "IAEStrokeAnimatableLineView.h"
+#import "IAEFavoriteConceptsTableHeader.h"
+#import "UIView+LoadFromXib.h"
+#import "IAEValueDecoratorView.h"
 
 static const NSUInteger kNumberOfSections = 2;
 static const NSUInteger kIncomesSection = 0;
@@ -21,6 +24,8 @@ static const CGFloat kDurationStrokeAnimation = 0.25;
 static const CGFloat kColorWhiteComponentForStrokeAnimation = 0.8;
 static const CGFloat kColorWhiteAlphaComponentForStrokeAnimation = 1.0;
 static const NSUInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
+
+static const CGFloat kHeaderViewHeight = 54.0;
 
 @interface IAEFavoriteConceptsViewController ()
 
@@ -255,11 +260,23 @@ static const NSUInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
     self.navItem.rightBarButtonItem.enabled = rowsSelected;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    NSString *title = section == kIncomesSection ? NSLocalizedString(@"LTEXT_CATEGORYTYPEINCOME_NAME", @"") : NSLocalizedString(@"LTEXT_CATEGORYTYPEEXPENSE_NAME", @"");
+    IAEFavoriteConceptsTableHeader *header = (IAEFavoriteConceptsTableHeader *)[UIView viewFromXib:@"IAEFavoriteConceptsTableHeader" withOwner:self];
+    if (section == kIncomesSection) {
+        header.title = NSLocalizedString(@"LTEXT_CATEGORYTYPEINCOME_NAME", @"");
+        header.decoratorValueType = ECONOMIC_INCOME_VALUE;
+    } else if (section == kExpenseSection) {
+        header.title = NSLocalizedString(@"LTEXT_CATEGORYTYPEEXPENSE_NAME", @"");
+        header.decoratorValueType = ECONOMIC_EXPENSE_VALUE;
+    }
     
-    return title;
+    return header;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return kHeaderViewHeight;
 }
 
 #pragma mark - NavigationItem Events

@@ -18,6 +18,9 @@
 #import "IAEColorHelper.h"
 #import "IAENumberFormatterManager.h"
 
+static NSString * const kCategoryKey = @"category";
+static NSString * const kValueKey = @"value";
+
 static const NSUInteger kNumberOfSections = 2;
 static const NSUInteger kIncomesSection = 0;
 static const NSUInteger kExpenseSection = 1;
@@ -44,23 +47,6 @@ static const CGFloat kHeaderViewHeight = 54.0;
 
 @implementation IAEFavoriteConceptsViewController
 
-#pragma mark - Properties
-
-- (IAEStrokeAnimatableLineView *)strokeAnimatableLineView
-{
-    // ToDo: Refactor
-    if (!_strokeAnimatableLineView) {
-        _strokeAnimatableLineView = [[IAEStrokeAnimatableLineView alloc] init];
-        _strokeAnimatableLineView.durationOfStrokeAnimation = kDurationStrokeAnimation;
-        _strokeAnimatableLineView.strokeColor = [UIColor colorWithWhite:kColorWhiteComponentForStrokeAnimation
-                                                                  alpha:kColorWhiteAlphaComponentForStrokeAnimation];
-        _strokeAnimatableLineView.strokeType = kTypeStrokeAnimation;
-        _strokeAnimatableLineView.delegate = self;
-    }
-    
-    return _strokeAnimatableLineView;
-}
-
 #pragma mark - Init
 
 - (instancetype)initWithOptions:(NSUInteger)options
@@ -70,12 +56,23 @@ static const CGFloat kHeaderViewHeight = 54.0;
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         _initOptions = options;
-        // ToDo: Refactor
+
+        [self initStrokeAnimatableView];
         [self createFavoriteConcepts];
         [self sortFavoriteConcepts];
     }
-    return self;
 
+    return self;
+}
+
+- (void)initStrokeAnimatableView
+{
+    _strokeAnimatableLineView = [[IAEStrokeAnimatableLineView alloc] init];
+    _strokeAnimatableLineView.durationOfStrokeAnimation = kDurationStrokeAnimation;
+    _strokeAnimatableLineView.strokeColor = [UIColor colorWithWhite:kColorWhiteComponentForStrokeAnimation
+                                                              alpha:kColorWhiteAlphaComponentForStrokeAnimation];
+    _strokeAnimatableLineView.strokeType = kTypeStrokeAnimation;
+    _strokeAnimatableLineView.delegate = self;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -95,7 +92,7 @@ static const CGFloat kHeaderViewHeight = 54.0;
         CategoryType categoryType = [[IAECategoryStore sharedCategoryStore] findTypeOfCategoryTag:category];
         NSMutableArray *container = [self findFavoriteContainerOfType:categoryType];
         for (NSString *categoryValue in favorites[category]) {
-            [container addObject:@{@"category" : category, @"value" : categoryValue}];
+            [container addObject:@{kCategoryKey : category, kValueKey : categoryValue}];
         }
     }
 }
@@ -105,9 +102,9 @@ static const CGFloat kHeaderViewHeight = 54.0;
     NSComparisonResult (^sortBlock)(id obj1, id obj2) = ^(id obj1, id obj2) {
         NSDictionary *dicObj1 = obj1;
         NSDictionary *dicObj2 = obj2;
-        NSComparisonResult result = [dicObj1[@"category"] compare:dicObj2[@"category"]];
+        NSComparisonResult result = [dicObj1[kCategoryKey] compare:dicObj2[kCategoryKey]];
         if (result == NSOrderedSame) {
-            result = [dicObj1[@"value"] compare:dicObj2[@"value"]];
+            result = [dicObj1[kValueKey] compare:dicObj2[kValueKey]];
         }
         
         return result;
@@ -127,12 +124,11 @@ static const CGFloat kHeaderViewHeight = 54.0;
 {
     [super viewDidLoad];
         
-    [self configureWithOptions];
+    [self configureWithOptionsPassed];
     [self configureTableView];
-    
 }
 
-- (void)configureWithOptions
+- (void)configureWithOptionsPassed
 {
     if ([self isAddOptionEnabled]) {
         [self enableAddOption];
@@ -158,7 +154,7 @@ static const CGFloat kHeaderViewHeight = 54.0;
 - (void)enableAddOption
 {
     NSAssert(self.navItem, @"");
-    NSLog(@"%@", self.navItem.title);
+
     self.navItem.rightBarButtonItem = [[UIBarButtonItem alloc]  initWithTitle:NSLocalizedString(@"LTEXT_CALCULATOR_BUTTON_ADD", @"")
                                                                         style:UIBarButtonItemStylePlain
                                                                        target:self
@@ -178,12 +174,6 @@ static const CGFloat kHeaderViewHeight = 54.0;
     self.tableView.allowsMultipleSelection = YES;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - TableView DataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -201,23 +191,63 @@ static const CGFloat kHeaderViewHeight = 54.0;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"tableViewCell"];
-    CategoryType categoryTypeOfIndexPath = [self findCategoryTypeOfIndexPath:indexPath];
-    NSArray *favoriteContainer = [self findFavoriteContainerOfType:categoryTypeOfIndexPath];
+    NSDictionary *favoriteItem = [self findFavoriteItemAtIndexPath:indexPath];
+    [self configureCell:cell inTableView:tableView atIndexPath:indexPath withFavoriteItem:favoriteItem];
+    
+    return cell;
+}
+
+- (NSDictionary *)findFavoriteItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray *favoriteContainer = [self findFavoriteContainerAtIndexPath:indexPath];
     NSDictionary *favoriteItem = favoriteContainer[indexPath.row];
+
+    return favoriteItem;
+}
+
+- (NSMutableArray *)findFavoriteContainerAtIndexPath:(NSIndexPath *)indexPath
+{
+    CategoryType categoryTypeOfIndexPath = [self findCategoryTypeOfIndexPath:indexPath];
+    NSMutableArray *favoriteContainer = [self findFavoriteContainerOfType:categoryTypeOfIndexPath];
+    
+    return favoriteContainer;
+}
+
+- (void)configureCell:(UITableViewCell *)cell inTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath withFavoriteItem:(NSDictionary *)favoriteItem
+{
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.accessoryType = [self accesoryTypeOfTableView:tableView forIndexPath:indexPath];
+
     cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:21];
-    cell.textLabel.text = favoriteItem[@"category"];
-    NSDecimalNumber *valueNumber = [NSDecimalNumber decimalNumberWithString:favoriteItem[@"value"]];
-    if (indexPath.section == kExpenseSection) {
+    cell.textLabel.text = favoriteItem[kCategoryKey];
+    
+    cell.detailTextLabel.text = [self convertToEconomicStringValueItem:favoriteItem[kValueKey] ofType:[self economicValueTypeInTableView:tableView forIndexPath:indexPath]];
+    cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:18];
+    cell.detailTextLabel.textColor = indexPath.section == kIncomesSection ? [IAEColorHelper colorForEconomicIncomeValue] : [IAEColorHelper colorForEconomicExpenseValue];
+}
+
+- (NSString *)convertToEconomicStringValueItem:(NSString *)value ofType:(EconomicValueType)type
+{
+    NSDecimalNumber *valueNumber = [NSDecimalNumber decimalNumberWithString:value];
+    if (type == ECONOMIC_EXPENSE_VALUE) {
         NSDecimalNumber *minusOne = [NSDecimalNumber decimalNumberWithString:@"-1"];
         valueNumber = [valueNumber decimalNumberByMultiplyingBy:minusOne];
     }
-    cell.detailTextLabel.text = [[IAENumberFormatterManager sharedManager].currencyFormatter stringFromNumber:valueNumber];
-    cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:18];
-    cell.detailTextLabel.textColor = indexPath.section == kIncomesSection ? [IAEColorHelper colorForEconomicIncomeValue] : [IAEColorHelper colorForEconomicExpenseValue];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.accessoryType = [self isSelectedCellInTableView:tableView forRowAtIndexPath:indexPath] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
     
-    return cell;
+    NSString *valueNumberString = [[IAENumberFormatterManager sharedManager].currencyFormatter stringFromNumber:valueNumber];
+    return valueNumberString;
+}
+
+- (EconomicValueType)economicValueTypeInTableView:(UITableView *)tableView forIndexPath:(NSIndexPath *)indexPath
+{
+    return indexPath.section == kIncomesSection ? ECONOMIC_INCOME_VALUE : ECONOMIC_EXPENSE_VALUE;
+}
+
+- (UITableViewCellAccessoryType)accesoryTypeOfTableView:(UITableView *)tableView forIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCellAccessoryType accesoryType = [self isSelectedCellInTableView:tableView forRowAtIndexPath:indexPath] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+    
+    return accesoryType;
 }
 
 - (BOOL)isSelectedCellInTableView:(UITableView *)tableView forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -320,7 +350,7 @@ static const CGFloat kHeaderViewHeight = 54.0;
     for (NSIndexPath *indexPath in selectedIndexPaths) {
         if (indexPath.section == sectionToCheck) {
             UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-            [conceptsFound addObject:@{@"category": cell.textLabel.text, @"value" : cell.detailTextLabel.text}];
+            [conceptsFound addObject:@{kCategoryKey: cell.textLabel.text, kValueKey : cell.detailTextLabel.text}];
         }
     }
     
@@ -342,12 +372,13 @@ static const CGFloat kHeaderViewHeight = 54.0;
 - (void)strokeAnimatableView:(IAEStrokeAnimatableLineView *)strokeAnimatableView didStrokeOverTheView:(UIView *)view;
 {
     // Remove
-    NSMutableArray *favoriteConceptContainer = self.strokedCellIndexPath.section == kIncomesSection ? self.favoriteIncomes : self.favoriteExpenses;
+    NSMutableArray *favoriteConceptContainer = [self findFavoriteContainerAtIndexPath:self.strokedCellIndexPath];
     NSDictionary *favoriteItem = [favoriteConceptContainer objectAtIndex:self.strokedCellIndexPath.row];
-    [self.delegate favoriteConceptsViewController:self willRemoveFavoriteWithCategory:favoriteItem[@"category"] andValue:favoriteItem[@"value"]];
-    [[IAEFavoriteConceptsStock sharedInstance] removeAndSaveFavoriteWithCategory:favoriteItem[@"category"] andValue:favoriteItem[@"value"]];
+    
+    [self.delegate favoriteConceptsViewController:self willRemoveFavoriteWithCategory:favoriteItem[kCategoryKey] andValue:favoriteItem[kValueKey]];
+    [[IAEFavoriteConceptsStock sharedInstance] removeAndSaveFavoriteWithCategory:favoriteItem[kCategoryKey] andValue:favoriteItem[kValueKey]];
     [favoriteConceptContainer removeObjectAtIndex:self.strokedCellIndexPath.row];
-    [self.delegate favoriteConceptsViewController:self didRemoveFavoriteWithCategory:favoriteItem[@"category"] andValue:favoriteItem[@"value"]];
+    [self.delegate favoriteConceptsViewController:self didRemoveFavoriteWithCategory:favoriteItem[kCategoryKey] andValue:favoriteItem[kValueKey]];
 
     [self.tableView deleteRowsAtIndexPaths:@[self.strokedCellIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     self.strokedCellIndexPath = nil;

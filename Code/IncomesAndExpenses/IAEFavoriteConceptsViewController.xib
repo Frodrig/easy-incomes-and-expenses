@@ -20,7 +20,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="460" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <items>
-                        <navigationItem title="Favorites" id="OiL-hG-JLn">
+                        <navigationItem id="OiL-hG-JLn">
                             <barButtonItem key="leftBarButtonItem" style="done" systemItem="done" id="DeA-VR-7TM">
                                 <connections>
                                     <action selector="doneButtonPressed:" destination="-1" id="cq3-Bn-n9h"/>

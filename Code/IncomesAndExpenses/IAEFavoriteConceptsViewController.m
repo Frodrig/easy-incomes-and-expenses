@@ -123,9 +123,15 @@ static const CGFloat kHeaderViewHeight = 54.0;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-        
+    
+    [self configureNavigationBar];
     [self configureWithOptionsPassed];
     [self configureTableView];
+}
+
+- (void)configureNavigationBar
+{
+    self.navItem.title = NSLocalizedString(@"LTEXT_FAVORITE_NAVIGATIONITEM_TITLE", @"");
 }
 
 - (void)configureWithOptionsPassed

@@ -31,7 +31,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" id="nMm-CI-Dve">
-                                <rect key="frame" x="-20" y="-13" width="435" height="116"/>
+                                <rect key="frame" x="-20" y="-13" width="415" height="116"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label adsfk aslfk kasdfjklj asldj lkadf klads flkjasdljasdf" lineBreakMode="clip" numberOfLines="2" minimumScaleFactor="0.5" id="FwU-Ko-eR6">
@@ -52,16 +52,17 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="869-pin.png" id="P3u-Jy-SE5">
-                        <rect key="frame" x="0.0" y="10" width="40" height="90"/>
+                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="869-pin.png" id="P3u-Jy-SE5">
+                        <rect key="frame" x="0.0" y="10" width="20" height="90"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
-            <color key="backgroundColor" red="0.96470588235294119" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="deviceRGB"/>
+            <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="deviceRGB"/>
             <connections>
                 <outlet property="amountLabel" destination="HqS-Bo-sDV" id="0eP-4g-Hm4"/>
+                <outlet property="categoryAndDecoratorContentInformationView" destination="nMm-CI-Dve" id="tvi-hY-Doc"/>
                 <outlet property="categoryLabel" destination="FwU-Ko-eR6" id="Hh5-4l-DIc"/>
                 <outlet property="conceptInformationContainerView" destination="XdT-BY-TUN" id="6wF-SQ-rdo"/>
                 <outlet property="favoritePinImage" destination="P3u-Jy-SE5" id="hja-Gx-7mV"/>

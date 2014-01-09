@@ -14,6 +14,7 @@
 
 @interface IAEEditModeConceptCollectionViewCell()
 
+@property (weak, nonatomic) IBOutlet UIView *categoryAndDecoratorContentInformationView;
 @property (weak, nonatomic) IBOutlet UILabel *amountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
 @property (nonatomic, readwrite, getter = isInStrokeState) BOOL strokeState;
@@ -144,17 +145,20 @@ static const CGFloat kCallForAttentionRationAlphaColor = 0.3;
 
 - (BOOL)isAmountLabelContainingLocationPoint:(CGPoint)location
 {
-    return CGRectContainsPoint(self.amountLabel.frame, location);
+    CGRect test = [self convertRect:self.amountLabel.frame fromView:self.conceptInformationContainerView];
+    return CGRectContainsPoint(test, location);
 }
 
 - (BOOL)isCategoryNameOrTypeContainingLocationPoint:(CGPoint)location
 {
-    return CGRectContainsPoint(self.categoryLabel.frame, location);
+    CGRect test = [self convertRect:self.categoryLabel.frame fromView:self.categoryAndDecoratorContentInformationView];
+    return CGRectContainsPoint(test, location);
 }
 
 - (BOOL)isIdentifierOrDayContainingLocationPoint:(CGPoint)location
 {
-    return CGRectContainsPoint(self.identifierContainerView.frame, location);
+    CGRect test = [self convertRect:self.identifierContainerView.frame fromView:self.conceptInformationContainerView];
+    return CGRectContainsPoint(test, location);
 }
 
 // Esto va en otra clase como, por ejemplo, un configurador

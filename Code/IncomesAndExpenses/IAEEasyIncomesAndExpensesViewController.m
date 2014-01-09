@@ -81,6 +81,7 @@
 @property (nonatomic, strong) UIView *withoutConceptsWarningInMonthReportModeView;
 @property (nonatomic, strong) UIPopoverController *popover;
 @property (nonatomic, strong) UITapGestureRecognizer *tapConceptsRecognizer;
+@property (nonatomic, strong) UITapGestureRecognizer *tapEditAndReportModeContainerViewRecognizer;
 @property (nonatomic, strong) UISwipeGestureRecognizer *swipeConceptsGestureRecognizer;
 @property (nonatomic, strong) UIPanGestureRecognizer *panCalculatorGestureRecognizer;
 @property (nonatomic, strong) IAEStrokeAnimatableLineView *strokeAnimatableLineView;
@@ -221,6 +222,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     [self.calculatorViewController removePanGestureRecognizer];
     [self.conceptsCollectionView removeGestureRecognizer:self.tapConceptsRecognizer];
     [self.conceptsCollectionView removeGestureRecognizer:self.swipeConceptsGestureRecognizer];
+    [self.editAndReportModeContentContainerView removeGestureRecognizer:self.tapEditAndReportModeContainerViewRecognizer];
 }
 
 #pragma mark - Init
@@ -254,6 +256,11 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 {
     _tapConceptsRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnConceptsCollectionView:)];
     _tapConceptsRecognizer.numberOfTapsRequired = 1;
+    
+    // TODO
+    
+    _tapEditAndReportModeContainerViewRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnConceptsCollectionView:)];
+    _tapEditAndReportModeContainerViewRecognizer.numberOfTapsRequired = 1;
 }
 
 - (void)initSwipeConceptsGestureRecognizer
@@ -339,6 +346,9 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     [self configureConceptsViews];
     [self configureReportAreaView];
     [self configureReportMenuView];
+    
+    // ToDo
+    [self.editAndReportModeContentContainerView addGestureRecognizer:self.tapEditAndReportModeContainerViewRecognizer];
 }
 
 - (void)configureNavigationBar
@@ -1596,7 +1606,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (void)tapOnConceptsCollectionView:(UITapGestureRecognizer *)tapGestureRecognizer
 {
-    NSAssert(tapGestureRecognizer == self.tapConceptsRecognizer, @"");
+    NSAssert(tapGestureRecognizer == self.tapConceptsRecognizer || tapGestureRecognizer == self.tapEditAndReportModeContainerViewRecognizer, @"");
     if ([self canTapOnConceptsCollectionView]) {
         IAEEditModeConceptCollectionViewCell *cell = [self findConceptCellUnderLocationOfGestureRecognizer:tapGestureRecognizer];
         if ([self isActualSelectedContextAMonth] ) {
@@ -1622,11 +1632,26 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (IAEEditModeConceptCollectionViewCell *)findConceptCellUnderLocationOfGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
 {
-    CGPoint location = [gestureRecognizer locationInView:self.conceptsCollectionView];
+    CGPoint location = [self extractConceptCollectionViewLocationFromGestureRecognizer:gestureRecognizer];
     NSIndexPath *locationIndexPath = [self.conceptsCollectionView indexPathForItemAtPoint:location];
     IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:locationIndexPath];
     
     return cell;
+}
+
+- (CGPoint)extractConceptCollectionViewLocationFromGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+{
+    CGPoint location = CGPointZero;
+    if (gestureRecognizer == self.tapConceptsRecognizer) {
+        location = [gestureRecognizer locationInView:self.conceptsCollectionView];
+    } else if (gestureRecognizer == self.tapEditAndReportModeContainerViewRecognizer) {
+        location = [gestureRecognizer locationInView:self.editAndReportModeContentContainerView];
+        location = [self.conceptsCollectionView convertPoint:location fromView:self.editAndReportModeContentContainerView];
+        location = CGPointMake(MAX(0, location.x), location.y);
+        location = CGPointMake(MIN(location.x, self.conceptsCollectionView.frame.size.width), location.y);
+    }
+
+    return location;
 }
 
 - (void)executeActionInYearContextOnCellOfConceptCollectionView:(IAEEditModeConceptCollectionViewCell *)cell
@@ -1670,7 +1695,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
                                   underLocatonOfTapGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
 {
     CGPoint location = [self convertLocationToCellArea:cell fromGestureRecognizer:gestureRecognizer];
-    if ([cell isFavoritePinContainingLocationPoint:location] && [self isFavoritePintInteractionEnabledInConcepts]) {
+    if ([cell isFavoritePinContainingLocationPoint:location] && [self isFavoritePinInteractionEnabledInConcepts]) {
         [self executeLogicAfterFavoritePinTapForCell:cell];
     } else if ([cell isAmountLabelContainingLocationPoint:location]) {
         [self openPopoverForAdjustAmountOfConceptCell:cell];
@@ -1681,7 +1706,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     }
 }
 
-- (BOOL)isFavoritePintInteractionEnabledInConcepts
+- (BOOL)isFavoritePinInteractionEnabledInConcepts
 {
     return [self.calculatorViewController isOpen];
 }
@@ -1700,7 +1725,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (CGPoint)convertLocationToCellArea:(UICollectionViewCell *)cell fromGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
 {
-    CGPoint location = [gestureRecognizer locationInView:self.conceptsCollectionView];;
+    CGPoint location = [self extractConceptCollectionViewLocationFromGestureRecognizer:gestureRecognizer];
     CGPoint locationConvertedToCellArea = [cell convertPoint:location fromView:self.conceptsCollectionView];
 
     return locationConvertedToCellArea;

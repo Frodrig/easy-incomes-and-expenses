@@ -1713,14 +1713,18 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (void)executeLogicAfterFavoritePinTapForCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
-    [cell changeStateOfFavoritePin];
+    const BOOL willFavoritePinBeEnabled = !cell.favoritePinEnabled;
     IAEConcept *conceptOfCell = [self findConceptOfCell:cell];
-    if ([cell isFavoritePinEnabled]) {
+    if (willFavoritePinBeEnabled) {
         [[IAEFavoriteConceptsStock sharedInstance] addFavorite:conceptOfCell];
     } else {
         [[IAEFavoriteConceptsStock sharedInstance] removeFavoriteOfConcept:conceptOfCell];
     }
     [[IAEFavoriteConceptsStock sharedInstance] save];
+    
+    [self updateVisibleCollectionViewCellsEnabling:willFavoritePinBeEnabled
+                                      withCategory:[conceptOfCell.category localizedTag]
+                                          andValue:conceptOfCell.amount.stringValue];
 }
 
 - (CGPoint)convertLocationToCellArea:(UICollectionViewCell *)cell fromGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
@@ -2256,17 +2260,21 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (void)calculatorViewController:(IAECalculatorViewController *)calculatorViewController didRemoveFavoriteConceptWithCategory:(NSString *)category andValue:(NSString *)value
 {
-    [self updateVisibleCollectionViewCellsAfterRemoveFavoriteConceptWithCategory:category andValue:value];
+    [self updateVisibleCollectionViewCellsEnabling:NO withCategory:category andValue:value];
 }
 
-- (void)updateVisibleCollectionViewCellsAfterRemoveFavoriteConceptWithCategory:(NSString *)category andValue:(NSString *)value
+- (void)updateVisibleCollectionViewCellsEnabling:(BOOL)enabling withCategory:(NSString *)category andValue:(NSString *)value
 {
     NSArray *visibleCells = self.conceptsCollectionView.visibleCells;
     for (IAEEditModeConceptCollectionViewCell *cell in visibleCells) {
         NSIndexPath *indexPathForCell = [self.conceptsCollectionView indexPathForCell:cell];
         IAEConcept *conceptOfCell = [self findConceptAtIndexPath:indexPathForCell];
         if ([[conceptOfCell.category localizedTag] isEqualToString:category] && [[conceptOfCell.amount stringValue] isEqualToString:value]) {
-            [cell disableFavoritePin];
+            if (enabling) {
+                [cell enableFavoritePin];
+            } else {
+                [cell disableFavoritePin];
+            }
         }
     }
 }

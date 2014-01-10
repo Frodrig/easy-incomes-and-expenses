@@ -403,7 +403,7 @@
                                     </connections>
                                 </button>
                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="869-pin.png" id="hul-D4-wbn">
-                                    <rect key="frame" x="718" y="113" width="44" height="44"/>
+                                    <rect key="frame" x="732" y="142" width="22" height="34"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
                             </subviews>

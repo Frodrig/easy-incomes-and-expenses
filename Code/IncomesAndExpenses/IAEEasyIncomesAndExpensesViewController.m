@@ -1642,7 +1642,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 - (CGPoint)extractConceptCollectionViewLocationFromGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
 {
     CGPoint location = CGPointZero;
-    if (gestureRecognizer == self.tapConceptsRecognizer) {
+    if (gestureRecognizer == self.tapConceptsRecognizer || gestureRecognizer == self.swipeConceptsGestureRecognizer) {
         location = [gestureRecognizer locationInView:self.conceptsCollectionView];
     } else if (gestureRecognizer == self.tapEditAndReportModeContainerViewRecognizer) {
         location = [gestureRecognizer locationInView:self.editAndReportModeContentContainerView];

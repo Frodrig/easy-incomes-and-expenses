@@ -1088,7 +1088,6 @@
 		5B5DBB3E17E1FA5400716503 /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				5BAEAE141876B5D200271B47 /* Favorite Concepts */,
 				5B32D659177C41170070AC72 /* Easy Incomes and Expenses */,
 				5B90782E179D1A8B00B2A0F7 /* Calculator */,
 				5B8CD5D617A2C6B400A353A5 /* Text Raw Selector Menu */,
@@ -1348,6 +1347,7 @@
 				5B6E9FA4177D9BAB0072EE34 /* Categories */,
 				5B767E231636E797005315F8 /* Model */,
 				5B32D651177C385A0070AC72 /* View, Controllers & ViewControllers */,
+				5BAEAE141876B5D200271B47 /* Favorite Concepts */,
 				5B62D860178EC1EB009879A6 /* Story Boards */,
 				5B767DFD1636D7FC005315F8 /* Supporting Files */,
 				5B767E051636D7FC005315F8 /* IAEAppDelegate.h */,

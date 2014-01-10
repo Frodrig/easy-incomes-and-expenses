@@ -2451,7 +2451,7 @@ didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
          didRemoveFavoriteWithCategory:(NSString *)category
                               andValue:(NSString *)value
 {
-    // ...
+    [self updateVisibleCollectionViewCellsEnabling:NO withCategory:category andValue:value];
 }
 
 - (void)doneButtonWasPressedInfavoriteConceptsViewController:(IAEFavoriteConceptsViewController *)favoriteConceptsViewController;

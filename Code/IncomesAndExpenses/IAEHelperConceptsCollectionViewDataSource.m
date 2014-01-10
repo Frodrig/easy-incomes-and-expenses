@@ -167,15 +167,16 @@ static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
 
 - (void)configureFavoritePinOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell withConcept:(IAEConcept *)concept
 {
+    const BOOL isAFavoriteConcept = [[IAEFavoriteConceptsStock sharedInstance] isMarkedAsFavorite:concept];
+    if (isAFavoriteConcept) {
+        [cell enableFavoritePin];
+    } else {
+        [cell disableFavoritePin];
+    }
+
     const BOOL editModeActive = [self.iaeViewControllerQuery isEditModeActive] && [self.iaeViewControllerQuery isCalculatorOpen];
     if (editModeActive) {
         [cell showFavoritePin];
-        const BOOL isAFavoriteConcept = [[IAEFavoriteConceptsStock sharedInstance] isMarkedAsFavorite:concept];
-        if (isAFavoriteConcept) {
-            [cell enableFavoritePin];
-        } else {
-            [cell disableFavoritePin];
-        }
     } else {
         [cell hideFavoritePin];
     }

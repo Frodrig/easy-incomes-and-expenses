@@ -508,16 +508,14 @@ static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
 
 - (void)enableFavoritePin
 {
-    NSAssert(!self.favoritePinImage.hidden, @"");
     self.favoritePinEnabled = YES;
-    self.favoritePinImage.alpha = 1.0;
+    self.favoritePinImage.alpha = self.alpha > 0 ? kEnableAlphaValueForFavoritePin : self.alpha;
 }
 
 - (void)disableFavoritePin
 {
-    NSAssert(!self.favoritePinImage.hidden, @"");
     self.favoritePinEnabled = NO;
-    self.favoritePinImage.alpha = kDisableAlphaValueForFavoritePin;
+    self.favoritePinImage.alpha = self.alpha > 0 ? kDisableAlphaValueForFavoritePin : self.alpha;
 }
 
 - (void)changeStateOfFavoritePin

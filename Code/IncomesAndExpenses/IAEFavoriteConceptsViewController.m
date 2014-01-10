@@ -32,6 +32,13 @@ static const NSUInteger kTypeStrokeAnimation = STROKEANIMATABLE_TYPE_THIN;
 
 static const CGFloat kHeaderViewHeight = 54.0;
 
+static NSString * const kAdviceNoFavoriteFontFamily = @"HelveticaNeue-Italic";
+static const CGFloat kAdviceNoFavoriteFontSize = 18;
+static NSString * const kCategoryFavoriteFontFamily = @"HelveticaNeue-Thin";
+static const CGFloat kCategoryFavoriteFontSize = 21;
+static NSString * const kValueFavoriteFontFamily = @"HelveticaNeue";
+static const CGFloat kValueFavoriteFontSize = 18;
+
 @interface IAEFavoriteConceptsViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -191,16 +198,32 @@ static const CGFloat kHeaderViewHeight = 54.0;
 {
     const NSInteger numberOfRows = section == kIncomesSection ? self.favoriteIncomes.count : self.favoriteExpenses.count;
     
-    return numberOfRows;
+    return MAX(numberOfRows, 1);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"tableViewCell"];
-    NSDictionary *favoriteItem = [self findFavoriteItemAtIndexPath:indexPath];
-    [self configureCell:cell inTableView:tableView atIndexPath:indexPath withFavoriteItem:favoriteItem];
+    UITableViewCell *cell = nil;
+    if ([self isNoFavoritePinsAtIndexPath:indexPath]) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"tableViewAdviceCell"];
+        [self configureAdviceNoFavoriteConceptCell:cell inTableView:tableView atIndexPath:indexPath];
+    } else {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"tableViewCell"];
+        NSDictionary *favoriteItem = [self findFavoriteItemAtIndexPath:indexPath];
+        [self configureFavoriteConceptCell:cell inTableView:tableView atIndexPath:indexPath withFavoriteItem:favoriteItem];
+    }
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
+}
+
+- (BOOL)isNoFavoritePinsAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray *favoriteContainer = [self findFavoriteContainerAtIndexPath:indexPath];
+    const BOOL noFavoritePins = favoriteContainer.count == 0;
+
+    return noFavoritePins;
 }
 
 - (NSDictionary *)findFavoriteItemAtIndexPath:(NSIndexPath *)indexPath
@@ -219,16 +242,21 @@ static const CGFloat kHeaderViewHeight = 54.0;
     return favoriteContainer;
 }
 
-- (void)configureCell:(UITableViewCell *)cell inTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath withFavoriteItem:(NSDictionary *)favoriteItem
+- (void)configureAdviceNoFavoriteConceptCell:(UITableViewCell *)cell inTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath
 {
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.textLabel.font = [UIFont fontWithName:kAdviceNoFavoriteFontFamily size:kAdviceNoFavoriteFontSize];
+    cell.textLabel.text = NSLocalizedString(@"LTEXT_FAVORITE_NOFAVORITESADVICE", @"");
+}
+
+- (void)configureFavoriteConceptCell:(UITableViewCell *)cell inTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath withFavoriteItem:(NSDictionary *)favoriteItem
+{
     cell.accessoryType = [self accesoryTypeOfTableView:tableView forIndexPath:indexPath];
 
-    cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:21];
+    cell.textLabel.font = [UIFont fontWithName:kCategoryFavoriteFontFamily size:kCategoryFavoriteFontSize];
     cell.textLabel.text = favoriteItem[kCategoryKey];
     
     cell.detailTextLabel.text = [self convertToEconomicStringValueItem:favoriteItem[kValueKey] ofType:[self economicValueTypeInTableView:tableView forIndexPath:indexPath]];
-    cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:18];
+    cell.detailTextLabel.font = [UIFont fontWithName:kValueFavoriteFontFamily size:kValueFavoriteFontSize];
     cell.detailTextLabel.textColor = indexPath.section == kIncomesSection ? [IAEColorHelper colorForEconomicIncomeValue] : [IAEColorHelper colorForEconomicExpenseValue];
 }
 
@@ -280,16 +308,23 @@ static const CGFloat kHeaderViewHeight = 54.0;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self isAddOptionEnabled]) {
+    if ([self checkForSelectAndDeselectEventsAtIndexPath:indexPath]) {
         [self tableView:tableView setCellSelected:YES forRowAtIndexPath:indexPath];
     }
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self isAddOptionEnabled]) {
+    if ([self checkForSelectAndDeselectEventsAtIndexPath:indexPath]) {
         [self tableView:tableView setCellSelected:NO forRowAtIndexPath:indexPath];
     }
+}
+
+- (BOOL)checkForSelectAndDeselectEventsAtIndexPath:(NSIndexPath *)indexPath
+{
+    const BOOL check = [self isNoFavoritePinsAtIndexPath:indexPath] && [self isAddOptionEnabled];
+    
+    return check;
 }
 
 - (void)tableView:(UITableView *)tableView setCellSelected:(BOOL)selected forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -386,7 +421,13 @@ static const CGFloat kHeaderViewHeight = 54.0;
     [favoriteConceptContainer removeObjectAtIndex:self.strokedCellIndexPath.row];
     [self.delegate favoriteConceptsViewController:self didRemoveFavoriteWithCategory:favoriteItem[kCategoryKey] andValue:favoriteItem[kValueKey]];
 
+    [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:@[self.strokedCellIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    if (favoriteConceptContainer.count == 0) {
+        [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:self.strokedCellIndexPath.section]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+    [self.tableView endUpdates];
+    
     self.strokedCellIndexPath = nil;
     [self.strokeAnimatableLineView resetStroke];
 }

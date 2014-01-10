@@ -39,6 +39,10 @@ static const CGFloat kCategoryFavoriteFontSize = 21;
 static NSString * const kValueFavoriteFontFamily = @"HelveticaNeue";
 static const CGFloat kValueFavoriteFontSize = 18;
 
+static const CGFloat kDelayToExecuteRemoveFavoriteCell = 0.1;
+
+static const CGFloat kAlphaForCellStroked = 0.2;
+
 @interface IAEFavoriteConceptsViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -214,6 +218,7 @@ static const CGFloat kValueFavoriteFontSize = 18;
     }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.alpha = 1.0;
     
     return cell;
 }
@@ -405,6 +410,9 @@ static const CGFloat kValueFavoriteFontSize = 18;
     CGPoint location = [gesture locationInView:self.tableView];
     self.strokedCellIndexPath = [self.tableView indexPathForRowAtPoint:location];
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:self.strokedCellIndexPath];
+    [UIView animateWithDuration:self.strokeAnimatableLineView.durationOfStrokeAnimation animations:^{
+        cell.alpha = kAlphaForCellStroked;
+    }];
     [self.strokeAnimatableLineView doStrokeOverTheView:cell];
 }
 
@@ -412,7 +420,11 @@ static const CGFloat kValueFavoriteFontSize = 18;
 
 - (void)strokeAnimatableView:(IAEStrokeAnimatableLineView *)strokeAnimatableView didStrokeOverTheView:(UIView *)view;
 {
-    // Remove
+    [self performSelector:@selector(doRemoveFavoriteCell) withObject:nil afterDelay:kDelayToExecuteRemoveFavoriteCell];
+}
+
+- (void)doRemoveFavoriteCell
+{
     NSMutableArray *favoriteConceptContainer = [self findFavoriteContainerAtIndexPath:self.strokedCellIndexPath];
     NSDictionary *favoriteItem = [favoriteConceptContainer objectAtIndex:self.strokedCellIndexPath.row];
     
@@ -420,7 +432,7 @@ static const CGFloat kValueFavoriteFontSize = 18;
     [[IAEFavoriteConceptsStock sharedInstance] removeAndSaveFavoriteWithCategory:favoriteItem[kCategoryKey] andValue:favoriteItem[kValueKey]];
     [favoriteConceptContainer removeObjectAtIndex:self.strokedCellIndexPath.row];
     [self.delegate favoriteConceptsViewController:self didRemoveFavoriteWithCategory:favoriteItem[kCategoryKey] andValue:favoriteItem[kValueKey]];
-
+    
     [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:@[self.strokedCellIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     if (favoriteConceptContainer.count == 0) {

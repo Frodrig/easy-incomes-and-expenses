@@ -313,21 +313,21 @@ static const CGFloat kAlphaForCellStroked = 0.2;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self checkForSelectAndDeselectEventsAtIndexPath:indexPath]) {
+    if ([self isActiveCheckForSelectAndDeselectEventsAtIndexPath:indexPath]) {
         [self tableView:tableView setCellSelected:YES forRowAtIndexPath:indexPath];
     }
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self checkForSelectAndDeselectEventsAtIndexPath:indexPath]) {
+    if ([self isActiveCheckForSelectAndDeselectEventsAtIndexPath:indexPath]) {
         [self tableView:tableView setCellSelected:NO forRowAtIndexPath:indexPath];
     }
 }
 
-- (BOOL)checkForSelectAndDeselectEventsAtIndexPath:(NSIndexPath *)indexPath
+- (BOOL)isActiveCheckForSelectAndDeselectEventsAtIndexPath:(NSIndexPath *)indexPath
 {
-    const BOOL check = [self isNoFavoritePinsAtIndexPath:indexPath] && [self isAddOptionEnabled];
+    const BOOL check = ![self isNoFavoritePinsAtIndexPath:indexPath] && [self isAddOptionEnabled];
     
     return check;
 }

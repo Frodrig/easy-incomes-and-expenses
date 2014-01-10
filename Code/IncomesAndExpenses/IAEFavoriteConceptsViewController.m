@@ -395,8 +395,9 @@ static const CGFloat kAlphaForCellStroked = 0.2;
     NSArray *selectedIndexPaths = [self.tableView indexPathsForSelectedRows];
     for (NSIndexPath *indexPath in selectedIndexPaths) {
         if (indexPath.section == sectionToCheck) {
-            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-            [conceptsFound addObject:@{kCategoryKey: cell.textLabel.text, kValueKey : cell.detailTextLabel.text}];
+            NSDictionary *item = [self findFavoriteItemAtIndexPath:indexPath];
+            [conceptsFound addObject:@{kCategoryKey: item[kCategoryKey],
+                                       kValueKey : item[kValueKey]}];
         }
     }
     

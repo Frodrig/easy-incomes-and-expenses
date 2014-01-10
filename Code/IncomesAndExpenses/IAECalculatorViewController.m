@@ -89,6 +89,8 @@ static const NSUInteger kPopoverYOffsetForFavoriteConceptsViewController = 24;
 static NSString * const kCategoryKey = @"category";
 static NSString * const kValueKey = @"value";
 
+static const CGFloat kUpdateFavoritePinAnimationTime = 0.35;
+
 #pragma mark - Properties
 
 - (NSString *)actualAmount
@@ -513,7 +515,7 @@ static NSString * const kValueKey = @"value";
     BOOL canDelete = [self canDeleteOneValueInAmount];
     if (canDelete) {
         [self.actualAmount deleteCharactersInRange:NSMakeRange(self.actualAmount.length - 1, 1)];
-        [self updateFavoritePin];
+        [self updateFavoritePinWithAnimation:YES];
     }
     
     return canDelete;
@@ -567,7 +569,7 @@ static NSString * const kValueKey = @"value";
     if (canAppend) {
         NSString *decimalSeparator = [[IAECurrencyManager sharedManager] decimalSeparator];
         self.actualAmount = [NSMutableString stringWithFormat:@"%@%@", self.actualAmount, decimalSeparator];
-        [self updateFavoritePin];
+        [self updateFavoritePinWithAnimation:YES];
     }
     
     return canAppend;
@@ -658,7 +660,7 @@ static NSString * const kValueKey = @"value";
     if (canAppend) {
         NSString *stringValue = [[NSNumber numberWithUnsignedInteger:value] stringValue];
         self.actualAmount = [NSMutableString stringWithFormat:@"%@%@", self.actualAmount, stringValue];
-        [self updateFavoritePin];
+        [self updateFavoritePinWithAnimation:YES];
     }
     
     return canAppend;
@@ -840,7 +842,7 @@ static NSString * const kValueKey = @"value";
 {
     self.actualAmount = nil;
     [self configureDisplayPanelWithActualAmount];
-    [self updateFavoritePin];
+    [self updateFavoritePinWithAnimation:YES];
 }
 
 #pragma mark - UIPopoverControllerDelegate
@@ -1030,9 +1032,27 @@ static NSString * const kValueKey = @"value";
 
 #pragma mark - FavoritePinImage
 
-- (void)updateFavoritePin
+- (void)updateFavoritePinWithAnimation:(BOOL)animation;
 {
-    self.pinFavoriteImage.hidden = [self actualAmountWithData];
+    const BOOL showPin = ![self actualAmountWithData];
+    if (showPin == self.pinFavoriteImage.hidden) {
+        if (animation) {
+            [UIView animateWithDuration:kUpdateFavoritePinAnimationTime animations:^{
+                if (showPin) {
+                    self.pinFavoriteImage.hidden = NO;
+                    self.pinFavoriteImage.alpha = 0.0;
+                }
+                self.pinFavoriteImage.alpha = showPin ? 1.0 : 0.0;
+            } completion:^(BOOL finished) {
+                if (!showPin && finished) {
+                    self.pinFavoriteImage.hidden = YES;
+                    self.pinFavoriteImage.alpha = 0;
+                }
+            }];
+        } else {
+            self.pinFavoriteImage.hidden = showPin;
+        }
+    }
 }
 
 - (BOOL)isFavoritePinActive

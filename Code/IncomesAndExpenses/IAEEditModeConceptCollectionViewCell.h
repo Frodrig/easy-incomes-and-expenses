@@ -40,7 +40,7 @@ typedef NS_ENUM(NSUInteger, EditModeConceptElement) {
 - (void)setTagWithIndex:(NSUInteger)index;
 - (NSUInteger)extractIndexFromTag;
 
-- (void)hideFavoritePin;
+- (void)hideFavoritePinWithAnimation:(BOOL)animation;
 - (void)showFavoritePin;
 - (void)changeStateOfFavoritePin;
 - (void)enableFavoritePin;

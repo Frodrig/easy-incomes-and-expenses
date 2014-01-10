@@ -478,18 +478,23 @@ static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
 
 #pragma mark - Favorite Pin
 
-- (void)hideFavoritePin
+- (void)hideFavoritePinWithAnimation:(BOOL)animation
 {
     if (!self.favoritePinImage.hidden) {
-        [self.favoritePinImage.layer removeAllAnimations];
-        [UIView animateWithDuration:kHideShowFavoritePinTime animations:^{
-            self.favoritePinImage.alpha = 0.0;
-        } completion:^(BOOL finished) {
-            if (finished) {
-                self.favoritePinImage.alpha = 1.0;
-                self.favoritePinImage.hidden = YES;
-            }
-        }];
+        if (animation) {
+            
+            [self.favoritePinImage.layer removeAllAnimations];
+            [UIView animateWithDuration:kHideShowFavoritePinTime animations:^{
+                self.favoritePinImage.alpha = 0.0;
+            } completion:^(BOOL finished) {
+                if (finished) {
+                    self.favoritePinImage.alpha = 1.0;
+                    self.favoritePinImage.hidden = YES;
+                }
+            }];
+        } else {
+            self.favoritePinImage.hidden = YES;
+        }
     }
 }
 

@@ -178,7 +178,7 @@ static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
     if (editModeActive) {
         [cell showFavoritePin];
     } else {
-        [cell hideFavoritePin];
+        [cell hideFavoritePinWithAnimation:NO];
     }
 }
 

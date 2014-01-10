@@ -2299,7 +2299,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     self.attachBehaviorForContainerFX.anchorPoint = self.calculatorViewController.view.center;
     
     for (IAEEditModeConceptCollectionViewCell *cell in self.conceptsCollectionView.visibleCells) {
-        [cell hideFavoritePin];
+        [cell hideFavoritePinWithAnimation:YES];
     }
 }
 

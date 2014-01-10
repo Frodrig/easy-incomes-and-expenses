@@ -25,6 +25,7 @@ typedef NS_ENUM(NSUInteger, EditModeConceptElement) {
 @property (nonatomic) CGFloat durationOfStrokeStateTransition;
 @property (nonatomic, readonly, getter = isInStrokeState) BOOL strokeState;
 @property (nonatomic) BOOL drawSeparatorLine;
+@property (nonatomic) BOOL favoritePinEnabled;
 
 - (UILabel *)findCategoryLabel;
 - (UILabel *)findAmountLabel;
@@ -44,7 +45,6 @@ typedef NS_ENUM(NSUInteger, EditModeConceptElement) {
 - (void)changeStateOfFavoritePin;
 - (void)enableFavoritePin;
 - (void)disableFavoritePin;
-- (BOOL)isFavoritePinEnabled;
 
 - (BOOL)isFavoritePinContainingLocationPoint:(CGPoint)location;
 - (BOOL)isAmountLabelContainingLocationPoint:(CGPoint)location;

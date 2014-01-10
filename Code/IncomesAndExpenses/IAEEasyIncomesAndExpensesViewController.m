@@ -2285,8 +2285,9 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     
     self.attachBehaviorForContainerFX.anchorPoint = self.calculatorViewController.view.center;
     
-    // ToDo: Momento de mostrar calculadora eliminamos botones de favorito
-    [self.conceptsCollectionView reloadData];
+    for (IAEEditModeConceptCollectionViewCell *cell in self.conceptsCollectionView.visibleCells) {
+        [cell showFavoritePin];
+    }
 }
 
 - (void)hideButtonWasPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
@@ -2297,8 +2298,9 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     
     self.attachBehaviorForContainerFX.anchorPoint = self.calculatorViewController.view.center;
     
-    // ToDo: Momento de ocultar calculadora eliminamos botones de favorito
-    [self.conceptsCollectionView reloadData];
+    for (IAEEditModeConceptCollectionViewCell *cell in self.conceptsCollectionView.visibleCells) {
+        [cell hideFavoritePin];
+    }
 }
 
 - (void)updateFramePositionBeforeShowCalculatorForView:(UIView *)view

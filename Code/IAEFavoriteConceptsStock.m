@@ -59,7 +59,7 @@ static NSString * const kFavoriteConceptsFile = @"favorite_concepts.data";
 
 - (void)addFavorite:(IAEConcept *)concept
 {
-    NSAssert(![self isMarkedAsFavorite:concept], @"");
+    //NSAssert(![self isMarkedAsFavorite:concept], @"");
     if (![self isMarkedAsFavorite:concept]) {
         NSString *categoryTag = [concept.category localizedTag];
         NSMutableArray *valuesForCategory = [self.favorites valueForKey:categoryTag];

@@ -56,6 +56,10 @@ static const CGFloat kDurationOfCallForAttentionAnimationOut = 0.75;
 static const CGFloat kCallForAttentionRatioWhiteColor = 0.8;
 static const CGFloat kCallForAttentionRationAlphaColor = 0.3;
 
+static const CGFloat kHideShowFavoritePinTime = 0.75;
+static const CGFloat kDisableAlphaValueForFavoritePin = 0.3;
+static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
+
 #pragma mark - Properties
 
 - (void)setDrawSeparatorLine:(BOOL)drawSeparatorLine
@@ -73,6 +77,7 @@ static const CGFloat kCallForAttentionRationAlphaColor = 0.3;
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        _favoritePinEnabled = YES;
         self.durationOfStrokeStateTransition = kDefaultDurationOfStrokeStateModeTransition;
     }
     return self;
@@ -475,35 +480,51 @@ static const CGFloat kCallForAttentionRationAlphaColor = 0.3;
 
 - (void)hideFavoritePin
 {
-    self.favoritePinImage.hidden = YES;
+    if (!self.favoritePinImage.hidden) {
+        [self.favoritePinImage.layer removeAllAnimations];
+        [UIView animateWithDuration:kHideShowFavoritePinTime animations:^{
+            self.favoritePinImage.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            if (finished) {
+                self.favoritePinImage.alpha = 1.0;
+                self.favoritePinImage.hidden = YES;
+            }
+        }];
+    }
 }
 
 - (void)showFavoritePin
 {
-    self.favoritePinImage.hidden = NO;
+    if (self.favoritePinImage.hidden) {
+        [self.favoritePinImage.layer removeAllAnimations];
+        self.favoritePinImage.hidden = NO;
+        self.favoritePinImage.alpha = 0.0;
+        [UIView animateWithDuration:kHideShowFavoritePinTime animations:^{
+            self.favoritePinImage.alpha = self.favoritePinEnabled ? kEnableAlphaValueForFavoritePin : kDisableAlphaValueForFavoritePin;
+        } completion:^(BOOL finished) {
+        }];
+    }
 }
 
 - (void)enableFavoritePin
 {
     NSAssert(!self.favoritePinImage.hidden, @"");
+    self.favoritePinEnabled = YES;
     self.favoritePinImage.alpha = 1.0;
 }
 
 - (void)disableFavoritePin
 {
     NSAssert(!self.favoritePinImage.hidden, @"");
-    self.favoritePinImage.alpha = 0.3;
+    self.favoritePinEnabled = NO;
+    self.favoritePinImage.alpha = kDisableAlphaValueForFavoritePin;
 }
 
 - (void)changeStateOfFavoritePin
 {
     NSAssert(!self.favoritePinImage.hidden, @"");
-    self.favoritePinImage.alpha = self.favoritePinImage.alpha < 1.0 ? 1.0 : 0.3;
-}
-
-- (BOOL)isFavoritePinEnabled
-{
-    return self.favoritePinImage.alpha < 1.0 ? NO : YES;
+    self.favoritePinEnabled = !self.favoritePinEnabled;
+    self.favoritePinImage.alpha = self.favoritePinEnabled ? kEnableAlphaValueForFavoritePin : kDisableAlphaValueForFavoritePin;
 }
 
 @end

@@ -50,7 +50,8 @@ static NSString * const kIDOfCategoryTableViewCell = @"CategoryTableViewCell";
 static NSString * const kFontOfGeneralCategoryLabel = @"HelveticaNeue-Thin_Italic";
 static NSString * const kFontOfUserCategoryLabel = @"HelveticaNeue-Thin";
 static const CGFloat kSizeOfCategoryNameLabel = 28;
-static const CGFloat kHeightOfCategoriesWithoutNumberOfConceptsCell = 51;
+static const CGFloat kSmallSizeOfCategoryNameLabel = 21;
+static const CGFloat kHeightOfCategoriesWithoutNumberOfConceptsCell = 38;
 static const CGFloat kHeightOfCategoriesWithNumberOfConceptsCell = 78;
 
 static const CGFloat kDurationOfAnimationOfOpenDecoratorView = 0.1;
@@ -159,7 +160,7 @@ static const CGFloat kAlphaOfColorWhiteValueForAttractAttentionFadeIn = 0.3;
 
 - (UIFont *)createFontForCategoryNameWithGeneralCategory
 {
-    return [UIFont fontWithName:kFontOfGeneralCategoryLabel size:kSizeOfCategoryNameLabel];
+    return [UIFont fontWithName:kFontOfGeneralCategoryLabel size:self.showNumberOfConcepts ? kSizeOfCategoryNameLabel : kSmallSizeOfCategoryNameLabel];
 }
 
 - (NSDictionary *)createAttributeDictionaryForUserCategory
@@ -173,7 +174,7 @@ static const CGFloat kAlphaOfColorWhiteValueForAttractAttentionFadeIn = 0.3;
 
 - (UIFont *)createFontForCategoryNameWithUserCategory
 {
-    return [UIFont fontWithName:kFontOfUserCategoryLabel size:kSizeOfCategoryNameLabel];
+    return [UIFont fontWithName:kFontOfUserCategoryLabel size:self.showNumberOfConcepts ? kSizeOfCategoryNameLabel : kSmallSizeOfCategoryNameLabel];
 }
 
 - (void)dealloc

@@ -91,6 +91,8 @@ static NSString * const kValueKey = @"value";
 
 static const CGFloat kUpdateFavoritePinAnimationTime = 0.35;
 
+static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 75;
+
 #pragma mark - Properties
 
 - (NSString *)actualAmount
@@ -457,7 +459,8 @@ static const CGFloat kUpdateFavoritePinAnimationTime = 0.35;
 {
     NSUInteger categorySelectorOptions = CATEGORYSELECTOR_EXTRAACTION_CATEGORYSELECTION | CATEGORYSELECTOR_EXTRAACTION_ADD;
     IAECategorySelectorViewController *viewController = [[IAECategorySelectorViewController alloc] initWithExtraActions:categorySelectorOptions
-                                                                                                withSelectedCategory:self.actualCategory];
+                                                                                                   withSelectedCategory:self.actualCategory];
+    viewController.view.frame = CGRectMake(viewController.view.frame.origin.x, viewController.view.frame.origin.y, viewController.view.bounds.size.width, viewController.view.bounds.size.height + kPopoverAdditionalHeightAmountForChangeCategory);
     viewController.showNumberOfConcepts = NO;
     viewController.delegate = self;
 

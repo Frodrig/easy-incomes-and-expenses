@@ -10,6 +10,7 @@
 #import "IAEYear.h"
 #import "IAEConcept.h"
 #import "IAEMonth.h"
+#import <Crashlytics/Crashlytics.h>
 
 @implementation IAEBook
 
@@ -113,6 +114,7 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     NSError *error;
     NSArray *yearsLoaded = [self.context executeFetchRequest:request error:&error];
     if (nil != error) {
+        CLS_LOG(@"Fallo haciendo fetch de años. Razon %@", [error localizedDescription]);
         [NSException raise:@"Fetch failed loading years" format:@"Reason: %@", [error localizedDescription]];
     }
     
@@ -221,17 +223,15 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
 }
 
 // Nota: Preserva siempre el año actual aunque no tenga conceptos
-- (void)deleteYearsWithZeroConceptsPreservingActualYear
+- (void)loadAllYearsRemovingYearsWithZeroConceptsAndPreservingActualYear
 {
     IAEYear *actualYear = [self findActualYear];
     if (actualYear) {
-        NSMutableArray *actualLoadedYears = [NSMutableArray arrayWithArray:self.years];
-        
         [self loadAll];
 
         NSMutableSet *yearsToDelete = [[NSMutableSet alloc] initWithCapacity:self.years.count];
         for (IAEYear *year in self.years) {
-            if ([year findNumberOfConcepts] == 0 && actualYear != year) {
+            if ([year findNumberOfConcepts] == 0 && actualYear.yearDate != year.yearDate) {
                 [yearsToDelete addObject:year];
             }
         }
@@ -239,13 +239,7 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
         while (yearsToDelete.count > 0) {
             IAEYear *yearObjectToDelete = [yearsToDelete anyObject];
             [yearsToDelete removeObject:yearObjectToDelete];
-            
-            [actualLoadedYears removeObjectIdenticalTo:yearObjectToDelete];
             [self deleteYearObject:yearObjectToDelete];
-        }
-        
-        if (actualLoadedYears.count > 0) {
-            _years = [NSMutableArray arrayWithArray:actualLoadedYears];
         }
     }
 }

@@ -19,6 +19,7 @@
 #import "IAEEconomicValueTypeHelper.h"
 #import "IAEColorHelper.h"
 #import "IAECategory.h"
+#import <Crashlytics/Crashlytics.h>
 
 @interface IAEHelperConceptsCollectionViewDataSource()
 
@@ -116,22 +117,28 @@ static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
 {
     // Nota: Por defecto los conceptos tienen el valor absoluto de la cantidad que almacenan de ahi el pedir la cantidad con signo si procede
     IAEConcept *concept = [self.iaeViewControllerQuery findConceptAtIndexPath:indexPath];
-    NSAssert(concept, @"");
-    IAECategory *category = concept.category;
-    NSAssert(category, @"");
-    NSDecimalNumber *amountWithSign = [concept amountWithSign];
-    NSString *amountWithSignString = [[IAENumberFormatterManager sharedManager].currencyFormatter stringFromNumber:amountWithSign];
-    const EconomicValueType economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:amountWithSign];
-    UIColor *colorForEconomicValueType = [IAEColorHelper colorForEconomicValueType:economicValueType];
-    const NSUInteger numberOfConcepts = [self.iaeViewControllerQuery findNumberOfConceptsOfActualSelectedContextUsingSectionForYearContext:indexPath.section];
-    NSUInteger instantEntryIndex =  numberOfConcepts - indexPath.row;
-    
-    cell.valueDecoratorView.economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:amountWithSign];
-    cell.drawSeparatorLine = indexPath.row != numberOfConcepts - 1;
-    [cell setTagWithIndex:index];
-    [cell configureCategoryLabelWithName:[category localizedTag]];
-    [cell configureAmountLabelWithValue:amountWithSignString andColor:colorForEconomicValueType];
-    [self configureIdentifierOfConceptCell:cell atIndexPath:indexPath withIndex:instantEntryIndex];
+    if (concept) {
+        IAECategory *category = concept.category;
+        NSAssert(category, @"");
+        NSDecimalNumber *amountWithSign = [concept amountWithSign];
+        NSString *amountWithSignString = [[IAENumberFormatterManager sharedManager].currencyFormatter stringFromNumber:amountWithSign];
+        const EconomicValueType economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:amountWithSign];
+        UIColor *colorForEconomicValueType = [IAEColorHelper colorForEconomicValueType:economicValueType];
+        const NSUInteger numberOfConcepts = [self.iaeViewControllerQuery findNumberOfConceptsOfActualSelectedContextUsingSectionForYearContext:indexPath.section];
+        NSUInteger instantEntryIndex =  numberOfConcepts - indexPath.row;
+        
+        cell.valueDecoratorView.economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:amountWithSign];
+        cell.drawSeparatorLine = indexPath.row != numberOfConcepts - 1;
+        [cell setTagWithIndex:index];
+        [cell configureCategoryLabelWithName:[category localizedTag]];
+        [cell configureAmountLabelWithValue:amountWithSignString andColor:colorForEconomicValueType];
+        [self configureIdentifierOfConceptCell:cell atIndexPath:indexPath withIndex:instantEntryIndex];
+    } else {
+        CLS_LOG(@"configureEditModeConceptCell:withConceptAtIndexPath:");
+        CLS_LOG(@"Se ha retornado un concepto nulo para %@", indexPath);
+        // Hay que hacer pruebas para ver que ocurre si llega un concepto nulo
+        // Seguimos sin saber realmente el motivo por el cual se produce esta situacion
+    }
 }
 
 - (void)configureIdentifierOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell

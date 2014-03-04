@@ -225,13 +225,22 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
 // Nota: Preserva siempre el año actual aunque no tenga conceptos
 - (void)loadAllYearsRemovingYearsWithZeroConceptsAndPreservingActualYear
 {
-    IAEYear *actualYear = [self findActualYear];
-    if (actualYear) {
+    IAEYear *actualYearObjectBeforeReload = [self findActualYear];
+    const NSUInteger actualYearDate = actualYearObjectBeforeReload.yearDate;
+    if (actualYearObjectBeforeReload) {
         [self loadAll];
+        
+        // Garantizamos que el año que estaba abierto seguira ocupando la primera posicion
+        IAEYear *actualYearAfterReload = [self findYearWithDate:@(actualYearDate)];
+        NSUInteger actualYearIndex = [self.years indexOfObject:actualYearAfterReload];
+        NSAssert(actualYearIndex != NSNotFound, @"");
+        if (actualYearIndex != 0) {
+            [self.years exchangeObjectAtIndex:0 withObjectAtIndex:actualYearIndex];
+        }
 
         NSMutableSet *yearsToDelete = [[NSMutableSet alloc] initWithCapacity:self.years.count];
         for (IAEYear *year in self.years) {
-            if ([year findNumberOfConcepts] == 0 && actualYear.yearDate != year.yearDate) {
+            if ([year findNumberOfConcepts] == 0 && actualYearDate != year.yearDate) {
                 [yearsToDelete addObject:year];
             }
         }
@@ -269,8 +278,8 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
 - (IAEYear *)findActualYear
 {
     // Cuando estamos fuera de la pantalla de seleccion de año solo hay un año cargado y es el primero del array
-    NSAssert(self.years.count == 1, @"O no hay años o bien hay mas de uno cargado");
-    return [self.years objectAtIndex:0];
+    NSAssert(self.years.count != 0, @"¡No hay años cargados!");
+    return self.years.count > 0 ? [self.years objectAtIndex:0] : nil;
 }
 
 - (NSArray *)findAllYearWithConcepts

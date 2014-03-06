@@ -125,8 +125,7 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
         self.yearLoadedBeforeStart = yearLoadedBeforeStart.yearDate;
     }
     
-    [[IAEBook sharedBook] deleteYearsWithZeroConceptsPreservingActualYear];
-    [[IAEBook sharedBook] loadAll];
+    [[IAEBook sharedBook] loadAllYearsRemovingYearsWithZeroConceptsAndPreservingActualYear];
 }
 
 - (void)configureActualYearOpenLabel

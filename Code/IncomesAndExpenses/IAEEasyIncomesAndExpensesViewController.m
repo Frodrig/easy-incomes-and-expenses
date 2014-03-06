@@ -589,13 +589,33 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     [self openModalForPresentYearSelectorViewController];
 }
 
+- (void)stopConceptsCollectionViewScrollAtActualPosition
+{
+    CGPoint offset = self.conceptsCollectionView.contentOffset;
+    offset.x -= 1.0;
+    offset.y -= 1.0;
+    [self.conceptsCollectionView setContentOffset:offset animated:NO];
+    
+    offset.x += 1.0;
+    offset.y += 1.0;
+    [self.conceptsCollectionView setContentOffset:offset animated:NO];
+}
+
+- (void)stopConceptsCollectionViewScrollAtTop
+{
+    CGRect frame = CGRectMake(0.0, 0.0, self.conceptsCollectionView.bounds.size.width, self.conceptsCollectionView.bounds.size.height);
+    [self.conceptsCollectionView scrollRectToVisible:frame animated:NO];
+}
+
 - (void)openModalForPresentYearSelectorViewController
 {
     self.yearSelectorViewController = [[IAEYearSelectorViewController alloc] initWithNibName:nil bundle:nil];
     self.yearSelectorViewController.delegate = self;
     self.yearSelectorViewController.modalPresentationStyle = UIModalPresentationFormSheet;
     
-    [self presentViewController:self.yearSelectorViewController animated:YES completion:nil];
+    [self presentViewController:self.yearSelectorViewController animated:YES completion:^{
+        [self stopConceptsCollectionViewScrollAtActualPosition];
+    }];
 }
 
 - (void)settingsOptionPressed:(id)sender
@@ -869,8 +889,11 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 {
     NSArray *concepts = [self allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath:indexPath];
     CLSLog(@"valid array of concepts: %@ indexPath.row: %d section: %d number of Concepts: %d", concepts ? @"Yes" : @"No", indexPath.row, indexPath.section, concepts.count);
-    NSAssert(indexPath.row < concepts.count, @"");
-    IAEConcept *concept = [concepts objectAtIndex:indexPath.row];
+    
+    IAEConcept *concept = nil;
+    if (concepts.count > 0) {
+        concept = [concepts objectAtIndex:indexPath.row];
+    }
     
     return concept;
 }
@@ -972,6 +995,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
         CLSLog(@"allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath - YEAR: %d & MONTH: %d", month.year.yearDate, month.month);
     }
     
+    CLSLog(@"day mode active ? %@", [self isDayModeActiveForConcepts] ? @"YES" : @"NO");
     NSArray *allConcepts = [self isDayModeActiveForConcepts] ? [month allConceptsSortedByDay] : [month allConceptsSortedByEntryInstant];
     
     return allConcepts;
@@ -1362,8 +1386,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (void)reloadContentOfConceptsCollectionView
 {
-    CGRect frame = CGRectMake(0.0, 0.0, self.conceptsCollectionView.bounds.size.width, self.conceptsCollectionView.bounds.size.height);
-    [self.conceptsCollectionView scrollRectToVisible:frame animated:NO];
+    [self stopConceptsCollectionViewScrollAtTop];
     [self.conceptsCollectionView reloadData];
 }
 

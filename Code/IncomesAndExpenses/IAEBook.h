@@ -28,7 +28,7 @@
 
 - (IAEYear *)createYear:(NSNumber *)yearDate;
 - (void)deleteYear:(NSNumber *)yearDate;
-- (void)deleteYearsWithZeroConceptsPreservingActualYear;
+- (void)loadAllYearsRemovingYearsWithZeroConceptsAndPreservingActualYear;
 - (void)deleteAllConceptsOfYear:(IAEYear *)year;
 
 // OJO: La funcion mas destructiva

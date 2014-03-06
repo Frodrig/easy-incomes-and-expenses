@@ -589,6 +589,18 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     [self openModalForPresentYearSelectorViewController];
 }
 
+- (void)stopConceptsCollectionViewScrollAtActualPosition
+{
+    CGPoint offset = self.conceptsCollectionView.contentOffset;
+    offset.x -= 1.0;
+    offset.y -= 1.0;
+    [self.conceptsCollectionView setContentOffset:offset animated:NO];
+    
+    offset.x += 1.0;
+    offset.y += 1.0;
+    [self.conceptsCollectionView setContentOffset:offset animated:NO];
+}
+
 - (void)stopConceptsCollectionViewScrollAtTop
 {
     CGRect frame = CGRectMake(0.0, 0.0, self.conceptsCollectionView.bounds.size.width, self.conceptsCollectionView.bounds.size.height);
@@ -602,7 +614,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     self.yearSelectorViewController.modalPresentationStyle = UIModalPresentationFormSheet;
     
     [self presentViewController:self.yearSelectorViewController animated:YES completion:^{
-        [self stopConceptsCollectionViewScrollAtTop];
+        [self stopConceptsCollectionViewScrollAtActualPosition];
     }];
 }
 

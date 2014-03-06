@@ -880,11 +880,6 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     
     IAEConcept *concept = nil;
     if (concepts.count > 0) {
-        if (indexPath.row >= concepts.count) {
-            IAEYear *actualYear = [[IAEBook sharedBook] findActualYear];
-            NSLog(@"actualYear %d", actualYear.yearDate);
-            NSLog(@"Error accediendo al array de conceptos con el indexpath recibido");
-        }
         concept = [concepts objectAtIndex:indexPath.row];
     }
     

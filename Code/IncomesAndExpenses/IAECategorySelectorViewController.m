@@ -18,6 +18,7 @@
 #import "IAEStrokeAnimatableLineView.h"
 #import "IAELocalizerPhraseComposer.h"
 #import "IAEColorHelper.h"
+#import <CoreText/CoreText.h>
 
 @interface IAECategorySelectorViewController ()
 
@@ -152,14 +153,21 @@ static const CGFloat kAlphaOfColorWhiteValueForAttractAttentionFadeIn = 0.3;
 {
     NSDictionary *attributes =  @{NSFontAttributeName: [self createFontForCategoryNameWithGeneralCategory],
                                   NSForegroundColorAttributeName:[UIColor blackColor],
-                                  NSKernAttributeName: [NSNumber numberWithInteger:0.0]};
+                                  NSKernAttributeName: @(0)};
     
     return attributes;
 }
 
 - (UIFont *)createFontForCategoryNameWithGeneralCategory
 {
-    return [UIFont fontWithName:kFontOfGeneralCategoryLabel size:kSizeOfCategoryNameLabel];
+    // Bug introducido por Apple desde la version 7.1
+    // Woraround: http://stackoverflow.com/questions/19527962/what-happened-to-helveticaneue-italic-on-ios-7-0-3
+    UIFont *font = [UIFont fontWithName:kFontOfGeneralCategoryLabel size:kSizeOfCategoryNameLabel];
+    if (!font) {
+        font = [UIFont fontWithName:kFontOfUserCategoryLabel size:kSizeOfCategoryNameLabel];
+    }
+    
+    return font;
 }
 
 - (NSDictionary *)createAttributeDictionaryForUserCategory

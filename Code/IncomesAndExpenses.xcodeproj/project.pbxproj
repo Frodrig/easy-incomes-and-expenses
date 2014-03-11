@@ -1136,6 +1136,8 @@
 		5B6F45E2181ED0460073B1AC /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				5BC7100A17AC29F600E12953 /* IAECategory.h */,
+				5BC7101217AC29F600E12953 /* IAECategory.m */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -1707,8 +1709,6 @@
 			children = (
 				5BC7100B17AC29F600E12953 /* IAECategoryStore.h */,
 				5BC7101317AC29F600E12953 /* IAECategoryStore.m */,
-				5BC7100A17AC29F600E12953 /* IAECategory.h */,
-				5BC7101217AC29F600E12953 /* IAECategory.m */,
 				5B6F45E2181ED0460073B1AC /* Category */,
 			);
 			name = CategoryStore;
@@ -2438,7 +2438,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "Easy Inc & Exp";
 				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7F36368A-FAB6-404E-A43D-FA73FBF43FDB";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "03C8F691-ABE4-4694-93AF-BB20ECB69B3E";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};

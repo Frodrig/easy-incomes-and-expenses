@@ -22,7 +22,6 @@
 #pragma mark - Constants
 
 static const NSUInteger kContentScrollViewNumberOfItems = 13;
-static const NSUInteger kGlobalIndexForYearInContextScrollView = 0;
 static const NSUInteger kContextMenuIndexOfYearOption = 0;
 static NSString * const kContextMenuFontFamilyName = @"HelveticaNeue-Ultralight";
 static const CGFloat kContextMenuFontSizeOfOptions = 24;

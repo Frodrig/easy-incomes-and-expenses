@@ -13,6 +13,7 @@
 #import "IAECategoryStore.h"
 #import "IAEBook.h"
 #import "IAEDateHelper.h"
+#import <Crashlytics/Crashlytics.h>
 
 @interface IAEMonth()
 
@@ -103,8 +104,13 @@ static NSString * const kLTextDecemberName = @"December";
 
 - (NSDecimalNumber *)sumAllAmountOfCategoryType:(CategoryType)category
 {
+    // http://stackoverflow.com/questions/4340445/how-can-i-tell-whether-an-nsmanagedobject-has-been-deleted/7896369#7896369
+    CLS_LOG(@"sumAllAmountOfCategoryType - total concepts %lu", (unsigned long)self.concepts.count);
+    
     NSDecimalNumber *sumDecimalNumber = [NSDecimalNumber zero];
     for (IAEConcept *concept in self.concepts) {
+        //CLS_LOG(@"Concept with ID %@ ", concept.objectID);
+
         if (concept.category.categoryType == category) {
             sumDecimalNumber = [sumDecimalNumber decimalNumberByAdding:concept.amount];
         }

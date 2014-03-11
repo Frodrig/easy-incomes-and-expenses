@@ -93,7 +93,7 @@ static NSString * const kCategoryPropertyNameTag = @"tag";
     
     NSError *error;
     NSArray *result = [[IAEBook sharedBook].context executeFetchRequest:request error:&error];
-    if (nil != error) {
+    if (!result) {
         [NSException raise:@"IAECategoryStore: Failed fetching" format:@"Cause: %@", error];
     }
     

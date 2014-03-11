@@ -110,9 +110,6 @@ static NSString * const kLTextSettingsBarButtonTitle = @"LTEXT_BARBUTTON_SETTING
 static NSString * const kLTextYearsBarButtonTitle = @"LTEXT_BARBUTTON_YEARS_TITLE";
 static NSString * const kLTextCategoriesBarButtonTitle = @"LTEXT_BARBUTTON_CATEGORIES_TITLE";
 
-static const CGFloat kEditAndReportModeContentContainerRadius = 15;
-static const CGFloat kColorWithWhiteForEditAndReportModeContentContainerBackground = 0.97;
-
 static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 
 static NSString * const kNotificationDayModeOnName = @"dayModeToOn";
@@ -121,7 +118,6 @@ static NSString * const kNotificationDayModeOffName = @"dayModeToOff";
 static NSString * const kLTextModeSegmentedControlEditMode = @"LTEXT_MODESEGMENTEDCONTROL_EDITMODE";
 static NSString * const kLTextModeSegmentedControlReportMode = @"LTEXT_MODESEGMENTEDCONTROL_REPORTMODE";
 
-static const NSUInteger kContentScrollViewNumberOfItems = 13;
 static const NSUInteger kGlobalIndexForYearInContextScrollView = 0;
 
 static NSString * const kNibConceptCellName = @"IAEEditModeConceptCollectionViewCell";
@@ -150,8 +146,6 @@ static const CGFloat kDurationOfEditConceptCollectionViewTransition = 0.5;
 static NSString * const kXibWithoutConceptsWarningInEditModeViewName = @"IAEWithoutConceptsTextWarning";
 static NSString * const kXibWithoutConceptsWarningInReportModeViewName = @"IAEWithoutConceptsTextWarningReportMode";
 static const CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.5;
-
-static const CGFloat kDurationOfFrameUpdateWhenShowOrHideCalculator = 0.25;
 
 static const NSInteger kInvalidOptionIndex = -1;
 
@@ -888,7 +882,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 - (IAEConcept *)findConceptAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray *concepts = [self allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath:indexPath];
-    CLSLog(@"valid array of concepts: %@ indexPath.row: %d section: %d number of Concepts: %d", concepts ? @"Yes" : @"No", indexPath.row, indexPath.section, concepts.count);
+    CLSLog(@"valid array of concepts: %@ indexPath.row: %ld section: %ld number of Concepts: %lu", concepts ? @"Yes" : @"No", (long)indexPath.row, (long)indexPath.section, (unsigned long)concepts.count);
     
     IAEConcept *concept = nil;
     if (concepts.count > 0) {

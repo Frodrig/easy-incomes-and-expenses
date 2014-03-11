@@ -39,7 +39,7 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
 
 #pragma mark - Instance
 
-- (id) init
+- (id)init
 {
     self = [super init];
     if (self) {
@@ -113,7 +113,7 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
 
     NSError *error;
     NSArray *yearsLoaded = [self.context executeFetchRequest:request error:&error];
-    if (nil != error) {
+    if (!yearsLoaded) {
         CLS_LOG(@"Fallo haciendo fetch de años. Razon %@", [error localizedDescription]);
         [NSException raise:@"Fetch failed loading years" format:@"Reason: %@", [error localizedDescription]];
     }
@@ -125,12 +125,15 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
 {
     [self doRefreshObjectMergeChangesExceptForObjects:[NSSet setWithArray:self.years]];
 
-    _years = [NSMutableArray arrayWithArray:[self loadYearsWithLimit:UINT_MAX andPredicate:nil]];
+    NSArray *years = [self loadYearsWithLimit:UINT_MAX andPredicate:nil];
+    if (years) {
+        _years = [NSMutableArray arrayWithArray:years];
+    }
 }
 
 - (void)loadYear:(NSUInteger)year
 {
-    IAEYear *yearFound;
+    IAEYear *yearFound = nil;
     for (IAEYear *yearIt in self.years) {
         if (yearIt.yearDate == year) {
             yearFound = yearIt;

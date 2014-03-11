@@ -83,7 +83,7 @@ static const CGFloat kWhiteAlphaComponentForCircle = 1.0;
 
 - (void)configureNavigationBarTitle
 {
-    NSString *yearName = [NSString stringWithFormat:@"%d", self.yearDate];
+    NSString *yearName = [NSString stringWithFormat:@"%lu", (unsigned long)self.yearDate];
     NSString *monthName = [IAEDateHelper findMonthNameStringWithMonthIndex:self.monthIndex inShortForm:NO];
 
     self.navigationBarTitle.title = [NSString stringWithFormat:NSLocalizedString(@"LTEXT_CALENDARDAYSELECTOR_TITLE", ""), monthName, yearName];
@@ -131,7 +131,7 @@ static const CGFloat kWhiteAlphaComponentForCircle = 1.0;
                                               rowIt * self.dayOfTheMonthHeightSize,
                                               self.dayOfTheMonthWidthSize,
                                               self.dayOfTheMonthHeightSize);
-                NSString *labelText = [NSString stringWithFormat:@"%d", dayIt];
+                NSString *labelText = [NSString stringWithFormat:@"%lu", (unsigned long)dayIt];
                 NSDictionary *labelAttributes = @{NSFontAttributeName: [UIFont fontWithName:kDayOfTheMonthFontFamilyName size:kDayOfTheMonthFontSize],
                                                   NSForegroundColorAttributeName: [UIColor darkTextColor]};
                 

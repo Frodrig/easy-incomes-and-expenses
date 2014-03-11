@@ -123,6 +123,7 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
     if ([IAEBook sharedBook].years.count > 0) {
         IAEYear *yearLoadedBeforeStart = [[IAEBook sharedBook] findActualYear];
         self.yearLoadedBeforeStart = yearLoadedBeforeStart.yearDate;
+        yearLoadedBeforeStart = nil;
     }
     
     [[IAEBook sharedBook] loadAllYearsRemovingYearsWithZeroConceptsAndPreservingActualYear];

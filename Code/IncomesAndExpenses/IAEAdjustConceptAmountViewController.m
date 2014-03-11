@@ -24,7 +24,6 @@
 #pragma mark - Constants
 
 static const CGFloat kDurationOfAnimationOfInvalidAdjustActionFadeIn = 0.1;
-static const CGFloat kDurationOfAnimationOfInvalidAdjustActionFadeOut = 0.25;
 
 #pragma mark - Properties
 

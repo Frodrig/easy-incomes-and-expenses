@@ -260,7 +260,7 @@ static const CGFloat kCallForAttentionRationAlphaColor = 0.3;
 
 - (void)configureEntryInstantLabelWithIndex:(NSUInteger)index withAnimationDuration:(CGFloat)animationDuration
 {
-    NSString *text = [NSString stringWithFormat:@"%d", index];
+    NSString *text = [NSString stringWithFormat:@"%lu", (unsigned long)index];
     UIFont *font = [UIFont fontWithName:kEntryInstantFontFamilyName size:kEntryInstantFontFamilySize];
     NSDictionary *attributes = @{NSFontAttributeName: font,
                                  NSForegroundColorAttributeName: [UIColor colorWithWhite:0.9 alpha:1.0],

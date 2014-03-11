@@ -122,7 +122,7 @@ static const CGFloat kDurationOfAnimationOfChangeContext = 0.6;
 
 - (IAEContextView *)findContextViewAtIndex:(NSUInteger)index
 {
-    IAEContextView *contextView = [self.contextViews objectForKey:[NSNumber numberWithInt:index]];
+    IAEContextView *contextView = [self.contextViews objectForKey:@(index)];
     
     return contextView;
 }

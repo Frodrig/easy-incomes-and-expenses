@@ -33,7 +33,6 @@ static const NSUInteger kTagCategoryButton = 10;
 static const NSUInteger kTagDayContainerView = 15;
 static const NSUInteger kTagDayButton = 20;
 static const NSUInteger kTagAmountLabel = 30;
-static const NSUInteger kTagStrokeHelperView = 100;
 
 static NSString * const kLTextNoCategorySelected = @"LTEXT_CALCULATOR_NOCATEGORYSELECTED";
 static NSString * const kLTextNoDaySelected = @"LTEXT_CALCULATOR_NODAYSELECTED";
@@ -42,8 +41,6 @@ static NSString * const kLTextDaySelected = @"LTEXT_CALCULATOR_DAYSELECTED";
 static NSString * const kFontFamilyNameForAmountLabel = @"HelveticaNeue-Thin";
 static const NSUInteger kFontFamilySizeForAmountLabel = 42;
 static const CGFloat kFontFamilyKernForAmountLabel = 0.0;
-
-static const CGFloat kDurationOfTransitionWhenDayActive = 0.25;
 
 static const CGFloat kDurationOfStrokeAnimation = 0.25;
 static const CGFloat kColorWhiteComponentForStrokeAnimationForConcepts = 1;

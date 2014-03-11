@@ -26,9 +26,6 @@ static const NSUInteger kTagDecimalButton = 200;
 static const NSUInteger kTagAddButton = 400;
 static const NSUInteger kTagKeyboardContainerView = 300;
 
-static const CGFloat kRadiusOfKeyboardContainerView = 5;
-static const CGFloat kRadiusForButtons = 15;
-
 static const CGFloat kWhiteColorComponentForExternalGratePanel = 0.9;
 static const CGFloat kWhiteColorAlphaComponentForExternalGratePanel = 1.0;
     

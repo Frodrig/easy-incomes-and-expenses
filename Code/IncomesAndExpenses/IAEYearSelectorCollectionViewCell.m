@@ -90,7 +90,7 @@ static const NSUInteger kContainerViewRoundRectSize = 10;
 
 - (NSString *)yearStringFromYearDate:(NSUInteger)yearDate
 {
-    NSString *yearString = [NSString stringWithFormat:@"%d", yearDate];
+    NSString *yearString = [NSString stringWithFormat:@"%lu", (unsigned long)yearDate];
     
     return yearString;
 }

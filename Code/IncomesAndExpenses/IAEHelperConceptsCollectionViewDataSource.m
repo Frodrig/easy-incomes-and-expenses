@@ -115,6 +115,8 @@ static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
 
 - (void)configureEditModeConceptCell:(IAEEditModeConceptCollectionViewCell *)cell withConceptAtIndexPath:(NSIndexPath *)indexPath
 {
+    CLSLog(@"%s", __FUNCTION__);
+    
     // Nota: Por defecto los conceptos tienen el valor absoluto de la cantidad que almacenan de ahi el pedir la cantidad con signo si procede
     IAEConcept *concept = [self.iaeViewControllerQuery findConceptAtIndexPath:indexPath];
     if (concept) {
@@ -156,6 +158,8 @@ static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
 
 - (BOOL)isDayOfTheMonthAssociatedWithConceptCell:(IAEEditModeConceptCollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
+    CLSLog(@"%s", __FUNCTION__);
+    
     IAEConcept *concept = [self.iaeViewControllerQuery findConceptAtIndexPath:indexPath];
     return concept.dayOfTheMonth != 0;
 }
@@ -164,6 +168,8 @@ static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
                                                     atIndexPath:(NSIndexPath *)indexPath
                                                       withIndex:(NSUInteger)index
 {
+    CLSLog(@"%s", __FUNCTION__);
+    
     IAEConcept *concept = [self.iaeViewControllerQuery findConceptAtIndexPath:indexPath];
     NSString *dayOfTheWeekName = [self.iaeViewControllerQuery findDayOfTheWeekNameFromConcept:concept];
     

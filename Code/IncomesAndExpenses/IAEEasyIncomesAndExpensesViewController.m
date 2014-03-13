@@ -885,8 +885,10 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     CLSLog(@"valid array of concepts: %@ indexPath.row: %ld section: %ld number of Concepts: %lu", concepts ? @"Yes" : @"No", (long)indexPath.row, (long)indexPath.section, (unsigned long)concepts.count);
     
     IAEConcept *concept = nil;
-    if (concepts.count > 0) {
+    if (concepts.count > 0 && indexPath.row < concepts.count) {
         concept = [concepts objectAtIndex:indexPath.row];
+    } else {
+        CLSLog(@"Problema intentando acceder al concepto, indexPath superior a la cantidad de conceptos");
     }
     
     return concept;
@@ -997,6 +999,8 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (IAEConcept *)findConceptOfCell:(UICollectionViewCell *)cell
 {
+    CLSLog(@"%s", __FUNCTION__);
+    
     NSIndexPath *indexPathOfCell = [self.conceptsCollectionView indexPathForCell:cell];
     return [self findConceptAtIndexPath:indexPathOfCell];
 }
@@ -1781,6 +1785,8 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 - (void)adjustConceptsAmountViewController:(IAEAdjustConceptAmountViewController *)adjustConceptsAmountViewController
           didPressedAdjustButtonWithAmount:(NSNumber *)amount
 {
+    CLSLog(@"%s", __FUNCTION__);
+    
     [Flurry logEvent:@"changeconcept_amount"];
 
     IAEConcept *concept = [self findConceptAtIndexPath:adjustConceptsAmountViewController.conceptCellIndexPath];
@@ -1813,6 +1819,8 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (BOOL)canAdjustConceptAmountViewController:(IAEAdjustConceptAmountViewController *)adjustConceptViewController addAmount:(NSNumber *)amount
 {
+    CLSLog(@"%s", __FUNCTION__);
+    
     IAEConcept *concept = [self findConceptAtIndexPath:adjustConceptViewController.conceptCellIndexPath];
     const BOOL can = [concept canAddAmount:amount];
     
@@ -1851,6 +1859,8 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (void)changeCategoryOfConceptAtIndexPath:(NSIndexPath *)indexPath toCategory:(IAECategory *)category
 {
+    CLSLog(@"%s", __FUNCTION__);
+    
     IAEConcept *concept = [self findConceptAtIndexPath:indexPath];
     if (concept.category != category) {
         CategoryType originalCategoryType = concept.category.categoryType;
@@ -2134,6 +2144,8 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 - (void)dayCalendarSelectorViewController:(IAEDayCalendarSelectorViewController *)dayCalendarSelectorViewController
                              didSelectDay:(NSUInteger)day
 {
+    CLSLog(@"%s", __FUNCTION__);
+    
     [self dismisPopover];
 
     IAEConcept *concept = [self findConceptAtIndexPath:dayCalendarSelectorViewController.conceptCellIndexPath];

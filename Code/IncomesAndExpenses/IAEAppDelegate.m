@@ -14,6 +14,7 @@
 #import "IAEMonth.h"
 #import "IAECategoryStore.h"
 #import "IAERootLauchingViewController.h"
+#import "IAEFixRemoveCategoryActionLostInUnloadedYears.h"
 
 @implementation IAEAppDelegate
 
@@ -21,6 +22,7 @@
 
 static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
 static NSString * const kUserDefaultsReportAmountMode = @"reportAmountMode";
+static NSString * const kFixRemoveCategoryActionLostInUnloadedYearsExecuted = @"fixRemoveCategoryActionLostInUnloadedYearsExecuted";
 static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalAmounts";
 
 #pragma mark - didFinishLaunching
@@ -29,9 +31,10 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
 {
     [self prepareCrashlytics];
     [self prepareFlurry];
-    [self processProcessInfoEnvironment];
-    [self createYearBookIfProceed];
     [self prepareDefaults];
+    [self processProcessInfoEnvironment];
+    [self processFixes];
+    [self createYearBookIfProceed];
     [self createWindowRootLaunchingViewControllerAndMakeVisible];
         
     return YES;
@@ -57,11 +60,18 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
 
 - (void)processProcessInfoEnvironment
 {
+    return;
+    
     NSNumber *testEnviromentVariable = [[NSProcessInfo processInfo].environment valueForKey:@"createTestDataAtLaunch"];
     if ([testEnviromentVariable boolValue]) {
         [[IAEBook sharedBook] deleteAllAndSave];
         [self createYearTest2];
     }
+}
+
+- (void)processFixes
+{
+    [IAEFixRemoveCategoryActionLostInUnloadedYears checkAndExecuteIfApplicable];
 }
 
 - (void)createYearBookIfProceed
@@ -79,6 +89,7 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
 {
     // Defaults del registration  domain
     NSDictionary *defaults = @{ kUserDefaultsDayModeActiveKey: [NSNumber numberWithBool:NO],
+                                kFixRemoveCategoryActionLostInUnloadedYearsExecuted: [NSNumber numberWithBool:NO],
                                 kUserDefaultsReportAmountMode: kUserDefaultsReportAmountModeTotalAmountValue };
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 }

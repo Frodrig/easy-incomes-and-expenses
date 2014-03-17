@@ -110,9 +110,12 @@ static NSString * const kLTextDecemberName = @"December";
     NSDecimalNumber *sumDecimalNumber = [NSDecimalNumber zero];
     for (IAEConcept *concept in self.concepts) {
         //CLS_LOG(@"Concept with ID %@ ", concept.objectID);
-
-        if (concept.category.categoryType == category) {
-            sumDecimalNumber = [sumDecimalNumber decimalNumberByAdding:concept.amount];
+        if ([[IAEBook sharedBook].context existingObjectWithID:concept.category.objectID error:NULL]) {
+            if (concept.category.categoryType == category) {
+                sumDecimalNumber = [sumDecimalNumber decimalNumberByAdding:concept.amount];
+            }
+        } else {
+            NSLog(@"No existe");
         }
     }
     

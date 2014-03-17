@@ -16,4 +16,10 @@
 - (void)changeToReportTotalAmountModeInReportSection;
 - (void)changeToReportTotalPercentageModeInReportSection;
 
+- (BOOL)isDayModeActiveForConcepts;
+
+- (BOOL)isFixRemoveCategoryActionLostInUnloadedYearsExecuted;
+- (BOOL)isFixRemoveCategoryActionLostInUnloadedYearsNotExecuted;
+- (void)setFixRemoveCategoryActionLostInUnloadedYearsExecuted:(BOOL)executed;
+
 @end

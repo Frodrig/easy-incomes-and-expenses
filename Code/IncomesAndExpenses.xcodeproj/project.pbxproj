@@ -18,6 +18,7 @@
 		5B1B7F9C18D792400012AC21 /* IAEBookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1B7F9B18D792400012AC21 /* IAEBookTests.m */; };
 		5B1B7F9D18D793440012AC21 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD06167163A8CFF00A80BE3 /* CoreData.framework */; };
 		5B1B7FA118D794420012AC21 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1B7FA018D794420012AC21 /* XCTest.framework */; };
+		5B1B7FA518D7A22C0012AC21 /* IAEFixRemoveCategoryActionLostInUnloadedYears.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1B7FA418D7A22C0012AC21 /* IAEFixRemoveCategoryActionLostInUnloadedYears.m */; };
 		5B1F0D3517841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1F0D3417841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m */; };
 		5B1F0D3717841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B1F0D3617841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib */; };
 		5B23F04017FED21C00477D34 /* NSUserDefaults+EasyIncAndExp.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B23F03F17FED21C00477D34 /* NSUserDefaults+EasyIncAndExp.m */; };
@@ -192,6 +193,8 @@
 		5B1B7F9B18D792400012AC21 /* IAEBookTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEBookTests.m; sourceTree = "<group>"; };
 		5B1B7F9E18D794370012AC21 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		5B1B7FA018D794420012AC21 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		5B1B7FA318D7A22C0012AC21 /* IAEFixRemoveCategoryActionLostInUnloadedYears.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEFixRemoveCategoryActionLostInUnloadedYears.h; sourceTree = "<group>"; };
+		5B1B7FA418D7A22C0012AC21 /* IAEFixRemoveCategoryActionLostInUnloadedYears.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEFixRemoveCategoryActionLostInUnloadedYears.m; sourceTree = "<group>"; };
 		5B1F0D3317841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEditModeConceptCollectionViewCell.h; sourceTree = "<group>"; };
 		5B1F0D3417841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEditModeConceptCollectionViewCell.m; sourceTree = "<group>"; };
 		5B1F0D3617841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEEditModeConceptCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -544,6 +547,15 @@
 				5B1B7F9518D791070012AC21 /* IncomesAndExpenses Tests-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5B1B7FA218D7A1C90012AC21 /* Fix */ = {
+			isa = PBXGroup;
+			children = (
+				5B1B7FA318D7A22C0012AC21 /* IAEFixRemoveCategoryActionLostInUnloadedYears.h */,
+				5B1B7FA418D7A22C0012AC21 /* IAEFixRemoveCategoryActionLostInUnloadedYears.m */,
+			);
+			name = Fix;
 			sourceTree = "<group>";
 		};
 		5B1F0D3217841C7400D0B4F1 /* WithConceptCell */ = {
@@ -1067,6 +1079,7 @@
 		5B767DFC1636D7FC005315F8 /* IncomesAndExpenses */ = {
 			isa = PBXGroup;
 			children = (
+				5B1B7FA218D7A1C90012AC21 /* Fix */,
 				5B00386418CFC13900044B2D /* Flurry-iOS-4.3.2 */,
 				5B8F842F17B0FEA800C17020 /* Global constants */,
 				5BF925331795447D0002CF9F /* Assets */,
@@ -1931,6 +1944,7 @@
 				5B5DBB3117E1E9EB00716503 /* IAERootLauchingViewController.m in Sources */,
 				5B36AFF11785874D00132475 /* IAEAdjustConceptAmountViewController.m in Sources */,
 				5B62D87D178EC27D009879A6 /* IAEDateHelper.m in Sources */,
+				5B1B7FA518D7A22C0012AC21 /* IAEFixRemoveCategoryActionLostInUnloadedYears.m in Sources */,
 				5B90783C179D268000B2A0F7 /* IAEDisplayPanelCalculatorView.m in Sources */,
 				5B251FA117AACA71000957A5 /* IAEStrokeAnimatableLineView.m in Sources */,
 				5BEA608217A6A36600520E09 /* IAEReportAreaView.m in Sources */,

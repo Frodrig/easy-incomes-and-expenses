@@ -21,6 +21,8 @@
 
 + (IAEBook *)sharedBook;
 
+- (instancetype)initWithManagedObjectModel:(NSManagedObjectModel *)model andManagedObjectContext:(NSManagedObjectContext *)context;
+
 - (void)loadAll;
 - (void)loadYear:(NSUInteger)yearDate;
 - (void)loadMoreRecientYear;

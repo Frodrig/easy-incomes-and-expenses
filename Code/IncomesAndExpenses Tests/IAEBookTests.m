@@ -11,7 +11,10 @@
 #import <CoreData/CoreData.h>
 //#import <OCMock/OCMock.h>
 #import "IAEBook.h"
-
+#import "IAEYear.h"
+#import "IAEMonth.h"
+#import "IAECategory.h"
+#import "IAECategoryStore.h"
 
 @interface IAEBookTests : XCTestCase {
     // Core Data stack objects.
@@ -35,6 +38,7 @@
 
     [self createCoreDataStack];
     [self createSut];
+    
 }
 
 
@@ -53,9 +57,31 @@
 
 
 - (void) createSut {
-    sut = [[IAEBook alloc] init];
+    sut = [[IAEBook alloc] initWithManagedObjectModel:model andManagedObjectContext:context];
 }
 
+
+- (void) createYearsWithConcepts
+{
+    return;
+    /*
+    for (NSNumber *yearIt in @[@2014, @2013, @2010, @2001]) {
+        IAEYear *yearObj = [sut createYear:yearIt];
+        for (IAEMonth *monthObjectIt in yearObj.months) {
+            for (int conceptToCreate = 0; conceptToCreate < 1000; conceptToCreate++) {
+                IAECategory *category = arc4random() % 2 == 0 ? [IAECategoryStore sharedCategoryStore].generalIncomeCategory : [IAECategoryStore sharedCategoryStore].generalIncomeCategory;
+                [monthObjectIt addConceptWithAmount:[NSDecimalNumber decimalNumberWithString:@""]
+                                           category:category
+                                               date:[NSDate timeIntervalSinceReferenceDate]
+                                     andDescription:@"Test Concept"];
+            }
+        }
+        
+        [sut saveAll];
+        [sut unloadAll];
+    }
+     */
+}
 
 - (void) tearDown {
     [self releaseSut];

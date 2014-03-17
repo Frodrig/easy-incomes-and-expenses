@@ -41,9 +41,45 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
 
 - (id)init
 {
+    NSManagedObjectModel *model = [self createManagedObjectModel];
+    NSManagedObjectContext *context = [self createManagedObjectContextFromModel:model];
+    if (self = [self initWithManagedObjectModel:model andManagedObjectContext:context]) {
+    }
+    
+    return self;
+}
+
+- (NSManagedObjectModel *)createManagedObjectModel
+{
+    return [NSManagedObjectModel mergedModelFromBundles:nil];
+}
+
+- (NSManagedObjectContext *)createManagedObjectContextFromModel:(NSManagedObjectModel *)model
+{
+    NSPersistentStoreCoordinator *persistentStore = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:model];
+    
+    NSError *error;
+    if (![persistentStore addPersistentStoreWithType:NSSQLiteStoreType
+                                       configuration:nil
+                                                 URL:[self storeFileURLWithPath]
+                                             options:nil
+                                               error:&error]) {
+        [NSException raise:@"Open DB failed" format:@"Reason: %@", [error localizedDescription]];
+    }
+    
+    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] init];
+    context.persistentStoreCoordinator = persistentStore;
+    context.undoManager = nil;
+
+    return context;
+}
+
+- (instancetype)initWithManagedObjectModel:(NSManagedObjectModel *)model andManagedObjectContext:(NSManagedObjectContext *)context
+{
     self = [super init];
     if (self) {
-        [self prepareModelAndContextOfDB];
+        _model = model;
+        _context = context;
     }
     
     return self;
@@ -56,25 +92,6 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     NSURL* retURL = [NSURL fileURLWithPath:[documentDirectory stringByAppendingPathComponent:kFileNameForStoreData]];
     
     return retURL;
-}
-
-- (void)prepareModelAndContextOfDB
-{
-    _model = [NSManagedObjectModel mergedModelFromBundles:nil];
-    NSPersistentStoreCoordinator *persistentStore = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_model];
-    
-    NSError *error;
-    if (![persistentStore addPersistentStoreWithType:NSSQLiteStoreType
-                                       configuration:nil
-                                                 URL:[self storeFileURLWithPath]
-                                             options:nil
-                                               error:&error]) {
-        [NSException raise:@"Open DB failed" format:@"Reason: %@", [error localizedDescription]];
-    }
-    
-    _context = [[NSManagedObjectContext alloc] init];
-    _context.persistentStoreCoordinator = persistentStore;
-    _context.undoManager = nil;
 }
 
 - (void)doRefreshObjectMergeChangesExceptForObjects:(NSSet *)exceptObjects

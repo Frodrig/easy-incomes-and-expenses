@@ -15,19 +15,26 @@
 #import "IAEYear.h"
 #import "IAEMonth.h"
 
+static const NSString * const kMinVersion = @"2.4.3";
+
+@interface IAEFixRemoveCategoryActionLostInUnloadedYears()
+
+@end
+
 @implementation IAEFixRemoveCategoryActionLostInUnloadedYears
 
 + (void)checkAndExecuteIfApplicable
 {
     NSMutableString *documentWithFixes = [[NSMutableString alloc] init];
     
-    if ([[NSUserDefaults standardUserDefaults] isFixRemoveCategoryActionLostInUnloadedYearsNotExecuted]) {
+    if ([self canExecuteFix]) {
         [[IAEBook sharedBook] loadAll];
         
         for (IAEYear *yearObjIt in [IAEBook sharedBook].years) {
             for (IAEMonth *monthObjIt in yearObjIt.months) {
                 for (IAEConcept *conceptObjIt in monthObjIt.concepts) {
-                    if (![[IAEBook sharedBook].context existingObjectWithID:conceptObjIt.category.objectID error:NULL]) {
+                    const BOOL conceptWithCategoryToFix = ![[IAEBook sharedBook].context existingObjectWithID:conceptObjIt.category.objectID error:NULL];
+                    if (conceptWithCategoryToFix) {
                         conceptObjIt.category = [IAECategoryStore sharedCategoryStore].generalExpenseCategory;
                         
                         [documentWithFixes appendString:@"Category Lost and fixed as income - "];
@@ -37,6 +44,7 @@
                         if ([[NSUserDefaults standardUserDefaults] isDayModeActiveForConcepts]) {
                             [documentWithFixes appendString:[NSString stringWithFormat:@"Day: %d", conceptObjIt.dayOfTheMonth]];
                         }
+                        [documentWithFixes appendString:@"\n"];
                     }
                 }
             }
@@ -47,6 +55,13 @@
         
         [[NSUserDefaults standardUserDefaults] setFixRemoveCategoryActionLostInUnloadedYearsExecuted:YES];
     }
+}
+
++ (BOOL)canExecuteFix
+{
+    const BOOL isFixNotExecuted = [[NSUserDefaults standardUserDefaults] isFixRemoveCategoryActionLostInUnloadedYearsNotExecuted];
+    
+    return isFixNotExecuted;
 }
 
 @end

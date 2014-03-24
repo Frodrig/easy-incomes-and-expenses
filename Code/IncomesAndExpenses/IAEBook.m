@@ -12,6 +12,12 @@
 #import "IAEMonth.h"
 #import <Crashlytics/Crashlytics.h>
 
+@interface IAEBook()
+
+@property (nonatomic, readwrite, strong) NSMutableArray *years;
+
+@end
+
 @implementation IAEBook
 
 @synthesize years = _years;
@@ -167,6 +173,20 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     }
 }
 
+- (void)unloadAllAndLoadYearDates:(NSArray *)yearDates
+{
+    [self unloadAll];
+    
+    NSMutableArray *yearsLoaded = [NSMutableArray arrayWithCapacity:yearDates.count];
+    
+    for (NSNumber *yearDateIt in yearDates) {
+        NSArray *yearLoaded = [self loadYearsWithLimit:1 andPredicate:[NSPredicate predicateWithFormat:@"yearDate == %@", yearDateIt]];
+        [yearsLoaded addObjectsFromArray:yearLoaded];
+    }
+                               
+    self.years = yearsLoaded;
+}
+
 - (void)loadMoreRecientYear
 {
     [self doRefreshObjectMergeChangesExceptForObjects:nil];
@@ -312,6 +332,16 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     }
     
     return [NSArray arrayWithArray:yearsSelected];
+}
+
+- (NSArray *)findAllYeardDatesLoaded
+{
+    NSMutableArray *allYearDates = [[NSMutableArray alloc] initWithCapacity:self.years.count];
+    for (IAEYear *yearIt in self.years) {
+        [allYearDates addObject:@(yearIt.yearDate)];
+    }
+    
+    return [NSArray arrayWithArray:allYearDates];
 }
 
 - (void)deleteAllAndSave

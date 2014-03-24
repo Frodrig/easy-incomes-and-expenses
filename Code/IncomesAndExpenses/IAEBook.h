@@ -25,6 +25,7 @@
 
 - (void)loadAll;
 - (void)loadYear:(NSUInteger)yearDate;
+- (void)unloadAllAndLoadYearDates:(NSArray *)yearDates;
 - (void)loadMoreRecientYear;
 - (void)unloadAll;
 
@@ -38,6 +39,7 @@
 
 - (IAEYear *)findYearWithDate:(NSNumber *)yearDate;
 - (IAEYear *)findActualYear;
+- (NSArray *)findAllYeardDatesLoaded;
 - (NSArray *)findAllConceptsWithCategory:(IAECategory *)category;
 - (NSArray *)findAllYearWithConcepts;
 

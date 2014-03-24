@@ -2230,6 +2230,7 @@
 				5B1B7F9918D791070012AC21 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5B767DEC1636D7FC005315F8 /* Build configuration list for PBXProject "IncomesAndExpenses" */ = {
 			isa = XCConfigurationList;

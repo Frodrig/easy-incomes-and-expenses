@@ -27,12 +27,18 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
 
 #pragma mark - didFinishLaunching
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [self prepareCrashlytics];
     [self prepareFlurry];
     [self prepareDefaults];
     [self processProcessInfoEnvironment];
+    [self configureObservingFixes];
     [self processFixes];
     [self createYearBookIfProceed];
     [self createWindowRootLaunchingViewControllerAndMakeVisible];
@@ -69,6 +75,15 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
     }
 }
 
+- (void)configureObservingFixes
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notificationFixRemoveCategoryActionLostInUnloadedYearsReport:)
+                                                 name:@"FixRemoveCategoryActionLostInUnloadedYearsReport"
+                                               object:nil];
+
+}
+
 - (void)processFixes
 {
     [IAEFixRemoveCategoryActionLostInUnloadedYears checkAndExecuteIfApplicable];
@@ -102,7 +117,14 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
     [self.window makeKeyAndVisible];
 }
 
-#pragma mark - Notifications
+#pragma mark - App Notifications
+
+- (void)notificationFixRemoveCategoryActionLostInUnloadedYearsReport:(NSDictionary *)userInfo
+{
+    // ....
+}
+
+#pragma mark - System Notifications
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

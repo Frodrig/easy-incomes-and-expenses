@@ -37,14 +37,7 @@ static const NSString * const kMinVersion = @"2.4.3";
                     if (conceptWithCategoryToFix) {
                         conceptObjIt.category = [IAECategoryStore sharedCategoryStore].generalExpenseCategory;
                         
-                        [documentWithFixes appendString:@"Category Lost and fixed as income - "];
-                        [documentWithFixes appendString:[NSString stringWithFormat:@"Year: %@ ", yearObjIt.yearDateAsString]];
-                        [documentWithFixes appendString:[NSString stringWithFormat:@"Month: %@ ", monthObjIt.monthAsString]];
-                        [documentWithFixes appendString:[NSString stringWithFormat:@"Ammount: %@ ", conceptObjIt.amount]];
-                        if ([[NSUserDefaults standardUserDefaults] isDayModeActiveForConcepts]) {
-                            [documentWithFixes appendString:[NSString stringWithFormat:@"Day: %d", conceptObjIt.dayOfTheMonth]];
-                        }
-                        [documentWithFixes appendString:@"\n"];
+                        [documentWithFixes appendString:[self createDescriptionOfConceptFixed:conceptObjIt]];
                     }
                 }
             }
@@ -54,6 +47,9 @@ static const NSString * const kMinVersion = @"2.4.3";
         [[IAEBook sharedBook] unloadAll];
         
         [[NSUserDefaults standardUserDefaults] setFixRemoveCategoryActionLostInUnloadedYearsExecuted:YES];
+        
+        // sendMessage
+        [self sendEmailWithReportIfApplicable:documentWithFixes];
     }
 }
 
@@ -62,6 +58,32 @@ static const NSString * const kMinVersion = @"2.4.3";
     const BOOL isFixNotExecuted = [[NSUserDefaults standardUserDefaults] isFixRemoveCategoryActionLostInUnloadedYearsNotExecuted];
     
     return isFixNotExecuted;
+}
+
++ (NSString *)createDescriptionOfConceptFixed:(IAEConcept *)concept
+{
+    NSMutableString *documentWithFixes = [[NSMutableString alloc] init];
+
+    [documentWithFixes appendString:NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.introfix", @"")];
+    [documentWithFixes appendString:[NSString stringWithFormat:@"%@: %@ ", NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.year", @""), concept.month.year.yearDateAsString]];
+    [documentWithFixes appendString:[NSString stringWithFormat:@"%@: %@ ", NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.month", @""), concept.month.monthAsString]];
+    [documentWithFixes appendString:[NSString stringWithFormat:@"%@: %@ ", NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.amount", @""), concept.amount]];
+    if ([[NSUserDefaults standardUserDefaults] isDayModeActiveForConcepts]) {
+        [documentWithFixes appendString:[NSString stringWithFormat:@"%@: %d", NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.day", @""), concept.dayOfTheMonth]];
+    }
+    
+    [documentWithFixes appendString:@"\n"];
+
+    return documentWithFixes;
+}
+
++ (void)sendEmailWithReportIfApplicable:(NSString *)report
+{
+    if (report.length > 0) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"FixRemoveCategoryActionLostInUnloadedYearsReport"
+                                                            object:nil
+                                                          userInfo:@{@"report": report}];
+    }
 }
 
 @end

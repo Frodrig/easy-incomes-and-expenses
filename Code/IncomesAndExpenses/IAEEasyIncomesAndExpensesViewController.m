@@ -48,6 +48,7 @@
 #import "NSDecimalNumber+AbsoluteValue.h"
 #import "IAEStrokeAnimatableLineView.h"
 #import "IAEDragPanelCalculatorView.h"
+#import "IAEFixRemoveCategoryActionLostInUnloadedYears.h"
 
 @interface IAEEasyIncomesAndExpensesViewController ()
 
@@ -529,6 +530,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     self.navigationController.navigationBar.alpha = 0;
 
     [self executeInitialAnimation];
+    [self checkFixesExecuted];
 }
 
 - (void)executeInitialAnimation
@@ -554,6 +556,43 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     } completion:^(BOOL finished) {
         [self.delegate lauchCompleteInEasyIncomesAndExpensesViewController:self];
     }];
+}
+
+- (void)checkFixesExecuted
+{
+    if ([IAEFixRemoveCategoryActionLostInUnloadedYears defaultFix].resultReport.length > 0) {
+        UIAlertView *checkFixesExecutedAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.alertview.subject", @"")
+                                                                              message:NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.alertview.message", @"")
+                                                                             delegate:self
+                                                                    cancelButtonTitle:NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.alertview.ok", @"")
+                                                                    otherButtonTitles:nil];
+        [checkFixesExecutedAlertView show];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSAssert([IAEFixRemoveCategoryActionLostInUnloadedYears defaultFix].resultReport.length > 0, @"Deberia de haber un reporte creado");
+    
+    MFMailComposeViewController *appEmailViewController = [[MFMailComposeViewController alloc] init];
+    appEmailViewController.mailComposeDelegate = self;
+    
+    NSString *subject = NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.emailSubject", @"");
+    [appEmailViewController setSubject:subject];
+    [appEmailViewController setToRecipients:nil];
+    
+    NSString *beginMessage = NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.emailBeginMessage", @"");
+    NSString *messageBody = [beginMessage stringByAppendingString:[IAEFixRemoveCategoryActionLostInUnloadedYears defaultFix].resultReport];
+    [appEmailViewController setMessageBody:messageBody isHTML:NO];
+    
+    [self presentViewController:appEmailViewController animated:YES completion:nil];
+}
+
+#pragma mark - MFMailComposeViewControllerDelegate
+
+-(void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - ControlEvents
@@ -2138,6 +2177,25 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 {
     [self.yearSelectorViewController closeButtonPressed:nil];
 }
+
+/*
+- (void)notificationFixRemoveCategoryActionLostInUnloadedYearsReport:(NSDictionary *)userInfo
+{
+    MFMailComposeViewController *appEmailViewController = [[MFMailComposeViewController alloc] init];
+    appEmailViewController.mailComposeDelegate = self;
+    
+    NSString *subject = NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.emailSubject", @"");
+    [appEmailViewController setSubject:subject];
+    [appEmailViewController setToRecipients:nil];
+    
+    NSString *beginMessage = NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.emailBeginMessage", @"");
+    NSString *reportOfFix = userInfo[@"report"];
+    NSString *messageBody = [beginMessage stringByAppendingString:reportOfFix];
+    [appEmailViewController setMessageBody:messageBody isHTML:NO];
+    
+    [self presentViewController:appEmailViewController animated:YES completion:nil];
+}
+*/
 
 #pragma mark - IAEDayCalendarSelectorViewControllerDelegate
 

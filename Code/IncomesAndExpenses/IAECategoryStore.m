@@ -137,6 +137,23 @@ static NSString * const kCategoryPropertyNameTag = @"tag";
     if (category && category != self.generalIncomeCategory && category != self.generalExpenseCategory) {
         IAECategory *baseCategory = category.categoryType == IncomeCategory ? self.generalIncomeCategory : self.generalExpenseCategory;
         
+        NSArray *conceptsWithCategory = [[IAEBook sharedBook] findAllConceptsWithCategory:category];
+        for (IAEConcept *concept in conceptsWithCategory) {
+            concept.category = baseCategory;
+        }
+        
+        [category removeObserver:self forKeyPath:kCategoryPropertyNameTag context:NULL];
+        [_userDefinedCategories removeObject:category];
+        [[IAEBook sharedBook].context deleteObject:category];
+        
+        [[IAEBook sharedBook] saveAll];
+    }
+    
+    return;
+    
+    if (category && category != self.generalIncomeCategory && category != self.generalExpenseCategory) {
+        IAECategory *baseCategory = category.categoryType == IncomeCategory ? self.generalIncomeCategory : self.generalExpenseCategory;
+        
         NSArray *allYearsDatesActuallyLoaded = [[IAEBook sharedBook] findAllYeardDatesLoaded];
         [[IAEBook sharedBook] loadAll];
         

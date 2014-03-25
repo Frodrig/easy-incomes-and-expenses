@@ -23,8 +23,23 @@ static const NSString * const kMinVersion = @"2.4.3";
 
 @implementation IAEFixRemoveCategoryActionLostInUnloadedYears
 
-+ (void)checkAndExecuteIfApplicable
++ (IAEFixRemoveCategoryActionLostInUnloadedYears *)defaultFix
 {
+    static IAEFixRemoveCategoryActionLostInUnloadedYears *defaultFix = nil;
+    
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        defaultFix = [[self alloc] init];
+    });
+    
+    return defaultFix;
+}
+
+- (void)checkAndExecuteIfApplicable
+{
+    [[NSUserDefaults standardUserDefaults] setFixRemoveCategoryActionLostInUnloadedYearsExecuted:NO];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
     NSMutableString *documentWithFixes = [[NSMutableString alloc] init];
     
     if ([self canExecuteFix]) {
@@ -36,7 +51,6 @@ static const NSString * const kMinVersion = @"2.4.3";
                     const BOOL conceptWithCategoryToFix = ![[IAEBook sharedBook].context existingObjectWithID:conceptObjIt.category.objectID error:NULL];
                     if (conceptWithCategoryToFix) {
                         conceptObjIt.category = [IAECategoryStore sharedCategoryStore].generalExpenseCategory;
-                        
                         [documentWithFixes appendString:[self createDescriptionOfConceptFixed:conceptObjIt]];
                     }
                 }
@@ -48,23 +62,21 @@ static const NSString * const kMinVersion = @"2.4.3";
         
         [[NSUserDefaults standardUserDefaults] setFixRemoveCategoryActionLostInUnloadedYearsExecuted:YES];
         
-        // sendMessage
-        [self sendEmailWithReportIfApplicable:documentWithFixes];
+        self.resultReport = [documentWithFixes mutableCopy];
     }
 }
 
-+ (BOOL)canExecuteFix
+- (BOOL)canExecuteFix
 {
     const BOOL isFixNotExecuted = [[NSUserDefaults standardUserDefaults] isFixRemoveCategoryActionLostInUnloadedYearsNotExecuted];
     
     return isFixNotExecuted;
 }
 
-+ (NSString *)createDescriptionOfConceptFixed:(IAEConcept *)concept
+- (NSString *)createDescriptionOfConceptFixed:(IAEConcept *)concept
 {
     NSMutableString *documentWithFixes = [[NSMutableString alloc] init];
 
-    [documentWithFixes appendString:NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.introfix", @"")];
     [documentWithFixes appendString:[NSString stringWithFormat:@"%@: %@ ", NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.year", @""), concept.month.year.yearDateAsString]];
     [documentWithFixes appendString:[NSString stringWithFormat:@"%@: %@ ", NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.month", @""), concept.month.monthAsString]];
     [documentWithFixes appendString:[NSString stringWithFormat:@"%@: %@ ", NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.amount", @""), concept.amount]];
@@ -75,15 +87,6 @@ static const NSString * const kMinVersion = @"2.4.3";
     [documentWithFixes appendString:@"\n"];
 
     return documentWithFixes;
-}
-
-+ (void)sendEmailWithReportIfApplicable:(NSString *)report
-{
-    if (report.length > 0) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"FixRemoveCategoryActionLostInUnloadedYearsReport"
-                                                            object:nil
-                                                          userInfo:@{@"report": report}];
-    }
 }
 
 @end

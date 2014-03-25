@@ -10,6 +10,10 @@
 
 @interface IAEFixRemoveCategoryActionLostInUnloadedYears : NSObject
 
-+ (void)checkAndExecuteIfApplicable;
+@property(nonatomic, strong) NSString *resultReport;
+
++ (IAEFixRemoveCategoryActionLostInUnloadedYears *)defaultFix;
+
+- (void)checkAndExecuteIfApplicable;
 
 @end

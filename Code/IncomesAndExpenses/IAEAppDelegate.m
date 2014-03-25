@@ -38,14 +38,18 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
     [self prepareFlurry];
     [self prepareDefaults];
     [self processProcessInfoEnvironment];
-    [self configureObservingFixes];
     [self processFixes];
     [self createYearBookIfProceed];
     [self createWindowRootLaunchingViewControllerAndMakeVisible];
         
     return YES;
 }
-    
+
+- (void)processFixes
+{
+    [[IAEFixRemoveCategoryActionLostInUnloadedYears defaultFix] checkAndExecuteIfApplicable];
+}
+
 - (void)prepareCrashlytics
 {
     [Crashlytics startWithAPIKey:@"ed113bdf0c248b243b565ef1fdac0f966317a7b8"];
@@ -75,20 +79,6 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
     }
 }
 
-- (void)configureObservingFixes
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(notificationFixRemoveCategoryActionLostInUnloadedYearsReport:)
-                                                 name:@"FixRemoveCategoryActionLostInUnloadedYearsReport"
-                                               object:nil];
-
-}
-
-- (void)processFixes
-{
-    [IAEFixRemoveCategoryActionLostInUnloadedYears checkAndExecuteIfApplicable];
-}
-
 - (void)createYearBookIfProceed
 {
     // Si no hay ningun año registrado, se crea
@@ -115,13 +105,6 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
     self.window.backgroundColor = [UIColor whiteColor];
     self.window.rootViewController = [[IAERootLauchingViewController alloc] init];
     [self.window makeKeyAndVisible];
-}
-
-#pragma mark - App Notifications
-
-- (void)notificationFixRemoveCategoryActionLostInUnloadedYearsReport:(NSDictionary *)userInfo
-{
-    // ....
 }
 
 #pragma mark - System Notifications

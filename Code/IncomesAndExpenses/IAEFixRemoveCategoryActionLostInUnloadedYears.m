@@ -37,8 +37,8 @@ static const NSString * const kMinVersion = @"2.4.3";
 
 - (void)checkAndExecuteIfApplicable
 {
-    [[NSUserDefaults standardUserDefaults] setFixRemoveCategoryActionLostInUnloadedYearsExecuted:NO];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    //[[NSUserDefaults standardUserDefaults] setFixRemoveCategoryActionLostInUnloadedYearsExecuted:NO];
+    //[[NSUserDefaults standardUserDefaults] synchronize];
 
     NSMutableString *documentWithFixes = [[NSMutableString alloc] init];
     

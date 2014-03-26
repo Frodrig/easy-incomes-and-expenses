@@ -134,6 +134,7 @@ static NSString * const kCategoryPropertyNameTag = @"tag";
 
 - (void)removeCategory:(IAECategory *)category
 {
+    /*
     if (category && category != self.generalIncomeCategory && category != self.generalExpenseCategory) {
         IAECategory *baseCategory = category.categoryType == IncomeCategory ? self.generalIncomeCategory : self.generalExpenseCategory;
         
@@ -150,7 +151,7 @@ static NSString * const kCategoryPropertyNameTag = @"tag";
     }
     
     return;
-    
+    */
     if (category && category != self.generalIncomeCategory && category != self.generalExpenseCategory) {
         IAECategory *baseCategory = category.categoryType == IncomeCategory ? self.generalIncomeCategory : self.generalExpenseCategory;
         

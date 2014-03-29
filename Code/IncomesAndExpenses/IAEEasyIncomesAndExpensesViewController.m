@@ -97,8 +97,6 @@
 
 #pragma mark - Constants
 
-static const NSUInteger kNumberOfMonths = 12;
-
 static const CGFloat kSelectorContextViewYOutsideMargin = 100;
 
 static const CGFloat kDurationInitializationAnimationNavigationFadeIn = 0.75;

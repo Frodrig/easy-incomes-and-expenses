@@ -58,6 +58,26 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     return self;
 }
 
+- (void)prepareModelAndContextOfDB
+{
+    _model = [NSManagedObjectModel mergedModelFromBundles:nil];
+    NSPersistentStoreCoordinator *persistentStore = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_model];
+    
+    NSError *error;
+    if (![persistentStore addPersistentStoreWithType:NSSQLiteStoreType
+                                       configuration:nil
+                                                 URL:[self storeFileURLWithPath]
+                                             options:nil
+                                               error:&error]) {
+        [NSException raise:@"Open DB failed" format:@"Reason: %@", [error localizedDescription]];
+    }
+    
+    _context = [[NSManagedObjectContext alloc] init];
+    _context.persistentStoreCoordinator = persistentStore;
+    _context.undoManager = nil;
+}
+
+
 - (NSManagedObjectModel *)createManagedObjectModel
 {
     return [NSManagedObjectModel mergedModelFromBundles:nil];
@@ -410,13 +430,6 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     return [NSArray arrayWithArray:allYearDates];
 }
 
-- (void)deleteAllAndSave
-{
-    // Cuando estamos fuera de la pantalla de seleccion de año solo hay un año cargado y es el primero del array
-    NSAssert(self.openYears.count == 1, @"O no hay años o bien hay mas de uno cargado");
-    return [self.openYears objectAtIndex:0];
-}
-
 - (NSArray *)findInOpenYearsAllConceptsWithCategory:(IAECategory *)category
 {
     NSMutableArray *concepts = [[NSMutableArray alloc] initWithCapacity:self.openYears.count];
@@ -444,7 +457,7 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
 
 
 //////
-
+/*
 - (NSArray *)findAllYeardDatesLoaded
 {
     NSMutableArray *allYearDates = [[NSMutableArray alloc] initWithCapacity:self.years.count];
@@ -552,5 +565,5 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     
     return self;
 }
-
+*/
 @end

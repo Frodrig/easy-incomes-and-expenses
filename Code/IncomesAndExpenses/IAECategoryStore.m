@@ -10,6 +10,7 @@
 #import "IAECategory.h"
 #import "IAEConcept.h"
 #import "IAEBook.h"
+#import "IAEOpenYear.h"
 
 @interface IAECategoryStore()
 
@@ -136,12 +137,10 @@ static NSString * const kCategoryPropertyNameTag = @"tag";
 {
     if (category && category != self.generalIncomeCategory && category != self.generalExpenseCategory) {
         IAECategory *baseCategory = category.categoryType == IncomeCategory ? self.generalIncomeCategory : self.generalExpenseCategory;
+        IAEOpenYear *actualOpenYear = [[IAEBook sharedBook] findActualOpenYear];
+        [[IAEBook sharedBook] openAll];
+        
         NSArray *conceptsWithCategory = [[IAEBook sharedBook] findInOpenYearsAllConceptsWithCategory:category];
-        
-        NSArray *allYearsDatesActuallyLoaded = [[IAEBook sharedBook] findAllYeardDatesLoaded];
-        [[IAEBook sharedBook] loadAll];
-        
-        NSArray *conceptsWithCategory = [[IAEBook sharedBook] findAllConceptsWithCategory:category];
         for (IAEConcept *concept in conceptsWithCategory) {
             concept.category = baseCategory;
         }
@@ -152,7 +151,8 @@ static NSString * const kCategoryPropertyNameTag = @"tag";
         
         [[IAEBook sharedBook] saveAll];
         
-        [[IAEBook sharedBook] unloadAllAndLoadYearDates:allYearsDatesActuallyLoaded];
+        [[IAEBook sharedBook] openYear:@(actualOpenYear.yearDate)];
+        //[[IAEBook sharedBook] unloadAllAndLoadYearDates:allYearsDatesActuallyLoaded];
     }
 }
 

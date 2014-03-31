@@ -17,14 +17,15 @@
 #import "IAEFixRemoveCategoryActionLostInUnloadedYears.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
 
-@interface IAEAppDelegate()
-
-@property (nonatomic, strong) IAERootLauchingViewController *launchingViewController;
-
 static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
 static NSString * const kUserDefaultsReportAmountMode = @"reportAmountMode";
 static NSString * const kFixRemoveCategoryActionLostInUnloadedYearsExecuted = @"fixRemoveCategoryActionLostInUnloadedYearsExecuted";
 static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalAmounts";
+
+@interface IAEAppDelegate()
+
+@property (nonatomic, strong) IAERootLauchingViewController *launchingViewController;
+
 @end
 
 @implementation IAEAppDelegate

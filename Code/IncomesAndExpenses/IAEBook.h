@@ -24,7 +24,7 @@
 
 /////
 
-
+/*
 - (instancetype)initWithManagedObjectModel:(NSManagedObjectModel *)model andManagedObjectContext:(NSManagedObjectContext *)context;
 
 - (void)loadAll;
@@ -37,7 +37,7 @@
 - (void)deleteYear:(NSNumber *)yearDate;
 - (void)loadAllYearsRemovingYearsWithZeroConceptsAndPreservingActualYear;
 - (void)deleteAllConceptsOfYear:(IAEYear *)year;
-
+*/
 /////
 
 - (void)openAll;

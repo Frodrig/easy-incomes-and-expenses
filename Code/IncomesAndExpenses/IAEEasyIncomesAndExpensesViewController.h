@@ -20,6 +20,7 @@
 #import "IAEEasyIncomesAndExpensesViewControllerQuery.h"
 #import "IAEReportAreaViewDelegate.h"
 #import "IAEAdjustConceptAmountViewControllerDataSource.h"
+#import <MessageUI/MFMailComposeViewController.h>
 #import "IAEFavoriteConceptsViewControllerDelegate.h"
 
 @protocol IAEEasyIncomesAndExpensesViewControllerDelegate;
@@ -39,6 +40,8 @@
                                                                       IAEReportAreaViewDelegate,
                                                                       IAEAdjustConceptAmountViewControllerDataSource,
                                                                       IAEEasyIncomesAndExpensesViewControllerQuery,
+                                                                      MFMailComposeViewControllerDelegate,
+                                                                      UIAlertViewDelegate>
                                                                       IAEFavoriteConceptsViewControllerDelegate>
 
 @property (nonatomic, weak) id<IAEEasyIncomesAndExpensesViewControllerDelegate> delegate;

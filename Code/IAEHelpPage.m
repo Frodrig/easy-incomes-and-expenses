@@ -27,11 +27,11 @@
 {
     NSMutableArray *dataRead = [[NSMutableArray alloc] init];
     
-    NSString *ltextPrefix = [NSString stringWithFormat:@"LTEXT_HELPCONTENT_%d_%d_", _themeIndex, _pageIndex];
+    NSString *ltextPrefix = [NSString stringWithFormat:@"LTEXT_HELPCONTENT_%lu_%lu_", (unsigned long)_themeIndex, (unsigned long)_pageIndex];
     NSUInteger textIndex = 1;
     BOOL endReadTextData = NO;
     while (!endReadTextData) {
-        NSString *nextTextDataUnlocalizedLabel = [NSString stringWithFormat:@"%@%d", ltextPrefix, textIndex];
+        NSString *nextTextDataUnlocalizedLabel = [NSString stringWithFormat:@"%@%lu", ltextPrefix, (unsigned long)textIndex];
         NSString *nextTextDataLocalizedLabel = [[NSBundle mainBundle] localizedStringForKey:nextTextDataUnlocalizedLabel value:@"" table:nil];
         endReadTextData = [nextTextDataLocalizedLabel compare:nextTextDataUnlocalizedLabel] == NSOrderedSame;
         if (!endReadTextData) {
@@ -48,7 +48,7 @@
 
 - (void)description
 {
-    NSLog(@"HelpPage index: %d - theme index: %d", self.pageIndex, self.themeIndex);
+    NSLog(@"HelpPage index: %lu - theme index: %lu", (unsigned long)self.pageIndex, (unsigned long)self.themeIndex);
     NSLog(@"Content %@", [self.texts description]);
 }
 

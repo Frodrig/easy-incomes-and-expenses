@@ -48,8 +48,6 @@ static const CGFloat kMaxNumberOfReportItemsInScreen = 4;
 static const CGFloat kDurationOfReportItemViewAppear = 0.75;
 static const CGFloat kDurationOfReportItemViewDisappear = 0.75;
 
-static const CGFloat kMinAlphaValueForScrolledReportAreaItems = 0.15;
-
 static NSString * const kReloadPendingKey = @"ReloadPending";
 
 static const CGFloat KDurationOfNoItemsLabelAnimations = 0.5;

@@ -49,6 +49,7 @@
 #import "NSDecimalNumber+AbsoluteValue.h"
 #import "IAEStrokeAnimatableLineView.h"
 #import "IAEDragPanelCalculatorView.h"
+#import "IAEFixRemoveCategoryActionLostInUnloadedYears.h"
 #import "IAEFavoriteConceptsStock.h"
 #import "IAEFavoriteConceptsViewController.h"
 
@@ -101,8 +102,6 @@
 
 #pragma mark - Constants
 
-static const NSUInteger kNumberOfMonths = 12;
-
 static const CGFloat kSelectorContextViewYOutsideMargin = 100;
 
 static const CGFloat kDurationInitializationAnimationNavigationFadeIn = 0.75;
@@ -116,9 +115,6 @@ static NSString * const kLTextYearsBarButtonTitle = @"LTEXT_BARBUTTON_YEARS_TITL
 static NSString * const kLTextCategoriesBarButtonTitle = @"LTEXT_BARBUTTON_CATEGORIES_TITLE";
 static NSString * const kLTextFavoritesBarButtonTitle = @"LTEXT_BARBUTTON_FAVORITES_TITLE";
 
-static const CGFloat kEditAndReportModeContentContainerRadius = 15;
-static const CGFloat kColorWithWhiteForEditAndReportModeContentContainerBackground = 0.97;
-
 static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 
 static NSString * const kNotificationDayModeOnName = @"dayModeToOn";
@@ -128,7 +124,6 @@ static NSString * const kNotificationInitialMonthChanged = @"initialMonthChange"
 static NSString * const kLTextModeSegmentedControlEditMode = @"LTEXT_MODESEGMENTEDCONTROL_EDITMODE";
 static NSString * const kLTextModeSegmentedControlReportMode = @"LTEXT_MODESEGMENTEDCONTROL_REPORTMODE";
 
-static const NSUInteger kContentScrollViewNumberOfItems = 13;
 static const NSUInteger kGlobalIndexForYearInContextScrollView = 0;
 
 static NSString * const kNibConceptCellName = @"IAEEditModeConceptCollectionViewCell";
@@ -157,8 +152,6 @@ static const CGFloat kDurationOfEditConceptCollectionViewTransition = 0.5;
 static NSString * const kXibWithoutConceptsWarningInEditModeViewName = @"IAEWithoutConceptsTextWarning";
 static NSString * const kXibWithoutConceptsWarningInReportModeViewName = @"IAEWithoutConceptsTextWarningReportMode";
 static const CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.5;
-
-static const CGFloat kDurationOfFrameUpdateWhenShowOrHideCalculator = 0.25;
 
 static const NSInteger kInvalidOptionIndex = -1;
 
@@ -557,6 +550,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     self.navigationController.navigationBar.alpha = 0;
 
     [self executeInitialAnimation];
+    [self checkFixesExecuted];
 }
 
 - (void)executeInitialAnimation
@@ -582,6 +576,43 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     } completion:^(BOOL finished) {
         [self.delegate lauchCompleteInEasyIncomesAndExpensesViewController:self];
     }];
+}
+
+- (void)checkFixesExecuted
+{
+    if ([IAEFixRemoveCategoryActionLostInUnloadedYears defaultFix].resultReport.length > 0) {
+        UIAlertView *checkFixesExecutedAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.alertview.subject", @"")
+                                                                              message:NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.alertview.message", @"")
+                                                                             delegate:self
+                                                                    cancelButtonTitle:NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.alertview.ok", @"")
+                                                                    otherButtonTitles:nil];
+        [checkFixesExecutedAlertView show];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSAssert([IAEFixRemoveCategoryActionLostInUnloadedYears defaultFix].resultReport.length > 0, @"Deberia de haber un reporte creado");
+    
+    MFMailComposeViewController *appEmailViewController = [[MFMailComposeViewController alloc] init];
+    appEmailViewController.mailComposeDelegate = self;
+    
+    NSString *subject = NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.emailSubject", @"");
+    [appEmailViewController setSubject:subject];
+    [appEmailViewController setToRecipients:nil];
+    
+    NSString *beginMessage = NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.emailBeginMessage", @"");
+    NSString *messageBody = [beginMessage stringByAppendingString:[IAEFixRemoveCategoryActionLostInUnloadedYears defaultFix].resultReport];
+    [appEmailViewController setMessageBody:messageBody isHTML:NO];
+    
+    [self presentViewController:appEmailViewController animated:YES completion:nil];
+}
+
+#pragma mark - MFMailComposeViewControllerDelegate
+
+-(void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - ControlEvents
@@ -620,13 +651,33 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     [self openModalForPresentYearSelectorViewController];
 }
 
+- (void)stopConceptsCollectionViewScrollAtActualPosition
+{
+    CGPoint offset = self.conceptsCollectionView.contentOffset;
+    offset.x -= 1.0;
+    offset.y -= 1.0;
+    [self.conceptsCollectionView setContentOffset:offset animated:NO];
+    
+    offset.x += 1.0;
+    offset.y += 1.0;
+    [self.conceptsCollectionView setContentOffset:offset animated:NO];
+}
+
+- (void)stopConceptsCollectionViewScrollAtTop
+{
+    CGRect frame = CGRectMake(0.0, 0.0, self.conceptsCollectionView.bounds.size.width, self.conceptsCollectionView.bounds.size.height);
+    [self.conceptsCollectionView scrollRectToVisible:frame animated:NO];
+}
+
 - (void)openModalForPresentYearSelectorViewController
 {
     self.yearSelectorViewController = [[IAEYearSelectorViewController alloc] initWithNibName:nil bundle:nil];
     self.yearSelectorViewController.delegate = self;
     self.yearSelectorViewController.modalPresentationStyle = UIModalPresentationFormSheet;
     
-    [self presentViewController:self.yearSelectorViewController animated:YES completion:nil];
+    [self presentViewController:self.yearSelectorViewController animated:YES completion:^{
+        [self stopConceptsCollectionViewScrollAtActualPosition];
+    }];
 }
 
 - (void)settingsOptionPressed:(id)sender
@@ -921,9 +972,14 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 - (IAEConcept *)findConceptAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray *concepts = [self allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath:indexPath];
-    CLSLog(@"valid array of concepts: %@ indexPath.row: %d section: %d number of Concepts: %d", concepts ? @"Yes" : @"No", indexPath.row, indexPath.section, concepts.count);
-    NSAssert(indexPath.row < concepts.count, @"");
-    IAEConcept *concept = [concepts objectAtIndex:indexPath.row];
+    CLSLog(@"valid array of concepts: %@ indexPath.row: %ld section: %ld number of Concepts: %lu", concepts ? @"Yes" : @"No", (long)indexPath.row, (long)indexPath.section, (unsigned long)concepts.count);
+    
+    IAEConcept *concept = nil;
+    if (concepts.count > 0 && indexPath.row < concepts.count) {
+        concept = [concepts objectAtIndex:indexPath.row];
+    } else {
+        CLSLog(@"Problema intentando acceder al concepto, indexPath superior a la cantidad de conceptos");
+    }
     
     return concept;
 }
@@ -1028,6 +1084,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
         CLSLog(@"allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath - YEAR: %d & MONTH: %d", month.year.yearDate, month.month);
     }
     
+    CLSLog(@"day mode active ? %@", [self isDayModeActiveForConcepts] ? @"YES" : @"NO");
     NSArray *allConcepts = [self isDayModeActiveForConcepts] ? [month allConceptsSortedByDay] : [month allConceptsSortedByEntryInstant];
     
     return allConcepts;
@@ -1035,6 +1092,8 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (IAEConcept *)findConceptOfCell:(UICollectionViewCell *)cell
 {
+    CLSLog(@"%s", __FUNCTION__);
+    
     NSIndexPath *indexPathOfCell = [self.conceptsCollectionView indexPathForCell:cell];
     return [self findConceptAtIndexPath:indexPathOfCell];
 }
@@ -1418,8 +1477,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (void)reloadContentOfConceptsCollectionView
 {
-    CGRect frame = CGRectMake(0.0, 0.0, self.conceptsCollectionView.bounds.size.width, self.conceptsCollectionView.bounds.size.height);
-    [self.conceptsCollectionView scrollRectToVisible:frame animated:NO];
+    [self stopConceptsCollectionViewScrollAtTop];
     [self.conceptsCollectionView reloadData];
 }
 
@@ -1860,6 +1918,8 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 - (void)adjustConceptsAmountViewController:(IAEAdjustConceptAmountViewController *)adjustConceptsAmountViewController
           didPressedAdjustButtonWithAmount:(NSNumber *)amount
 {
+    CLSLog(@"%s", __FUNCTION__);
+    
     [Flurry logEvent:@"changeconcept_amount"];
 
     IAEConcept *concept = [self findConceptAtIndexPath:adjustConceptsAmountViewController.conceptCellIndexPath];
@@ -1892,6 +1952,8 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (BOOL)canAdjustConceptAmountViewController:(IAEAdjustConceptAmountViewController *)adjustConceptViewController addAmount:(NSNumber *)amount
 {
+    CLSLog(@"%s", __FUNCTION__);
+    
     IAEConcept *concept = [self findConceptAtIndexPath:adjustConceptViewController.conceptCellIndexPath];
     const BOOL can = [concept canAddAmount:amount];
     
@@ -1930,6 +1992,8 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 - (void)changeCategoryOfConceptAtIndexPath:(NSIndexPath *)indexPath toCategory:(IAECategory *)category
 {
+    CLSLog(@"%s", __FUNCTION__);
+    
     IAEConcept *concept = [self findConceptAtIndexPath:indexPath];
     if (concept.category != category) {
         CategoryType originalCategoryType = concept.category.categoryType;
@@ -2223,11 +2287,32 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     [self.yearSelectorViewController closeButtonPressed:nil];
 }
 
+/*
+- (void)notificationFixRemoveCategoryActionLostInUnloadedYearsReport:(NSDictionary *)userInfo
+{
+    MFMailComposeViewController *appEmailViewController = [[MFMailComposeViewController alloc] init];
+    appEmailViewController.mailComposeDelegate = self;
+    
+    NSString *subject = NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.emailSubject", @"");
+    [appEmailViewController setSubject:subject];
+    [appEmailViewController setToRecipients:nil];
+    
+    NSString *beginMessage = NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.emailBeginMessage", @"");
+    NSString *reportOfFix = userInfo[@"report"];
+    NSString *messageBody = [beginMessage stringByAppendingString:reportOfFix];
+    [appEmailViewController setMessageBody:messageBody isHTML:NO];
+    
+    [self presentViewController:appEmailViewController animated:YES completion:nil];
+}
+*/
+
 #pragma mark - IAEDayCalendarSelectorViewControllerDelegate
 
 - (void)dayCalendarSelectorViewController:(IAEDayCalendarSelectorViewController *)dayCalendarSelectorViewController
                              didSelectDay:(NSUInteger)day
 {
+    CLSLog(@"%s", __FUNCTION__);
+    
     [self dismisPopover];
 
     IAEConcept *concept = [self findConceptAtIndexPath:dayCalendarSelectorViewController.conceptCellIndexPath];

@@ -27,9 +27,6 @@ static NSString * const kReportMenuFontFamilyName = @"HelveticaNeue-Ultralight";
 static const CGFloat kReportMenuFontSizeOfOptions = 28;
 static const CGFloat kReportMenuKernOfOptions = 4;
 static const CGFloat kReportMenuItemWidthSize = 200;
-static const NSUInteger kReportMenuIndexOfBalancesOption = 0;
-static const NSUInteger kReportMenuIndexOfIncomesOption = 1;
-static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
 static const NSUInteger kBorderMaskForOptions = 0;
 static const CGFloat kRadiusOfBorderForOptions = 0;
 

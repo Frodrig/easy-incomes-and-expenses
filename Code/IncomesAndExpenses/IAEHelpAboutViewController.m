@@ -119,10 +119,10 @@ static NSString * const kCollectionViewAboutCellIdentifier = @"IAEInfoCell";
 
 - (void)feedbackEmailButtonWasPressedInHelpAboutCollectionViewCell:(IAEHelpAboutCollectionViewCell *)cell
 {
-    [self lauchMailComposerViewControllerForFeedback];
+    [self launchMailComposerViewControllerForFeedback];
 }
 
-- (void)lauchMailComposerViewControllerForFeedback
+- (void)launchMailComposerViewControllerForFeedback
 {
     MFMailComposeViewController *appEmailViewController = [[MFMailComposeViewController alloc] init];
     appEmailViewController.mailComposeDelegate = self;

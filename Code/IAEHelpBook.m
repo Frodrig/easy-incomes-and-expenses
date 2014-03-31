@@ -44,7 +44,7 @@
     NSUInteger themeIndex = 1;
     BOOL allThemesCreated = NO;
     while (!allThemesCreated) {
-        NSString *unlocLTextTheme = [NSString stringWithFormat:@"%@%d", prefixLTextThemes, themeIndex];
+        NSString *unlocLTextTheme = [NSString stringWithFormat:@"%@%lu", prefixLTextThemes, (unsigned long)themeIndex];
         NSString *locLTextTheme = [[NSBundle mainBundle] localizedStringForKey:unlocLTextTheme value:@"" table:nil];
         allThemesCreated = [locLTextTheme compare:unlocLTextTheme] == NSOrderedSame;
         if (!allThemesCreated) {
@@ -63,7 +63,7 @@
 - (void)description
 {
     NSLog(@"IAEHelpBook description");
-    NSLog(@"Themes total: %d", self.themes.count);
+    NSLog(@"Themes total: %lu", (unsigned long)self.themes.count);
     NSLog(@"%@", [self.themes description]);
 }
 

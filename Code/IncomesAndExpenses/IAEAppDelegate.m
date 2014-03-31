@@ -14,17 +14,27 @@
 #import "IAEMonth.h"
 #import "IAECategoryStore.h"
 #import "IAERootLauchingViewController.h"
+#import "IAEFixRemoveCategoryActionLostInUnloadedYears.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
 
 @interface IAEAppDelegate()
 
 @property (nonatomic, strong) IAERootLauchingViewController *launchingViewController;
 
+static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
+static NSString * const kUserDefaultsReportAmountMode = @"reportAmountMode";
+static NSString * const kFixRemoveCategoryActionLostInUnloadedYearsExecuted = @"fixRemoveCategoryActionLostInUnloadedYearsExecuted";
+static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalAmounts";
 @end
 
 @implementation IAEAppDelegate
 
 #pragma mark - didFinishLaunching
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -32,12 +42,18 @@
     [self prepareFlurry];
     [[NSUserDefaults standardUserDefaults] prepareDefaults];
     [self processProcessInfoEnvironment];
+    [self processFixes];
     [self createYearBookIfProceed];
     [self createWindowRootLaunchingViewControllerAndMakeVisible];
     
     return YES;
 }
-    
+
+- (void)processFixes
+{
+    [[IAEFixRemoveCategoryActionLostInUnloadedYears defaultFix] checkAndExecuteIfApplicable];
+}
+
 - (void)prepareCrashlytics
 {
     [Crashlytics startWithAPIKey:@"ed113bdf0c248b243b565ef1fdac0f966317a7b8"];
@@ -58,6 +74,8 @@
 
 - (void)processProcessInfoEnvironment
 {
+    return;
+    
     NSNumber *testEnviromentVariable = [[NSProcessInfo processInfo].environment valueForKey:@"createTestDataAtLaunch"];
     if ([testEnviromentVariable boolValue]) {
         [[IAEBook sharedBook] deleteAllAndSave];
@@ -88,7 +106,7 @@
     [_launchingViewController performActionsAfterInsertedAsRootViewController];
 }
 
-#pragma mark - Notifications
+#pragma mark - System Notifications
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

@@ -13,13 +13,13 @@
 #import "IAEOpenYear.h"
 #import "MonthDefs.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
+#import <Crashlytics/Crashlytics.h>
 
 @interface IAEBook()
 
 @property (nonatomic, strong) NSMutableArray *years;
 @property (nonatomic, strong) NSManagedObjectContext *context;
 @property (nonatomic, strong) NSManagedObjectModel *model;
-
 @end
 
 @implementation IAEBook
@@ -58,19 +58,14 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     return self;
 }
 
-- (NSURL *)storeFileURLWithPath
+- (NSManagedObjectModel *)createManagedObjectModel
 {
-    NSArray *documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectory = [documentDirectories objectAtIndex:0];
-    NSURL* retURL = [NSURL fileURLWithPath:[documentDirectory stringByAppendingPathComponent:kFileNameForStoreData]];
-    
-    return retURL;
+    return [NSManagedObjectModel mergedModelFromBundles:nil];
 }
 
-- (void)prepareModelAndContextOfDB
+- (NSManagedObjectContext *)createManagedObjectContextFromModel:(NSManagedObjectModel *)model
 {
-    _model = [NSManagedObjectModel mergedModelFromBundles:nil];
-    NSPersistentStoreCoordinator *persistentStore = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_model];
+    NSPersistentStoreCoordinator *persistentStore = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:model];
     
     NSURL *storeURL = [self storeFileURLWithPath];
     
@@ -83,21 +78,26 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
         [NSException raise:@"Open DB failed" format:@"Reason: %@", [error localizedDescription]];
     }
     
-    if (![[NSFileManager defaultManager] setAttributes:@{NSFileProtectionKey: NSFileProtectionComplete}
-                                          ofItemAtPath:storeURL.path
-                                                 error:&error]) {
-        [NSException raise:@"Set protection attribute failed" format:@"Reason: %@", [error localizedDescription]];
-    }
-    
-    _context = [[NSManagedObjectContext alloc] init];
-    _context.persistentStoreCoordinator = persistentStore;
-    _context.undoManager = nil;
+    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] init];
+    context.persistentStoreCoordinator = persistentStore;
+    context.undoManager = nil;
+
+    return context;
 }
 
 - (void)prepareYearContainers
 {
     _years = [NSMutableArray array];
     _openYears = [NSArray array];
+}
+
+- (NSURL *)storeFileURLWithPath
+{
+    NSArray *documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [documentDirectories objectAtIndex:0];
+    NSURL* retURL = [NSURL fileURLWithPath:[documentDirectory stringByAppendingPathComponent:kFileNameForStoreData]];
+    
+    return retURL;
 }
 
 - (void)doRefreshObjectMergeChangesExceptForObjects:(NSSet *)exceptObjects
@@ -221,7 +221,8 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     
     NSError *error;
     NSArray *yearsLoaded = [self.context executeFetchRequest:request error:&error];
-    if (nil != error) {
+    if (!yearsLoaded) {
+        CLS_LOG(@"Fallo haciendo fetch de años. Razon %@", [error localizedDescription]);
         [NSException raise:@"Fetch failed loading years" format:@"Reason: %@", [error localizedDescription]];
     }
     
@@ -399,7 +400,17 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     return resultYear;
 }
 
-- (IAEOpenYear *)findActualOpenYear
+- (NSArray *)findAllYeardDatesLoaded
+{
+    NSMutableArray *allYearDates = [[NSMutableArray alloc] initWithCapacity:self.years.count];
+    for (IAEYear *yearIt in self.years) {
+        [allYearDates addObject:@(yearIt.yearDate)];
+    }
+    
+    return [NSArray arrayWithArray:allYearDates];
+}
+
+- (void)deleteAllAndSave
 {
     // Cuando estamos fuera de la pantalla de seleccion de año solo hay un año cargado y es el primero del array
     NSAssert(self.openYears.count == 1, @"O no hay años o bien hay mas de uno cargado");
@@ -429,6 +440,117 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     
     NSArray *resultOpenYears = [NSArray arrayWithArray:yearsSelected];
     return resultOpenYears;
+}
+
+
+//////
+
+- (NSArray *)findAllYeardDatesLoaded
+{
+    NSMutableArray *allYearDates = [[NSMutableArray alloc] initWithCapacity:self.years.count];
+    for (IAEYear *yearIt in self.years) {
+        [allYearDates addObject:@(yearIt.yearDate)];
+    }
+    
+    return [NSArray arrayWithArray:allYearDates];
+}
+
+- (IAEYear *)findActualYear
+{
+    // Cuando estamos fuera de la pantalla de seleccion de año solo hay un año cargado y es el primero del array
+    NSAssert(self.years.count != 0, @"¡No hay años cargados!");
+    return self.years.count > 0 ? [self.years objectAtIndex:0] : nil;
+}
+
+// Nota: Preserva siempre el año actual aunque no tenga conceptos
+- (void)loadAllYearsRemovingYearsWithZeroConceptsAndPreservingActualYear
+{
+    IAEYear *actualYearObjectBeforeReload = [self findActualYear];
+    const NSUInteger actualYearDate = actualYearObjectBeforeReload.yearDate;
+    if (actualYearObjectBeforeReload) {
+        [self loadAll];
+        
+        // Garantizamos que el año que estaba abierto seguira ocupando la primera posicion
+        IAEYear *actualYearAfterReload = [self findYearWithDate:@(actualYearDate)];
+        NSUInteger actualYearIndex = [self.years indexOfObject:actualYearAfterReload];
+        NSAssert(actualYearIndex != NSNotFound, @"");
+        if (actualYearIndex != 0) {
+            [self.years exchangeObjectAtIndex:0 withObjectAtIndex:actualYearIndex];
+        }
+        
+        NSMutableSet *yearsToDelete = [[NSMutableSet alloc] initWithCapacity:self.years.count];
+        for (IAEYear *year in self.years) {
+            if ([year findNumberOfConcepts] == 0 && actualYearDate != year.yearDate) {
+                [yearsToDelete addObject:year];
+            }
+        }
+        
+        while (yearsToDelete.count > 0) {
+            IAEYear *yearObjectToDelete = [yearsToDelete anyObject];
+            [yearsToDelete removeObject:yearObjectToDelete];
+            [self deleteYearObject:yearObjectToDelete];
+        }
+    }
+}
+
+- (void)unloadAllAndLoadYearDates:(NSArray *)yearDates
+{
+    [self unloadAll];
+    
+    NSMutableArray *yearsLoaded = [NSMutableArray arrayWithCapacity:yearDates.count];
+    
+    for (NSNumber *yearDateIt in yearDates) {
+        NSArray *yearLoaded = [self loadYearsWithLimit:1 andPredicate:[NSPredicate predicateWithFormat:@"yearDate == %@", yearDateIt]];
+        [yearsLoaded addObjectsFromArray:yearLoaded];
+    }
+    
+    self.years = yearsLoaded;
+}
+
+- (void)loadMoreRecientYear
+{
+    [self doRefreshObjectMergeChangesExceptForObjects:nil];
+    _years = [NSMutableArray arrayWithArray:[self loadYearsWithLimit:1 andPredicate:nil]];
+}
+
+- (void)loadYear:(NSUInteger)year
+{
+    IAEYear *yearFound = nil;
+    for (IAEYear *yearIt in self.years) {
+        if (yearIt.yearDate == year) {
+            yearFound = yearIt;
+            break;
+        }
+    }
+    
+    if (yearFound) {
+        [self doRefreshObjectMergeChangesExceptForObjects:[NSSet setWithObject:yearFound]];
+        _years = [NSMutableArray arrayWithObject:yearFound];
+    } else {
+        [self doRefreshObjectMergeChangesExceptForObjects:nil];
+        _years = [NSMutableArray arrayWithArray:[self loadYearsWithLimit:1 andPredicate:[NSPredicate predicateWithFormat:@"yearDate == %@", [NSNumber numberWithUnsignedInteger:year]]]];
+    }
+}
+
+- (void)loadAll
+{
+    [self doRefreshObjectMergeChangesExceptForObjects:[NSSet setWithArray:self.years]];
+    
+    NSArray *years = [self loadYearsWithLimit:UINT_MAX andPredicate:nil];
+    if (years) {
+        _years = [NSMutableArray arrayWithArray:years];
+    }
+}
+
+- (instancetype)initWithManagedObjectModel:(NSManagedObjectModel *)model andManagedObjectContext:(NSManagedObjectContext *)context
+{
+    self = [super init];
+    if (self) {
+        _model = model;
+        _context = context;
+    }
+    
+    return self;
 }
 
 @end

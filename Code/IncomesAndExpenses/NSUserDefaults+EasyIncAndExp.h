@@ -21,7 +21,12 @@
 - (void)changeToReportTotalAmountModeInReportSection;
 - (void)changeToReportTotalPercentageModeInReportSection;
 
+- (BOOL)isDayModeActiveForConcepts;
 - (void)changeInitialMonthTo:(MonthType)startMonth;
 - (MonthType)actualInitialMonth;
+
+- (BOOL)isFixRemoveCategoryActionLostInUnloadedYearsExecuted;
+- (BOOL)isFixRemoveCategoryActionLostInUnloadedYearsNotExecuted;
+- (void)setFixRemoveCategoryActionLostInUnloadedYearsExecuted:(BOOL)executed;
 
 @end

@@ -25,7 +25,7 @@
 
 - (void)readTitleData
 {
-    NSString *unlocalizedLText = [NSString stringWithFormat:@"LTEXT_HELPCONTENT_%d", _themeIndex];
+    NSString *unlocalizedLText = [NSString stringWithFormat:@"LTEXT_HELPCONTENT_%lu", (unsigned long)_themeIndex];
     _title = NSLocalizedString(unlocalizedLText, @"");
 }
 
@@ -33,11 +33,11 @@
 {
     NSMutableArray *helpPagesCreated = [[NSMutableArray alloc] init];
     
-    NSString *prefixThemeLTextPage = [NSString stringWithFormat:@"LTEXT_HELPCONTENT_%d_", _themeIndex];
+    NSString *prefixThemeLTextPage = [NSString stringWithFormat:@"LTEXT_HELPCONTENT_%lu_", (unsigned long)_themeIndex];
     NSUInteger helpPageIndex = 1;
     BOOL endReadHelpPages = NO;
     while (!endReadHelpPages) {
-        NSString *unlocLTextOfFirstTextOfFirstPageOfTheme = [NSString stringWithFormat:@"%@%d_1", prefixThemeLTextPage, helpPageIndex];
+        NSString *unlocLTextOfFirstTextOfFirstPageOfTheme = [NSString stringWithFormat:@"%@%lu_1", prefixThemeLTextPage, (unsigned long)helpPageIndex];
         NSString *locLTextOfFirstTextOfFirstPageOfTheme = [[NSBundle mainBundle] localizedStringForKey:unlocLTextOfFirstTextOfFirstPageOfTheme
                                                                                                  value:@""
                                                                                                  table:nil];
@@ -55,9 +55,9 @@
 
 - (void)description
 {
-    NSLog(@"Theme index: %d", self.themeIndex);
+    NSLog(@"Theme index: %lu", (unsigned long)self.themeIndex);
     NSLog(@"Theme title: %@", self.title);
-    NSLog(@"Theme pages: %d", self.helpPages.count);
+    NSLog(@"Theme pages: %lu", (unsigned long)self.helpPages.count);
     NSLog(@"%@", [self.helpPages description]);
 }
 

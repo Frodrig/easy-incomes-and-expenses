@@ -53,11 +53,11 @@
 - (NSArray *)findInOpenYearsAllConceptsWithCategory:(IAECategory *)category;
 - (NSArray *)findAllOpenYearsWithConcepts;
 
-- (IAEYear *)findYearWithDate:(NSNumber *)yearDate;
-- (IAEYear *)findActualYear;
+//- (IAEYear *)findYearWithDate:(NSNumber *)yearDate;
+//- (IAEYear *)findActualYear;
 - (NSArray *)findAllYeardDatesLoaded;
-- (NSArray *)findAllConceptsWithCategory:(IAECategory *)category;
-- (NSArray *)findAllYearWithConcepts;
+//- (NSArray *)findAllConceptsWithCategory:(IAECategory *)category;
+//- (NSArray *)findAllYearWithConcepts;
 
 - (BOOL)saveAll;
 

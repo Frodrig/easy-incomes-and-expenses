@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 Fernando Rodríguez Martínez. All rights reserved.
 //
 
-#import <Crashlytics/Crashlytics.h>
 #import "Flurry.h"
 #import "IAEAppDelegate.h"
 #import "IAEBook.h"
@@ -16,6 +15,7 @@
 #import "IAERootLauchingViewController.h"
 #import "IAEFixRemoveCategoryActionLostInUnloadedYears.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
+#import <Crashlytics/Crashlytics.h>
 
 static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
 static NSString * const kUserDefaultsReportAmountMode = @"reportAmountMode";

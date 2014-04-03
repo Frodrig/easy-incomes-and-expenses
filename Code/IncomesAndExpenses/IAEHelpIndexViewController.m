@@ -161,7 +161,7 @@ static NSString * const kExportCSVFileWithExtension = @"export.csv";
     const NSUInteger indexSufix = indexPath.row + 1;
     NSString *ltext = [NSString stringWithFormat:@"LTEXT_SETTINGSINDEX_%lu", (unsigned long)indexSufix];
     cell.textLabel.text = NSLocalizedString(ltext, @"");
-    NSString *imageName = [NSString stringWithFormat:@"settingsindex_img_%d", indexSufix];
+    NSString *imageName = [NSString stringWithFormat:@"settingsindex_img_%lu", (unsigned long)indexSufix];
     cell.imageView.image = [UIImage imageNamed:imageName];
     cell.accessoryType = indexPath.row == kRowOfCSVExportIndex ? UITableViewCellAccessoryNone : UITableViewCellAccessoryDisclosureIndicator;
 }

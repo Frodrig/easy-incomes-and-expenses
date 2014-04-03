@@ -19,6 +19,7 @@
 		5B1B7F9D18D793440012AC21 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD06167163A8CFF00A80BE3 /* CoreData.framework */; };
 		5B1B7FA118D794420012AC21 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1B7FA018D794420012AC21 /* XCTest.framework */; };
 		5B1B7FA518D7A22C0012AC21 /* IAEFixRemoveCategoryActionLostInUnloadedYears.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1B7FA418D7A22C0012AC21 /* IAEFixRemoveCategoryActionLostInUnloadedYears.m */; };
+		5B1C904E18EDED9600A7BC68 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1C904D18EDED9600A7BC68 /* Crashlytics.framework */; };
 		5B1F0D3517841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1F0D3417841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m */; };
 		5B1F0D3717841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B1F0D3617841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib */; };
 		5B23F04017FED21C00477D34 /* NSUserDefaults+EasyIncAndExp.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B23F03F17FED21C00477D34 /* NSUserDefaults+EasyIncAndExp.m */; };
@@ -231,6 +232,7 @@
 		5B1B7FA018D794420012AC21 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		5B1B7FA318D7A22C0012AC21 /* IAEFixRemoveCategoryActionLostInUnloadedYears.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEFixRemoveCategoryActionLostInUnloadedYears.h; sourceTree = "<group>"; };
 		5B1B7FA418D7A22C0012AC21 /* IAEFixRemoveCategoryActionLostInUnloadedYears.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEFixRemoveCategoryActionLostInUnloadedYears.m; sourceTree = "<group>"; };
+		5B1C904D18EDED9600A7BC68 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		5B1F0D3317841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEditModeConceptCollectionViewCell.h; sourceTree = "<group>"; };
 		5B1F0D3417841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEditModeConceptCollectionViewCell.m; sourceTree = "<group>"; };
 		5B1F0D3617841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEEditModeConceptCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -552,6 +554,7 @@
 			files = (
 				5B00398418CFC13900044B2D /* libFlurryAds_4.3.2.a in Frameworks */,
 				5BBD37CF180BFF990095A15A /* Security.framework in Frameworks */,
+				5B1C904E18EDED9600A7BC68 /* Crashlytics.framework in Frameworks */,
 				5BBD37D3180C01850095A15A /* MediaPlayer.framework in Frameworks */,
 				5BBD37D1180BFF9F0095A15A /* AdSupport.framework in Frameworks */,
 				5BBD37CD180BFF730095A15A /* SystemConfiguration.framework in Frameworks */,
@@ -1201,6 +1204,7 @@
 		5B767DF51636D7FC005315F8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5B1C904D18EDED9600A7BC68 /* Crashlytics.framework */,
 				5B1B7FA018D794420012AC21 /* XCTest.framework */,
 				5B1B7F9E18D794370012AC21 /* SenTestingKit.framework */,
 				5BBD37D2180C01850095A15A /* MediaPlayer.framework */,
@@ -2443,7 +2447,11 @@
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/fernandorodriguezmartinez/Trabajo/Freelance/Git/Easy\\ Incomes\\ and\\ Expenses/Code",
+					/Users/fernandorodriguezmartinez/Trabajo/Freelance/Git/Easy,
+					Incomes,
+					and,
+					Expenses/Code,
+					"$(PROJECT_DIR)",
 				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2477,7 +2485,11 @@
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/fernandorodriguezmartinez/Trabajo/Freelance/Git/Easy\\ Incomes\\ and\\ Expenses/Code",
+					/Users/fernandorodriguezmartinez/Trabajo/Freelance/Git/Easy,
+					Incomes,
+					and,
+					Expenses/Code,
+					"$(PROJECT_DIR)",
 				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

@@ -50,7 +50,7 @@ static NSString * const kLTextStartLabelBaseText = @"LTEXT_ABOUTANDOPTIONS_START
 - (void)initStartMonthSettings
 {
     NSNumber *startMonthUserDefaultsValue = [[NSUserDefaults standardUserDefaults] valueForKey:kUserDefaultInitialMonth];
-    MonthType startMonth = startMonthUserDefaultsValue.integerValue;
+    MonthType startMonth = (MonthType) startMonthUserDefaultsValue.integerValue;
     NSString *startMonthName = [IAEDateHelper findMonthNameStringWithMonthIndex:startMonth inShortForm:NO];
     NSString *buttonTitle = [NSString stringWithFormat:@"%@%@", NSLocalizedString(kLTextStartLabelBaseText, @""), startMonthName];
     self.startMonthLabel.text = buttonTitle;

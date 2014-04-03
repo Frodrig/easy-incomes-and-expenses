@@ -40,9 +40,9 @@ static const NSString * const kMinVersion = @"2.4.3";
     NSMutableString *documentWithFixes = [[NSMutableString alloc] init];
     
     if ([self canExecuteFix]) {
-        [[IAEBook sharedBook] loadAll];
+        [[IAEBook sharedBook] openAll];
         
-        for (IAEYear *yearObjIt in [IAEBook sharedBook].years) {
+        for (IAEYear *yearObjIt in [IAEBook sharedBook].openYears) {
             for (IAEMonth *monthObjIt in yearObjIt.months) {
                 for (IAEConcept *conceptObjIt in monthObjIt.concepts) {
                     const BOOL conceptWithCategoryToFix = ![[IAEBook sharedBook].context existingObjectWithID:conceptObjIt.category.objectID error:NULL];
@@ -55,7 +55,7 @@ static const NSString * const kMinVersion = @"2.4.3";
          }
         
         [[IAEBook sharedBook] saveAll];
-        [[IAEBook sharedBook] unloadAll];
+        [[IAEBook sharedBook] closeAll];
         
         [[NSUserDefaults standardUserDefaults] setFixRemoveCategoryActionLostInUnloadedYearsExecuted:YES];
         

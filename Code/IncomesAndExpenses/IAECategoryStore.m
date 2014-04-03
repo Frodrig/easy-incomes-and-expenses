@@ -137,7 +137,10 @@ static NSString * const kCategoryPropertyNameTag = @"tag";
 {
     if (category && category != self.generalIncomeCategory && category != self.generalExpenseCategory) {
         IAECategory *baseCategory = category.categoryType == IncomeCategory ? self.generalIncomeCategory : self.generalExpenseCategory;
+        NSAssert([IAEBook sharedBook].openYears.count <= 1, @"Solo esta preparado para que haya un año abierto");
         IAEOpenYear *actualOpenYear = [[IAEBook sharedBook] findActualOpenYear];
+        NSUInteger actualOpenYearDate = actualOpenYear.yearDate;
+        
         [[IAEBook sharedBook] openAll];
         
         NSArray *conceptsWithCategory = [[IAEBook sharedBook] findInOpenYearsAllConceptsWithCategory:category];
@@ -150,9 +153,7 @@ static NSString * const kCategoryPropertyNameTag = @"tag";
         [[IAEBook sharedBook].context deleteObject:category];
         
         [[IAEBook sharedBook] saveAll];
-        
-        [[IAEBook sharedBook] openYear:@(actualOpenYear.yearDate)];
-        //[[IAEBook sharedBook] unloadAllAndLoadYearDates:allYearsDatesActuallyLoaded];
+        [[IAEBook sharedBook] closeAllAndOpenYearWithDate:@(actualOpenYearDate)];
     }
 }
 

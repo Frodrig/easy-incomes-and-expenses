@@ -126,7 +126,7 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 {
     NSNumber *startMonth = [[NSUserDefaults standardUserDefaults] valueForKey:kUserDefaultInitialMonthKey];
     
-    return startMonth.integerValue;
+    return (MonthType)(startMonth.integerValue);
 }
 
 - (void)setFixRemoveCategoryActionLostInUnloadedYearsExecuted:(BOOL)executed

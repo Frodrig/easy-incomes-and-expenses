@@ -20,6 +20,7 @@
 #import "IAEColorHelper.h"
 #import "IAECategory.h"
 #import "IAEFavoriteConceptsStock.h"
+#import <Crashlytics/Crashlytics.h>
 
 @interface IAEHelperConceptsCollectionViewDataSource()
 

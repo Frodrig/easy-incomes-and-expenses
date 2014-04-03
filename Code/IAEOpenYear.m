@@ -90,7 +90,7 @@ static const NSUInteger kMonthsPerYear = 12;
 
 - (NSComparisonResult)compare:(IAEOpenYear *)aOpenYear
 {
-    NSNumber *yearDateNumber = [NSNumber numberWithInt:self.yearDate];
+    NSNumber *yearDateNumber = @(self.yearDate);
     const NSComparisonResult compareResult = [yearDateNumber compare:@(aOpenYear.yearDate)];
     
     return compareResult;

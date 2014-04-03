@@ -113,7 +113,7 @@ static const NSUInteger kFamilyFontSizeForCells = 22;
 
 - (MonthType)monthOfIndexPath:(NSIndexPath *)indexPath
 {
-    const MonthType month = indexPath.row + 1;
+    const MonthType month = (MonthType)(indexPath.row + 1);
 
     return month;
 }

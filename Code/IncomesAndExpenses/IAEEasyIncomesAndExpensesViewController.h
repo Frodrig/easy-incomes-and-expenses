@@ -41,7 +41,7 @@
                                                                       IAEAdjustConceptAmountViewControllerDataSource,
                                                                       IAEEasyIncomesAndExpensesViewControllerQuery,
                                                                       MFMailComposeViewControllerDelegate,
-                                                                      UIAlertViewDelegate>
+                                                                      UIAlertViewDelegate,
                                                                       IAEFavoriteConceptsViewControllerDelegate>
 
 @property (nonatomic, weak) id<IAEEasyIncomesAndExpensesViewControllerDelegate> delegate;

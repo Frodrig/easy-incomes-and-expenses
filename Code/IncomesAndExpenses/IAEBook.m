@@ -455,6 +455,12 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     return resultOpenYears;
 }
 
+- (IAEOpenYear *)findActualOpenYear
+{
+    // Siempre se considera que el año actualmente abierto es el primero
+    NSAssert(self.openYears.count >= 1, @"O no hay años o bien hay mas de uno cargado");
+    return [self.openYears objectAtIndex:0];
+}
 
 //////
 /*

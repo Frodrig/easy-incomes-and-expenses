@@ -163,6 +163,8 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 
 static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
+static const NSUInteger kNumberOfMonths = 12;
+
 #pragma mark - Properties
 
 - (IAEStrokeAnimatableLineView *)strokeAnimatableLineView
@@ -1055,7 +1057,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
     NSDateComponents *monthComponents = [gregorian components:NSMonthCalendarUnit fromDate:today];
     
     IAEOpenYear *openYear = [self findOpenYear];
-    const NSUInteger todayLocalMonthIndex = [openYear findIndexOfMonth:[monthComponents month]];
+    const NSUInteger todayLocalMonthIndex = [openYear findIndexOfMonth:(MonthType)(monthComponents.month)];
     
     return todayLocalMonthIndex;
 }
@@ -2261,7 +2263,7 @@ static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 - (void)notificationCenterInitialMonthChanged:(NSNotification *)notification
 {
     NSNumber *newMonth = [[notification userInfo] objectForKey:@"newInitialMonth"];
-    [self recalculeVisibleMonthsInOpenYearWithInitialMonth:newMonth.integerValue];
+    [self recalculeVisibleMonthsInOpenYearWithInitialMonth:(MonthType)(newMonth.integerValue)];
     [self.contextMenuView reloadOptionsStringNames];
     [self goToTodayMonth];
     //[self updateContentInformationOfActualModeWithAnimation:YES];

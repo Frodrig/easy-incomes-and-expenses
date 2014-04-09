@@ -83,7 +83,8 @@
 @property (nonatomic, strong) UIPopoverController *popover;
 @property (nonatomic, strong) UITapGestureRecognizer *tapConceptsRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *tapEditAndReportModeContainerViewRecognizer;
-@property (nonatomic, strong) UISwipeGestureRecognizer *swipeConceptsGestureRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer *swipeRightConceptsGestureRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer *swipeLeftConceptsGestureRecognizer;
 @property (nonatomic, strong) UIPanGestureRecognizer *panCalculatorGestureRecognizer;
 @property (nonatomic, strong) IAEStrokeAnimatableLineView *strokeAnimatableLineView;
 @property (nonatomic, weak) IAEEditModeConceptCollectionViewCell *conceptCellToRemove;
@@ -216,7 +217,8 @@ static const NSUInteger kNumberOfMonths = 12;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.calculatorViewController removePanGestureRecognizer];
     [self.conceptsCollectionView removeGestureRecognizer:self.tapConceptsRecognizer];
-    [self.conceptsCollectionView removeGestureRecognizer:self.swipeConceptsGestureRecognizer];
+    [self.conceptsCollectionView removeGestureRecognizer:self.swipeRightConceptsGestureRecognizer];
+    [self.conceptsCollectionView removeGestureRecognizer:self.swipeLeftConceptsGestureRecognizer];
     [self.editAndReportModeContentContainerView removeGestureRecognizer:self.tapEditAndReportModeContainerViewRecognizer];
 }
 
@@ -228,7 +230,8 @@ static const NSUInteger kNumberOfMonths = 12;
     if (self) {
         [self initCommonProperties];
         [self initTapConceptsGestureRecognizer];
-        [self initSwipeConceptsGestureRecognizer];
+        [self initRightSwipeConceptsGestureRecognizer];
+        [self initLeftSwipeConceptsGestureRecognizer];
         [self initPanCalculatorGestureRecognizer];
         [self initAsObserverOfNotificationCenter];
         [self initContextMenuView];
@@ -258,10 +261,16 @@ static const NSUInteger kNumberOfMonths = 12;
     _tapEditAndReportModeContainerViewRecognizer.numberOfTapsRequired = 1;
 }
 
-- (void)initSwipeConceptsGestureRecognizer
+- (void)initRightSwipeConceptsGestureRecognizer
 {
-    _swipeConceptsGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeOnConceptsCollectionView:)];
-    _swipeConceptsGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+    _swipeRightConceptsGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRightOnConceptsCollectionView:)];
+    _swipeRightConceptsGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+}
+
+- (void)initLeftSwipeConceptsGestureRecognizer
+{
+    _swipeLeftConceptsGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeftOnConceptsCollectionView:)];
+    _swipeLeftConceptsGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
 }
 
 - (void)initPanCalculatorGestureRecognizer
@@ -418,7 +427,8 @@ static const NSUInteger kNumberOfMonths = 12;
     self.conceptsCollectionView.bounces = YES;
     
     [self.conceptsCollectionView addGestureRecognizer:self.tapConceptsRecognizer];
-    [self.conceptsCollectionView addGestureRecognizer:self.swipeConceptsGestureRecognizer];
+    [self.conceptsCollectionView addGestureRecognizer:self.swipeRightConceptsGestureRecognizer];
+    [self.conceptsCollectionView addGestureRecognizer:self.swipeLeftConceptsGestureRecognizer];
 }
 
 - (void)configureReportAreaView
@@ -1628,9 +1638,34 @@ static const NSUInteger kNumberOfMonths = 12;
 
 #pragma mark - UISwipeGestureRecognizer
 
-- (void)swipeOnConceptsCollectionView:(UIGestureRecognizer *)swipeGestureRecognizer
+- (void)swipeLeftOnConceptsCollectionView:(UIGestureRecognizer *)swipeGestureRecognizer
 {
-    if ([self canSwipeOnConceptsCollectionView]) {
+    if ([self canDoLeftSwipeOnConceptsCollectionView]) {
+        // Nota: Puede venir un concepto nulo por hacer swipe en una zona hueca
+        IAEEditModeConceptCollectionViewCell *cell = [self findConceptCellUnderLocationOfGestureRecognizer:swipeGestureRecognizer];
+        if (cell) {
+            if ([self isCompletelyVisibleConceptCollectionViewCell:cell]) {
+                NSLog(@"Swipe left");
+                [cell scrollToMenuMode];
+            } else {
+                [self scrollToConceptsCollectionViewCell:cell];
+            }
+        }
+    }
+}
+
+- (BOOL)canDoLeftSwipeOnConceptsCollectionView
+{
+    const BOOL can = [self isActualSelectedContextAMonth] &&
+                     ![self.calculatorViewController isAnyTranslationActive] &&
+                     !self.conceptCellToRemove;
+    
+    return can;
+}
+
+- (void)swipeRightOnConceptsCollectionView:(UIGestureRecognizer *)swipeGestureRecognizer
+{
+    if ([self canDoRightSwipeOnConceptsCollectionView]) {
         // Nota: Puede venir un concepto nulo por hacer strike en una zona hueca
         IAEEditModeConceptCollectionViewCell *cell = [self findConceptCellUnderLocationOfGestureRecognizer:swipeGestureRecognizer];
         if (cell) {
@@ -1643,7 +1678,7 @@ static const NSUInteger kNumberOfMonths = 12;
     }
 }
 
-- (BOOL)canSwipeOnConceptsCollectionView
+- (BOOL)canDoRightSwipeOnConceptsCollectionView
 {
     const BOOL can = [self isActualSelectedContextAMonth] &&
                      ![self.calculatorViewController isAnyTranslationActive] &&
@@ -1702,7 +1737,7 @@ static const NSUInteger kNumberOfMonths = 12;
 - (CGPoint)extractConceptCollectionViewLocationFromGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
 {
     CGPoint location = CGPointZero;
-    if (gestureRecognizer == self.tapConceptsRecognizer || gestureRecognizer == self.swipeConceptsGestureRecognizer) {
+    if ([self isAConceptCollectionViewGestureRecognizer:gestureRecognizer]) {
         location = [gestureRecognizer locationInView:self.conceptsCollectionView];
     } else if (gestureRecognizer == self.tapEditAndReportModeContainerViewRecognizer) {
         location = [gestureRecognizer locationInView:self.editAndReportModeContentContainerView];
@@ -1712,6 +1747,13 @@ static const NSUInteger kNumberOfMonths = 12;
     }
 
     return location;
+}
+
+- (BOOL)isAConceptCollectionViewGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+{
+    return gestureRecognizer == self.tapConceptsRecognizer ||
+           gestureRecognizer == self.swipeRightConceptsGestureRecognizer ||
+           gestureRecognizer == self.swipeLeftConceptsGestureRecognizer;
 }
 
 - (void)executeActionInYearContextOnCellOfConceptCollectionView:(IAEEditModeConceptCollectionViewCell *)cell
@@ -1748,7 +1790,7 @@ static const NSUInteger kNumberOfMonths = 12;
 - (void)scrollToConceptsCollectionViewCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
     NSIndexPath *cellIndexPath = [self.conceptsCollectionView indexPathForCell:cell];
-    [self.conceptsCollectionView scrollToItemAtIndexPath:cellIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
+    [self.conceptsCollectionView scrollToItemAtIndexPath:cellIndexPath atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
 }
 
 - (void)executeLogicForManipulateConceptsCollectionViewCell:(IAEEditModeConceptCollectionViewCell *)cell

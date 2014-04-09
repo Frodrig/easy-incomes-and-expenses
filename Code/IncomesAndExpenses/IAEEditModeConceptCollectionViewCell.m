@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *amountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
 @property (nonatomic, readwrite, getter = isInStrokeState) BOOL strokeState;
+@property (weak, nonatomic) IBOutlet UIScrollView *containerScrollView;
 
 @end
 
@@ -89,6 +90,16 @@ static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
     [self removeIdentifierContainerViewSubviews];
     self.durationOfStrokeStateTransition = kDefaultDurationOfStrokeStateModeTransition;
     self.strokeState = NO;
+}
+
+- (void)scrollToMenuMode
+{
+    [self.containerScrollView scrollRectToVisible:CGRectMake(self.containerScrollView.contentSize.width - self.containerScrollView.contentSize.width * 0.5, 0, self.containerScrollView.contentSize.width * 0.5, self.containerScrollView.contentSize.height) animated:YES];
+}
+
+- (void)scrollToNormalMode
+{
+    [self.containerScrollView scrollRectToVisible:CGRectZero animated:YES];
 }
 
 #pragma mark - Draw

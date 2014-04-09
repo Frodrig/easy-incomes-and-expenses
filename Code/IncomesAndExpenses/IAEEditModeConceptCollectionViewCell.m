@@ -17,12 +17,16 @@
 @property (weak, nonatomic) IBOutlet UIView *categoryAndDecoratorContentInformationView;
 @property (weak, nonatomic) IBOutlet UILabel *amountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
-@property (nonatomic, readwrite, getter = isInStrokeState) BOOL strokeState;
 @property (weak, nonatomic) IBOutlet UIScrollView *containerScrollView;
+@property (weak, nonatomic) IBOutlet UILabel *optionDuplicateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *optionCopyLabel;
+@property (nonatomic, readwrite, getter = isInStrokeState) BOOL strokeState;
+@property (weak, nonatomic) IBOutlet UILabel *optionMoveLabel;
 
 @end
 
 @implementation IAEEditModeConceptCollectionViewCell
+
 
 #pragma mark - Constants
 
@@ -161,19 +165,37 @@ static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
 
 - (BOOL)isAmountLabelContainingLocationPoint:(CGPoint)location
 {
-    CGRect test = [self convertRect:self.amountLabel.frame fromView:self.conceptInformationContainerView];
-    return CGRectContainsPoint(test, location);
+    return [self isView:self.amountLabel containingLocationPoint:location fromView:self.conceptInformationContainerView];
 }
 
 - (BOOL)isCategoryNameOrTypeContainingLocationPoint:(CGPoint)location
 {
-    CGRect test = [self convertRect:self.categoryLabel.frame fromView:self.categoryAndDecoratorContentInformationView];
-    return CGRectContainsPoint(test, location);
+    return [self isView:self.categoryLabel containingLocationPoint:location fromView:self.categoryAndDecoratorContentInformationView];
 }
 
 - (BOOL)isIdentifierOrDayContainingLocationPoint:(CGPoint)location
 {
-    CGRect test = [self convertRect:self.identifierContainerView.frame fromView:self.conceptInformationContainerView];
+    return [self isView:self.identifierContainerView containingLocationPoint:location fromView:self.conceptInformationContainerView];
+}
+
+- (BOOL)isDuplicateOptionContainingLocationPoint:(CGPoint)location
+{
+    return [self isView:self.optionDuplicateLabel containingLocationPoint:location fromView:self.containerScrollView];
+}
+
+- (BOOL)isMoveOptionContainingLocationPoint:(CGPoint)location
+{
+    return [self isView:self.optionMoveLabel containingLocationPoint:location fromView:self.conceptInformationContainerView];
+}
+
+- (BOOL)isCopyOptionContainingLocationPoint:(CGPoint)location
+{
+    return [self isView:self.optionCopyLabel containingLocationPoint:location fromView:self.conceptInformationContainerView];
+}
+
+- (BOOL)isView:(UIView *)sourceView containingLocationPoint:(CGPoint)location fromView:(UIView *)fromView
+{
+    CGRect test = [self convertRect:sourceView.frame fromView:fromView];
     return CGRectContainsPoint(test, location);
 }
 

@@ -1715,7 +1715,7 @@ static const NSUInteger kNumberOfMonths = 12;
 
 - (BOOL)canTapOnConceptCollectionViewCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
-    const BOOL can = ![self.calculatorViewController isAnyTranslationActive] && !cell.menuModeActive;
+    const BOOL can = ![self.calculatorViewController isAnyTranslationActive];
     
     return can;
 }
@@ -1798,22 +1798,34 @@ static const NSUInteger kNumberOfMonths = 12;
                                   underLocatonOfTapGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
 {
     CGPoint location = [self convertLocationToCellArea:cell fromGestureRecognizer:gestureRecognizer];
-    if ([cell isFavoritePinContainingLocationPoint:location] && [self isFavoritePinInteractionEnabledInConcepts]) {
-        [self executeLogicAfterFavoritePinTapForCell:cell];
-    } else if ([cell isAmountLabelContainingLocationPoint:location]) {
-        [self openPopoverForAdjustAmountOfConceptCell:cell];
-    } else if ([cell isCategoryNameOrTypeContainingLocationPoint:location]) {
-        [self openPopoverForEditCategoryOfConceptCell:cell];
-    } else if ([cell isIdentifierOrDayContainingLocationPoint:location] && [self isDayModeActiveForConcepts]) {
-        [self openPopoverForSelectDayOfConceptCell:cell];
-    } else if ([cell isDuplicateOptionContainingLocationPoint:location]) {
-        NSLog(@"Duplicate Option");
-        
-    } else if ([cell isMoveOptionContainingLocationPoint:location]) {
-        NSLog(@"Move Option");
-    } else if ([cell isCopyOptionContainingLocationPoint:location]) {
-        NSLog(@"Copy Option");
+    if (cell.menuModeActive) {
+        if ([cell isDuplicateOptionContainingLocationPoint:location]) {
+            [self executeDuplicateConceptOfCell:cell];
+        } else if ([cell isMoveOptionContainingLocationPoint:location]) {
+            NSLog(@"Move Option");
+        } else if ([cell isCopyOptionContainingLocationPoint:location]) {
+            NSLog(@"Copy Option");
+        }
+    } else {
+        if ([cell isFavoritePinContainingLocationPoint:location] && [self isFavoritePinInteractionEnabledInConcepts]) {
+            [self executeLogicAfterFavoritePinTapForCell:cell];
+        } else if ([cell isAmountLabelContainingLocationPoint:location]) {
+            [self openPopoverForAdjustAmountOfConceptCell:cell];
+        } else if ([cell isCategoryNameOrTypeContainingLocationPoint:location]) {
+            [self openPopoverForEditCategoryOfConceptCell:cell];
+        } else if ([cell isIdentifierOrDayContainingLocationPoint:location] && [self isDayModeActiveForConcepts]) {
+            [self openPopoverForSelectDayOfConceptCell:cell];
+        }
     }
+}
+
+- (void)executeDuplicateConceptOfCell:(IAEEditModeConceptCollectionViewCell *)cell
+{
+    IAEConcept *concept = [self findConceptOfCell:cell];
+    IAEConcept *newConcept = [concept.month duplicateConcept:concept];
+    [[IAEBook sharedBook] saveAll];
+    [self hideAllConceptsCellWithMenuModeActiveUsingAnimation:NO];
+    [self updateAfterNewConceptCreated:newConcept];
 }
 
 - (BOOL)isFavoritePinInteractionEnabledInConcepts
@@ -2469,9 +2481,14 @@ static const NSUInteger kNumberOfMonths = 12;
 - (void)calculatorViewController:(IAECalculatorViewController *)calculatorViewController didCreateNewConcept:(IAEConcept *)concept
 {
     [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES andExecuteAfterAnimationTheLogicBlock:^{
-        [self reloadConceptsCollectionViewAfterCreateNewConcept:concept];
-        [self updateBalancesWithAnimation:NO];
+        [self updateAfterNewConceptCreated:concept];
     }];
+}
+
+- (void)updateAfterNewConceptCreated:(IAEConcept *)concept
+{
+    [self reloadConceptsCollectionViewAfterCreateNewConcept:concept];
+    [self updateBalancesWithAnimation:NO];
 }
 
 - (void)reloadConceptsCollectionViewAfterCreateNewConcept:(IAEConcept *)concept
@@ -2535,6 +2552,7 @@ static const NSUInteger kNumberOfMonths = 12;
 
 - (void)reloadConceptsCollectionViewWithoutDayModeAfterCreateNewConcept
 {
+    [self.conceptsCollectionView scrollRectToVisible:CGRectMake(0, 0, self.conceptsCollectionView.bounds.size.width, self.conceptsCollectionView.bounds.size.height) animated:NO];
     [self.conceptsCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]];
 }
 

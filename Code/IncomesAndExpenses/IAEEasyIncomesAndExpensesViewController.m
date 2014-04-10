@@ -2503,6 +2503,20 @@ static const NSUInteger kNumberOfMonths = 12;
 
 #pragma mark - UIScrollViewDelegate
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    if (scrollView == self.conceptsCollectionView) {
+        [self hideAllConceptsCellWithMenuModeActive];
+    }
+}
+
+- (void)hideAllConceptsCellWithMenuModeActive
+{
+    for (IAEEditModeConceptCollectionViewCell *cell in self.conceptsCollectionView.visibleCells) {
+        [cell scrollToNormalMode];
+    }
+}
+
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
     if (scrollView == self.conceptsCollectionView) {

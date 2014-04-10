@@ -1640,25 +1640,24 @@ static const NSUInteger kNumberOfMonths = 12;
 
 - (void)swipeLeftOnConceptsCollectionView:(UIGestureRecognizer *)swipeGestureRecognizer
 {
-    if ([self canDoLeftSwipeOnConceptsCollectionView]) {
-        // Nota: Puede venir un concepto nulo por hacer swipe en una zona hueca
-        IAEEditModeConceptCollectionViewCell *cell = [self findConceptCellUnderLocationOfGestureRecognizer:swipeGestureRecognizer];
-        if (cell) {
-            if ([self isCompletelyVisibleConceptCollectionViewCell:cell]) {
-                NSLog(@"Swipe left");
-                [cell scrollToMenuMode];
-            } else {
-                [self scrollToConceptsCollectionViewCell:cell];
-            }
+    // Nota: Puede venir un concepto nulo por hacer swipe en una zona hueca
+    IAEEditModeConceptCollectionViewCell *cell = [self findConceptCellUnderLocationOfGestureRecognizer:swipeGestureRecognizer];
+    if (cell && [self canDoLeftSwipeOnConceptsCollectionViewCell:cell]) {
+        if ([self isCompletelyVisibleConceptCollectionViewCell:cell]) {
+            [self hideAllConceptsCellWithMenuModeActive];
+            [cell scrollToMenuMode];
+        } else {
+            [self scrollToConceptsCollectionViewCell:cell];
         }
     }
 }
 
-- (BOOL)canDoLeftSwipeOnConceptsCollectionView
+- (BOOL)canDoLeftSwipeOnConceptsCollectionViewCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
     const BOOL can = [self isActualSelectedContextAMonth] &&
                      ![self.calculatorViewController isAnyTranslationActive] &&
-                     !self.conceptCellToRemove;
+                     !self.conceptCellToRemove &&
+                     !cell.menuModeActive;
     
     return can;
 }

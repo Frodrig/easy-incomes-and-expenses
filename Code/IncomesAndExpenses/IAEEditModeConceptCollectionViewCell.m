@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *optionDuplicateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *optionCopyLabel;
 @property (nonatomic, readwrite, getter = isInStrokeState) BOOL strokeState;
+@property (nonatomic, readwrite) BOOL menuModeActive;
 @property (weak, nonatomic) IBOutlet UILabel *optionMoveLabel;
 
 @end
@@ -83,6 +84,7 @@ static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
     if (self) {
         // Initialization code
         _favoritePinEnabled = YES;
+        _menuModeActive = NO;
         self.durationOfStrokeStateTransition = kDefaultDurationOfStrokeStateModeTransition;
     }
     return self;
@@ -94,16 +96,23 @@ static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
     [self removeIdentifierContainerViewSubviews];
     self.durationOfStrokeStateTransition = kDefaultDurationOfStrokeStateModeTransition;
     self.strokeState = NO;
+    self.menuModeActive = NO;
 }
 
 - (void)scrollToMenuMode
 {
-    [self.containerScrollView scrollRectToVisible:CGRectMake(self.containerScrollView.contentSize.width - self.containerScrollView.contentSize.width * 0.5, 0, self.containerScrollView.contentSize.width * 0.5, self.containerScrollView.contentSize.height) animated:YES];
+    if (!self.menuModeActive) {
+        self.menuModeActive = YES;
+        [self.containerScrollView scrollRectToVisible:CGRectMake(self.containerScrollView.contentSize.width - self.containerScrollView.contentSize.width * 0.5, 0, self.containerScrollView.contentSize.width * 0.5, self.containerScrollView.contentSize.height) animated:YES];
+    }
 }
 
 - (void)scrollToNormalMode
 {
-    [self.containerScrollView scrollRectToVisible:CGRectZero animated:YES];
+    if (self.menuModeActive) {
+        self.menuModeActive = NO;
+        [self.containerScrollView scrollRectToVisible:CGRectMake(0, 0, self.containerScrollView.contentSize.width - self.containerScrollView.contentSize.width * 0.5, self.containerScrollView.contentSize.height) animated:YES];
+    }
 }
 
 #pragma mark - Draw

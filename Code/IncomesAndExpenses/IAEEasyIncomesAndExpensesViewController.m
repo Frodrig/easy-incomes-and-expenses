@@ -1669,7 +1669,9 @@ static const NSUInteger kNumberOfMonths = 12;
         // Nota: Puede venir un concepto nulo por hacer strike en una zona hueca
         IAEEditModeConceptCollectionViewCell *cell = [self findConceptCellUnderLocationOfGestureRecognizer:swipeGestureRecognizer];
         if (cell) {
-            if ([self isCompletelyVisibleConceptCollectionViewCell:cell]) {
+            if (cell.menuModeActive) {
+                [cell scrollToNormalMode];
+            } else if ([self isCompletelyVisibleConceptCollectionViewCell:cell]) {
                 [self doStrokeOverConceptCell:cell];
             } else {
                 [self scrollToConceptsCollectionViewCell:cell];

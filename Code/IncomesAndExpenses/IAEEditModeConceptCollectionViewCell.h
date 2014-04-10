@@ -24,6 +24,7 @@ typedef NS_ENUM(NSUInteger, EditModeConceptElement) {
 @property (weak, nonatomic) IBOutlet UIImageView *favoritePinImage;
 @property (nonatomic) CGFloat durationOfStrokeStateTransition;
 @property (nonatomic, readonly, getter = isInStrokeState) BOOL strokeState;
+@property (nonatomic, readonly) BOOL menuModeActive;
 @property (nonatomic) BOOL drawSeparatorLine;
 @property (nonatomic) BOOL favoritePinEnabled;
 

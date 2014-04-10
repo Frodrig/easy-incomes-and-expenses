@@ -97,22 +97,33 @@ static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
     self.durationOfStrokeStateTransition = kDefaultDurationOfStrokeStateModeTransition;
     self.strokeState = NO;
     self.menuModeActive = NO;
+    [self executeScrollToNormalModeWithAnimation:NO];
 }
 
 - (void)scrollToMenuMode
 {
     if (!self.menuModeActive) {
         self.menuModeActive = YES;
-        [self.containerScrollView scrollRectToVisible:CGRectMake(self.containerScrollView.contentSize.width - self.containerScrollView.contentSize.width * 0.5, 0, self.containerScrollView.contentSize.width * 0.5, self.containerScrollView.contentSize.height) animated:YES];
+        [self executeScrollToMenuModeWithAnimation:YES];
     }
+}
+
+- (void)executeScrollToMenuModeWithAnimation:(BOOL)animation
+{
+    [self.containerScrollView scrollRectToVisible:CGRectMake(self.containerScrollView.contentSize.width - self.containerScrollView.contentSize.width * 0.5, 0, self.containerScrollView.contentSize.width * 0.5, self.containerScrollView.contentSize.height) animated:animation];
 }
 
 - (void)scrollToNormalMode
 {
     if (self.menuModeActive) {
         self.menuModeActive = NO;
-        [self.containerScrollView scrollRectToVisible:CGRectMake(0, 0, self.containerScrollView.contentSize.width - self.containerScrollView.contentSize.width * 0.5, self.containerScrollView.contentSize.height) animated:YES];
+        [self executeScrollToNormalModeWithAnimation:YES];
     }
+}
+
+- (void)executeScrollToNormalModeWithAnimation:(BOOL)animation
+{
+    [self.containerScrollView scrollRectToVisible:CGRectMake(0, 0, self.containerScrollView.contentSize.width - self.containerScrollView.contentSize.width * 0.5, self.containerScrollView.contentSize.height) animated:animation];
 }
 
 #pragma mark - Draw

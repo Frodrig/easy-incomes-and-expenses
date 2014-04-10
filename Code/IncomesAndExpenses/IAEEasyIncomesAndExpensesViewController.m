@@ -1704,8 +1704,8 @@ static const NSUInteger kNumberOfMonths = 12;
 - (void)tapOnConceptsCollectionView:(UITapGestureRecognizer *)tapGestureRecognizer
 {
     NSAssert(tapGestureRecognizer == self.tapConceptsRecognizer || tapGestureRecognizer == self.tapEditAndReportModeContainerViewRecognizer, @"");
-    if ([self canTapOnConceptsCollectionView]) {
-        IAEEditModeConceptCollectionViewCell *cell = [self findConceptCellUnderLocationOfGestureRecognizer:tapGestureRecognizer];
+    IAEEditModeConceptCollectionViewCell *cell = [self findConceptCellUnderLocationOfGestureRecognizer:tapGestureRecognizer];
+    if ([self canTapOnConceptCollectionViewCell:cell]) {
         if ([self isActualSelectedContextAMonth] ) {
             [self executeActionInMonthContextOnCellOfConceptCollectionView:cell underLocatonOfTapGestureRecognizer:tapGestureRecognizer];
         } else if ([self isActualSelectedContextTheYearOpen]) {
@@ -1714,9 +1714,9 @@ static const NSUInteger kNumberOfMonths = 12;
     }
 }
 
-- (BOOL)canTapOnConceptsCollectionView
+- (BOOL)canTapOnConceptCollectionViewCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
-    const BOOL can = ![self.calculatorViewController isAnyTranslationActive];
+    const BOOL can = ![self.calculatorViewController isAnyTranslationActive] && !cell.menuModeActive;
     
     return can;
 }

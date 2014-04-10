@@ -1644,7 +1644,7 @@ static const NSUInteger kNumberOfMonths = 12;
     IAEEditModeConceptCollectionViewCell *cell = [self findConceptCellUnderLocationOfGestureRecognizer:swipeGestureRecognizer];
     if (cell && [self canDoLeftSwipeOnConceptsCollectionViewCell:cell]) {
         if ([self isCompletelyVisibleConceptCollectionViewCell:cell]) {
-            [self hideAllConceptsCellWithMenuModeActive];
+            [self hideAllConceptsCellWithMenuModeActiveUsingAnimation:YES];
             [cell scrollToMenuMode];
         } else {
             [self scrollToConceptsCollectionViewCell:cell];
@@ -1669,7 +1669,7 @@ static const NSUInteger kNumberOfMonths = 12;
         IAEEditModeConceptCollectionViewCell *cell = [self findConceptCellUnderLocationOfGestureRecognizer:swipeGestureRecognizer];
         if (cell) {
             if (cell.menuModeActive) {
-                [cell scrollToNormalMode];
+                [cell scrollToNormalModeUsingAnimation:YES];
             } else if ([self isCompletelyVisibleConceptCollectionViewCell:cell]) {
                 [self doStrokeOverConceptCell:cell];
             } else {
@@ -1808,6 +1808,7 @@ static const NSUInteger kNumberOfMonths = 12;
         [self openPopoverForSelectDayOfConceptCell:cell];
     } else if ([cell isDuplicateOptionContainingLocationPoint:location]) {
         NSLog(@"Duplicate Option");
+        
     } else if ([cell isMoveOptionContainingLocationPoint:location]) {
         NSLog(@"Move Option");
     } else if ([cell isCopyOptionContainingLocationPoint:location]) {
@@ -2505,14 +2506,14 @@ static const NSUInteger kNumberOfMonths = 12;
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     if (scrollView == self.conceptsCollectionView) {
-        [self hideAllConceptsCellWithMenuModeActive];
+        [self hideAllConceptsCellWithMenuModeActiveUsingAnimation:YES];
     }
 }
 
-- (void)hideAllConceptsCellWithMenuModeActive
+- (void)hideAllConceptsCellWithMenuModeActiveUsingAnimation:(BOOL)animation
 {
     for (IAEEditModeConceptCollectionViewCell *cell in self.conceptsCollectionView.visibleCells) {
-        [cell scrollToNormalMode];
+        [cell scrollToNormalModeUsingAnimation:animation];
     }
 }
 

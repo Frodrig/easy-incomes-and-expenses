@@ -59,7 +59,7 @@ typedef NS_ENUM(NSUInteger, EditModeConceptElement) {
 - (void)exitFromStrokeState;
 
 - (void)scrollToMenuMode;
-- (void)scrollToNormalMode;
+- (void)scrollToNormalModeUsingAnimation:(BOOL)animation;
 
 - (void)setVisualAspectInEditMode:(BOOL)editMode forConceptElement:(EditModeConceptElement)conceptElement;
 

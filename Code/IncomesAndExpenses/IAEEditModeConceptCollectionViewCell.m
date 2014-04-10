@@ -113,11 +113,11 @@ static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
     [self.containerScrollView scrollRectToVisible:CGRectMake(self.containerScrollView.contentSize.width - self.containerScrollView.contentSize.width * 0.5, 0, self.containerScrollView.contentSize.width * 0.5, self.containerScrollView.contentSize.height) animated:animation];
 }
 
-- (void)scrollToNormalMode
+- (void)scrollToNormalModeUsingAnimation:(BOOL)animation
 {
     if (self.menuModeActive) {
         self.menuModeActive = NO;
-        [self executeScrollToNormalModeWithAnimation:YES];
+        [self executeScrollToNormalModeWithAnimation:animation];
     }
 }
 

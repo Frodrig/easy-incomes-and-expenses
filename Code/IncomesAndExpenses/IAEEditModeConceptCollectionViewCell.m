@@ -180,17 +180,17 @@ static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
 
 - (BOOL)isDuplicateOptionContainingLocationPoint:(CGPoint)location
 {
-    return [self isView:self.optionDuplicateLabel containingLocationPoint:location fromView:self.containerScrollView];
+    return [self isView:self.optionDuplicateLabel containingLocationPoint:location fromView:self.optionDuplicateLabel];
 }
 
 - (BOOL)isMoveOptionContainingLocationPoint:(CGPoint)location
 {
-    return [self isView:self.optionMoveLabel containingLocationPoint:location fromView:self.conceptInformationContainerView];
+    return [self isView:self.optionMoveLabel containingLocationPoint:location fromView:self.optionDuplicateLabel];
 }
 
 - (BOOL)isCopyOptionContainingLocationPoint:(CGPoint)location
 {
-    return [self isView:self.optionCopyLabel containingLocationPoint:location fromView:self.conceptInformationContainerView];
+    return [self isView:self.optionCopyLabel containingLocationPoint:location fromView:self.optionDuplicateLabel];
 }
 
 - (BOOL)isView:(UIView *)sourceView containingLocationPoint:(CGPoint)location fromView:(UIView *)fromView

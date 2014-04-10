@@ -51,6 +51,8 @@ typedef NS_ENUM(NSUInteger, EditModeConceptElement) {
 - (BOOL)isCategoryNameOrTypeContainingLocationPoint:(CGPoint)location;
 - (BOOL)isIdentifierOrDayContainingLocationPoint:(CGPoint)location;
 - (BOOL)isDuplicateOptionContainingLocationPoint:(CGPoint)location;
+- (BOOL)isCopyOptionContainingLocationPoint:(CGPoint)location;
+- (BOOL)isMoveOptionContainingLocationPoint:(CGPoint)location;
 
 - (void)goToStrokeState;
 - (void)exitFromStrokeState;

@@ -1807,6 +1807,10 @@ static const NSUInteger kNumberOfMonths = 12;
         [self openPopoverForSelectDayOfConceptCell:cell];
     } else if ([cell isDuplicateOptionContainingLocationPoint:location]) {
         NSLog(@"Duplicate Option");
+    } else if ([cell isMoveOptionContainingLocationPoint:location]) {
+        NSLog(@"Move Option");
+    } else if ([cell isCopyOptionContainingLocationPoint:location]) {
+        NSLog(@"Copy Option");
     }
 }
 

@@ -1179,6 +1179,19 @@ static const NSUInteger kNumberOfMonths = 12;
     return concept.dayOfTheMonth;
 }
 
+- (IAEEditModeConceptCollectionViewCell *)findConceptCollectionCellWithMenuModeActive
+{
+    IAEEditModeConceptCollectionViewCell *retCell = nil;
+    for (IAEEditModeConceptCollectionViewCell *cellIt in self.conceptsCollectionView.visibleCells) {
+        if (cellIt.menuModeActive) {
+            retCell = cellIt;
+            break;
+        }
+    }
+    
+    return retCell;
+}
+
 #pragma mark - Update 
 
 - (void)updateBalancesWithAnimation:(BOOL)animation
@@ -1644,7 +1657,7 @@ static const NSUInteger kNumberOfMonths = 12;
     IAEEditModeConceptCollectionViewCell *cell = [self findConceptCellUnderLocationOfGestureRecognizer:swipeGestureRecognizer];
     if (cell && [self canDoLeftSwipeOnConceptsCollectionViewCell:cell]) {
         if ([self isCompletelyVisibleConceptCollectionViewCell:cell]) {
-            [self hideAllConceptsCellWithMenuModeActiveUsingAnimation:YES];
+            [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
             [cell scrollToMenuMode];
         } else {
             [self scrollToConceptsCollectionViewCell:cell];
@@ -1804,8 +1817,9 @@ static const NSUInteger kNumberOfMonths = 12;
         } else if ([cell isMoveOptionContainingLocationPoint:location]) {
             NSLog(@"Move Option");
         } else if ([cell isCopyOptionContainingLocationPoint:location]) {
-            NSLog(@"Copy Option");
+            [self executeCopyConceptOfCell:cell];
         }
+        
     } else {
         if ([cell isFavoritePinContainingLocationPoint:location] && [self isFavoritePinInteractionEnabledInConcepts]) {
             [self executeLogicAfterFavoritePinTapForCell:cell];
@@ -1824,8 +1838,22 @@ static const NSUInteger kNumberOfMonths = 12;
     IAEConcept *concept = [self findConceptOfCell:cell];
     IAEConcept *newConcept = [concept.month duplicateConcept:concept];
     [[IAEBook sharedBook] saveAll];
-    [self hideAllConceptsCellWithMenuModeActiveUsingAnimation:NO];
+    [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:NO];
     [self updateAfterNewConceptCreated:newConcept];
+}
+
+- (void)executeCopyConceptOfCell:(IAEEditModeConceptCollectionViewCell *)cell
+{
+    // findConceptCollectionCellWithMenuModeActive
+    // IAEConceptOperationMonthSelectorView
+    // IAEConceptOperationMonthSelectorViewDelegate
+    
+    // Pulsacion
+    // Popover desde esa pestaña con la misma logica de posicionamiento que usamos ahora para el resto de componentes
+    // Indicamos los meses invalidos al view y los validos para seleccionar
+    // Pulsar fuera del popover lo hace desaparecer
+    // NO existe boton listo. En cuanto pulsas en un mes se llama al delegado, se hace dissmis y se procede
+    // Idea: se podria rastrear por conceptos identicos en otros meses e indicarlo de alguna manera
 }
 
 - (BOOL)isFavoritePinInteractionEnabledInConcepts
@@ -2523,11 +2551,11 @@ static const NSUInteger kNumberOfMonths = 12;
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     if (scrollView == self.conceptsCollectionView) {
-        [self hideAllConceptsCellWithMenuModeActiveUsingAnimation:YES];
+        [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
     }
 }
 
-- (void)hideAllConceptsCellWithMenuModeActiveUsingAnimation:(BOOL)animation
+- (void)hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:(BOOL)animation
 {
     for (IAEEditModeConceptCollectionViewCell *cell in self.conceptsCollectionView.visibleCells) {
         [cell scrollToNormalModeUsingAnimation:animation];

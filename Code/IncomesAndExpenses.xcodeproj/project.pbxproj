@@ -197,6 +197,8 @@
 		5BEA98AB1793E3A500098AE0 /* IAECircleDecoratorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEA98AA1793E3A500098AE0 /* IAECircleDecoratorView.m */; };
 		5BF1DFD818F991BD0024B3AD /* IAEMonthSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF1DFD618F991BD0024B3AD /* IAEMonthSelectorViewController.m */; };
 		5BF1DFD918F991BD0024B3AD /* IAEMonthSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BF1DFD718F991BD0024B3AD /* IAEMonthSelectorViewController.xib */; };
+		5BF1DFDF18F994460024B3AD /* IAEMonthSelectorCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF1DFDE18F994460024B3AD /* IAEMonthSelectorCollectionViewCell.m */; };
+		5BF1DFE118F994640024B3AD /* IAEMonthSelectorCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BF1DFE018F994640024B3AD /* IAEMonthSelectorCollectionViewCell.xib */; };
 		5BF8A08918EA0A8B0039F19B /* IAEHelpConfigureConceptsWithDaysCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B87976A180E904400554E13 /* IAEHelpConfigureConceptsWithDaysCell.xib */; };
 		5BFDE72A17C5E27500DF884B /* IAESelectorContextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFDE72917C5E27500DF884B /* IAESelectorContextView.m */; };
 /* End PBXBuildFile section */
@@ -537,6 +539,9 @@
 		5BF1DFD618F991BD0024B3AD /* IAEMonthSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEMonthSelectorViewController.m; sourceTree = "<group>"; };
 		5BF1DFD718F991BD0024B3AD /* IAEMonthSelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEMonthSelectorViewController.xib; sourceTree = "<group>"; };
 		5BF1DFDA18F991D50024B3AD /* IAEMonthSelectorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEMonthSelectorViewControllerDelegate.h; sourceTree = "<group>"; };
+		5BF1DFDD18F994460024B3AD /* IAEMonthSelectorCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEMonthSelectorCollectionViewCell.h; sourceTree = "<group>"; };
+		5BF1DFDE18F994460024B3AD /* IAEMonthSelectorCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEMonthSelectorCollectionViewCell.m; sourceTree = "<group>"; };
+		5BF1DFE018F994640024B3AD /* IAEMonthSelectorCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEMonthSelectorCollectionViewCell.xib; sourceTree = "<group>"; };
 		5BFDE72817C5E27500DF884B /* IAESelectorContextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAESelectorContextView.h; sourceTree = "<group>"; };
 		5BFDE72917C5E27500DF884B /* IAESelectorContextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAESelectorContextView.m; sourceTree = "<group>"; };
 		5BFDE72D17C5F07A00DF884B /* IAESelectorContextViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAESelectorContextViewDelegate.h; sourceTree = "<group>"; };
@@ -1925,9 +1930,28 @@
 				5BF1DFD518F991BD0024B3AD /* IAEMonthSelectorViewController.h */,
 				5BF1DFD618F991BD0024B3AD /* IAEMonthSelectorViewController.m */,
 				5BF1DFD718F991BD0024B3AD /* IAEMonthSelectorViewController.xib */,
-				5BF1DFDA18F991D50024B3AD /* IAEMonthSelectorViewControllerDelegate.h */,
+				5BF1DFDB18F9941F0024B3AD /* Delegate */,
+				5BF1DFDC18F994260024B3AD /* Cell */,
 			);
 			name = "Month Selector";
+			sourceTree = "<group>";
+		};
+		5BF1DFDB18F9941F0024B3AD /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				5BF1DFDA18F991D50024B3AD /* IAEMonthSelectorViewControllerDelegate.h */,
+			);
+			name = Delegate;
+			sourceTree = "<group>";
+		};
+		5BF1DFDC18F994260024B3AD /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				5BF1DFDD18F994460024B3AD /* IAEMonthSelectorCollectionViewCell.h */,
+				5BF1DFDE18F994460024B3AD /* IAEMonthSelectorCollectionViewCell.m */,
+				5BF1DFE018F994640024B3AD /* IAEMonthSelectorCollectionViewCell.xib */,
+			);
+			name = Cell;
 			sourceTree = "<group>";
 		};
 		5BF925331795447D0002CF9F /* Assets */ = {
@@ -2081,6 +2105,7 @@
 				5BBD37CB180BFF5B0095A15A /* ProjectApiKey.txt in Resources */,
 				5B2512831851E07600669AE6 /* settingsindex_img_3.png in Resources */,
 				5B2E93D317DCDDF6007D4284 /* eiae_icon29@2x.png in Resources */,
+				5BF1DFE118F994640024B3AD /* IAEMonthSelectorCollectionViewCell.xib in Resources */,
 				5B94036017904C1400F9C1D0 /* IAEYearSelectorViewController.xib in Resources */,
 				5B36AFFD1785D73800132475 /* IAECategorySelectorViewController.xib in Resources */,
 				5B36AFF21785874D00132475 /* IAEAdjustConceptAmountViewController.xib in Resources */,
@@ -2247,6 +2272,7 @@
 				5B62D87D178EC27D009879A6 /* IAEDateHelper.m in Sources */,
 				5B1B7FA518D7A22C0012AC21 /* IAEFixRemoveCategoryActionLostInUnloadedYears.m in Sources */,
 				5B90783C179D268000B2A0F7 /* IAEDisplayPanelCalculatorView.m in Sources */,
+				5BF1DFDF18F994460024B3AD /* IAEMonthSelectorCollectionViewCell.m in Sources */,
 				5B5497B71820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.m in Sources */,
 				5B251FA117AACA71000957A5 /* IAEStrokeAnimatableLineView.m in Sources */,
 				5BEA608217A6A36600520E09 /* IAEReportAreaView.m in Sources */,

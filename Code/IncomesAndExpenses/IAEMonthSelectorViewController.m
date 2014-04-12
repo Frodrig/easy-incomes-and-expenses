@@ -7,8 +7,10 @@
 //
 
 #import "IAEMonthSelectorViewController.h"
+#import "MonthDefs.h"
 
-@interface IAEMonthSelectorViewController ()
+@interface IAEMonthSelectorViewController ()<UICollectionViewDataSource,
+                                             UICollectionViewDelegate>
 
 @end
 
@@ -33,6 +35,30 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - UICollectionViewDelegate
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+    
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+}
+
+#pragma mark - UICollectionViewDataSource
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return nil;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return 0;
 }
 
 @end

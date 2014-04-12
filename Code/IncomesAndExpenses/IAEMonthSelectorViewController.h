@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IAEMonthSelectorViewControllerDelegate.h"
 
 @interface IAEMonthSelectorViewController : UIViewController
+
+@property (nonatomic, weak) id<IAEMonthSelectorViewControllerDelegate> delegate;
 
 @end

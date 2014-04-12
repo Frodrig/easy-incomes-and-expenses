@@ -64,6 +64,7 @@
 		5B36AFFD1785D73800132475 /* IAECategorySelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B36AFFB1785D73800132475 /* IAECategorySelectorViewController.xib */; };
 		5B51363A18F9530800EE8766 /* IAEMonthSelectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B51363918F9530800EE8766 /* IAEMonthSelectorView.m */; };
 		5B51363D18F9531A00EE8766 /* IAEMonthSelectorViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B51363C18F9531A00EE8766 /* IAEMonthSelectorViewDelegate.m */; };
+		5B51363F18F9563500EE8766 /* IAEMonthSelectorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B51363E18F9563500EE8766 /* IAEMonthSelectorView.xib */; };
 		5B5497B71820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5497B51820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.m */; };
 		5B5497B81820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B5497B61820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.xib */; };
 		5B5544A2177460DD009CFC84 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B5544A1177460DD009CFC84 /* Main.storyboard */; };
@@ -297,6 +298,7 @@
 		5B51363918F9530800EE8766 /* IAEMonthSelectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEMonthSelectorView.m; sourceTree = "<group>"; };
 		5B51363B18F9531A00EE8766 /* IAEMonthSelectorViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEMonthSelectorViewDelegate.h; sourceTree = "<group>"; };
 		5B51363C18F9531A00EE8766 /* IAEMonthSelectorViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEMonthSelectorViewDelegate.m; sourceTree = "<group>"; };
+		5B51363E18F9563500EE8766 /* IAEMonthSelectorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEMonthSelectorView.xib; sourceTree = "<group>"; };
 		5B5497B41820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelpConfigureStartMonthSelectorTableViewController.h; sourceTree = "<group>"; };
 		5B5497B51820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelpConfigureStartMonthSelectorTableViewController.m; sourceTree = "<group>"; };
 		5B5497B61820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEHelpConfigureStartMonthSelectorTableViewController.xib; sourceTree = "<group>"; };
@@ -841,6 +843,7 @@
 			children = (
 				5B51363818F9530800EE8766 /* IAEMonthSelectorView.h */,
 				5B51363918F9530800EE8766 /* IAEMonthSelectorView.m */,
+				5B51363E18F9563500EE8766 /* IAEMonthSelectorView.xib */,
 				5B51363B18F9531A00EE8766 /* IAEMonthSelectorViewDelegate.h */,
 				5B51363C18F9531A00EE8766 /* IAEMonthSelectorViewDelegate.m */,
 			);
@@ -2139,6 +2142,7 @@
 				5BA0131317983A9000337E84 /* IAEDayCalendarSelectorViewController.xib in Resources */,
 				5BB8AD1217FAC2F200BAAB96 /* editconceptcontainerviewbackground.png in Resources */,
 				5B879773180E9EFA00554E13 /* IAEHelpAboutViewController.xib in Resources */,
+				5B51363F18F9563500EE8766 /* IAEMonthSelectorView.xib in Resources */,
 				5B28D1B318200E6300EF4D48 /* 717-flag@2x.png in Resources */,
 				5B2512821851E07600669AE6 /* settingsindex_img_1@2x.png in Resources */,
 				5B1F0D3717841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib in Resources */,

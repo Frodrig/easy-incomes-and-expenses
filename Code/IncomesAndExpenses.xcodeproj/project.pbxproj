@@ -62,6 +62,8 @@
 		5B36AFF71785BBF400132475 /* NSDecimalNumber+AbsoluteValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B36AFF61785BBF400132475 /* NSDecimalNumber+AbsoluteValue.m */; };
 		5B36AFFC1785D73800132475 /* IAECategorySelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B36AFFA1785D73800132475 /* IAECategorySelectorViewController.m */; };
 		5B36AFFD1785D73800132475 /* IAECategorySelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B36AFFB1785D73800132475 /* IAECategorySelectorViewController.xib */; };
+		5B51363A18F9530800EE8766 /* IAEMonthSelectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B51363918F9530800EE8766 /* IAEMonthSelectorView.m */; };
+		5B51363D18F9531A00EE8766 /* IAEMonthSelectorViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B51363C18F9531A00EE8766 /* IAEMonthSelectorViewDelegate.m */; };
 		5B5497B71820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5497B51820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.m */; };
 		5B5497B81820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B5497B61820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.xib */; };
 		5B5544A2177460DD009CFC84 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B5544A1177460DD009CFC84 /* Main.storyboard */; };
@@ -291,6 +293,10 @@
 		5B36AFFA1785D73800132475 /* IAECategorySelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECategorySelectorViewController.m; sourceTree = "<group>"; };
 		5B36AFFB1785D73800132475 /* IAECategorySelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAECategorySelectorViewController.xib; sourceTree = "<group>"; };
 		5B48BFFA1799425500BF0A68 /* IAEDayCalendarSelectorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEDayCalendarSelectorViewControllerDelegate.h; sourceTree = "<group>"; };
+		5B51363818F9530800EE8766 /* IAEMonthSelectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEMonthSelectorView.h; sourceTree = "<group>"; };
+		5B51363918F9530800EE8766 /* IAEMonthSelectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEMonthSelectorView.m; sourceTree = "<group>"; };
+		5B51363B18F9531A00EE8766 /* IAEMonthSelectorViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEMonthSelectorViewDelegate.h; sourceTree = "<group>"; };
+		5B51363C18F9531A00EE8766 /* IAEMonthSelectorViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEMonthSelectorViewDelegate.m; sourceTree = "<group>"; };
 		5B5497B41820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelpConfigureStartMonthSelectorTableViewController.h; sourceTree = "<group>"; };
 		5B5497B51820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelpConfigureStartMonthSelectorTableViewController.m; sourceTree = "<group>"; };
 		5B5497B61820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEHelpConfigureStartMonthSelectorTableViewController.xib; sourceTree = "<group>"; };
@@ -828,6 +834,17 @@
 				5BCE3AC017A9788E00CD01E7 /* Protocols */,
 			);
 			name = "Category Selector";
+			sourceTree = "<group>";
+		};
+		5B51363718F9522B00EE8766 /* MonthSelector */ = {
+			isa = PBXGroup;
+			children = (
+				5B51363818F9530800EE8766 /* IAEMonthSelectorView.h */,
+				5B51363918F9530800EE8766 /* IAEMonthSelectorView.m */,
+				5B51363B18F9531A00EE8766 /* IAEMonthSelectorViewDelegate.h */,
+				5B51363C18F9531A00EE8766 /* IAEMonthSelectorViewDelegate.m */,
+			);
+			name = MonthSelector;
 			sourceTree = "<group>";
 		};
 		5B5497B31820FD9C0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController */ = {
@@ -1466,6 +1483,7 @@
 		5B903BB91782DBAF00DBEFB2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5B51363718F9522B00EE8766 /* MonthSelector */,
 				5B2D38B017AF9FB10056488B /* XIBs */,
 				5BCE3A9C17A8FBBF00CD01E7 /* Concept Collection View */,
 				5BFDE72B17C5E6F900DF884B /* Context Views */,
@@ -2165,6 +2183,7 @@
 				5B5C968C17816EF0008CD851 /* IAEValueDecoratorViewZeroConfigurator.m in Sources */,
 				5BC7101A17AC29F600E12953 /* IAEConcept.m in Sources */,
 				5B767E031636D7FC005315F8 /* main.m in Sources */,
+				5B51363D18F9531A00EE8766 /* IAEMonthSelectorViewDelegate.m in Sources */,
 				5BCE3AB417A9689600CD01E7 /* IAEHelperReportTextRawMenuDataSource.m in Sources */,
 				5B5BEAF41827E6CA00A00BE0 /* IAEExporter.m in Sources */,
 				5BDD9A2618571B60001A6CEF /* IAEHelpPasswordIndexViewController.m in Sources */,
@@ -2173,6 +2192,7 @@
 				5BCE3ABD17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.m in Sources */,
 				5BDD9A2D18572256001A6CEF /* IAEPasswordPanelViewController.m in Sources */,
 				5BE84E77180DA8CF00F4A80B /* IAESettingsViewController.m in Sources */,
+				5B51363A18F9530800EE8766 /* IAEMonthSelectorView.m in Sources */,
 				5B23F04017FED21C00477D34 /* NSUserDefaults+EasyIncAndExp.m in Sources */,
 				5B6F45E5181ED29F0073B1AC /* IAEOpenYear.m in Sources */,
 				5B907832179D1AA700B2A0F7 /* IAECalculatorViewController.m in Sources */,

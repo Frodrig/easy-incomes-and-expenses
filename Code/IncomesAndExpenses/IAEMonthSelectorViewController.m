@@ -15,6 +15,7 @@ static NSString * const kMonthCellIdentifier = @"MonthCellIdentifier";
 @interface IAEMonthSelectorViewController ()<UICollectionViewDataSource,
                                              UICollectionViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 @property (weak, nonatomic) IBOutlet UICollectionView *monthCollectionView;
 @property (nonatomic) MonthType actualMonth;
 @property (nonatomic, copy) NSSet *invalidInteractionMonths;
@@ -45,7 +46,13 @@ static NSString * const kMonthCellIdentifier = @"MonthCellIdentifier";
 {
     [super viewDidLoad];
     
+    [self configureNavigationBar];
     [self configureMonthCollectionView];
+}
+
+- (void)configureNavigationBar
+{
+    self.navigationBar.topItem.title = NSLocalizedString(@"LTEXT_MONTHSELECTOR_TITLE", @"");
 }
 
 - (void)configureMonthCollectionView

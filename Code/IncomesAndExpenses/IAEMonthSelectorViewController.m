@@ -32,7 +32,7 @@ static NSString * const kMonthCellIdentifier = @"MonthCellIdentifier";
 
 - (instancetype)initWithActualMonth:(MonthType)actualMonth andInvalidInteractionMonths:(NSSet *)invalidInteractionMonths
 {
-    self = [self initWithNibName:nil bundle:nil];
+    self = [super initWithNibName:nil bundle:nil];
     if (self) {
         _actualMonth = actualMonth;
         _invalidInteractionMonths = invalidInteractionMonths;
@@ -50,7 +50,7 @@ static NSString * const kMonthCellIdentifier = @"MonthCellIdentifier";
 
 - (void)configureMonthCollectionView
 {
-    [self.monthCollectionView registerClass:[IAEMonthSelectorCollectionViewCell class] forCellWithReuseIdentifier:kMonthCellIdentifier];
+    [self.monthCollectionView registerNib:[UINib nibWithNibName:@"IAEMonthSelectorCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:kMonthCellIdentifier];
 }
 
 - (void)didReceiveMemoryWarning

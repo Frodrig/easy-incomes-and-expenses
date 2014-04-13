@@ -1289,7 +1289,7 @@ static const NSUInteger kNumberOfMonths = 12;
     } else if ([popoverController.contentViewController isKindOfClass:[IAECategorySelectorViewController class]]) {
         [self performActionsAfterDismissCategorySelectorPopover:popoverController];
     } else if ([popoverController.contentViewController isKindOfClass:[IAEMonthSelectorViewController class]]) {
-        // TODO
+        [self performActionsAfterMonthSelectorViewController:popoverController];
     }
     
     self.popover = nil;
@@ -1315,6 +1315,11 @@ static const NSUInteger kNumberOfMonths = 12;
     IAECategorySelectorViewController *controller = (IAECategorySelectorViewController *)popoverController.contentViewController;
     IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:controller.conceptCellIndexPath];
     [cell setVisualAspectInEditMode:NO forConceptElement:EditModeConceptElement_Category];
+}
+
+- (void)performActionsAfterMonthSelectorViewController:(UIPopoverController *)popover
+{
+    self.monthSelectorViewController = nil;
 }
 
 - (void)updateBalancesIfDismissFromAdjustConceptAmountPopover:(UIPopoverController *)popover
@@ -1821,9 +1826,8 @@ static const NSUInteger kNumberOfMonths = 12;
         } else if ([cell isMoveOptionContainingLocationPoint:location]) {
             NSLog(@"Move Option");
         } else if ([cell isCopyOptionContainingLocationPoint:location]) {
-            [self executeCopyConceptOfCell:cell];
+            [self openPopoverForSelectMonthToCopyConceptCell:cell];
         }
-        
     } else {
         if ([cell isFavoritePinContainingLocationPoint:location] && [self isFavoritePinInteractionEnabledInConcepts]) {
             [self executeLogicAfterFavoritePinTapForCell:cell];
@@ -1844,20 +1848,6 @@ static const NSUInteger kNumberOfMonths = 12;
     [[IAEBook sharedBook] saveAll];
     [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:NO];
     [self updateAfterNewConceptCreated:newConcept];
-}
-
-- (void)executeCopyConceptOfCell:(IAEEditModeConceptCollectionViewCell *)cell
-{
-    // findConceptCollectionCellWithMenuModeActive
-    // IAEConceptOperationMonthSelectorView
-    // IAEConceptOperationMonthSelectorViewDelegate
-    
-    // Pulsacion
-    // Popover desde esa pestaña con la misma logica de posicionamiento que usamos ahora para el resto de componentes
-    // Indicamos los meses invalidos al view y los validos para seleccionar
-    // Pulsar fuera del popover lo hace desaparecer
-    // NO existe boton listo. En cuanto pulsas en un mes se llama al delegado, se hace dissmis y se procede
-    // Idea: se podria rastrear por conceptos identicos en otros meses e indicarlo de alguna manera
 }
 
 - (void)openPopoverForSelectMonthToCopyConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
@@ -2672,6 +2662,24 @@ didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
 - (void)doneButtonWasPressedInfavoriteConceptsViewController:(IAEFavoriteConceptsViewController *)favoriteConceptsViewController;
 {
      // ...
+}
+
+#pragma mark - IAEMonthSelectorViewControllerDelegate
+
+- (void)monthSelectorViewController:(IAEMonthSelectorViewController *)monthSelectorViewController didSelectMonth:(MonthType)month
+{
+    NSLog(@"monthSelected");
+    // findConceptCollectionCellWithMenuModeActive
+    // IAEConceptOperationMonthSelectorView
+    // IAEConceptOperationMonthSelectorViewDelegate
+    
+    // Pulsacion
+    // Popover desde esa pestaña con la misma logica de posicionamiento que usamos ahora para el resto de componentes
+    // Indicamos los meses invalidos al view y los validos para seleccionar
+    // Pulsar fuera del popover lo hace desaparecer
+    // NO existe boton listo. En cuanto pulsas en un mes se llama al delegado, se hace dissmis y se procede
+    // Idea: se podria rastrear por conceptos identicos en otros meses e indicarlo de alguna manera
+
 }
 
 @end

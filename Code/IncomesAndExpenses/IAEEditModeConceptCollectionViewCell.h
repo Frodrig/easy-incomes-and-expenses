@@ -60,6 +60,9 @@ typedef NS_ENUM(NSUInteger, EditModeConceptElement) {
 
 - (void)scrollToMenuMode;
 - (void)scrollToNormalModeUsingAnimation:(BOOL)animation;
+- (UIView *)viewOfDuplicateMenuOption;
+- (UIView *)viewOfCopyMenuOption;
+- (UIView *)viewOfMoveMenuOption;
 
 - (void)setVisualAspectInEditMode:(BOOL)editMode forConceptElement:(EditModeConceptElement)conceptElement;
 

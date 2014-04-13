@@ -126,6 +126,21 @@ static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
     [self.containerScrollView scrollRectToVisible:CGRectMake(0, 0, self.containerScrollView.contentSize.width - self.containerScrollView.contentSize.width * 0.5, self.containerScrollView.contentSize.height) animated:animation];
 }
 
+- (UIView *)viewOfDuplicateMenuOption
+{
+    return self.optionDuplicateLabel;
+}
+
+- (UIView *)viewOfCopyMenuOption
+{
+    return self.optionCopyLabel;
+}
+
+- (UIView *)viewOfMoveMenuOption
+{
+    return self.optionMoveLabel;
+}
+
 #pragma mark - Draw
 
 // Only override drawRect: if you perform custom drawing.

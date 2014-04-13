@@ -52,6 +52,7 @@
 #import "IAEFixRemoveCategoryActionLostInUnloadedYears.h"
 #import "IAEFavoriteConceptsStock.h"
 #import "IAEFavoriteConceptsViewController.h"
+#import "IAEMonthSelectorViewController.h"
 
 @interface IAEEasyIncomesAndExpensesViewController ()
 
@@ -96,6 +97,7 @@
 @property (nonatomic, strong) UIDynamicAnimator *dynamicAnimator;
 @property (nonatomic, strong) NSIndexPath *pendingScrollToEditModeConceptCellIndexPath;
 @property (nonatomic, strong) NSIndexPath *indexPathOfCellWithPendingCallForAttentionAnimation;
+@property (nonatomic, strong) IAEMonthSelectorViewController *monthSelectorViewController;
 
 @end
 
@@ -1286,6 +1288,8 @@ static const NSUInteger kNumberOfMonths = 12;
         [self performActionsAfterDismissDayCalendarSelectorPopover:popoverController];
     } else if ([popoverController.contentViewController isKindOfClass:[IAECategorySelectorViewController class]]) {
         [self performActionsAfterDismissCategorySelectorPopover:popoverController];
+    } else if ([popoverController.contentViewController isKindOfClass:[IAEMonthSelectorViewController class]]) {
+        // TODO
     }
     
     self.popover = nil;
@@ -1854,6 +1858,20 @@ static const NSUInteger kNumberOfMonths = 12;
     // Pulsar fuera del popover lo hace desaparecer
     // NO existe boton listo. En cuanto pulsas en un mes se llama al delegado, se hace dissmis y se procede
     // Idea: se podria rastrear por conceptos identicos en otros meses e indicarlo de alguna manera
+}
+
+- (void)openPopoverForSelectMonthToCopyConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
+{
+    self.monthSelectorViewController = [self createMonthSelectorViewControllerFromActualState];
+    [self createAndPresentPopoverForConceptCellView:[cell viewOfCopyMenuOption] withViewController:self.monthSelectorViewController];
+}
+
+- (IAEMonthSelectorViewController *)createMonthSelectorViewControllerFromActualState
+{
+    IAEMonthSelectorViewController *monthSelectorViewController = [[IAEMonthSelectorViewController alloc] initWithActualMonth:[self findActualSelectedMonth].month andInvalidInteractionMonths:nil];
+    monthSelectorViewController.delegate = self;
+
+    return monthSelectorViewController;
 }
 
 - (BOOL)isFavoritePinInteractionEnabledInConcepts

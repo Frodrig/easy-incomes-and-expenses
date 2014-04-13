@@ -10,6 +10,8 @@
 #import "IAEYearObject.h"
 #import "MonthDefs.h"
 
+@class IAEMonth;
+
 @interface IAEOpenYear : NSObject<IAEYearObject>
 
 @property (nonatomic, readonly) NSInteger yearDate;
@@ -23,6 +25,7 @@
 - (void)deleteAllConcepts;
 
 - (NSUInteger)findIndexOfMonth:(MonthType)month;
+- (IAEMonth *)findMonthObjectOfMonthDate:(MonthType)month;
 
 - (NSComparisonResult)compareDescendingPriority:(IAEOpenYear *)aOpenYear;
 

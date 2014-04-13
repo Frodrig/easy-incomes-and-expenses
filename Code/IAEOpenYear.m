@@ -292,6 +292,17 @@ static const NSUInteger kMonthsPerYear = 12;
     return indexOfMonth;
 }
 
+- (IAEMonth *)findMonthObjectOfMonthDate:(MonthType)month
+{
+    IAEMonth *monthObject = nil;
+    NSUInteger indexOfMonth = [self findIndexOfMonth:month];
+    if (indexOfMonth != NSNotFound) {
+        monthObject = [self.months objectAtIndex:indexOfMonth];
+    }
+    
+    return monthObject;
+}
+
 #pragma mark - String
 
 - (NSString *)yearDateAsString

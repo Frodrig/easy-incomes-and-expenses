@@ -54,6 +54,11 @@
 #import "IAEFavoriteConceptsViewController.h"
 #import "IAEMonthSelectorViewController.h"
 
+typedef NS_ENUM(NSUInteger, MonthSelectorPurpose) {
+    MonthSelectorPurposeCopy,
+    MonthSelectorPurposeMove,
+};
+
 @interface IAEEasyIncomesAndExpensesViewController ()
 
 @property (strong, nonatomic) IBOutlet UILabel *navigationBarTitleLabel;
@@ -98,6 +103,7 @@
 @property (nonatomic, strong) NSIndexPath *pendingScrollToEditModeConceptCellIndexPath;
 @property (nonatomic, strong) NSIndexPath *indexPathOfCellWithPendingCallForAttentionAnimation;
 @property (nonatomic, strong) IAEMonthSelectorViewController *monthSelectorViewController;
+@property (nonatomic) MonthSelectorPurpose monthSelectorPurpose;
 
 @end
 
@@ -1853,6 +1859,7 @@ static const NSUInteger kNumberOfMonths = 12;
 - (void)openPopoverForSelectMonthToCopyConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
     self.monthSelectorViewController = [self createMonthSelectorViewControllerFromActualState];
+    self.monthSelectorPurpose = MonthSelectorPurposeCopy;
     [self createAndPresentPopoverForConceptCellView:[cell viewOfCopyMenuOption] withViewController:self.monthSelectorViewController];
 }
 
@@ -2679,6 +2686,15 @@ didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
     // Pulsar fuera del popover lo hace desaparecer
     // NO existe boton listo. En cuanto pulsas en un mes se llama al delegado, se hace dissmis y se procede
     // Idea: se podria rastrear por conceptos identicos en otros meses e indicarlo de alguna manera
+    [self.popover dismissPopoverAnimated:YES];
+    IAEMonth *monthSelectedToCopy = [[[IAEBook sharedBook] findActualOpenYear] findMonthObjectOfMonthDate:month];
+    NSAssert(monthSelectedToCopy, @"");
+    IAEEditModeConceptCollectionViewCell *cellWithConceptToCopy = [self findConceptCollectionCellWithMenuModeActive];
+    NSAssert(cellWithConceptToCopy, @"");
+    IAEConcept *conceptToCopy = [self findConceptOfCell:cellWithConceptToCopy];
+    [monthSelectedToCopy duplicateConcept:conceptToCopy];
+
+    // TODO falta animacion de balances
 
 }
 

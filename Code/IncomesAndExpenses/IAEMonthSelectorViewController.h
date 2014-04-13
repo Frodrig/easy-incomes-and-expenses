@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "IAEMonthSelectorViewControllerDelegate.h"
+#import "MonthDefs.h"
 
 @interface IAEMonthSelectorViewController : UIViewController
 
 @property (nonatomic, weak) id<IAEMonthSelectorViewControllerDelegate> delegate;
+
+- (instancetype)initWithActualMonth:(MonthType)actualMonth andInvalidInteractionMonths:(NSSet *)invalidInteractionMonths;
 
 @end

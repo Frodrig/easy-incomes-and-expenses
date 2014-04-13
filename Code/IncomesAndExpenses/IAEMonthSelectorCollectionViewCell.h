@@ -12,5 +12,6 @@
 @interface IAEMonthSelectorCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic) MonthType month;
+@property (nonatomic) BOOL disabledAspect;
 
 @end

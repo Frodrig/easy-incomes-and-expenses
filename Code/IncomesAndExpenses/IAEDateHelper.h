@@ -24,4 +24,6 @@
 
 + (NSString *)createYearIdentificationTagFromYearDate:(NSUInteger)yearDate withShortForm:(BOOL)shortForm;
 
++ (NSArray *)monthTypesArray;
+
 @end

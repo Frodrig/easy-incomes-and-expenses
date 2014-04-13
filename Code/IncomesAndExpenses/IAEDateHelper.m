@@ -160,4 +160,28 @@
     return yearString;
 }
 
++ (NSArray *)monthTypesArray
+{
+    static NSArray *monthTypes = nil;
+
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        monthTypes = @[@(January),
+                       @(February),
+                       @(March),
+                       @(April),
+                       @(May),
+                       @(June),
+                       @(July),
+                       @(August),
+                       @(September),
+                       @(October),
+                       @(November),
+                       @(December)];
+    });
+
+    return monthTypes;
+}
+
+
 @end

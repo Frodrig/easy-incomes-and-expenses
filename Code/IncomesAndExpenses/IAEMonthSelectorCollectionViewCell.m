@@ -11,7 +11,7 @@
 
 @interface IAEMonthSelectorCollectionViewCell()
 
-@property (weak, nonatomic) IBOutlet UIButton *monthButton;
+@property (weak, nonatomic) IBOutlet UILabel *monthLabel;
 
 @end
 
@@ -25,12 +25,19 @@
     [self configureCellBasedInMonthValue];
 }
 
+- (void)setDisabledAspect:(BOOL)disabledAspect
+{
+    _disabledAspect = disabledAspect;
+    _monthLabel.enabled = !disabledAspect;
+}
+
 #pragma mark - Init
 
 - (void)awakeFromNib
 {
     [self configureCellGeneralAspect];
     self.month = InvalidMonth;
+    self.disabledAspect = NO;
 }
 
 #pragma mark - Month
@@ -43,7 +50,7 @@
 
 - (void)configureCellBasedInMonthValue
 {
-    [self.monthButton setTitle:[self findMonthNameString] forState:UIControlStateNormal];
+    self.monthLabel.text = [self findMonthNameString];
 }
 
 - (NSString *)findMonthNameString

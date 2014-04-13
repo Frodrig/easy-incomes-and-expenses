@@ -7,7 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MonthDefs.h"
+
+@class IAEMonthSelectorViewController;
 
 @protocol IAEMonthSelectorViewControllerDelegate <NSObject>
+
+- (void)monthSelectorViewController:(IAEMonthSelectorViewController *)monthSelectorViewController didSelectMonth:(MonthType)month;
 
 @end

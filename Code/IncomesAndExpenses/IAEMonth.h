@@ -37,6 +37,7 @@
                        dayOfTheMonth:(NSUInteger)dayOfTheMonth
                       andDescription:(NSString *)description;
 - (IAEConcept *)duplicateConcept:(IAEConcept *)concept;
+- (IAEConcept *)moveConcept:(IAEConcept *)concept;
 
 - (void)removeAllConceptsWithNotification:(BOOL)notification;
 - (void)removeConcept:(IAEConcept *)concept;

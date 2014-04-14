@@ -1830,7 +1830,7 @@ static const NSUInteger kNumberOfMonths = 12;
         if ([cell isDuplicateOptionContainingLocationPoint:location]) {
             [self executeDuplicateConceptOfCell:cell];
         } else if ([cell isMoveOptionContainingLocationPoint:location]) {
-            NSLog(@"Move Option");
+            [self openPopoverForSelectMonthToMoveConceptCell:cell];
         } else if ([cell isCopyOptionContainingLocationPoint:location]) {
             [self openPopoverForSelectMonthToCopyConceptCell:cell];
         }
@@ -1858,9 +1858,19 @@ static const NSUInteger kNumberOfMonths = 12;
 
 - (void)openPopoverForSelectMonthToCopyConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
+    [self openPopoverForSelectMonthFromCell:cell withPurpose:MonthSelectorPurposeCopy inDestinationView:[cell viewOfCopyMenuOption]];
+}
+
+- (void)openPopoverForSelectMonthToMoveConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
+{
+    [self openPopoverForSelectMonthFromCell:cell withPurpose:MonthSelectorPurposeMove inDestinationView:[cell viewOfMoveMenuOption]];
+}
+
+- (void)openPopoverForSelectMonthFromCell:(IAEEditModeConceptCollectionViewCell *)cell withPurpose:(MonthSelectorPurpose)purpose inDestinationView:(UIView *)destinationView
+{
     self.monthSelectorViewController = [self createMonthSelectorViewControllerFromActualState];
-    self.monthSelectorPurpose = MonthSelectorPurposeCopy;
-    [self createAndPresentPopoverForConceptCellView:[cell viewOfCopyMenuOption] withViewController:self.monthSelectorViewController];
+    self.monthSelectorPurpose = purpose;
+    [self createAndPresentPopoverForConceptCellView:destinationView withViewController:self.monthSelectorViewController];
 }
 
 - (IAEMonthSelectorViewController *)createMonthSelectorViewControllerFromActualState
@@ -2676,17 +2686,20 @@ didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
 - (void)monthSelectorViewController:(IAEMonthSelectorViewController *)monthSelectorViewController didSelectMonth:(MonthType)month
 {
     [self.popover dismissPopoverAnimated:YES];
-    [self executeLogicToCopyConceptOfCellWithMenuModeActiveIntoMonthOfType:month];
+    [self executeActionOnMonth:[[[IAEBook sharedBook] findActualOpenYear] findMonthObjectOfMonthDate:month]
+                basedInPurpose:self.monthSelectorPurpose
+                   withConceptOfCell:[self findConceptCollectionCellWithMenuModeActive]];
 }
 
-- (void)executeLogicToCopyConceptOfCellWithMenuModeActiveIntoMonthOfType:(MonthType)monthTypeToCopy
+- (void)executeActionOnMonth:(IAEMonth *)month basedInPurpose:(MonthSelectorPurpose)purpose withConceptOfCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
-    IAEMonth *monthSelectedToCopy = [[[IAEBook sharedBook] findActualOpenYear] findMonthObjectOfMonthDate:monthTypeToCopy];
-    NSAssert(monthSelectedToCopy, @"");
-    IAEEditModeConceptCollectionViewCell *cellWithConceptToCopy = [self findConceptCollectionCellWithMenuModeActive];
-    NSAssert(cellWithConceptToCopy, @"");
-    IAEConcept *conceptToCopy = [self findConceptOfCell:cellWithConceptToCopy];
-    [monthSelectedToCopy duplicateConcept:conceptToCopy];
+    if (purpose == MonthSelectorPurposeCopy) {
+        [month duplicateConcept:[self findConceptOfCell:cell]];
+    } else if (purpose == MonthSelectorPurposeMove) {
+        [month moveConcept:[self findConceptOfCell:cell]];
+        [self.conceptsCollectionView deleteItemsAtIndexPaths:@[[self.conceptsCollectionView indexPathForCell:cell]]];
+        [self updateBalancesWithAnimation:YES];
+    }
 }
 
 @end

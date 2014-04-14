@@ -2675,27 +2675,18 @@ didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
 
 - (void)monthSelectorViewController:(IAEMonthSelectorViewController *)monthSelectorViewController didSelectMonth:(MonthType)month
 {
-    NSLog(@"monthSelected");
-    // findConceptCollectionCellWithMenuModeActive
-    // IAEConceptOperationMonthSelectorView
-    // IAEConceptOperationMonthSelectorViewDelegate
-    
-    // Pulsacion
-    // Popover desde esa pestaña con la misma logica de posicionamiento que usamos ahora para el resto de componentes
-    // Indicamos los meses invalidos al view y los validos para seleccionar
-    // Pulsar fuera del popover lo hace desaparecer
-    // NO existe boton listo. En cuanto pulsas en un mes se llama al delegado, se hace dissmis y se procede
-    // Idea: se podria rastrear por conceptos identicos en otros meses e indicarlo de alguna manera
     [self.popover dismissPopoverAnimated:YES];
-    IAEMonth *monthSelectedToCopy = [[[IAEBook sharedBook] findActualOpenYear] findMonthObjectOfMonthDate:month];
+    [self executeLogicToCopyConceptOfCellWithMenuModeActiveIntoMonthOfType:month];
+}
+
+- (void)executeLogicToCopyConceptOfCellWithMenuModeActiveIntoMonthOfType:(MonthType)monthTypeToCopy
+{
+    IAEMonth *monthSelectedToCopy = [[[IAEBook sharedBook] findActualOpenYear] findMonthObjectOfMonthDate:monthTypeToCopy];
     NSAssert(monthSelectedToCopy, @"");
     IAEEditModeConceptCollectionViewCell *cellWithConceptToCopy = [self findConceptCollectionCellWithMenuModeActive];
     NSAssert(cellWithConceptToCopy, @"");
     IAEConcept *conceptToCopy = [self findConceptOfCell:cellWithConceptToCopy];
     [monthSelectedToCopy duplicateConcept:conceptToCopy];
-
-    // TODO falta animacion de balances
-
 }
 
 @end

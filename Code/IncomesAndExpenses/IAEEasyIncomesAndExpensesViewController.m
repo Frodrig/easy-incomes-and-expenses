@@ -1852,7 +1852,7 @@ static const NSUInteger kNumberOfMonths = 12;
     IAEConcept *concept = [self findConceptOfCell:cell];
     IAEConcept *newConcept = [concept.month duplicateConcept:concept];
     [[IAEBook sharedBook] saveAll];
-    [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:NO];
+    [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
     [self updateAfterNewConceptCreated:newConcept];
 }
 
@@ -2695,6 +2695,7 @@ didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
 {
     if (purpose == MonthSelectorPurposeCopy) {
         [month duplicateConcept:[self findConceptOfCell:cell]];
+        [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
     } else if (purpose == MonthSelectorPurposeMove) {
         [month moveConcept:[self findConceptOfCell:cell]];
         [self.conceptsCollectionView deleteItemsAtIndexPaths:@[[self.conceptsCollectionView indexPathForCell:cell]]];

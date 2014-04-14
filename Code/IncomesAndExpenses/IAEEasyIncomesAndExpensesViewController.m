@@ -2693,13 +2693,13 @@ didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
 
 - (void)executeActionOnMonth:(IAEMonth *)month basedInPurpose:(MonthSelectorPurpose)purpose withConceptOfCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
+    IAEConcept *concept = [self findConceptOfCell:cell];
+    [month duplicateConcept:concept];
     if (purpose == MonthSelectorPurposeCopy) {
-        [month duplicateConcept:[self findConceptOfCell:cell]];
         [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
     } else if (purpose == MonthSelectorPurposeMove) {
-        [month moveConcept:[self findConceptOfCell:cell]];
-        [self.conceptsCollectionView deleteItemsAtIndexPaths:@[[self.conceptsCollectionView indexPathForCell:cell]]];
-        [self updateBalancesWithAnimation:YES];
+        self.conceptCellToRemove = cell;
+        [self removeConceptAndUpdateBalancesOfCell:cell withAnimation:YES];
     }
 }
 

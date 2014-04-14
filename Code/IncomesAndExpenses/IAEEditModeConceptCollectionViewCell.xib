@@ -108,6 +108,7 @@
                 <outlet property="optionCopyLabel" destination="xQF-Xb-xt2" id="l6a-Xg-NXW"/>
                 <outlet property="optionDuplicateLabel" destination="nyY-ns-twb" id="vjH-MZ-DQq"/>
                 <outlet property="optionMoveLabel" destination="UjS-l6-lkg" id="EmO-F7-rmQ"/>
+                <outlet property="otherOptionsContainerView" destination="Xvp-rC-hF6" id="Vn1-7M-EnL"/>
                 <outlet property="valueDecoratorView" destination="L7q-OU-jlD" id="C88-Rr-fh6"/>
             </connections>
         </collectionViewCell>

@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *containerScrollView;
 @property (weak, nonatomic) IBOutlet UILabel *optionDuplicateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *optionCopyLabel;
+@property (weak, nonatomic) IBOutlet UIView *otherOptionsContainerView;
 @property (nonatomic, readwrite, getter = isInStrokeState) BOOL strokeState;
 @property (nonatomic, readwrite) BOOL menuModeActive;
 @property (weak, nonatomic) IBOutlet UILabel *optionMoveLabel;
@@ -215,17 +216,17 @@ static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
 
 - (BOOL)isDuplicateOptionContainingLocationPoint:(CGPoint)location
 {
-    return [self isView:self.optionDuplicateLabel containingLocationPoint:location fromView:self.optionDuplicateLabel];
+    return [self isView:self.optionDuplicateLabel containingLocationPoint:location fromView:self.otherOptionsContainerView];
 }
 
 - (BOOL)isMoveOptionContainingLocationPoint:(CGPoint)location
 {
-    return [self isView:self.optionMoveLabel containingLocationPoint:location fromView:self.optionMoveLabel];
+    return [self isView:self.optionMoveLabel containingLocationPoint:location fromView:self.otherOptionsContainerView];
 }
 
 - (BOOL)isCopyOptionContainingLocationPoint:(CGPoint)location
 {
-    return [self isView:self.optionCopyLabel containingLocationPoint:location fromView:self.optionCopyLabel];
+    return [self isView:self.optionCopyLabel containingLocationPoint:location fromView:self.otherOptionsContainerView];
 }
 
 - (BOOL)isView:(UIView *)sourceView containingLocationPoint:(CGPoint)location fromView:(UIView *)fromView

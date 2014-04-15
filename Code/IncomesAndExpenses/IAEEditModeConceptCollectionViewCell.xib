@@ -80,8 +80,20 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" id="L7q-OU-jlD" customClass="IAEValueDecoratorView">
-                                                <rect key="frame" x="20" y="20" width="20" height="76"/>
+                                                <rect key="frame" x="16" y="20" width="20" height="76"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </view>
+                                            <view contentMode="scaleToFill" id="CEB-DU-gfL" userLabel="View - Star container">
+                                                <rect key="frame" x="4" y="20" width="44" height="76"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <subviews>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star.png" highlighted="YES" id="juI-NV-7hi">
+                                                        <rect key="frame" x="15" y="31" width="14" height="14"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    </imageView>
+                                                </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </view>
                                         </subviews>
@@ -90,10 +102,6 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="869-pin.png" id="P3u-Jy-SE5">
-                                <rect key="frame" x="20" y="20" width="22" height="90"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                         </subviews>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="size" keyPath="contentSize">
@@ -111,17 +119,17 @@
                 <outlet property="categoryLabel" destination="FwU-Ko-eR6" id="Hh5-4l-DIc"/>
                 <outlet property="conceptInformationContainerView" destination="XdT-BY-TUN" id="6wF-SQ-rdo"/>
                 <outlet property="containerScrollView" destination="2c2-si-b4E" id="ufe-Jv-XDh"/>
-                <outlet property="favoritePinImage" destination="P3u-Jy-SE5" id="hja-Gx-7mV"/>
                 <outlet property="identifierContainerView" destination="0jx-Qr-cEo" id="e3U-B0-Uj6"/>
                 <outlet property="optionCopyLabel" destination="xQF-Xb-xt2" id="l6a-Xg-NXW"/>
                 <outlet property="optionDuplicateLabel" destination="nyY-ns-twb" id="vjH-MZ-DQq"/>
                 <outlet property="optionMoveLabel" destination="UjS-l6-lkg" id="EmO-F7-rmQ"/>
                 <outlet property="otherOptionsContainerView" destination="Xvp-rC-hF6" id="Vn1-7M-EnL"/>
+                <outlet property="starContainerView" destination="CEB-DU-gfL" id="uqN-2C-NNO"/>
                 <outlet property="valueDecoratorView" destination="L7q-OU-jlD" id="C88-Rr-fh6"/>
             </connections>
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="869-pin.png" width="14" height="28"/>
+        <image name="star.png" width="26" height="26"/>
     </resources>
 </document>

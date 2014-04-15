@@ -196,7 +196,7 @@ static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
 
 - (BOOL)isFavoritePinContainingLocationPoint:(CGPoint)location
 {
-    return CGRectContainsPoint(self.favoritePinImage.frame, location);
+    return CGRectContainsPoint(self.starContainerView.frame, location);
 }
 
 - (BOOL)isAmountLabelContainingLocationPoint:(CGPoint)location
@@ -549,32 +549,32 @@ static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
 
 - (void)hideFavoritePinWithAnimation:(BOOL)animation
 {
-    if (!self.favoritePinImage.hidden) {
+    if (!self.starContainerView.hidden) {
         if (animation) {
             
-            [self.favoritePinImage.layer removeAllAnimations];
+            [self.starContainerView.layer removeAllAnimations];
             [UIView animateWithDuration:kHideShowFavoritePinTime animations:^{
-                self.favoritePinImage.alpha = 0.0;
+                self.starContainerView.alpha = 0.0;
             } completion:^(BOOL finished) {
                 if (finished) {
-                    self.favoritePinImage.alpha = 1.0;
-                    self.favoritePinImage.hidden = YES;
+                    self.starContainerView.alpha = 1.0;
+                    self.starContainerView.hidden = YES;
                 }
             }];
         } else {
-            self.favoritePinImage.hidden = YES;
+            self.starContainerView.hidden = YES;
         }
     }
 }
 
 - (void)showFavoritePin
 {
-    if (self.favoritePinImage.hidden) {
-        [self.favoritePinImage.layer removeAllAnimations];
-        self.favoritePinImage.hidden = NO;
-        self.favoritePinImage.alpha = 0.0;
+    if (self.starContainerView.hidden) {
+        [self.starContainerView.layer removeAllAnimations];
+        self.starContainerView.hidden = NO;
+        self.starContainerView.alpha = 0.0;
         [UIView animateWithDuration:kHideShowFavoritePinTime animations:^{
-            self.favoritePinImage.alpha = self.favoritePinEnabled ? kEnableAlphaValueForFavoritePin : kDisableAlphaValueForFavoritePin;
+            self.starContainerView.alpha = self.favoritePinEnabled ? kEnableAlphaValueForFavoritePin : kDisableAlphaValueForFavoritePin;
         } completion:^(BOOL finished) {
         }];
     }
@@ -583,20 +583,20 @@ static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
 - (void)enableFavoritePin
 {
     self.favoritePinEnabled = YES;
-    self.favoritePinImage.alpha = self.alpha > 0 ? kEnableAlphaValueForFavoritePin : self.alpha;
+    self.starContainerView.alpha = self.alpha > 0 ? kEnableAlphaValueForFavoritePin : self.alpha;
 }
 
 - (void)disableFavoritePin
 {
     self.favoritePinEnabled = NO;
-    self.favoritePinImage.alpha = self.alpha > 0 ? kDisableAlphaValueForFavoritePin : self.alpha;
+    self.starContainerView.alpha = self.alpha > 0 ? kDisableAlphaValueForFavoritePin : self.alpha;
 }
 
 - (void)changeStateOfFavoritePin
 {
-    NSAssert(!self.favoritePinImage.hidden, @"");
+    NSAssert(!self.starContainerView.hidden, @"");
     self.favoritePinEnabled = !self.favoritePinEnabled;
-    self.favoritePinImage.alpha = self.favoritePinEnabled ? kEnableAlphaValueForFavoritePin : kDisableAlphaValueForFavoritePin;
+    self.starContainerView.alpha = self.favoritePinEnabled ? kEnableAlphaValueForFavoritePin : kDisableAlphaValueForFavoritePin;
 }
 
 @end

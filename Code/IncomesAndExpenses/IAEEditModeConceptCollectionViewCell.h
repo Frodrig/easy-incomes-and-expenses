@@ -21,7 +21,8 @@ typedef NS_ENUM(NSUInteger, EditModeConceptElement) {
 @property (weak, nonatomic) IBOutlet UIView *conceptInformationContainerView;
 @property (weak, nonatomic) IBOutlet IAEValueDecoratorView *valueDecoratorView;
 @property (weak, nonatomic) IBOutlet UIView *identifierContainerView;
-@property (weak, nonatomic) IBOutlet UIImageView *favoritePinImage;
+//@property (weak, nonatomic) IBOutlet UIImageView *favoritePinImage;
+@property (weak, nonatomic) IBOutlet UIView *starContainerView;
 @property (nonatomic) CGFloat durationOfStrokeStateTransition;
 @property (nonatomic, readonly, getter = isInStrokeState) BOOL strokeState;
 @property (nonatomic, readonly) BOOL menuModeActive;

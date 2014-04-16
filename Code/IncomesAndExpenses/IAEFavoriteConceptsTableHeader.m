@@ -49,13 +49,14 @@
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+- (void)vinculeForTouchEventTarget:(id)target withSelector:(SEL)selector
 {
-    // Drawing code
+    [self.selectButton addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
 }
-*/
+
+- (void)desvinculeForTouchEventTarget:(id)target
+{
+    [self.selectButton removeTarget:target action:NULL forControlEvents:UIControlEventTouchUpInside];
+}
 
 @end

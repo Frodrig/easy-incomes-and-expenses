@@ -202,6 +202,11 @@ static const CGFloat kAlphaForCellStroked = 0.2;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    return [self numberOfRowsForSection:section];
+}
+
+- (NSUInteger)numberOfRowsForSection:(NSUInteger)section
+{
     const NSInteger numberOfRows = section == kIncomesSection ? self.favoriteIncomes.count : self.favoriteExpenses.count;
     
     return MAX(numberOfRows, 1);
@@ -339,6 +344,7 @@ static const CGFloat kAlphaForCellStroked = 0.2;
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     cell.accessoryType = selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
     
+    [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     [self refreshHeaderAtSection:indexPath.section];
     [self updateAddButtonEnabledState];
 }
@@ -378,6 +384,35 @@ static const CGFloat kAlphaForCellStroked = 0.2;
     } else {
         header.selectButtonState = SelectButtonStateHide;
     }
+    
+    if (section == kIncomesSection) {
+        [header vinculeForTouchEventTarget:self withSelector:@selector(buttonSelectDeselectAllIncomesPressed:)];
+    } else {
+        [header vinculeForTouchEventTarget:self withSelector:@selector(buttonSelectDeselectAllExpensesPressed:)];
+    }
+}
+
+- (void)buttonSelectDeselectAllIncomesPressed:(id)sender
+{
+    [self executeSelectDeselectActionOfButtonState:self.incomeHeaderView.selectButtonState forSection:kIncomesSection];
+    //[self changeSelectDeselectStateOfHeaderView:self.incomeHeaderView];
+}
+
+- (void)buttonSelectDeselectAllExpensesPressed:(id)sender
+{
+    [self executeSelectDeselectActionOfButtonState:self.expenseHeaderView.selectButtonState forSection:kExpenseSection];
+    //[self changeSelectDeselectStateOfHeaderView:self.expenseHeaderView];
+}
+
+- (void)executeSelectDeselectActionOfButtonState:(SelectButtonState)state forSection:(NSUInteger)section
+{
+    [self.tableView beginUpdates];
+    
+    for (NSUInteger rowIt = 0; rowIt < [self numberOfRowsForSection:section]; ++rowIt) {
+        [self tableView:self.tableView setCellSelected:state == SelectButtonStateSelectAll ? YES : NO forRowAtIndexPath:[NSIndexPath indexPathForRow:rowIt inSection:section]];
+    }
+    
+    [self.tableView endUpdates];
 }
 
 - (BOOL)existSelectionsForSection:(NSUInteger)section inTableView:(UITableView *)tableView
@@ -392,6 +427,15 @@ static const CGFloat kAlphaForCellStroked = 0.2;
     }
     
     return retExistSelections;
+}
+
+- (void)changeSelectDeselectStateOfHeaderView:(IAEFavoriteConceptsTableHeader *)headerView
+{
+    if (headerView.selectButtonState == SelectButtonStateSelectAll) {
+        headerView.selectButtonState = SelectButtonStateDeselectAll;
+    } else if (headerView.selectButtonState == SelectButtonStateDeselectAll) {
+        headerView.selectButtonState = SelectButtonStateSelectAll;
+    }
 }
 
 - (void)refreshHeaderAtSection:(NSInteger)section

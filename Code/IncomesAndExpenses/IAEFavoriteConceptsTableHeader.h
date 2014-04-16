@@ -20,5 +20,7 @@ typedef NS_ENUM(NSUInteger, SelectButtonState) {
 @property (nonatomic) EconomicValueType decoratorValueType;
 @property (nonatomic) SelectButtonState selectButtonState;
 
+- (void)vinculeForTouchEventTarget:(id)target withSelector:(SEL)selector;
+- (void)desvinculeForTouchEventTarget:(id)target;
 
 @end

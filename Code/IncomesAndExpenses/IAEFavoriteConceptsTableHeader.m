@@ -13,19 +13,31 @@
 
 @property (nonatomic, weak) IBOutlet IAEValueDecoratorView *typeDecorator;
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UIButton *selectButton;
 
 @end
 
 @implementation IAEFavoriteConceptsTableHeader
 
-- (void)setTitle:(NSString *)title
+- (void)setSelectButtonState:(SelectButtonState)selectButtonState
 {
-    self.titleLabel.text = title;
+    if (selectButtonState == SelectButtonStateHide) {
+        _selectButton.hidden = YES;
+    } else if (selectButtonState == SelectButtonStateSelectAll) {
+        _selectButton.hidden = NO;
+        [_selectButton setTitle:NSLocalizedString(@"LTEXT_FAVORITE_SELECT_ALL", @"") forState:UIControlStateNormal];
+    } else if (selectButtonState == SelectButtonStateDeselectAll) {
+        _selectButton.hidden = NO;
+        [_selectButton setTitle:NSLocalizedString(@"LTEXT_FAVORITE_UNSELECT_ALL", @"") forState:UIControlStateNormal];
+    }
+    
+    _selectButtonState = selectButtonState;
 }
 
 - (void)setDecoratorValueType:(EconomicValueType)decoratorValueType
 {
-    self.typeDecorator.economicValueType = decoratorValueType;
+    _titleLabel.text = decoratorValueType == ECONOMIC_INCOME_VALUE ? NSLocalizedString(@"LTEXT_CATEGORYTYPEINCOME_NAME", @"") : NSLocalizedString(@"LTEXT_CATEGORYTYPEEXPENSE_NAME", @"");
+    _typeDecorator.economicValueType = decoratorValueType;
 }
 
 - (id)initWithFrame:(CGRect)frame

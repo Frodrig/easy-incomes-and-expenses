@@ -349,13 +349,8 @@ static const CGFloat kAlphaForCellStroked = 0.2;
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     IAEFavoriteConceptsTableHeader *header = (IAEFavoriteConceptsTableHeader *)[UIView viewFromXib:@"IAEFavoriteConceptsTableHeader" withOwner:self];
-    if (section == kIncomesSection) {
-        header.title = NSLocalizedString(@"LTEXT_CATEGORYTYPEINCOME_NAME", @"");
-        header.decoratorValueType = ECONOMIC_INCOME_VALUE;
-    } else if (section == kExpenseSection) {
-        header.title = NSLocalizedString(@"LTEXT_CATEGORYTYPEEXPENSE_NAME", @"");
-        header.decoratorValueType = ECONOMIC_EXPENSE_VALUE;
-    }
+    header.decoratorValueType = section == kIncomesSection ? ECONOMIC_INCOME_VALUE : ECONOMIC_EXPENSE_VALUE;
+    header.selectButtonState = [self isAddOptionEnabled] ? SelectButtonStateSelectAll : SelectButtonStateHide;
     
     return header;
 }

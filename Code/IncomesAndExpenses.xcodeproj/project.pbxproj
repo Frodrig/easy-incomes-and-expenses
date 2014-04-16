@@ -997,6 +997,7 @@
 				5BDD9A2918572239001A6CEF /* PasswordPanel */,
 				5BE84E68180DA16200F4A80B /* About and Options */,
 				5B94035D178FEE9700F9C1D0 /* Category Selector */,
+				5BAEAE141876B5D200271B47 /* Favorite Concepts */,
 				5B32D65A177C417A0070AC72 /* Year Selector */,
 			);
 			name = Application;
@@ -1254,7 +1255,6 @@
 				5B6E9FA4177D9BAB0072EE34 /* Categories */,
 				5B767E231636E797005315F8 /* Model */,
 				5B32D651177C385A0070AC72 /* View, Controllers & ViewControllers */,
-				5BAEAE141876B5D200271B47 /* Favorite Concepts */,
 				5B62D860178EC1EB009879A6 /* Story Boards */,
 				5B767DFD1636D7FC005315F8 /* Supporting Files */,
 				5B767E051636D7FC005315F8 /* IAEAppDelegate.h */,

@@ -9,9 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "IAEValueDefs.h"
 
+typedef NS_ENUM(NSUInteger, SelectButtonState) {
+    SelectButtonStateSelectAll,
+    SelectButtonStateDeselectAll,
+    SelectButtonStateHide
+};
+
 @interface IAEFavoriteConceptsTableHeader : UIView
 
-@property (nonatomic, strong) NSString *title;
 @property (nonatomic) EconomicValueType decoratorValueType;
+@property (nonatomic) SelectButtonState selectButtonState;
+
 
 @end

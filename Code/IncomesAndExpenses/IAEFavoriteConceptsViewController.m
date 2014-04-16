@@ -47,6 +47,8 @@ static const CGFloat kAlphaForCellStroked = 0.2;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navItem;
+@property (nonatomic, weak) IAEFavoriteConceptsTableHeader *incomeHeaderView;
+@property (nonatomic, weak) IAEFavoriteConceptsTableHeader *expenseHeaderView;
 @property (nonatomic, strong) IAEStrokeAnimatableLineView *strokeAnimatableLineView;
 @property (nonatomic, strong) UISwipeGestureRecognizer *swipeGestureRecognizer;
 @property (nonatomic, strong) NSIndexPath *strokedCellIndexPath;
@@ -337,6 +339,7 @@ static const CGFloat kAlphaForCellStroked = 0.2;
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     cell.accessoryType = selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
     
+    [self refreshHeaderAtSection:indexPath.section];
     [self updateAddButtonEnabledState];
 }
 
@@ -348,11 +351,57 @@ static const CGFloat kAlphaForCellStroked = 0.2;
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    IAEFavoriteConceptsTableHeader *header = (IAEFavoriteConceptsTableHeader *)[UIView viewFromXib:@"IAEFavoriteConceptsTableHeader" withOwner:self];
-    header.decoratorValueType = section == kIncomesSection ? ECONOMIC_INCOME_VALUE : ECONOMIC_EXPENSE_VALUE;
-    header.selectButtonState = [self isAddOptionEnabled] ? SelectButtonStateSelectAll : SelectButtonStateHide;
+    IAEFavoriteConceptsTableHeader *header = [self createAndSaveViewForHeaderInSection:section inTableView:tableView];
+    [self configureHeader:header forSection:section inTableView:tableView];
     
     return header;
+}
+
+- (IAEFavoriteConceptsTableHeader *)createAndSaveViewForHeaderInSection:(NSInteger)section inTableView:(UITableView *)tableView
+{
+    IAEFavoriteConceptsTableHeader *header = (IAEFavoriteConceptsTableHeader *)[UIView viewFromXib:@"IAEFavoriteConceptsTableHeader" withOwner:self];
+    if (section == kIncomesSection) {
+        self.incomeHeaderView = header;
+    } else if (section == kExpenseSection) {
+        self.expenseHeaderView = header;
+    }
+    
+    return header;
+}
+
+- (void)configureHeader:(IAEFavoriteConceptsTableHeader *)header forSection:(NSInteger)section inTableView:(UITableView *)tableView
+{
+    header.decoratorValueType = section == kIncomesSection ? ECONOMIC_INCOME_VALUE : ECONOMIC_EXPENSE_VALUE;
+    if ([self isAddOptionEnabled]) {
+        // TODO si no hay elementos estado desactivado
+        header.selectButtonState = [self existSelectionsForSection:kIncomesSection inTableView:tableView] ? SelectButtonStateDeselectAll : SelectButtonStateSelectAll;
+    } else {
+        header.selectButtonState = SelectButtonStateHide;
+    }
+}
+
+- (BOOL)existSelectionsForSection:(NSUInteger)section inTableView:(UITableView *)tableView
+{
+    BOOL retExistSelections = NO;
+    
+    for (NSIndexPath *indexPath in tableView.indexPathsForSelectedRows) {
+        if (indexPath.section == section) {
+            retExistSelections = YES;
+            break;
+        }
+    }
+    
+    return retExistSelections;
+}
+
+- (void)refreshHeaderAtSection:(NSInteger)section
+{
+    [self configureHeader:[self findHeaderViewForSection:section] forSection:section inTableView:self.tableView];
+}
+
+- (IAEFavoriteConceptsTableHeader *)findHeaderViewForSection:(NSInteger)section
+{
+    return section == kIncomesSection ? self.incomeHeaderView : self.expenseHeaderView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

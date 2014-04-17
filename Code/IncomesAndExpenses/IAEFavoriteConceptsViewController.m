@@ -321,14 +321,14 @@ static const CGFloat kAlphaForCellStroked = 0.2;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([self isActiveCheckForSelectAndDeselectEventsAtIndexPath:indexPath]) {
-        [self tableView:tableView setCellSelected:YES forRowAtIndexPath:indexPath];
+        [self tableView:tableView setCellSelected:YES forRowAtIndexPath:indexPath andUpdateAddAndSelectButtons:YES];
     }
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([self isActiveCheckForSelectAndDeselectEventsAtIndexPath:indexPath]) {
-        [self tableView:tableView setCellSelected:NO forRowAtIndexPath:indexPath];
+        [self tableView:tableView setCellSelected:NO forRowAtIndexPath:indexPath andUpdateAddAndSelectButtons:YES];
     }
 }
 
@@ -339,13 +339,22 @@ static const CGFloat kAlphaForCellStroked = 0.2;
     return check;
 }
 
-- (void)tableView:(UITableView *)tableView setCellSelected:(BOOL)selected forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView setCellSelected:(BOOL)selected forRowAtIndexPath:(NSIndexPath *)indexPath andUpdateAddAndSelectButtons:(BOOL)updateAddAndSelectButtons
 {
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    cell.accessoryType = selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
-    
-    [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
-    [self refreshHeaderAtSection:indexPath.section];
+    if (selected) {
+        [tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    } else {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+    [tableView cellForRowAtIndexPath:indexPath].accessoryType = selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+    if (updateAddAndSelectButtons) {
+        [self updateAddAndSelectButtonsForSection:indexPath.section];
+    }
+}
+
+- (void)updateAddAndSelectButtonsForSection:(NSInteger)section
+{
+    [self refreshHeaderAtSection:section];
     [self updateAddButtonEnabledState];
 }
 
@@ -377,17 +386,27 @@ static const CGFloat kAlphaForCellStroked = 0.2;
 
 - (void)configureHeader:(IAEFavoriteConceptsTableHeader *)header forSection:(NSInteger)section inTableView:(UITableView *)tableView
 {
-    header.decoratorValueType = section == kIncomesSection ? ECONOMIC_INCOME_VALUE : ECONOMIC_EXPENSE_VALUE;
     if ([self isAddOptionEnabled]) {
         // TODO si no hay elementos estado desactivado
-        header.selectButtonState = [self existSelectionsForSection:kIncomesSection inTableView:tableView] ? SelectButtonStateDeselectAll : SelectButtonStateSelectAll;
+        if ([self isNoFavoritePinsAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:section]]) {
+            header.selectButtonState = SelectButtonStateHide;
+        } else if ([self someSelectionsButNotAllSelectionsActiveForSection:section inTableView:tableView] ||
+                   [self noSelectionsActiveForSection:section inTableView:tableView]) {
+            header.selectButtonState =  SelectButtonStateSelectAll;
+        } else if ([self allSelectionsActiveForSection:section inTableView:tableView]) {
+            header.selectButtonState = SelectButtonStateDeselectAll;
+        } else {
+            NSAssert(0, @"");
+        }
     } else {
         header.selectButtonState = SelectButtonStateHide;
     }
     
     if (section == kIncomesSection) {
+        header.decoratorValueType = ECONOMIC_INCOME_VALUE;
         [header vinculeForTouchEventTarget:self withSelector:@selector(buttonSelectDeselectAllIncomesPressed:)];
-    } else {
+    } else if (section == kExpenseSection) {
+        header.decoratorValueType = ECONOMIC_EXPENSE_VALUE;
         [header vinculeForTouchEventTarget:self withSelector:@selector(buttonSelectDeselectAllExpensesPressed:)];
     }
 }
@@ -395,21 +414,23 @@ static const CGFloat kAlphaForCellStroked = 0.2;
 - (void)buttonSelectDeselectAllIncomesPressed:(id)sender
 {
     [self executeSelectDeselectActionOfButtonState:self.incomeHeaderView.selectButtonState forSection:kIncomesSection];
-    //[self changeSelectDeselectStateOfHeaderView:self.incomeHeaderView];
 }
 
 - (void)buttonSelectDeselectAllExpensesPressed:(id)sender
 {
     [self executeSelectDeselectActionOfButtonState:self.expenseHeaderView.selectButtonState forSection:kExpenseSection];
-    //[self changeSelectDeselectStateOfHeaderView:self.expenseHeaderView];
 }
 
 - (void)executeSelectDeselectActionOfButtonState:(SelectButtonState)state forSection:(NSUInteger)section
 {
     [self.tableView beginUpdates];
     
-    for (NSUInteger rowIt = 0; rowIt < [self numberOfRowsForSection:section]; ++rowIt) {
-        [self tableView:self.tableView setCellSelected:state == SelectButtonStateSelectAll ? YES : NO forRowAtIndexPath:[NSIndexPath indexPathForRow:rowIt inSection:section]];
+    const NSUInteger numberOfRows = [self numberOfRowsForSection:section];
+    if (numberOfRows > 0) {
+        for (NSUInteger rowIt = 0; rowIt < numberOfRows; ++rowIt) {
+            [self tableView:self.tableView setCellSelected:state == SelectButtonStateSelectAll ? YES : NO forRowAtIndexPath:[NSIndexPath indexPathForRow:rowIt inSection:section] andUpdateAddAndSelectButtons:NO];
+        }
+        [self updateAddAndSelectButtonsForSection:section];
     }
     
     [self.tableView endUpdates];
@@ -427,6 +448,35 @@ static const CGFloat kAlphaForCellStroked = 0.2;
     }
     
     return retExistSelections;
+}
+
+- (BOOL)allSelectionsActiveForSection:(NSInteger)section inTableView:(UITableView *)tableView
+{
+    NSArray *selectionsOfSection = [self selectionsForSection:section inTableView:tableView];
+    return selectionsOfSection.count == [self numberOfRowsForSection:section];
+}
+
+- (BOOL)someSelectionsButNotAllSelectionsActiveForSection:(NSInteger)section inTableView:(UITableView *)tableView
+{
+    NSArray *selectionsOfSection = [self selectionsForSection:section inTableView:tableView];
+    return selectionsOfSection.count > 0 && selectionsOfSection.count < [self numberOfRowsForSection:section];
+}
+
+
+- (BOOL)noSelectionsActiveForSection:(NSInteger)section inTableView:(UITableView *)tableView
+{
+    NSArray *selectionsOfSection = [self selectionsForSection:section inTableView:tableView];
+    return selectionsOfSection.count == 0;
+}
+
+- (NSArray *)selectionsForSection:(NSUInteger)section inTableView:(UITableView *)tableView
+{
+    NSArray *selectionsOfSection = [tableView.indexPathsForSelectedRows filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        NSIndexPath *indexPath = evaluatedObject;
+        return indexPath.section == section;
+    }]];
+    
+    return selectionsOfSection;
 }
 
 - (void)changeSelectDeselectStateOfHeaderView:(IAEFavoriteConceptsTableHeader *)headerView

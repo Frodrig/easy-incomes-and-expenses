@@ -60,56 +60,6 @@ typedef NS_ENUM(NSUInteger, MonthSelectorPurpose) {
     MonthSelectorPurposeMove,
 };
 
-@interface IAEEasyIncomesAndExpensesViewController ()
-
-@property (strong, nonatomic) IBOutlet UILabel *navigationBarTitleLabel;
-@property (weak, nonatomic) IBOutlet UIView *containerViewForDynamicFX;
-@property (strong, nonatomic) UIBarButtonItem *yearsButton;
-@property (strong, nonatomic) UIBarButtonItem *categoriesButton;
-@property (strong, nonatomic) UIBarButtonItem *favoritesButton;
-@property (strong, nonatomic) UIBarButtonItem *settingsButton;
-@property (weak, nonatomic) IBOutlet IAESelectorContextView *selectorContextView;
-@property (weak, nonatomic) IBOutlet UIView *editAndReportModeContentContainerView;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *modeSegmentedControl;
-@property (weak, nonatomic) IBOutlet UICollectionView *conceptsCollectionView;
-@property (nonatomic, strong) UIImageView *editAndReportModeContentContainerViewBackground;
-@property (nonatomic, strong) IAEYearSelectorViewController *yearSelectorViewController;
-@property (nonatomic, strong) IAECategorySelectorViewController *categoriesSelectorViewController;
-@property (nonatomic, strong) IAESettingsViewController *aboutAndOptions2ViewController;
-@property (nonatomic, strong) IAEReportAreaView *reportAreaView;
-@property (nonatomic, strong) IAETextRawSelectorMenuView *contextMenuView;
-@property (nonatomic, strong) IAETextRawSelectorMenuView *reportMenuView;
-@property (nonatomic, strong) IAECalculatorViewController *calculatorViewController;
-@property (nonatomic, strong) IAEHelperReportAreaViewDataSource *helperReportAreaViewDataSource;
-@property (nonatomic, strong) IAEHelperContextTextRawMenuDataSource *helperContextTextRawMenuDataSource;
-@property (nonatomic, strong) IAEHelperReportTextRawMenuDataSource *helperReportTextRawMenuDataSource;
-@property (nonatomic, strong) IAEHelperCalculatorDataSource *helperCalculatorDataSource;
-@property (nonatomic, strong) IAEHelperConceptsCollectionViewDataSource *helperConceptsCollectionViewDataSource;
-@property (nonatomic, strong) UIView *withoutConceptsWarningInMonthEditModeView;
-@property (nonatomic, strong) UIView *withoutConceptsWarningInMonthReportModeView;
-@property (nonatomic, strong) UIPopoverController *popover;
-@property (nonatomic, strong) UITapGestureRecognizer *tapConceptsRecognizer;
-@property (nonatomic, strong) UITapGestureRecognizer *tapEditAndReportModeContainerViewRecognizer;
-@property (nonatomic, strong) UISwipeGestureRecognizer *swipeRightConceptsGestureRecognizer;
-@property (nonatomic, strong) UISwipeGestureRecognizer *swipeLeftConceptsGestureRecognizer;
-@property (nonatomic, strong) UIPanGestureRecognizer *panCalculatorGestureRecognizer;
-@property (nonatomic, strong) IAEStrokeAnimatableLineView *strokeAnimatableLineView;
-@property (nonatomic, weak) IAEEditModeConceptCollectionViewCell *conceptCellToRemove;
-@property (nonatomic) BOOL initialPositioning;
-@property (nonatomic, weak) IAECategory *categoryRenaming;
-@property (nonatomic) BOOL reloadAllPendingFromYearSelectorIfReturnWithSameYearDate;
-@property (nonatomic) NSInteger lastContextIndexMenuPressed;
-@property (nonatomic, strong) UIAttachmentBehavior *attachBehaviorForContainerFX;
-@property (nonatomic, strong) UIDynamicAnimator *dynamicAnimator;
-@property (nonatomic, strong) NSIndexPath *pendingScrollToEditModeConceptCellIndexPath;
-@property (nonatomic, strong) NSIndexPath *indexPathOfCellWithPendingCallForAttentionAnimation;
-@property (nonatomic, strong) IAEMonthSelectorViewController *monthSelectorViewController;
-@property (nonatomic) MonthSelectorPurpose monthSelectorPurpose;
-
-@end
-
-@implementation IAEEasyIncomesAndExpensesViewController
-
 #pragma mark - Constants
 
 static const CGFloat kSelectorContextViewYOutsideMargin = 100;
@@ -174,6 +124,59 @@ static const CGFloat kDurationModeFadeIn = 0.75;
 static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
 
 static const NSUInteger kNumberOfMonths = 12;
+
+static const NSUInteger kAlertViewButtonCancelIndex = 0;
+static const NSUInteger kAltertViewButtonConfirmationIndex = 1;
+
+@interface IAEEasyIncomesAndExpensesViewController ()
+
+@property (strong, nonatomic) IBOutlet UILabel *navigationBarTitleLabel;
+@property (weak, nonatomic) IBOutlet UIView *containerViewForDynamicFX;
+@property (strong, nonatomic) UIBarButtonItem *yearsButton;
+@property (strong, nonatomic) UIBarButtonItem *categoriesButton;
+@property (strong, nonatomic) UIBarButtonItem *favoritesButton;
+@property (strong, nonatomic) UIBarButtonItem *settingsButton;
+@property (weak, nonatomic) IBOutlet IAESelectorContextView *selectorContextView;
+@property (weak, nonatomic) IBOutlet UIView *editAndReportModeContentContainerView;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *modeSegmentedControl;
+@property (weak, nonatomic) IBOutlet UICollectionView *conceptsCollectionView;
+@property (nonatomic, strong) UIImageView *editAndReportModeContentContainerViewBackground;
+@property (nonatomic, strong) IAEYearSelectorViewController *yearSelectorViewController;
+@property (nonatomic, strong) IAECategorySelectorViewController *categoriesSelectorViewController;
+@property (nonatomic, strong) IAESettingsViewController *aboutAndOptions2ViewController;
+@property (nonatomic, strong) IAEReportAreaView *reportAreaView;
+@property (nonatomic, strong) IAETextRawSelectorMenuView *contextMenuView;
+@property (nonatomic, strong) IAETextRawSelectorMenuView *reportMenuView;
+@property (nonatomic, strong) IAECalculatorViewController *calculatorViewController;
+@property (nonatomic, strong) IAEHelperReportAreaViewDataSource *helperReportAreaViewDataSource;
+@property (nonatomic, strong) IAEHelperContextTextRawMenuDataSource *helperContextTextRawMenuDataSource;
+@property (nonatomic, strong) IAEHelperReportTextRawMenuDataSource *helperReportTextRawMenuDataSource;
+@property (nonatomic, strong) IAEHelperCalculatorDataSource *helperCalculatorDataSource;
+@property (nonatomic, strong) IAEHelperConceptsCollectionViewDataSource *helperConceptsCollectionViewDataSource;
+@property (nonatomic, strong) UIView *withoutConceptsWarningInMonthEditModeView;
+@property (nonatomic, strong) UIView *withoutConceptsWarningInMonthReportModeView;
+@property (nonatomic, strong) UIPopoverController *popover;
+@property (nonatomic, strong) UITapGestureRecognizer *tapConceptsRecognizer;
+@property (nonatomic, strong) UITapGestureRecognizer *tapEditAndReportModeContainerViewRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer *swipeRightConceptsGestureRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer *swipeLeftConceptsGestureRecognizer;
+@property (nonatomic, strong) UIPanGestureRecognizer *panCalculatorGestureRecognizer;
+@property (nonatomic, strong) IAEStrokeAnimatableLineView *strokeAnimatableLineView;
+@property (nonatomic, weak) IAEEditModeConceptCollectionViewCell *conceptCellToRemove;
+@property (nonatomic) BOOL initialPositioning;
+@property (nonatomic, weak) IAECategory *categoryRenaming;
+@property (nonatomic) BOOL reloadAllPendingFromYearSelectorIfReturnWithSameYearDate;
+@property (nonatomic) NSInteger lastContextIndexMenuPressed;
+@property (nonatomic, strong) UIAttachmentBehavior *attachBehaviorForContainerFX;
+@property (nonatomic, strong) UIDynamicAnimator *dynamicAnimator;
+@property (nonatomic, strong) NSIndexPath *pendingScrollToEditModeConceptCellIndexPath;
+@property (nonatomic, strong) NSIndexPath *indexPathOfCellWithPendingCallForAttentionAnimation;
+@property (nonatomic, strong) IAEMonthSelectorViewController *monthSelectorViewController;
+@property (nonatomic) MonthSelectorPurpose monthSelectorPurpose;
+
+@end
+
+@implementation IAEEasyIncomesAndExpensesViewController
 
 #pragma mark - Properties
 
@@ -616,14 +619,18 @@ static const NSUInteger kNumberOfMonths = 12;
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (self.conceptCellToRemove) {
-        if (buttonIndex == 0) {
-            [self doUndoRemoveConceptCellToRemove];
-        } else if (buttonIndex == 1) {
-            [self doRemoveConceptCellToRemove];
-        }
-        
+        [self executeLogicAfterDissmisAlertViewConfirmationRemoveConceptWithButtonClickedAtIndex:buttonIndex];
     } else {
         [self executeLogicAfterFixRemoveCategoryActionLostInUnloadedYearsAlertViewOk];
+    }
+}
+
+- (void)executeLogicAfterDissmisAlertViewConfirmationRemoveConceptWithButtonClickedAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == kAlertViewButtonCancelIndex) {
+        [self doUndoRemoveConceptCellToRemove];
+    } else if (buttonIndex == kAltertViewButtonConfirmationIndex) {
+        [self doRemoveConceptCellToRemove];
     }
 }
 
@@ -1642,11 +1649,20 @@ static const NSUInteger kNumberOfMonths = 12;
 - (void)strokeAnimatableView:(IAEStrokeAnimatableLineView *)strokeAnimatableView didStrokeOverTheView:(UIView *)view
 {
     if ([[NSUserDefaults standardUserDefaults] isRemoveConceptConfirmationActive]) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Confirmation" message:@"¿Quieres borrar realmente el concepto?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Si", nil];
-        [alertView show];
+        [self lauchAlertViewToConfirmRemoveOfStrokedConceptCell];
     } else {
         [self performSelector:@selector(doRemoveConceptCellToRemove) withObject:nil afterDelay:kDelayToExecuteRemoveConceptCell];
     }
+}
+
+- (void)lauchAlertViewToConfirmRemoveOfStrokedConceptCell
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_ALERTVIEW_CONFIRMREMOVECONCEPT_TITLE", @"")
+                                                        message:NSLocalizedString(@"LTEXT_ALERTVIEW_CONFIRMREMOVECONCEPT_MESSAGE", @"")
+                                                       delegate:self
+                                              cancelButtonTitle:NSLocalizedString(@"LTEXT_ALERTVIEW_CONFIRMREMOVECONCEPT_NO", @"")
+                                              otherButtonTitles:NSLocalizedString(@"LTEXT_ALERTVIEW_CONFIRMREMOVECONCEPT_YES", @""), nil];
+    [alertView show];
 }
 
 - (void)doRemoveConceptCellToRemove

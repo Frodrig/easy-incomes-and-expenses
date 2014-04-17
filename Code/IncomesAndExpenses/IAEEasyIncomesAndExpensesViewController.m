@@ -53,6 +53,7 @@
 #import "IAEFavoriteConceptsStock.h"
 #import "IAEFavoriteConceptsViewController.h"
 #import "IAEMonthSelectorViewController.h"
+#import "NSUserDefaults+EasyIncAndExp.h"
 
 typedef NS_ENUM(NSUInteger, MonthSelectorPurpose) {
     MonthSelectorPurposeCopy,
@@ -610,7 +611,18 @@ static const NSUInteger kNumberOfMonths = 12;
     }
 }
 
+#pragma mark - AlertViewDelegate
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (self.conceptCellToRemove) {
+        
+    } else {
+        [self executeLogicAfterFixRemoveCategoryActionLostInUnloadedYearsAlertViewOk];
+    }
+}
+
+- (void)executeLogicAfterFixRemoveCategoryActionLostInUnloadedYearsAlertViewOk
 {
     NSAssert([IAEFixRemoveCategoryActionLostInUnloadedYears defaultFix].resultReport.length > 0, @"Deberia de haber un reporte creado");
     
@@ -1624,7 +1636,12 @@ static const NSUInteger kNumberOfMonths = 12;
 
 - (void)strokeAnimatableView:(IAEStrokeAnimatableLineView *)strokeAnimatableView didStrokeOverTheView:(UIView *)view
 {
-    [self performSelector:@selector(doRemoveConceptCellToRemove) withObject:nil afterDelay:kDelayToExecuteRemoveConceptCell];
+    if ([[NSUserDefaults standardUserDefaults] isRemoveConceptConfirmationActive]) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Confirmation" message:@"¿Quieres borrar realmente el concepto?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Si", nil];
+        [alertView show];
+    } else {
+        [self performSelector:@selector(doRemoveConceptCellToRemove) withObject:nil afterDelay:kDelayToExecuteRemoveConceptCell];
+    }
 }
 
 - (void)doRemoveConceptCellToRemove

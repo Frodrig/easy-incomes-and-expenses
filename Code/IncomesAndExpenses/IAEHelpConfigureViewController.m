@@ -9,6 +9,7 @@
 #import "IAEHelpConfigureViewController.h"
 #import "IAEHelpConfigureConceptsWithDaysCell.h"
 #import "IAEHelpConfigureStartMonthCell.h"
+#import "IAEHelpConfigureConfirmRemoveConceptCell.h"
 #import "IAEHelpIndexViewControllerDelegate.h"
 #import "IAEHelpConfigureStartMonthSelectorTableViewController.h"
 #import "MonthDefs.h"
@@ -30,11 +31,14 @@ static NSString * const kCollectionViewConceptsWithDaysCellNibName = @"IAEHelpCo
 static NSString * const kCollectionViewConceptsWithDaysCellIdentifier = @"IAEConfigureConceptsWithDaysCell";
 static NSString * const kCollectionViewStartMonthCellNibName = @"IAEHelpConfigureStartMonthCell";
 static NSString * const kCollectionViewStartMonthCellIdentifier = @"IAEConfigureStartMonthCell";
+static NSString * const kCollectionViewRemoveConceptsWithConfirmationCellNibName = @"IAEConfirmRemoveConceptCell";
+static NSString * const kCollectionViewRemoveConceptsWithConfirmationCellIdentifier = @"IAEConfigureConfirmRemoveConceptCell";
 
-static NSUInteger kNumberOfSections = 2;
+static NSUInteger kNumberOfSections = 3;
 static NSUInteger kNumberOfItemsInSection = 1;
 static NSUInteger kSectionOfConfigureConceptsWithDaysCell = 0;
 static NSUInteger kSectionOfConfigureStartMonthCell = 1;
+static NSUInteger kSectionOfRemoveConceptsWithConfirmationCell = 2;
 
 #pragma mark - Init
 
@@ -62,6 +66,8 @@ static NSUInteger kSectionOfConfigureStartMonthCell = 1;
           forCellWithReuseIdentifier:kCollectionViewConceptsWithDaysCellIdentifier];
     [self.collectionView registerNib:[UINib nibWithNibName:kCollectionViewStartMonthCellNibName bundle:nil]
           forCellWithReuseIdentifier:kCollectionViewStartMonthCellIdentifier];
+    [self.collectionView registerNib:[UINib nibWithNibName:kCollectionViewRemoveConceptsWithConfirmationCellNibName bundle:nil]
+          forCellWithReuseIdentifier:kCollectionViewRemoveConceptsWithConfirmationCellIdentifier];
 }
 
 - (void)configureNavigationController
@@ -110,6 +116,8 @@ static NSUInteger kSectionOfConfigureStartMonthCell = 1;
         size = [IAEHelpConfigureConceptsWithDaysCell sizeOfItem];
     } else if (indexPath.section == kSectionOfConfigureStartMonthCell) {
         size = [IAEHelpConfigureStartMonthCell sizeOfItem];
+    } else if (indexPath.section == kSectionOfRemoveConceptsWithConfirmationCell) {
+        size = [IAEHelpConfigureConfirmRemoveConceptCell sizeOfItem];
     }
     
     return size;
@@ -158,6 +166,9 @@ static NSUInteger kSectionOfConfigureStartMonthCell = 1;
                                                          forIndexPath:indexPath];
     } else if (indexPath.section == kSectionOfConfigureStartMonthCell) {
         cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCollectionViewStartMonthCellIdentifier
+                                                         forIndexPath:indexPath];
+    } else if (indexPath.section == kSectionOfRemoveConceptsWithConfirmationCell) {
+        cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCollectionViewRemoveConceptsWithConfirmationCellIdentifier
                                                          forIndexPath:indexPath];
     }
     

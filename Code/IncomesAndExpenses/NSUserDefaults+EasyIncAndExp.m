@@ -16,6 +16,7 @@
 static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
 static NSString * const kUserDefaultsReportAmountModeKey = @"reportAmountMode";
 static NSString * const kUserDefaultInitialMonthKey = @"initialMonth";
+static NSString * const kUserDefaultRemoveConceptConfirmation = @"removeConceptConfirmation";
 
 static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalAmounts";
 static NSString * const kUserDefaultsReportAmountModePercentageAmountValue = @"percentageAmounts";
@@ -28,18 +29,12 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 {
     NSDictionary *defaults = @{ kUserDefaultsDayModeActiveKey: [NSNumber numberWithBool:NO],
                                 kUserDefaultsReportAmountModeKey: kUserDefaultsReportAmountModeTotalAmountValue,
-                                kUserDefaultInitialMonthKey: @(January)};
+                                kUserDefaultInitialMonthKey: @(January),
+                                kUserDefaultRemoveConceptConfirmation: @(NO)};
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];    
 }
 
 #pragma mark - ReportSection
-
-- (BOOL)isDayModeActive
-{
-    const BOOL isDayModeActive = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsDayModeActiveKey];
-    
-    return isDayModeActive;
-}
 
 - (BOOL)isTotalAmountModeInReportSection
 {
@@ -97,6 +92,23 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 - (BOOL)isDayModeActiveForConcepts
 {
     return [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsDayModeActive];
+}
+
+- (void)changeDayModeActiveForConcepts
+{
+    [[NSUserDefaults standardUserDefaults] setBool:![self isDayModeActiveForConcepts] forKey:kUserDefaultsDayModeActive];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (BOOL)isRemoveConceptConfirmationActive
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultRemoveConceptConfirmation];
+}
+
+- (void)changeRemoveConceptConfirmation
+{
+    [[NSUserDefaults standardUserDefaults] setBool:![self isRemoveConceptConfirmationActive] forKey:kUserDefaultRemoveConceptConfirmation];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (BOOL)isFixRemoveCategoryActionLostInUnloadedYearsNotExecuted

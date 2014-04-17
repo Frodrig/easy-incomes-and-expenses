@@ -68,6 +68,8 @@
 		5B55C406178AA8C20066F586 /* IAECategoryEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B55C404178AA8C20066F586 /* IAECategoryEditorViewController.m */; };
 		5B55C407178AA8C20066F586 /* IAECategoryEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B55C405178AA8C20066F586 /* IAECategoryEditorViewController.xib */; };
 		5B57275817D9A99B00552E98 /* IAENibUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B57275717D9A99B00552E98 /* IAENibUtils.m */; };
+		5B5773BB18FF9A7600672C29 /* IAEHelpConfigureConfirmRemoveConceptCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5773BA18FF9A7600672C29 /* IAEHelpConfigureConfirmRemoveConceptCell.m */; };
+		5B5773BD18FF9A8800672C29 /* IAEConfirmRemoveConceptCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B5773BC18FF9A8800672C29 /* IAEConfirmRemoveConceptCell.xib */; };
 		5B57A9C217FAD39500C7BFD3 /* calculatordragbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B57A9C017FAD39500C7BFD3 /* calculatordragbackground.png */; };
 		5B57A9C317FAD39500C7BFD3 /* calculatordragbackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B57A9C117FAD39500C7BFD3 /* calculatordragbackground@2x.png */; };
 		5B5BEAF41827E6CA00A00BE0 /* IAEExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5BEAF31827E6CA00A00BE0 /* IAEExporter.m */; };
@@ -310,6 +312,9 @@
 		5B57275617D9A99B00552E98 /* IAENibUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAENibUtils.h; sourceTree = "<group>"; };
 		5B57275717D9A99B00552E98 /* IAENibUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAENibUtils.m; sourceTree = "<group>"; };
 		5B57275917D9FAD400552E98 /* IAEAdjustConceptAmountViewControllerDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEAdjustConceptAmountViewControllerDataSource.h; sourceTree = "<group>"; };
+		5B5773B918FF9A7600672C29 /* IAEHelpConfigureConfirmRemoveConceptCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelpConfigureConfirmRemoveConceptCell.h; sourceTree = "<group>"; };
+		5B5773BA18FF9A7600672C29 /* IAEHelpConfigureConfirmRemoveConceptCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelpConfigureConfirmRemoveConceptCell.m; sourceTree = "<group>"; };
+		5B5773BC18FF9A8800672C29 /* IAEConfirmRemoveConceptCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEConfirmRemoveConceptCell.xib; sourceTree = "<group>"; };
 		5B57A9C017FAD39500C7BFD3 /* calculatordragbackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calculatordragbackground.png; sourceTree = "<group>"; };
 		5B57A9C117FAD39500C7BFD3 /* calculatordragbackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calculatordragbackground@2x.png"; sourceTree = "<group>"; };
 		5B5BEAF21827E6CA00A00BE0 /* IAEExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEExporter.h; sourceTree = "<group>"; };
@@ -680,7 +685,6 @@
 				5B23F03F17FED21C00477D34 /* NSUserDefaults+EasyIncAndExp.m */,
 			);
 			name = NSUserDefaults;
-			path = IncomesAndExpenses;
 			sourceTree = "<group>";
 		};
 		5B23F04117FF097A00477D34 /* Formatters */ = {
@@ -714,7 +718,6 @@
 		5B28D1A5182001C000EF4D48 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				5B23F03D17FED1FD00477D34 /* NSUserDefaults */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -864,6 +867,7 @@
 			children = (
 				5B28D1A61820077000EF4D48 /* IAEHelpConfigureStartMonthCell */,
 				5B879768180E8FE500554E13 /* IAEHelpConfigureConceptsWithDaysCell */,
+				5B5773BE18FF9A8D00672C29 /* IAEConfirmRemoveConceptCell */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -895,6 +899,16 @@
 				5B57275717D9A99B00552E98 /* IAENibUtils.m */,
 			);
 			name = Nib;
+			sourceTree = "<group>";
+		};
+		5B5773BE18FF9A8D00672C29 /* IAEConfirmRemoveConceptCell */ = {
+			isa = PBXGroup;
+			children = (
+				5B5773B918FF9A7600672C29 /* IAEHelpConfigureConfirmRemoveConceptCell.h */,
+				5B5773BA18FF9A7600672C29 /* IAEHelpConfigureConfirmRemoveConceptCell.m */,
+				5B5773BC18FF9A8800672C29 /* IAEConfirmRemoveConceptCell.xib */,
+			);
+			name = IAEConfirmRemoveConceptCell;
 			sourceTree = "<group>";
 		};
 		5B58A48217AA635A00697C70 /* Protocols */ = {
@@ -1134,6 +1148,7 @@
 		5B6E9FA4177D9BAB0072EE34 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				5B23F03D17FED1FD00477D34 /* NSUserDefaults */,
 				5BA013091798007200337E84 /* String */,
 				5B36AFF41785BBC500132475 /* NSDecimalNumber */,
 				5B5C96A61781E861008CD851 /* NSNumber */,
@@ -2184,6 +2199,7 @@
 				5BE8A68418FDCF9300475F68 /* starblack.png in Resources */,
 				5B2512821851E07600669AE6 /* settingsindex_img_1@2x.png in Resources */,
 				5B1F0D3717841CE400D0B4F1 /* IAEEditModeConceptCollectionViewCell.xib in Resources */,
+				5B5773BD18FF9A8800672C29 /* IAEConfirmRemoveConceptCell.xib in Resources */,
 				5B28D1AB182007BF00EF4D48 /* IAEHelpConfigureStartMonthCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2292,6 +2308,7 @@
 				5B5497B71820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.m in Sources */,
 				5B251FA117AACA71000957A5 /* IAEStrokeAnimatableLineView.m in Sources */,
 				5BEA608217A6A36600520E09 /* IAEReportAreaView.m in Sources */,
+				5B5773BB18FF9A7600672C29 /* IAEHelpConfigureConfirmRemoveConceptCell.m in Sources */,
 				5B32D654177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m in Sources */,
 				5B5C967F17816A13008CD851 /* UIView+RoundedCorners.m in Sources */,
 				5BAEAE181876B8C300271B47 /* IAEFavoriteConceptsViewController.m in Sources */,

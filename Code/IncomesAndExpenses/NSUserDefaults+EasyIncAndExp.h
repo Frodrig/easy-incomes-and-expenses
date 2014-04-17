@@ -13,8 +13,6 @@
 
 - (void)prepareDefaults;
 
-- (BOOL)isDayModeActive;
-
 - (BOOL)isTotalAmountModeInReportSection;
 - (BOOL)isTotalPercentageModeInReportSection;
 - (void)changeToNextReportMode;
@@ -22,8 +20,13 @@
 - (void)changeToReportTotalPercentageModeInReportSection;
 
 - (BOOL)isDayModeActiveForConcepts;
+- (void)changeDayModeActiveForConcepts;
+
 - (void)changeInitialMonthTo:(MonthType)startMonth;
 - (MonthType)actualInitialMonth;
+
+- (BOOL)isRemoveConceptConfirmationActive;
+- (void)changeRemoveConceptConfirmation;
 
 - (BOOL)isFixRemoveCategoryActionLostInUnloadedYearsExecuted;
 - (BOOL)isFixRemoveCategoryActionLostInUnloadedYearsNotExecuted;

@@ -10,6 +10,7 @@
 #import <Crashlytics/Crashlytics.h>
 #import "Flurry.h"
 #import "IAENibUtils.h"
+#import "NSUserDefaults+EasyIncAndExp.h"
 
 @interface IAEHelpConfigureConceptsWithDaysCell()
 
@@ -20,10 +21,7 @@
 
 @implementation IAEHelpConfigureConceptsWithDaysCell
 
-static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
-
 static NSString * const kTagDayModeLabelText = @"LTEXT_ABOUTANDOPTIONS_DAYMODELABEL_TEXT";
-
 static NSString * const kNibName = @"IAEHelpConfigureConceptsWithDaysCell";
 
 #pragma mark - Class
@@ -58,16 +56,14 @@ static NSString * const kNibName = @"IAEHelpConfigureConceptsWithDaysCell";
 
 - (void)initDayModeInformationSwitch
 {
-    _dayModeSwitch.on = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsDayModeActive];
+    _dayModeSwitch.on = [[NSUserDefaults standardUserDefaults] isDayModeActiveForConcepts];
 }
 
 #pragma mark - Control Events
 
 - (IBAction)daySwitchValueChanged:(id)sender
 {
-    [[NSUserDefaults standardUserDefaults] setBool:self.dayModeSwitch.on forKey:kUserDefaultsDayModeActive];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
+    [[NSUserDefaults standardUserDefaults] changeDayModeActiveForConcepts];
     [Crashlytics setObjectValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"dayModeActive"] forKey:@"Days Mode"];
     [Flurry logEvent:@"daymode_activation" withParameters:@{@"DayMode" : [NSNumber numberWithBool:self.dayModeSwitch.on]}];
 }

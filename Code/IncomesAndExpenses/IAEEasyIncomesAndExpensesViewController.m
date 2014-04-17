@@ -616,6 +616,11 @@ static const NSUInteger kNumberOfMonths = 12;
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (self.conceptCellToRemove) {
+        if (buttonIndex == 0) {
+            [self doUndoRemoveConceptCellToRemove];
+        } else if (buttonIndex == 1) {
+            [self doRemoveConceptCellToRemove];
+        }
         
     } else {
         [self executeLogicAfterFixRemoveCategoryActionLostInUnloadedYearsAlertViewOk];
@@ -1647,6 +1652,13 @@ static const NSUInteger kNumberOfMonths = 12;
 - (void)doRemoveConceptCellToRemove
 {
     [self removeConceptAndUpdateBalancesOfCell:self.conceptCellToRemove withAnimation:YES];
+}
+
+- (void)doUndoRemoveConceptCellToRemove
+{
+    [self.strokeAnimatableLineView resetStroke];
+    [self.conceptCellToRemove exitFromStrokeState];
+    self.conceptCellToRemove = nil;
 }
 
 #pragma mark - UIPanGestureRecognizer

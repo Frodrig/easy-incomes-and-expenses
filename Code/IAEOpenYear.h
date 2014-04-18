@@ -29,4 +29,8 @@
 
 - (NSComparisonResult)compareDescendingPriority:(IAEOpenYear *)aOpenYear;
 
+- (NSDecimalNumber *)expenses;
+- (NSDecimalNumber *)incomes;
+- (NSDecimalNumber *)balance;
+
 @end

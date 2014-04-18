@@ -1180,7 +1180,6 @@
 				5B6F45E1181ED00B0073B1AC /* Defs */,
 				5B6F45DE181ECF780073B1AC /* Protocols */,
 				5BAEAE081876825500271B47 /* Favorite Concepts */,
-				5B6F45DD181ECF5A0073B1AC /* OpenYear */,
 				5B87977A180EADB200554E13 /* Core Data */,
 			);
 			name = Data;
@@ -1664,6 +1663,7 @@
 		5BC7102117AC2A1F00E12953 /* Year */ = {
 			isa = PBXGroup;
 			children = (
+				5B6F45DD181ECF5A0073B1AC /* OpenYear */,
 				5BC7100F17AC29F600E12953 /* IAEYear.h */,
 				5BC7101617AC29F600E12953 /* IAEYear.m */,
 			);

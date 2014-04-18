@@ -248,13 +248,13 @@ static const NSUInteger kMonthsPerYear = 12;
 
 - (NSArray *)findAllCategoriesSortedByAbsoluteValueOfAmountsInConceptsOfType:(CategoryType)type
 {
-    NSArray *allCategories = [NSArray array];
+    NSMutableSet *allCategories = [NSMutableSet set];
     for (IAEMonth *months in self.months) {
         NSArray *allCategoriesOfMonth = [months findAllCategoriesInConceptsOfType:type];
-        allCategories = [allCategories arrayByAddingObjectsFromArray:allCategoriesOfMonth];
+        [allCategories addObjectsFromArray:allCategoriesOfMonth];
     }
     
-    allCategories = [allCategories sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+    NSArray *allSortedCategories = [allCategories.allObjects sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         IAECategory *category1 = obj1;
         IAECategory *category2 = obj2;
         NSDecimalNumber *amountCategory1 = [self balanceOfAllConceptsOfCategory:category1];
@@ -265,7 +265,7 @@ static const NSUInteger kMonthsPerYear = 12;
     }];
     
     
-    return allCategories;
+    return allSortedCategories;
 }
 
 - (NSUInteger)findNumberOfConcepts

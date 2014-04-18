@@ -268,15 +268,13 @@ static NSString * const kLTextDecemberName = @"December";
 {
     NSMutableSet *categoriesFound = [NSMutableSet setWithCapacity:self.concepts.count];
     
-    NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:self.concepts.count];
     for (IAEConcept *concept in self.concepts) {
         if (concept.category.categoryType == type && ![categoriesFound containsObject:concept.category]) {
-            [array addObject:concept.category];
             [categoriesFound addObject:concept.category];
         }
     }
     
-    return array;
+    return [categoriesFound.allObjects copy];
 }
 
 - (NSArray *)allConceptsSortedByEntryInstant

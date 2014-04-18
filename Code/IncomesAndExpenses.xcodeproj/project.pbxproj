@@ -10,6 +10,7 @@
 		5B0038FE18CFC13900044B2D /* libFlurry_4.3.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B00386718CFC13900044B2D /* libFlurry_4.3.2.a */; };
 		5B00398418CFC13900044B2D /* libFlurryAds_4.3.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B0038F218CFC13900044B2D /* libFlurryAds_4.3.2.a */; };
 		5B0574C117AFE2F600B95D50 /* IAEWithoutConceptsTextWarningReportMode.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B0574C317AFE2F600B95D50 /* IAEWithoutConceptsTextWarningReportMode.xib */; };
+		5B0EDE9F1900EEE0009A3DF5 /* IAEEmailChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0EDE9E1900EEE0009A3DF5 /* IAEEmailChecker.m */; };
 		5B0F8BC416B94ADD002D62A5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5B0F8BC616B94ADD002D62A5 /* Localizable.strings */; };
 		5B1B7F8B18D791070012AC21 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B767DF81636D7FC005315F8 /* Foundation.framework */; };
 		5B1B7F8C18D791070012AC21 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B767DF61636D7FC005315F8 /* UIKit.framework */; };
@@ -229,6 +230,8 @@
 		5B021D3716B8363F000B8D4F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5B0574C217AFE2F600B95D50 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/IAEWithoutConceptsTextWarningReportMode.xib; sourceTree = "<group>"; };
 		5B0574C417AFE2F900B95D50 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/IAEWithoutConceptsTextWarningReportMode.xib; sourceTree = "<group>"; };
+		5B0EDE9D1900EEE0009A3DF5 /* IAEEmailChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEmailChecker.h; sourceTree = "<group>"; };
+		5B0EDE9E1900EEE0009A3DF5 /* IAEEmailChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEmailChecker.m; sourceTree = "<group>"; };
 		5B0F8BC516B94ADD002D62A5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5B0F8BC716B94AE1002D62A5 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5B1B7F8818D791070012AC21 /* IncomesAndExpenses Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "IncomesAndExpenses Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -629,6 +632,15 @@
 				5B0574C317AFE2F600B95D50 /* IAEWithoutConceptsTextWarningReportMode.xib */,
 			);
 			name = SinConceptosEnModoReporte;
+			sourceTree = "<group>";
+		};
+		5B0EDE9C1900EEB8009A3DF5 /* Email */ = {
+			isa = PBXGroup;
+			children = (
+				5B0EDE9D1900EEE0009A3DF5 /* IAEEmailChecker.h */,
+				5B0EDE9E1900EEE0009A3DF5 /* IAEEmailChecker.m */,
+			);
+			name = Email;
 			sourceTree = "<group>";
 		};
 		5B0F8BC116B94A7B002D62A5 /* Localizacion */ = {
@@ -1056,6 +1068,7 @@
 		5B62D861178EC1FA009879A6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5B0EDE9C1900EEB8009A3DF5 /* Email */,
 				5B98F0AE185883350051333A /* Keychain */,
 				5B5BEAF11827E6B400A00BE0 /* Exporter */,
 				5B23F04117FF097A00477D34 /* Formatters */,
@@ -2252,6 +2265,7 @@
 				5B23F04017FED21C00477D34 /* NSUserDefaults+EasyIncAndExp.m in Sources */,
 				5B6F45E5181ED29F0073B1AC /* IAEOpenYear.m in Sources */,
 				5B907832179D1AA700B2A0F7 /* IAECalculatorViewController.m in Sources */,
+				5B0EDE9F1900EEE0009A3DF5 /* IAEEmailChecker.m in Sources */,
 				5B32D65D177C41980070AC72 /* IAEYearSelectorViewController.m in Sources */,
 				5BD06157163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld in Sources */,
 				5B8CD5D117A262A800A353A5 /* IAEContextView.m in Sources */,

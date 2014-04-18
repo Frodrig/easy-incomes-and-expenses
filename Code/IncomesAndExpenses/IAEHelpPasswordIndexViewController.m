@@ -22,6 +22,7 @@
 
 static const NSUInteger kActivateDeactivatePasswordIndex = 0;
 static const NSUInteger kChangePasswordIndex = 1;
+static const NSUInteger kVinculePasswordRecoverEmail = 2;
 
 #pragma mark - Init
 
@@ -61,7 +62,7 @@ static const NSUInteger kChangePasswordIndex = 1;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -89,11 +90,17 @@ static const NSUInteger kChangePasswordIndex = 1;
     const BOOL passwordActivated = [self isPasswordActivated];
     if (indexPath.row == kActivateDeactivatePasswordIndex) {
         cell.textLabel.text =  passwordActivated ? NSLocalizedString(@"LTEXT_PASSWORDINDEX_DEACTIVATE", @"") : NSLocalizedString(@"LTEXT_PASSWORDINDEX_ACTIVATE", @"");
+        cell.userInteractionEnabled = YES;
+        cell.textLabel.enabled = YES;
     } else if (indexPath.row == kChangePasswordIndex) {
         cell.textLabel.text = NSLocalizedString(@"LTEXT_PASSWORDINDEX_CHANGE", @"");
         cell.userInteractionEnabled = passwordActivated;
         cell.textLabel.enabled = passwordActivated;
         cell.detailTextLabel.enabled = passwordActivated;
+    } else if (indexPath.row == kVinculePasswordRecoverEmail) {
+        cell.textLabel.text = NSLocalizedString(@"LTEXT_PASSWORDINDEX_VINCULEEMAIL", @"");
+        cell.userInteractionEnabled = YES;
+        cell.textLabel.enabled = YES;
     }
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -108,8 +115,29 @@ static const NSUInteger kChangePasswordIndex = 1;
 
 #pragma mark - Table view delegate
 
-// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([self isIndexPathForPasswordPanelViewController:indexPath]) {
+        [self launchPasswordPanelViewControllerWithAppropiateModeForIndexPath:indexPath];
+    } else {
+        if ([MFMailComposeViewController canSendMail]) {
+            
+        } else {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@""
+                                                                message:@""
+                                                               delegate:nil
+                                                      cancelButtonTitle:@""
+                                                      otherButtonTitles:nil];
+        }
+    }
+}
+
+- (BOOL)isIndexPathForPasswordPanelViewController:(NSIndexPath *)indexPath
+{
+    return indexPath.row == kActivateDeactivatePasswordIndex || indexPath.row == kChangePasswordIndex;
+}
+
+- (void)launchPasswordPanelViewControllerWithAppropiateModeForIndexPath:(NSIndexPath *)indexPath
 {
     ModeType mode = [self findModeTypeBasedInSelectedRowAtIndexPath:indexPath];
     IAEPasswordPanelViewController *passwordPanelViewController = [[IAEPasswordPanelViewController alloc] initWithMode:mode];
@@ -127,5 +155,6 @@ static const NSUInteger kChangePasswordIndex = 1;
     
     return retMode;
 }
+
 
 @end

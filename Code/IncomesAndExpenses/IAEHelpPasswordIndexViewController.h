@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MFMailComposeViewController.h>
 
 @protocol IAEHelpIndexViewControllerDelegate;
 
-@interface IAEHelpPasswordIndexViewController : UITableViewController
+@interface IAEHelpPasswordIndexViewController : UITableViewController<MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, weak)id<IAEHelpIndexViewControllerDelegate> delegate;
 

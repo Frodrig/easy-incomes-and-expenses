@@ -9,6 +9,7 @@
 #import "IAEHelpPasswordIndexViewController.h"
 #import "IAESettingsViewControllerDefs.h"
 #import "IAEPasswordPanelViewController.h"
+#import "IAEPasswordRecoveryEmailPanelViewController.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
 #import "KeychainItemWrapper.h"
 
@@ -140,7 +141,7 @@ static const NSUInteger kVinculePasswordRecoverEmailIndex = 2;
 
 -(void)launchEmailRecoveryPanelViewController
 {
-    
+    [self.navigationController pushViewController:[[IAEPasswordRecoveryEmailPanelViewController alloc] initWithNibName:nil bundle:nil] animated:YES];
 }
 
 - (void)launchAlertViewAboutCantVinculeEmailRecovery

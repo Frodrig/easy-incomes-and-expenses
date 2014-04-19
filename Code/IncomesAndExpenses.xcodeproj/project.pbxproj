@@ -12,6 +12,8 @@
 		5B0574C117AFE2F600B95D50 /* IAEWithoutConceptsTextWarningReportMode.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B0574C317AFE2F600B95D50 /* IAEWithoutConceptsTextWarningReportMode.xib */; };
 		5B0EDE9F1900EEE0009A3DF5 /* IAEEmailChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0EDE9E1900EEE0009A3DF5 /* IAEEmailChecker.m */; };
 		5B0F8BC416B94ADD002D62A5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5B0F8BC616B94ADD002D62A5 /* Localizable.strings */; };
+		5B0FEE9B1902484F0067CA38 /* IAEPasswordRecoveryEmailPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0FEE991902484F0067CA38 /* IAEPasswordRecoveryEmailPanelViewController.m */; };
+		5B0FEE9C1902484F0067CA38 /* IAEPasswordRecoveryEmailPanelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B0FEE9A1902484F0067CA38 /* IAEPasswordRecoveryEmailPanelViewController.xib */; };
 		5B1B7F8B18D791070012AC21 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B767DF81636D7FC005315F8 /* Foundation.framework */; };
 		5B1B7F8C18D791070012AC21 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B767DF61636D7FC005315F8 /* UIKit.framework */; };
 		5B1B7F9218D791070012AC21 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5B1B7F9018D791070012AC21 /* InfoPlist.strings */; };
@@ -234,6 +236,9 @@
 		5B0EDE9E1900EEE0009A3DF5 /* IAEEmailChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEmailChecker.m; sourceTree = "<group>"; };
 		5B0F8BC516B94ADD002D62A5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5B0F8BC716B94AE1002D62A5 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5B0FEE981902484F0067CA38 /* IAEPasswordRecoveryEmailPanelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEPasswordRecoveryEmailPanelViewController.h; sourceTree = "<group>"; };
+		5B0FEE991902484F0067CA38 /* IAEPasswordRecoveryEmailPanelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEPasswordRecoveryEmailPanelViewController.m; sourceTree = "<group>"; };
+		5B0FEE9A1902484F0067CA38 /* IAEPasswordRecoveryEmailPanelViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEPasswordRecoveryEmailPanelViewController.xib; sourceTree = "<group>"; };
 		5B1B7F8818D791070012AC21 /* IncomesAndExpenses Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "IncomesAndExpenses Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B1B7F8918D791070012AC21 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		5B1B7F8F18D791070012AC21 /* IncomesAndExpenses Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IncomesAndExpenses Tests-Info.plist"; sourceTree = "<group>"; };
@@ -649,6 +654,16 @@
 				5B0F8BC616B94ADD002D62A5 /* Localizable.strings */,
 			);
 			name = Localizacion;
+			sourceTree = "<group>";
+		};
+		5B0FEE97190248280067CA38 /* PasswordRecoveryEmailPanel */ = {
+			isa = PBXGroup;
+			children = (
+				5B0FEE981902484F0067CA38 /* IAEPasswordRecoveryEmailPanelViewController.h */,
+				5B0FEE991902484F0067CA38 /* IAEPasswordRecoveryEmailPanelViewController.m */,
+				5B0FEE9A1902484F0067CA38 /* IAEPasswordRecoveryEmailPanelViewController.xib */,
+			);
+			name = PasswordRecoveryEmailPanel;
 			sourceTree = "<group>";
 		};
 		5B1B7F8D18D791070012AC21 /* IncomesAndExpenses Tests */ = {
@@ -1859,6 +1874,7 @@
 		5BDD9A2218571AD3001A6CEF /* IAEPassword */ = {
 			isa = PBXGroup;
 			children = (
+				5B0FEE97190248280067CA38 /* PasswordRecoveryEmailPanel */,
 				5BDD9A2318571B60001A6CEF /* IAEHelpPasswordIndexViewController.h */,
 				5BDD9A2418571B60001A6CEF /* IAEHelpPasswordIndexViewController.m */,
 				5BDD9A2518571B60001A6CEF /* IAEHelpPasswordIndexViewController.xib */,
@@ -2207,6 +2223,7 @@
 				5BC1110117CD1DF500FF6D6B /* 730-envelope@2x.png in Resources */,
 				5BA0131317983A9000337E84 /* IAEDayCalendarSelectorViewController.xib in Resources */,
 				5BB8AD1217FAC2F200BAAB96 /* editconceptcontainerviewbackground.png in Resources */,
+				5B0FEE9C1902484F0067CA38 /* IAEPasswordRecoveryEmailPanelViewController.xib in Resources */,
 				5B879773180E9EFA00554E13 /* IAEHelpAboutViewController.xib in Resources */,
 				5B28D1B318200E6300EF4D48 /* 717-flag@2x.png in Resources */,
 				5BE8A68418FDCF9300475F68 /* starblack.png in Resources */,
@@ -2289,6 +2306,7 @@
 				5BEA608717A6A39400520E09 /* IAEReportAreaItemView.m in Sources */,
 				5BEA98AB1793E3A500098AE0 /* IAECircleDecoratorView.m in Sources */,
 				5B36AFF71785BBF400132475 /* NSDecimalNumber+AbsoluteValue.m in Sources */,
+				5B0FEE9B1902484F0067CA38 /* IAEPasswordRecoveryEmailPanelViewController.m in Sources */,
 				5BA0131217983A9000337E84 /* IAEDayCalendarSelectorViewController.m in Sources */,
 				5B62D86E178EC20E009879A6 /* IAEEconomicValueTypeHelper.m in Sources */,
 				5B62D870178EC20E009879A6 /* IAEColorHelper.m in Sources */,

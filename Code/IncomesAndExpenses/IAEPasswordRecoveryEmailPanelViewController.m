@@ -7,9 +7,11 @@
 //
 
 #import "IAEPasswordRecoveryEmailPanelViewController.h"
+#import "NSUserDefaults+EasyIncAndExp.h"
 
 @interface IAEPasswordRecoveryEmailPanelViewController ()
 @property (weak, nonatomic) IBOutlet UINavigationItem *customNavigationItem;
+@property (weak, nonatomic) IBOutlet UITextField *passwordTextFieldView;
 @end
 
 @implementation IAEPasswordRecoveryEmailPanelViewController
@@ -34,11 +36,21 @@
     [super viewDidLoad];
     
     [self configureNavigationView];
+    [self configurePasswordTextFieldView];
 }
 
 - (void)configureNavigationView
 {
     self.customNavigationItem.title = NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_TITLE", @"");
+}
+
+- (void)configurePasswordTextFieldView
+{
+    self.passwordTextFieldView.placeholder = NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_TEXTFIELD_PLACEHOLDER", @"");
+
+    if ([[NSUserDefaults standardUserDefaults] isPasswordRecoveryEmailSet]) {
+        self.passwordTextFieldView.text = [[NSUserDefaults standardUserDefaults] findPasswordRecoveryEmail];
+    }
 }
 
 - (void)didReceiveMemoryWarning

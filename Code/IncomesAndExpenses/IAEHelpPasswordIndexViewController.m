@@ -22,7 +22,7 @@
 
 static const NSUInteger kActivateDeactivatePasswordIndex = 0;
 static const NSUInteger kChangePasswordIndex = 1;
-static const NSUInteger kVinculePasswordRecoverEmail = 2;
+static const NSUInteger kVinculePasswordRecoverEmailIndex = 2;
 
 #pragma mark - Init
 
@@ -97,7 +97,7 @@ static const NSUInteger kVinculePasswordRecoverEmail = 2;
         cell.userInteractionEnabled = passwordActivated;
         cell.textLabel.enabled = passwordActivated;
         cell.detailTextLabel.enabled = passwordActivated;
-    } else if (indexPath.row == kVinculePasswordRecoverEmail) {
+    } else if (indexPath.row == kVinculePasswordRecoverEmailIndex) {
         cell.textLabel.text = NSLocalizedString(@"LTEXT_PASSWORDINDEX_VINCULEEMAIL", @"");
         cell.userInteractionEnabled = YES;
         cell.textLabel.enabled = YES;
@@ -119,17 +119,40 @@ static const NSUInteger kVinculePasswordRecoverEmail = 2;
 {
     if ([self isIndexPathForPasswordPanelViewController:indexPath]) {
         [self launchPasswordPanelViewControllerWithAppropiateModeForIndexPath:indexPath];
-    } else {
-        if ([MFMailComposeViewController canSendMail]) {
-            
-        } else {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@""
-                                                                message:@""
-                                                               delegate:nil
-                                                      cancelButtonTitle:@""
-                                                      otherButtonTitles:nil];
-        }
+    } else if ([self isIndexPathForVinculePasswordRecoveryEmail:indexPath]) {
+        [self executeLogicForVinculePasswordRecoveryEmailSectionForIndexPath:indexPath];
     }
+}
+
+- (BOOL)isIndexPathForVinculePasswordRecoveryEmail:(NSIndexPath *)indexPath
+{
+    return indexPath.row == kVinculePasswordRecoverEmailIndex;
+}
+
+- (void)executeLogicForVinculePasswordRecoveryEmailSectionForIndexPath:(NSIndexPath *)indexPath
+{
+    if ([MFMailComposeViewController canSendMail]) {
+        [self launchEmailRecoveryPanelViewController];
+    } else {
+        [self launchAlertViewAboutCantVinculeEmailRecovery];
+    }
+}
+
+-(void)launchEmailRecoveryPanelViewController
+{
+    
+}
+
+- (void)launchAlertViewAboutCantVinculeEmailRecovery
+{
+    [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:kVinculePasswordRecoverEmailIndex inSection:0] animated:YES];
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_PASSWORDPANEL_CANTVINCULEMAIL_ALERTVIEW_TITLE", @"")
+                                                        message:NSLocalizedString(@"LTEXT_PASSWORDPANEL_CANTVINCULEMAIL_ALERTVIEW_MESSAGE", @"")
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"LTEXT_PASSWORDPANEL_CANTVINCULEMAIL_ALERTVIEW_OK", @"")
+                                              otherButtonTitles:nil];
+    [alertView show];
 }
 
 - (BOOL)isIndexPathForPasswordPanelViewController:(NSIndexPath *)indexPath

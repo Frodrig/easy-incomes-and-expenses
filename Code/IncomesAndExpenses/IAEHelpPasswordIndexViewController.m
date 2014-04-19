@@ -132,6 +132,8 @@ static const NSUInteger kVinculePasswordRecoverEmailIndex = 2;
 
 - (void)executeLogicForVinculePasswordRecoveryEmailSectionForIndexPath:(NSIndexPath *)indexPath
 {
+    [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:kVinculePasswordRecoverEmailIndex inSection:0] animated:YES];
+
     if ([MFMailComposeViewController canSendMail]) {
         [self launchEmailRecoveryPanelViewController];
     } else {
@@ -141,13 +143,13 @@ static const NSUInteger kVinculePasswordRecoverEmailIndex = 2;
 
 -(void)launchEmailRecoveryPanelViewController
 {
-    [self.navigationController pushViewController:[[IAEPasswordRecoveryEmailPanelViewController alloc] initWithNibName:nil bundle:nil] animated:YES];
+    [self.navigationController presentViewController:[[IAEPasswordRecoveryEmailPanelViewController alloc] initWithNibName:nil bundle:nil] animated:YES completion:^{
+        
+    }];
 }
 
 - (void)launchAlertViewAboutCantVinculeEmailRecovery
 {
-    [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:kVinculePasswordRecoverEmailIndex inSection:0] animated:YES];
-    
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_PASSWORDPANEL_CANTVINCULEMAIL_ALERTVIEW_TITLE", @"")
                                                         message:NSLocalizedString(@"LTEXT_PASSWORDPANEL_CANTVINCULEMAIL_ALERTVIEW_MESSAGE", @"")
                                                        delegate:nil

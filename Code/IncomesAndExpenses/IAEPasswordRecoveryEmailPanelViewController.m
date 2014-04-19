@@ -18,21 +18,31 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        [self configureModalPresentationAndTransition];
     }
     return self;
+}
+
+- (void)configureModalPresentationAndTransition
+{
+    self.modalPresentationStyle = UIModalPresentationFormSheet;
+    self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)cancelButton:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

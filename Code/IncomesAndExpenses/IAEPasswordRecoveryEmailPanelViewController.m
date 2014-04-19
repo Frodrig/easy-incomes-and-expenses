@@ -9,7 +9,7 @@
 #import "IAEPasswordRecoveryEmailPanelViewController.h"
 
 @interface IAEPasswordRecoveryEmailPanelViewController ()
-
+@property (weak, nonatomic) IBOutlet UINavigationItem *customNavigationItem;
 @end
 
 @implementation IAEPasswordRecoveryEmailPanelViewController
@@ -32,6 +32,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self configureNavigationView];
+}
+
+- (void)configureNavigationView
+{
+    self.customNavigationItem.title = NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_TITLE", @"");
 }
 
 - (void)didReceiveMemoryWarning

@@ -12,6 +12,7 @@
 @interface IAEPasswordRecoveryEmailPanelViewController ()
 @property (weak, nonatomic) IBOutlet UINavigationItem *customNavigationItem;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextFieldView;
+@property (weak, nonatomic) IBOutlet UILabel *informationLabel;
 @end
 
 @implementation IAEPasswordRecoveryEmailPanelViewController

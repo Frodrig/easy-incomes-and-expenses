@@ -80,7 +80,7 @@ static const NSUInteger kSizeRoundedRectCorners = 10;
 
 - (BOOL)disablesAutomaticKeyboardDismissal
 {
-    // IMPORTANTE: Por algun motivo para que el teclado desaparezca tras return, hay que sobrecargar esta funcion
+    // IMPORTANTE: Por algun motivo para que el teclado desaparezca tras return EN UN MODAL, hay que sobrecargar esta funcion
     return NO;
 }
 

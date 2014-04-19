@@ -28,6 +28,10 @@
 - (BOOL)isRemoveConceptConfirmationActive;
 - (void)changeRemoveConceptConfirmation;
 
+- (BOOL)isPasswordRecoveryEmailSet;
+- (NSString *)findPasswordRecoveryEmail;
+- (void)vinculePasswordRecoveryEmail:(NSString *)passwordRecoveryEmail;
+
 - (BOOL)isFixRemoveCategoryActionLostInUnloadedYearsExecuted;
 - (BOOL)isFixRemoveCategoryActionLostInUnloadedYearsNotExecuted;
 - (void)setFixRemoveCategoryActionLostInUnloadedYearsExecuted:(BOOL)executed;

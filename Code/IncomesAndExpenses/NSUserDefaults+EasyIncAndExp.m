@@ -17,6 +17,7 @@ static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
 static NSString * const kUserDefaultsReportAmountModeKey = @"reportAmountMode";
 static NSString * const kUserDefaultInitialMonthKey = @"initialMonth";
 static NSString * const kUserDefaultRemoveConceptConfirmation = @"removeConceptConfirmation";
+static NSString * const kUserDefaultRecoverPasswordEmail = @"recoverPasswordEmail";
 
 static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalAmounts";
 static NSString * const kUserDefaultsReportAmountModePercentageAmountValue = @"percentageAmounts";
@@ -30,7 +31,8 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
     NSDictionary *defaults = @{ kUserDefaultsDayModeActiveKey: [NSNumber numberWithBool:NO],
                                 kUserDefaultsReportAmountModeKey: kUserDefaultsReportAmountModeTotalAmountValue,
                                 kUserDefaultInitialMonthKey: @(January),
-                                kUserDefaultRemoveConceptConfirmation: @(NO)};
+                                kUserDefaultRemoveConceptConfirmation: @(NO),
+                                kUserDefaultRecoverPasswordEmail: @""};
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];    
 }
 
@@ -89,6 +91,27 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+#pragma mark - EmailRecoveryPassword
+
+- (BOOL)isPasswordRecoveryEmailSet
+{
+    return [[NSUserDefaults standardUserDefaults] stringForKey:kUserDefaultRecoverPasswordEmail].length > 0;
+}
+
+- (NSString *)findPasswordRecoveryEmail
+{
+    return [[NSUserDefaults standardUserDefaults] stringForKey:kUserDefaultRecoverPasswordEmail];
+}
+
+- (void)vinculePasswordRecoveryEmail:(NSString *)passwordRecoveryEmail
+{
+    NSAssert(passwordRecoveryEmail, @"");
+    [[NSUserDefaults standardUserDefaults] setValue:passwordRecoveryEmail forKey:kUserDefaultRecoverPasswordEmail];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+#pragma mark - DayMode
+
 - (BOOL)isDayModeActiveForConcepts
 {
     return [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsDayModeActive];
@@ -100,6 +123,8 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+#pragma mark - RemoveConceptConfirmation
+
 - (BOOL)isRemoveConceptConfirmationActive
 {
     return [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultRemoveConceptConfirmation];
@@ -110,6 +135,8 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
     [[NSUserDefaults standardUserDefaults] setBool:![self isRemoveConceptConfirmationActive] forKey:kUserDefaultRemoveConceptConfirmation];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
+
+#pragma mark - Fix
 
 - (BOOL)isFixRemoveCategoryActionLostInUnloadedYearsNotExecuted
 {

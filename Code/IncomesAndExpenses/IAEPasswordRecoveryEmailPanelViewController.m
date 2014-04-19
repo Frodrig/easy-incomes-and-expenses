@@ -38,6 +38,7 @@
     
     [self configureNavigationView];
     [self configurePasswordTextFieldView];
+    [self configureInformationLabel];
 }
 
 - (void)configureNavigationView
@@ -52,6 +53,21 @@
     if ([[NSUserDefaults standardUserDefaults] isPasswordRecoveryEmailSet]) {
         self.passwordTextFieldView.text = [[NSUserDefaults standardUserDefaults] findPasswordRecoveryEmail];
     }
+}
+
+- (void)configureInformationLabel
+{
+    [self setDefaultMessageForInformationLabel];
+}
+
+- (void)setDefaultMessageForInformationLabel
+{
+    self.informationLabel.text = NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_INFOMSG_DEFAULT", @"");
+}
+
+- (void)setIncorrectEmailMessageForInformationLabel
+{
+    self.informationLabel.text = NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_INFOMSG_INVALIDEMAIL", @"");
 }
 
 - (void)didReceiveMemoryWarning

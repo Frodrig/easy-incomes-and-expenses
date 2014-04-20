@@ -14,7 +14,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RoJ-XZ-7n0">
-                        <rect key="frame" x="72" y="14" width="391" height="44"/>
+                        <rect key="frame" x="20" y="14" width="391" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
                         <nil key="highlightedColor"/>
@@ -28,11 +28,6 @@
                             <action selector="confirmSwithPressed:" destination="mag-N1-Fiz" eventType="valueChanged" id="g8f-de-oba"/>
                         </connections>
                     </switch>
-                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="851-calendar.png" translatesAutoresizingMaskIntoConstraints="NO" id="lHC-ki-bav">
-                        <rect key="frame" x="20" y="14" width="44" height="44"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    </imageView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -44,7 +39,4 @@
             </connections>
         </collectionViewCell>
     </objects>
-    <resources>
-        <image name="851-calendar.png" width="28" height="28"/>
-    </resources>
 </document>

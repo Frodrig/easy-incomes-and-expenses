@@ -2558,10 +2558,6 @@
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/fernandorodriguezmartinez/Trabajo/Freelance/Git/Easy,
-					Incomes,
-					and,
-					Expenses/Code,
 					"$(PROJECT_DIR)",
 				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -2596,10 +2592,6 @@
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/fernandorodriguezmartinez/Trabajo/Freelance/Git/Easy,
-					Incomes,
-					and,
-					Expenses/Code,
 					"$(PROJECT_DIR)",
 				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;

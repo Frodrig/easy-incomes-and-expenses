@@ -147,7 +147,7 @@
     const BOOL usingTwoYears = initialMonth != January;
     if (usingTwoYears) {
         NSString *firstYearString = [NSString stringWithFormat:@"%lu", (unsigned long)yearDate];
-        NSString *secondYearString = [NSString stringWithFormat:@"%lu", yearDate + 1];
+        NSString *secondYearString = [NSString stringWithFormat:@"%lu", (unsigned long)(yearDate + 1)];
         if (shortForm) {
             firstYearString = [firstYearString substringWithRange:NSMakeRange(2, 2)];
             secondYearString = [secondYearString substringWithRange:NSMakeRange(2, 2)];

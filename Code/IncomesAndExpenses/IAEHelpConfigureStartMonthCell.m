@@ -14,7 +14,8 @@
 
 @interface IAEHelpConfigureStartMonthCell()
 
-@property (weak, nonatomic) IBOutlet UILabel *startMonthLabel;
+@property (weak, nonatomic) IBOutlet UILabel *informationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *monthValueLabel;
 
 @end
 
@@ -23,9 +24,7 @@
 #pragma mark - Constants
 
 static NSString * const kNibName = @"IAEHelpConfigureStartMonthCell";
-
 static NSString * const kUserDefaultInitialMonth = @"initialMonth";
-
 static NSString * const kLTextStartLabelBaseText = @"LTEXT_ABOUTANDOPTIONS_STARTMONTHBUTTON_TEXT";
 
 #pragma mark - Static
@@ -49,11 +48,8 @@ static NSString * const kLTextStartLabelBaseText = @"LTEXT_ABOUTANDOPTIONS_START
 
 - (void)initStartMonthSettings
 {
-    NSNumber *startMonthUserDefaultsValue = [[NSUserDefaults standardUserDefaults] valueForKey:kUserDefaultInitialMonth];
-    MonthType startMonth = (MonthType) startMonthUserDefaultsValue.integerValue;
-    NSString *startMonthName = [IAEDateHelper findMonthNameStringWithMonthIndex:startMonth inShortForm:NO];
-    NSString *buttonTitle = [NSString stringWithFormat:@"%@%@", NSLocalizedString(kLTextStartLabelBaseText, @""), startMonthName];
-    self.startMonthLabel.text = buttonTitle;
+    self.informationLabel.text = NSLocalizedString(kLTextStartLabelBaseText, @"");
+    self.monthValueLabel.text = [IAEDateHelper findMonthNameStringWithMonthIndex:[[[NSUserDefaults standardUserDefaults] valueForKey:kUserDefaultInitialMonth] integerValue] inShortForm:NO];
 }
 
 @end

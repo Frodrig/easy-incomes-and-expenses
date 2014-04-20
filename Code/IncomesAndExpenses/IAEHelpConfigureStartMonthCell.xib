@@ -14,11 +14,18 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="766-arrow-right.png" translatesAutoresizingMaskIntoConstraints="NO" id="8Je-Jq-Wht">
-                        <rect key="frame" x="476" y="12" width="44" height="44"/>
+                        <rect key="frame" x="486" y="12" width="44" height="44"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MGt-M7-HRT">
-                        <rect key="frame" x="20" y="12" width="396" height="44"/>
+                        <rect key="frame" x="20" y="12" width="239" height="44"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vWX-cu-wRX">
+                        <rect key="frame" x="317" y="14" width="161" height="44"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -29,7 +36,8 @@
             </view>
             <size key="customSize" width="540" height="994"/>
             <connections>
-                <outlet property="startMonthLabel" destination="MGt-M7-HRT" id="YZI-Li-quh"/>
+                <outlet property="informationLabel" destination="MGt-M7-HRT" id="qft-Dt-9bm"/>
+                <outlet property="monthValueLabel" destination="vWX-cu-wRX" id="QCZ-Ur-bJ4"/>
             </connections>
         </collectionViewCell>
     </objects>

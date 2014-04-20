@@ -24,6 +24,7 @@
 static const NSUInteger kActivateDeactivatePasswordIndex = 0;
 static const NSUInteger kChangePasswordIndex = 1;
 static const NSUInteger kVinculePasswordRecoverEmailIndex = 2;
+static const NSUInteger kNumberOfOptionsAvailable = 2;
 
 #pragma mark - Init
 
@@ -63,7 +64,7 @@ static const NSUInteger kVinculePasswordRecoverEmailIndex = 2;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return kNumberOfOptionsAvailable;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -17,6 +17,10 @@
 #import "IAEYear.h"
 #import "IAENumberFormatterManager.h"
 
+@interface IAEExporter()
+@property (nonatomic, strong) NSFileHandle *exportFileHandle;
+@end
+
 @implementation IAEExporter
 
 #pragma mark - Constants
@@ -39,47 +43,71 @@ static NSString * const kExportCSVFileWithExtension = @"export.csv";
 
 #pragma mark - Export
 
-- (BOOL)exportAllYearsToTMPCSVFile
+- (BOOL)beginExport
 {
-    BOOL exportOk = NO;
-    
     NSString * pathForTMPDirectory = [NSTemporaryDirectory() stringByAppendingPathComponent:kExportCSVFileWithExtension];
     [[NSFileManager defaultManager] removeItemAtPath:pathForTMPDirectory error:nil];
-    const BOOL fileManagerOk = [[NSFileManager defaultManager] createFileAtPath:pathForTMPDirectory contents:nil attributes:nil];
-    if (fileManagerOk) {
-        NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:pathForTMPDirectory];
-        const BOOL fileHandleOk = fileHandle != nil;
-        if (fileHandleOk) {
-            [fileHandle seekToEndOfFile];
-            [self writeCSVToFile:fileHandle];
-            [fileHandle closeFile];
-            exportOk = YES;
-        } else {
-            // TODO: Fallo creando el FileHandle
-        }
-    } else {
-        // TODO: Fallo creando el FileManager
+    if ([[NSFileManager defaultManager] createFileAtPath:pathForTMPDirectory contents:nil attributes:nil]) {
+        self.exportFileHandle = [NSFileHandle fileHandleForWritingAtPath:pathForTMPDirectory];
     }
+
+    return self.exportFileHandle != nil;
+}
+
+- (void)endExport
+{
+    NSAssert(self.exportFileHandle, @"");
+    [self.exportFileHandle closeFile];
+}
+
+- (BOOL)exportAllYearsToTMPCSVFile
+{
+    const BOOL retExportOk = [self beginExport];
+    if (retExportOk) {
+        [self writeHeaderColumnsToCSVWithFileHandle:self.exportFileHandle];
+        [self writeAllConceptsOfAllYearsToCSVWithFileHandle:self.exportFileHandle];
+    }
+    [self endExport];
     
-    return exportOk;
+    return retExportOk;
 }
 
 - (BOOL)exporToTMPCSVFileYear:(NSUInteger)year
 {
-    return NO;
+    BOOL retExportOk = [self beginExport];
+    if (retExportOk) {
+        IAEOpenYear *actualOpenYear = [[IAEBook sharedBook] findActualOpenYear];
+        NSNumber *actualOpenYearDate = @(actualOpenYear.yearDate);
+        IAEOpenYear *openYearToExport = [[IAEBook sharedBook] openYear:@(year)];
+        if (openYearToExport) {
+            [self writeHeaderColumnsToCSVWithFileHandle:self.exportFileHandle];
+            [self writeAllConceptsOfYear:openYearToExport toCSVWithFileHandle:self.exportFileHandle];
+        } else {
+            retExportOk = NO;
+        }
+        [[IAEBook sharedBook] openYear:actualOpenYearDate];
+    }
+    [self endExport];
     
+    return retExportOk;
 }
 
 - (BOOL)exportFromActualOpenYearToTMPCSVFileMonth:(MonthType)month
 {
-    return NO;
-}
-
-
-- (void)writeCSVToFile:(NSFileHandle *)fileHandle
-{
-    [self writeHeaderColumnsToCSVWithFileHandle:fileHandle];
-    [self writeAllConceptsToCSVWithFileHandle:fileHandle];
+    BOOL retExportOk = [self beginExport];
+    if (retExportOk) {
+        IAEOpenYear *actualOpenYear = [[IAEBook sharedBook] findActualOpenYear];
+        IAEMonth *monthToExport = [actualOpenYear findMonthObjectOfMonthDate:month];
+        if (monthToExport) {
+            [self writeHeaderColumnsToCSVWithFileHandle:self.exportFileHandle];
+            [self writeAllConceptsOfMonth:monthToExport toCSVWithFileHandle:self.exportFileHandle];
+        } else {
+            retExportOk = NO;
+        }
+    }
+    [self endExport];
+    
+    return retExportOk;
 }
 
 - (void)writeHeaderColumnsToCSVWithFileHandle:(NSFileHandle *)fileHandle
@@ -100,24 +128,34 @@ static NSString * const kExportCSVFileWithExtension = @"export.csv";
     [fileHandle writeData:data];
 }
 
-- (void)writeAllConceptsToCSVWithFileHandle:(NSFileHandle *)fileHandle
+- (void)writeAllConceptsOfAllYearsToCSVWithFileHandle:(NSFileHandle *)fileHandle
 {
     IAEOpenYear *actualOpenYear = [[IAEBook sharedBook] findActualOpenYear];
     NSNumber *actualOpenYearDate = @(actualOpenYear.yearDate);
     
     [[IAEBook sharedBook] openAll];
-    
     for (IAEOpenYear *openYear in [IAEBook sharedBook].openYears) {
-        for (IAEMonth *month in openYear.months) {
-            NSArray *ordererConcepts = [month allConceptsSortedByDay];
-            for (IAEConcept *concept in [ordererConcepts reverseObjectEnumerator]) {
-                [self writeConcept:concept toCSVWithFileHandle:fileHandle];
-            }
-        }
+        [self writeAllConceptsOfYear:openYear toCSVWithFileHandle:fileHandle];
     }
     
     [[IAEBook sharedBook] closeAllAndOpenYearWithDate:actualOpenYearDate];
 }
+
+- (void)writeAllConceptsOfYear:(IAEOpenYear *)year toCSVWithFileHandle:(NSFileHandle *)fileHandle
+{
+    for (IAEMonth *month in year.months) {
+        [self writeAllConceptsOfMonth:month toCSVWithFileHandle:fileHandle];
+    }
+}
+
+- (void)writeAllConceptsOfMonth:(IAEMonth *)month toCSVWithFileHandle:(NSFileHandle *)fileHandle
+{
+    NSArray *ordererConcepts = [month allConceptsSortedByDay];
+    for (IAEConcept *concept in [ordererConcepts reverseObjectEnumerator]) {
+        [self writeConcept:concept toCSVWithFileHandle:fileHandle];
+    }
+}
+
 
 - (void)writeConcept:(IAEConcept *)concept toCSVWithFileHandle:(NSFileHandle *)fileHandle
 {

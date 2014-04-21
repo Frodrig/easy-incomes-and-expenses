@@ -8,13 +8,18 @@
 
 #import "IAESelectorContextView.h"
 #import "IAEContextView.h"
+#import "IAEContextSubmenuView.h"
+#import "IAEContextSubmenuViewDelegate.h"
+#import "IAEContextSubmenuViewDatasource.h"
 #import "UIView+LoadFromXib.h"
 
-@interface IAESelectorContextView()
+@interface IAESelectorContextView()<IAEContextSubmenuViewDelegate,
+                                    IAEContextSubmenuViewDatasource>
 
 @property (nonatomic, strong) NSMutableDictionary *contextViews;
 @property (nonatomic) NSUInteger actualContextViewIndex;
 @property (nonatomic, strong) UIScrollView *scrollViewContainer;
+@property (nonatomic, strong) IAEContextSubmenuView *contextSubmenuView;
 
 @end
 
@@ -41,7 +46,7 @@ static const CGFloat kDurationOfAnimationOfChangeContext = 0.6;
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [self createAndVinculeScrollViewContainer];
+        [self createAndVinculeBaseSubviews];
     }
     
     return self;
@@ -51,26 +56,46 @@ static const CGFloat kDurationOfAnimationOfChangeContext = 0.6;
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [self createAndVinculeScrollViewContainer];
+        [self createAndVinculeBaseSubviews];
     }
     
     return self;
 }
 
-- (void)createAndVinculeScrollViewContainer
+- (void)createAndVinculeBaseSubviews
+{
+    [self createAndConfigureContextSubmenuView];
+    [self createConfigureAndVinculeScrollViewContainer];
+}
+
+- (void)createAndConfigureContextSubmenuView
+{
+    self.contextSubmenuView = (IAEContextSubmenuView *)[UIView viewFromXib:@"IAEContextSubmenuView" withOwner:self];
+    self.contextSubmenuView.delegate = self;
+    self.contextSubmenuView.datasource = self;
+}
+
+- (void)createConfigureAndVinculeScrollViewContainer
 {
     self.scrollViewContainer = [[UIScrollView alloc] initWithFrame:self.bounds];
-    self.scrollViewContainer.contentSize = CGSizeMake(self.bounds.size.width + 200, self.bounds.size.height);
+    self.scrollViewContainer.contentSize = CGSizeMake(self.bounds.size.width + self.contextSubmenuView .bounds.size.width, self.bounds.size.height);
     self.scrollViewContainer.pagingEnabled = YES;
     self.scrollViewContainer.backgroundColor = [UIColor clearColor];
     self.scrollViewContainer.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
     self.scrollViewContainer.autoresizesSubviews = YES;
     self.scrollViewContainer.showsHorizontalScrollIndicator = NO;
     self.scrollViewContainer.showsVerticalScrollIndicator = NO;
-    self.scrollViewContainer.bounces = YES;
+    self.scrollViewContainer.bounces = NO;
     [self.scrollViewContainer scrollRectToVisible:CGRectZero animated:NO];
     
+    [self addContextsubMenuViewIntoScrollViewContainer];
     [self addSubview:self.scrollViewContainer];
+}
+
+- (void)addContextsubMenuViewIntoScrollViewContainer
+{
+    [self.scrollViewContainer addSubview:self.contextSubmenuView];
+    self.contextSubmenuView.frame = CGRectOffset(self.contextSubmenuView.frame, self.scrollViewContainer.contentSize.width - self.contextSubmenuView.bounds.size.width, 100);
 }
 
 #pragma mark - Add
@@ -199,5 +224,33 @@ static const CGFloat kDurationOfAnimationOfChangeContext = 0.6;
     return self.scrollViewContainer.contentOffset.x > 0;
 }
 
+#pragma mark - IAEContextSubmenuDelegate
+
+- (void)exportCSVOptionWasPressedInContextSubmenuView:(IAEContextSubmenuView *)contextSubmenuView
+{
+    
+}
+
+- (void)removeAllConceptsOptionWasPressedInContextSubmenuView:(IAEContextSubmenuView *)contextSubmenuView
+{
+    
+}
+
+#pragma mark - IAEContextSubmenuDatasource
+
+- (BOOL)isActualContextAYearForContextSubmenuView:(IAEContextSubmenuView *)contextSubmenuView
+{
+    return [self isActualContextOfType:CONTEXT_VIEW_YEAR];
+}
+
+- (BOOL)isActualContextAMonthForContextSubmenuView:(IAEContextSubmenuView *)contextSubmenuView
+{
+    return [self isActualContextOfType:CONTEXT_VIEW_MONTH];
+}
+
+- (BOOL)isActualContextOfType:(IAEContextViewType)contextType
+{
+    return [self findContextViewAtIndex:[self findActualContextViewIndex]].contextType == contextType;
+}
 
 @end

@@ -8,11 +8,13 @@
 
 #import "IAESelectorContextView.h"
 #import "IAEContextView.h"
+#import "UIView+LoadFromXib.h"
 
 @interface IAESelectorContextView()
 
 @property (nonatomic, strong) NSMutableDictionary *contextViews;
 @property (nonatomic) NSUInteger actualContextViewIndex;
+@property (nonatomic, strong) UIScrollView *scrollViewContainer;
 
 @end
 
@@ -33,6 +35,44 @@ static const CGFloat kDurationOfAnimationOfChangeContext = 0.6;
     return _contextViews;
 }
 
+#pragma mark - Init
+
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self createAndVinculeScrollViewContainer];
+    }
+    
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self createAndVinculeScrollViewContainer];
+    }
+    
+    return self;
+}
+
+- (void)createAndVinculeScrollViewContainer
+{
+    self.scrollViewContainer = [[UIScrollView alloc] initWithFrame:self.bounds];
+    self.scrollViewContainer.contentSize = CGSizeMake(self.bounds.size.width + 200, self.bounds.size.height);
+    self.scrollViewContainer.pagingEnabled = YES;
+    self.scrollViewContainer.backgroundColor = [UIColor clearColor];
+    self.scrollViewContainer.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
+    self.scrollViewContainer.autoresizesSubviews = YES;
+    self.scrollViewContainer.showsHorizontalScrollIndicator = NO;
+    self.scrollViewContainer.showsVerticalScrollIndicator = NO;
+    self.scrollViewContainer.bounces = YES;
+    [self.scrollViewContainer scrollRectToVisible:CGRectZero animated:NO];
+    
+    [self addSubview:self.scrollViewContainer];
+}
+
 #pragma mark - Add
 
 - (BOOL)addContextView:(IAEContextView *)contextView withIndex:(NSUInteger)index
@@ -40,7 +80,8 @@ static const CGFloat kDurationOfAnimationOfChangeContext = 0.6;
     BOOL canAdd = [self canAddContextViewWithIndex:index];
     if (canAdd) {
         self.contextViews[[NSNumber numberWithInt:index]] = contextView;
-        [self addSubview:contextView];
+        contextView.backgroundColor = [UIColor clearColor];
+        [self.scrollViewContainer addSubview:contextView];
         contextView.hidden = YES;
     }
     
@@ -145,5 +186,18 @@ static const CGFloat kDurationOfAnimationOfChangeContext = 0.6;
         block(keyObject.unsignedIntegerValue, obj);
     }];
 }
+
+#pragma mark - Menu Mode
+
+- (void)hideMenuModeWithAnimation:(BOOL)animation
+{
+    [self.scrollViewContainer scrollRectToVisible:CGRectZero animated:animation];
+}
+
+- (BOOL)isInMenuMode
+{
+    return self.scrollViewContainer.contentOffset.x > 0;
+}
+
 
 @end

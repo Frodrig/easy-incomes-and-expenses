@@ -26,4 +26,7 @@
 
 - (void)enumerateContextViewsUsingBlock:(void(^)(NSUInteger index, IAEContextView *contextView))block;
 
+- (void)hideMenuModeWithAnimation:(BOOL)animation;
+- (BOOL)isInMenuMode;
+
 @end

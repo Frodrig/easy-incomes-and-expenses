@@ -64,6 +64,18 @@ static NSString * const kExportCSVFileWithExtension = @"export.csv";
     return exportOk;
 }
 
+- (BOOL)exporToTMPCSVFileYear:(NSUInteger)year
+{
+    return NO;
+    
+}
+
+- (BOOL)exportFromActualOpenYearToTMPCSVFileMonth:(MonthType)month
+{
+    return NO;
+}
+
+
 - (void)writeCSVToFile:(NSFileHandle *)fileHandle
 {
     [self writeHeaderColumnsToCSVWithFileHandle:fileHandle];

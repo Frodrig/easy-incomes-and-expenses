@@ -7,11 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MonthDefs.h"
 
 @interface IAEExporter : NSObject
 
 + (IAEExporter *)sharedExporter;
 
 - (BOOL)exportAllYearsToTMPCSVFile;
+- (BOOL)exporToTMPCSVFileYear:(NSUInteger)year;
+- (BOOL)exportFromActualOpenYearToTMPCSVFileMonth:(MonthType)month;
 
 @end

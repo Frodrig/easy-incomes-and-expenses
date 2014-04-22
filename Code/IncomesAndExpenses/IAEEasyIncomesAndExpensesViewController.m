@@ -1373,7 +1373,17 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (NSUInteger)numberOfConceptsForSelectorContextView:(IAESelectorContextView *)selectorContextView atIndex:(NSUInteger)index
 {
-    return 0;
+    NSUInteger retNumberOfConcepts = 0;
+    
+    IAEMonth *actualMonth = [self findActualSelectedMonth];
+    if (actualMonth) {
+        retNumberOfConcepts = actualMonth.concepts.count;
+    } else {
+        IAEOpenYear *openYear = [self findOpenYear];
+        retNumberOfConcepts = [openYear findNumberOfConcepts];
+    }
+    
+    return retNumberOfConcepts;
 }
 
 #pragma mark - IAESelectorContextView Delegate
@@ -1398,6 +1408,8 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     
     [self deleteAllConceptsInModelObjectOfActualSelectionContextView];
     [self reloadDataAndUpdateBalancesWithAnimationInConceptCollectionViewAfterRemoveAllConcepts];
+    
+    // TODO
 }
 
 - (void)deleteAllConceptsInModelObjectOfActualSelectionContextView

@@ -133,6 +133,7 @@ static const CGFloat kDurationOfAnimationOfChangeContext = 0.6;
         } else {
             [self hideWithoutAnimationTheContextView:contextViewToHide andShowTheContextView:contextViewToShow];
         }
+        [self.contextSubmenuView updateAvailabilityOfOptions];
     }
 }
 
@@ -253,6 +254,11 @@ static const CGFloat kDurationOfAnimationOfChangeContext = 0.6;
     const NSUInteger actualContextViewIndex = [self findActualContextViewIndex];
     IAEContextView *actualContextView = [self findContextViewAtIndex:actualContextViewIndex];
     return actualContextView.contextType == contextType;
+}
+
+- (BOOL)isActualContextWithConceptsForContextSubmenuView:(IAEContextSubmenuView *)contextSubmenuView
+{
+    return [self.dataSource numberOfConceptsForSelectorContextView:self atIndex:[self findActualContextViewIndex]] > 0;
 }
 
 @end

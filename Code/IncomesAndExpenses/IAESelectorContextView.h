@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "IAESelectorContextViewDelegate.h"
+#import "IAESelectorContextViewDataSource.h"
 
 @class IAEContextView;
 
 @interface IAESelectorContextView : UIView
 
 @property (nonatomic, weak) id<IAESelectorContextViewDelegate> delegate;
+@property (nonatomic, weak) id<IAESelectorContextViewDataSource> dataSource;
 @property (nonatomic, readonly, getter = isAnimationInProgress) BOOL animationInProgress;
 
 - (BOOL)addContextView:(IAEContextView *)contextView withIndex:(NSUInteger)index;

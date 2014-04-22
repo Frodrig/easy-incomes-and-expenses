@@ -515,6 +515,7 @@
 		5BCE3AB817A9703B00CD01E7 /* IAEHelperCalculatorDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelperCalculatorDataSource.m; sourceTree = "<group>"; };
 		5BCE3ABB17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelperConceptsCollectionViewDataSource.h; sourceTree = "<group>"; };
 		5BCE3ABC17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelperConceptsCollectionViewDataSource.m; sourceTree = "<group>"; };
+		5BCF718A19070D5F0084F187 /* IAESelectorContextViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAESelectorContextViewDataSource.h; sourceTree = "<group>"; };
 		5BD06156163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = IncomesAndExpenses.xcdatamodel; sourceTree = "<group>"; };
 		5BD06167163A8CFF00A80BE3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		5BD94C091786B864009009B1 /* IAECategoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategoryTableViewCell.h; sourceTree = "<group>"; };
@@ -2029,6 +2030,7 @@
 			children = (
 				5B0874651905A31200A00574 /* IAEContextSubmenuView */,
 				5BFDE72D17C5F07A00DF884B /* IAESelectorContextViewDelegate.h */,
+				5BCF718A19070D5F0084F187 /* IAESelectorContextViewDataSource.h */,
 				5BFDE72817C5E27500DF884B /* IAESelectorContextView.h */,
 				5BFDE72917C5E27500DF884B /* IAESelectorContextView.m */,
 			);

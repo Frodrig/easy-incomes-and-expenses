@@ -395,6 +395,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 - (void)configureSelectorContextView
 {
     self.selectorContextView.delegate = self;
+    self.selectorContextView.dataSource = self;
 }
 
 - (void)configureEditModeSegmentedControl
@@ -1366,6 +1367,13 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 {
     [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:!self.initialPositioning];
     [self disableOrEnableReportMenuIfAppropiate];
+}
+
+#pragma mark - IAESelectorContextView DataSource
+
+- (NSUInteger)numberOfConceptsForSelectorContextView:(IAESelectorContextView *)selectorContextView atIndex:(NSUInteger)index
+{
+    return 0;
 }
 
 #pragma mark - IAESelectorContextView Delegate

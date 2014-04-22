@@ -107,4 +107,12 @@ static const NSUInteger kAlertViewExecuteRemoveAllButtonIndex = 1;
     }
 }
 
+#pragma mark - Update
+
+- (void)updateAvailabilityOfOptions
+{
+    self.removeAllConceptsOptionLabel.enabled = [self.datasource isActualContextWithConceptsForContextSubmenuView:self];
+}
+
+
 @end

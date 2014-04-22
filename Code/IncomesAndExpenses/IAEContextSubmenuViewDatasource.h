@@ -15,4 +15,6 @@
 - (BOOL)isActualContextAYearForContextSubmenuView:(IAEContextSubmenuView *)contextSubmenuView;
 - (BOOL)isActualContextAMonthForContextSubmenuView:(IAEContextSubmenuView *)contextSubmenuView;
 
+- (BOOL)isActualContextWithConceptsForContextSubmenuView:(IAEContextSubmenuView *)contextSubmenuView;
+
 @end

@@ -15,4 +15,6 @@
 @property (nonatomic, weak) id<IAEContextSubmenuViewDelegate> delegate;
 @property (nonatomic, weak) id<IAEContextSubmenuViewDatasource> datasource;
 
+- (void)updateAvailabilityOfOptions;
+
 @end

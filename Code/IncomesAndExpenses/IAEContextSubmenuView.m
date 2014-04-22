@@ -92,9 +92,9 @@ static const NSUInteger kAlertViewExecuteRemoveAllButtonIndex = 1;
 {
     NSString *retMsg = nil;
     if ([self.datasource isActualContextAMonthForContextSubmenuView:self]) {
-        retMsg = NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_ALERTVIEWREMOVEALLCONCEPTS_MSG_YEAR", @"");
-    } else if ([self.datasource isActualContextAYearForContextSubmenuView:self]) {
         retMsg = NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_ALERTVIEWREMOVEALLCONCEPTS_MSG_MONTH", @"");
+    } else if ([self.datasource isActualContextAYearForContextSubmenuView:self]) {
+        retMsg = NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_ALERTVIEWREMOVEALLCONCEPTS_MSG_YEAR", @"");
     }
     
     return retMsg;

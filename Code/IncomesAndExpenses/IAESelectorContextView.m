@@ -250,7 +250,9 @@ static const CGFloat kDurationOfAnimationOfChangeContext = 0.6;
 
 - (BOOL)isActualContextOfType:(IAEContextViewType)contextType
 {
-    return [self findContextViewAtIndex:[self findActualContextViewIndex]].contextType == contextType;
+    const NSUInteger actualContextViewIndex = [self findActualContextViewIndex];
+    IAEContextView *actualContextView = [self findContextViewAtIndex:actualContextViewIndex];
+    return actualContextView.contextType == contextType;
 }
 
 @end

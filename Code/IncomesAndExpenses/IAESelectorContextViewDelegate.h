@@ -13,5 +13,7 @@
 @protocol IAESelectorContextViewDelegate <NSObject>
 
 - (void)selectorContextView:(IAESelectorContextView *)selectorContextView didChangeToContextViewAtIndex:(NSUInteger)index;
-
+- (void)selectorContextView:(IAESelectorContextView *)selectorContextView didSelectExportCSVOptionAtIndex:(NSUInteger)index;
+- (void)selectorContextView:(IAESelectorContextView *)selectorContextView didSelectRemoveAllConceptsOptionAtIndex:(NSUInteger)index;
+    
 @end

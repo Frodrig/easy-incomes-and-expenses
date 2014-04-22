@@ -38,6 +38,7 @@
                       andDescription:(NSString *)description;
 - (IAEConcept *)duplicateConcept:(IAEConcept *)concept;
 
+- (void)deleteAllConcepts; // [self removeAllConceptsWithNotificacion:NO]
 - (void)removeAllConceptsWithNotification:(BOOL)notification;
 - (void)removeConcept:(IAEConcept *)concept;
 

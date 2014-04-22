@@ -228,12 +228,12 @@ static const CGFloat kDurationOfAnimationOfChangeContext = 0.6;
 
 - (void)exportCSVOptionWasPressedInContextSubmenuView:(IAEContextSubmenuView *)contextSubmenuView
 {
-    
+    [self.delegate selectorContextView:self didSelectExportCSVOptionAtIndex:self.actualContextViewIndex];
 }
 
 - (void)removeAllConceptsOptionWasPressedInContextSubmenuView:(IAEContextSubmenuView *)contextSubmenuView
 {
-    
+    [self.delegate selectorContextView:self didSelectRemoveAllConceptsOptionAtIndex:self.actualContextViewIndex];
 }
 
 #pragma mark - IAEContextSubmenuDatasource

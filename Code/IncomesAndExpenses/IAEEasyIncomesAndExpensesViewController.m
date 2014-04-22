@@ -1369,13 +1369,6 @@ static const NSUInteger kAltertViewButtonConfirmationIndex = 1;
 
 #pragma mark - IAESelectorContextView Delegate
 
-- (BOOL)isReportScrollView:(UIScrollView *)scrollView
-{
-    BOOL reportScrollView = scrollView == (UIScrollView *)self.reportAreaView;
-    
-    return reportScrollView;
-}
-
 - (void)selectorContextView:(IAESelectorContextView *)selectorContextView didChangeToContextViewAtIndex:(NSUInteger)index
 {
     if ([self isContextMenuOptionPending]) {
@@ -1383,6 +1376,22 @@ static const NSUInteger kAltertViewButtonConfirmationIndex = 1;
     } else {
         [self updateContentInformationBasedInCurrentContextWithAnimation:!self.initialPositioning];
     }
+}
+
+- (void)selectorContextView:(IAESelectorContextView *)selectorContextView didSelectExportCSVOptionAtIndex:(NSUInteger)index
+{
+}
+
+- (void)selectorContextView:(IAESelectorContextView *)selectorContextView didSelectRemoveAllConceptsOptionAtIndex:(NSUInteger)index
+{
+    NSAssert(selectorContextView == self.selectorContextView, @"");
+    NSAssert(index == [self.selectorContextView findActualContextViewIndex], @"");
+    
+    id modelObject = [self findModelObjectOfActualSelectedContextView];
+    [modelObject deleteAllConcepts];
+    [[IAEBook sharedBook] saveAll];
+    [self.conceptsCollectionView reloadData];
+    [self updateBalancesWithAnimation:YES];
 }
 
 - (void)updateContentInformationBasedInCurrentContextWithAnimation:(BOOL)animation

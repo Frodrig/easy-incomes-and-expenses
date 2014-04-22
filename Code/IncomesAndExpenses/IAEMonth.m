@@ -97,6 +97,11 @@ static NSString * const kLTextDecemberName = @"December";
     return [self addConceptWithAmount:concept.amount category:concept.category date:concept.date dayOfTheMonth:concept.dayOfTheMonth andDescription:concept.description];
 }
 
+- (void)deleteAllConcepts
+{
+    [self removeAllConceptsWithNotification:NO];
+}
+
 - (void)removeAllConceptsWithNotification:(BOOL)notification
 {
     while (self.concepts.count > 0) {

@@ -128,6 +128,8 @@ static const NSUInteger kNumberOfMonths = 12;
 static const NSUInteger kAlertViewButtonCancelIndex = 0;
 static const NSUInteger kAltertViewButtonConfirmationIndex = 1;
 
+static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
+
 @interface IAEEasyIncomesAndExpensesViewController ()
 
 @property (strong, nonatomic) IBOutlet UILabel *navigationBarTitleLabel;
@@ -1156,8 +1158,7 @@ static const NSUInteger kAltertViewButtonConfirmationIndex = 1;
 
 - (IAEContextView *)findActualSelectedMonthContextView
 {
-    NSAssert(self.contextMenuView.currentOptionIndexSelected > 0, @"");
-    return [self findContextViewAtGlobalPosition:self.contextMenuView.currentOptionIndexSelected];
+    return self.contextMenuView.currentOptionIndexSelected > 0 ? [self findContextViewAtGlobalPosition:self.contextMenuView.currentOptionIndexSelected] : nil;
 }
 
 - (IAEContextView *)findOpenYearContextView
@@ -1387,11 +1388,29 @@ static const NSUInteger kAltertViewButtonConfirmationIndex = 1;
     NSAssert(selectorContextView == self.selectorContextView, @"");
     NSAssert(index == [self.selectorContextView findActualContextViewIndex], @"");
     
+    [self deleteAllConceptsInModelObjectOfActualSelectionContextView];
+    [self reloadDataAndUpdateBalancesWithAnimationInConceptCollectionViewAfterRemoveAllConcepts];
+}
+
+- (void)deleteAllConceptsInModelObjectOfActualSelectionContextView
+{
     id modelObject = [self findModelObjectOfActualSelectedContextView];
     [modelObject deleteAllConcepts];
     [[IAEBook sharedBook] saveAll];
-    [self.conceptsCollectionView reloadData];
-    [self updateBalancesWithAnimation:YES];
+}
+
+- (void)reloadDataAndUpdateBalancesWithAnimationInConceptCollectionViewAfterRemoveAllConcepts
+{
+    [UIView animateWithDuration:kAnimationForReloadDataAfterRemoveAllConcepts animations:^{
+        self.conceptsCollectionView.alpha = 0;
+    } completion:^(BOOL finished) {
+        [self.conceptsCollectionView reloadData];
+        [self updateBalancesWithAnimation:YES];
+        [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES];
+        [UIView animateWithDuration:0 animations:^{
+            self.conceptsCollectionView.alpha = 1.0;
+        }];
+    }];
 }
 
 - (void)updateContentInformationBasedInCurrentContextWithAnimation:(BOOL)animation

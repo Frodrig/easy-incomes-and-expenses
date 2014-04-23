@@ -1228,12 +1228,13 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 #pragma mark - Update 
 
-- (void)updateBalancesWithAnimation:(BOOL)animation
+- (void)updateBalancesAndAvailabilityOfSelectorContextSubmenuWithAnimation:(BOOL)animation
 {
     if (![self.calculatorViewController isOpen]) {
         [self updateSelectedMonthBalanceWithAnimation:animation];
         [self updateOpenYearBalance];
     }
+    [self.selectorContextView updateAvailabilityOfSubmenuOptions];
 }
 
 - (void)updateSelectedMonthBalanceWithAnimation:(BOOL)animation
@@ -1329,7 +1330,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)performActionsAfterDismissAdjustConceptAmountPopover:(UIPopoverController *)popoverController
 {
-    [self updateBalancesWithAnimation:YES];
+    [self updateBalancesAndAvailabilityOfSelectorContextSubmenuWithAnimation:YES];
     IAEAdjustConceptAmountViewController *controller = (IAEAdjustConceptAmountViewController *)popoverController.contentViewController;
     IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:controller.conceptCellIndexPath];
     [cell setVisualAspectInEditMode:NO forConceptElement:EditModeConceptElement_Amount];
@@ -1357,7 +1358,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 - (void)updateBalancesIfDismissFromAdjustConceptAmountPopover:(UIPopoverController *)popover
 {
     if ([popover.contentViewController isKindOfClass:[IAEAdjustConceptAmountViewController class]]) {
-        [self updateBalancesWithAnimation:YES];
+        [self updateBalancesAndAvailabilityOfSelectorContextSubmenuWithAnimation:YES];
     }
 }
 
@@ -1425,7 +1426,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
         self.conceptsCollectionView.alpha = 0;
     } completion:^(BOOL finished) {
         [self.conceptsCollectionView reloadData];
-        [self updateBalancesWithAnimation:YES];
+        [self updateBalancesAndAvailabilityOfSelectorContextSubmenuWithAnimation:YES];
         [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES];
         [UIView animateWithDuration:0 animations:^{
             self.conceptsCollectionView.alpha = 1.0;
@@ -2119,7 +2120,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
             [self.conceptsCollectionView reloadItemsAtIndexPaths:@[indexPathOfNewLastCell]];
         }
     } completion:^(BOOL finished) {
-        [self updateBalancesWithAnimation:YES];
+        [self updateBalancesAndAvailabilityOfSelectorContextSubmenuWithAnimation:YES];
     }];
 }
 
@@ -2215,7 +2216,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
         [self.helperConceptsCollectionViewDataSource configureEditModeConceptCell:cell withConceptAtIndexPath:indexPath];
 
         if (originalCategoryType != concept.category.categoryType) {
-            [self updateBalancesWithAnimation:YES];
+            [self updateBalancesAndAvailabilityOfSelectorContextSubmenuWithAnimation:YES];
         }
     }
 }
@@ -2587,7 +2588,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)hideButtonWasPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
 {
-    [self updateBalancesWithAnimation:YES];
+    [self updateBalancesAndAvailabilityOfSelectorContextSubmenuWithAnimation:YES];
 
     [self setNavigationButtonsEnabled:YES];
     
@@ -2620,7 +2621,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 {
     [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES andExecuteAfterAnimationTheLogicBlock:^{
         [self.conceptsCollectionView reloadData];
-        [self updateBalancesWithAnimation:NO];
+        [self updateBalancesAndAvailabilityOfSelectorContextSubmenuWithAnimation:NO];
     }];
 }
 
@@ -2634,7 +2635,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 - (void)updateAfterNewConceptCreated:(IAEConcept *)concept
 {
     [self reloadConceptsCollectionViewAfterCreateNewConcept:concept];
-    [self updateBalancesWithAnimation:NO];
+    [self updateBalancesAndAvailabilityOfSelectorContextSubmenuWithAnimation:NO];
 }
 
 - (void)reloadConceptsCollectionViewAfterCreateNewConcept:(IAEConcept *)concept

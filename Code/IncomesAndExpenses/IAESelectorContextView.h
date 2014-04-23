@@ -31,4 +31,6 @@
 - (void)hideMenuModeWithAnimation:(BOOL)animation;
 - (BOOL)isInMenuMode;
 
+- (void)updateAvailabilityOfSubmenuOptions;
+
 @end

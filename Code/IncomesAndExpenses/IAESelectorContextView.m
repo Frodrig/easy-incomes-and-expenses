@@ -213,6 +213,13 @@ static const CGFloat kDurationOfAnimationOfChangeContext = 0.6;
     }];
 }
 
+#pragma mark - Submenu Options
+
+- (void)updateAvailabilityOfSubmenuOptions
+{
+    [self.contextSubmenuView updateAvailabilityOfOptions];
+}
+
 #pragma mark - Menu Mode
 
 - (void)hideMenuModeWithAnimation:(BOOL)animation

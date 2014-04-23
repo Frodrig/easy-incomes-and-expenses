@@ -62,12 +62,12 @@ static const NSUInteger kAlertViewExecuteRemoveAllButtonIndex = 1;
 
 - (BOOL)isExportCSVOptionTouchedFromTouches:(NSSet *)touches
 {
-    return CGRectContainsPoint(self.exportCSVOptionLabel.frame, [self locationFromTouches:touches]);
+    return CGRectContainsPoint(self.exportCSVOptionLabel.frame, [self locationFromTouches:touches]) && self.exportCSVOptionLabel.enabled;
 }
 
 - (BOOL)isRemoveAllOptionTouchedFromTouches:(NSSet *)touches
 {
-    return CGRectContainsPoint(self.removeAllConceptsOptionLabel.frame, [self locationFromTouches:touches]);
+    return CGRectContainsPoint(self.removeAllConceptsOptionLabel.frame, [self locationFromTouches:touches]) && self.removeAllConceptsOptionLabel.enabled;
 }
 
 - (CGPoint)locationFromTouches:(NSSet *)touches

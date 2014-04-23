@@ -2765,20 +2765,21 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)optionIndex:(NSUInteger)optionIndex wasReSelectedInTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenuView
 {
-    [self lauchActionSheetForContextMenuAtOptionIndex:optionIndex];
+    [self lauchActionSheetForContextMenuAtOptionIndexIfApplicable:optionIndex];
 }
 
-- (void)lauchActionSheetForContextMenuAtOptionIndex:(NSUInteger)optionIndex
+- (void)lauchActionSheetForContextMenuAtOptionIndexIfApplicable:(NSUInteger)optionIndex
 {
-
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                             delegate:self
-                                                    cancelButtonTitle:nil
-                                               destructiveButtonTitle:[self existConceptsInActualSelectedContext] ? NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_OPTION_REMOVEALLCONCEPTS", @"") : nil
-                                                    otherButtonTitles:NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_OPTION_EXPORTCSV", @""), nil];
-    actionSheet.tintColor = [UIColor lightGrayColor];
-    actionSheet.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
-    [actionSheet showFromRect:[self calculeRectForShowActionSheetForContextMenuAtOptionIndex:optionIndex] inView:self.contextMenuView animated:YES];
+    if ([self existConceptsInActualSelectedContext]) {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                 delegate:self
+                                                        cancelButtonTitle:nil
+                                                   destructiveButtonTitle:NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_OPTION_REMOVEALLCONCEPTS", @"")
+                                                        otherButtonTitles:NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_OPTION_EXPORTCSV", @""), nil];
+        actionSheet.tintColor = [UIColor lightGrayColor];
+        actionSheet.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
+        [actionSheet showFromRect:[self calculeRectForShowActionSheetForContextMenuAtOptionIndex:optionIndex] inView:self.contextMenuView animated:YES];
+    }
 }
 
 - (CGRect)calculeRectForShowActionSheetForContextMenuAtOptionIndex:(NSUInteger)optionIndex

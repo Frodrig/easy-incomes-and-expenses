@@ -2403,11 +2403,11 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 - (void)reloadAllWithAnimation:(BOOL)animation
 {
     [self.contextMenuView reloadOptionsStringNames];
-    [self reloadBalancesOfContextViewsWithAnimation:animation];
+    [self reloadBalancesOfContextViewsAndAvailabilityOfSelectorContextSubmenuWithAnimation:animation];
     [self updateContentInformationOfActualModeWithAnimation:animation];
 }
 
-- (void)reloadBalancesOfContextViewsWithAnimation:(BOOL)animation
+- (void)reloadBalancesOfContextViewsAndAvailabilityOfSelectorContextSubmenuWithAnimation:(BOOL)animation
 {
     [self.selectorContextView enumerateContextViewsUsingBlock:^(NSUInteger index, IAEContextView *contextView) {
         if (animation) {
@@ -2416,6 +2416,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
             [contextView reloadDataWithoutAnimation];
         }
     }];
+    [self.selectorContextView updateAvailabilityOfSubmenuOptions];
 }
 
 - (void)yearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController didCreateAndLoadSelectedYearDate:(NSUInteger)yearDate

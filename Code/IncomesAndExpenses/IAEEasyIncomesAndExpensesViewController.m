@@ -2719,7 +2719,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     
     [appEmailViewController setSubject:NSLocalizedString(@"LTEXT_EMAIL_SUBJECTCSVEXPORT", @"")];
     
-    NSString * pathForTMPDirectory = [NSTemporaryDirectory() stringByAppendingPathComponent:@"export_easyincomesandexpenses.csv"];
+    NSString * pathForTMPDirectory = [NSTemporaryDirectory() stringByAppendingPathComponent:[IAEExporter exportCSVFileNameWithExtension]];
     NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:pathForTMPDirectory];
     const BOOL fileHandleOk = fileHandle != nil;
     if (fileHandleOk) {

@@ -41,6 +41,11 @@ static NSString * const kExportCSVFileWithExtension = @"export_easyincomesandexp
     return sharedInstance;
 }
 
++(NSString *)exportCSVFileNameWithExtension
+{
+    return kExportCSVFileNameWithExtension;
+}
+
 #pragma mark - Export
 
 - (BOOL)beginExport

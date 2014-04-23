@@ -2666,7 +2666,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     if (buttonIndex == actionSheet.destructiveButtonIndex) {
         [self deleteAllConceptsOfActualSelectionContextViewAndUpdateUserInterface];
     } else {
-        [self exportAllConceptsOfActualSelectionContextViewToCSV];
+        [self exportAllConceptsOfActualSelectionContextViewToCSVIfApplicable];
     }
 }
 
@@ -2697,19 +2697,29 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     }];
 }
 
-- (void)exportAllConceptsOfActualSelectionContextViewToCSV
+- (void)exportAllConceptsOfActualSelectionContextViewToCSVIfApplicable
 {
     [Flurry logEvent:@"settingsindex_csvexport"];
-    
-    if ([self isActualSelectedContextAMonth]) {
-        if ([[IAEExporter sharedExporter] exportFromActualOpenYearToTMPCSVFileMonth:[self findActualSelectedMonth].month]) {
-            [self lauchMailComposerViewControllerForSendCSVExport];
+
+    if ([MFMailComposeViewController canSendMail]) {
+        if ([self isActualSelectedContextAMonth]) {
+            if ([[IAEExporter sharedExporter] exportFromActualOpenYearToTMPCSVFileMonth:[self findActualSelectedMonth].month]) {
+                [self lauchMailComposerViewControllerForSendCSVExport];
+            }
+        } else if ([self isActualSelectedContextTheYearOpen]) {
+            if ([[IAEExporter sharedExporter] exporToTMPCSVFileYear:[[IAEBook sharedBook] findActualOpenYear].yearDate]) {
+                [self lauchMailComposerViewControllerForSendCSVExport];
+            }
         }
-    } else if ([self isActualSelectedContextTheYearOpen]) {
-        if ([[IAEExporter sharedExporter] exporToTMPCSVFileYear:[[IAEBook sharedBook] findActualOpenYear].yearDate]) {
-            [self lauchMailComposerViewControllerForSendCSVExport];
-        }
+    } else {
+        [self lauchAlertViewCantSendCSVEmail];
     }
+}
+
+- (void)lauchAlertViewCantSendCSVEmail
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_ALERT_CANTSENDEMAIL_ALERTVIEW_CSV_TITLE", @"") message:NSLocalizedString(@"LTEXT_ALERT_CANTSENDEMAIL_ALERTVIEW_CSV_MESSAGE", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"LTEXT_ALERT_CANTSENDEMAIL_ALERTVIEW_CSV_OKBUTTON", @"") otherButtonTitles:nil];
+    [alertView show];
 }
 
 - (void)lauchMailComposerViewControllerForSendCSVExport
@@ -2733,7 +2743,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 #pragma mark - MFMailComposeViewControllerDelegate
 
--(void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
     [controller dismissViewControllerAnimated:YES completion:nil];
 }

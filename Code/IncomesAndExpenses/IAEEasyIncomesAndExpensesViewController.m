@@ -54,6 +54,7 @@
 #import "IAEFavoriteConceptsViewController.h"
 #import "IAEMonthSelectorViewController.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
+#import "IAEExporter.h"
 
 typedef NS_ENUM(NSUInteger, MonthSelectorPurpose) {
     MonthSelectorPurposeCopy,
@@ -653,13 +654,6 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     [appEmailViewController setMessageBody:messageBody isHTML:NO];
     
     [self presentViewController:appEmailViewController animated:YES completion:nil];
-}
-
-#pragma mark - MFMailComposeViewControllerDelegate
-
--(void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
-{
-    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - ControlEvents
@@ -1395,10 +1389,6 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     } else {
         [self updateContentInformationBasedInCurrentContextWithAnimation:!self.initialPositioning];
     }
-}
-
-- (void)selectorContextView:(IAESelectorContextView *)selectorContextView didSelectExportCSVOptionAtIndex:(NSUInteger)index
-{
 }
 
 - (void)updateContentInformationBasedInCurrentContextWithAnimation:(BOOL)animation
@@ -2676,7 +2666,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     if (buttonIndex == actionSheet.destructiveButtonIndex) {
         [self deleteAllConceptsOfActualSelectionContextViewAndUpdateUserInterface];
     } else {
-        
+        [self exportAllConceptsOfActualSelectionContextViewToCSV];
     }
 }
 
@@ -2707,6 +2697,46 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     }];
 }
 
+- (void)exportAllConceptsOfActualSelectionContextViewToCSV
+{
+    [Flurry logEvent:@"settingsindex_csvexport"];
+    
+    if ([self isActualSelectedContextAMonth]) {
+        if ([[IAEExporter sharedExporter] exportFromActualOpenYearToTMPCSVFileMonth:[self findActualSelectedMonth].month]) {
+            [self lauchMailComposerViewControllerForSendCSVExport];
+        }
+    } else if ([self isActualSelectedContextTheYearOpen]) {
+        if ([[IAEExporter sharedExporter] exporToTMPCSVFileYear:[[IAEBook sharedBook] findActualOpenYear].yearDate]) {
+            [self lauchMailComposerViewControllerForSendCSVExport];
+        }
+    }
+}
+
+- (void)lauchMailComposerViewControllerForSendCSVExport
+{
+    MFMailComposeViewController *appEmailViewController = [[MFMailComposeViewController alloc] init];
+    appEmailViewController.mailComposeDelegate = self;
+    
+    [appEmailViewController setSubject:NSLocalizedString(@"LTEXT_EMAIL_SUBJECTCSVEXPORT", @"")];
+    
+    NSString * pathForTMPDirectory = [NSTemporaryDirectory() stringByAppendingPathComponent:@"export_easyincomesandexpenses.csv"];
+    NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:pathForTMPDirectory];
+    const BOOL fileHandleOk = fileHandle != nil;
+    if (fileHandleOk) {
+        NSData *fileData = [fileHandle readDataToEndOfFile];
+        [appEmailViewController addAttachmentData:fileData mimeType:@"text/csv" fileName:@"Easy_Incomes_and_Expenses.csv"];
+        [self presentViewController:appEmailViewController animated:YES completion:nil];
+    } else {
+        [appEmailViewController dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+#pragma mark - MFMailComposeViewControllerDelegate
+
+-(void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    [controller dismissViewControllerAnimated:YES completion:nil];
+}
 
 #pragma mark - IAETextRawSelectorMenuViewDelegate
 

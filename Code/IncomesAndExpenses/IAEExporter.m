@@ -26,7 +26,7 @@
 #pragma mark - Constants
 
 static NSString * const kCSVCommaSeparator = @",";
-static NSString * const kExportCSVFileWithExtension = @"export.csv";
+static NSString * const kExportCSVFileWithExtension = @"export_easyincomesandexpenses.csv";
 
 #pragma mark - Class
 

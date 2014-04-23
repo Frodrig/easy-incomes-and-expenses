@@ -8,18 +8,13 @@
 
 #import "IAESelectorContextView.h"
 #import "IAEContextView.h"
-#import "IAEContextSubmenuView.h"
-#import "IAEContextSubmenuViewDelegate.h"
-#import "IAEContextSubmenuViewDatasource.h"
 #import "UIView+LoadFromXib.h"
 
-@interface IAESelectorContextView()<IAEContextSubmenuViewDelegate,
-                                    IAEContextSubmenuViewDatasource>
+@interface IAESelectorContextView()
 
 @property (nonatomic, strong) NSMutableDictionary *contextViews;
 @property (nonatomic) NSUInteger actualContextViewIndex;
 @property (nonatomic, strong) UIScrollView *scrollViewContainer;
-@property (nonatomic, strong) IAEContextSubmenuView *contextSubmenuView;
 
 @end
 
@@ -64,21 +59,12 @@ static const CGFloat kDurationOfAnimationOfChangeContext = 0.6;
 
 - (void)createAndVinculeBaseSubviews
 {
-    [self createAndConfigureContextSubmenuView];
     [self createConfigureAndVinculeScrollViewContainer];
-}
-
-- (void)createAndConfigureContextSubmenuView
-{
-    self.contextSubmenuView = (IAEContextSubmenuView *)[UIView viewFromXib:@"IAEContextSubmenuView" withOwner:self];
-    self.contextSubmenuView.delegate = self;
-    self.contextSubmenuView.datasource = self;
 }
 
 - (void)createConfigureAndVinculeScrollViewContainer
 {
     self.scrollViewContainer = [[UIScrollView alloc] initWithFrame:self.bounds];
-    self.scrollViewContainer.contentSize = CGSizeMake(self.bounds.size.width + self.contextSubmenuView .bounds.size.width, self.bounds.size.height);
     self.scrollViewContainer.pagingEnabled = YES;
     self.scrollViewContainer.backgroundColor = [UIColor clearColor];
     self.scrollViewContainer.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
@@ -88,14 +74,7 @@ static const CGFloat kDurationOfAnimationOfChangeContext = 0.6;
     self.scrollViewContainer.bounces = NO;
     [self.scrollViewContainer scrollRectToVisible:CGRectZero animated:NO];
     
-    [self addContextsubMenuViewIntoScrollViewContainer];
     [self addSubview:self.scrollViewContainer];
-}
-
-- (void)addContextsubMenuViewIntoScrollViewContainer
-{
-    [self.scrollViewContainer addSubview:self.contextSubmenuView];
-    self.contextSubmenuView.frame = CGRectOffset(self.contextSubmenuView.frame, self.scrollViewContainer.contentSize.width - self.contextSubmenuView.bounds.size.width, 100);
 }
 
 #pragma mark - Add
@@ -133,7 +112,6 @@ static const CGFloat kDurationOfAnimationOfChangeContext = 0.6;
         } else {
             [self hideWithoutAnimationTheContextView:contextViewToHide andShowTheContextView:contextViewToShow];
         }
-        [self.contextSubmenuView updateAvailabilityOfOptions];
     }
 }
 
@@ -211,61 +189,6 @@ static const CGFloat kDurationOfAnimationOfChangeContext = 0.6;
         NSNumber *keyObject = key;
         block(keyObject.unsignedIntegerValue, obj);
     }];
-}
-
-#pragma mark - Submenu Options
-
-- (void)updateAvailabilityOfSubmenuOptions
-{
-    [self.contextSubmenuView updateAvailabilityOfOptions];
-}
-
-#pragma mark - Menu Mode
-
-- (void)hideMenuModeWithAnimation:(BOOL)animation
-{
-    [self.scrollViewContainer scrollRectToVisible:CGRectZero animated:animation];
-}
-
-- (BOOL)isInMenuMode
-{
-    return self.scrollViewContainer.contentOffset.x > 0;
-}
-
-#pragma mark - IAEContextSubmenuDelegate
-
-- (void)exportCSVOptionWasPressedInContextSubmenuView:(IAEContextSubmenuView *)contextSubmenuView
-{
-    [self.delegate selectorContextView:self didSelectExportCSVOptionAtIndex:self.actualContextViewIndex];
-}
-
-- (void)removeAllConceptsOptionWasPressedInContextSubmenuView:(IAEContextSubmenuView *)contextSubmenuView
-{
-    [self.delegate selectorContextView:self didSelectRemoveAllConceptsOptionAtIndex:self.actualContextViewIndex];
-}
-
-#pragma mark - IAEContextSubmenuDatasource
-
-- (BOOL)isActualContextAYearForContextSubmenuView:(IAEContextSubmenuView *)contextSubmenuView
-{
-    return [self isActualContextOfType:CONTEXT_VIEW_YEAR];
-}
-
-- (BOOL)isActualContextAMonthForContextSubmenuView:(IAEContextSubmenuView *)contextSubmenuView
-{
-    return [self isActualContextOfType:CONTEXT_VIEW_MONTH];
-}
-
-- (BOOL)isActualContextOfType:(IAEContextViewType)contextType
-{
-    const NSUInteger actualContextViewIndex = [self findActualContextViewIndex];
-    IAEContextView *actualContextView = [self findContextViewAtIndex:actualContextViewIndex];
-    return actualContextView.contextType == contextType;
-}
-
-- (BOOL)isActualContextWithConceptsForContextSubmenuView:(IAEContextSubmenuView *)contextSubmenuView
-{
-    return [self.dataSource numberOfConceptsForSelectorContextView:self atIndex:[self findActualContextViewIndex]] > 0;
 }
 
 @end

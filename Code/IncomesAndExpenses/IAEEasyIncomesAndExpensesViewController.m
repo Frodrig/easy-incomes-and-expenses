@@ -1234,7 +1234,6 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
         [self updateSelectedMonthBalanceWithAnimation:animation];
         [self updateOpenYearBalance];
     }
-    [self.selectorContextView updateAvailabilityOfSubmenuOptions];
 }
 
 - (void)updateSelectedMonthBalanceWithAnimation:(BOOL)animation
@@ -2384,7 +2383,6 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
             [contextView reloadDataWithoutAnimation];
         }
     }];
-    [self.selectorContextView updateAvailabilityOfSubmenuOptions];
 }
 
 - (void)yearSelectorViewController:(IAEYearSelectorViewController *)yearSelectorViewController didCreateAndLoadSelectedYearDate:(NSUInteger)yearDate

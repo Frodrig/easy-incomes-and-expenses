@@ -10,8 +10,6 @@
 		5B0038FE18CFC13900044B2D /* libFlurry_4.3.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B00386718CFC13900044B2D /* libFlurry_4.3.2.a */; };
 		5B00398418CFC13900044B2D /* libFlurryAds_4.3.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B0038F218CFC13900044B2D /* libFlurryAds_4.3.2.a */; };
 		5B0574C117AFE2F600B95D50 /* IAEWithoutConceptsTextWarningReportMode.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B0574C317AFE2F600B95D50 /* IAEWithoutConceptsTextWarningReportMode.xib */; };
-		5B0874681905A34700A00574 /* IAEContextSubmenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0874671905A34700A00574 /* IAEContextSubmenuView.m */; };
-		5B08746A1905A35D00A00574 /* IAEContextSubmenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B0874691905A35D00A00574 /* IAEContextSubmenuView.xib */; };
 		5B0EDE9F1900EEE0009A3DF5 /* IAEEmailChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0EDE9E1900EEE0009A3DF5 /* IAEEmailChecker.m */; };
 		5B0F8BC416B94ADD002D62A5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5B0F8BC616B94ADD002D62A5 /* Localizable.strings */; };
 		5B0FEE9B1902484F0067CA38 /* IAEPasswordRecoveryEmailPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0FEE991902484F0067CA38 /* IAEPasswordRecoveryEmailPanelViewController.m */; };
@@ -230,11 +228,6 @@
 		5B021D3716B8363F000B8D4F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5B0574C217AFE2F600B95D50 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/IAEWithoutConceptsTextWarningReportMode.xib; sourceTree = "<group>"; };
 		5B0574C417AFE2F900B95D50 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/IAEWithoutConceptsTextWarningReportMode.xib; sourceTree = "<group>"; };
-		5B0874661905A34700A00574 /* IAEContextSubmenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEContextSubmenuView.h; sourceTree = "<group>"; };
-		5B0874671905A34700A00574 /* IAEContextSubmenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEContextSubmenuView.m; sourceTree = "<group>"; };
-		5B0874691905A35D00A00574 /* IAEContextSubmenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEContextSubmenuView.xib; sourceTree = "<group>"; };
-		5B08746B1905AA0000A00574 /* IAEContextSubmenuViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEContextSubmenuViewDelegate.h; sourceTree = "<group>"; };
-		5B08746C1905B16300A00574 /* IAEContextSubmenuViewDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEContextSubmenuViewDatasource.h; sourceTree = "<group>"; };
 		5B0EDE9D1900EEE0009A3DF5 /* IAEEmailChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEmailChecker.h; sourceTree = "<group>"; };
 		5B0EDE9E1900EEE0009A3DF5 /* IAEEmailChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEmailChecker.m; sourceTree = "<group>"; };
 		5B0F8BC516B94ADD002D62A5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -637,18 +630,6 @@
 				5B0574C317AFE2F600B95D50 /* IAEWithoutConceptsTextWarningReportMode.xib */,
 			);
 			name = SinConceptosEnModoReporte;
-			sourceTree = "<group>";
-		};
-		5B0874651905A31200A00574 /* IAEContextSubmenuView */ = {
-			isa = PBXGroup;
-			children = (
-				5B0874661905A34700A00574 /* IAEContextSubmenuView.h */,
-				5B0874671905A34700A00574 /* IAEContextSubmenuView.m */,
-				5B0874691905A35D00A00574 /* IAEContextSubmenuView.xib */,
-				5B08746B1905AA0000A00574 /* IAEContextSubmenuViewDelegate.h */,
-				5B08746C1905B16300A00574 /* IAEContextSubmenuViewDatasource.h */,
-			);
-			name = IAEContextSubmenuView;
 			sourceTree = "<group>";
 		};
 		5B0EDE9C1900EEB8009A3DF5 /* Email */ = {
@@ -2028,7 +2009,6 @@
 		5BFDE72717C5E25A00DF884B /* Selector Context View */ = {
 			isa = PBXGroup;
 			children = (
-				5B0874651905A31200A00574 /* IAEContextSubmenuView */,
 				5BFDE72D17C5F07A00DF884B /* IAESelectorContextViewDelegate.h */,
 				5BCF718A19070D5F0084F187 /* IAESelectorContextViewDataSource.h */,
 				5BFDE72817C5E27500DF884B /* IAESelectorContextView.h */,
@@ -2143,7 +2123,6 @@
 			files = (
 				5B767E011636D7FC005315F8 /* InfoPlist.strings in Resources */,
 				5B28D1AF18200C1300EF4D48 /* 766-arrow-right@2x.png in Resources */,
-				5B08746A1905A35D00A00574 /* IAEContextSubmenuView.xib in Resources */,
 				5BB8AD1317FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png in Resources */,
 				5BE84E7D180DA8F500F4A80B /* IAEHelpIndexViewController.xib in Resources */,
 				5B2A41B017C77C8100C29036 /* 765-arrow-left.png in Resources */,
@@ -2341,7 +2320,6 @@
 				5BEA608217A6A36600520E09 /* IAEReportAreaView.m in Sources */,
 				5B5773BB18FF9A7600672C29 /* IAEHelpConfigureConfirmRemoveConceptCell.m in Sources */,
 				5B32D654177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m in Sources */,
-				5B0874681905A34700A00574 /* IAEContextSubmenuView.m in Sources */,
 				5B5C967F17816A13008CD851 /* UIView+RoundedCorners.m in Sources */,
 				5BAEAE181876B8C300271B47 /* IAEFavoriteConceptsViewController.m in Sources */,
 				5BDD9A3218572F99001A6CEF /* IAEPasswordPanelScreenView.m in Sources */,

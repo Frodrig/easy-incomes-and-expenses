@@ -335,6 +335,18 @@ static const CGFloat kMinimumAlphaOfAnimationOptionDestroyWithGosth = 0.1;
     return menuOption;
 }
 
+- (CGRect)rectOfOptionAtIndex:(NSUInteger)index
+{
+    CGRect retRectOfOption = CGRectZero;
+    UIButton *option = [self findMenuOptionWithIndex:index];
+    if (option) {
+        retRectOfOption = option.frame;
+    }
+    
+    return retRectOfOption;
+}
+
+
 #pragma mark - UIControlEvents
 
 - (void)optionButtonPressed:(UIButton *)sender
@@ -351,17 +363,21 @@ static const CGFloat kMinimumAlphaOfAnimationOptionDestroyWithGosth = 0.1;
 - (void)changeToOptionIndex:(NSUInteger)index andSendToDelegate:(BOOL)sendToDelegate
 {
     const NSUInteger numberOfOptions = [self.dataSource numberOfOptionsInTextRawSelectorMenu:self];
-    if (index < numberOfOptions && index != self.currentOptionIndexSelected) {
-        BOOL permissionToSelectOptionIndex = YES;
-        if (sendToDelegate) {
-            permissionToSelectOptionIndex = [self.delegate canSelectOptionIndex:index inTextRawSelectorMenuView:self];
-        }
-        
-        if (permissionToSelectOptionIndex) {
-            self.currentOptionIndexSelected = index;
-            
+    if (index < numberOfOptions) {
+        if (index != self.currentOptionIndexSelected) {
+            BOOL permissionToSelectOptionIndex = YES;
             if (sendToDelegate) {
-                [self.delegate optionIndex:index wasSelectedInTextRawSelectorMenuView:self];
+                permissionToSelectOptionIndex = [self.delegate canSelectOptionIndex:index inTextRawSelectorMenuView:self];
+            }
+            if (permissionToSelectOptionIndex) {
+                self.currentOptionIndexSelected = index;
+                if (sendToDelegate) {
+                    [self.delegate optionIndex:index wasSelectedInTextRawSelectorMenuView:self];
+                }
+            }
+        } else {
+            if (sendToDelegate) {
+                [self.delegate optionIndex:index wasReSelectedInTextRawSelectorMenuView:self];
             }
         }
     }

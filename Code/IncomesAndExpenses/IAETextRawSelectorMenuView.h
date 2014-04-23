@@ -34,4 +34,6 @@ typedef NS_ENUM(NSUInteger, TextRawSelectorAnimationType) {
 
 - (void)animateOptionAtIndex:(NSUInteger)index withAnimationType:(TextRawSelectorAnimationType)animationType;
 
+- (CGRect)rectOfOptionAtIndex:(NSUInteger)index;
+
 @end

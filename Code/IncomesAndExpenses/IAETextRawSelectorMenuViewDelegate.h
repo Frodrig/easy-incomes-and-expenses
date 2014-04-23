@@ -15,6 +15,7 @@
 @optional
 
 - (void)optionIndex:(NSUInteger)optionIndex wasSelectedInTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenuView;
+- (void)optionIndex:(NSUInteger)optionIndex wasReSelectedInTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenuView;
 - (BOOL)canSelectOptionIndex:(NSUInteger)optionIndex inTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenuView;
 
 @end

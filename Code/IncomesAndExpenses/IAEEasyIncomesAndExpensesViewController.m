@@ -1402,38 +1402,6 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 {
 }
 
-- (void)selectorContextView:(IAESelectorContextView *)selectorContextView didSelectRemoveAllConceptsOptionAtIndex:(NSUInteger)index
-{
-    NSAssert(selectorContextView == self.selectorContextView, @"");
-    NSAssert(index == [self.selectorContextView findActualContextViewIndex], @"");
-    
-    [self deleteAllConceptsInModelObjectOfActualSelectionContextView];
-    [self reloadDataAndUpdateBalancesWithAnimationInConceptCollectionViewAfterRemoveAllConcepts];
-    
-    // TODO
-}
-
-- (void)deleteAllConceptsInModelObjectOfActualSelectionContextView
-{
-    id modelObject = [self findModelObjectOfActualSelectedContextView];
-    [modelObject deleteAllConcepts];
-    [[IAEBook sharedBook] saveAll];
-}
-
-- (void)reloadDataAndUpdateBalancesWithAnimationInConceptCollectionViewAfterRemoveAllConcepts
-{
-    [UIView animateWithDuration:kAnimationForReloadDataAfterRemoveAllConcepts animations:^{
-        self.conceptsCollectionView.alpha = 0;
-    } completion:^(BOOL finished) {
-        [self.conceptsCollectionView reloadData];
-        [self updateBalancesAndAvailabilityOfSelectorContextSubmenuWithAnimation:YES];
-        [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES];
-        [UIView animateWithDuration:0 animations:^{
-            self.conceptsCollectionView.alpha = 1.0;
-        }];
-    }];
-}
-
 - (void)updateContentInformationBasedInCurrentContextWithAnimation:(BOOL)animation
 {
     [self updateCurrentOptionIndexSelectedOfContextMenu];
@@ -2704,6 +2672,44 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     [self.conceptsCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]];
 }
 
+#pragma mark - UIActionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == actionSheet.destructiveButtonIndex) {
+        [self deleteAllConceptsOfActualSelectionContextViewAndUpdateUserInterface];
+    } else {
+        
+    }
+}
+
+- (void)deleteAllConceptsOfActualSelectionContextViewAndUpdateUserInterface
+{
+    [self deleteAllConceptsInModelObjectOfActualSelectionContextView];
+    [self reloadDataAndUpdateBalancesWithAnimationInConceptCollectionViewAfterRemoveAllConcepts];
+}
+
+- (void)deleteAllConceptsInModelObjectOfActualSelectionContextView
+{
+    id modelObject = [self findModelObjectOfActualSelectedContextView];
+    [modelObject deleteAllConcepts];
+    [[IAEBook sharedBook] saveAll];
+}
+
+- (void)reloadDataAndUpdateBalancesWithAnimationInConceptCollectionViewAfterRemoveAllConcepts
+{
+    [UIView animateWithDuration:kAnimationForReloadDataAfterRemoveAllConcepts animations:^{
+        self.conceptsCollectionView.alpha = 0;
+    } completion:^(BOOL finished) {
+        [self.conceptsCollectionView reloadData];
+        [self updateBalancesAndAvailabilityOfSelectorContextSubmenuWithAnimation:YES];
+        [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES];
+        [UIView animateWithDuration:0 animations:^{
+            self.conceptsCollectionView.alpha = 1.0;
+        }];
+    }];
+}
+
+
 #pragma mark - IAETextRawSelectorMenuViewDelegate
 
 - (BOOL)canSelectOptionIndex:(NSUInteger)optionIndex inTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenuView
@@ -2728,7 +2734,37 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
         [self reloadContentOfConceptsReportViewWithAnimation:YES];
     }
 }
- 
+
+- (void)optionIndex:(NSUInteger)optionIndex wasReSelectedInTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenuView
+{
+    [self lauchActionSheetForContextMenuAtOptionIndex:optionIndex];
+}
+
+- (void)lauchActionSheetForContextMenuAtOptionIndex:(NSUInteger)optionIndex
+{
+
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:nil
+                                               destructiveButtonTitle:[self existConceptsInActualSelectedContext] ? NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_OPTION_REMOVEALLCONCEPTS", @"") : nil
+                                                    otherButtonTitles:NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_OPTION_EXPORTCSV", @""), nil];
+    actionSheet.tintColor = [UIColor lightGrayColor];
+    actionSheet.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
+    [actionSheet showFromRect:[self calculeRectForShowActionSheetForContextMenuAtOptionIndex:optionIndex] inView:self.contextMenuView animated:YES];
+}
+
+- (CGRect)calculeRectForShowActionSheetForContextMenuAtOptionIndex:(NSUInteger)optionIndex
+{
+    CGRect fromRect = [self.contextMenuView rectOfOptionAtIndex:optionIndex];
+    if (optionIndex < 2) {
+        fromRect = CGRectOffset(fromRect, 10, 0);
+    } else if (optionIndex > 10) {
+        fromRect = CGRectOffset(fromRect, -10, 0);
+    }
+
+    return fromRect;
+}
+
 - (BOOL)isChangeOfContextRunning
 {
     return [self.selectorContextView isAnimationInProgress];

@@ -46,7 +46,8 @@
                                                                       MFMailComposeViewControllerDelegate,
                                                                       UIAlertViewDelegate,
                                                                       IAEFavoriteConceptsViewControllerDelegate,
-                                                                      IAEMonthSelectorViewControllerDelegate>
+                                                                      IAEMonthSelectorViewControllerDelegate,
+                                                                      UIActionSheetDelegate>
 
 @property (nonatomic, weak) id<IAEEasyIncomesAndExpensesViewControllerDelegate> delegate;
 

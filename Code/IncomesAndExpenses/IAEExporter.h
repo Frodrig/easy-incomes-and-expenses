@@ -13,6 +13,7 @@
 
 + (IAEExporter *)sharedExporter;
 + (NSString *)exportCSVFileNameWithExtension;
++ (NSString *)exportCSVFileName;
 
 - (BOOL)exportAllYearsToTMPCSVFile;
 - (BOOL)exporToTMPCSVFileYear:(NSUInteger)year;

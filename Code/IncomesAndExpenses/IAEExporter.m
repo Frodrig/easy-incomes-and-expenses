@@ -26,7 +26,6 @@
 #pragma mark - Constants
 
 static NSString * const kCSVCommaSeparator = @",";
-static NSString * const kExportCSVFileWithExtension = @"export_easyincomesandexpenses.csv";
 
 #pragma mark - Class
 
@@ -41,16 +40,31 @@ static NSString * const kExportCSVFileWithExtension = @"export_easyincomesandexp
     return sharedInstance;
 }
 
-+(NSString *)exportCSVFileNameWithExtension
++ (NSString *)exportCSVFileNameWithExtension
 {
-    return kExportCSVFileNameWithExtension;
+    static NSString * exportCSVFileWithExtension = nil;
+    if (!exportCSVFileWithExtension) {
+        exportCSVFileWithExtension = @"export_easyincomesandexpenses.csv";
+    }
+ 
+    return exportCSVFileWithExtension;
+}
+
++ (NSString *)exportCSVFileName
+{
+    static NSString *exportCSVFileName = nil;
+    if (!exportCSVFileName) {
+        exportCSVFileName = [[self exportCSVFileNameWithExtension] componentsSeparatedByString:@"."][0];
+    }
+    
+    return exportCSVFileName;
 }
 
 #pragma mark - Export
 
 - (BOOL)beginExport
 {
-    NSString * pathForTMPDirectory = [NSTemporaryDirectory() stringByAppendingPathComponent:kExportCSVFileWithExtension];
+    NSString * pathForTMPDirectory = [NSTemporaryDirectory() stringByAppendingPathComponent:[IAEExporter exportCSVFileNameWithExtension]];
     [[NSFileManager defaultManager] removeItemAtPath:pathForTMPDirectory error:nil];
     if ([[NSFileManager defaultManager] createFileAtPath:pathForTMPDirectory contents:nil attributes:nil]) {
         self.exportFileHandle = [NSFileHandle fileHandleForWritingAtPath:pathForTMPDirectory];

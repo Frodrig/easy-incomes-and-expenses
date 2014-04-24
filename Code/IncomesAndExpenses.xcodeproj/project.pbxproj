@@ -2531,7 +2531,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Fernando Rodríguez Martínez (X8YC5J88PS)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2554,7 +2554,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "Easy Inc & Exp";
 				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "03C8F691-ABE4-4694-93AF-BB20ECB69B3E";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2587,8 +2587,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "Easy Inc & Exp";
 				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=*]" = "21A79375-593B-44E7-B1DE-BD58D55085FA";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "21A79375-593B-44E7-B1DE-BD58D55085FA";
+				"PROVISIONING_PROFILE[sdk=*]" = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};

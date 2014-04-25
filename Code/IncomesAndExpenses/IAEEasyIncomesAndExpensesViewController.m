@@ -131,6 +131,8 @@ static const NSUInteger kAltertViewButtonConfirmationIndex = 1;
 
 static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
+static const NSUInteger kActionSheetForContextMenuCSVExportOptionIndex = 1;
+
 @interface IAEEasyIncomesAndExpensesViewController ()
 
 @property (strong, nonatomic) IBOutlet UILabel *navigationBarTitleLabel;
@@ -2661,11 +2663,12 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 }
 
 #pragma mark - UIActionSheetDelegate
+
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == actionSheet.destructiveButtonIndex) {
         [self deleteAllConceptsOfActualSelectionContextViewAndUpdateUserInterface];
-    } else {
+    } else if (buttonIndex == kActionSheetForContextMenuCSVExportOptionIndex) {
         [self exportAllConceptsOfActualSelectionContextViewToCSVIfApplicable];
     }
 }
@@ -2703,17 +2706,31 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
     if ([MFMailComposeViewController canSendMail]) {
         if ([self isActualSelectedContextAMonth]) {
+            NSString *attachmentNameDescriptor = [self makeAttachmentNameDescriptorWithYear:[[self findOpenYear] yearDateAsString] andMonth:[self findActualSelectedMonth].description];
             if ([[IAEExporter sharedExporter] exportFromActualOpenYearToTMPCSVFileMonth:[self findActualSelectedMonth].month]) {
-                [self lauchMailComposerViewControllerForSendCSVExport];
+                [self lauchMailComposerViewControllerForSendCSVExport:attachmentNameDescriptor];
             }
         } else if ([self isActualSelectedContextTheYearOpen]) {
+            NSString *attachmentNameDescriptor = [self makeAttachmentNameDescriptorWithYear:[[self findOpenYear] yearDateAsString] andMonth:nil];
             if ([[IAEExporter sharedExporter] exporToTMPCSVFileYear:[[IAEBook sharedBook] findActualOpenYear].yearDate]) {
-                [self lauchMailComposerViewControllerForSendCSVExport];
+                [self lauchMailComposerViewControllerForSendCSVExport:attachmentNameDescriptor];
             }
         }
     } else {
         [self lauchAlertViewCantSendCSVEmail];
     }
+}
+
+- (NSString *)makeAttachmentNameDescriptorWithYear:(NSString *)year andMonth:(NSString *)month
+{
+    NSString *attachmentNameDescriptor = [year stringByAppendingString:@"_"];
+    if (month) {
+        attachmentNameDescriptor = [[attachmentNameDescriptor stringByAppendingString:month] stringByAppendingString:@"_"];
+    }
+    attachmentNameDescriptor = [attachmentNameDescriptor stringByAppendingString:@"_EasyIncomesAndExpenses.csv"];
+    
+    return attachmentNameDescriptor;
+
 }
 
 - (void)lauchAlertViewCantSendCSVEmail
@@ -2722,7 +2739,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     [alertView show];
 }
 
-- (void)lauchMailComposerViewControllerForSendCSVExport
+- (void)lauchMailComposerViewControllerForSendCSVExport:(NSString *)attachmentNameDescriptor
 {
     MFMailComposeViewController *appEmailViewController = [[MFMailComposeViewController alloc] init];
     appEmailViewController.mailComposeDelegate = self;
@@ -2734,7 +2751,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     const BOOL fileHandleOk = fileHandle != nil;
     if (fileHandleOk) {
         NSData *fileData = [fileHandle readDataToEndOfFile];
-        [appEmailViewController addAttachmentData:fileData mimeType:@"text/csv" fileName:@"Easy_Incomes_and_Expenses.csv"];
+        [appEmailViewController addAttachmentData:fileData mimeType:@"text/csv" fileName:attachmentNameDescriptor];
         [self presentViewController:appEmailViewController animated:YES completion:nil];
     } else {
         [appEmailViewController dismissViewControllerAnimated:YES completion:nil];

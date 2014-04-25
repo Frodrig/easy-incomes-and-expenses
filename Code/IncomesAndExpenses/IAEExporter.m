@@ -17,6 +17,8 @@
 #import "IAEYear.h"
 #import "IAENumberFormatterManager.h"
 
+static NSStringEncoding kEntringEncondig = NSUTF8StringEncoding;
+
 @interface IAEExporter()
 @property (nonatomic, strong) NSFileHandle *exportFileHandle;
 @end
@@ -143,7 +145,7 @@ static NSString * const kCSVCommaSeparator = @",";
     headerStr = [headerStr stringByAppendingString:kCSVCommaSeparator];
     headerStr = [headerStr stringByAppendingString:NSLocalizedString(@"LTEXT_EXPORTCSV_COLUMN_AMOUNT", "")];
     
-    NSData *data = [headerStr dataUsingEncoding:NSUnicodeStringEncoding];
+    NSData *data = [headerStr dataUsingEncoding:kEntringEncondig];
     [fileHandle writeData:data];
 }
 
@@ -205,7 +207,7 @@ static NSString * const kCSVCommaSeparator = @",";
     categoryAmount = [categoryAmount stringByReplacingOccurrencesOfString:@"," withString:@"\",\""];
     conceptToWrite = [conceptToWrite stringByAppendingString:categoryAmount];
     
-    NSData *dataToWrite = [conceptToWrite dataUsingEncoding:NSUnicodeStringEncoding];
+    NSData *dataToWrite = [conceptToWrite dataUsingEncoding:kEntringEncondig];
     [fileHandle writeData:dataToWrite];
 }
 @end

@@ -132,8 +132,6 @@ static const NSUInteger kAltertViewButtonConfirmationIndex = 1;
 
 static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
-static const NSUInteger kActionSheetForContextMenuCSVExportOptionIndex = 1;
-
 @interface IAEEasyIncomesAndExpensesViewController ()
 
 @property (strong, nonatomic) IBOutlet UILabel *navigationBarTitleLabel;
@@ -2676,9 +2674,9 @@ static const NSUInteger kActionSheetForContextMenuCSVExportOptionIndex = 1;
 - (void)contextMenuActionSheetViewController:(IAEContextMenuActionSheetViewController *)contextMenuActionSheetViewController didSelectOption:(IAEContextMenuActionSheetOption)option;
 {
     if (option == IAEContextMenuActionSheetOptionCSVExport) {
-        [self deleteAllConceptsOfActualSelectionContextViewAndUpdateUserInterface];
-    } else if (option == IAEContextMenuActionSheetOptionRemoveAllConcepts) {
         [self exportAllConceptsOfActualSelectionContextViewToCSVIfApplicable];
+    } else if (option == IAEContextMenuActionSheetOptionRemoveAllConcepts) {
+        [self deleteAllConceptsOfActualSelectionContextViewAndUpdateUserInterface];
     }
     
     [self.popover dismissPopoverAnimated:YES];

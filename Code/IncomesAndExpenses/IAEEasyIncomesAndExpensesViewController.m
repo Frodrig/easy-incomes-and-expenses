@@ -178,6 +178,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 @property (nonatomic, strong) IAEMonthSelectorViewController *monthSelectorViewController;
 @property (nonatomic) MonthSelectorPurpose monthSelectorPurpose;
 @property (nonatomic, strong) IAEContextMenuActionSheetViewController *contextMenuActionSheetViewController;
+@property (nonatomic) BOOL waitingToConfirmRemoveAllConcepts;
 
 @end
 
@@ -626,6 +627,11 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 {
     if (self.conceptCellToRemove) {
         [self executeLogicAfterDissmisAlertViewConfirmationRemoveConceptWithButtonClickedAtIndex:buttonIndex];
+    } else if (self.waitingToConfirmRemoveAllConcepts) {
+        self.waitingToConfirmRemoveAllConcepts = NO;
+        if (buttonIndex == 1) {
+            [self deleteAllConceptsOfActualSelectionContextViewAndUpdateUserInterface];
+        }
     } else {
         [self executeLogicAfterFixRemoveCategoryActionLostInUnloadedYearsAlertViewOk];
     }
@@ -2676,10 +2682,22 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     if (option == IAEContextMenuActionSheetOptionCSVExport) {
         [self exportAllConceptsOfActualSelectionContextViewToCSVIfApplicable];
     } else if (option == IAEContextMenuActionSheetOptionRemoveAllConcepts) {
-        [self deleteAllConceptsOfActualSelectionContextViewAndUpdateUserInterface];
+        [self lauchAlertViewToConfirmRemoveAllConceptsInActualContext];
     }
     
     [self.popover dismissPopoverAnimated:YES];
+}
+
+- (void)lauchAlertViewToConfirmRemoveAllConceptsInActualContext
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_ALERTVIEWREMOVEALLCONCEPTS_TITLE", @"")
+                                                        message:[self isActualSelectedContextAMonth] ? NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_ALERTVIEWREMOVEALLCONCEPTS_MSG_MONTH", @"") : NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_ALERTVIEWREMOVEALLCONCEPTS_MSG_YEAR", @"")
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_ALERTVIEWREMOVEALLCONCEPTS_CANCELOPTION", @"")
+                                              otherButtonTitles:NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_ALERTVIEWREMOVEALLCONCEPTS_REMOVEOPTION", @""), nil];
+    [alertView show];
+    
+    self.waitingToConfirmRemoveAllConcepts = YES;
 }
 
 - (void)deleteAllConceptsOfActualSelectionContextViewAndUpdateUserInterface

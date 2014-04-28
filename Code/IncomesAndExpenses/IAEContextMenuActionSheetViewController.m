@@ -74,6 +74,8 @@
 {
     self.csvExportOptionButton.enabled = self.enabledOption == IAEContextMenuActionSheetOptionAll || self.enabledOption == IAEContextMenuActionSheetOptionCSVExport;
     self.removeAllConceptsOptionButton.enabled = self.enabledOption == IAEContextMenuActionSheetOptionAll || self.enabledOption == IAEContextMenuActionSheetOptionRemoveAllConcepts;
+    self.csvExportOptionButton.alpha = self.csvExportOptionButton.enabled ? 1.0 : 0.4;
+    self.removeAllConceptsOptionButton.alpha = self.csvExportOptionButton.alpha;
 }
 
 #pragma mark - Button Events

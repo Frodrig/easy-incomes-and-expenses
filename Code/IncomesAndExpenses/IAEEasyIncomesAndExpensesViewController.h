@@ -24,6 +24,7 @@
 #import <MessageUI/MFMailComposeViewController.h>
 #import "IAEFavoriteConceptsViewControllerDelegate.h"
 #import "IAEMonthSelectorViewControllerDelegate.h"
+#import "IAEContextMenuActionSheetViewControllerDelegate.h"
 
 @protocol IAEEasyIncomesAndExpensesViewControllerDelegate;
 
@@ -47,7 +48,7 @@
                                                                       UIAlertViewDelegate,
                                                                       IAEFavoriteConceptsViewControllerDelegate,
                                                                       IAEMonthSelectorViewControllerDelegate,
-                                                                      UIActionSheetDelegate>
+                                                                      IAEContextMenuActionSheetViewControllerDelegate>
 
 @property (nonatomic, weak) id<IAEEasyIncomesAndExpensesViewControllerDelegate> delegate;
 

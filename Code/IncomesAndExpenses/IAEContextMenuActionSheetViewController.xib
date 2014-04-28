@@ -21,7 +21,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
                     <color key="tintColor" red="0.8078432083" green="0.8078432083" blue="0.8078432083" alpha="1" colorSpace="deviceRGB"/>
-                    <state key="normal" title="Button">
+                    <state key="normal" title="CSV Export">
                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -29,7 +29,7 @@
                         <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="csvExportOptionButtonPressed:" destination="-1" eventType="touchUpInside" id="933-CE-YOW"/>
+                        <action selector="csvExportOptionButtonPressed:" destination="-1" eventType="touchUpInside" id="sEp-zt-DTS"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ppu-fp-9at">
@@ -37,15 +37,15 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
                     <color key="tintColor" red="0.8078432083" green="0.8078432083" blue="0.8078432083" alpha="1" colorSpace="deviceRGB"/>
-                    <state key="normal" title="Button">
+                    <state key="normal" title="Remove all concepts">
                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
-                    <state key="disabled">
+                    <state key="disabled" title="Remove all concepts">
                         <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="removeAllConceptsOptionButtonPressed:" destination="-1" eventType="touchUpInside" id="QRY-kk-Fmt"/>
+                        <action selector="removeAllConceptsOptionButtonPressed:" destination="-1" eventType="touchUpInside" id="5gK-pr-abx"/>
                     </connections>
                 </button>
             </subviews>

@@ -55,6 +55,7 @@
 #import "IAEMonthSelectorViewController.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
 #import "IAEExporter.h"
+#import "IAEContextMenuActionSheetViewController.h"
 
 typedef NS_ENUM(NSUInteger, MonthSelectorPurpose) {
     MonthSelectorPurposeCopy,
@@ -178,6 +179,7 @@ static const NSUInteger kActionSheetForContextMenuCSVExportOptionIndex = 1;
 @property (nonatomic, strong) NSIndexPath *indexPathOfCellWithPendingCallForAttentionAnimation;
 @property (nonatomic, strong) IAEMonthSelectorViewController *monthSelectorViewController;
 @property (nonatomic) MonthSelectorPurpose monthSelectorPurpose;
+@property (nonatomic, strong) IAEContextMenuActionSheetViewController *contextMenuActionSheetViewController;
 
 @end
 
@@ -1318,6 +1320,8 @@ static const NSUInteger kActionSheetForContextMenuCSVExportOptionIndex = 1;
         [self performActionsAfterDismissCategorySelectorPopover:popoverController];
     } else if ([popoverController.contentViewController isKindOfClass:[IAEMonthSelectorViewController class]]) {
         [self performActionsAfterMonthSelectorViewController:popoverController];
+    } else if ([popoverController.contentViewController isKindOfClass:[IAEContextMenuActionSheetViewController class]]) {
+        [self performActionsAfterContextMenuActionSheetViewController:popoverController];
     }
     
     self.popover = nil;
@@ -1348,6 +1352,11 @@ static const NSUInteger kActionSheetForContextMenuCSVExportOptionIndex = 1;
 - (void)performActionsAfterMonthSelectorViewController:(UIPopoverController *)popover
 {
     self.monthSelectorViewController = nil;
+}
+
+- (void)performActionsAfterContextMenuActionSheetViewController:(UIPopoverController *)popover
+{
+    self.contextMenuActionSheetViewController = nil;
 }
 
 - (void)updateBalancesIfDismissFromAdjustConceptAmountPopover:(UIPopoverController *)popover
@@ -2662,15 +2671,17 @@ static const NSUInteger kActionSheetForContextMenuCSVExportOptionIndex = 1;
     [self.conceptsCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]];
 }
 
-#pragma mark - UIActionSheetDelegate
+#pragma mark - IAEContextMenuActionSheetViewControllerDelegate
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void)contextMenuActionSheetViewController:(IAEContextMenuActionSheetViewController *)contextMenuActionSheetViewController didSelectOption:(IAEContextMenuActionSheetOption)option;
 {
-    if (buttonIndex == actionSheet.destructiveButtonIndex) {
+    if (option == IAEContextMenuActionSheetOptionCSVExport) {
         [self deleteAllConceptsOfActualSelectionContextViewAndUpdateUserInterface];
-    } else if (buttonIndex == kActionSheetForContextMenuCSVExportOptionIndex) {
+    } else if (option == IAEContextMenuActionSheetOptionRemoveAllConcepts) {
         [self exportAllConceptsOfActualSelectionContextViewToCSVIfApplicable];
     }
+    
+    [self.popover dismissPopoverAnimated:YES];
 }
 
 - (void)deleteAllConceptsOfActualSelectionContextViewAndUpdateUserInterface
@@ -2792,33 +2803,20 @@ static const NSUInteger kActionSheetForContextMenuCSVExportOptionIndex = 1;
 
 - (void)optionIndex:(NSUInteger)optionIndex wasReSelectedInTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenuView
 {
-    [self lauchActionSheetForContextMenuAtOptionIndexIfApplicable:optionIndex];
+    [self lauchContextMenuActionSheetForContextMenuAtOptionIndexIfApplicable:optionIndex];
 }
 
-- (void)lauchActionSheetForContextMenuAtOptionIndexIfApplicable:(NSUInteger)optionIndex
+- (void)lauchContextMenuActionSheetForContextMenuAtOptionIndexIfApplicable:(NSUInteger)optionIndex
 {
-    if ([self existConceptsInActualSelectedContext]) {
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                                 delegate:self
-                                                        cancelButtonTitle:nil
-                                                   destructiveButtonTitle:NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_OPTION_REMOVEALLCONCEPTS", @"")
-                                                        otherButtonTitles:NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_OPTION_EXPORTCSV", @""), nil];
-        actionSheet.tintColor = [UIColor lightGrayColor];
-        actionSheet.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
-        [actionSheet showFromRect:[self calculeRectForShowActionSheetForContextMenuAtOptionIndex:optionIndex] inView:self.contextMenuView animated:YES];
-    }
-}
-
-- (CGRect)calculeRectForShowActionSheetForContextMenuAtOptionIndex:(NSUInteger)optionIndex
-{
-    CGRect fromRect = [self.contextMenuView rectOfOptionAtIndex:optionIndex];
-    if (optionIndex < 2) {
-        fromRect = CGRectOffset(fromRect, 10, 0);
-    } else if (optionIndex > 10) {
-        fromRect = CGRectOffset(fromRect, -10, 0);
-    }
-
-    return fromRect;
+    self.contextMenuActionSheetViewController = [[IAEContextMenuActionSheetViewController alloc] initWithEnabledOption:[self existConceptsInActualSelectedContext] ? IAEContextMenuActionSheetOptionAll : IAEContextMenuActionSheetOptionOptionsNone];
+    self.contextMenuActionSheetViewController.delegate = self;
+    self.popover = [[UIPopoverController alloc] initWithContentViewController:self.contextMenuActionSheetViewController];
+    self.popover.delegate = self;
+    self.popover.popoverContentSize = self.contextMenuActionSheetViewController.view.bounds.size;
+    [self.popover presentPopoverFromRect:CGRectOffset([self.contextMenuView rectOfOptionAtIndex:optionIndex], 0, 4)
+                                  inView:self.contextMenuView
+                permittedArrowDirections:UIPopoverArrowDirectionUp
+                                animated:YES];
 }
 
 - (BOOL)isChangeOfContextRunning

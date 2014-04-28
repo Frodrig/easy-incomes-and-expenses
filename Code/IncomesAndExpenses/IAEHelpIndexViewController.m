@@ -14,7 +14,6 @@
 #import "IAEHelpPasswordIndexViewController.h"
 #import "MonthDefs.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
-#import "IAEExporter.h"
 #import "IAESettingsViewControllerDefs.h"
 
 @interface IAEHelpIndexViewController ()
@@ -35,15 +34,13 @@ static NSString * const kNotificationInitialMonthChanged = @"initialMonthChange"
 
 static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 
-static const NSInteger kIndexSize = 5;
+static const NSInteger kIndexSize = 4;
 
 static const NSUInteger kRowOfConfigureIndex = 0;
 static const NSUInteger kRowOfPassword = 1;
-static const NSUInteger kRowOfCSVExportIndex = 2;
-static const NSUInteger kRowOfHelpIndex = 3;
-static const NSUInteger kRowOfAboutIndex = 4;
+static const NSUInteger kRowOfHelpIndex = 2;
+static const NSUInteger kRowOfAboutIndex = 3;
 
-static NSString * const kExportCSVFileWithExtension = @"export.csv";
 
 #pragma mark - Init
 
@@ -163,7 +160,7 @@ static NSString * const kExportCSVFileWithExtension = @"export.csv";
     cell.textLabel.text = NSLocalizedString(ltext, @"");
     NSString *imageName = [NSString stringWithFormat:@"settingsindex_img_%lu", (unsigned long)indexSufix];
     cell.imageView.image = [UIImage imageNamed:imageName];
-    cell.accessoryType = indexPath.row == kRowOfCSVExportIndex ? UITableViewCellAccessoryNone : UITableViewCellAccessoryDisclosureIndicator;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 }
 
 #pragma mark - Table view delegate
@@ -184,14 +181,6 @@ static NSString * const kExportCSVFileWithExtension = @"export.csv";
     } else if (indexPath.row == kRowOfPassword) {
         [Flurry logEvent:@"settingsindex_password"];
         viewController = [[IAEHelpPasswordIndexViewController alloc] initWithNibName:@"IAEHelpPasswordIndexViewController" bundle:[NSBundle mainBundle]];
-    } else if (indexPath.row == kRowOfCSVExportIndex) {
-        [Flurry logEvent:@"settingsindex_csvexport"];
-        
-        // Lanzar en paralelo
-        if ([[IAEExporter sharedExporter] exportAllYearsToTMPCSVFile]) {
-            [self lauchMailComposerViewControllerForSendCSVExport];
-        }
-        
     } else if (indexPath.row == kRowOfHelpIndex) {
         [Flurry logEvent:@"settingsindex_help"];
         viewController = [[IAEHelpViewController alloc] initWithNibName:@"IAEHelpViewController" bundle:[NSBundle mainBundle]];
@@ -203,27 +192,6 @@ static NSString * const kExportCSVFileWithExtension = @"export.csv";
     [viewController performSelector:@selector(setDelegate:) withObject:self];
     
     return viewController;
-}
-
-
-- (void)lauchMailComposerViewControllerForSendCSVExport
-{
-    MFMailComposeViewController *appEmailViewController = [[MFMailComposeViewController alloc] init];
-    appEmailViewController.mailComposeDelegate = self;
-    
-    [appEmailViewController setSubject:NSLocalizedString(@"LTEXT_EMAIL_SUBJECTCSVEXPORT", @"")];
-    
-    NSString * pathForTMPDirectory = [NSTemporaryDirectory() stringByAppendingPathComponent:kExportCSVFileWithExtension];
-    NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingAtPath:pathForTMPDirectory];
-    const BOOL fileHandleOk = fileHandle != nil;
-    if (fileHandleOk) {
-        NSData *fileData = [fileHandle readDataToEndOfFile];
-        [appEmailViewController addAttachmentData:fileData mimeType:@"text/csv" fileName:@"Easy_Incomes_and_Expenses.csv"];
-        
-        [self presentViewController:appEmailViewController animated:YES completion:nil];
-    } else {
-        [appEmailViewController dismissViewControllerAnimated:YES completion:nil];
-    }
 }
 
 #pragma mark - MFMailComposeViewControllerDelegate

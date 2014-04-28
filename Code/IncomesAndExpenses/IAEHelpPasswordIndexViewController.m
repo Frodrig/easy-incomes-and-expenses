@@ -46,7 +46,7 @@ static const NSUInteger kNumberOfOptionsAvailable = 2;
 
 - (void)configureNavigationController
 {
-    self.title = NSLocalizedString(@"LTEXT_SETTINGSINDEX_7", @"");
+    self.title = NSLocalizedString(@"LTEXT_SETTINGSINDEX_2", @"");
 }
 
 - (void)didReceiveMemoryWarning

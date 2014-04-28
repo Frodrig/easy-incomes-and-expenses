@@ -189,6 +189,8 @@
 		5BDD9A3218572F99001A6CEF /* IAEPasswordPanelScreenView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BDD9A3118572F99001A6CEF /* IAEPasswordPanelScreenView.m */; };
 		5BDD9A3418572FB3001A6CEF /* IAEPasswordPanelScreenView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BDD9A3318572FB3001A6CEF /* IAEPasswordPanelScreenView.xib */; };
 		5BDD9A3818576AAB001A6CEF /* IAEPasswordPanelKeyboardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BDD9A3718576AAB001A6CEF /* IAEPasswordPanelKeyboardView.m */; };
+		5BDE0A30190EE15E001F45D9 /* IAEContextMenuActionSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE0A2E190EE15E001F45D9 /* IAEContextMenuActionSheetViewController.m */; };
+		5BDE0A31190EE15E001F45D9 /* IAEContextMenuActionSheetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BDE0A2F190EE15E001F45D9 /* IAEContextMenuActionSheetViewController.xib */; };
 		5BE84E77180DA8CF00F4A80B /* IAESettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE84E75180DA8CF00F4A80B /* IAESettingsViewController.m */; };
 		5BE84E78180DA8CF00F4A80B /* IAESettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE84E76180DA8CF00F4A80B /* IAESettingsViewController.xib */; };
 		5BE84E7C180DA8F500F4A80B /* IAEHelpIndexViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE84E7A180DA8F500F4A80B /* IAEHelpIndexViewController.m */; };
@@ -531,6 +533,11 @@
 		5BDD9A3318572FB3001A6CEF /* IAEPasswordPanelScreenView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEPasswordPanelScreenView.xib; sourceTree = "<group>"; };
 		5BDD9A3618576AAB001A6CEF /* IAEPasswordPanelKeyboardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEPasswordPanelKeyboardView.h; sourceTree = "<group>"; };
 		5BDD9A3718576AAB001A6CEF /* IAEPasswordPanelKeyboardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEPasswordPanelKeyboardView.m; sourceTree = "<group>"; };
+		5BDE0A2D190EE15D001F45D9 /* IAEContextMenuActionSheetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEContextMenuActionSheetViewController.h; sourceTree = "<group>"; };
+		5BDE0A2E190EE15E001F45D9 /* IAEContextMenuActionSheetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEContextMenuActionSheetViewController.m; sourceTree = "<group>"; };
+		5BDE0A2F190EE15E001F45D9 /* IAEContextMenuActionSheetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEContextMenuActionSheetViewController.xib; sourceTree = "<group>"; };
+		5BDE0A32190EE20B001F45D9 /* IAEContextMenuActionSheetViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEContextMenuActionSheetViewControllerDelegate.h; sourceTree = "<group>"; };
+		5BDE0A34190EE595001F45D9 /* IAEContextMenuActionSheetViewControllerDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IAEContextMenuActionSheetViewControllerDefs.h; sourceTree = "<group>"; };
 		5BE84E74180DA8CF00F4A80B /* IAESettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAESettingsViewController.h; sourceTree = "<group>"; };
 		5BE84E75180DA8CF00F4A80B /* IAESettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAESettingsViewController.m; sourceTree = "<group>"; };
 		5BE84E76180DA8CF00F4A80B /* IAESettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAESettingsViewController.xib; sourceTree = "<group>"; };
@@ -1025,6 +1032,7 @@
 				5B32D659177C41170070AC72 /* Easy Incomes and Expenses */,
 				5B90782E179D1A8B00B2A0F7 /* Calculator */,
 				5B8CD5D617A2C6B400A353A5 /* Text Raw Selector Menu */,
+				5BDE0A2C190EE13F001F45D9 /* ContextMenuActionSheet */,
 				5BA0130E17983A6600337E84 /* Day Calendar Selector */,
 				5BF1DFD418F990C90024B3AD /* Month Selector */,
 				5B36AFED1785872900132475 /* Adjust Concept Amout */,
@@ -1902,6 +1910,18 @@
 			name = IAEPasswordPanelKeyboardView;
 			sourceTree = "<group>";
 		};
+		5BDE0A2C190EE13F001F45D9 /* ContextMenuActionSheet */ = {
+			isa = PBXGroup;
+			children = (
+				5BDE0A34190EE595001F45D9 /* IAEContextMenuActionSheetViewControllerDefs.h */,
+				5BDE0A2D190EE15D001F45D9 /* IAEContextMenuActionSheetViewController.h */,
+				5BDE0A2E190EE15E001F45D9 /* IAEContextMenuActionSheetViewController.m */,
+				5BDE0A2F190EE15E001F45D9 /* IAEContextMenuActionSheetViewController.xib */,
+				5BDE0A32190EE20B001F45D9 /* IAEContextMenuActionSheetViewControllerDelegate.h */,
+			);
+			name = ContextMenuActionSheet;
+			sourceTree = "<group>";
+		};
 		5BE84E68180DA16200F4A80B /* About and Options */ = {
 			isa = PBXGroup;
 			children = (
@@ -2184,6 +2204,7 @@
 				5BAEAE0E1876926700271B47 /* 726-star.png in Resources */,
 				5BDD9A1E1857183D001A6CEF /* settingsindex_img_2.png in Resources */,
 				5BC73800187EA97000D22B4A /* IAEFavoriteConceptsTableHeader.xib in Resources */,
+				5BDE0A31190EE15E001F45D9 /* IAEContextMenuActionSheetViewController.xib in Resources */,
 				5BE8A68118FDCD2A00475F68 /* star@2x.png in Resources */,
 				5B87978C180EEC7200554E13 /* IAEHelpThemeViewController.xib in Resources */,
 				5B2AAA2B17C773C500E7C7A5 /* 746-plus-circle.png in Resources */,
@@ -2275,6 +2296,7 @@
 				5BCE3A9F17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m in Sources */,
 				5BE84E7C180DA8F500F4A80B /* IAEHelpIndexViewController.m in Sources */,
 				5B879759180E7DCD00554E13 /* IAEHelpAboutViewController.m in Sources */,
+				5BDE0A30190EE15E001F45D9 /* IAEContextMenuActionSheetViewController.m in Sources */,
 				5B879790180EF0FB00554E13 /* IAEHelpPageView.m in Sources */,
 				5B5C968917816EE0008CD851 /* IAEValueDecoratorViewExpenseConfigurator.m in Sources */,
 				5BC7101817AC29F600E12953 /* IAECategory.m in Sources */,

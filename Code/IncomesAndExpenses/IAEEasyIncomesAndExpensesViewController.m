@@ -2692,7 +2692,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_ALERTVIEWREMOVEALLCONCEPTS_TITLE", @"")
                                                         message:[self isActualSelectedContextAMonth] ? NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_ALERTVIEWREMOVEALLCONCEPTS_MSG_MONTH", @"") : NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_ALERTVIEWREMOVEALLCONCEPTS_MSG_YEAR", @"")
-                                                       delegate:nil
+                                                       delegate:self
                                               cancelButtonTitle:NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_ALERTVIEWREMOVEALLCONCEPTS_CANCELOPTION", @"")
                                               otherButtonTitles:NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_ALERTVIEWREMOVEALLCONCEPTS_REMOVEOPTION", @""), nil];
     [alertView show];

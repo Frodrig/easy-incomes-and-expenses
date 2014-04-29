@@ -24,7 +24,7 @@
 static const NSUInteger kActivateDeactivatePasswordIndex = 0;
 static const NSUInteger kChangePasswordIndex = 1;
 static const NSUInteger kVinculePasswordRecoverEmailIndex = 2;
-static const NSUInteger kNumberOfOptionsAvailable = 2;
+static const NSUInteger kNumberOfOptionsAvailable = 3;
 
 #pragma mark - Init
 

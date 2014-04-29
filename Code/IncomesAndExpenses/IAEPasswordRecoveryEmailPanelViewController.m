@@ -9,8 +9,11 @@
 #import "IAEPasswordRecoveryEmailPanelViewController.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
 #import "IAEEmailChecker.h"
+#import <AWSRuntime/AWSRuntime.h>
+#import <AWSSES/AWSSES.h>
 
 @interface IAEPasswordRecoveryEmailPanelViewController ()<UITextFieldDelegate>
+
 @property (weak, nonatomic) IBOutlet UINavigationItem *customNavigationItem;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextFieldView;
 @property (weak, nonatomic) IBOutlet UILabel *informationLabel;
@@ -151,6 +154,38 @@
 - (void)saveActualEmailRecoveryAddressAndDissmis
 {
     [[NSUserDefaults standardUserDefaults] vinculePasswordRecoveryEmail:[self actualPasswordRecoveryEmailWithValidFormat]];
+    /*
+     
+     AWSAccessKeyId=AKIAJ7V3LH7KQC3WBXOQ
+     AWSSecretKey=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
+     
+     AmazonSESClient sesClient = [[AmazonSESClient alloc] initWithAccessKey:ACCESS_KEY_ID withSecretKey:SECRET_KEY];
+     
+     SESContent *messageBody = [[[SESContent alloc] init] autorelease];
+     messageBody.data = [NSString stringWithFormat: @"Rating: %d\nComments:\n%@", rating.selectedSegmentIndex+1, commentsField.text];
+     
+     SESContent *subject = [[[SESContent alloc] init] autorelease];
+     subject.data = [NSString stringWithFormat: @"Feedback from %@", nameField.text];
+     
+     SESBody *body = [[[SESBody alloc] init] autorelease];
+     body.text = messageBody;
+     
+     SESMessage *message = [[[SESMessage alloc] init] autorelease];
+     message.subject = subject;
+     message.body    = body;
+     
+     SESDestination *destination = [[[SESDestination alloc] init] autorelease];
+     [destination.toAddresses addObject:VERIFIED_EMAIL];
+     
+     SESSendEmailRequest *ser = [[[SESSendEmailRequest alloc] init] autorelease];
+     ser.source      = VERIFIED_EMAIL;
+     ser.destination = destination;
+     ser.message     = message;
+     
+     SESSendEmailResponse response = [[AmazonClientManager ses] sendEmail:ser];
+     */
+    
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -232,5 +267,6 @@
     // IMPORTANTE: Por algun motivo para que el teclado desaparezca tras return EN UN MODAL, hay que sobrecargar esta funcion
     return NO;
 }
+
 
 @end

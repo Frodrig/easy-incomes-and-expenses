@@ -12,6 +12,7 @@
 #import <AWSRuntime/AWSRuntime.h>
 #import <AWSSES/AWSSES.h>
 
+
 @interface IAEPasswordRecoveryEmailPanelViewController ()<UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UINavigationItem *customNavigationItem;
@@ -151,42 +152,43 @@
     [self saveActualEmailRecoveryAddressAndDissmis];
 }
 
+static NSString * const kAWSAccessKeyId = @"REMOVED_AWS_KEY_ID";
+static NSString * const kAWSSecretKey = @"REMOVED_AWS_SECRET";
+
 - (void)saveActualEmailRecoveryAddressAndDissmis
 {
     [[NSUserDefaults standardUserDefaults] vinculePasswordRecoveryEmail:[self actualPasswordRecoveryEmailWithValidFormat]];
-    /*
+    
      
-     AWSAccessKeyId=REMOVED_AWS_KEY_ID
-     AWSSecretKey=REMOVED_AWS_SECRET
+    
+     AmazonSESClient *sesClient = [[AmazonSESClient alloc] initWithAccessKey:kAWSAccessKeyId withSecretKey:kAWSSecretKey];
      
-     AmazonSESClient sesClient = [[AmazonSESClient alloc] initWithAccessKey:ACCESS_KEY_ID withSecretKey:SECRET_KEY];
+     SESContent *messageBody = [[SESContent alloc] init];
+     messageBody.data = @"Test enviado correo con Amazon SES";
      
-     SESContent *messageBody = [[[SESContent alloc] init] autorelease];
-     messageBody.data = [NSString stringWithFormat: @"Rating: %d\nComments:\n%@", rating.selectedSegmentIndex+1, commentsField.text];
-     
-     SESContent *subject = [[[SESContent alloc] init] autorelease];
-     subject.data = [NSString stringWithFormat: @"Feedback from %@", nameField.text];
-     
-     SESBody *body = [[[SESBody alloc] init] autorelease];
+     SESContent *subject = [[SESContent alloc] init];
+     subject.data = @"Title";
+    
+     SESBody *body = [[SESBody alloc] init];
      body.text = messageBody;
      
-     SESMessage *message = [[[SESMessage alloc] init] autorelease];
+     SESMessage *message = [[SESMessage alloc] init];
      message.subject = subject;
      message.body    = body;
      
-     SESDestination *destination = [[[SESDestination alloc] init] autorelease];
-     [destination.toAddresses addObject:VERIFIED_EMAIL];
+     SESDestination *destination = [[SESDestination alloc] init];
+     [destination.toAddresses addObject:[self actualPasswordRecoveryEmailWithValidFormat]];
      
-     SESSendEmailRequest *ser = [[[SESSendEmailRequest alloc] init] autorelease];
-     ser.source      = VERIFIED_EMAIL;
+     SESSendEmailRequest *ser = [[SESSendEmailRequest alloc] init];
+     ser.source      = @"hola@frodrig.com";
      ser.destination = destination;
      ser.message     = message;
      
-     SESSendEmailResponse response = [[AmazonClientManager ses] sendEmail:ser];
-     */
+    SESSendEmailResponse *response = [sesClient sendEmail:ser];
     
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    NSLog(@"a");
+    //[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (NSString *)actualPasswordRecoveryEmailWithValidFormat

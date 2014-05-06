@@ -12,8 +12,11 @@
 #import <AWSRuntime/AWSRuntime.h>
 #import <AWSSES/AWSSES.h>
 
+static NSString * const kAWSAccessKeyId = @"AKIAJ7V3LH7KQC3WBXOQ";
+static NSString * const kAWSSecretKey = @"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";
 
-@interface IAEPasswordRecoveryEmailPanelViewController ()<UITextFieldDelegate>
+@interface IAEPasswordRecoveryEmailPanelViewController ()<UITextFieldDelegate,
+                                                          UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UINavigationItem *customNavigationItem;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextFieldView;
@@ -149,17 +152,13 @@
 
 - (IBAction)saveButton:(id)sender
 {
-    [self saveActualEmailRecoveryAddressAndDissmis];
+    //[self saveActualEmailRecoveryAddress];
+    [self launchPreDismissAlertViewWithInformationAboutVinculeEmailRecoveryAddress];
 }
 
-static NSString * const kAWSAccessKeyId = @"AKIAJ7V3LH7KQC3WBXOQ";
-static NSString * const kAWSSecretKey = @"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";
-
-- (void)saveActualEmailRecoveryAddressAndDissmis
+- (void)saveActualEmailRecoveryAddress
 {
     [[NSUserDefaults standardUserDefaults] vinculePasswordRecoveryEmail:[self actualPasswordRecoveryEmailWithValidFormat]];
-    
-     
     
      AmazonSESClient *sesClient = [[AmazonSESClient alloc] initWithAccessKey:kAWSAccessKeyId withSecretKey:kAWSSecretKey];
      
@@ -185,15 +184,28 @@ static NSString * const kAWSSecretKey = @"jUk51qk/f4wfHCGEbVJh0oO8WB8tvC8txtQM1v
      ser.message     = message;
      
     SESSendEmailResponse *response = [sesClient sendEmail:ser];
-    
-    
-    NSLog(@"a");
-    //[self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)launchPreDismissAlertViewWithInformationAboutVinculeEmailRecoveryAddress
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_TITLE", @"")
+                                                        message:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_MESSAGE", @"")
+                                                       delegate:self
+                                              cancelButtonTitle:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_OK", @"")
+                                              otherButtonTitles:nil];
+    [alertView show];
 }
 
 - (NSString *)actualPasswordRecoveryEmailWithValidFormat
 {
     return [self.passwordTextFieldView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+}
+
+#pragma mark - AlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - UITextFieldDelegate
@@ -270,5 +282,11 @@ static NSString * const kAWSSecretKey = @"jUk51qk/f4wfHCGEbVJh0oO8WB8tvC8txtQM1v
     return NO;
 }
 
+#pragma mark - UIResponder
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
 
 @end

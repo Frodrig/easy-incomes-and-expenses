@@ -9,11 +9,7 @@
 #import "IAEPasswordRecoveryEmailPanelViewController.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
 #import "IAEEmailChecker.h"
-#import <AWSRuntime/AWSRuntime.h>
-#import <AWSSES/AWSSES.h>
-
-static NSString * const kAWSAccessKeyId = @"AKIAJ7V3LH7KQC3WBXOQ";
-static NSString * const kAWSSecretKey = @"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";
+#import "IAEEmailSender.h"
 
 @interface IAEPasswordRecoveryEmailPanelViewController ()<UITextFieldDelegate,
                                                           UIAlertViewDelegate>
@@ -152,38 +148,19 @@ static NSString * const kAWSSecretKey = @"jUk51qk/f4wfHCGEbVJh0oO8WB8tvC8txtQM1v
 
 - (IBAction)saveButton:(id)sender
 {
-    //[self saveActualEmailRecoveryAddress];
+    [self saveActualEmailRecoveryAddress];
+    [self sendConfirmationLinkedEmailRecoveryAddress];
     [self launchPreDismissAlertViewWithInformationAboutVinculeEmailRecoveryAddress];
 }
 
 - (void)saveActualEmailRecoveryAddress
 {
     [[NSUserDefaults standardUserDefaults] vinculePasswordRecoveryEmail:[self actualPasswordRecoveryEmailWithValidFormat]];
-    
-     AmazonSESClient *sesClient = [[AmazonSESClient alloc] initWithAccessKey:kAWSAccessKeyId withSecretKey:kAWSSecretKey];
-     
-     SESContent *messageBody = [[SESContent alloc] init];
-     messageBody.data = @"Test enviado correo con Amazon SES";
-     
-     SESContent *subject = [[SESContent alloc] init];
-     subject.data = @"Title";
-    
-     SESBody *body = [[SESBody alloc] init];
-     body.text = messageBody;
-     
-     SESMessage *message = [[SESMessage alloc] init];
-     message.subject = subject;
-     message.body    = body;
-     
-     SESDestination *destination = [[SESDestination alloc] init];
-     [destination.toAddresses addObject:[self actualPasswordRecoveryEmailWithValidFormat]];
-     
-     SESSendEmailRequest *ser = [[SESSendEmailRequest alloc] init];
-     ser.source      = @"hola@frodrig.com";
-     ser.destination = destination;
-     ser.message     = message;
-     
-    SESSendEmailResponse *response = [sesClient sendEmail:ser];
+}
+
+- (void)sendConfirmationLinkedEmailRecoveryAddress
+{
+    [[IAEEmailSender sharedInstance] sendRecoveryPasswordEmailTo:[self actualPasswordRecoveryEmailWithValidFormat]];
 }
 
 - (void)launchPreDismissAlertViewWithInformationAboutVinculeEmailRecoveryAddress

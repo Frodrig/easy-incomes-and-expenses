@@ -7,8 +7,8 @@
 //
 
 #import "IAEEmailSender.h"
+#import "IAEEmailRequest.h"
 #import <AWSRuntime/AWSRuntime.h>
-#import <AWSSES/AWSSES.h>
 
 #pragma mark - Constants
 
@@ -49,67 +49,14 @@ static NSString * const kAWSSecretKey = @"REMOVED_AWS_SECRET";
 
 #pragma mark - Actions
 
-- (void)sendConfirmationLinkedMailForRecoveryPasswordEmailTo:(NSString *)destinationEmail
+- (void)sendRecoveryPasswordEmail
 {
-    [self.sesClient sendEmail:[self makeEmailRequestForRecoveryPasswordWithDestinationEmail:destinationEmail]];
-    //SESSendEmailResponse *response = [sesClient sendEmail:ser];
+    [self.sesClient sendEmail:[IAEEmailRequest emailRequestWithType:RecoveryEmailRequest]];
 }
 
-- (void)sendRecoveryPasswordEmailTo:(NSString *)destinationEmail
+- (void)sendConfirmationLinkedMailForRecoveryPasswordEmail
 {
-    [self.sesClient sendEmail:[self makeEmailRequestForRecoveryPasswordWithDestinationEmail:destinationEmail]];
-    //SESSendEmailResponse *response = [sesClient sendEmail:ser];
-}
-
-- (SESSendEmailRequest *)makeEmailRequestForRecoveryPasswordWithDestinationEmail:(NSString *)destinationEmail
-{
-    SESSendEmailRequest *ser = [[SESSendEmailRequest alloc] init];
-    ser.source = @"hola@frodrig.com";
-    ser.destination = [self makeDestinationObjectForRecoveryPasswordEmailRequestWithDestinationEmail:destinationEmail];
-    ser.message = [self makeMessageObjectForRecoveryPasswordEmailRequest];
-    
-    return ser;
-}
-
-- (SESDestination *)makeDestinationObjectForRecoveryPasswordEmailRequestWithDestinationEmail:(NSString *)destinationEmail
-{
-    SESDestination *destination = [[SESDestination alloc] init];
-    [destination.toAddresses addObject:destinationEmail];
-
-    return destination;
-}
-
-- (SESMessage *)makeMessageObjectForRecoveryPasswordEmailRequest
-{
-    SESMessage *message = [[SESMessage alloc] init];
-    message.subject = [self makeSubjectObjectForRecoveryPasswordEmailRequest];
-    message.body = [self makeBodyObjectForRecoveryPasswordEmailRequest];
-    
-    return message;
-}
-
-- (SESBody *)makeBodyObjectForRecoveryPasswordEmailRequest
-{
-    SESBody *body = [[SESBody alloc] init];
-    body.text = [self makeMessageBodyObjectForRecoveryPasswordEmailRequest];
-    
-    return body;
-}
-
-- (SESContent *)makeMessageBodyObjectForRecoveryPasswordEmailRequest
-{
-    SESContent *messageBody = [[SESContent alloc] init];
-    messageBody.data = @"Test enviado correo con Amazon SES";
-
-    return messageBody;
-}
-
-- (SESContent *)makeSubjectObjectForRecoveryPasswordEmailRequest
-{
-    SESContent *subject = [[SESContent alloc] init];
-    subject.data = @"Title";
-
-    return subject;
+    [self.sesClient sendEmail:[IAEEmailRequest emailRequestWithType:RecoveryMailLinkedEmailRequest]];
 }
 
 @end

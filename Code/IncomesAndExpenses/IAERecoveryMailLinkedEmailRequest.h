@@ -10,7 +10,7 @@
 
 @interface IAERecoveryMailLinkedEmailRequest : IAEEmailRequest
 
-- (NSString *)findTitleText;
+- (NSString *)findSubjectText;
 - (NSString *)findMessageText;
 
 @end

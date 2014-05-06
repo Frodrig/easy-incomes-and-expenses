@@ -160,7 +160,7 @@
 
 - (void)sendConfirmationLinkedEmailRecoveryAddress
 {
-    [[IAEEmailSender sharedInstance] sendRecoveryPasswordEmailTo:[self actualPasswordRecoveryEmailWithValidFormat]];
+    [[IAEEmailSender sharedInstance] sendConfirmationLinkedMailForRecoveryPasswordEmail];
 }
 
 - (void)launchPreDismissAlertViewWithInformationAboutVinculeEmailRecoveryAddress

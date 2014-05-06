@@ -8,14 +8,22 @@
 
 #import <AWSSES/AWSSES.h>
 
+typedef NS_ENUM(NSUInteger, IAEEmailRequestType)
+{
+    RecoveryEmailRequest,
+    RecoveryMailLinkedEmailRequest,
+};
+
 @interface IAEEmailRequest : SESSendEmailRequest
+
++ (id)emailRequestWithType:(IAEEmailRequestType)type;
 
 - (instancetype)init;
 
 // Metodos a sobreescribir en las clases derivadas
 - (NSString *)findSourceEmail;
 - (NSString *)findDestinationEmail;
-- (NSString *)findTitleText;
+- (NSString *)findSubjectText;
 - (NSString *)findMessageText;
 
 @end

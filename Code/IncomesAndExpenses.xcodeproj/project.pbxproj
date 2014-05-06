@@ -145,6 +145,10 @@
 		5BAEAE191876B8C300271B47 /* IAEFavoriteConceptsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BAEAE171876B8C300271B47 /* IAEFavoriteConceptsViewController.xib */; };
 		5BB8AD1217FAC2F200BAAB96 /* editconceptcontainerviewbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BB8AD1017FAC2F200BAAB96 /* editconceptcontainerviewbackground.png */; };
 		5BB8AD1317FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BB8AD1117FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png */; };
+		5BB937CC191938060001A31E /* IAEEmailSender.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB937CB191938060001A31E /* IAEEmailSender.m */; };
+		5BB937D01919447E0001A31E /* IAEEmailRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB937CF1919447E0001A31E /* IAEEmailRequest.m */; };
+		5BB937D31919487A0001A31E /* IAERecoveryEmailRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB937D21919487A0001A31E /* IAERecoveryEmailRequest.m */; };
+		5BB937D61919488F0001A31E /* IAERecoveryMailLinkedEmailRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB937D51919488F0001A31E /* IAERecoveryMailLinkedEmailRequest.m */; };
 		5BBD37CB180BFF5B0095A15A /* ProjectApiKey.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5BBD3739180BFF5B0095A15A /* ProjectApiKey.txt */; };
 		5BBD37CD180BFF730095A15A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BBD37CC180BFF730095A15A /* SystemConfiguration.framework */; };
 		5BBD37CF180BFF990095A15A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BBD37CE180BFF990095A15A /* Security.framework */; };
@@ -461,6 +465,14 @@
 		5BB2048D17D4C92700563B7C /* IAEReportAreaViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEReportAreaViewDelegate.h; sourceTree = "<group>"; };
 		5BB8AD1017FAC2F200BAAB96 /* editconceptcontainerviewbackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = editconceptcontainerviewbackground.png; sourceTree = "<group>"; };
 		5BB8AD1117FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editconceptcontainerviewbackground@2x.png"; sourceTree = "<group>"; };
+		5BB937CA191938060001A31E /* IAEEmailSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEmailSender.h; sourceTree = "<group>"; };
+		5BB937CB191938060001A31E /* IAEEmailSender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEmailSender.m; sourceTree = "<group>"; };
+		5BB937CE1919447E0001A31E /* IAEEmailRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEmailRequest.h; sourceTree = "<group>"; };
+		5BB937CF1919447E0001A31E /* IAEEmailRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEmailRequest.m; sourceTree = "<group>"; };
+		5BB937D11919487A0001A31E /* IAERecoveryEmailRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAERecoveryEmailRequest.h; sourceTree = "<group>"; };
+		5BB937D21919487A0001A31E /* IAERecoveryEmailRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAERecoveryEmailRequest.m; sourceTree = "<group>"; };
+		5BB937D41919488F0001A31E /* IAERecoveryMailLinkedEmailRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAERecoveryMailLinkedEmailRequest.h; sourceTree = "<group>"; };
+		5BB937D51919488F0001A31E /* IAERecoveryMailLinkedEmailRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAERecoveryMailLinkedEmailRequest.m; sourceTree = "<group>"; };
 		5BBD3739180BFF5B0095A15A /* ProjectApiKey.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ProjectApiKey.txt; sourceTree = "<group>"; };
 		5BBD37CC180BFF730095A15A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		5BBD37CE180BFF990095A15A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -1309,6 +1321,7 @@
 				5B6E9FA3177D95770072EE34 /* Defs */,
 				5B6E9FA4177D9BAB0072EE34 /* Categories */,
 				5B767E231636E797005315F8 /* Model */,
+				5BB937C8191937660001A31E /* Modules */,
 				5B32D651177C385A0070AC72 /* View, Controllers & ViewControllers */,
 				5B62D860178EC1EB009879A6 /* Story Boards */,
 				5B767DFD1636D7FC005315F8 /* Supporting Files */,
@@ -1657,6 +1670,37 @@
 				5BAEAE1A1876F97300271B47 /* IAEFavoriteConceptsViewControllerDelegate.h */,
 			);
 			name = "Favorite Concepts";
+			sourceTree = "<group>";
+		};
+		5BB937C8191937660001A31E /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				5BB937C9191937710001A31E /* EmailSender */,
+			);
+			name = Modules;
+			sourceTree = "<group>";
+		};
+		5BB937C9191937710001A31E /* EmailSender */ = {
+			isa = PBXGroup;
+			children = (
+				5BB937CD191944530001A31E /* EmailRequest */,
+				5BB937CA191938060001A31E /* IAEEmailSender.h */,
+				5BB937CB191938060001A31E /* IAEEmailSender.m */,
+			);
+			name = EmailSender;
+			sourceTree = "<group>";
+		};
+		5BB937CD191944530001A31E /* EmailRequest */ = {
+			isa = PBXGroup;
+			children = (
+				5BB937CE1919447E0001A31E /* IAEEmailRequest.h */,
+				5BB937CF1919447E0001A31E /* IAEEmailRequest.m */,
+				5BB937D11919487A0001A31E /* IAERecoveryEmailRequest.h */,
+				5BB937D21919487A0001A31E /* IAERecoveryEmailRequest.m */,
+				5BB937D41919488F0001A31E /* IAERecoveryMailLinkedEmailRequest.h */,
+				5BB937D51919488F0001A31E /* IAERecoveryMailLinkedEmailRequest.m */,
+			);
+			name = EmailRequest;
 			sourceTree = "<group>";
 		};
 		5BC7101D17AC29FE00E12953 /* Book */ = {
@@ -2329,7 +2373,9 @@
 				5B5C96A91781E877008CD851 /* NSNumber+DefaultValues.m in Sources */,
 				5B1F0D3517841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m in Sources */,
 				5BAEAE0B1876828A00271B47 /* IAEFavoriteConceptsStock.m in Sources */,
+				5BB937D01919447E0001A31E /* IAEEmailRequest.m in Sources */,
 				5B907840179D269E00B2A0F7 /* IAEKeyboardPanelCalculatorView.m in Sources */,
+				5BB937D31919487A0001A31E /* IAERecoveryEmailRequest.m in Sources */,
 				5BCE3AB917A9703B00CD01E7 /* IAEHelperCalculatorDataSource.m in Sources */,
 				5B879761180E7E6F00554E13 /* IAEHelpAboutCollectionViewCell.m in Sources */,
 				5B23F04417FF099000477D34 /* IAENumberFormatterManager.m in Sources */,
@@ -2338,6 +2384,7 @@
 				5B5C968217816D68008CD851 /* IAEValueDecoratorViewConfigurator.m in Sources */,
 				5B907838179D25BD00B2A0F7 /* IAEDragPanelCalculatorView.m in Sources */,
 				5B28D1A9182007B000EF4D48 /* IAEHelpConfigureStartMonthCell.m in Sources */,
+				5BB937D61919488F0001A31E /* IAERecoveryMailLinkedEmailRequest.m in Sources */,
 				5BCE3AA817A95D5300CD01E7 /* IAENumberUtils.m in Sources */,
 				5B8CD5D917A2C6DB00A353A5 /* IAETextRawSelectorMenuView.m in Sources */,
 				5B62D881178EC3CB009879A6 /* IAECurrencyInfo.m in Sources */,
@@ -2346,6 +2393,7 @@
 				5B5DBB3117E1E9EB00716503 /* IAERootLauchingViewController.m in Sources */,
 				5B36AFF11785874D00132475 /* IAEAdjustConceptAmountViewController.m in Sources */,
 				5B62D87D178EC27D009879A6 /* IAEDateHelper.m in Sources */,
+				5BB937CC191938060001A31E /* IAEEmailSender.m in Sources */,
 				5B1B7FA518D7A22C0012AC21 /* IAEFixRemoveCategoryActionLostInUnloadedYears.m in Sources */,
 				5B90783C179D268000B2A0F7 /* IAEDisplayPanelCalculatorView.m in Sources */,
 				5BF1DFDF18F994460024B3AD /* IAEMonthSelectorCollectionViewCell.m in Sources */,

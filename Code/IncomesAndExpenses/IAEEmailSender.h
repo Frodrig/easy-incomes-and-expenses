@@ -12,7 +12,7 @@
 
 + (instancetype)sharedInstance;
 
-- (void)sendRecoveryPasswordEmailTo:(NSString *)destinationEmail;
-- (void)sendConfirmationLinkedMailForRecoveryPasswordEmailTo:(NSString *)destinationEmail;
+- (void)sendRecoveryPasswordEmail;
+- (void)sendConfirmationLinkedMailForRecoveryPasswordEmail;
 
 @end

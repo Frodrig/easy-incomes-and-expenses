@@ -10,22 +10,14 @@
 
 @implementation IAERecoveryEmailRequest
 
-- (NSString *)findDestinationEmail
+- (NSString *)findSubjectText
 {
-
-    return nil;
-}
-
-- (NSString *)findTitleText
-{
-    NSAssert(NO, @"Se debe sobreescribir en la clase derivada");
-    return nil;
+    return @"";
 }
 
 - (NSString *)findMessageText
 {
-    NSAssert(NO, @"Se debe sobreescribir en la clase derivada");
-    return nil;
+    return @"";
 }
 
 @end

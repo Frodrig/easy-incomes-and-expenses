@@ -7,35 +7,60 @@
 //
 
 #import "IAEEmailRequest.h"
+#import "IAERecoveryEmailRequest.h"
+#import "IAERecoveryMailLinkedEmailRequest.h"
 #import <AWSRuntime/AWSRuntime.h>
 #import <AWSSES/AWSSES.h>
 #import "NSUserDefaults+EasyIncAndExp.h"
 
 @implementation IAEEmailRequest
 
+#pragma mark - Class
+
++ (id)emailRequestWithType:(IAEEmailRequestType)type
+{
+    IAEEmailRequest *retRequest = nil;
+    switch (type) {
+        case RecoveryEmailRequest:
+            retRequest = [[IAERecoveryEmailRequest alloc] init];
+            break;
+            
+        case RecoveryMailLinkedEmailRequest:
+            retRequest = [[IAERecoveryMailLinkedEmailRequest alloc] init];
+            break;
+            
+        default:
+            break;
+    }
+    
+    return retRequest;
+}
+
+#pragma mark - Init
+
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-        [self prepare];
+        [self prepareRequest];
     }
     
     return self;
 }
 
-- (void)prepare
+- (void)prepareRequest
 {
-    SESContent *subject = [[SESContent alloc] init];
-    subject.data = @"Title";
+    SESContent *emailSubject = [[SESContent alloc] init];
+    emailSubject.data = [self findSubjectText];
     
-    SESContent *messageBody = [[SESContent alloc] init];
-    messageBody.data = @"Test enviado correo con Amazon SES";
+    SESContent *emailMessageBody = [[SESContent alloc] init];
+    emailMessageBody.data = [self findMessageText];
     
     SESBody *body = [[SESBody alloc] init];
-    body.text = messageBody;
+    body.text = emailMessageBody;
     
     SESMessage *emailMessage = [[SESMessage alloc] init];
-    emailMessage.subject = subject;
+    emailMessage.subject = emailSubject;
     emailMessage.body = body;
     
     SESDestination *emailDestination = [[SESDestination alloc] init];
@@ -58,7 +83,7 @@
     return [[NSUserDefaults standardUserDefaults] findPasswordRecoveryEmail];
 }
 
-- (NSString *)findTitleText
+- (NSString *)findSubjectText
 {
     NSAssert(NO, @"Se debe sobreescribir en la clase derivada");
     return nil;

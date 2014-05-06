@@ -10,4 +10,14 @@
 
 @implementation IAERecoveryMailLinkedEmailRequest
 
+- (NSString *)findSubjectText
+{
+    return @"";
+}
+
+- (NSString *)findMessageText
+{
+    return @"";
+}
+
 @end

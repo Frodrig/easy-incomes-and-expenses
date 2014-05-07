@@ -110,6 +110,11 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (void)desvinculePasswordRecoveryEmail
+{
+    [self vinculePasswordRecoveryEmail:@""];
+}
+
 #pragma mark - DayMode
 
 - (BOOL)isDayModeActiveForConcepts

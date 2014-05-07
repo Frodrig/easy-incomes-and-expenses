@@ -11,6 +11,15 @@
 #import "IAEEmailChecker.h"
 #import "IAEEmailSender.h"
 
+typedef NS_ENUM(NSUInteger, AlertViewType) {
+    AlertViewRecoveryEmailLinked,
+    AlertViewRecoveryEmailUnlinked,
+    AlertViewDefault,
+    AlertViewNone
+};
+
+static const CGFloat kDissolveMessagesTime = 0.5;
+
 @interface IAEPasswordRecoveryEmailPanelViewController ()<UITextFieldDelegate,
                                                           UIAlertViewDelegate>
 
@@ -18,10 +27,14 @@
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextFieldView;
 @property (weak, nonatomic) IBOutlet UILabel *informationLabel;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveButton;
+@property (weak, nonatomic) IBOutlet UIButton *unlinkButton;
 @property (nonatomic) BOOL editing;
 @property (nonatomic, strong) UIColor *defaultMsgColor;
 @property (nonatomic, strong) UIColor *invalidEmailMsgColor;
 @property (nonatomic, strong) UIColor *validEmailMsgColor;
+@property (nonatomic, strong) NSString *unlinkRecoveryEmail;
+@property (nonatomic) AlertViewType actualAlertView;
+
 @end
 
 @implementation IAEPasswordRecoveryEmailPanelViewController
@@ -61,9 +74,15 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        [self initVars];
         [self configureModalPresentationAndTransition];
     }
     return self;
+}
+
+- (void)initVars
+{
+    _actualAlertView = AlertViewNone;
 }
 
 - (void)configureModalPresentationAndTransition
@@ -77,6 +96,8 @@
     [super viewDidLoad];
     
     [self configureNavigationView];
+    [self configureBarButtons];
+    [self configureUnlinkButton];
     [self configurePasswordTextFieldView];
     [self configureInformationLabel];
     [self enableSaveButtonIfApplicable];
@@ -87,19 +108,33 @@
     self.customNavigationItem.title = NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_TITLE", @"");
 }
 
+- (void)configureBarButtons
+{
+    if ([[NSUserDefaults standardUserDefaults] isPasswordRecoveryEmailSet]) {
+        self.customNavigationItem.rightBarButtonItem = nil;
+    }
+}
+
+- (void)configureUnlinkButton
+{
+    [self.unlinkButton setTitle:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_UNLINKBUTTON_TITLE", @"") forState:UIControlStateNormal];
+}
+
 - (void)configurePasswordTextFieldView
 {
     self.passwordTextFieldView.delegate = self;
-    self.passwordTextFieldView.placeholder = NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_TEXTFIELD_PLACEHOLDER", @"");
-
-    if ([[NSUserDefaults standardUserDefaults] isPasswordRecoveryEmailSet]) {
-        self.passwordTextFieldView.text = [[NSUserDefaults standardUserDefaults] findPasswordRecoveryEmail];
-    }
+    self.passwordTextFieldView.placeholder = [[NSUserDefaults standardUserDefaults] isPasswordRecoveryEmailSet] ? [[NSUserDefaults standardUserDefaults] findPasswordRecoveryEmail
+    ] : NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_TEXTFIELD_PLACEHOLDER", @"");
 }
 
 - (void)configureInformationLabel
 {
-    [self setDefaultMessageForInformationLabelWithAnimation:NO];
+    if ([[NSUserDefaults standardUserDefaults] isPasswordRecoveryEmailSet]) {
+        self.unlinkButton.hidden = NO;
+    } else {
+        [self setDefaultMessageForInformationLabelWithAnimation:NO];
+        self.unlinkButton.hidden = YES;
+    }
 }
 
 - (void)setDefaultMessageForInformationLabelWithAnimation:(BOOL)animation
@@ -120,7 +155,7 @@
 - (void)setMessage:(NSString *)message forInformationLabelWithAnimation:(BOOL)animation withColor:(UIColor *)color
 {
     if ([message compare:self.informationLabel.text] != NSOrderedSame) {
-        const CGFloat animationTime = animation ? 0.5 : 0;
+        const CGFloat animationTime = animation ? kDissolveMessagesTime : 0;
         [UIView animateWithDuration:animationTime animations:^{
             self.informationLabel.alpha = 0;
         } completion:^(BOOL finished) {
@@ -165,6 +200,8 @@
 
 - (void)launchPreDismissAlertViewWithInformationAboutVinculeEmailRecoveryAddress
 {
+    self.actualAlertView = AlertViewRecoveryEmailLinked;
+    
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_TITLE", @"")
                                                         message:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_MESSAGE", @"")
                                                        delegate:self
@@ -182,10 +219,37 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (self.actualAlertView == AlertViewRecoveryEmailLinked) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else if (self.actualAlertView == AlertViewRecoveryEmailUnlinked) {
+        if (buttonIndex == 1) {
+            [[NSUserDefaults standardUserDefaults] desvinculePasswordRecoveryEmail];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+    }
 }
 
 #pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    const BOOL should = ![[NSUserDefaults standardUserDefaults] isPasswordRecoveryEmailSet];
+    if (!should) {
+        [self launchAlertViewWithWarningAboutBeginEditingWithPasswordRecoveryEmailSet];
+    }
+    
+    return should;
+}
+
+- (void)launchAlertViewWithWarningAboutBeginEditingWithPasswordRecoveryEmailSet
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_WARNINGCANTEDITEMAILWITHLINKEDEMAIL_TITLE", @"")
+                                                        message:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_WARNINGCANTEDITEMAILWITHLINKEDEMAIL_MESSAGE", @"")
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_WARNINGCANTEDITEMAILWITHLINKEDEMAIL_OK", @"")
+                                              otherButtonTitles:nil];
+    [alertView show];
+}
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
@@ -264,6 +328,25 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self.view endEditing:YES];
+}
+
+#pragma mark - UnlinkButton
+
+- (IBAction)unlinkButtonPressed:(id)sender
+{
+    [self launchAlertViewToConfirmDesvinculeRecoveryEmail];
+}
+
+- (void)launchAlertViewToConfirmDesvinculeRecoveryEmail
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_CONFIRMUNLINKRECOVERYEMAIL_TITLE", @"")
+                                                        message:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_CONFIRMUNLINKRECOVERYEMAIL_MESSAGE", @"")
+                                                       delegate:self
+                                              cancelButtonTitle:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_CONFIRMUNLINKRECOVERYEMAIL_NO", @"")
+                                              otherButtonTitles:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_CONFIRMUNLINKRECOVERYEMAIL_YES", @""), nil];
+    [alertView show];
+    
+    self.actualAlertView = AlertViewRecoveryEmailUnlinked;
 }
 
 @end

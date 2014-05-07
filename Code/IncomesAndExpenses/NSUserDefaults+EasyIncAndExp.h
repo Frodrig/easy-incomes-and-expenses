@@ -31,6 +31,7 @@
 - (BOOL)isPasswordRecoveryEmailSet;
 - (NSString *)findPasswordRecoveryEmail;
 - (void)vinculePasswordRecoveryEmail:(NSString *)passwordRecoveryEmail;
+- (void)desvinculePasswordRecoveryEmail;
 
 - (BOOL)isFixRemoveCategoryActionLostInUnloadedYearsExecuted;
 - (BOOL)isFixRemoveCategoryActionLostInUnloadedYearsNotExecuted;

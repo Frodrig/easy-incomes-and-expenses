@@ -51,12 +51,14 @@ static NSString * const kAWSSecretKey = @"jUk51qk/f4wfHCGEbVJh0oO8WB8tvC8txtQM1v
 
 - (void)sendRecoveryPasswordEmail
 {
-    [self.sesClient sendEmail:[IAEEmailRequest emailRequestWithType:RecoveryEmailRequest]];
+    SESSendEmailResponse *response = [self.sesClient sendEmail:[IAEEmailRequest emailRequestWithType:RecoveryEmailRequest]];
+    NSLog(@"%@", response);
 }
 
 - (void)sendConfirmationLinkedMailForRecoveryPasswordEmail
 {
-    [self.sesClient sendEmail:[IAEEmailRequest emailRequestWithType:RecoveryMailLinkedEmailRequest]];
+    SESSendEmailResponse *response = [self.sesClient sendEmail:[IAEEmailRequest emailRequestWithType:RecoveryMailLinkedEmailRequest]];
+    NSLog(@"%@", response);
 }
 
 @end

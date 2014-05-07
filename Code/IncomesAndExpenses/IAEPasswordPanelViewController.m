@@ -12,6 +12,8 @@
 #import "IAESettingsViewControllerDefs.h"
 #import "IAEHelpIndexViewControllerDelegate.h"
 #import "KeychainItemWrapper.h"
+#import "IAEEmailSender.h"
+#import "NSUserDefaults+EasyIncAndExp.h"
 
 @interface IAEPasswordPanelViewController ()
 
@@ -20,11 +22,11 @@
 @property (weak, nonatomic) IBOutlet UIView *keyboardView;
 @property (nonatomic, strong) NSString *insertedPassword;
 @property (nonatomic, copy) NSString *pendingConfirmationPassword;
+@property (weak, nonatomic) IBOutlet UIButton *recoveryButton;
 
 @end
 
 @implementation IAEPasswordPanelViewController
-
 
 #pragma mark - constants
 
@@ -59,6 +61,7 @@ static const NSInteger kBasePanelPasswordTag = 100;
     [super viewDidLoad];
 
     [self configureNavigationController];
+    [self configureRecoveryButtonBasedInMode];
 }
 
 - (void)configureNavigationController
@@ -86,6 +89,16 @@ static const NSInteger kBasePanelPasswordTag = 100;
     retTitle = NSLocalizedString(retTitle, @"");
     
     return retTitle;
+}
+
+- (void)configureRecoveryButtonBasedInMode
+{
+    if (self.mode == MT_Validate && [[NSUserDefaults standardUserDefaults] isPasswordRecoveryEmailSet]) {
+        self.recoveryButton.hidden = NO;
+        [self.recoveryButton setTitle:NSLocalizedString(@"LTEXT_PASSWORDPANEL_RECOVERYBUTTON_TITLE", @"") forState:UIControlStateNormal];
+    } else {
+        self.recoveryButton.hidden = YES;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -342,5 +355,24 @@ static const NSInteger kBasePanelPasswordTag = 100;
         }
     }
 }
+
+#pragma mark - RecoveryPasswordButton
+
+- (IBAction)recoveryButtonPressed:(id)sender
+{
+    //[[IAEEmailSender sharedInstance] sendRecoveryPasswordEmail];
+    [self launchAlertViewToInformAboutRecoveryPasswordEmailWasSend];
+}
+
+- (void)launchAlertViewToInformAboutRecoveryPasswordEmailWasSend
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_PASSWORDPANEL_VALIDATE_ALERTVIEWRECOVERYEMAILPASSWORDSEND_TITLE", @"")
+                                                        message:NSLocalizedString(@"LTEXT_PASSWORDPANEL_VALIDATE_ALERTVIEWRECOVERYEMAILPASSWORDSEND_MESSAGE", @"")
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"LTEXT_PASSWORDPANEL_VALIDATE_ALERTVIEWRECOVERYEMAILPASSWORDSEND_OK", @"")
+                                              otherButtonTitles:nil];
+    [alertView show];
+}
+
 
 @end

@@ -12,12 +12,12 @@
 
 - (NSString *)findSubjectText
 {
-    return @"";
+    return @"Test";
 }
 
 - (NSString *)findMessageText
 {
-    return @"";
+    return @"Test";
 }
 
 @end

@@ -42,6 +42,7 @@ static NSString * const kAWSSecretKey = @"jUk51qk/f4wfHCGEbVJh0oO8WB8tvC8txtQM1v
 {
     if (!_sesClient) {
         _sesClient = [[AmazonSESClient alloc] initWithAccessKey:kAWSAccessKeyId withSecretKey:kAWSSecretKey];
+        _sesClient.endpoint = [AmazonEndpoints snsEndpoint:EU_WEST_1];
     }
     
     return _sesClient;
@@ -51,14 +52,29 @@ static NSString * const kAWSSecretKey = @"jUk51qk/f4wfHCGEbVJh0oO8WB8tvC8txtQM1v
 
 - (void)sendRecoveryPasswordEmail
 {
-    SESSendEmailResponse *response = [self.sesClient sendEmail:[IAEEmailRequest emailRequestWithType:RecoveryEmailRequest]];
-    NSLog(@"%@", response);
+    @try
+    {
+        SESSendEmailResponse *response = [self.sesClient sendEmail:[IAEEmailRequest emailRequestWithType:RecoveryEmailRequest]];
+        NSLog(@"%@", response);
+    }
+    @catch (NSException *theException)
+    {
+        NSLog(@"Exception: %@", theException);
+    }
 }
 
 - (void)sendConfirmationLinkedMailForRecoveryPasswordEmail
 {
-    SESSendEmailResponse *response = [self.sesClient sendEmail:[IAEEmailRequest emailRequestWithType:RecoveryMailLinkedEmailRequest]];
-    NSLog(@"%@", response);
+    @try
+    {
+        SESSendEmailResponse *response = [self.sesClient sendEmail:[IAEEmailRequest emailRequestWithType:RecoveryMailLinkedEmailRequest]];
+        NSLog(@"%@", response);
+    }
+    @catch (NSException *theException)
+    {
+        NSLog(@"Exception: %@", theException);
+    }
+
 }
 
 @end

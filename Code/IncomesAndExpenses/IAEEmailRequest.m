@@ -50,6 +50,21 @@
 
 - (void)prepareRequest
 {
+    self.source = [self findSourceEmail];
+    self.destination = [self createEmailDestination];
+    self.message = [self createEmailMessage];
+}
+
+- (SESDestination *)createEmailDestination
+{
+    SESDestination *emailDestination = [[SESDestination alloc] init];
+    [emailDestination.toAddresses addObject:[self findDestinationEmail]];
+
+    return emailDestination;
+}
+
+- (SESMessage *)createEmailMessage
+{
     SESContent *emailSubject = [[SESContent alloc] init];
     emailSubject.data = [self findSubjectText];
     
@@ -63,12 +78,7 @@
     emailMessage.subject = emailSubject;
     emailMessage.body = body;
     
-    SESDestination *emailDestination = [[SESDestination alloc] init];
-    [emailDestination.toAddresses addObject:[self findDestinationEmail]];
-    
-    self.source = [self findSourceEmail];
-    self.destination = destination;
-    self.message = message;
+    return emailMessage;
 }
 
 #pragma mark - Metodos a sobreescribir

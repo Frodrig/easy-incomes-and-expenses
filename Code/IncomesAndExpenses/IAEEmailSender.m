@@ -51,12 +51,14 @@ static NSString * const kAWSSecretKey = @"REMOVED_AWS_SECRET";
 
 - (void)sendRecoveryPasswordEmail
 {
-    [self.sesClient sendEmail:[IAEEmailRequest emailRequestWithType:RecoveryEmailRequest]];
+    SESSendEmailResponse *response = [self.sesClient sendEmail:[IAEEmailRequest emailRequestWithType:RecoveryEmailRequest]];
+    NSLog(@"%@", response);
 }
 
 - (void)sendConfirmationLinkedMailForRecoveryPasswordEmail
 {
-    [self.sesClient sendEmail:[IAEEmailRequest emailRequestWithType:RecoveryMailLinkedEmailRequest]];
+    SESSendEmailResponse *response = [self.sesClient sendEmail:[IAEEmailRequest emailRequestWithType:RecoveryMailLinkedEmailRequest]];
+    NSLog(@"%@", response);
 }
 
 @end

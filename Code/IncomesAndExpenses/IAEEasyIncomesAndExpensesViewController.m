@@ -2898,9 +2898,11 @@ didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
     [month duplicateConcept:concept];
     if (purpose == MonthSelectorPurposeCopy) {
         [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
+        [self.contextMenuView animateOptionAtIndex:month.month withAnimationType:TextRawSelectorAnimation_Blink];
     } else if (purpose == MonthSelectorPurposeMove) {
         self.conceptCellToRemove = cell;
         [self removeConceptAndUpdateBalancesOfCell:cell withAnimation:YES];
+        [self.contextMenuView animateOptionAtIndex:month.month withAnimationType:TextRawSelectorAnimation_Blink];
     }
 }
 

@@ -383,7 +383,7 @@ static const CGFloat kMinimumAlphaOfAnimationOptionDestroyWithGosth = 0.1;
     }
 }
 
-#pragma mark - Animation
+#pragma mark - Animation 
 
 - (void)animateOptionAtIndex:(NSUInteger)index withAnimationType:(TextRawSelectorAnimationType)animationType
 {

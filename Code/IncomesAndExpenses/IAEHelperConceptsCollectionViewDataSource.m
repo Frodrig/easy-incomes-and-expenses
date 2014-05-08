@@ -20,6 +20,7 @@
 #import "IAEColorHelper.h"
 #import "IAECategory.h"
 #import "IAEFavoriteConceptsStock.h"
+#import "NSUserDefaults+EasyIncAndExp.h"
 #import <Crashlytics/Crashlytics.h>
 
 @interface IAEHelperConceptsCollectionViewDataSource()
@@ -182,7 +183,7 @@ static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
     }
 
     const BOOL editModeActive = [self.iaeViewControllerQuery isEditModeActive] && [self.iaeViewControllerQuery isCalculatorOpen];
-    if (editModeActive) {
+    if (editModeActive && [[NSUserDefaults standardUserDefaults] isProVersionEnabled]) {
         [cell showFavoritePin];
     } else {
         [cell hideFavoritePinWithAnimation:NO];

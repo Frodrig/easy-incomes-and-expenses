@@ -46,6 +46,11 @@ static NSString * const kLTextStartLabelBaseText = @"LTEXT_ABOUTANDOPTIONS_START
     [self initStartMonthSettings];
 }
 
+- (void)prepareForReuse
+{
+    [self initStartMonthSettings];
+}
+
 - (void)initStartMonthSettings
 {
     self.informationLabel.text = NSLocalizedString(kLTextStartLabelBaseText, @"");

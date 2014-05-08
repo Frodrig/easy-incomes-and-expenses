@@ -2722,6 +2722,9 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
         self.conceptsCollectionView.alpha = 0;
     } completion:^(BOOL finished) {
         [self.conceptsCollectionView reloadData];
+        if ([self isReportModeActive]) {
+            [self reloadContentOfConceptsReportViewWithAnimation:YES];
+        }
         [self updateBalancesAndAvailabilityOfSelectorContextSubmenuWithAnimation:YES];
         [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES];
         [UIView animateWithDuration:0 animations:^{

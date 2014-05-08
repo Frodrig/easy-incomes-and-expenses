@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIView *categoryTypeDecoratorView;
 @property (weak, nonatomic) IBOutlet UIView *categoryDecoratorAndInputContainerView;
 @property (weak, nonatomic) IBOutlet UILabel *problemWarningLabel;
+@property (weak, nonatomic) IBOutlet UITextField *resumeTextField;
 @property (nonatomic) BOOL cancelButtonWasPressed;
 @end
 
@@ -222,6 +223,7 @@ static const NSUInteger kSizeRoundedRectCorners = 10;
     if (shouldChangeCharacters) {
         NSString *categoryTag = [self createCategoryTagByReplaceCategoryInputInRange:range withString:string];
         [self updateVisibilityWithAnimationOfProblemWarningLabelBasedInCategorTag:categoryTag];
+        self.resumeTextField.text = categoryTag;
     }
     
     return shouldChangeCharacters;
@@ -272,6 +274,7 @@ static const NSUInteger kSizeRoundedRectCorners = 10;
     
     [UIView animateWithDuration:0.25 animations:^{
         self.problemWarningLabel.alpha = hideWarningLabel ? 0.0 : 1.0;
+        self.resumeTextField.textColor = hideWarningLabel ? [UIColor blackColor] : [UIColor colorWithRed:1.0 green:0 blue:0 alpha:0.6];
     }];
 }
 

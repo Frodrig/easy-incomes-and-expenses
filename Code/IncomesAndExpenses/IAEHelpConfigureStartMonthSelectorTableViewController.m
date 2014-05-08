@@ -53,9 +53,11 @@ static const NSUInteger kFamilyFontSizeForCells = 22;
 - (void)configureNavigationController
 {
     self.title = NSLocalizedString(@"LTEXT_STARTMONTHSELECTORVC_TITLE", @"");
+    /*
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                            target:self
                                                                                            action:@selector(doneButtonPressed:)];
+     */
 }
 
 

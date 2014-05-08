@@ -93,7 +93,7 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 - (void)configureNavigationController
 {
     self.title = NSLocalizedString(@"LTEXT_SETTINGSINDEX_TITLE", @"");
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                           target:self
                                                                                           action:@selector(doneButtonPressed:)];
 }

@@ -91,9 +91,11 @@
 - (void)configureNavigationController
 {
     self.title = _helpTheme.title;
+    /*
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                            target:self
                                                                                            action:@selector(doneButtonPressed:)];
+     */
 }
 
 #pragma mark - Navigation Bar

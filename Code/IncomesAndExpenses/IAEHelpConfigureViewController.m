@@ -96,9 +96,11 @@ static NSString * const kCollectionViewRemoveConceptsWithConfirmationCellIdentif
 - (void)configureNavigationController
 {
     self.title = NSLocalizedString(@"LTEXT_SETTINGSINDEX_1", @"");
+    /*
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                            target:self
                                                                                            action:@selector(doneButtonPressed:)];
+     */
 }
 
 - (void)viewWillAppear:(BOOL)animated

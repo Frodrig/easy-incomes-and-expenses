@@ -1950,7 +1950,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (BOOL)isFavoritePinInteractionEnabledInConcepts
 {
-    return [self.calculatorViewController isOpen];
+    return [self.calculatorViewController isOpen] && [[NSUserDefaults standardUserDefaults] isProVersionEnabled];
 }
 
 - (void)executeLogicAfterFavoritePinTapForCell:(IAEEditModeConceptCollectionViewCell *)cell
@@ -2554,8 +2554,10 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     
     self.attachBehaviorForContainerFX.anchorPoint = self.calculatorViewController.view.center;
     
-    for (IAEEditModeConceptCollectionViewCell *cell in self.conceptsCollectionView.visibleCells) {
-        [cell showFavoritePin];
+    if ([[NSUserDefaults standardUserDefaults] isProVersionEnabled]) {
+        for (IAEEditModeConceptCollectionViewCell *cell in self.conceptsCollectionView.visibleCells) {
+            [cell showFavoritePin];
+        }
     }
 }
 

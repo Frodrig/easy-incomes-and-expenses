@@ -360,7 +360,7 @@ static const NSInteger kBasePanelPasswordTag = 100;
 
 - (IBAction)recoveryButtonPressed:(id)sender
 {
-    //[[IAEEmailSender sharedInstance] sendRecoveryPasswordEmail];
+    [[IAEEmailSender sharedInstance] sendRecoveryPasswordEmail];
     [self launchAlertViewToInformAboutRecoveryPasswordEmailWasSend];
 }
 

@@ -15,15 +15,11 @@
 #import "MonthDefs.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
 
-@interface IAEHelpConfigureViewController ()
-
-@property (nonatomic, strong) NSIndexPath *lastIndexPathHighlighted;
-
-@property (nonatomic) MonthType actualInitialMonth;
-
-@end
-
-@implementation IAEHelpConfigureViewController
+typedef NS_ENUM(NSUInteger, IAESectionConfigurationOptionType) {
+    IAESectionConfigurationOptionConceptsWithDays,
+    IAESectionConfigurationOptionChangeStartMonth,
+    IAESectionConfigurationOptionRemoveConceptConfirmation,
+};
 
 #pragma mark - Constantes
 
@@ -34,11 +30,39 @@ static NSString * const kCollectionViewStartMonthCellIdentifier = @"IAEConfigure
 static NSString * const kCollectionViewRemoveConceptsWithConfirmationCellNibName = @"IAEConfirmRemoveConceptCell";
 static NSString * const kCollectionViewRemoveConceptsWithConfirmationCellIdentifier = @"IAEConfigureConfirmRemoveConceptCell";
 
-static NSUInteger kNumberOfSections = 3;
-static NSUInteger kNumberOfItemsInSection = 1;
-static NSUInteger kSectionOfConfigureConceptsWithDaysCell = 0;
-static NSUInteger kSectionOfConfigureStartMonthCell = 1;
-static NSUInteger kSectionOfRemoveConceptsWithConfirmationCell = 2;
+#pragma mark - Interface
+
+@interface IAEHelpConfigureViewController ()
+
+@property (nonatomic, strong) NSIndexPath *lastIndexPathHighlighted;
+@property (nonatomic) MonthType actualInitialMonth;
+@property (nonatomic, strong) NSArray *sectionConfigurationOptionsLiteVersion;
+@property (nonatomic, strong) NSArray *sectionConfigurationOptionsProVersion;
+
+@end
+
+#pragma mark - Implementation
+
+@implementation IAEHelpConfigureViewController
+
+#pragma mark - Properties
+
+- (NSArray *)sectionConfigurationOptionsLiteVersion{
+    if (!_sectionConfigurationOptionsLiteVersion) {
+        _sectionConfigurationOptionsLiteVersion = @[@(IAESectionConfigurationOptionConceptsWithDays)];
+    }
+    
+    return _sectionConfigurationOptionsLiteVersion;
+}
+
+- (NSArray *)sectionConfigurationOptionsProVersion
+{
+    if (!_sectionConfigurationOptionsProVersion) {
+        _sectionConfigurationOptionsProVersion = @[@(IAESectionConfigurationOptionConceptsWithDays), @(IAESectionConfigurationOptionChangeStartMonth), @(IAESectionConfigurationOptionRemoveConceptConfirmation)];
+    }
+    
+    return _sectionConfigurationOptionsProVersion;
+}
 
 #pragma mark - Init
 
@@ -46,7 +70,6 @@ static NSUInteger kSectionOfRemoveConceptsWithConfirmationCell = 2;
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
         _actualInitialMonth = [[NSUserDefaults standardUserDefaults] actualInitialMonth];
     }
     return self;
@@ -90,10 +113,24 @@ static NSUInteger kSectionOfRemoveConceptsWithConfirmationCell = 2;
     MonthType actualInitialMonth = [[NSUserDefaults standardUserDefaults] actualInitialMonth];
     if (actualInitialMonth != self.actualInitialMonth) {
         self.actualInitialMonth = actualInitialMonth;
-        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:kSectionOfConfigureStartMonthCell]];
+        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:[self findSectionIndexForOption:IAESectionConfigurationOptionChangeStartMonth]]];
     }
     
     [self backgroundColorInCellAtIndexPath:self.lastIndexPathHighlighted highlighted:NO];
+}
+
+- (NSUInteger)findSectionIndexForOption:(IAESectionConfigurationOptionType)option
+{
+    NSInteger indexOfOption = [[self findSectionOptionsForActualVersion] indexOfObject:@(option)];
+    NSAssert(indexOfOption != NSNotFound, @"");
+    return indexOfOption;
+}
+
+#pragma mark - Model
+
+- (NSArray *)findSectionOptionsForActualVersion
+{
+    return [[NSUserDefaults standardUserDefaults] isProVersionEnabled] ? self.sectionConfigurationOptionsProVersion : self.sectionConfigurationOptionsLiteVersion;
 }
 
 #pragma mark - Navigation Bar
@@ -112,15 +149,21 @@ static NSUInteger kSectionOfRemoveConceptsWithConfirmationCell = 2;
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     CGSize size = CGSizeMake(0, 0);
-    if (indexPath.section == kSectionOfConfigureConceptsWithDaysCell) {
+    if ([self isSectionOfIndexPath:indexPath theOption:IAESectionConfigurationOptionConceptsWithDays]) {
         size = [IAEHelpConfigureConceptsWithDaysCell sizeOfItem];
-    } else if (indexPath.section == kSectionOfConfigureStartMonthCell) {
+    } else if ([self isSectionOfIndexPath:indexPath theOption:IAESectionConfigurationOptionChangeStartMonth]) {
         size = [IAEHelpConfigureStartMonthCell sizeOfItem];
-    } else if (indexPath.section == kSectionOfRemoveConceptsWithConfirmationCell) {
+    } else if ([self isSectionOfIndexPath:indexPath theOption:IAESectionConfigurationOptionRemoveConceptConfirmation]) {
         size = [IAEHelpConfigureConfirmRemoveConceptCell sizeOfItem];
     }
     
     return size;
+}
+
+- (BOOL)isSectionOfIndexPath:(NSIndexPath *)indexPath theOption:(IAESectionConfigurationOptionType)option
+{
+    IAESectionConfigurationOptionType sectionOptionOfIndexPath = (IAESectionConfigurationOptionType)[[[self findSectionOptionsForActualVersion] objectAtIndex:indexPath.section] unsignedIntegerValue];
+    return sectionOptionOfIndexPath == option;
 }
 
 - (NSUInteger)findNumberOfItemsBasedInSegmentedControl
@@ -132,7 +175,7 @@ static NSUInteger kSectionOfRemoveConceptsWithConfirmationCell = 2;
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == kSectionOfConfigureStartMonthCell) {
+    if ([self isSectionOfIndexPath:indexPath theOption:IAESectionConfigurationOptionChangeStartMonth]) {
         [self backgroundColorInCellAtIndexPath:indexPath highlighted:YES];
         [self launchStartMonthSelector];
     }
@@ -161,13 +204,13 @@ static NSUInteger kSectionOfRemoveConceptsWithConfirmationCell = 2;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell *cell = nil;
-    if (indexPath.section == kSectionOfConfigureConceptsWithDaysCell) {
+    if ([self isSectionOfIndexPath:indexPath theOption:IAESectionConfigurationOptionConceptsWithDays]) {
         cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCollectionViewConceptsWithDaysCellIdentifier
                                                          forIndexPath:indexPath];
-    } else if (indexPath.section == kSectionOfConfigureStartMonthCell) {
+    } else if ([self isSectionOfIndexPath:indexPath theOption:IAESectionConfigurationOptionChangeStartMonth]) {
         cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCollectionViewStartMonthCellIdentifier
                                                          forIndexPath:indexPath];
-    } else if (indexPath.section == kSectionOfRemoveConceptsWithConfirmationCell) {
+    } else if ([self isSectionOfIndexPath:indexPath theOption:IAESectionConfigurationOptionRemoveConceptConfirmation]) {
         cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCollectionViewRemoveConceptsWithConfirmationCellIdentifier
                                                          forIndexPath:indexPath];
     }
@@ -177,12 +220,12 @@ static NSUInteger kSectionOfRemoveConceptsWithConfirmationCell = 2;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return kNumberOfItemsInSection;
+    return 1;
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return kNumberOfSections;
+    return [self findSectionOptionsForActualVersion].count;
 }
 
 @end

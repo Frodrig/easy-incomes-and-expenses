@@ -196,11 +196,13 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 - (void)enableProVersion
 {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUserDefaultsProVersionKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)disableProVersion
 {
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserDefaultsProVersionKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

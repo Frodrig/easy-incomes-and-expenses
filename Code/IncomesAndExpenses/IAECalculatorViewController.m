@@ -26,6 +26,7 @@
 #import "IAENumberFormatterManager.h"
 #import "IAEFavoriteConceptsViewController.h"
 #import "IAEKeyboardPanelCalculatorView.h"
+#import "NSUserDefaults+EasyIncAndExp.h"
 
 @interface IAECalculatorViewController ()
 
@@ -201,6 +202,7 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 75;
     [super viewDidLoad];
     
     [self configureDisplayPanelCalculatorView];
+    [self configureInitialVisibilityOfPinFavoriteImage];
 }
 
 - (void)configureDisplayPanelCalculatorView
@@ -213,6 +215,11 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 75;
 {
     [self.popover dismissPopoverAnimated:YES];
     self.popover = nil;
+}
+
+- (void)configureInitialVisibilityOfPinFavoriteImage
+{
+    self.pinFavoriteImage.hidden = [[NSUserDefaults standardUserDefaults] isProVersionDisabled];
 }
 
 #pragma mark - Enabled & Disabled
@@ -595,7 +602,7 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 75;
     BOOL validAddAction = YES;
     if ([self isActualAmountOverZero]) {
         [self createNewConcept];
-    } else if ([self isFavoritePinActive]) {
+    } else if ([self isFavoritePinActive] && [[NSUserDefaults standardUserDefaults] isProVersionEnabled]) {
         [self launchPopoverForSelectFavoriteConceptsFromAddButton:button];
     } else {
         validAddAction = NO;
@@ -1037,7 +1044,7 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 75;
 
 - (void)updateFavoritePinWithAnimation:(BOOL)animation;
 {
-    const BOOL showPin = ![self actualAmountWithData];
+    const BOOL showPin = ![self actualAmountWithData] && [[NSUserDefaults standardUserDefaults] isProVersionEnabled];
     if (showPin == self.pinFavoriteImage.hidden) {
         if (animation) {
             [UIView animateWithDuration:kUpdateFavoritePinAnimationTime animations:^{

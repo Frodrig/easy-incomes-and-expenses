@@ -2824,15 +2824,17 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)lauchContextMenuActionSheetForContextMenuAtOptionIndexIfApplicable:(NSUInteger)optionIndex
 {
-    self.contextMenuActionSheetViewController = [[IAEContextMenuActionSheetViewController alloc] initWithEnabledOption:[self existConceptsInActualSelectedContext] ? IAEContextMenuActionSheetOptionAll : IAEContextMenuActionSheetOptionOptionsNone];
-    self.contextMenuActionSheetViewController.delegate = self;
-    self.popover = [[UIPopoverController alloc] initWithContentViewController:self.contextMenuActionSheetViewController];
-    self.popover.delegate = self;
-    self.popover.popoverContentSize = self.contextMenuActionSheetViewController.view.bounds.size;
-    [self.popover presentPopoverFromRect:CGRectOffset([self.contextMenuView rectOfOptionAtIndex:optionIndex], 0, 4)
-                                  inView:self.contextMenuView
-                permittedArrowDirections:UIPopoverArrowDirectionUp
-                                animated:YES];
+    if ([[NSUserDefaults standardUserDefaults] isProVersionDisa]) {
+        self.contextMenuActionSheetViewController = [[IAEContextMenuActionSheetViewController alloc] initWithEnabledOption:[self existConceptsInActualSelectedContext] ? IAEContextMenuActionSheetOptionAll : IAEContextMenuActionSheetOptionOptionsNone];
+        self.contextMenuActionSheetViewController.delegate = self;
+        self.popover = [[UIPopoverController alloc] initWithContentViewController:self.contextMenuActionSheetViewController];
+        self.popover.delegate = self;
+        self.popover.popoverContentSize = self.contextMenuActionSheetViewController.view.bounds.size;
+        [self.popover presentPopoverFromRect:CGRectOffset([self.contextMenuView rectOfOptionAtIndex:optionIndex], 0, 4)
+                                      inView:self.contextMenuView
+                    permittedArrowDirections:UIPopoverArrowDirectionUp
+                                    animated:YES];
+    }
 }
 
 - (BOOL)isChangeOfContextRunning

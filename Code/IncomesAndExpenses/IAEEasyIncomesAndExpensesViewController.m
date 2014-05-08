@@ -377,10 +377,10 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 {
     self.navigationBarTitleLabel.text = [NSString stringWithFormat:@"Easy Incomes and Expenses", NSLocalizedString(kLTextNavigationBarTitle, @""), NSLocalizedString(kLTextVersionAppType, @"")];
     
-    self.favoritesButton = [[NSUserDefaults standardUserDefaults] isProVersionEnabled] ? [self makeBarButtonWithTitle:kLTextFavoritesBarButtonTitle andSelector:@selector(favoritesButtonPressed:)] : nil;
+    self.favoritesButton = [self makeBarButtonWithTitle:kLTextFavoritesBarButtonTitle andSelector:@selector(favoritesButtonPressed:)];
     self.categoriesButton = [self makeBarButtonWithTitle:kLTextCategoriesBarButtonTitle andSelector:@selector(categoriesButtonPressed:)];
     self.yearsButton = [self makeBarButtonWithTitle:kLTextYearsBarButtonTitle andSelector:@selector(yearsButtonPressed:)];
-    self.navigationItem.rightBarButtonItems = self.favoritesButton ? @[self.favoritesButton, self.categoriesButton, self.yearsButton] : @[self.categoriesButton, self.yearsButton];
+    self.navigationItem.rightBarButtonItems = [[NSUserDefaults standardUserDefaults] isProVersionEnabled] ? @[self.favoritesButton, self.categoriesButton, self.yearsButton] : @[self.categoriesButton, self.yearsButton];
     
     self.settingsButton = [self makeBarButtonWithTitle:kLTextSettingsBarButtonTitle andSelector:@selector(settingsOptionPressed:)];
     self.navigationItem.leftBarButtonItems = @[self.settingsButton];

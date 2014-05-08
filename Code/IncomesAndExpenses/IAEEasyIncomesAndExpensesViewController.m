@@ -1669,7 +1669,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)strokeAnimatableView:(IAEStrokeAnimatableLineView *)strokeAnimatableView didStrokeOverTheView:(UIView *)view
 {
-    if ([[NSUserDefaults standardUserDefaults] isRemoveConceptConfirmationActive]) {
+    if ([[NSUserDefaults standardUserDefaults] isRemoveConceptConfirmationActive] && [[NSUserDefaults standardUserDefaults] isProVersionEnabled]) {
         [self lauchAlertViewToConfirmRemoveOfStrokedConceptCell];
     } else {
         [self performSelector:@selector(doRemoveConceptCellToRemove) withObject:nil afterDelay:kDelayToExecuteRemoveConceptCell];
@@ -1751,7 +1751,8 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     const BOOL can = [self isActualSelectedContextAMonth] &&
                      ![self.calculatorViewController isAnyTranslationActive] &&
                      !self.conceptCellToRemove &&
-                     !cell.menuModeActive;
+                     !cell.menuModeActive &&
+                     [[NSUserDefaults standardUserDefaults] isProVersionEnabled];
     
     return can;
 }
@@ -2824,7 +2825,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)lauchContextMenuActionSheetForContextMenuAtOptionIndexIfApplicable:(NSUInteger)optionIndex
 {
-    if ([[NSUserDefaults standardUserDefaults] isProVersionDisa]) {
+    if ([[NSUserDefaults standardUserDefaults] isProVersionEnabled]) {
         self.contextMenuActionSheetViewController = [[IAEContextMenuActionSheetViewController alloc] initWithEnabledOption:[self existConceptsInActualSelectedContext] ? IAEContextMenuActionSheetOptionAll : IAEContextMenuActionSheetOptionOptionsNone];
         self.contextMenuActionSheetViewController.delegate = self;
         self.popover = [[UIPopoverController alloc] initWithContentViewController:self.contextMenuActionSheetViewController];

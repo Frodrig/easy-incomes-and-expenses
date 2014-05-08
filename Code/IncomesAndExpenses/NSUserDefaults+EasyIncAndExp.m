@@ -18,6 +18,7 @@ static NSString * const kUserDefaultsReportAmountModeKey = @"reportAmountMode";
 static NSString * const kUserDefaultInitialMonthKey = @"initialMonth";
 static NSString * const kUserDefaultRemoveConceptConfirmation = @"removeConceptConfirmation";
 static NSString * const kUserDefaultRecoverPasswordEmail = @"recoverPasswordEmail";
+static NSString * const kUserDefaultsProVersionKey = @"proVersion";
 
 static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalAmounts";
 static NSString * const kUserDefaultsReportAmountModePercentageAmountValue = @"percentageAmounts";
@@ -32,7 +33,8 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
                                 kUserDefaultsReportAmountModeKey: kUserDefaultsReportAmountModeTotalAmountValue,
                                 kUserDefaultInitialMonthKey: @(January),
                                 kUserDefaultRemoveConceptConfirmation: @(NO),
-                                kUserDefaultRecoverPasswordEmail: @""};
+                                kUserDefaultRecoverPasswordEmail: @"",
+                                kUserDefaultsProVersionKey : @(NO)};
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];    
 }
 
@@ -177,6 +179,23 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 {
     [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:executed] forKey:kFixRemoveCategoryActionLostInUnloadedYearsExecuted];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+#pragma mark - ProVersion
+
+- (BOOL)isProVersionActive
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsProVersionKey];
+}
+
+- (void)enableProVersion
+{
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUserDefaultsProVersionKey];
+}
+
+- (void)disableProVersion
+{
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserDefaultsProVersionKey];
 }
 
 @end

@@ -182,6 +182,7 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 75;
     _mode = CM_HIDE;
     _previousCalculatorMode = CM_HIDE;
     self.view.autoresizingMask = UIViewAutoresizingNone;
+    _actualDay = [IAEDateHelper findActualDayOfTheMonth];
 }
 
 - (void)initAsObserverOfNotificationCenter
@@ -415,6 +416,7 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 75;
 - (void)hide
 {
     self.previousCalculatorMode = self.mode;
+    self.actualDay = [IAEDateHelper findActualDayOfTheMonth];
     self.mode = CM_HIDE;
     [self updateVisibilityToShow:NO usingAnimation:YES];
 
@@ -433,7 +435,6 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 75;
         self.view.frame = show ? self.frameInVisibleMode : self.frameInHideMode;
     } completion:^(BOOL finished) {
         [self resetAmountPannel];
-        self.actualDay = 0;
         self.automaticDragMode = NO;
     }];
 }
@@ -947,7 +948,7 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 75;
 
 - (void)notificationCenterOnDayModeOff:(NSNotification *)notification
 {
-    self.actualDay = 0;
+    //self.actualDay = 0;
     [self configureDisplayPanelWithActualDayWithAnimation:NO];
 }
 

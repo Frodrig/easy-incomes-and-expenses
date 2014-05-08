@@ -16,17 +16,16 @@
 #import "NSUserDefaults+EasyIncAndExp.h"
 #import "IAESettingsViewControllerDefs.h"
 
-@interface IAEHelpIndexViewController ()
+#pragma mark - Enums
 
-@property (nonatomic) BOOL dayModeWasActiveAtStart;
-@property (nonatomic) MonthType monthInitialAtStart;
-
-@end
-
-@implementation IAEHelpIndexViewController
+typedef NS_ENUM(NSUInteger, IAESettingsIndexOptionType) {
+    IAESettingsIndexOptionConfigure,
+    IAESettingsIndexOptionPassword,
+    IAESettingsIndexOptionHelp,
+    IAESettingsIndexOptionAbout,
+};
 
 #pragma mark - Constants
-
 
 static NSString * const kNotificationDayModeOnName = @"dayModeToOn";
 static NSString * const kNotificationDayModeOffName = @"dayModeToOff";
@@ -34,13 +33,38 @@ static NSString * const kNotificationInitialMonthChanged = @"initialMonthChange"
 
 static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 
-static const NSInteger kIndexSize = 4;
+#pragma mark - Interface
 
-static const NSUInteger kRowOfConfigureIndex = 0;
-static const NSUInteger kRowOfPassword = 1;
-static const NSUInteger kRowOfHelpIndex = 2;
-static const NSUInteger kRowOfAboutIndex = 3;
+@interface IAEHelpIndexViewController ()
 
+@property (nonatomic) BOOL dayModeWasActiveAtStart;
+@property (nonatomic) MonthType monthInitialAtStart;
+@property (nonatomic, strong) NSArray *optionsForLiteVersion;
+@property (nonatomic, strong) NSArray *optionsForProVersion;
+
+@end
+
+@implementation IAEHelpIndexViewController
+
+#pragma mark - Properties
+
+- (NSArray *)optionsForLiteVersion
+{
+    if (!_optionsForLiteVersion) {
+        _optionsForLiteVersion = @[@(IAESettingsIndexOptionConfigure), @(IAESettingsIndexOptionHelp), @(IAESettingsIndexOptionAbout)];
+    }
+    
+    return _optionsForLiteVersion;
+}
+
+- (NSArray *)optionsForProVersion
+{
+    if (!_optionsForProVersion) {
+        _optionsForProVersion = @[@(IAESettingsIndexOptionConfigure), @(IAESettingsIndexOptionPassword), @(IAESettingsIndexOptionHelp), @(IAESettingsIndexOptionAbout)];
+    }
+    
+    return _optionsForProVersion;
+}
 
 #pragma mark - Init
 
@@ -72,6 +96,13 @@ static const NSUInteger kRowOfAboutIndex = 3;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                           target:self
                                                                                           action:@selector(doneButtonPressed:)];
+}
+
+#pragma mark - Model
+
+- (NSArray *)findOptionsForActualVersion
+{
+    return [[NSUserDefaults standardUserDefaults] isProVersionEnabled] ? self.optionsForProVersion : self.optionsForLiteVersion;
 }
 
 #pragma mark - IAEHelpIndexViewControllerDelegate
@@ -130,7 +161,7 @@ static const NSUInteger kRowOfAboutIndex = 3;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return kIndexSize;
+    return [self findOptionsForActualVersion].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -155,7 +186,9 @@ static const NSUInteger kRowOfAboutIndex = 3;
 
 - (void)configureCell:(UITableViewCell *)cell ofTableView:(UITableView *)tableView forIndexPath:(NSIndexPath *)indexPath
 {
-    const NSUInteger indexSufix = indexPath.row + 1;
+    IAESettingsIndexOptionType optionType = (IAESettingsIndexOptionType)[[[self findOptionsForActualVersion] objectAtIndex:indexPath.row] unsignedIntegerValue];
+
+    const NSUInteger indexSufix = optionType + 1;
     NSString *ltext = [NSString stringWithFormat:@"LTEXT_SETTINGSINDEX_%lu", (unsigned long)indexSufix];
     cell.textLabel.text = NSLocalizedString(ltext, @"");
     NSString *imageName = [NSString stringWithFormat:@"settingsindex_img_%lu", (unsigned long)indexSufix];
@@ -174,17 +207,18 @@ static const NSUInteger kRowOfAboutIndex = 3;
 - (UIViewController *)createNextViewControllerBasedInSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UIViewController *viewController = nil;
+    IAESettingsIndexOptionType optionType = (IAESettingsIndexOptionType)[[[self findOptionsForActualVersion] objectAtIndex:indexPath.row] unsignedIntegerValue];
     
-    if (indexPath.row == kRowOfConfigureIndex) {
+    if (optionType == IAESettingsIndexOptionConfigure) {
         [Flurry logEvent:@"settingsindex_configure"];
         viewController = [[IAEHelpConfigureViewController alloc] initWithNibName:@"IAEHelpConfigureViewController" bundle:[NSBundle mainBundle]];
-    } else if (indexPath.row == kRowOfPassword) {
+    } else if (optionType == IAESettingsIndexOptionPassword) {
         [Flurry logEvent:@"settingsindex_password"];
         viewController = [[IAEHelpPasswordIndexViewController alloc] initWithNibName:@"IAEHelpPasswordIndexViewController" bundle:[NSBundle mainBundle]];
-    } else if (indexPath.row == kRowOfHelpIndex) {
+    } else if (optionType == IAESettingsIndexOptionHelp) {
         [Flurry logEvent:@"settingsindex_help"];
         viewController = [[IAEHelpViewController alloc] initWithNibName:@"IAEHelpViewController" bundle:[NSBundle mainBundle]];
-    } else if (indexPath.row == kRowOfAboutIndex) {
+    } else if (optionType == IAESettingsIndexOptionAbout) {
         [Flurry logEvent:@"settingsindex_about"];
         viewController = [[IAEHelpAboutViewController alloc] initWithNibName:@"IAEHelpAboutViewController" bundle:[NSBundle mainBundle]];
     }

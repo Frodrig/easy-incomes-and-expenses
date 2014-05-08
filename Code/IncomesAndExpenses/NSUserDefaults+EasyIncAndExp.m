@@ -34,7 +34,7 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
                                 kUserDefaultInitialMonthKey: @(January),
                                 kUserDefaultRemoveConceptConfirmation: @(NO),
                                 kUserDefaultRecoverPasswordEmail: @"",
-                                kUserDefaultsProVersionKey : @(NO)};
+                                kUserDefaultsProVersionKey : @(YES)};
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];    
 }
 

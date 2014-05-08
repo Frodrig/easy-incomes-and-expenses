@@ -21,6 +21,13 @@
     return dateComponents.year;
 }
 
++ (NSUInteger)findActualDayOfTheMonth
+{
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents* components = [calendar components:NSDayCalendarUnit fromDate:[NSDate date]];
+    return [components day];
+}
+
 + (NSCalendar *)findCurrentCalendar
 {
     static NSCalendar *currentCalendar = nil;

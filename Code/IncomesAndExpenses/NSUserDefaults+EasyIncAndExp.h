@@ -37,7 +37,8 @@
 - (BOOL)isFixRemoveCategoryActionLostInUnloadedYearsNotExecuted;
 - (void)setFixRemoveCategoryActionLostInUnloadedYearsExecuted:(BOOL)executed;
 
-- (BOOL)isProVersionActive;
+- (BOOL)isProVersionEnabled;
+- (BOOL)isProVersionDisabled;
 - (void)enableProVersion;
 - (void)disableProVersion;
 

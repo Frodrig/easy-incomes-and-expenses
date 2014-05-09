@@ -138,6 +138,11 @@
 		5BA0130D179800AC00337E84 /* NSString+TwoDigitString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA0130C179800AC00337E84 /* NSString+TwoDigitString.m */; };
 		5BA0131217983A9000337E84 /* IAEDayCalendarSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA0131017983A9000337E84 /* IAEDayCalendarSelectorViewController.m */; };
 		5BA0131317983A9000337E84 /* IAEDayCalendarSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA0131117983A9000337E84 /* IAEDayCalendarSelectorViewController.xib */; };
+		5BA98C63191D46E3005D49FB /* SSPostmark.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA98C5A191D46E3005D49FB /* SSPostmark.m */; };
+		5BA98C64191D46E3005D49FB /* SSPostmarkAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA98C5C191D46E3005D49FB /* SSPostmarkAttachment.m */; };
+		5BA98C65191D46E3005D49FB /* SSPostmarkEmail.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA98C5E191D46E3005D49FB /* SSPostmarkEmail.m */; };
+		5BA98C66191D46E3005D49FB /* SSPostmarkValidationError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA98C60191D46E3005D49FB /* SSPostmarkValidationError.m */; };
+		5BA98C67191D46E3005D49FB /* SSPostmarkValidators.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA98C62191D46E3005D49FB /* SSPostmarkValidators.m */; };
 		5BAEAE0B1876828A00271B47 /* IAEFavoriteConceptsStock.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BAEAE0A1876828A00271B47 /* IAEFavoriteConceptsStock.m */; };
 		5BAEAE0E1876926700271B47 /* 726-star.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BAEAE0C1876926700271B47 /* 726-star.png */; };
 		5BAEAE0F1876926700271B47 /* 726-star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BAEAE0D1876926700271B47 /* 726-star@2x.png */; };
@@ -450,6 +455,17 @@
 		5BA0130F17983A9000337E84 /* IAEDayCalendarSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEDayCalendarSelectorViewController.h; sourceTree = "<group>"; };
 		5BA0131017983A9000337E84 /* IAEDayCalendarSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEDayCalendarSelectorViewController.m; sourceTree = "<group>"; };
 		5BA0131117983A9000337E84 /* IAEDayCalendarSelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEDayCalendarSelectorViewController.xib; sourceTree = "<group>"; };
+		5BA98C58191D46E3005D49FB /* SSPostmark-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SSPostmark-Prefix.pch"; sourceTree = "<group>"; };
+		5BA98C59191D46E3005D49FB /* SSPostmark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSPostmark.h; sourceTree = "<group>"; };
+		5BA98C5A191D46E3005D49FB /* SSPostmark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSPostmark.m; sourceTree = "<group>"; };
+		5BA98C5B191D46E3005D49FB /* SSPostmarkAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSPostmarkAttachment.h; sourceTree = "<group>"; };
+		5BA98C5C191D46E3005D49FB /* SSPostmarkAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSPostmarkAttachment.m; sourceTree = "<group>"; };
+		5BA98C5D191D46E3005D49FB /* SSPostmarkEmail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSPostmarkEmail.h; sourceTree = "<group>"; };
+		5BA98C5E191D46E3005D49FB /* SSPostmarkEmail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSPostmarkEmail.m; sourceTree = "<group>"; };
+		5BA98C5F191D46E3005D49FB /* SSPostmarkValidationError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSPostmarkValidationError.h; sourceTree = "<group>"; };
+		5BA98C60191D46E3005D49FB /* SSPostmarkValidationError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSPostmarkValidationError.m; sourceTree = "<group>"; };
+		5BA98C61191D46E3005D49FB /* SSPostmarkValidators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSPostmarkValidators.h; sourceTree = "<group>"; };
+		5BA98C62191D46E3005D49FB /* SSPostmarkValidators.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSPostmarkValidators.m; sourceTree = "<group>"; };
 		5BAA5E46170988AC00B6B3F8 /* IncomesAndExpenses copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "IncomesAndExpenses copy-Info.plist"; path = "/Users/fernandorodriguezmartinez/Trabajo/Freelance/Git/Easy Incomes and Expenses/Code/IncomesAndExpenses copy-Info.plist"; sourceTree = "<absolute>"; };
 		5BAD901C181903B700CE0124 /* IAEHelpIndexViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelpIndexViewControllerDelegate.h; sourceTree = "<group>"; };
 		5BAEAE091876828A00271B47 /* IAEFavoriteConceptsStock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEFavoriteConceptsStock.h; sourceTree = "<group>"; };
@@ -1314,6 +1330,7 @@
 		5B767DFC1636D7FC005315F8 /* IncomesAndExpenses */ = {
 			isa = PBXGroup;
 			children = (
+				5BA98C56191D46C0005D49FB /* Libraries */,
 				5B1B7FA218D7A1C90012AC21 /* Fix */,
 				5B00386418CFC13900044B2D /* Flurry-iOS-4.3.2 */,
 				5B8F842F17B0FEA800C17020 /* Global constants */,
@@ -1641,6 +1658,32 @@
 				5BCE3AC317A978CA00CD01E7 /* Protocols */,
 			);
 			name = "Day Calendar Selector";
+			sourceTree = "<group>";
+		};
+		5BA98C56191D46C0005D49FB /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				5BA98C57191D46CB005D49FB /* SSPostmark */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		5BA98C57191D46CB005D49FB /* SSPostmark */ = {
+			isa = PBXGroup;
+			children = (
+				5BA98C58191D46E3005D49FB /* SSPostmark-Prefix.pch */,
+				5BA98C59191D46E3005D49FB /* SSPostmark.h */,
+				5BA98C5A191D46E3005D49FB /* SSPostmark.m */,
+				5BA98C5B191D46E3005D49FB /* SSPostmarkAttachment.h */,
+				5BA98C5C191D46E3005D49FB /* SSPostmarkAttachment.m */,
+				5BA98C5D191D46E3005D49FB /* SSPostmarkEmail.h */,
+				5BA98C5E191D46E3005D49FB /* SSPostmarkEmail.m */,
+				5BA98C5F191D46E3005D49FB /* SSPostmarkValidationError.h */,
+				5BA98C60191D46E3005D49FB /* SSPostmarkValidationError.m */,
+				5BA98C61191D46E3005D49FB /* SSPostmarkValidators.h */,
+				5BA98C62191D46E3005D49FB /* SSPostmarkValidators.m */,
+			);
+			name = SSPostmark;
 			sourceTree = "<group>";
 		};
 		5BAEAE081876825500271B47 /* Favorite Concepts */ = {
@@ -2331,6 +2374,7 @@
 				5B907832179D1AA700B2A0F7 /* IAECalculatorViewController.m in Sources */,
 				5B0EDE9F1900EEE0009A3DF5 /* IAEEmailChecker.m in Sources */,
 				5B32D65D177C41980070AC72 /* IAEYearSelectorViewController.m in Sources */,
+				5BA98C67191D46E3005D49FB /* SSPostmarkValidators.m in Sources */,
 				5BD06157163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld in Sources */,
 				5B8CD5D117A262A800A353A5 /* IAEContextView.m in Sources */,
 				5BF1DFD818F991BD0024B3AD /* IAEMonthSelectorViewController.m in Sources */,
@@ -2379,6 +2423,7 @@
 				5BB937D61919488F0001A31E /* IAERecoveryMailLinkedEmailRequest.m in Sources */,
 				5BCE3AA817A95D5300CD01E7 /* IAENumberUtils.m in Sources */,
 				5B8CD5D917A2C6DB00A353A5 /* IAETextRawSelectorMenuView.m in Sources */,
+				5BA98C66191D46E3005D49FB /* SSPostmarkValidationError.m in Sources */,
 				5B62D881178EC3CB009879A6 /* IAECurrencyInfo.m in Sources */,
 				5BC7101917AC29F600E12953 /* IAECategoryStore.m in Sources */,
 				5B879766180E8FCB00554E13 /* IAEHelpConfigureViewController.m in Sources */,
@@ -2395,16 +2440,19 @@
 				5B5773BB18FF9A7600672C29 /* IAEHelpConfigureConfirmRemoveConceptCell.m in Sources */,
 				5B32D654177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m in Sources */,
 				5B5C967F17816A13008CD851 /* UIView+RoundedCorners.m in Sources */,
+				5BA98C63191D46E3005D49FB /* SSPostmark.m in Sources */,
 				5BAEAE181876B8C300271B47 /* IAEFavoriteConceptsViewController.m in Sources */,
 				5BDD9A3218572F99001A6CEF /* IAEPasswordPanelScreenView.m in Sources */,
 				5B879783180EB2C700554E13 /* IAEHelpTheme.m in Sources */,
 				5BC737FE187EA95100D22B4A /* IAEFavoriteConceptsTableHeader.m in Sources */,
+				5BA98C65191D46E3005D49FB /* SSPostmarkEmail.m in Sources */,
 				5B62D85B178EA870009879A6 /* IAEYearSelectorCollectionViewCell.m in Sources */,
 				5BCE3AAB17A95EDB00CD01E7 /* IAEHelperReportAreaViewDataSource.m in Sources */,
 				5BCE3AB117A9688700CD01E7 /* IAEHelperContextTextRawMenuDataSource.m in Sources */,
 				5B87978B180EEC7200554E13 /* IAEHelpThemeViewController.m in Sources */,
 				5BA0130D179800AC00337E84 /* NSString+TwoDigitString.m in Sources */,
 				5BC7101717AC29F600E12953 /* IAEBook.m in Sources */,
+				5BA98C64191D46E3005D49FB /* SSPostmarkAttachment.m in Sources */,
 				5B6E9FA7177D9C950072EE34 /* UIView+LoadFromXib.m in Sources */,
 				5B57275817D9A99B00552E98 /* IAENibUtils.m in Sources */,
 				5BC7101C17AC29F600E12953 /* IAEYear.m in Sources */,

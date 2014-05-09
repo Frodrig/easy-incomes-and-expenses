@@ -9,6 +9,8 @@
 #import "IAEEmailSender.h"
 #import "IAEEmailRequest.h"
 #import <AWSRuntime/AWSRuntime.h>
+#import "SSPostmark.h"
+#import "SSPostmarkEmail.h"
 
 #pragma mark - Constants
 
@@ -52,6 +54,24 @@ static NSString * const kAWSSecretKey = @"REMOVED_AWS_SECRET";
 
 - (void)sendRecoveryPasswordEmail
 {
+    NSAssert([SSPostmarkValidators validatesEmail:@"easyincomesandexpenses@frodrig.com" type:SSPostmarkEmailAddressValidateStrict], @"");
+    
+    SSPostmark *pm = [[SSPostmark alloc] initWithApiKey:@"06f7e2e4-923e-4fc4-a208-6752790e934c"];
+    
+    SSPostmarkEmail *email = [[SSPostmarkEmail alloc] init];
+    email.fromAddress = @"easyincomesandexpenses@frodrig.com";
+    email.nameForFromAddress = @"Easy Incomes and Expenses";
+    email.subject = @"Test Subject";
+    [email.toAddresses addObject:@"frodrig76@gmail.com"];
+    [email setBody:@"Test body" isHTML:NO];
+    
+    [pm sendEmail:email completion:^(BOOL success, NSError *error) {
+        NSLog(@"Success: %i",success);
+        NSLog(@"Error: %@",error);
+    }];
+
+    return;
+    
     @try {
         
         SESContent *messageBody = [[SESContent alloc] init];

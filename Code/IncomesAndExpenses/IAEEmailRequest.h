@@ -12,6 +12,9 @@ typedef NS_ENUM(NSUInteger, IAEEmailRequestType)
 {
     RecoveryEmailRequest,
     RecoveryMailLinkedEmailRequest,
+    PasswordDisabledEmailRequest,
+    PasswordEnabledEmailRequest,
+    PasswordChangedEmailRequest
 };
 
 @interface IAEEmailRequest : SSPostmarkEmail

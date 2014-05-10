@@ -10,6 +10,9 @@
 		5B0038FE18CFC13900044B2D /* libFlurry_4.3.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B00386718CFC13900044B2D /* libFlurry_4.3.2.a */; };
 		5B00398418CFC13900044B2D /* libFlurryAds_4.3.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B0038F218CFC13900044B2D /* libFlurryAds_4.3.2.a */; };
 		5B0574C117AFE2F600B95D50 /* IAEWithoutConceptsTextWarningReportMode.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B0574C317AFE2F600B95D50 /* IAEWithoutConceptsTextWarningReportMode.xib */; };
+		5B069D7F191E2400002442F6 /* IAEPasswordDisabledEmailRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B069D7E191E2400002442F6 /* IAEPasswordDisabledEmailRequest.m */; };
+		5B069D82191E2412002442F6 /* IAEPasswordEnabledEmailRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B069D81191E2412002442F6 /* IAEPasswordEnabledEmailRequest.m */; };
+		5B069D85191E2423002442F6 /* IAEPasswordChangedEmailRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B069D84191E2423002442F6 /* IAEPasswordChangedEmailRequest.m */; };
 		5B0EDE9F1900EEE0009A3DF5 /* IAEEmailChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0EDE9E1900EEE0009A3DF5 /* IAEEmailChecker.m */; };
 		5B0F8BC416B94ADD002D62A5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5B0F8BC616B94ADD002D62A5 /* Localizable.strings */; };
 		5B0FEE9B1902484F0067CA38 /* IAEPasswordRecoveryEmailPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0FEE991902484F0067CA38 /* IAEPasswordRecoveryEmailPanelViewController.m */; };
@@ -240,6 +243,12 @@
 		5B021D3716B8363F000B8D4F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5B0574C217AFE2F600B95D50 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/IAEWithoutConceptsTextWarningReportMode.xib; sourceTree = "<group>"; };
 		5B0574C417AFE2F900B95D50 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/IAEWithoutConceptsTextWarningReportMode.xib; sourceTree = "<group>"; };
+		5B069D7D191E2400002442F6 /* IAEPasswordDisabledEmailRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEPasswordDisabledEmailRequest.h; sourceTree = "<group>"; };
+		5B069D7E191E2400002442F6 /* IAEPasswordDisabledEmailRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEPasswordDisabledEmailRequest.m; sourceTree = "<group>"; };
+		5B069D80191E2412002442F6 /* IAEPasswordEnabledEmailRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEPasswordEnabledEmailRequest.h; sourceTree = "<group>"; };
+		5B069D81191E2412002442F6 /* IAEPasswordEnabledEmailRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEPasswordEnabledEmailRequest.m; sourceTree = "<group>"; };
+		5B069D83191E2423002442F6 /* IAEPasswordChangedEmailRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEPasswordChangedEmailRequest.h; sourceTree = "<group>"; };
+		5B069D84191E2423002442F6 /* IAEPasswordChangedEmailRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEPasswordChangedEmailRequest.m; sourceTree = "<group>"; };
 		5B0EDE9D1900EEE0009A3DF5 /* IAEEmailChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEmailChecker.h; sourceTree = "<group>"; };
 		5B0EDE9E1900EEE0009A3DF5 /* IAEEmailChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEmailChecker.m; sourceTree = "<group>"; };
 		5B0F8BC516B94ADD002D62A5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1726,6 +1735,12 @@
 				5BB937D21919487A0001A31E /* IAERecoveryEmailRequest.m */,
 				5BB937D41919488F0001A31E /* IAERecoveryMailLinkedEmailRequest.h */,
 				5BB937D51919488F0001A31E /* IAERecoveryMailLinkedEmailRequest.m */,
+				5B069D7D191E2400002442F6 /* IAEPasswordDisabledEmailRequest.h */,
+				5B069D7E191E2400002442F6 /* IAEPasswordDisabledEmailRequest.m */,
+				5B069D80191E2412002442F6 /* IAEPasswordEnabledEmailRequest.h */,
+				5B069D81191E2412002442F6 /* IAEPasswordEnabledEmailRequest.m */,
+				5B069D83191E2423002442F6 /* IAEPasswordChangedEmailRequest.h */,
+				5B069D84191E2423002442F6 /* IAEPasswordChangedEmailRequest.m */,
 			);
 			name = EmailRequest;
 			sourceTree = "<group>";
@@ -2365,6 +2380,7 @@
 				5B6F45E5181ED29F0073B1AC /* IAEOpenYear.m in Sources */,
 				5B907832179D1AA700B2A0F7 /* IAECalculatorViewController.m in Sources */,
 				5B0EDE9F1900EEE0009A3DF5 /* IAEEmailChecker.m in Sources */,
+				5B069D7F191E2400002442F6 /* IAEPasswordDisabledEmailRequest.m in Sources */,
 				5B32D65D177C41980070AC72 /* IAEYearSelectorViewController.m in Sources */,
 				5BA98C67191D46E3005D49FB /* SSPostmarkValidators.m in Sources */,
 				5BD06157163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld in Sources */,
@@ -2427,6 +2443,7 @@
 				5B90783C179D268000B2A0F7 /* IAEDisplayPanelCalculatorView.m in Sources */,
 				5BF1DFDF18F994460024B3AD /* IAEMonthSelectorCollectionViewCell.m in Sources */,
 				5B5497B71820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.m in Sources */,
+				5B069D85191E2423002442F6 /* IAEPasswordChangedEmailRequest.m in Sources */,
 				5B251FA117AACA71000957A5 /* IAEStrokeAnimatableLineView.m in Sources */,
 				5BEA608217A6A36600520E09 /* IAEReportAreaView.m in Sources */,
 				5B5773BB18FF9A7600672C29 /* IAEHelpConfigureConfirmRemoveConceptCell.m in Sources */,
@@ -2448,6 +2465,7 @@
 				5B6E9FA7177D9C950072EE34 /* UIView+LoadFromXib.m in Sources */,
 				5B57275817D9A99B00552E98 /* IAENibUtils.m in Sources */,
 				5BC7101C17AC29F600E12953 /* IAEYear.m in Sources */,
+				5B069D82191E2412002442F6 /* IAEPasswordEnabledEmailRequest.m in Sources */,
 				5BC7101B17AC29F600E12953 /* IAEMonth.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

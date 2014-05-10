@@ -1,0 +1,16 @@
+//
+//  IAEPasswordDisabledEmailRequest.h
+//  IncomesAndExpenses
+//
+//  Created by Fernando Rodríguez Martínez on 10/05/14.
+//  Copyright (c) 2014 Fernando Rodríguez Martínez. All rights reserved.
+//
+
+#import "IAEEmailRequest.h"
+
+@interface IAEPasswordDisabledEmailRequest : IAEEmailRequest
+
+- (NSString *)findSubjectText;
+- (NSString *)findMessageText;
+
+@end

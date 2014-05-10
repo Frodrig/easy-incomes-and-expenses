@@ -51,16 +51,34 @@ static NSString * const kPostmarkAPIKey = @"b4239a78-425f-405e-89bd-b7551d0fad26
 
 #pragma mark - Actions
 
+- (void)sendPasswordDisabledEmail
+{
+    [self sendEmailRequestOfType:PasswordDisabledEmailRequest];
+}
+
+- (void)sendPasswordEnabledEmail
+{
+    [self sendEmailRequestOfType:PasswordEnabledEmailRequest];
+}
+
+- (void)sendPasswordChangedEmail
+{
+    [self sendEmailRequestOfType:PasswordChangedEmailRequest];
+}
+
 - (void)sendRecoveryPasswordEmail
 {
-    [self.postmark sendEmail:[IAEEmailRequest emailRequestWithType:RecoveryEmailRequest] completion:^(BOOL success, NSError *error) {
-        NSAssert(!error, @"");
-    }];
+    [self sendEmailRequestOfType:RecoveryEmailRequest];
 }
 
 - (void)sendConfirmationLinkedMailForRecoveryPasswordEmail
 {
-    [self.postmark sendEmail:[IAEEmailRequest emailRequestWithType:RecoveryMailLinkedEmailRequest] completion:^(BOOL success, NSError *error) {
+    [self sendEmailRequestOfType:RecoveryMailLinkedEmailRequest];
+}
+
+- (void)sendEmailRequestOfType:(IAEEmailRequestType)emailRequestType
+{
+    [self.postmark sendEmail:[IAEEmailRequest emailRequestWithType:emailRequestType] completion:^(BOOL success, NSError *error) {
         NSAssert(!error, @"");
     }];
 }

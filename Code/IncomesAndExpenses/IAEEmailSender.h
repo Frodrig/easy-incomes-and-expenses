@@ -12,7 +12,11 @@
 
 + (instancetype)sharedInstance;
 
+- (void)sendPasswordDisabledEmail;
+- (void)sendPasswordEnabledEmail;
+- (void)sendPasswordChangedEmail;
 - (void)sendRecoveryPasswordEmail;
 - (void)sendConfirmationLinkedMailForRecoveryPasswordEmail;
+
 
 @end

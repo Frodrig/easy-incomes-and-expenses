@@ -9,6 +9,9 @@
 #import "IAEEmailRequest.h"
 #import "IAERecoveryEmailRequest.h"
 #import "IAERecoveryMailLinkedEmailRequest.h"
+#import "IAEPasswordChangedEmailRequest.h"
+#import "IAEPasswordDisabledEmailRequest.h"
+#import "IAEPasswordEnabledEmailRequest.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
 
 #pragma mark - Constantes
@@ -30,6 +33,18 @@ static NSString * const kDefaultNameForSourceEmail = @"Easy Incomes and Expenses
             
         case RecoveryMailLinkedEmailRequest:
             retRequest = [[IAERecoveryMailLinkedEmailRequest alloc] init];
+            break;
+            
+        case PasswordChangedEmailRequest:
+            retRequest = [[IAEPasswordChangedEmailRequest alloc] init];
+            break;
+            
+        case PasswordDisabledEmailRequest:
+            retRequest = [[IAEPasswordDisabledEmailRequest alloc] init];
+            break;
+            
+        case PasswordEnabledEmailRequest:
+            retRequest = [[IAEPasswordEnabledEmailRequest alloc] init];
             break;
             
         default:

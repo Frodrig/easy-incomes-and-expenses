@@ -56,7 +56,7 @@ static NSString * const kAWSSecretKey = @"REMOVED_AWS_SECRET";
 {
     NSAssert([SSPostmarkValidators validatesEmail:@"easyincomesandexpenses@frodrig.com" type:SSPostmarkEmailAddressValidateStrict], @"");
     
-    SSPostmark *pm = [[SSPostmark alloc] initWithApiKey:@"06f7e2e4-923e-4fc4-a208-6752790e934c"];
+    SSPostmark *pm = [[SSPostmark alloc] initWithApiKey:@"REMOVED_POSTMARK_TOKEN"];
     
     SSPostmarkEmail *email = [[SSPostmarkEmail alloc] init];
     email.fromAddress = @"easyincomesandexpenses@frodrig.com";

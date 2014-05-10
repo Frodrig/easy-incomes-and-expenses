@@ -28,6 +28,7 @@ static const CGFloat kDissolveMessagesTime = 0.5;
 @property (weak, nonatomic) IBOutlet UILabel *informationLabel;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveButton;
 @property (weak, nonatomic) IBOutlet UIButton *unlinkButton;
+@property (weak, nonatomic) IBOutlet UILabel *noComercialUseLabel;
 @property (nonatomic) BOOL editing;
 @property (nonatomic, strong) UIColor *defaultMsgColor;
 @property (nonatomic, strong) UIColor *invalidEmailMsgColor;
@@ -100,6 +101,7 @@ static const CGFloat kDissolveMessagesTime = 0.5;
     [self configureUnlinkButton];
     [self configurePasswordTextFieldView];
     [self configureInformationLabel];
+    [self configureNoComercialUseLabel];
     [self enableSaveButtonIfApplicable];
 }
 
@@ -166,6 +168,11 @@ static const CGFloat kDissolveMessagesTime = 0.5;
             }];
         }];
     }
+}
+
+- (void)configureNoComercialUseLabel
+{
+    self.noComercialUseLabel.text = NSLocalizedString(@"LTEXT_PASSWORDPANEL_INFONOCOMERCIALUSE", @"");
 }
 
 - (void)didReceiveMemoryWarning

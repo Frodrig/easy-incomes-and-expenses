@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Fernando Rodríguez Martínez. All rights reserved.
 //
 
-#import <AWSSES/AWSSES.h>
+#import "SSPostmarkEmail.h"
 
 typedef NS_ENUM(NSUInteger, IAEEmailRequestType)
 {
@@ -14,15 +14,19 @@ typedef NS_ENUM(NSUInteger, IAEEmailRequestType)
     RecoveryMailLinkedEmailRequest,
 };
 
-@interface IAEEmailRequest : SESSendEmailRequest
+@interface IAEEmailRequest : SSPostmarkEmail
 
 + (id)emailRequestWithType:(IAEEmailRequestType)type;
 
 - (instancetype)init;
 
 // Metodos a sobreescribir en las clases derivadas
+// Opcional
 - (NSString *)findSourceEmail;
+- (NSString *)findNameForSourceEmail;
 - (NSString *)findDestinationEmail;
+
+// Obligatorio
 - (NSString *)findSubjectText;
 - (NSString *)findMessageText;
 

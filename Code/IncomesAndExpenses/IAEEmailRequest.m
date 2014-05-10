@@ -9,9 +9,12 @@
 #import "IAEEmailRequest.h"
 #import "IAERecoveryEmailRequest.h"
 #import "IAERecoveryMailLinkedEmailRequest.h"
-#import <AWSRuntime/AWSRuntime.h>
-#import <AWSSES/AWSSES.h>
 #import "NSUserDefaults+EasyIncAndExp.h"
+
+#pragma mark - Constantes
+
+static NSString * const kDefaultSourceEmail = @"easyincomesandexpenses@frodrig.com";
+static NSString * const kDefaultNameForSourceEmail = @"Easy Incomes and Expenses";
 
 @implementation IAEEmailRequest
 
@@ -50,42 +53,23 @@
 
 - (void)prepareRequest
 {
-    self.source = [self findSourceEmail];
-    self.destination = [self createEmailDestination];
-    self.message = [self createEmailMessage];
-}
-
-- (SESDestination *)createEmailDestination
-{
-    SESDestination *emailDestination = [[SESDestination alloc] init];
-    [emailDestination.toAddresses addObject:[self findDestinationEmail]];
-
-    return emailDestination;
-}
-
-- (SESMessage *)createEmailMessage
-{
-    SESContent *emailSubject = [[SESContent alloc] init];
-    emailSubject.data = [self findSubjectText];
-    
-    SESContent *emailMessageBody = [[SESContent alloc] init];
-    emailMessageBody.data = [self findMessageText];
-    
-    SESBody *body = [[SESBody alloc] init];
-    body.text = emailMessageBody;
-    
-    SESMessage *emailMessage = [[SESMessage alloc] init];
-    emailMessage.subject = emailSubject;
-    emailMessage.body = body;
-    
-    return emailMessage;
+    self.fromAddress = [self findSourceEmail];
+    self.nameForFromAddress =[self findNameForSourceEmail];
+    self.subject = [self findSubjectText];
+    [self.toAddresses addObject:[self findDestinationEmail]];
+    [self setBody:[self findMessageText] isHTML:NO];
 }
 
 #pragma mark - Metodos a sobreescribir
 
 - (NSString *)findSourceEmail
 {
-    return @"easyincexp-noreply@frodrig.com";
+    return kDefaultSourceEmail;
+}
+
+- (NSString *)findNameForSourceEmail
+{
+    return kDefaultNameForSourceEmail;
 }
 
 - (NSString *)findDestinationEmail

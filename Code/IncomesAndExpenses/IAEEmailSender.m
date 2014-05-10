@@ -56,7 +56,7 @@ static NSString * const kAWSSecretKey = @"jUk51qk/f4wfHCGEbVJh0oO8WB8tvC8txtQM1v
 {
     NSAssert([SSPostmarkValidators validatesEmail:@"easyincomesandexpenses@frodrig.com" type:SSPostmarkEmailAddressValidateStrict], @"");
     
-    SSPostmark *pm = [[SSPostmark alloc] initWithApiKey:@"06f7e2e4-923e-4fc4-a208-6752790e934c"];
+    SSPostmark *pm = [[SSPostmark alloc] initWithApiKey:@"b4239a78-425f-405e-89bd-b7551d0fad26"];
     
     SSPostmarkEmail *email = [[SSPostmarkEmail alloc] init];
     email.fromAddress = @"easyincomesandexpenses@frodrig.com";

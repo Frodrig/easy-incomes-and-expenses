@@ -252,15 +252,26 @@ static const NSInteger kBasePanelPasswordTag = 100;
 {
     const BOOL passwordOk = [self.pendingConfirmationPassword isEqualToString:self.insertedPassword];
     if (passwordOk) {
-        [self dismissAndChangeUserPassword:self.pendingConfirmationPassword];
+        [self changeUserPasswordWithNotificationEmailIfApplicableAndDismiss:self.pendingConfirmationPassword];
     } else {
         [self performActionsAfterInvalidPasswordInsertedWithIncorrectPasswordMessage:@"LTEXT_PASSWORDPANEL_SCREENMESSAGE_INVALIDPASSWORDINCONFIRM"];
     }
 }
 
-- (void)dismissAndChangeUserPassword:(NSString *)newPasswordCode
+- (void)changeUserPasswordWithNotificationEmailIfApplicableAndDismiss:(NSString *)newPasswordCode
 {
+    const BOOL passwordRecoveryEmailSet = [[NSUserDefaults standardUserDefaults] isPasswordRecoveryEmailSet];
+    const BOOL canSendPasswordChangedEmail = passwordRecoveryEmailSet && [[KeychainItemWrapper defaultKeychain] isPasswordActivated];
+    const BOOL canSendPasswordEnabledEmail = passwordRecoveryEmailSet && ![[KeychainItemWrapper defaultKeychain] isPasswordActivated];
+    
     [[KeychainItemWrapper defaultKeychain] setNewPassword:self.pendingConfirmationPassword];
+    
+    if (canSendPasswordChangedEmail) {
+        [[IAEEmailSender sharedInstance] sendPasswordChangedEmail];
+    } else if (canSendPasswordEnabledEmail){
+        [[IAEEmailSender sharedInstance] sendPasswordEnabledEmail];
+    }
+    
     [self.delegate dismissAll];
 }
 
@@ -314,12 +325,20 @@ static const NSInteger kBasePanelPasswordTag = 100;
     if (subState == insertSubstate) {
         if ([self isInsertedPasswordEqualToUserPassword]) {
             if (clearUserPassword) {
-                [[KeychainItemWrapper defaultKeychain] clearPassword];
+                [self clearUserPasswordAndNotifyWithRecoveryEmailIfApplicable];
             }
             [self.delegate dismissAll];
         } else {
             [self performActionsAfterInvalidPasswordInsertedWithIncorrectPasswordMessage:incorrectPasswordMessage];
         }
+    }
+}
+
+- (void)clearUserPasswordAndNotifyWithRecoveryEmailIfApplicable
+{
+    [[KeychainItemWrapper defaultKeychain] clearPassword];
+    if ([[NSUserDefaults standardUserDefaults] isPasswordRecoveryEmailSet]) {
+        [[IAEEmailSender sharedInstance] sendPasswordDisabledEmail];
     }
 }
 

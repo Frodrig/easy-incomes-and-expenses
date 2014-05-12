@@ -76,6 +76,11 @@ static NSString * const kPostmarkAPIKey = @"b4239a78-425f-405e-89bd-b7551d0fad26
     [self sendEmailRequestOfType:RecoveryMailLinkedEmailRequest];
 }
 
+- (void)sendUnlinkedMailForRecoveryPasswordEmail
+{
+    [self sendEmailRequestOfType:MailUnlinkedEmailRequest];
+}
+
 - (void)sendEmailRequestOfType:(IAEEmailRequestType)emailRequestType
 {
     [self.postmark sendEmail:[IAEEmailRequest emailRequestWithType:emailRequestType] completion:^(BOOL success, NSError *error) {

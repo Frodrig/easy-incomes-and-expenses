@@ -140,10 +140,20 @@ static NSString * const kEasyIncomesAndExpensesViewControllerID = @"EasyIncomesA
 
 - (void)notificationApplicationWillEnterForeground:(NSNotification *)notification
 {
-    if ([[KeychainItemWrapper defaultKeychain] isPasswordActivated]) {
-        [self initPasswordController];
-        [self presentViewController:self.passwordViewController animated:YES completion:nil];
+    if ([self needToPresentPasswordController]) {
+        [self initAndPresentPasswordViewController];
     }
+}
+
+- (BOOL)needToPresentPasswordController
+{
+    return [[KeychainItemWrapper defaultKeychain] isPasswordActivated] && !self.passwordViewController;
+}
+
+- (void)initAndPresentPasswordViewController
+{
+    [self initPasswordController];
+    [self presentViewController:self.passwordViewController animated:YES completion:nil];
 }
 
 #pragma mark - IAEHelpIndexViewControllerDelegate

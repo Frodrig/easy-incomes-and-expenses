@@ -15,6 +15,8 @@
 #import "IAEEmailSender.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
 
+static const CGFloat kDelayTimeForActionsAfterInvalidPassword = 0.25;
+
 @interface IAEPasswordPanelViewController ()
 
 @property (nonatomic) ModeType mode;
@@ -254,7 +256,7 @@ static const NSInteger kBasePanelPasswordTag = 100;
     if (passwordOk) {
         [self changeUserPasswordWithNotificationEmailIfApplicableAndDismiss:self.pendingConfirmationPassword];
     } else {
-        [self performActionsAfterInvalidPasswordInsertedWithIncorrectPasswordMessage:@"LTEXT_PASSWORDPANEL_SCREENMESSAGE_INVALIDPASSWORDINCONFIRM"];
+        [self performAfterDelayActionsAfterInvalidPasswordInsertedWithIncorrectPasswordMessage:@"LTEXT_PASSWORDPANEL_SCREENMESSAGE_INVALIDPASSWORDINCONFIRM"];
     }
 }
 
@@ -286,7 +288,7 @@ static const NSInteger kBasePanelPasswordTag = 100;
        if ([self isInsertedPasswordEqualToUserPassword]) {
            [self advanceScrollViewSavingInsertedPassword:NO andCleaningInsertedPassword:YES];
         } else {
-            [self performActionsAfterInvalidPasswordInsertedWithIncorrectPasswordMessage:@"LTEXT_PASSWORDPANEL_SCREENMESSAGE_INVALIDPASSWORDINCHANGE"];
+            [self performAfterDelayActionsAfterInvalidPasswordInsertedWithIncorrectPasswordMessage:@"LTEXT_PASSWORDPANEL_SCREENMESSAGE_INVALIDPASSWORDINCHANGE"];
         }
     } else if (subState == insertNewSubstate) {
         [self advanceScrollViewSavingInsertedPassword:YES andCleaningInsertedPassword:YES];
@@ -304,6 +306,22 @@ static const NSInteger kBasePanelPasswordTag = 100;
     
     [panel executeFXInvalidPassword];
 }
+
+- (void)performAfterDelayActionsAfterInvalidPasswordInsertedWithIncorrectPasswordMessage:(NSString *)incorrectPasswordMessage
+{
+    __weak IAEPasswordPanelViewController *weakSelf = self;
+    void (^block)(void) = ^void(void) {
+        [weakSelf performActionsAfterInvalidPasswordInsertedWithIncorrectPasswordMessage:incorrectPasswordMessage];
+    };
+    
+    [self performSelector:@selector(executeBlock:) withObject:block afterDelay:kDelayTimeForActionsAfterInvalidPassword];
+}
+
+- (void)executeBlock:(void(^)(void))block
+{
+    block();
+}
+
 - (void)performActionsAfterPasswordInsertedInDeactivateMode
 {
     [self performActionsAfterPasswordInsertedCleaningUserPassword:YES
@@ -329,7 +347,7 @@ static const NSInteger kBasePanelPasswordTag = 100;
             }
             [self.delegate dismissAll];
         } else {
-            [self performActionsAfterInvalidPasswordInsertedWithIncorrectPasswordMessage:incorrectPasswordMessage];
+            [self performAfterDelayActionsAfterInvalidPasswordInsertedWithIncorrectPasswordMessage:incorrectPasswordMessage];
         }
     }
 }

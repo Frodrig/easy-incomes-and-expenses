@@ -7,17 +7,18 @@
 //
 
 #import "IAERecoveryEmailRequest.h"
+#import "KeychainItemWrapper.h"
 
 @implementation IAERecoveryEmailRequest
 
 - (NSString *)findSubjectText
 {
-    return @"Test";
+    return NSLocalizedString(@"LTEXT_PASSWORD_EMAILREMEMBERPASSWORD_SUBJECT", @"");
 }
 
 - (NSString *)findMessageText
 {
-    return @"Test";
+    return [NSString stringWithFormat:NSLocalizedString(@"LTEXT_PASSWORD_EMAILREMEMBERPASSWORD_MESSAGE", @""), [[KeychainItemWrapper defaultKeychain] findPassword]];
 }
 
 @end

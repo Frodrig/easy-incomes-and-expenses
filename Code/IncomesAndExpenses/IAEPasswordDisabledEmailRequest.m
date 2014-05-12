@@ -12,12 +12,12 @@
 
 - (NSString *)findSubjectText
 {
-    return @"Test";
+    return NSLocalizedString(@"LTEXT_PASSWORD_EMAILDEACTIVATEPASSWORDMODE_SUBJECT", @"");
 }
 
 - (NSString *)findMessageText
 {
-    return @"Test";
+    return NSLocalizedString(@"LTEXT_PASSWORD_EMAILDEACTIVATEPASSWORDMODE_MESSAGE", @"");
 }
 
 @end

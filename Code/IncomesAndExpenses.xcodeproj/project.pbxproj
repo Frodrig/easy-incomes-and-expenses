@@ -133,6 +133,7 @@
 		5B90783C179D268000B2A0F7 /* IAEDisplayPanelCalculatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B90783B179D268000B2A0F7 /* IAEDisplayPanelCalculatorView.m */; };
 		5B907840179D269E00B2A0F7 /* IAEKeyboardPanelCalculatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B90783F179D269E00B2A0F7 /* IAEKeyboardPanelCalculatorView.m */; };
 		5B94036017904C1400F9C1D0 /* IAEYearSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B94035F17904C1400F9C1D0 /* IAEYearSelectorViewController.xib */; };
+		5B9416791920CF4000BECD88 /* IAEMailUnlinkedEmailRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B9416781920CF4000BECD88 /* IAEMailUnlinkedEmailRequest.m */; };
 		5B951F6C17D88F1700CCEACE /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B951F6A17D88F1700CCEACE /* icon.png */; };
 		5B951F6D17D88F1700CCEACE /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B951F6B17D88F1700CCEACE /* icon@2x.png */; };
 		5B98F0B4185884770051333A /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B98F0B3185884770051333A /* KeychainItemWrapper.m */; };
@@ -451,6 +452,8 @@
 		5B907842179D7FED00B2A0F7 /* IAECalculatorViewControllerDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECalculatorViewControllerDataSource.h; sourceTree = "<group>"; };
 		5B94035C178FEA5C00F9C1D0 /* IAEYearSelectorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEYearSelectorViewControllerDelegate.h; sourceTree = "<group>"; };
 		5B94035F17904C1400F9C1D0 /* IAEYearSelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEYearSelectorViewController.xib; sourceTree = "<group>"; };
+		5B9416771920CF4000BECD88 /* IAEMailUnlinkedEmailRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEMailUnlinkedEmailRequest.h; sourceTree = "<group>"; };
+		5B9416781920CF4000BECD88 /* IAEMailUnlinkedEmailRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEMailUnlinkedEmailRequest.m; sourceTree = "<group>"; };
 		5B951F6A17D88F1700CCEACE /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		5B951F6B17D88F1700CCEACE /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		5B98F0B2185884770051333A /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
@@ -1735,6 +1738,8 @@
 				5BB937D21919487A0001A31E /* IAERecoveryEmailRequest.m */,
 				5BB937D41919488F0001A31E /* IAERecoveryMailLinkedEmailRequest.h */,
 				5BB937D51919488F0001A31E /* IAERecoveryMailLinkedEmailRequest.m */,
+				5B9416771920CF4000BECD88 /* IAEMailUnlinkedEmailRequest.h */,
+				5B9416781920CF4000BECD88 /* IAEMailUnlinkedEmailRequest.m */,
 				5B069D7D191E2400002442F6 /* IAEPasswordDisabledEmailRequest.h */,
 				5B069D7E191E2400002442F6 /* IAEPasswordDisabledEmailRequest.m */,
 				5B069D80191E2412002442F6 /* IAEPasswordEnabledEmailRequest.h */,
@@ -2369,6 +2374,7 @@
 				5BC7101A17AC29F600E12953 /* IAEConcept.m in Sources */,
 				5B767E031636D7FC005315F8 /* main.m in Sources */,
 				5BCE3AB417A9689600CD01E7 /* IAEHelperReportTextRawMenuDataSource.m in Sources */,
+				5B9416791920CF4000BECD88 /* IAEMailUnlinkedEmailRequest.m in Sources */,
 				5B5BEAF41827E6CA00A00BE0 /* IAEExporter.m in Sources */,
 				5BDD9A2618571B60001A6CEF /* IAEHelpPasswordIndexViewController.m in Sources */,
 				5B767E071636D7FC005315F8 /* IAEAppDelegate.m in Sources */,

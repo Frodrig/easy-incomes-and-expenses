@@ -230,6 +230,7 @@ static const CGFloat kDissolveMessagesTime = 0.5;
         [self dismissViewControllerAnimated:YES completion:nil];
     } else if (self.actualAlertView == AlertViewRecoveryEmailUnlinked) {
         if (buttonIndex == 1) {
+            [[IAEEmailSender sharedInstance] sendUnlinkedMailForRecoveryPasswordEmail];
             [[NSUserDefaults standardUserDefaults] desvinculePasswordRecoveryEmail];
             [self dismissViewControllerAnimated:YES completion:nil];
         }

@@ -12,6 +12,7 @@ typedef NS_ENUM(NSUInteger, IAEEmailRequestType)
 {
     RecoveryEmailRequest,
     RecoveryMailLinkedEmailRequest,
+    MailUnlinkedEmailRequest,
     PasswordDisabledEmailRequest,
     PasswordEnabledEmailRequest,
     PasswordChangedEmailRequest

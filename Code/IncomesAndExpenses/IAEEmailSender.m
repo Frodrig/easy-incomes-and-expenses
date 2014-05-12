@@ -76,6 +76,11 @@ static NSString * const kPostmarkAPIKey = @"REMOVED_POSTMARK_TOKEN";
     [self sendEmailRequestOfType:RecoveryMailLinkedEmailRequest];
 }
 
+- (void)sendUnlinkedMailForRecoveryPasswordEmail
+{
+    [self sendEmailRequestOfType:MailUnlinkedEmailRequest];
+}
+
 - (void)sendEmailRequestOfType:(IAEEmailRequestType)emailRequestType
 {
     [self.postmark sendEmail:[IAEEmailRequest emailRequestWithType:emailRequestType] completion:^(BOOL success, NSError *error) {

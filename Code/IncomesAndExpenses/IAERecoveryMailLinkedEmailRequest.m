@@ -12,12 +12,12 @@
 
 - (NSString *)findSubjectText
 {
-    return @"Test";
+    return NSLocalizedString(@"LTEXT_PASSWORD_EMAILLINKED_SUBJECT", @"");
 }
 
 - (NSString *)findMessageText
 {
-    return @"Test";
+    return NSLocalizedString(@"LTEXT_PASSWORD_EMAILLINKED_MESSAGE", @"");
 }
 
 @end

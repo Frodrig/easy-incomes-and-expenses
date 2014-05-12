@@ -89,7 +89,7 @@ static float kFXInvalidPasswordDuration = 0.25;
         self.backgroundColor = [UIColor colorWithRed:1 green:0.0 blue:0.0 alpha:0.2];
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:kFXInvalidPasswordDuration animations:^{
-            self.backgroundColor = [UIColor whiteColor];
+            self.backgroundColor = [UIColor clearColor];
         } completion:nil];
     }];
 }

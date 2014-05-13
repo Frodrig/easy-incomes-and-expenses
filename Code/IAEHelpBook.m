@@ -63,7 +63,13 @@
 
 - (void)createProVersionThemesData
 {
-    _proVersionThemesText = @[];
+    _proVersionThemesText = @[@"LTEXT_HELPCONTENT_PROVERSION_1",
+                              @"LTEXT_HELPCONTENT_PROVERSION_2",
+                              @"LTEXT_HELPCONTENT_PROVERSION_3",
+                              @"LTEXT_HELPCONTENT_PROVERSION_4",
+                              @"LTEXT_HELPCONTENT_PROVERSION_5",
+                              @"LTEXT_HELPCONTENT_PROVERSION_6",
+                              @"LTEXT_HELPCONTENT_PROVERSION_7"];
 }
 
 - (void)createThemesObjects

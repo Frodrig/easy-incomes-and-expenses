@@ -12,10 +12,26 @@
 #import "IAEHelpThemeViewController.h"
 #import "IAEHelpIndexViewControllerDelegate.h"
 #import "IAESettingsViewControllerDefs.h"
+#import "IAEHelpSelectorTableViewCell.h"
+#import "IAEHelpSelectorTableViewCellDelegate.h"
 
-@interface IAEHelpViewController ()
+#pragma mark - Constants
+
+static const NSUInteger kNumberOfSections = 2;
+static const NSUInteger kHelpSelectorIndex = 0;
+static const NSUInteger kHelpContentIndex = 1;
+static NSString * const kHelpSelectorCellIdentifier = @"HelpSelectorCell";
+static NSString * const kHelpContentCellIdentifier = @"HelpContentCell";
+
+#pragma mark - Interface
+
+@interface IAEHelpViewController ()<IAEHelpSelectorTableViewCellDelegate>
+
+@property (nonatomic) IAEHelpThemeType actualHelpTheme;
 
 @end
+
+#pragma mark - Implementation
 
 @implementation IAEHelpViewController
 
@@ -27,7 +43,7 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+        _actualHelpTheme = HelpThemeAllVersion;
     }
     return self;
 }
@@ -37,6 +53,8 @@
     [super viewDidLoad];
     
     [self configureNavigationController];
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"IAEHelpSelectorTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:kHelpSelectorCellIdentifier];
 }
 
 - (void)configureNavigationController
@@ -66,35 +84,68 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return kNumberOfSections;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [IAEHelpBook sharedHelpBook].allVersionThemes.count;
+    NSInteger retNumberOfRows = 1;
+
+    if (section == kHelpContentIndex) {
+        retNumberOfRows = [self isActualHelpThemeAllVersion] ? [IAEHelpBook sharedHelpBook].allVersionThemes.count : [IAEHelpBook sharedHelpBook].proVersionThemes.count;
+    }
+    
+    return retNumberOfRows;
+}
+
+- (BOOL)isActualHelpThemeAllVersion
+{
+    return self.actualHelpTheme == HelpThemeAllVersion;
+}
+
+- (BOOL)isActualHelpThemeProVersion
+{
+    return self.actualHelpTheme == HelpThemeProVersion;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [self newCellForTableView:tableView forRowAtIndexPath:indexPath];
-    [self configureCell:cell ofTableView:tableView forRowAtIndexPath:indexPath];
+    UITableViewCell *cell = nil;
+    
+    if ([self isHelpSelectorSectionOfIndexPath:indexPath]) {
+        IAEHelpSelectorTableViewCell *helpSelectorTableViewCell = [tableView dequeueReusableCellWithIdentifier:kHelpSelectorCellIdentifier forIndexPath:indexPath];
+        helpSelectorTableViewCell.delegate = self;
+        cell = helpSelectorTableViewCell;
+    } else if ([self isHelpContentSectionOfIndexPath:indexPath]) {
+        cell = [self newHelpContentCellForTableView:tableView forRowAtIndexPath:indexPath];
+        [self configureHelpContentCell:cell ofTableView:tableView forRowAtIndexPath:indexPath];
+    }
     
     return cell;
 }
 
-- (UITableViewCell *)newCellForTableView:(UITableView *)tableView forRowAtIndexPath:(NSIndexPath *)indexPath
+- (BOOL)isHelpSelectorSectionOfIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    return indexPath.section == kHelpSelectorIndex;
+}
+
+- (BOOL)isHelpContentSectionOfIndexPath:(NSIndexPath *)indexPath
+{
+    return indexPath.section == kHelpContentIndex;
+}
+
+- (UITableViewCell *)newHelpContentCellForTableView:(UITableView *)tableView forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kHelpContentCellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kHelpContentCellIdentifier];
         cell.textLabel.font = [UIFont fontWithName:kFamilyFontNameForCells size:kFamilyFontSizeForCells];
     }
     
     return cell;
 }
 
-- (void)configureCell:(UITableViewCell *)cell ofTableView:(UITableView *)tableView forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)configureHelpContentCell:(UITableViewCell *)cell ofTableView:(UITableView *)tableView forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     IAEHelpTheme *helpTheme = [[IAEHelpBook sharedHelpBook].allVersionThemes objectAtIndex:indexPath.row];
     cell.textLabel.text = helpTheme.title;
@@ -105,7 +156,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self launchThemeViewControllerWithThemeIndex:indexPath.row];
+    if ([self isHelpContentSectionOfIndexPath:indexPath]) {
+        [self launchThemeViewControllerWithThemeIndex:indexPath.row];
+    }
 }
 
 - (void)launchThemeViewControllerWithThemeIndex:(NSUInteger)themeIndex
@@ -116,4 +169,14 @@
     [self.navigationController pushViewController:themeViewController animated:YES];
 }
 
+#pragma mark - IAEHelpSelectorTableViewCellDelegate
+
+- (void)helpSelectorTableViewCell:(IAEHelpSelectorTableViewCell *)cell didChangeSelectorIndexToHelpThemeType:(IAEHelpThemeType)helpThemeType
+{
+    self.actualHelpTheme = helpThemeType;
+    [self.tableView reloadSections:[[NSIndexSet alloc] initWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+
 @end
+

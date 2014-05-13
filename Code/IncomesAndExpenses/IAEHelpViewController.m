@@ -149,10 +149,14 @@ static const CGFloat kHelpContentSectionHeight = 64;
 
 - (void)configureHelpContentCell:(UITableViewCell *)cell ofTableView:(UITableView *)tableView forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray *versionThemes = [self isActualHelpThemeAllVersion] ? [IAEHelpBook sharedHelpBook].allVersionThemes : [IAEHelpBook sharedHelpBook].proVersionThemes;
-    IAEHelpTheme *helpTheme = [versionThemes objectAtIndex:indexPath.row];
+    IAEHelpTheme *helpTheme = [[self findContainerThemesForActualHelpTheme] objectAtIndex:indexPath.row];
     cell.textLabel.text = helpTheme.title;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+}
+
+- (NSArray *)findContainerThemesForActualHelpTheme
+{
+    return [self isActualHelpThemeAllVersion] ? [IAEHelpBook sharedHelpBook].allVersionThemes : [IAEHelpBook sharedHelpBook].proVersionThemes;
 }
 
 #pragma mark - Table view delegate
@@ -166,7 +170,7 @@ static const CGFloat kHelpContentSectionHeight = 64;
 
 - (void)launchThemeViewControllerWithThemeIndex:(NSUInteger)themeIndex
 {
-    IAEHelpTheme *theme = [[IAEHelpBook sharedHelpBook].allVersionThemes objectAtIndex:themeIndex];
+    IAEHelpTheme *theme = [[self findContainerThemesForActualHelpTheme] objectAtIndex:themeIndex];
     IAEHelpThemeViewController *themeViewController = [[IAEHelpThemeViewController alloc] initWithHelpTheme:theme];
     themeViewController.delegate = self.delegate;
     [self.navigationController pushViewController:themeViewController animated:YES];

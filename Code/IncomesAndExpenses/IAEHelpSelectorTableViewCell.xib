@@ -23,7 +23,7 @@
                             <segment title="Basic version"/>
                             <segment title="Pro version"/>
                         </segments>
-                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" red="0.80784320831298828" green="0.80784320831298828" blue="0.80784320831298828" alpha="1" colorSpace="deviceRGB"/>
                         <connections>
                             <action selector="onSegmentedControlPressed:" destination="KGk-i7-Jjw" eventType="valueChanged" id="ryF-gd-xRU"/>
                         </connections>

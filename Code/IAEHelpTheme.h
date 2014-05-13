@@ -7,11 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-typedef NS_ENUM(NSUInteger, IAEHelpThemeType) {
-    HelpThemeAllVersion,
-    HelpThemeProVersion
-};
+#import "IAEHelpThemeDefs.h"
 
 @interface IAEHelpTheme : NSObject
 

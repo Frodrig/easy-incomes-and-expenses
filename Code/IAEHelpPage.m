@@ -8,14 +8,21 @@
 
 #import "IAEHelpPage.h"
 
+@interface IAEHelpPage()
+
+@property (nonatomic, readonly) NSString *ltextPrefix;
+
+@end
+
 @implementation IAEHelpPage
 
-- (instancetype)initWithThemeIndex:(NSUInteger)themeIndex andPageIndex:(NSUInteger)pageIndex
+- (instancetype)initWithThemeIndex:(NSUInteger)themeIndex pageIndex:(NSUInteger)pageIndex andLTextPrefix:(NSString *)ltextPrefix;
 {
     self = [super init];
     if (self) {
         _themeIndex = themeIndex;
         _pageIndex = pageIndex;
+        _ltextPrefix = ltextPrefix;
         
         [self readTextData];
     }
@@ -27,7 +34,7 @@
 {
     NSMutableArray *dataRead = [[NSMutableArray alloc] init];
     
-    NSString *ltextPrefix = [NSString stringWithFormat:@"LTEXT_HELPCONTENT_%lu_%lu_", (unsigned long)_themeIndex, (unsigned long)_pageIndex];
+    NSString *ltextPrefix = [NSString stringWithFormat:@"%@%lu_%lu_", _ltextPrefix, (unsigned long)_themeIndex, (unsigned long)_pageIndex];
     NSUInteger textIndex = 1;
     BOOL endReadTextData = NO;
     while (!endReadTextData) {

@@ -8,13 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSUInteger, IAEHelpThemeType) {
+    HelpThemeAllVersion,
+    HelpThemeProVersion
+};
+
 @interface IAEHelpTheme : NSObject
 
+@property (nonatomic, readonly) IAEHelpThemeType type;
 @property (nonatomic, strong, readonly) NSString *title;
 @property (nonatomic, readonly) NSUInteger themeIndex;
 @property (nonatomic, strong, readonly) NSArray *helpPages;
 
-- (instancetype)initWithThemeIndex:(NSUInteger)themeIndex;
+
+- (instancetype)initWithThemeIndex:(NSUInteger)themeIndex andType:(IAEHelpThemeType)type;
 
 - (void)description;
 

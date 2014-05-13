@@ -71,7 +71,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [IAEHelpBook sharedHelpBook].themes.count;
+    return [IAEHelpBook sharedHelpBook].allVersionThemes.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -96,7 +96,7 @@
 
 - (void)configureCell:(UITableViewCell *)cell ofTableView:(UITableView *)tableView forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    IAEHelpTheme *helpTheme = [[IAEHelpBook sharedHelpBook].themes objectAtIndex:indexPath.row];
+    IAEHelpTheme *helpTheme = [[IAEHelpBook sharedHelpBook].allVersionThemes objectAtIndex:indexPath.row];
     cell.textLabel.text = helpTheme.title;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 }
@@ -110,7 +110,7 @@
 
 - (void)launchThemeViewControllerWithThemeIndex:(NSUInteger)themeIndex
 {
-    IAEHelpTheme *theme = [[IAEHelpBook sharedHelpBook].themes objectAtIndex:themeIndex];
+    IAEHelpTheme *theme = [[IAEHelpBook sharedHelpBook].allVersionThemes objectAtIndex:themeIndex];
     IAEHelpThemeViewController *themeViewController = [[IAEHelpThemeViewController alloc] initWithHelpTheme:theme];
     themeViewController.delegate = self.delegate;
     [self.navigationController pushViewController:themeViewController animated:YES];

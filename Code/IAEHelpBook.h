@@ -16,7 +16,7 @@
 
 @interface IAEHelpBook : NSObject
 
-@property (nonatomic, strong, readonly) NSArray *themes;
+@property (nonatomic, strong, readonly) NSArray *allVersionThemes;
 
 + (instancetype)sharedHelpBook;
 

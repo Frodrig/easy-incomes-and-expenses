@@ -14,7 +14,7 @@
 @property (nonatomic, readonly) NSUInteger themeIndex;
 @property (nonatomic, readonly) NSUInteger pageIndex;
 
-- (instancetype)initWithThemeIndex:(NSUInteger)themeIndex andPageIndex:(NSUInteger)pageIndex;
+- (instancetype)initWithThemeIndex:(NSUInteger)themeIndex pageIndex:(NSUInteger)pageIndex andLTextPrefix:(NSString *)ltextPrefix;
 
 - (void)description;
 

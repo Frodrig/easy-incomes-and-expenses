@@ -11,11 +11,12 @@
 
 @implementation IAEHelpTheme
 
-- (instancetype)initWithThemeIndex:(NSUInteger)themeIndex
+- (instancetype)initWithThemeIndex:(NSUInteger)themeIndex andType:(IAEHelpThemeType)type;
 {
     self = [super init];
     if (self) {
         _themeIndex = themeIndex;
+        _type = type;
         [self readTitleData];
         [self createHelpPages];
     }
@@ -25,7 +26,7 @@
 
 - (void)readTitleData
 {
-    NSString *unlocalizedLText = [NSString stringWithFormat:@"LTEXT_HELPCONTENT_%lu", (unsigned long)_themeIndex];
+    NSString *unlocalizedLText = [NSString stringWithFormat:@"%@%lu", [self findStaticPrefixThemeLTextForActualType], (unsigned long)_themeIndex];
     _title = NSLocalizedString(unlocalizedLText, @"");
 }
 
@@ -33,7 +34,7 @@
 {
     NSMutableArray *helpPagesCreated = [[NSMutableArray alloc] init];
     
-    NSString *prefixThemeLTextPage = [NSString stringWithFormat:@"LTEXT_HELPCONTENT_%lu_", (unsigned long)_themeIndex];
+    NSString *prefixThemeLTextPage = [NSString stringWithFormat:@"%@%lu_", [self findStaticPrefixThemeLTextForActualType], (unsigned long)_themeIndex];
     NSUInteger helpPageIndex = 1;
     BOOL endReadHelpPages = NO;
     while (!endReadHelpPages) {
@@ -43,7 +44,7 @@
                                                                                                  table:nil];
         endReadHelpPages = [locLTextOfFirstTextOfFirstPageOfTheme compare:unlocLTextOfFirstTextOfFirstPageOfTheme] == NSOrderedSame;
         if (!endReadHelpPages) {
-            IAEHelpPage *helpPage = [[IAEHelpPage alloc] initWithThemeIndex:_themeIndex andPageIndex:helpPageIndex];
+            IAEHelpPage *helpPage = [[IAEHelpPage alloc] initWithThemeIndex:_themeIndex pageIndex:helpPageIndex andLTextPrefix:[self findStaticPrefixThemeLTextForActualType]];
             [helpPagesCreated addObject:helpPage];
         }
         
@@ -51,6 +52,19 @@
     }
     
     _helpPages = [NSArray arrayWithArray:helpPagesCreated];
+}
+
+- (NSString *)findStaticPrefixThemeLTextForActualType
+{
+    NSString *retPrefix = nil;
+    
+    if (_type == HelpThemeAllVersion) {
+        retPrefix = @"LTEXT_HELPCONTENT_ALLVERSIONS_";
+    } else if (_type == HelpThemeProVersion) {
+        retPrefix = @"LTEXT_HELPCONTENT_PROVERSION_";
+    }
+    
+    return retPrefix;
 }
 
 - (void)description

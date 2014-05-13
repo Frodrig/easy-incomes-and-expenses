@@ -12,6 +12,7 @@
 @interface IAEHelpBook()
 
 @property (nonatomic, strong) NSArray *allVersionThemesText;
+@property (nonatomic, strong) NSArray *proVersionThemesText;
 
 @end
 
@@ -45,6 +46,7 @@
 - (void)createThemesData
 {
     [self createAllVersionThemesData];
+    [self createProVersionThemesData];
 }
 
 - (void)createAllVersionThemesData
@@ -59,20 +61,36 @@
                               @"LTEXT_HELPCONTENT_ALLVERSIONS_8"];
 }
 
+- (void)createProVersionThemesData
+{
+    _proVersionThemesText = @[];
+}
+
 - (void)createThemesObjects
 {
     [self createAllVersionThemesObjects];
+    [self createProVersionThemesObjects];
 }
 
 - (void)createAllVersionThemesObjects
 {
+    _allVersionThemes = [self createArrayOfThemeObjectsType:HelpThemeAllVersion fromThemesText:_allVersionThemesText];
+}
+
+- (void)createProVersionThemesObjects
+{
+    _proVersionThemes = [self createArrayOfThemeObjectsType:HelpThemeProVersion fromThemesText:_proVersionThemesText];
+}
+
+- (NSArray *)createArrayOfThemeObjectsType:(IAEHelpThemeType)themeObjectType fromThemesText:(NSArray *)themesText
+{
     NSMutableArray *themesCreated = [[NSMutableArray alloc] init];
-    for (NSUInteger allVersionThemeIndex = 0; allVersionThemeIndex < _allVersionThemesText.count; ++allVersionThemeIndex) {
-        IAEHelpTheme *theme = [[IAEHelpTheme alloc] initWithThemeIndex:allVersionThemeIndex + 1 andType:HelpThemeAllVersion];
+    for (NSUInteger themeIndexIt = 0; themeIndexIt < themesText.count; ++themeIndexIt) {
+        IAEHelpTheme *theme = [[IAEHelpTheme alloc] initWithThemeIndex:themeIndexIt + 1 andType:themeObjectType];
         [themesCreated addObject:theme];
     }
-
-    _allVersionThemes = [NSArray arrayWithArray:themesCreated];
+    
+    return [NSArray arrayWithArray:themesCreated];
 }
 
 #pragma mark - Description

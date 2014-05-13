@@ -147,7 +147,8 @@ static NSString * const kHelpContentCellIdentifier = @"HelpContentCell";
 
 - (void)configureHelpContentCell:(UITableViewCell *)cell ofTableView:(UITableView *)tableView forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    IAEHelpTheme *helpTheme = [[IAEHelpBook sharedHelpBook].allVersionThemes objectAtIndex:indexPath.row];
+    NSArray *versionThemes = [self isActualHelpThemeAllVersion] ? [IAEHelpBook sharedHelpBook].allVersionThemes : [IAEHelpBook sharedHelpBook].proVersionThemes;
+    IAEHelpTheme *helpTheme = [versionThemes objectAtIndex:indexPath.row];
     cell.textLabel.text = helpTheme.title;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 }

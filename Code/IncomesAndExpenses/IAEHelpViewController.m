@@ -110,7 +110,7 @@
 
 - (void)launchThemeViewControllerWithThemeIndex:(NSUInteger)themeIndex
 {
-    IAEHelpTheme *theme = [[IAEHelpBook sharedHelpBook] findHelpThemeAtIndex:themeIndex];
+    IAEHelpTheme *theme = [[IAEHelpBook sharedHelpBook].themes objectAtIndex:themeIndex];
     IAEHelpThemeViewController *themeViewController = [[IAEHelpThemeViewController alloc] initWithHelpTheme:theme];
     themeViewController.delegate = self.delegate;
     [self.navigationController pushViewController:themeViewController animated:YES];

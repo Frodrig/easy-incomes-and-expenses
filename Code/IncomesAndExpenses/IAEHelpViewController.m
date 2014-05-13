@@ -18,10 +18,12 @@
 #pragma mark - Constants
 
 static const NSUInteger kNumberOfSections = 2;
-static const NSUInteger kHelpSelectorIndex = 0;
-static const NSUInteger kHelpContentIndex = 1;
+static const NSUInteger kHelpSelectorSectionIndex = 0;
+static const NSUInteger kHelpContentSectionIndex = 1;
 static NSString * const kHelpSelectorCellIdentifier = @"HelpSelectorCell";
 static NSString * const kHelpContentCellIdentifier = @"HelpContentCell";
+static const CGFloat kHelpSelectorSectionHeight = 44;
+static const CGFloat kHelpContentSectionHeight = 64;
 
 #pragma mark - Interface
 
@@ -91,7 +93,7 @@ static NSString * const kHelpContentCellIdentifier = @"HelpContentCell";
 {
     NSInteger retNumberOfRows = 1;
 
-    if (section == kHelpContentIndex) {
+    if (section == kHelpContentSectionIndex) {
         retNumberOfRows = [self isActualHelpThemeAllVersion] ? [IAEHelpBook sharedHelpBook].allVersionThemes.count : [IAEHelpBook sharedHelpBook].proVersionThemes.count;
     }
     
@@ -126,12 +128,12 @@ static NSString * const kHelpContentCellIdentifier = @"HelpContentCell";
 
 - (BOOL)isHelpSelectorSectionOfIndexPath:(NSIndexPath *)indexPath
 {
-    return indexPath.section == kHelpSelectorIndex;
+    return indexPath.section == kHelpSelectorSectionIndex;
 }
 
 - (BOOL)isHelpContentSectionOfIndexPath:(NSIndexPath *)indexPath
 {
-    return indexPath.section == kHelpContentIndex;
+    return indexPath.section == kHelpContentSectionIndex;
 }
 
 - (UITableViewCell *)newHelpContentCellForTableView:(UITableView *)tableView forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -168,6 +170,16 @@ static NSString * const kHelpContentCellIdentifier = @"HelpContentCell";
     IAEHelpThemeViewController *themeViewController = [[IAEHelpThemeViewController alloc] initWithHelpTheme:theme];
     themeViewController.delegate = self.delegate;
     [self.navigationController pushViewController:themeViewController animated:YES];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat retHeightRow = kHelpContentSectionHeight;
+    if (indexPath.section == kHelpSelectorSectionIndex) {
+        retHeightRow = kHelpSelectorSectionHeight;
+    }
+    
+    return retHeightRow;
 }
 
 #pragma mark - IAEHelpSelectorTableViewCellDelegate

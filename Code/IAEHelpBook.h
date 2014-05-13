@@ -24,6 +24,4 @@
 
 - (void)description;
 
-- (IAEHelpTheme *)findHelpThemeAtIndex:(NSUInteger)index;
-
 @end

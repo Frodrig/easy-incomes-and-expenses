@@ -67,18 +67,4 @@
     NSLog(@"%@", [self.themes description]);
 }
 
-
-#pragma mark - Finds
-
-- (IAEHelpTheme *)findHelpThemeAtIndex:(NSUInteger)index
-{
-    IAEHelpTheme *helpTheme = nil;
-    if (index < self.themes.count) {
-        helpTheme = [self.themes objectAtIndex:index];
-    }
-    
-    return helpTheme;
-}
-
-
 @end

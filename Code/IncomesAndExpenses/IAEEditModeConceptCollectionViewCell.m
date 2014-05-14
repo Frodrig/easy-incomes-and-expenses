@@ -81,14 +81,32 @@ static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
+    NSAssert(0, @"");
+    return nil;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
     if (self) {
-        // Initialization code
         _favoritePinEnabled = YES;
         _menuModeActive = NO;
         self.durationOfStrokeStateTransition = kDefaultDurationOfStrokeStateModeTransition;
     }
+    
     return self;
+}
+
+- (void)awakeFromNib
+{
+    [self localizedSubmenuOptionLabels];
+}
+
+- (void)localizedSubmenuOptionLabels
+{
+    self.optionCopyLabel.text = NSLocalizedString(@"LTEXT_CONCEPT_SUBMENU_COPY", @"");
+    self.optionMoveLabel.text = NSLocalizedString(@"LTEXT_CONCEPT_SUBMENU_MOVE", @"");
+    self.optionDuplicateLabel.text = NSLocalizedString(@"LTEXT_CONCEPT_SUBMENU_DUPLICATE", @"");
 }
 
 - (void)prepareForReuse

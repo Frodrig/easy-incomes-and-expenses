@@ -37,7 +37,6 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event

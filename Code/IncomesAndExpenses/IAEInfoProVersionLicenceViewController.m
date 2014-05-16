@@ -10,6 +10,11 @@
 
 @interface IAEInfoProVersionLicenceViewController ()
 
+@property (weak, nonatomic) IBOutlet UINavigationItem *navItem;
+@property (weak, nonatomic) IBOutlet UILabel *easyIncomesAndExpensesLabel;
+@property (weak, nonatomic) IBOutlet UILabel *proVersionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *thankYouLabel;
+
 @end
 
 @implementation IAEInfoProVersionLicenceViewController
@@ -26,7 +31,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view from its nib.
+    [self localizeStrings];
+}
+
+- (void)localizeStrings
+{
+    self.navItem.title = NSLocalizedString(@"LTEXT_INFOPROVERSIONMODAL_TITLE", @"");
+    self.easyIncomesAndExpensesLabel.text = NSLocalizedString(@"LTEXT_INFOPROVERSIONMODAL_APPNAME", @"");
+    self.proVersionLabel.text = NSLocalizedString(@"LTEXT_INFOPROVERSIONMODAL_PROVERSION", @"");
+    self.thankYouLabel.text = NSLocalizedString(@"LTEXT_INFOPROVERSIONMODAL_THANKYOU", @"");
 }
 
 - (void)didReceiveMemoryWarning
@@ -34,6 +49,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - Events
 
 - (IBAction)doneButtonPressed:(id)sender
 {

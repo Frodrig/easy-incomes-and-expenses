@@ -9,6 +9,7 @@
 #import "IAEInAppPurchaseStoreViewController.h"
 
 @interface IAEInAppPurchaseStoreViewController ()
+@property (weak, nonatomic) IBOutlet UINavigationItem *navItem;
 
 @end
 
@@ -27,6 +28,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    self.navItem.title = NSLocalizedString(@"LTEXT_MAINNAVIGATION_TITLE_NOPROVERSION", @"");
 }
 
 - (void)didReceiveMemoryWarning

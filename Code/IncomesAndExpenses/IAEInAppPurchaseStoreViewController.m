@@ -35,4 +35,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - DoneButtonPressed
+
+- (IBAction)doneButtonPressed:(id)sender
+{
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
 @end

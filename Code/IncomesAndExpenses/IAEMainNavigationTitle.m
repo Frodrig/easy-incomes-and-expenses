@@ -7,31 +7,36 @@
 //
 
 #import "IAEMainNavigationTitle.h"
+#import "NSUserDefaults+EasyIncAndExp.h"
 
 @implementation IAEMainNavigationTitle
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
+    NSAssert(0, @"Se espera que se cargue desde un StoryBoard / XIB");
+    return nil;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
     if (self) {
-        // Initialization code
+        [self configureText];
     }
+    
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+- (void)configureText
 {
-    // Drawing code
+    self.text = NSLocalizedString([[NSUserDefaults standardUserDefaults] isProVersionEnabled] ?@"LTEXT_MAINNAVIGATION_TITLE_PROVERSION" : @"LTEXT_MAINNAVIGATION_TITLE_NOPROVERSION" , @"");
 }
-*/
 
+
+#pragma mark - Interaction
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"Touch en el navigation title");
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event

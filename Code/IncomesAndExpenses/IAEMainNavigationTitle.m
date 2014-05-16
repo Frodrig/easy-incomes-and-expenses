@@ -37,7 +37,8 @@ static NSString * const kNotificationMainLabelTitleTouched = @"mainLabelTitleTou
 
 - (void)configureText
 {
-    self.text = NSLocalizedString([[NSUserDefaults standardUserDefaults] isProVersionEnabled] ?@"LTEXT_MAINNAVIGATION_TITLE_PROVERSION" : @"LTEXT_MAINNAVIGATION_TITLE_NOPROVERSION" , @"");
+    [[NSUserDefaults standardUserDefaults] disableProVersion];
+    self.text = NSLocalizedString([[NSUserDefaults standardUserDefaults] isProVersionEnabled] ? @"LTEXT_MAINNAVIGATION_TITLE_PROVERSION" : @"LTEXT_MAINNAVIGATION_TITLE_NOPROVERSION" , @"");
 }
 
 

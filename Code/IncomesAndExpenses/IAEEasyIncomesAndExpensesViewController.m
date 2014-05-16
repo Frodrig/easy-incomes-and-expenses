@@ -2457,9 +2457,10 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)notificationCenterMainNavitationTitleTouched:(NSNotification *)notification
 {
-    UIViewController *modalViewController = [[NSUserDefaults standardUserDefaults] isProVersionEnabled] ? [[IAEInAppPurchaseStoreViewController alloc] initWithNibName:nil bundle:nil] : [[IAEInfoProVersionLicenceViewController alloc] initWithNibName:nil bundle:nil];
+    UIViewController *modalViewController = [[NSUserDefaults standardUserDefaults] isProVersionEnabled] ? [[IAEInfoProVersionLicenceViewController alloc] initWithNibName:nil bundle:nil] : [[IAEInAppPurchaseStoreViewController alloc] initWithNibName:nil bundle:nil];
     modalViewController.modalPresentationStyle = UIModalPresentationFormSheet;
     modalViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    modalViewController.modalInPopover = YES;
     [self presentViewController:modalViewController animated:YES completion:nil];
 }
 

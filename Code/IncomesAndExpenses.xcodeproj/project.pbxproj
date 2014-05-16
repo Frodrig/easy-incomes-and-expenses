@@ -44,6 +44,8 @@
 		5B25B3A41925F2D0009B53BA /* IAEMainNavigationTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B25B3A31925F2D0009B53BA /* IAEMainNavigationTitle.m */; };
 		5B25B3AA1925F8A7009B53BA /* IAEInfoProVersionLicenceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B25B3A81925F8A7009B53BA /* IAEInfoProVersionLicenceViewController.m */; };
 		5B25B3AB1925F8A7009B53BA /* IAEInfoProVersionLicenceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B25B3A91925F8A7009B53BA /* IAEInfoProVersionLicenceViewController.xib */; };
+		5B25B3B01925F90F009B53BA /* IAEInAppPurchaseStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B25B3AE1925F90F009B53BA /* IAEInAppPurchaseStoreViewController.m */; };
+		5B25B3B11925F90F009B53BA /* IAEInAppPurchaseStoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B25B3AF1925F90F009B53BA /* IAEInAppPurchaseStoreViewController.xib */; };
 		5B28813417985822006E4F9B /* IAEVersionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B28813317985822006E4F9B /* IAEVersionHelper.m */; };
 		5B28D1A9182007B000EF4D48 /* IAEHelpConfigureStartMonthCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B28D1A8182007B000EF4D48 /* IAEHelpConfigureStartMonthCell.m */; };
 		5B28D1AB182007BF00EF4D48 /* IAEHelpConfigureStartMonthCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B28D1AA182007BF00EF4D48 /* IAEHelpConfigureStartMonthCell.xib */; };
@@ -299,6 +301,9 @@
 		5B25B3A71925F8A7009B53BA /* IAEInfoProVersionLicenceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEInfoProVersionLicenceViewController.h; sourceTree = "<group>"; };
 		5B25B3A81925F8A7009B53BA /* IAEInfoProVersionLicenceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEInfoProVersionLicenceViewController.m; sourceTree = "<group>"; };
 		5B25B3A91925F8A7009B53BA /* IAEInfoProVersionLicenceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEInfoProVersionLicenceViewController.xib; sourceTree = "<group>"; };
+		5B25B3AD1925F90F009B53BA /* IAEInAppPurchaseStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEInAppPurchaseStoreViewController.h; sourceTree = "<group>"; };
+		5B25B3AE1925F90F009B53BA /* IAEInAppPurchaseStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEInAppPurchaseStoreViewController.m; sourceTree = "<group>"; };
+		5B25B3AF1925F90F009B53BA /* IAEInAppPurchaseStoreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEInAppPurchaseStoreViewController.xib; sourceTree = "<group>"; };
 		5B28813217985822006E4F9B /* IAEVersionHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEVersionHelper.h; sourceTree = "<group>"; };
 		5B28813317985822006E4F9B /* IAEVersionHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEVersionHelper.m; sourceTree = "<group>"; };
 		5B28D1A7182007B000EF4D48 /* IAEHelpConfigureStartMonthCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelpConfigureStartMonthCell.h; sourceTree = "<group>"; };
@@ -808,14 +813,24 @@
 			name = MainNavigationTitle;
 			sourceTree = "<group>";
 		};
-		5B25B3A61925F88A009B53BA /* InfoProVersionLicenceViewController */ = {
+		5B25B3A61925F88A009B53BA /* InfoProVersionLicence */ = {
 			isa = PBXGroup;
 			children = (
 				5B25B3A71925F8A7009B53BA /* IAEInfoProVersionLicenceViewController.h */,
 				5B25B3A81925F8A7009B53BA /* IAEInfoProVersionLicenceViewController.m */,
 				5B25B3A91925F8A7009B53BA /* IAEInfoProVersionLicenceViewController.xib */,
 			);
-			name = InfoProVersionLicenceViewController;
+			name = InfoProVersionLicence;
+			sourceTree = "<group>";
+		};
+		5B25B3AC1925F8EA009B53BA /* InAppPurchaseStore */ = {
+			isa = PBXGroup;
+			children = (
+				5B25B3AD1925F90F009B53BA /* IAEInAppPurchaseStoreViewController.h */,
+				5B25B3AE1925F90F009B53BA /* IAEInAppPurchaseStoreViewController.m */,
+				5B25B3AF1925F90F009B53BA /* IAEInAppPurchaseStoreViewController.xib */,
+			);
+			name = InAppPurchaseStore;
 			sourceTree = "<group>";
 		};
 		5B2881311798580F006E4F9B /* Version Helper */ = {
@@ -1114,7 +1129,6 @@
 		5B5DBB3E17E1FA5400716503 /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				5B25B3A61925F88A009B53BA /* InfoProVersionLicenceViewController */,
 				5B32D659177C41170070AC72 /* Easy Incomes and Expenses */,
 				5B90782E179D1A8B00B2A0F7 /* Calculator */,
 				5B8CD5D617A2C6B400A353A5 /* Text Raw Selector Menu */,
@@ -1128,6 +1142,8 @@
 				5B55C402178AA79D0066F586 /* Category Editor */,
 				5BAEAE141876B5D200271B47 /* Favorite Concepts */,
 				5B32D65A177C417A0070AC72 /* Year Selector */,
+				5B25B3AC1925F8EA009B53BA /* InAppPurchaseStore */,
+				5B25B3A61925F88A009B53BA /* InfoProVersionLicence */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -2335,6 +2351,7 @@
 				5B0574C117AFE2F600B95D50 /* IAEWithoutConceptsTextWarningReportMode.xib in Resources */,
 				5BCB5F531822C1BD00A37013 /* 743-printer@2x.png in Resources */,
 				5BDD9A1F1857183D001A6CEF /* settingsindex_img_2@2x.png in Resources */,
+				5B25B3B11925F90F009B53BA /* IAEInAppPurchaseStoreViewController.xib in Resources */,
 				5BAEAE1318769A7400271B47 /* 869-pin@2x.png in Resources */,
 				5B2A41B117C77C8100C29036 /* 765-arrow-left@2x.png in Resources */,
 				5BF8A08918EA0A8B0039F19B /* IAEHelpConfigureConceptsWithDaysCell.xib in Resources */,
@@ -2447,6 +2464,7 @@
 				5B0EDE9F1900EEE0009A3DF5 /* IAEEmailChecker.m in Sources */,
 				5B069D7F191E2400002442F6 /* IAEPasswordDisabledEmailRequest.m in Sources */,
 				5B32D65D177C41980070AC72 /* IAEYearSelectorViewController.m in Sources */,
+				5B25B3B01925F90F009B53BA /* IAEInAppPurchaseStoreViewController.m in Sources */,
 				5BA98C67191D46E3005D49FB /* SSPostmarkValidators.m in Sources */,
 				5B25B3A41925F2D0009B53BA /* IAEMainNavigationTitle.m in Sources */,
 				5BD06157163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld in Sources */,

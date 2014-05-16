@@ -86,7 +86,6 @@
                         <outlet property="containerViewForDynamicFX" destination="6wF-Rw-GjU" id="hWC-Am-sbP"/>
                         <outlet property="editAndReportModeContentContainerView" destination="G41-3w-8Uv" id="FNX-AU-fYg"/>
                         <outlet property="modeSegmentedControl" destination="iQJ-fE-Ltz" id="wtQ-Ue-Syc"/>
-                        <outlet property="navigationBarTitleLabel" destination="eNa-tf-Xv0" id="Tka-lU-rxt"/>
                         <outlet property="selectorContextView" destination="Dio-MI-59n" id="qfS-89-4Iz"/>
                     </connections>
                 </viewController>

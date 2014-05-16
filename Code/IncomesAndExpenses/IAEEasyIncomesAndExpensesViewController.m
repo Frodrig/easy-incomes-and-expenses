@@ -134,7 +134,6 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 @interface IAEEasyIncomesAndExpensesViewController ()
 
-@property (strong, nonatomic) IBOutlet UILabel *navigationBarTitleLabel;
 @property (weak, nonatomic) IBOutlet UIView *containerViewForDynamicFX;
 @property (strong, nonatomic) UIBarButtonItem *yearsButton;
 @property (strong, nonatomic) UIBarButtonItem *categoriesButton;
@@ -375,8 +374,6 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)configureNavigationBar
 {
-    //self.navigationBarTitleLabel.text = [NSString stringWithFormat:@"Easy Incomes and Expenses", NSLocalizedString(kLTextNavigationBarTitle, @""), NSLocalizedString(kLTextVersionAppType, @"")];
-    
     self.favoritesButton = [self makeBarButtonWithTitle:kLTextFavoritesBarButtonTitle andSelector:@selector(favoritesButtonPressed:)];
     self.categoriesButton = [self makeBarButtonWithTitle:kLTextCategoriesBarButtonTitle andSelector:@selector(categoriesButtonPressed:)];
     self.yearsButton = [self makeBarButtonWithTitle:kLTextYearsBarButtonTitle andSelector:@selector(yearsButtonPressed:)];

@@ -9,7 +9,15 @@
 #import "IAEMainNavigationTitle.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
 
+#pragma mark - Constants
+
+static NSString * const kNotificationMainLabelTitleTouched = @"mainLabelTitleTouched";
+
+#pragma mark - Implementation
+
 @implementation IAEMainNavigationTitle
+
+#pragma mark - Init
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -37,6 +45,7 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationMainLabelTitleTouched object:self];
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event

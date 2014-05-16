@@ -82,6 +82,7 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 static NSString * const kNotificationDayModeOnName = @"dayModeToOn";
 static NSString * const kNotificationDayModeOffName = @"dayModeToOff";
 static NSString * const kNotificationInitialMonthChanged = @"initialMonthChange";
+static NSString * const kNotificationMainLabelTitleTouched = @"mainLabelTitleTouched";
 
 static NSString * const kLTextModeSegmentedControlEditMode = @"LTEXT_MODESEGMENTEDCONTROL_EDITMODE";
 static NSString * const kLTextModeSegmentedControlReportMode = @"LTEXT_MODESEGMENTEDCONTROL_REPORTMODE";
@@ -321,6 +322,10 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
                                              selector:@selector(notificationCenterInitialMonthChanged:)
                                                  name:kNotificationInitialMonthChanged
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notificationCenterMainNavitationTitleTouched:)
+                                                 name:kNotificationMainLabelTitleTouched object:nil];
 }
 
 - (void)initContextMenuView
@@ -2446,6 +2451,11 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     [self.contextMenuView reloadOptionsStringNames];
     [self goToTodayMonth];
     //[self updateContentInformationOfActualModeWithAnimation:YES];
+}
+
+- (void)notificationCenterMainNavitationTitleTouched:(NSNotification *)notification
+{
+    NSLog(@"Notification from main navigation title");
 }
 
 - (void)recalculeVisibleMonthsInOpenYearWithInitialMonth:(MonthType)initialMonth

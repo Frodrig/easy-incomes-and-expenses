@@ -58,11 +58,19 @@ static const NSUInteger kADLabelTag = 1;
 
 - (void)localizeADLabels
 {
-    
+    [(UILabel *)[self.adInitialMonthView viewWithTag:kADLabelTag] setText:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_ADINITIALMONTH", @"")];
+    [(UILabel *)[self.adPasswordView viewWithTag:kADLabelTag] setText:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_ADPASSWORD", @"")];
+    [(UILabel *)[self.adFavoritesView viewWithTag:kADLabelTag] setText:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_ADFAVORITES", @"")];
+    [(UILabel *)[self.adCSVView viewWithTag:kADLabelTag] setText:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_ADCSV", @"")];
+    [(UILabel *)[self.adDuplicateMoveCopyView viewWithTag:kADLabelTag] setText:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_ADDUPLICATEMOVECOPY", @"")];
+    [(UILabel *)[self.adAccesibilityView viewWithTag:kADLabelTag] setText:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_ADACCESIBILITY", @"")];
+    [(UILabel *)[self.adFutureUpdatesView viewWithTag:kADLabelTag] setText:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_ADFUTUREUPDATES", @"")];
 }
 
 - (void)localizeButtons
 {
+    [self.purchaseButton setTitle:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_PURCHASEBUTTON", @"") forState:UIControlStateNormal];
+    [self.restoreButton setTitle:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_RESTOREBUTTON", @"") forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning

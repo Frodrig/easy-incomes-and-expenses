@@ -56,6 +56,8 @@
 #import "NSUserDefaults+EasyIncAndExp.h"
 #import "IAEExporter.h"
 #import "IAEContextMenuActionSheetViewController.h"
+#import "IAEInfoProVersionLicenceViewController.h"
+#import "IAEInAppPurchaseStoreViewController.h"
 
 typedef NS_ENUM(NSUInteger, MonthSelectorPurpose) {
     MonthSelectorPurposeCopy,
@@ -2455,7 +2457,10 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)notificationCenterMainNavitationTitleTouched:(NSNotification *)notification
 {
-    NSLog(@"Notification from main navigation title");
+    UIViewController *modalViewController = [[NSUserDefaults standardUserDefaults] isProVersionEnabled] ? [[IAEInAppPurchaseStoreViewController alloc] initWithNibName:nil bundle:nil] : [[IAEInfoProVersionLicenceViewController alloc] initWithNibName:nil bundle:nil];
+    modalViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+    modalViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentViewController:modalViewController animated:YES completion:nil];
 }
 
 - (void)recalculeVisibleMonthsInOpenYearWithInitialMonth:(MonthType)initialMonth

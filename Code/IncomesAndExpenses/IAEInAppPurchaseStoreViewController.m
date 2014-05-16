@@ -8,10 +8,28 @@
 
 #import "IAEInAppPurchaseStoreViewController.h"
 
+#pragma mark - Constants
+
+static const NSUInteger kADLabelTag = 1;
+
+#pragma mark - Interfaces
+
 @interface IAEInAppPurchaseStoreViewController ()
+
 @property (weak, nonatomic) IBOutlet UINavigationItem *navItem;
+@property (weak, nonatomic) IBOutlet UIButton *purchaseButton;
+@property (weak, nonatomic) IBOutlet UIButton *restoreButton;
+@property (weak, nonatomic) IBOutlet UIView *adInitialMonthView;
+@property (weak, nonatomic) IBOutlet UIView *adPasswordView;
+@property (weak, nonatomic) IBOutlet UIView *adFavoritesView;
+@property (weak, nonatomic) IBOutlet UIView *adCSVView;
+@property (weak, nonatomic) IBOutlet UIView *adDuplicateMoveCopyView;
+@property (weak, nonatomic) IBOutlet UIView *adAccesibilityView;
+@property (weak, nonatomic) IBOutlet UIView *adFutureUpdatesView;
 
 @end
+
+#pragma mark - Implementation
 
 @implementation IAEInAppPurchaseStoreViewController
 
@@ -27,9 +45,24 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
     
+    [self configureNavigationItem];
+    [self localizeADLabels];
+    [self localizeButtons];
+}
+
+- (void)configureNavigationItem
+{
     self.navItem.title = NSLocalizedString(@"LTEXT_MAINNAVIGATION_TITLE_NOPROVERSION", @"");
+}
+
+- (void)localizeADLabels
+{
+    
+}
+
+- (void)localizeButtons
+{
 }
 
 - (void)didReceiveMemoryWarning

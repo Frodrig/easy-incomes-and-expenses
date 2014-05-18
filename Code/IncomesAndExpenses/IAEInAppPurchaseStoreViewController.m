@@ -7,6 +7,9 @@
 //
 
 #import "IAEInAppPurchaseStoreViewController.h"
+#import "IAEInAppPurchasesStore.h"
+#import "SKProduct+FormatedPrice.h"
+#import <StoreKit/StoreKit.h>
 
 #pragma mark - Constants
 
@@ -26,6 +29,7 @@ static const NSUInteger kADLabelTag = 1;
 @property (weak, nonatomic) IBOutlet UIView *adDuplicateMoveCopyView;
 @property (weak, nonatomic) IBOutlet UIView *adAccesibilityView;
 @property (weak, nonatomic) IBOutlet UIView *adFutureUpdatesView;
+@property (nonatomic, strong) SKProduct *proVersionProduct;
 
 @end
 
@@ -45,6 +49,9 @@ static const NSUInteger kADLabelTag = 1;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.purchaseButton.enabled = NO;
+    self.restoreButton.enabled = NO;
     
     [self configureNavigationItem];
     [self localizeADLabels];
@@ -73,6 +80,26 @@ static const NSUInteger kADLabelTag = 1;
     [self.restoreButton setTitle:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_RESTOREBUTTON", @"") forState:UIControlStateNormal];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self requestProVersionProduct];
+}
+
+- (void)requestProVersionProduct
+{
+    __weak IAEInAppPurchaseStoreViewController *weakSelf = self;
+    [[IAEInAppPurchasesStore defaultStore] requestProVersionProductOnCompletion:^(SKProduct *product) {
+        if (product) {
+            weakSelf.proVersionProduct = product;
+            [weakSelf.purchaseButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"", @""), [product formattedPrice]] forState:UIControlStateNormal];
+            weakSelf.purchaseButton.enabled = YES;
+            weakSelf.restoreButton.enabled = YES;
+        }
+    }];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -90,6 +117,7 @@ static const NSUInteger kADLabelTag = 1;
 
 - (IBAction)purchaseButtonPressed:(id)sender
 {
+    [[IAEInAppPurchasesStore defaultStore] payForProduct:self.proVersionProduct];    
 }
 
 #pragma mark - RestoreButtonPressed

@@ -8,10 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+@class  SKProduct;
+
 @interface IAEInAppPurchasesStore : NSObject
 
 + (instancetype)defaultStore;
 
+- (void)beginTransationObserverSession;
+- (void)endTransactionObserverSessio;
+
 - (BOOL)isInAppPurchasesAccesible;
+
+- (void)requestProVersionProductOnCompletion:(void(^)(SKProduct *product))completionBlock;
+
+- (void)payForProduct:(SKProduct *)product;
+- (void)restorePurchasedProducts;
 
 @end

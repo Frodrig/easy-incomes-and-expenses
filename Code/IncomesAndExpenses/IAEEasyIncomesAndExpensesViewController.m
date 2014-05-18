@@ -58,6 +58,7 @@
 #import "IAEContextMenuActionSheetViewController.h"
 #import "IAEInfoProVersionLicenceViewController.h"
 #import "IAEInAppPurchaseStoreViewController.h"
+#import "IAEInAppPurchasesStore.h"
 
 typedef NS_ENUM(NSUInteger, MonthSelectorPurpose) {
     MonthSelectorPurposeCopy,
@@ -2457,10 +2458,31 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)notificationCenterMainNavitationTitleTouched:(NSNotification *)notification
 {
+    if ([[IAEInAppPurchasesStore defaultStore] isInAppPurchasesAccesible]) {
+        [self lauchInAppPurchaseStoreViewController];
+    } else {
+        [self launchAlertViewAboutInAppPurchasesInaccesible];
+    }
+}
+
+- (void)lauchInAppPurchaseStoreViewController
+{
     UIViewController *modalViewController = [[NSUserDefaults standardUserDefaults] isProVersionEnabled] ? [[IAEInfoProVersionLicenceViewController alloc] initWithNibName:nil bundle:nil] : [[IAEInAppPurchaseStoreViewController alloc] initWithNibName:nil bundle:nil];
     modalViewController.modalPresentationStyle = UIModalPresentationFormSheet;
     modalViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self presentViewController:modalViewController animated:YES completion:nil];
+}
+
+- (void)launchAlertViewAboutInAppPurchasesInaccesible
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_INAPPPURCHASESINACCESIBLE_ALERTVIEW_TITLE", @"")
+                                                        message:NSLocalizedString(@"LTEXT_INAPPPURCHASESINACCESIBLE_ALERTVIEW_MESSAGE", @"")
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"LTEXT_INAPPPURCHASESINACCESIBLE_ALERTVIEW_CANCEL", @"")
+                                              otherButtonTitles:nil];
+    
+    [alertView show];
+    
 }
 
 - (void)recalculeVisibleMonthsInOpenYearWithInitialMonth:(MonthType)initialMonth
@@ -2481,6 +2503,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 - (void)closeModalsAfterEnterBackground
 {
     [self.yearSelectorViewController closeButtonPressed:nil];
+    [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
 }
 
 /*

@@ -14,6 +14,7 @@
 #import "IAECategoryStore.h"
 #import "IAERootLauchingViewController.h"
 #import "IAEFixRemoveCategoryActionLostInUnloadedYears.h"
+#import "IAEInAppPurchasesStore.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
 #import <Crashlytics/Crashlytics.h>
 
@@ -42,6 +43,7 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
     [self prepareCrashlytics];
     [self prepareFlurry];
     [[NSUserDefaults standardUserDefaults] prepareDefaults];
+    [[IAEInAppPurchasesStore defaultStore] beginTransationObserverSession];
     [self processProcessInfoEnvironment];
     [self processFixes];
     [self createYearBookIfProceed];

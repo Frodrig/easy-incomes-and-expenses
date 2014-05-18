@@ -231,6 +231,7 @@
 		5BFDE72A17C5E27500DF884B /* IAESelectorContextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFDE72917C5E27500DF884B /* IAESelectorContextView.m */; };
 		5BFF5B9B1928D251009CAEE6 /* IAEInAppPurchasesStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFF5B9A1928D251009CAEE6 /* IAEInAppPurchasesStore.m */; };
 		5BFF5B9D1928D2CD009CAEE6 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BFF5B9C1928D2CD009CAEE6 /* StoreKit.framework */; };
+		5BFF5BA11928F945009CAEE6 /* SKProduct+FormatedPrice.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFF5BA01928F945009CAEE6 /* SKProduct+FormatedPrice.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -633,6 +634,8 @@
 		5BFF5B991928D251009CAEE6 /* IAEInAppPurchasesStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEInAppPurchasesStore.h; sourceTree = "<group>"; };
 		5BFF5B9A1928D251009CAEE6 /* IAEInAppPurchasesStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEInAppPurchasesStore.m; sourceTree = "<group>"; };
 		5BFF5B9C1928D2CD009CAEE6 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		5BFF5B9F1928F945009CAEE6 /* SKProduct+FormatedPrice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKProduct+FormatedPrice.h"; sourceTree = "<group>"; };
+		5BFF5BA01928F945009CAEE6 /* SKProduct+FormatedPrice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKProduct+FormatedPrice.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1287,6 +1290,7 @@
 		5B6E9FA4177D9BAB0072EE34 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				5BFF5B9E1928F92B009CAEE6 /* SKProduct */,
 				5B23F03D17FED1FD00477D34 /* NSUserDefaults */,
 				5BA013091798007200337E84 /* String */,
 				5B36AFF41785BBC500132475 /* NSDecimalNumber */,
@@ -2239,6 +2243,15 @@
 			name = InAppPurchasesStore;
 			sourceTree = "<group>";
 		};
+		5BFF5B9E1928F92B009CAEE6 /* SKProduct */ = {
+			isa = PBXGroup;
+			children = (
+				5BFF5B9F1928F945009CAEE6 /* SKProduct+FormatedPrice.h */,
+				5BFF5BA01928F945009CAEE6 /* SKProduct+FormatedPrice.m */,
+			);
+			name = SKProduct;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2494,6 +2507,7 @@
 				5B879778180EA90500554E13 /* IAEHelpViewController.m in Sources */,
 				5B98F0B4185884770051333A /* KeychainItemWrapper.m in Sources */,
 				5B55C406178AA8C20066F586 /* IAECategoryEditorViewController.m in Sources */,
+				5BFF5BA11928F945009CAEE6 /* SKProduct+FormatedPrice.m in Sources */,
 				5BCE3A9F17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m in Sources */,
 				5BE84E7C180DA8F500F4A80B /* IAEHelpIndexViewController.m in Sources */,
 				5B879759180E7DCD00554E13 /* IAEHelpAboutViewController.m in Sources */,

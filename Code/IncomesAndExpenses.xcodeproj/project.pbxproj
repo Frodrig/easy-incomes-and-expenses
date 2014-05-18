@@ -229,6 +229,8 @@
 		5BF1DFE118F994640024B3AD /* IAEMonthSelectorCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BF1DFE018F994640024B3AD /* IAEMonthSelectorCollectionViewCell.xib */; };
 		5BF8A08918EA0A8B0039F19B /* IAEHelpConfigureConceptsWithDaysCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B87976A180E904400554E13 /* IAEHelpConfigureConceptsWithDaysCell.xib */; };
 		5BFDE72A17C5E27500DF884B /* IAESelectorContextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFDE72917C5E27500DF884B /* IAESelectorContextView.m */; };
+		5BFF5B9B1928D251009CAEE6 /* IAEInAppPurchasesStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFF5B9A1928D251009CAEE6 /* IAEInAppPurchasesStore.m */; };
+		5BFF5B9D1928D2CD009CAEE6 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BFF5B9C1928D2CD009CAEE6 /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -628,6 +630,9 @@
 		5BFDE72817C5E27500DF884B /* IAESelectorContextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAESelectorContextView.h; sourceTree = "<group>"; };
 		5BFDE72917C5E27500DF884B /* IAESelectorContextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAESelectorContextView.m; sourceTree = "<group>"; };
 		5BFDE72D17C5F07A00DF884B /* IAESelectorContextViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAESelectorContextViewDelegate.h; sourceTree = "<group>"; };
+		5BFF5B991928D251009CAEE6 /* IAEInAppPurchasesStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEInAppPurchasesStore.h; sourceTree = "<group>"; };
+		5BFF5B9A1928D251009CAEE6 /* IAEInAppPurchasesStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEInAppPurchasesStore.m; sourceTree = "<group>"; };
+		5BFF5B9C1928D2CD009CAEE6 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -646,6 +651,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BFF5B9D1928D2CD009CAEE6 /* StoreKit.framework in Frameworks */,
 				5BDEEC03191033B200646726 /* CFNetwork.framework in Frameworks */,
 				5B00398418CFC13900044B2D /* libFlurryAds_4.3.2.a in Frameworks */,
 				5BBD37CF180BFF990095A15A /* Security.framework in Frameworks */,
@@ -1372,6 +1378,7 @@
 		5B767DF51636D7FC005315F8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5BFF5B9C1928D2CD009CAEE6 /* StoreKit.framework */,
 				5BDEEC02191033B200646726 /* CFNetwork.framework */,
 				5B1C904D18EDED9600A7BC68 /* Crashlytics.framework */,
 				5B1B7FA018D794420012AC21 /* XCTest.framework */,
@@ -1776,6 +1783,7 @@
 		5BB937C8191937660001A31E /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				5BFF5B981928D1E6009CAEE6 /* InAppPurchasesStore */,
 				5BB937C9191937710001A31E /* EmailSender */,
 			);
 			name = Modules;
@@ -2222,6 +2230,15 @@
 			name = "Context Views";
 			sourceTree = "<group>";
 		};
+		5BFF5B981928D1E6009CAEE6 /* InAppPurchasesStore */ = {
+			isa = PBXGroup;
+			children = (
+				5BFF5B991928D251009CAEE6 /* IAEInAppPurchasesStore.h */,
+				5BFF5B9A1928D251009CAEE6 /* IAEInAppPurchasesStore.m */,
+			);
+			name = InAppPurchasesStore;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2491,6 +2508,7 @@
 				5BEA98AB1793E3A500098AE0 /* IAECircleDecoratorView.m in Sources */,
 				5B36AFF71785BBF400132475 /* NSDecimalNumber+AbsoluteValue.m in Sources */,
 				5B0FEE9B1902484F0067CA38 /* IAEPasswordRecoveryEmailPanelViewController.m in Sources */,
+				5BFF5B9B1928D251009CAEE6 /* IAEInAppPurchasesStore.m in Sources */,
 				5BA0131217983A9000337E84 /* IAEDayCalendarSelectorViewController.m in Sources */,
 				5B62D86E178EC20E009879A6 /* IAEEconomicValueTypeHelper.m in Sources */,
 				5B62D870178EC20E009879A6 /* IAEColorHelper.m in Sources */,

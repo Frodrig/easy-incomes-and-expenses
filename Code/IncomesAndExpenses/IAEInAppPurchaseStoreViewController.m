@@ -86,4 +86,16 @@ static const NSUInteger kADLabelTag = 1;
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark - PurchaseButtonPressed
+
+- (IBAction)purchaseButtonPressed:(id)sender
+{
+}
+
+#pragma mark - RestoreButtonPressed
+
+- (IBAction)restoreButtonPressed:(id)sender
+{
+}
+
 @end

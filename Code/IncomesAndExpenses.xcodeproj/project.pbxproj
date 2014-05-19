@@ -192,6 +192,7 @@
 		5BCE3AB417A9689600CD01E7 /* IAEHelperReportTextRawMenuDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3AB317A9689600CD01E7 /* IAEHelperReportTextRawMenuDataSource.m */; };
 		5BCE3AB917A9703B00CD01E7 /* IAEHelperCalculatorDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3AB817A9703B00CD01E7 /* IAEHelperCalculatorDataSource.m */; };
 		5BCE3ABD17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3ABC17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.m */; };
+		5BD01C9E1929F48C00348C91 /* IAEHasthUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD01C9D1929F48C00348C91 /* IAEHasthUtilities.m */; };
 		5BD06157163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5BD06155163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld */; };
 		5BD06168163A8CFF00A80BE3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD06167163A8CFF00A80BE3 /* CoreData.framework */; };
 		5BD94C0B1786B864009009B1 /* IAECategoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD94C0A1786B864009009B1 /* IAECategoryTableViewCell.m */; };
@@ -570,6 +571,8 @@
 		5BCE3ABB17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelperConceptsCollectionViewDataSource.h; sourceTree = "<group>"; };
 		5BCE3ABC17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelperConceptsCollectionViewDataSource.m; sourceTree = "<group>"; };
 		5BCF718A19070D5F0084F187 /* IAESelectorContextViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAESelectorContextViewDataSource.h; sourceTree = "<group>"; };
+		5BD01C9C1929F48C00348C91 /* IAEHasthUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHasthUtilities.h; sourceTree = "<group>"; };
+		5BD01C9D1929F48C00348C91 /* IAEHasthUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHasthUtilities.m; sourceTree = "<group>"; };
 		5BD06156163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = IncomesAndExpenses.xcdatamodel; sourceTree = "<group>"; };
 		5BD06167163A8CFF00A80BE3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		5BD94C091786B864009009B1 /* IAECategoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategoryTableViewCell.h; sourceTree = "<group>"; };
@@ -1197,6 +1200,7 @@
 		5B62D861178EC1FA009879A6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5BD01C9B1929F47A00348C91 /* Hash */,
 				5B0EDE9C1900EEB8009A3DF5 /* Email */,
 				5B98F0AE185883350051333A /* Keychain */,
 				5B5BEAF11827E6B400A00BE0 /* Exporter */,
@@ -2035,6 +2039,15 @@
 			name = Protocols;
 			sourceTree = "<group>";
 		};
+		5BD01C9B1929F47A00348C91 /* Hash */ = {
+			isa = PBXGroup;
+			children = (
+				5BD01C9C1929F48C00348C91 /* IAEHasthUtilities.h */,
+				5BD01C9D1929F48C00348C91 /* IAEHasthUtilities.m */,
+			);
+			name = Hash;
+			sourceTree = "<group>";
+		};
 		5BD94C081786B83E009009B1 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -2539,6 +2552,7 @@
 				5BCE3AB917A9703B00CD01E7 /* IAEHelperCalculatorDataSource.m in Sources */,
 				5B879761180E7E6F00554E13 /* IAEHelpAboutCollectionViewCell.m in Sources */,
 				5B23F04417FF099000477D34 /* IAENumberFormatterManager.m in Sources */,
+				5BD01C9E1929F48C00348C91 /* IAEHasthUtilities.m in Sources */,
 				5B5C967B1781673A008CD851 /* IAEValueDecoratorView.m in Sources */,
 				5B60EB5A17C4A3D5004E3D81 /* IAELocalizerPhraseComposer.m in Sources */,
 				5B5C968217816D68008CD851 /* IAEValueDecoratorViewConfigurator.m in Sources */,

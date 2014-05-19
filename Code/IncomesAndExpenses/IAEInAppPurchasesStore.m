@@ -66,21 +66,34 @@ static NSString * const kInAppPurchaseProVersionIdentifier = @"com.easyincomesan
                 
             case SKPaymentTransactionStatePurchased:
                 // Pending - Validate transaction
-                [[SKPaymentQueue defaultQueue] finishTransaction:paymentTransacction];
-                [[NSUserDefaults standardUserDefaults] enableProVersion];
+                [self finishTransactionAndGiveFeaturesWithPaymentTransaction:paymentTransacction];
                 break;
                 
             case SKPaymentTransactionStateFailed:
                 break;
                 
             case SKPaymentTransactionStateRestored:
-                [[SKPaymentQueue defaultQueue] finishTransaction:paymentTransacction];
-                [[NSUserDefaults standardUserDefaults] enableProVersion];
+                [self finishTransactionAndGiveFeaturesWithPaymentTransaction:paymentTransacction];
                 break;
             default:
                 break;
         }
     }
+}
+
+- (void)finishTransactionAndGiveFeaturesWithPaymentTransaction:(SKPaymentTransaction *)paymentTransacction
+{
+    [[SKPaymentQueue defaultQueue] finishTransaction:paymentTransacction];
+    
+    // ToDo:
+    // - Validate receipt
+    //   - Verify signature
+    //   - Verify device
+    //   - Make sure the product purchase is what must be
+    // If the purchase is correct then, enableProVersion
+    
+    
+    [[NSUserDefaults standardUserDefaults] enableProVersion];
 }
 
 #pragma mark - Questions

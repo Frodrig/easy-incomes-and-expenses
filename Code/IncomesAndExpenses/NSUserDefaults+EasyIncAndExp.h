@@ -19,6 +19,8 @@
 - (void)changeToReportTotalAmountModeInReportSection;
 - (void)changeToReportTotalPercentageModeInReportSection;
 
+- (NSString *)userUniqueIdentifier;
+
 - (BOOL)isDayModeActiveForConcepts;
 - (void)changeDayModeActiveForConcepts;
 

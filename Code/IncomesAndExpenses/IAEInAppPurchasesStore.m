@@ -7,8 +7,9 @@
 //
 
 #import "IAEInAppPurchasesStore.h"
-#import "NSUserDefaults+EasyIncAndExp.h"
 #import <StoreKit/StoreKit.h>
+#import "NSUserDefaults+EasyIncAndExp.h"
+#import "IAEHasthUtilities.h"
 
 #pragma mark - Constants
 
@@ -103,7 +104,8 @@ static NSString * const kInAppPurchaseProVersionIdentifier = @"com.easyincomesan
 
 - (void)payForProduct:(SKProduct *)product
 {
-    SKPayment *payment = [SKPayment paymentWithProduct:product];
+    SKMutablePayment *payment = [SKMutablePayment paymentWithProduct:product];
+    payment.applicationUsername = [IAEHasthUtilities hashedValueForStringIdentifier:[[NSUserDefaults standardUserDefaults] userUniqueIdentifier]];
     [[SKPaymentQueue defaultQueue] addPayment:payment];
 }
 

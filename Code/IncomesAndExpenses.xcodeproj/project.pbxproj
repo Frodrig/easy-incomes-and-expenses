@@ -193,6 +193,7 @@
 		5BCE3AB917A9703B00CD01E7 /* IAEHelperCalculatorDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3AB817A9703B00CD01E7 /* IAEHelperCalculatorDataSource.m */; };
 		5BCE3ABD17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3ABC17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.m */; };
 		5BD01C9E1929F48C00348C91 /* IAEHasthUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD01C9D1929F48C00348C91 /* IAEHasthUtilities.m */; };
+		5BD01CA21929F78700348C91 /* IAEIdentifiers.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD01CA11929F78700348C91 /* IAEIdentifiers.m */; };
 		5BD06157163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5BD06155163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld */; };
 		5BD06168163A8CFF00A80BE3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD06167163A8CFF00A80BE3 /* CoreData.framework */; };
 		5BD94C0B1786B864009009B1 /* IAECategoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD94C0A1786B864009009B1 /* IAECategoryTableViewCell.m */; };
@@ -573,6 +574,8 @@
 		5BCF718A19070D5F0084F187 /* IAESelectorContextViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAESelectorContextViewDataSource.h; sourceTree = "<group>"; };
 		5BD01C9C1929F48C00348C91 /* IAEHasthUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHasthUtilities.h; sourceTree = "<group>"; };
 		5BD01C9D1929F48C00348C91 /* IAEHasthUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHasthUtilities.m; sourceTree = "<group>"; };
+		5BD01CA01929F78700348C91 /* IAEIdentifiers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEIdentifiers.h; sourceTree = "<group>"; };
+		5BD01CA11929F78700348C91 /* IAEIdentifiers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEIdentifiers.m; sourceTree = "<group>"; };
 		5BD06156163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = IncomesAndExpenses.xcdatamodel; sourceTree = "<group>"; };
 		5BD06167163A8CFF00A80BE3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		5BD94C091786B864009009B1 /* IAECategoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategoryTableViewCell.h; sourceTree = "<group>"; };
@@ -1200,6 +1203,7 @@
 		5B62D861178EC1FA009879A6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5BD01C9F1929F77B00348C91 /* Identifiers */,
 				5BD01C9B1929F47A00348C91 /* Hash */,
 				5B0EDE9C1900EEB8009A3DF5 /* Email */,
 				5B98F0AE185883350051333A /* Keychain */,
@@ -2048,6 +2052,15 @@
 			name = Hash;
 			sourceTree = "<group>";
 		};
+		5BD01C9F1929F77B00348C91 /* Identifiers */ = {
+			isa = PBXGroup;
+			children = (
+				5BD01CA01929F78700348C91 /* IAEIdentifiers.h */,
+				5BD01CA11929F78700348C91 /* IAEIdentifiers.m */,
+			);
+			name = Identifiers;
+			sourceTree = "<group>";
+		};
 		5BD94C081786B83E009009B1 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -2502,6 +2515,7 @@
 				5BDD9A2D18572256001A6CEF /* IAEPasswordPanelViewController.m in Sources */,
 				5BE84E77180DA8CF00F4A80B /* IAESettingsViewController.m in Sources */,
 				5B23F04017FED21C00477D34 /* NSUserDefaults+EasyIncAndExp.m in Sources */,
+				5BD01CA21929F78700348C91 /* IAEIdentifiers.m in Sources */,
 				5B6F45E5181ED29F0073B1AC /* IAEOpenYear.m in Sources */,
 				5B907832179D1AA700B2A0F7 /* IAECalculatorViewController.m in Sources */,
 				5B0EDE9F1900EEE0009A3DF5 /* IAEEmailChecker.m in Sources */,

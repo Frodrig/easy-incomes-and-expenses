@@ -7,6 +7,7 @@
 //
 
 #import "NSUserDefaults+EasyIncAndExp.h"
+#import "IAEIdentifiers.h"
 #import "Flurry.h"
 
 @implementation NSUserDefaults (EasyIncAndExp)
@@ -19,6 +20,7 @@ static NSString * const kUserDefaultInitialMonthKey = @"initialMonth";
 static NSString * const kUserDefaultRemoveConceptConfirmation = @"removeConceptConfirmation";
 static NSString * const kUserDefaultRecoverPasswordEmail = @"recoverPasswordEmail";
 static NSString * const kUserDefaultsProVersionKey = @"proVersion";
+static NSString * const kUserUniqueIdentifier = @"uniqueIdentifier";
 
 static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalAmounts";
 static NSString * const kUserDefaultsReportAmountModePercentageAmountValue = @"percentageAmounts";
@@ -203,6 +205,18 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 {
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserDefaultsProVersionKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+#pragma mark - UniqueIdentifier
+
+- (NSString *)userUniqueIdentifier;
+{
+    if ([[NSUserDefaults standardUserDefaults] valueForKey:kUserUniqueIdentifier] == nil) {
+        [[NSUserDefaults standardUserDefaults] setValue:[IAEIdentifiers generateUniqueIdentifier] forKey:kUserUniqueIdentifier];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
+    return [[NSUserDefaults standardUserDefaults] stringForKey:kUserUniqueIdentifier];
 }
 
 @end

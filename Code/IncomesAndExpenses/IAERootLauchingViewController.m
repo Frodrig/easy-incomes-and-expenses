@@ -10,21 +10,25 @@
 #import "IAEEasyIncomesAndExpensesViewController.h"
 #import "IAEPasswordPanelViewController.h"
 #import "KeychainItemWrapper.h"
-
-@interface IAERootLauchingViewController ()
-
-@property (nonatomic, strong) IAEPasswordPanelViewController *passwordViewController;
-@property (nonatomic, strong) UINavigationController *mainViewController;
-@property (nonatomic, strong) UIImageView *launchImage;
-@end
-
-@implementation IAERootLauchingViewController
+#import "IAEInAppPurchaseStoreViewControllerDefs.h"
 
 #pragma mark - constants
 
 static NSString * const kMainStoryBoardName = @"Main";
 static NSString * const kLaunchImageName = @"ipadlandscape_launchimage";
 static NSString * const kEasyIncomesAndExpensesViewControllerID = @"EasyIncomesAndExpensesViewControllerID";
+static const CGFloat kFadeInCourtainViewTransitionToProVersionEffectTime = 1.0;
+static const CGFloat kFadeOutCourtainViewTransitionToProVersionEffectTime = 3.0;
+
+@interface IAERootLauchingViewController ()
+
+@property (nonatomic, strong) IAEPasswordPanelViewController *passwordViewController;
+@property (nonatomic, strong) UINavigationController *mainViewController;
+@property (nonatomic, strong) IAEEasyIncomesAndExpensesViewController *easyIncomesAndExpensesViewController;
+@property (nonatomic, strong) UIImageView *launchImage;
+@end
+
+@implementation IAERootLauchingViewController
 
 #pragma mark - init
 
@@ -49,11 +53,16 @@ static NSString * const kEasyIncomesAndExpensesViewControllerID = @"EasyIncomesA
                                              selector: @selector(notificationApplicationDidEnterBackground:)
                                                  name: UIApplicationDidEnterBackgroundNotification
                                                object: nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(notificationApplicationWillEnterForeground:)
                                                  name: UIApplicationWillEnterForegroundNotification
                                                object: nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notificationCenterProVersionEnabledFromStore:)
+                                                 name:kProVersionEnabledFromStore
+                                               object:nil];
 }
 
 - (void)initPasswordController
@@ -71,10 +80,10 @@ static NSString * const kEasyIncomesAndExpensesViewControllerID = @"EasyIncomesA
 
 - (void)initNavigationControllerWithRootController
 {
-    IAEEasyIncomesAndExpensesViewController *rootViewController = [self instantiateFromStoryBoardEasyIncomesViewController];
-    rootViewController.delegate = self;
+    self.easyIncomesAndExpensesViewController = [self instantiateFromStoryBoardEasyIncomesViewController];
+    self.easyIncomesAndExpensesViewController.delegate = self;
     
-    _mainViewController = [[UINavigationController alloc] initWithRootViewController:rootViewController];
+    _mainViewController = [[UINavigationController alloc] initWithRootViewController:self.easyIncomesAndExpensesViewController];
     _mainViewController.navigationBar.tintColor = [UIColor colorWithWhite:kGlobalTintColorForWhiteComponent alpha:1.0];
 }
 
@@ -180,6 +189,35 @@ static NSString * const kEasyIncomesAndExpensesViewControllerID = @"EasyIncomesA
     } completion:^(BOOL finished) {
         [self removeImageFromView];
     }];
+}
+
+#pragma mark - Notificacion
+
+- (void)notificationCenterProVersionEnabledFromStore:(NSNotification *)notification
+{
+    UIView *courtainView = [self createAndAddCourtainViewForTheTransitionToProVisualEffect];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    [UIView animateWithDuration:kFadeInCourtainViewTransitionToProVersionEffectTime animations:^{
+        courtainView.alpha = 1.0;
+    } completion:^(BOOL finished) {
+        [self.easyIncomesAndExpensesViewController resetToLaunchState];
+        [UIView animateWithDuration:kFadeOutCourtainViewTransitionToProVersionEffectTime animations:^{
+            courtainView.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            [courtainView removeFromSuperview];
+        }];
+    }];
+}
+
+- (UIView *)createAndAddCourtainViewForTheTransitionToProVisualEffect
+{
+    UIView *courtainView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
+    courtainView.backgroundColor = [UIColor whiteColor];
+    courtainView.alpha = 0.0;
+    [self.view addSubview:courtainView];
+    [self.view bringSubviewToFront:courtainView];
+    
+    return courtainView;
 }
 
 @end

@@ -10,4 +10,6 @@
 
 @interface IAEMainNavigationTitle : UILabel
 
+- (void)reloadTitle;
+
 @end

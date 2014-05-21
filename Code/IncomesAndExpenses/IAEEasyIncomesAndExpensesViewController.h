@@ -58,4 +58,6 @@
 
 - (void)reloadAllWithAnimation:(BOOL)animation;
 
+- (void)resetToLaunchState;
+
 @end

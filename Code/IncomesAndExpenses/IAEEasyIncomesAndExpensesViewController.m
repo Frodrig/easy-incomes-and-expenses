@@ -60,6 +60,7 @@
 #import "IAEInAppPurchaseStoreViewController.h"
 #import "IAEInAppPurchasesStore.h"
 #import "IAEInternet.h"
+#import "IAEMainNavigationTitle.h"
 
 typedef NS_ENUM(NSUInteger, MonthSelectorPurpose) {
     MonthSelectorPurposeCopy,
@@ -2454,7 +2455,6 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     [self recalculeVisibleMonthsInOpenYearWithInitialMonth:(MonthType)(newMonth.integerValue)];
     [self.contextMenuView reloadOptionsStringNames];
     [self goToTodayMonth];
-    //[self updateContentInformationOfActualModeWithAnimation:YES];
 }
 
 - (void)notificationCenterMainNavitationTitleTouched:(NSNotification *)notification
@@ -2611,16 +2611,16 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     }
 }
 
-- (void)hideButtonWasPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
+- (void)calculatorViewController:(IAECalculatorViewController *)calculatorViewController hideButtonWasPressedWithAnimation:(BOOL)animation
 {
-    [self updateBalancesAndAvailabilityOfSelectorContextSubmenuWithAnimation:YES];
+    [self updateBalancesAndAvailabilityOfSelectorContextSubmenuWithAnimation:animation];
 
     [self setNavigationButtonsEnabled:YES];
     
     self.attachBehaviorForContainerFX.anchorPoint = self.calculatorViewController.view.center;
     
     for (IAEEditModeConceptCollectionViewCell *cell in self.conceptsCollectionView.visibleCells) {
-        [cell hideFavoritePinWithAnimation:YES];
+        [cell hideFavoritePinWithAnimation:animation];
     }
 }
 
@@ -2962,6 +2962,24 @@ didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
         [self removeConceptAndUpdateBalancesOfCell:cell withAnimation:YES];
         [self.contextMenuView animateOptionAtIndex:month.month withAnimationType:TextRawSelectorAnimation_Blink];
     }
+}
+
+#pragma mark - Actions
+
+
+#pragma mark - Actions
+
+- (void)resetToLaunchState
+{
+    [self.calculatorViewController hideWithoutAnimation];
+    [self configureNavigationBar];
+    [self reloadMainNavigationTitle];
+}
+
+- (void)reloadMainNavigationTitle
+{
+    IAEMainNavigationTitle *navigationTitle = (IAEMainNavigationTitle *)self.navigationItem.titleView;
+    [navigationTitle reloadTitle];
 }
 
 @end

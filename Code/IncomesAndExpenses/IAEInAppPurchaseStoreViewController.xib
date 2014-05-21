@@ -13,6 +13,7 @@
                 <outlet property="adFutureUpdatesView" destination="hOh-4R-5zV" id="ack-PT-5vI"/>
                 <outlet property="adInitialMonthView" destination="4QZ-Ag-3Dn" id="lYP-GM-Ckn"/>
                 <outlet property="adPasswordView" destination="f44-Yq-puN" id="lO6-iZ-qBI"/>
+                <outlet property="loaderIndicatorContainerView" destination="WG4-e4-8RH" id="L1K-pB-Hpf"/>
                 <outlet property="messageWithRetryButtonContainerView" destination="eAk-Er-BsR" id="qNY-rM-Guv"/>
                 <outlet property="navItem" destination="g8D-xh-6IK" id="UqF-YT-Vvr"/>
                 <outlet property="purchaseButton" destination="T7H-1W-ZKC" id="8pq-LV-9YC"/>
@@ -228,6 +229,11 @@
                                 <action selector="retryButtonPressed:" destination="-1" eventType="touchUpInside" id="qyK-b6-fCD"/>
                             </connections>
                         </button>
+                        <view contentMode="center" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WG4-e4-8RH">
+                            <rect key="frame" x="268" y="272" width="44" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                 </view>

@@ -83,6 +83,7 @@
 		5B57A9C317FAD39500C7BFD3 /* calculatordragbackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B57A9C117FAD39500C7BFD3 /* calculatordragbackground@2x.png */; };
 		5B5A0540192C9DC800154371 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A053F192C9DC800154371 /* Reachability.m */; };
 		5B5A0544192C9E4800154371 /* IAEInternet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A0543192C9E4800154371 /* IAEInternet.m */; };
+		5B5A0548192CE54E00154371 /* IAEInAppPurchaseStoreViewControllerDefs.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5A0547192CE54E00154371 /* IAEInAppPurchaseStoreViewControllerDefs.m */; };
 		5B5BEAF41827E6CA00A00BE0 /* IAEExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5BEAF31827E6CA00A00BE0 /* IAEExporter.m */; };
 		5B5C967B1781673A008CD851 /* IAEValueDecoratorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C967A1781673A008CD851 /* IAEValueDecoratorView.m */; };
 		5B5C967F17816A13008CD851 /* UIView+RoundedCorners.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C967E17816A13008CD851 /* UIView+RoundedCorners.m */; };
@@ -367,6 +368,8 @@
 		5B5A053F192C9DC800154371 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		5B5A0542192C9E4800154371 /* IAEInternet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEInternet.h; sourceTree = "<group>"; };
 		5B5A0543192C9E4800154371 /* IAEInternet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEInternet.m; sourceTree = "<group>"; };
+		5B5A0546192CE54E00154371 /* IAEInAppPurchaseStoreViewControllerDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEInAppPurchaseStoreViewControllerDefs.h; sourceTree = "<group>"; };
+		5B5A0547192CE54E00154371 /* IAEInAppPurchaseStoreViewControllerDefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEInAppPurchaseStoreViewControllerDefs.m; sourceTree = "<group>"; };
 		5B5BEAF21827E6CA00A00BE0 /* IAEExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEExporter.h; sourceTree = "<group>"; };
 		5B5BEAF31827E6CA00A00BE0 /* IAEExporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEExporter.m; sourceTree = "<group>"; };
 		5B5C96791781673A008CD851 /* IAEValueDecoratorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEValueDecoratorView.h; sourceTree = "<group>"; };
@@ -850,6 +853,7 @@
 				5B25B3AD1925F90F009B53BA /* IAEInAppPurchaseStoreViewController.h */,
 				5B25B3AE1925F90F009B53BA /* IAEInAppPurchaseStoreViewController.m */,
 				5B25B3AF1925F90F009B53BA /* IAEInAppPurchaseStoreViewController.xib */,
+				5B5A0549192CE57200154371 /* Defs */,
 			);
 			name = InAppPurchaseStore;
 			sourceTree = "<group>";
@@ -1084,6 +1088,15 @@
 				5B5A0543192C9E4800154371 /* IAEInternet.m */,
 			);
 			name = Internet;
+			sourceTree = "<group>";
+		};
+		5B5A0549192CE57200154371 /* Defs */ = {
+			isa = PBXGroup;
+			children = (
+				5B5A0546192CE54E00154371 /* IAEInAppPurchaseStoreViewControllerDefs.h */,
+				5B5A0547192CE54E00154371 /* IAEInAppPurchaseStoreViewControllerDefs.m */,
+			);
+			name = Defs;
 			sourceTree = "<group>";
 		};
 		5B5BEAF11827E6B400A00BE0 /* Exporter */ = {
@@ -2622,6 +2635,7 @@
 				5B5773BB18FF9A7600672C29 /* IAEHelpConfigureConfirmRemoveConceptCell.m in Sources */,
 				5B32D654177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m in Sources */,
 				5B5C967F17816A13008CD851 /* UIView+RoundedCorners.m in Sources */,
+				5B5A0548192CE54E00154371 /* IAEInAppPurchaseStoreViewControllerDefs.m in Sources */,
 				5BA98C63191D46E3005D49FB /* SSPostmark.m in Sources */,
 				5BAEAE181876B8C300271B47 /* IAEFavoriteConceptsViewController.m in Sources */,
 				5BDD9A3218572F99001A6CEF /* IAEPasswordPanelScreenView.m in Sources */,

@@ -21,7 +21,7 @@
 
 - (void)requestProVersionProductOnCompletion:(void(^)(SKProduct *product))completionBlock;
 
-- (void)payForProduct:(SKProduct *)product;
-- (void)restorePurchasedProducts;
+- (void)payForProduct:(SKProduct *)product withCompletionBlock:(void(^)(NSError *error))completionBlock;
+- (void)restorePurchasedProductsWithCompletionBlock:(void(^)(NSError *error))completionBlock;
 
 @end

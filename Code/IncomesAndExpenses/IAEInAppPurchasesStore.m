@@ -8,8 +8,8 @@
 
 #import "IAEInAppPurchasesStore.h"
 #import <StoreKit/StoreKit.h>
-#import "NSUserDefaults+EasyIncAndExp.h"
 #import "IAEHasthUtilities.h"
+#import "NSUserDefaults+EasyIncAndExp.h"
 
 #pragma mark - Constants
 
@@ -21,7 +21,9 @@ static NSString * const kInAppPurchaseProVersionIdentifier = @"com.easyincomesan
                                     SKPaymentTransactionObserver>
 
 @property (nonatomic, strong) SKProductsRequest *productRequest;
-@property (nonatomic, strong) void(^productRequestCompletionBlock)(SKProduct *);
+@property (nonatomic, strong) void(^productRequestCompletionBlock)(SKProduct *product);
+@property (nonatomic, strong) void(^paymentCompletionBlock)(NSError *error);
+@property (nonatomic, strong) void(^restoreCompletionBlock)(NSError *error);
 
 @end
 
@@ -60,28 +62,40 @@ static NSString * const kInAppPurchaseProVersionIdentifier = @"com.easyincomesan
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions
 {
     for (SKPaymentTransaction *paymentTransacction in transactions) {
-        switch (paymentTransacction.transactionState) {
-            case SKPaymentTransactionStatePurchasing:
-                break;
-                
-            case SKPaymentTransactionStatePurchased:
-                // Pending - Validate transaction
-                [self finishTransactionAndGiveFeaturesWithPaymentTransaction:paymentTransacction];
-                break;
-                
-            case SKPaymentTransactionStateFailed:
-                break;
-                
-            case SKPaymentTransactionStateRestored:
-                [self finishTransactionAndGiveFeaturesWithPaymentTransaction:paymentTransacction];
-                break;
-            default:
-                break;
+        if (paymentTransacction.transactionState != SKPaymentTransactionStatePurchasing) {
+            switch (paymentTransacction.transactionState) {
+                case SKPaymentTransactionStatePurchased:
+                    [self finishTransactionAndGiveFeaturesWithPaymentTransaction:paymentTransacction withBlock:self.paymentCompletionBlock andError:nil];
+                    break;
+                    
+                case SKPaymentTransactionStateFailed:
+                    [self finishTransactionFailedWithPaymentTransaction:paymentTransacction];
+                    break;
+                    
+                case SKPaymentTransactionStateRestored:
+                    [self finishTransactionAndGiveFeaturesWithPaymentTransaction:paymentTransacction withBlock:self.restoreCompletionBlock andError:nil];
+                    break;
+                    
+                default:
+                    break;
+            }
+
+            self.paymentCompletionBlock = self.restoreCompletionBlock = nil;
         }
     }
 }
 
-- (void)finishTransactionAndGiveFeaturesWithPaymentTransaction:(SKPaymentTransaction *)paymentTransacction
+- (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue
+{
+}
+
+- (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error
+{
+    self.restoreCompletionBlock(error);
+    self.paymentCompletionBlock = self.restoreCompletionBlock = nil;
+}
+
+- (void)finishTransactionAndGiveFeaturesWithPaymentTransaction:(SKPaymentTransaction *)paymentTransacction withBlock:(void(^)(NSError *error))completionBlock andError:(NSError *)error
 {
     [[SKPaymentQueue defaultQueue] finishTransaction:paymentTransacction];
     
@@ -93,7 +107,18 @@ static NSString * const kInAppPurchaseProVersionIdentifier = @"com.easyincomesan
     // If the purchase is correct then, enableProVersion
     
     
-    [[NSUserDefaults standardUserDefaults] enableProVersion];
+    
+    completionBlock(error);
+}
+
+- (void)finishTransactionFailedWithPaymentTransaction:(SKPaymentTransaction *)paymentTransacction
+{
+    [[SKPaymentQueue defaultQueue] finishTransaction:paymentTransacction];
+    if (self.paymentCompletionBlock) {
+        self.paymentCompletionBlock(paymentTransacction.error);
+    } else if (self.restoreCompletionBlock) {
+        self.restoreCompletionBlock(paymentTransacction.error);
+    }
 }
 
 #pragma mark - Questions
@@ -115,15 +140,17 @@ static NSString * const kInAppPurchaseProVersionIdentifier = @"com.easyincomesan
     }
 }
 
-- (void)payForProduct:(SKProduct *)product
+- (void)payForProduct:(SKProduct *)product withCompletionBlock:(void(^)(NSError *error))completionBlock
 {
+    self.paymentCompletionBlock = completionBlock;
     SKMutablePayment *payment = [SKMutablePayment paymentWithProduct:product];
     payment.applicationUsername = [IAEHasthUtilities hashedValueForStringIdentifier:[[NSUserDefaults standardUserDefaults] userUniqueIdentifier]];
     [[SKPaymentQueue defaultQueue] addPayment:payment];
 }
 
-- (void)restorePurchasedProducts;
+- (void)restorePurchasedProductsWithCompletionBlock:(void(^)(NSError *error))completionBlock
 {
+    self.restoreCompletionBlock = completionBlock;
     [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
 }
 

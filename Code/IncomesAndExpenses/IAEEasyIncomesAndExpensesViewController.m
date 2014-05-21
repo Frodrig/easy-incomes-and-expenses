@@ -59,6 +59,7 @@
 #import "IAEInfoProVersionLicenceViewController.h"
 #import "IAEInAppPurchaseStoreViewController.h"
 #import "IAEInAppPurchasesStore.h"
+#import "IAEInternet.h"
 
 typedef NS_ENUM(NSUInteger, MonthSelectorPurpose) {
     MonthSelectorPurposeCopy,
@@ -2459,7 +2460,11 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 - (void)notificationCenterMainNavitationTitleTouched:(NSNotification *)notification
 {
     if ([[IAEInAppPurchasesStore defaultStore] isInAppPurchasesAccesible]) {
-        [self lauchInAppPurchaseStoreViewController];
+        if ([IAEInternet isConnected]) {
+            [self lauchInAppPurchaseStoreViewController];
+        } else {
+            [self launchAlertViewAboutInetConexionNotAvailable];
+        }
     } else {
         [self launchAlertViewAboutInAppPurchasesInaccesible];
     }
@@ -2482,7 +2487,17 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
                                               otherButtonTitles:nil];
     
     [alertView show];
+}
+
+- (void)launchAlertViewAboutInetConexionNotAvailable
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_INETCONEXION_ALERTVIEW_TITLE", @"")
+                                                        message:NSLocalizedString(@"LTEXT_INETCONEXION_ALERTVIEW_MESSAGE", @"")
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"LTEXT_INETCONEXION_ALERTVIEW_CANCEL", @"")
+                                              otherButtonTitles:nil];
     
+    [alertView show];
 }
 
 - (void)recalculeVisibleMonthsInOpenYearWithInitialMonth:(MonthType)initialMonth

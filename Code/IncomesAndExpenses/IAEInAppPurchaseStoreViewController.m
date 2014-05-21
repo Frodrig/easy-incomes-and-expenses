@@ -20,6 +20,11 @@ typedef NS_ENUM(NSUInteger, ControllerStateType) {
     ControllerStateTypeNone,
 };
 
+typedef NS_ENUM(NSUInteger, ThankYouAlertViewType) {
+    ThankYouAlertViewTypeRestore,
+    ThankYouAlertViewTypePurchase,
+};
+
 #pragma mark - Constants
 
 static const NSUInteger kADLabelTag = 1;
@@ -181,7 +186,7 @@ static const NSUInteger kADLabelTag = 1;
 {
     if (self.state != ControllerStateTypeWaitingForPurchaseOrRestore) {
         [[IAEInAppPurchasesStore defaultStore] payForProduct:self.proVersionProduct withCompletionBlock:^(NSError *error) {
-            [self checkPayAndRestorePurchasedProductsResult:error];
+            [self checkPayProductsResultWithError:error];
         }];
         [self setCommonUIConfigurationForWaitingForPurchaseAndRestoreState];
         self.state = ControllerStateTypeWaitingForPurchaseOrRestore;
@@ -219,7 +224,7 @@ static const NSUInteger kADLabelTag = 1;
 {
     [self setWaitingForPurchaseOrRestoreState];
     [[IAEInAppPurchasesStore defaultStore] payForProduct:self.proVersionProduct withCompletionBlock:^(NSError *error) {
-        [self checkPayAndRestorePurchasedProductsResult:error];
+        [self checkPayProductsResultWithError:error];
     }];
 }
 
@@ -229,11 +234,21 @@ static const NSUInteger kADLabelTag = 1;
 {
     [self setWaitingForPurchaseOrRestoreState];
     [[IAEInAppPurchasesStore defaultStore] restorePurchasedProductsWithCompletionBlock:^(NSError *error) {
-        [self checkPayAndRestorePurchasedProductsResult:error];
+        [self checkRestoreProductsResultWithError:error];
     }];
 }
 
-- (void)checkPayAndRestorePurchasedProductsResult:(NSError *)error
+- (void)checkPayProductsResultWithError:(NSError *)error
+{
+    [self checkPayOrRestureProductsResultWithError:error andThankyouAlertViewType:ThankYouAlertViewTypePurchase];
+}
+
+- (void)checkRestoreProductsResultWithError:(NSError *)error
+{
+    [self checkPayOrRestureProductsResultWithError:error andThankyouAlertViewType:ThankYouAlertViewTypeRestore];
+}
+
+- (void)checkPayOrRestureProductsResultWithError:(NSError *)error andThankyouAlertViewType:(ThankYouAlertViewType)alertViewType
 {
     if (error) {
         if (error.code != SKErrorPaymentCancelled) {
@@ -242,8 +257,65 @@ static const NSUInteger kADLabelTag = 1;
         [self setShowingPurchaseAndRestoreStateWithProduct:self.proVersionProduct];
     } else {
         [[NSUserDefaults standardUserDefaults] enableProVersion];
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self launchAlertViewThankYouOfType:alertViewType];
+        }];
     }
+}
+         
+- (void)launchAlertViewThankYouOfType:(ThankYouAlertViewType)alertViewType
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[self titleStringForAlertViewThankYouOfType:alertViewType]
+                                                        message:[self messageStringForAlertViewThankYouOfType:alertViewType]
+                                                       delegate:nil
+                                              cancelButtonTitle:[self cancelStringAlertViewThankYouOfType:alertViewType]
+                                              otherButtonTitles:nil];
+    [alertView show];
+}
+
+- (NSString *)titleStringForAlertViewThankYouOfType:(ThankYouAlertViewType)alertViewType
+{
+    NSString *retTitle = nil;
+    switch (alertViewType) {
+        case ThankYouAlertViewTypePurchase:
+            retTitle = NSLocalizedString(@"LTEXT_INAPPPURCHASESPAYMENTDONETHANKYOU_ALERTVIEW_TITLE", @"");
+            break;
+        case ThankYouAlertViewTypeRestore:
+            retTitle = NSLocalizedString(@"LTEXT_INAPPPURCHASESRESTORETHANKYOU_ALERTVIEW_TITLE", @"");
+            break;
+    }
+    
+    return retTitle;
+}
+
+- (NSString *)messageStringForAlertViewThankYouOfType:(ThankYouAlertViewType)alertViewType
+{
+    NSString *retTitle = nil;
+    switch (alertViewType) {
+        case ThankYouAlertViewTypePurchase:
+            retTitle = NSLocalizedString(@"LTEXT_INAPPPURCHASESPAYMENTDONETHANKYOU_ALERTVIEW_MESSAGE", @"");
+            break;
+        case ThankYouAlertViewTypeRestore:
+            retTitle = NSLocalizedString(@"LTEXT_INAPPPURCHASESRESTORETHANKYOU_ALERTVIEW_MESSAGE", @"");
+            break;
+    }
+    
+    return retTitle;
+}
+
+- (NSString *)cancelStringAlertViewThankYouOfType:(ThankYouAlertViewType)alertViewType
+{
+    NSString *retTitle = nil;
+    switch (alertViewType) {
+        case ThankYouAlertViewTypePurchase:
+            retTitle = NSLocalizedString(@"LTEXT_INAPPPURCHASESPAYMENTDONETHANKYOU_ALERTVIEW_CANCEL", @"");
+            break;
+        case ThankYouAlertViewTypeRestore:
+            retTitle = NSLocalizedString(@"LTEXT_INAPPPURCHASESRESTORETHANKYOU_ALERTVIEW_CANCEL", @"");
+            break;
+    }
+    
+    return retTitle;
 }
 
 - (void)launchAlertViewWithPaymentOrRestoreProcessWithError:(NSError *)error

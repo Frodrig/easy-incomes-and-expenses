@@ -12,6 +12,7 @@
 #import <StoreKit/StoreKit.h>
 #import "NSUserDefaults+EasyIncAndExp.h"
 #import "IAEInAppPurchaseStoreViewControllerDefs.h"
+#import "IAELoaderIndicatorView.h"
 
 typedef NS_ENUM(NSUInteger, ControllerStateType) {
     ControllerStateTypeRequestingProVersionProduct,
@@ -48,6 +49,7 @@ static const NSUInteger kADLabelTag = 1;
 @property (weak, nonatomic) IBOutlet UIView *adFutureUpdatesView;
 @property (weak, nonatomic) IBOutlet UILabel *standAloneMessageLabel;
 @property (weak, nonatomic) IBOutlet UIButton *retryButton;
+@property (weak, nonatomic) IBOutlet UIView *loaderIndicatorContainerView;
 @property (nonatomic, strong) SKProduct *proVersionProduct;
 @property (nonatomic) ControllerStateType state;
 @property (nonatomic) BOOL leavingWithPurchaseOrRestore;
@@ -144,6 +146,7 @@ static const NSUInteger kADLabelTag = 1;
         self.purchaseRestoreContainerView.hidden = YES;
         self.navItem.rightBarButtonItem.enabled = NO;
         [self requestProVersionProduct];
+        [self addLoaderIndicatorView];
         self.state = ControllerStateTypeRequestingProVersionProduct;
     }
 }
@@ -156,6 +159,7 @@ static const NSUInteger kADLabelTag = 1;
         self.messageWithRetryButtonContainerView.hidden = NO;
         self.purchaseRestoreContainerView.hidden = YES;
         self.navItem.rightBarButtonItem.enabled = YES;
+        [self removeLoaderIndicatorView];
         self.state = ControllerStateTypeErrorRequestingProVersionProduct;
     }
 }
@@ -168,6 +172,7 @@ static const NSUInteger kADLabelTag = 1;
         self.purchaseRestoreContainerView.hidden = NO;
         self.messageWithRetryButtonContainerView.hidden = YES;
         self.navItem.rightBarButtonItem.enabled = YES;
+        [self removeLoaderIndicatorView];
         self.state = ControllerStateTypeShowingPurchaseAndRestore;
     }
 }
@@ -180,10 +185,11 @@ static const NSUInteger kADLabelTag = 1;
         self.retryButton.hidden = YES;
         self.standAloneMessageLabel.text = NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_WAITTINGFORPURCHASEORRESTORE_MESSAGE", @"");
         self.navItem.rightBarButtonItem.enabled = NO;
+        [self addLoaderIndicatorView];
         self.state = ControllerStateTypeWaitingForPurchaseOrRestore;
     }
 }
-
+/*
 - (void)setWaitingForPurchaseState
 {
     if (self.state != ControllerStateTypeWaitingForPurchaseOrRestore) {
@@ -203,7 +209,7 @@ static const NSUInteger kADLabelTag = 1;
         self.state = ControllerStateTypeWaitingForPurchaseOrRestore;
     }
 }
-
+*/
 - (void)setCommonUIConfigurationForWaitingForPurchaseAndRestoreState
 {
     self.purchaseRestoreContainerView.hidden = YES;
@@ -211,6 +217,23 @@ static const NSUInteger kADLabelTag = 1;
     self.retryButton.hidden = YES;
     self.standAloneMessageLabel.text = NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_WAITTINGFORPURCHASEORRESTORE_MESSAGE", @"");
     self.navItem.rightBarButtonItem.enabled = NO;
+}
+
+#pragma mark - LoaderIndicatorView
+
+- (void)addLoaderIndicatorView
+{
+    if (self.loaderIndicatorContainerView.subviews.count == 0) {
+        [self.loaderIndicatorContainerView addSubview:[IAELoaderIndicatorView loaderIndicatorView]];
+    }
+}
+
+- (void)removeLoaderIndicatorView
+{
+    if (self.loaderIndicatorContainerView.subviews.count > 0) {
+        UIView *loaderIndicatorView = self.loaderIndicatorContainerView.subviews[0];
+        [loaderIndicatorView removeFromSuperview];
+    }
 }
 
 #pragma mark - DoneButtonPressed
@@ -340,7 +363,6 @@ static const NSUInteger kADLabelTag = 1;
         [self dismissViewControllerAnimated:YES completion:^{
             [[NSNotificationCenter defaultCenter] postNotificationName:kProVersionEnabledFromStore object:self];
         }];
-
     }
 }
 

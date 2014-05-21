@@ -415,12 +415,21 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 75;
 
 - (void)hide
 {
+    [self hideWithAnimation:YES];
+}
+
+- (void)hideWithoutAnimation
+{
+    [self hideWithAnimation:NO];
+}
+
+- (void)hideWithAnimation:(BOOL)animation
+{
     self.previousCalculatorMode = self.mode;
     self.actualDay = [IAEDateHelper findActualDayOfTheMonth];
     self.mode = CM_HIDE;
-    [self updateVisibilityToShow:NO usingAnimation:YES];
-
-    [self.delegate hideButtonWasPressedOnCalculatorViewController:self];
+    [self updateVisibilityToShow:NO usingAnimation:animation];
+    [self.delegate calculatorViewController:self hideButtonWasPressedWithAnimation:animation];
 }
 
 - (CGFloat)calculeAbsoluteOffsetDisplacementValue
@@ -1114,7 +1123,5 @@ didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
 {
     [self.delegate calculatorViewController:self didRemoveFavoriteConceptWithCategory:category andValue:value];
 }
-
-
 
 @end

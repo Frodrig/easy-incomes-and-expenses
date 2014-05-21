@@ -40,6 +40,10 @@ static NSString * const kNotificationMainLabelTitleTouched = @"mainLabelTitleTou
     self.text = NSLocalizedString([[NSUserDefaults standardUserDefaults] isProVersionEnabled] ? @"LTEXT_MAINNAVIGATION_TITLE_PROVERSION" : @"LTEXT_MAINNAVIGATION_TITLE_NOPROVERSION" , @"");
 }
 
+- (void)reloadTitle
+{
+    [self configureText];
+}
 
 #pragma mark - Interaction
 

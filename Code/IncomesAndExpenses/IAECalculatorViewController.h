@@ -47,6 +47,7 @@
 - (IBAction)expenseButtonPressed:(id)sender;
 
 - (void)hide;
+- (void)hideWithoutAnimation;
 
 - (IBAction)categoryButtonPressed:(UIButton *)button;
 - (IBAction)dayButtonPressed:(UIButton *)button;

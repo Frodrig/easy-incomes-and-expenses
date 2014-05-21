@@ -11,6 +11,7 @@
 #import "SKProduct+FormatedPrice.h"
 #import <StoreKit/StoreKit.h>
 #import "NSUserDefaults+EasyIncAndExp.h"
+#import "IAEInAppPurchaseStoreViewControllerDefs.h"
 
 typedef NS_ENUM(NSUInteger, ControllerStateType) {
     ControllerStateTypeRequestingProVersionProduct,
@@ -31,7 +32,7 @@ static const NSUInteger kADLabelTag = 1;
 
 #pragma mark - Interfaces
 
-@interface IAEInAppPurchaseStoreViewController ()
+@interface IAEInAppPurchaseStoreViewController ()<UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *purchaseRestoreContainerView;
 @property (weak, nonatomic) IBOutlet UIView *messageWithRetryButtonContainerView;
@@ -49,6 +50,7 @@ static const NSUInteger kADLabelTag = 1;
 @property (weak, nonatomic) IBOutlet UIButton *retryButton;
 @property (nonatomic, strong) SKProduct *proVersionProduct;
 @property (nonatomic) ControllerStateType state;
+@property (nonatomic) BOOL leavingWithPurchaseOrRestore;
 
 @end
 
@@ -257,9 +259,8 @@ static const NSUInteger kADLabelTag = 1;
         [self setShowingPurchaseAndRestoreStateWithProduct:self.proVersionProduct];
     } else {
         [[NSUserDefaults standardUserDefaults] enableProVersion];
-        [self dismissViewControllerAnimated:YES completion:^{
-            [self launchAlertViewThankYouOfType:alertViewType];
-        }];
+        self.leavingWithPurchaseOrRestore = YES;
+        [self launchAlertViewThankYouOfType:alertViewType];
     }
 }
          
@@ -267,7 +268,7 @@ static const NSUInteger kADLabelTag = 1;
 {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[self titleStringForAlertViewThankYouOfType:alertViewType]
                                                         message:[self messageStringForAlertViewThankYouOfType:alertViewType]
-                                                       delegate:nil
+                                                       delegate:self
                                               cancelButtonTitle:[self cancelStringAlertViewThankYouOfType:alertViewType]
                                               otherButtonTitles:nil];
     [alertView show];
@@ -330,5 +331,18 @@ static const NSUInteger kADLabelTag = 1;
 {
     [self setRequestingProVersionProductState];
 }
+
+#pragma mark - AlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (self.leavingWithPurchaseOrRestore) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:kProVersionEnabledFromStore object:self];
+        }];
+
+    }
+}
+
 
 @end

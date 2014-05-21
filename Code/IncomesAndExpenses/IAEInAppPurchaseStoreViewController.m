@@ -13,7 +13,7 @@
 
 typedef NS_ENUM(NSUInteger, ControllerStateType) {
     ControllerStateTypeRequestingProVersionProduct,
-    ControllerStateTypeErrorRequestinProVersionProduct,
+    ControllerStateTypeErrorRequestingProVersionProduct,
     ControllerStateTypeShowingPurchaseAndRestore,
     ControllerStateTypePurchasingOrRestoring,
     ControllerStateTypeNone,
@@ -64,11 +64,9 @@ static const NSUInteger kADLabelTag = 1;
 {
     [super viewDidLoad];
     
-    self.purchaseButton.enabled = NO;
-    self.restoreButton.enabled = NO;
-    
     [self configureNavigationItem];
     [self localizePurchaseRestoreContainerViewLabels];
+    [self localizeMessageWithRetryButtonContainerViewLabels];
 }
 
 - (void)configureNavigationItem
@@ -93,6 +91,11 @@ static const NSUInteger kADLabelTag = 1;
     [(UILabel *)[self.adFutureUpdatesView viewWithTag:kADLabelTag] setText:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_ADFUTUREUPDATES", @"")];
 }
 
+- (void)localizeMessageWithRetryButtonContainerViewLabels
+{
+    [self.retryButton setTitle:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_RETRYBUTTON", @"") forState:UIControlStateNormal];
+}
+
 - (void)localizeRestorePurchaseButtons
 {
     [self.purchaseButton setTitle:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_PURCHASEBUTTON", @"") forState:UIControlStateNormal];
@@ -101,7 +104,7 @@ static const NSUInteger kADLabelTag = 1;
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self setRequestingProVersionProduct];
+    [self setRequestingProVersionProductState];
 }
 
 - (void)requestProVersionProduct
@@ -109,10 +112,9 @@ static const NSUInteger kADLabelTag = 1;
     __weak IAEInAppPurchaseStoreViewController *weakSelf = self;
     [[IAEInAppPurchasesStore defaultStore] requestProVersionProductOnCompletion:^(SKProduct *product) {
         if (product) {
-            weakSelf.proVersionProduct = product;
-            [weakSelf.purchaseButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_PURCHASEBUTTON", @""), [product formattedPrice]] forState:UIControlStateNormal];
-            weakSelf.purchaseButton.enabled = YES;
-            weakSelf.restoreButton.enabled = YES;
+            [weakSelf setShowingPurchaseAndRestoreStateWithProduct:product];
+        } else {
+            [weakSelf setErrorRequestingProVersionProductState];
         }
     }];
 }
@@ -125,7 +127,7 @@ static const NSUInteger kADLabelTag = 1;
 
 #pragma mark - States
 
-- (void)setRequestingProVersionProduct
+- (void)setRequestingProVersionProductState
 {
     if (self.state != ControllerStateTypeRequestingProVersionProduct) {
         self.standAloneMessageLabel.text = NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_REQUESTINGPROVERSIONPRODUCT_MESSAGE", @"");
@@ -135,6 +137,30 @@ static const NSUInteger kADLabelTag = 1;
         self.navItem.rightBarButtonItem.enabled = NO;
         [self requestProVersionProduct];
         self.state = ControllerStateTypeRequestingProVersionProduct;
+    }
+}
+
+- (void)setErrorRequestingProVersionProductState
+{
+    if (self.state != ControllerStateTypeErrorRequestingProVersionProduct) {
+        self.standAloneMessageLabel.text = NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_ERRORREQUESTINGPROVERSIONPRODUCT_MESSAGE", @"");
+        self.retryButton.hidden = NO;
+        self.messageWithRetryButtonContainerView.hidden = NO;
+        self.purchaseRestoreContainerView.hidden = YES;
+        self.navItem.rightBarButtonItem.enabled = YES;
+        self.state = ControllerStateTypeErrorRequestingProVersionProduct;
+    }
+}
+
+- (void)setShowingPurchaseAndRestoreStateWithProduct:(SKProduct *)product
+{
+    if (self.state != ControllerStateTypeShowingPurchaseAndRestore) {
+        self.proVersionProduct = product;
+        [self.purchaseButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_PURCHASEBUTTON", @""), [self.proVersionProduct price]] forState:UIControlStateNormal];
+        self.purchaseRestoreContainerView.hidden = NO;
+        self.messageWithRetryButtonContainerView.hidden = YES;
+        self.navItem.rightBarButtonItem.enabled = YES;
+        self.state = ControllerStateTypeShowingPurchaseAndRestore;
     }
 }
 
@@ -156,6 +182,14 @@ static const NSUInteger kADLabelTag = 1;
 
 - (IBAction)restoreButtonPressed:(id)sender
 {
+    
+}
+
+#pragma mark - RetryButtonPressed
+
+- (IBAction)retryButtonPressed:(id)sender
+{
+    [self setRequestingProVersionProductState];
 }
 
 @end

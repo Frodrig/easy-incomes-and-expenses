@@ -37,7 +37,9 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
                                 kUserDefaultRemoveConceptConfirmation: @(NO),
                                 kUserDefaultRecoverPasswordEmail: @"",
                                 kUserDefaultsProVersionKey : @(YES)};
-    [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];    
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
+    
+    [self disableProVersion];
 }
 
 #pragma mark - ReportSection

@@ -10,12 +10,13 @@
 #import "IAEInAppPurchasesStore.h"
 #import "SKProduct+FormatedPrice.h"
 #import <StoreKit/StoreKit.h>
+#import "NSUserDefaults+EasyIncAndExp.h"
 
 typedef NS_ENUM(NSUInteger, ControllerStateType) {
     ControllerStateTypeRequestingProVersionProduct,
     ControllerStateTypeErrorRequestingProVersionProduct,
     ControllerStateTypeShowingPurchaseAndRestore,
-    ControllerStateTypePurchasingOrRestoring,
+    ControllerStateTypeWaitingForPurchaseOrRestore,
     ControllerStateTypeNone,
 };
 
@@ -63,7 +64,7 @@ static const NSUInteger kADLabelTag = 1;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+     
     [self configureNavigationItem];
     [self localizePurchaseRestoreContainerViewLabels];
     [self localizeMessageWithRetryButtonContainerViewLabels];
@@ -164,6 +165,47 @@ static const NSUInteger kADLabelTag = 1;
     }
 }
 
+- (void)setWaitingForPurchaseOrRestoreState
+{
+    if (self.state != ControllerStateTypeWaitingForPurchaseOrRestore) {
+        self.purchaseRestoreContainerView.hidden = YES;
+        self.messageWithRetryButtonContainerView.hidden = NO;
+        self.retryButton.hidden = YES;
+        self.standAloneMessageLabel.text = NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_WAITTINGFORPURCHASEORRESTORE_MESSAGE", @"");
+        self.navItem.rightBarButtonItem.enabled = NO;
+        self.state = ControllerStateTypeWaitingForPurchaseOrRestore;
+    }
+}
+
+- (void)setWaitingForPurchaseState
+{
+    if (self.state != ControllerStateTypeWaitingForPurchaseOrRestore) {
+        [[IAEInAppPurchasesStore defaultStore] payForProduct:self.proVersionProduct withCompletionBlock:^(NSError *error) {
+            [self checkPayAndRestorePurchasedProductsResult:error];
+        }];
+        [self setCommonUIConfigurationForWaitingForPurchaseAndRestoreState];
+        self.state = ControllerStateTypeWaitingForPurchaseOrRestore;
+    }
+}
+
+- (void)setWaitingForRestoreState
+{
+    if (self.state != ControllerStateTypeWaitingForPurchaseOrRestore) {
+        [self setRequestingProVersionProductState];
+        [self setCommonUIConfigurationForWaitingForPurchaseAndRestoreState];
+        self.state = ControllerStateTypeWaitingForPurchaseOrRestore;
+    }
+}
+
+- (void)setCommonUIConfigurationForWaitingForPurchaseAndRestoreState
+{
+    self.purchaseRestoreContainerView.hidden = YES;
+    self.messageWithRetryButtonContainerView.hidden = NO;
+    self.retryButton.hidden = YES;
+    self.standAloneMessageLabel.text = NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_WAITTINGFORPURCHASEORRESTORE_MESSAGE", @"");
+    self.navItem.rightBarButtonItem.enabled = NO;
+}
+
 #pragma mark - DoneButtonPressed
 
 - (IBAction)doneButtonPressed:(id)sender
@@ -175,14 +217,39 @@ static const NSUInteger kADLabelTag = 1;
 
 - (IBAction)purchaseButtonPressed:(id)sender
 {
-    [[IAEInAppPurchasesStore defaultStore] payForProduct:self.proVersionProduct];    
+    [self setWaitingForPurchaseOrRestoreState];
+    [[IAEInAppPurchasesStore defaultStore] payForProduct:self.proVersionProduct withCompletionBlock:^(NSError *error) {
+        [self checkPayAndRestorePurchasedProductsResult:error];
+    }];
 }
 
 #pragma mark - RestoreButtonPressed
 
 - (IBAction)restoreButtonPressed:(id)sender
 {
-    
+    [self setWaitingForPurchaseOrRestoreState];
+    [[IAEInAppPurchasesStore defaultStore] restorePurchasedProductsWithCompletionBlock:^(NSError *error) {
+        [self checkPayAndRestorePurchasedProductsResult:error];
+    }];
+}
+
+- (void)checkPayAndRestorePurchasedProductsResult:(NSError *)error
+{
+    if (error) {
+        if (error.code != SKErrorPaymentCancelled) {
+            [self launchAlertViewWithPaymentOrRestoreProcessWithError:error];
+        }
+        [self setShowingPurchaseAndRestoreStateWithProduct:self.proVersionProduct];
+    } else {
+        [[NSUserDefaults standardUserDefaults] enableProVersion];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+- (void)launchAlertViewWithPaymentOrRestoreProcessWithError:(NSError *)error
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_INAPPPURCHASESPROBLEMSINPAYMENTORRESTORE_ALERTVIEW_TITLE", @"") message:error.localizedDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"LTEXT_INAPPPURCHASESPROBLEMSINPAYMENTORRESTORE_ALERTVIEW_CANCEL", @"") otherButtonTitles:nil];
+    [alertView show];
 }
 
 #pragma mark - RetryButtonPressed

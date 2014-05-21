@@ -1,0 +1,11 @@
+//
+//  IAEInAppPurchaseStoreViewControllerDefs.m
+//  IncomesAndExpenses
+//
+//  Created by Fernando Rodríguez Martínez on 21/05/14.
+//  Copyright (c) 2014 Fernando Rodríguez Martínez. All rights reserved.
+//
+
+#import "IAEInAppPurchaseStoreViewControllerDefs.h"
+
+NSString * const kProVersionEnabledFromStore = @"ProVersionEnabledFromStore";

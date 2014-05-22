@@ -30,6 +30,8 @@ typedef NS_ENUM(NSUInteger, ThankYouAlertViewType) {
 #pragma mark - Constants
 
 static const NSUInteger kADLabelTag = 1;
+static const CGFloat kFadeOutStateTime = 0.5;
+static const CGFloat kFadeInStateTime = 0.75;
 
 #pragma mark - Interfaces
 
@@ -73,7 +75,7 @@ static const NSUInteger kADLabelTag = 1;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-     
+    
     [self configureNavigationItem];
     [self localizePurchaseRestoreContainerViewLabels];
     [self localizeMessageWithRetryButtonContainerViewLabels];
@@ -140,76 +142,94 @@ static const NSUInteger kADLabelTag = 1;
 - (void)setRequestingProVersionProductState
 {
     if (self.state != ControllerStateTypeRequestingProVersionProduct) {
-        self.standAloneMessageLabel.text = NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_REQUESTINGPROVERSIONPRODUCT_MESSAGE", @"");
-        self.retryButton.hidden = YES;
-        self.messageWithRetryButtonContainerView.hidden = NO;
-        self.purchaseRestoreContainerView.hidden = YES;
         self.navItem.rightBarButtonItem.enabled = NO;
-        [self requestProVersionProduct];
-        [self addLoaderIndicatorView];
-        self.state = ControllerStateTypeRequestingProVersionProduct;
+        [UIView animateWithDuration:kFadeOutStateTime animations:^{
+            self.purchaseRestoreContainerView.alpha = 0;
+            self.messageWithRetryButtonContainerView.alpha = 1;
+        } completion:^(BOOL finished) {
+            self.purchaseRestoreContainerView.alpha = 1;
+            self.purchaseRestoreContainerView.hidden = YES;
+            self.messageWithRetryButtonContainerView.alpha = 0;
+            self.messageWithRetryButtonContainerView.hidden = NO;
+            self.retryButton.hidden = YES;
+            self.standAloneMessageLabel.text = NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_REQUESTINGPROVERSIONPRODUCT_MESSAGE", @"");
+            [self requestProVersionProduct];
+            [self addLoaderIndicatorView];
+            self.state = ControllerStateTypeRequestingProVersionProduct;
+            [UIView animateWithDuration:kFadeInStateTime animations:^{
+                self.messageWithRetryButtonContainerView.alpha = 1.0;
+            }];
+        }];
     }
 }
 
 - (void)setErrorRequestingProVersionProductState
 {
     if (self.state != ControllerStateTypeErrorRequestingProVersionProduct) {
-        self.standAloneMessageLabel.text = NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_ERRORREQUESTINGPROVERSIONPRODUCT_MESSAGE", @"");
-        self.retryButton.hidden = NO;
-        self.messageWithRetryButtonContainerView.hidden = NO;
-        self.purchaseRestoreContainerView.hidden = YES;
-        self.navItem.rightBarButtonItem.enabled = YES;
-        [self removeLoaderIndicatorView];
-        self.state = ControllerStateTypeErrorRequestingProVersionProduct;
+        self.messageWithRetryButtonContainerView.alpha = 1;
+        [UIView animateWithDuration:kFadeOutStateTime animations:^{
+            self.purchaseRestoreContainerView.alpha = 0;
+        } completion:^(BOOL finished) {
+            self.purchaseRestoreContainerView.alpha = 1;
+            self.purchaseRestoreContainerView.hidden = YES;
+            self.messageWithRetryButtonContainerView.alpha = 0;
+            self.messageWithRetryButtonContainerView.hidden = NO;
+            self.navItem.rightBarButtonItem.enabled = YES;
+            self.standAloneMessageLabel.text = NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_ERRORREQUESTINGPROVERSIONPRODUCT_MESSAGE", @"");
+            [self removeLoaderIndicatorView];
+            self.state = ControllerStateTypeErrorRequestingProVersionProduct;
+            [UIView animateWithDuration:kFadeInStateTime animations:^{
+                self.messageWithRetryButtonContainerView.alpha = 1.0;
+            }];
+        }];
     }
 }
 
 - (void)setShowingPurchaseAndRestoreStateWithProduct:(SKProduct *)product
 {
     if (self.state != ControllerStateTypeShowingPurchaseAndRestore) {
-        self.proVersionProduct = product;
-        [self.purchaseButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_PURCHASEBUTTON", @""), [self.proVersionProduct price]] forState:UIControlStateNormal];
-        self.purchaseRestoreContainerView.hidden = NO;
-        self.messageWithRetryButtonContainerView.hidden = YES;
-        self.navItem.rightBarButtonItem.enabled = YES;
-        [self removeLoaderIndicatorView];
-        self.state = ControllerStateTypeShowingPurchaseAndRestore;
+        self.purchaseRestoreContainerView.alpha = 1;
+        [UIView animateWithDuration:kFadeOutStateTime animations:^{
+            self.messageWithRetryButtonContainerView.alpha = 0;
+        } completion:^(BOOL finished) {
+            self.messageWithRetryButtonContainerView.alpha = 1;
+            self.messageWithRetryButtonContainerView.hidden = YES;
+            self.purchaseRestoreContainerView.alpha = 0;
+            self.purchaseRestoreContainerView.hidden = NO;
+            self.proVersionProduct = product;
+            [self.purchaseButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_PURCHASEBUTTON", @""), [self.proVersionProduct price]] forState:UIControlStateNormal];
+            self.navItem.rightBarButtonItem.enabled = YES;
+            [self removeLoaderIndicatorView];
+            self.state = ControllerStateTypeShowingPurchaseAndRestore;
+            [UIView animateWithDuration:kFadeInStateTime animations:^{
+                self.purchaseRestoreContainerView.alpha = 1.0;
+            }];
+        }];
     }
 }
 
 - (void)setWaitingForPurchaseOrRestoreState
 {
     if (self.state != ControllerStateTypeWaitingForPurchaseOrRestore) {
-        self.purchaseRestoreContainerView.hidden = YES;
-        self.messageWithRetryButtonContainerView.hidden = NO;
-        self.retryButton.hidden = YES;
-        self.standAloneMessageLabel.text = NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_WAITTINGFORPURCHASEORRESTORE_MESSAGE", @"");
-        self.navItem.rightBarButtonItem.enabled = NO;
-        [self addLoaderIndicatorView];
-        self.state = ControllerStateTypeWaitingForPurchaseOrRestore;
-    }
-}
-/*
-- (void)setWaitingForPurchaseState
-{
-    if (self.state != ControllerStateTypeWaitingForPurchaseOrRestore) {
-        [[IAEInAppPurchasesStore defaultStore] payForProduct:self.proVersionProduct withCompletionBlock:^(NSError *error) {
-            [self checkPayProductsResultWithError:error];
+        self.messageWithRetryButtonContainerView.alpha = 1;
+        [UIView animateWithDuration:kFadeOutStateTime animations:^{
+            self.purchaseRestoreContainerView.alpha = 0;
+        } completion:^(BOOL finished) {
+            self.purchaseRestoreContainerView.alpha = 1;
+            self.purchaseRestoreContainerView.hidden = YES;
+            self.messageWithRetryButtonContainerView.alpha = 0;
+            self.messageWithRetryButtonContainerView.hidden = NO;
+            self.standAloneMessageLabel.text = NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_WAITTINGFORPURCHASEORRESTORE_MESSAGE", @"");
+            self.navItem.rightBarButtonItem.enabled = NO;
+            [self addLoaderIndicatorView];
+            self.state = ControllerStateTypeWaitingForPurchaseOrRestore;
+            [UIView animateWithDuration:kFadeInStateTime animations:^{
+                self.messageWithRetryButtonContainerView.alpha = 1.0;
+            }];
         }];
-        [self setCommonUIConfigurationForWaitingForPurchaseAndRestoreState];
-        self.state = ControllerStateTypeWaitingForPurchaseOrRestore;
     }
 }
 
-- (void)setWaitingForRestoreState
-{
-    if (self.state != ControllerStateTypeWaitingForPurchaseOrRestore) {
-        [self setRequestingProVersionProductState];
-        [self setCommonUIConfigurationForWaitingForPurchaseAndRestoreState];
-        self.state = ControllerStateTypeWaitingForPurchaseOrRestore;
-    }
-}
-*/
 - (void)setCommonUIConfigurationForWaitingForPurchaseAndRestoreState
 {
     self.purchaseRestoreContainerView.hidden = YES;

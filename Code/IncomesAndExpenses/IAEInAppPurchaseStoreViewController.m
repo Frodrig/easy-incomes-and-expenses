@@ -29,7 +29,6 @@ typedef NS_ENUM(NSUInteger, ThankYouAlertViewType) {
 
 #pragma mark - Constants
 
-static const NSUInteger kADLabelTag = 1;
 static const CGFloat kFadeOutStateTime = 0.5;
 static const CGFloat kFadeInStateTime = 0.75;
 
@@ -39,16 +38,11 @@ static const CGFloat kFadeInStateTime = 0.75;
 
 @property (weak, nonatomic) IBOutlet UIView *purchaseRestoreContainerView;
 @property (weak, nonatomic) IBOutlet UIView *messageWithRetryButtonContainerView;
+@property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
+@property (weak, nonatomic) IBOutlet UITextView *featuresTextView;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navItem;
 @property (weak, nonatomic) IBOutlet UIButton *purchaseButton;
 @property (weak, nonatomic) IBOutlet UIButton *restoreButton;
-@property (weak, nonatomic) IBOutlet UIView *adInitialMonthView;
-@property (weak, nonatomic) IBOutlet UIView *adPasswordView;
-@property (weak, nonatomic) IBOutlet UIView *adFavoritesView;
-@property (weak, nonatomic) IBOutlet UIView *adCSVView;
-@property (weak, nonatomic) IBOutlet UIView *adDuplicateMoveCopyView;
-@property (weak, nonatomic) IBOutlet UIView *adAccesibilityView;
-@property (weak, nonatomic) IBOutlet UIView *adFutureUpdatesView;
 @property (weak, nonatomic) IBOutlet UILabel *standAloneMessageLabel;
 @property (weak, nonatomic) IBOutlet UIButton *retryButton;
 @property (weak, nonatomic) IBOutlet UIView *loaderIndicatorContainerView;
@@ -94,13 +88,14 @@ static const CGFloat kFadeInStateTime = 0.75;
 
 - (void)localizeRestorePurchaseLabels
 {
-    [(UILabel *)[self.adInitialMonthView viewWithTag:kADLabelTag] setText:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_ADINITIALMONTH", @"")];
-    [(UILabel *)[self.adPasswordView viewWithTag:kADLabelTag] setText:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_ADPASSWORD", @"")];
-    [(UILabel *)[self.adFavoritesView viewWithTag:kADLabelTag] setText:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_ADFAVORITES", @"")];
-    [(UILabel *)[self.adCSVView viewWithTag:kADLabelTag] setText:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_ADCSV", @"")];
-    [(UILabel *)[self.adDuplicateMoveCopyView viewWithTag:kADLabelTag] setText:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_ADDUPLICATEMOVECOPY", @"")];
-    [(UILabel *)[self.adAccesibilityView viewWithTag:kADLabelTag] setText:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_ADACCESIBILITY", @"")];
-    [(UILabel *)[self.adFutureUpdatesView viewWithTag:kADLabelTag] setText:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_ADFUTUREUPDATES", @"")];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.alignment = NSTextAlignmentJustified;
+    
+    self.descriptionTextView.attributedText = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"LTEXT_A", @"")
+                                                                              attributes:@{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:22],
+                                                                                           NSForegroundColorAttributeName: [UIColor blackColor],
+                                                                                           NSParagraphStyleAttributeName: paragraphStyle,
+                                                                                           NSKernAttributeName: [NSNumber numberWithInteger:0]}];
 }
 
 - (void)localizeMessageWithRetryButtonContainerViewLabels
@@ -197,7 +192,15 @@ static const CGFloat kFadeInStateTime = 0.75;
             self.purchaseRestoreContainerView.alpha = 0;
             self.purchaseRestoreContainerView.hidden = NO;
             self.proVersionProduct = product;
-            [self.purchaseButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_PURCHASEBUTTON", @""), [self.proVersionProduct price]] forState:UIControlStateNormal];
+            [self.purchaseButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_PURCHASEBUTTON", @""), [self.proVersionProduct formattedPrice]] forState:UIControlStateNormal];
+        
+            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+            paragraphStyle.alignment = NSTextAlignmentCenter;
+            paragraphStyle.lineSpacing = 8;
+            self.featuresTextView.attributedText = [[NSAttributedString alloc] initWithString:product.localizedDescription attributes:@{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:21],
+                                                                                                                                             NSForegroundColorAttributeName: [UIColor blackColor],
+                                                                                                                                             NSParagraphStyleAttributeName: paragraphStyle,
+                                                                                                                                             NSKernAttributeName: [NSNumber numberWithInteger:0.5]}];
             self.navItem.rightBarButtonItem.enabled = YES;
             [self removeLoaderIndicatorView];
             self.state = ControllerStateTypeShowingPurchaseAndRestore;

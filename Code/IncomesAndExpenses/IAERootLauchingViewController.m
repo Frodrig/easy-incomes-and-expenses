@@ -199,6 +199,7 @@ static const CGFloat kFadeOutCourtainViewTransitionToProVersionEffectTime = 3.0;
             self.courtainView.alpha = 0.0;
          } completion:^(BOOL finished) {
             [self.courtainView removeFromSuperview];
+             self.courtainView = nil;
          }];
     } else {
         [super touchesBegan:touches withEvent:event];

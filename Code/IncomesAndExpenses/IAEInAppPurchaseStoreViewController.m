@@ -207,13 +207,7 @@ static const CGFloat kFadeInStateTime = 0.75;
             self.proVersionProduct = product;
             [self.purchaseButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_PURCHASEBUTTON", @""), [self.proVersionProduct formattedPrice]] forState:UIControlStateNormal];
         
-            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-            paragraphStyle.alignment = NSTextAlignmentCenter;
-            paragraphStyle.lineSpacing = 8;
-            self.featuresTextView.attributedText = [[NSAttributedString alloc] initWithString:product.localizedDescription attributes:@{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:21],
-                                                                                                                                             NSForegroundColorAttributeName: [UIColor blackColor],
-                                                                                                                                             NSParagraphStyleAttributeName: paragraphStyle,
-                                                                                                                                             NSKernAttributeName: [NSNumber numberWithInteger:0.5]}];
+            self.featuresTextView.attributedText = [self featuresDescriptionAttributedTextForProduct:product];
             self.navItem.rightBarButtonItem.enabled = YES;
             [self removeLoaderIndicatorView];
             self.state = ControllerStateTypeShowingPurchaseAndRestore;
@@ -222,6 +216,18 @@ static const CGFloat kFadeInStateTime = 0.75;
             }];
         }];
     }
+}
+
+- (NSAttributedString *)featuresDescriptionAttributedTextForProduct:(SKProduct *)product
+{
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+    paragraphStyle.lineSpacing = 8;
+    return [[NSAttributedString alloc] initWithString:product.localizedDescription attributes:@{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:21],
+                                                                                                                                NSForegroundColorAttributeName: [UIColor blackColor],
+                                                                                                                                NSParagraphStyleAttributeName: paragraphStyle,
+                                                                                                                                NSKernAttributeName: [NSNumber numberWithInteger:0.5]}];
+
 }
 
 - (void)setWaitingForPurchaseOrRestoreState

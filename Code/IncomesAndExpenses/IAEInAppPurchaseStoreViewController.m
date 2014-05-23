@@ -49,12 +49,32 @@ static const CGFloat kFadeInStateTime = 0.75;
 @property (nonatomic, strong) SKProduct *proVersionProduct;
 @property (nonatomic) ControllerStateType state;
 @property (nonatomic) BOOL leavingWithPurchaseOrRestore;
+@property (nonatomic, strong) NSAttributedString *genericDescriptionAttributedText;
 
 @end
 
 #pragma mark - Implementation
 
 @implementation IAEInAppPurchaseStoreViewController
+
+#pragma mark - Properties
+
+- (NSAttributedString *)genericDescriptionAttributedText
+{
+    if (!_genericDescriptionAttributedText) {
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.alignment = NSTextAlignmentJustified;
+        _genericDescriptionAttributedText = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_GENERICDESCRIPTION", @"")
+                                                                                  attributes:@{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:22],
+                                                                                               NSForegroundColorAttributeName: [UIColor blackColor],
+                                                                                               NSParagraphStyleAttributeName: paragraphStyle,
+                                                                                               NSKernAttributeName: [NSNumber numberWithInteger:0]}];
+    }
+    
+    return _genericDescriptionAttributedText;
+}
+
+#pragma mark - Init
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -88,14 +108,7 @@ static const CGFloat kFadeInStateTime = 0.75;
 
 - (void)localizeRestorePurchaseLabels
 {
-    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    paragraphStyle.alignment = NSTextAlignmentJustified;
-    
-    self.descriptionTextView.attributedText = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"LTEXT_A", @"")
-                                                                              attributes:@{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:22],
-                                                                                           NSForegroundColorAttributeName: [UIColor blackColor],
-                                                                                           NSParagraphStyleAttributeName: paragraphStyle,
-                                                                                           NSKernAttributeName: [NSNumber numberWithInteger:0]}];
+    self.descriptionTextView.attributedText = self.genericDescriptionAttributedText;
 }
 
 - (void)localizeMessageWithRetryButtonContainerViewLabels

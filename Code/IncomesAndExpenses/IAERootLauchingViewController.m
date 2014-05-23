@@ -26,6 +26,7 @@ static const CGFloat kFadeOutCourtainViewTransitionToProVersionEffectTime = 3.0;
 @property (nonatomic, strong) UINavigationController *mainViewController;
 @property (nonatomic, strong) IAEEasyIncomesAndExpensesViewController *easyIncomesAndExpensesViewController;
 @property (nonatomic, strong) UIImageView *launchImage;
+@property (nonatomic, strong) UIView *courtainView;
 @end
 
 @implementation IAERootLauchingViewController
@@ -191,27 +192,43 @@ static const CGFloat kFadeOutCourtainViewTransitionToProVersionEffectTime = 3.0;
     }];
 }
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    if (self.courtainView) {
+        [UIView animateWithDuration:kFadeOutCourtainViewTransitionToProVersionEffectTime animations:^{
+            self.courtainView.alpha = 0.0;
+         } completion:^(BOOL finished) {
+            [self.courtainView removeFromSuperview];
+         }];
+    } else {
+        [super touchesBegan:touches withEvent:event];
+    }
+}
+
 #pragma mark - Notificacion
 
 - (void)notificationCenterProVersionEnabledFromStore:(NSNotification *)notification
 {
-    UIView *courtainView = [self createAndAddCourtainViewForTheTransitionToProVisualEffect];
+    self.courtainView = [self createAndAddCourtainViewForTheTransitionToProVisualEffect];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
     [UIView animateWithDuration:kFadeInCourtainViewTransitionToProVersionEffectTime animations:^{
-        courtainView.alpha = 1.0;
+        self.courtainView.alpha = 1.0;
     } completion:^(BOOL finished) {
         [self.easyIncomesAndExpensesViewController resetToLaunchState];
-        [UIView animateWithDuration:kFadeOutCourtainViewTransitionToProVersionEffectTime animations:^{
-            courtainView.alpha = 0.0;
-        } completion:^(BOOL finished) {
-            [courtainView removeFromSuperview];
-        }];
     }];
 }
 
 - (UIView *)createAndAddCourtainViewForTheTransitionToProVisualEffect
 {
     UIView *courtainView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
+    UILabel *smileLabel = [[UILabel alloc] init];
+    smileLabel.attributedText = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"LTEXT_PURCHASEPROVERSION_COURTAIN_THANKYOU", @"") attributes:@{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Thin" size:100],
+                                                                                                               NSForegroundColorAttributeName: [UIColor blackColor],
+                                                                                                                                                              NSKernAttributeName: @(1.5)}];
+    [smileLabel sizeToFit];
+    [courtainView addSubview:smileLabel];
+    smileLabel.center = courtainView.center;
+    //smileLabel.layer.affineTransform = CGAffineTransformMakeRotation(90);
     courtainView.backgroundColor = [UIColor whiteColor];
     courtainView.alpha = 0.0;
     [self.view addSubview:courtainView];

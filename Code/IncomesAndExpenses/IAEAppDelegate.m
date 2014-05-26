@@ -88,13 +88,9 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
 
 - (void)createYearBookIfProceed
 {
-    // Si no hay ningun año registrado, se crea
-    [[IAEBook sharedBook] openMostRecientCreatedYear];
-    if (0 == [IAEBook sharedBook].openYears.count) {
-        NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        NSDateComponents *yearComponent = [gregorian components:NSYearCalendarUnit fromDate:[NSDate date]];
-        [[IAEBook sharedBook] openYear:@(yearComponent.year)];
-    }
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *yearComponent = [gregorian components:NSYearCalendarUnit fromDate:[NSDate date]];
+    [[IAEBook sharedBook] openYear:@(yearComponent.year)];
 }
 
 - (void)createWindowRootLaunchingViewControllerAndMakeVisible

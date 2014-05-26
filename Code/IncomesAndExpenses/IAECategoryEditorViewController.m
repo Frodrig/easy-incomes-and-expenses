@@ -285,8 +285,13 @@ static const NSUInteger kSizeRoundedRectCorners = 10;
     if (![self notifyToDelegateForNewOrRenamedCategoryIfProceed]) {
         [self setCancelActionAndNotifyToDelegate];
     }
+   
+    return YES;
+}
 
-//    [self.categoryInputTextField resignFirstResponder];
+- (BOOL)textFieldShouldClear:(UITextField *)textField
+{
+    self.resumeTextField.text = @"";
     
     return YES;
 }

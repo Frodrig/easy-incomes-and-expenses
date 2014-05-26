@@ -61,6 +61,9 @@ static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
+    // Nota: Para intentar resolver el problema relacioando con el crash que aparece de vez en cuando
+    [collectionView.collectionViewLayout invalidateLayout];
+    
     NSUInteger numberOfSections = 1;
     if ([self.iaeViewControllerQuery isActualSelectedContextTheYearOpen]) {
         NSArray *monthWithConcepts = [self.iaeViewControllerQuery findAllOrdererMonthsWithConceptsOfOpenYear];

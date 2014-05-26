@@ -70,6 +70,8 @@
 		5B36AFFC1785D73800132475 /* IAECategorySelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B36AFFA1785D73800132475 /* IAECategorySelectorViewController.m */; };
 		5B36AFFD1785D73800132475 /* IAECategorySelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B36AFFB1785D73800132475 /* IAECategorySelectorViewController.xib */; };
 		5B3CD7791933391200AF2A0C /* IAEPasswordCheckView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3CD7781933391200AF2A0C /* IAEPasswordCheckView.m */; };
+		5B3CD77C193346F500AF2A0C /* nextDecoratorTableView.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3CD77A193346F500AF2A0C /* nextDecoratorTableView.png */; };
+		5B3CD77D193346F500AF2A0C /* nextDecoratorTableView@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3CD77B193346F500AF2A0C /* nextDecoratorTableView@2x.png */; };
 		5B5497B71820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5497B51820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.m */; };
 		5B5497B81820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B5497B61820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.xib */; };
 		5B5544A2177460DD009CFC84 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B5544A1177460DD009CFC84 /* Main.storyboard */; };
@@ -370,6 +372,8 @@
 		5B36AFFB1785D73800132475 /* IAECategorySelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAECategorySelectorViewController.xib; sourceTree = "<group>"; };
 		5B3CD7771933391200AF2A0C /* IAEPasswordCheckView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEPasswordCheckView.h; sourceTree = "<group>"; };
 		5B3CD7781933391200AF2A0C /* IAEPasswordCheckView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEPasswordCheckView.m; sourceTree = "<group>"; };
+		5B3CD77A193346F500AF2A0C /* nextDecoratorTableView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nextDecoratorTableView.png; sourceTree = "<group>"; };
+		5B3CD77B193346F500AF2A0C /* nextDecoratorTableView@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nextDecoratorTableView@2x.png"; sourceTree = "<group>"; };
 		5B48BFFA1799425500BF0A68 /* IAEDayCalendarSelectorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEDayCalendarSelectorViewControllerDelegate.h; sourceTree = "<group>"; };
 		5B5497B41820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelpConfigureStartMonthSelectorTableViewController.h; sourceTree = "<group>"; };
 		5B5497B51820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelpConfigureStartMonthSelectorTableViewController.m; sourceTree = "<group>"; };
@@ -1553,6 +1557,8 @@
 		5B7FCE9217D63D1200624D25 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				5B3CD77A193346F500AF2A0C /* nextDecoratorTableView.png */,
+				5B3CD77B193346F500AF2A0C /* nextDecoratorTableView@2x.png */,
 				5B5A0580192D096600154371 /* imageLoader-1.gif */,
 				5B5A0581192D096600154371 /* imageLoader-2.gif */,
 				5B5A0582192D096600154371 /* imageLoader-3.gif */,
@@ -2556,6 +2562,7 @@
 				5BD94C0F1786B896009009B1 /* IAECategoryTableViewCell.xib in Resources */,
 				5B5A0598192D096600154371 /* imageLoader-1.gif in Resources */,
 				5B5A05AA192D096600154371 /* imageLoader-19.gif in Resources */,
+				5B3CD77D193346F500AF2A0C /* nextDecoratorTableView@2x.png in Resources */,
 				5B879779180EA90500554E13 /* IAEHelpViewController.xib in Resources */,
 				5BE8A68018FDCD2A00475F68 /* star.png in Resources */,
 				5B28D1AE18200C1300EF4D48 /* 766-arrow-right.png in Resources */,
@@ -2592,6 +2599,7 @@
 				5B2E93D217DCDDF6007D4284 /* eiae_icon40.png in Resources */,
 				5B5A05A8192D096600154371 /* imageLoader-17.gif in Resources */,
 				5B5DBB3D17E1F01400716503 /* ipadlandscape_launchimage.png in Resources */,
+				5B3CD77C193346F500AF2A0C /* nextDecoratorTableView.png in Resources */,
 				5BDD9A201857183D001A6CEF /* 745-unlocked.png in Resources */,
 				5BCB5F3F1822640C00A37013 /* 702-share@2x.png in Resources */,
 				5BE84E78180DA8CF00F4A80B /* IAESettingsViewController.xib in Resources */,

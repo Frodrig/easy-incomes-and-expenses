@@ -33,6 +33,7 @@
 - (IAEOpenYear *)findOpenYearWithDate:(NSNumber *)yearDate;
 - (NSArray *)findInOpenYearsAllConceptsWithCategory:(IAECategory *)category;
 - (NSArray *)findAllOpenYearsWithConcepts;
+- (NSArray *)findAllOpenYearsWithConceptsSorted;
 
 - (NSArray *)findAllYeardDatesLoaded;
 

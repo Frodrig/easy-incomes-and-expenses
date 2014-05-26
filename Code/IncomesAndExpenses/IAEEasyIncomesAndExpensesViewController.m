@@ -76,7 +76,6 @@ static const CGFloat kDurationInitializationAnimationContextAndModesFadeIn = 1;
 static const CGFloat kDurationInitializationAnimationTraslantionFadeIn = 1.25;
 
 static NSString * const kLTextNavigationBarTitle = @"LTEXT_NAVIGATIONBAR_TITLE";
-static NSString * const kLTextVersionAppType = @"LTEXT_CATEGORY_VERSION";
 static NSString * const kLTextSettingsBarButtonTitle = @"LTEXT_BARBUTTON_SETTINGS_TITLE";
 static NSString * const kLTextYearsBarButtonTitle = @"LTEXT_BARBUTTON_YEARS_TITLE";
 static NSString * const kLTextCategoriesBarButtonTitle = @"LTEXT_BARBUTTON_CATEGORIES_TITLE";

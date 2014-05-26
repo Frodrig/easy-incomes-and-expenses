@@ -56,7 +56,6 @@
 #import "NSUserDefaults+EasyIncAndExp.h"
 #import "IAEExporter.h"
 #import "IAEContextMenuActionSheetViewController.h"
-#import "IAEInfoProVersionLicenceViewController.h"
 #import "IAEInAppPurchaseStoreViewController.h"
 #import "IAEInAppPurchasesStore.h"
 #import "IAEInternet.h"
@@ -2458,20 +2457,23 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)notificationCenterMainNavitationTitleTouched:(NSNotification *)notification
 {
-    if ([[IAEInAppPurchasesStore defaultStore] isInAppPurchasesAccesible]) {
-        if ([IAEInternet isConnected]) {
-            [self lauchInAppPurchaseStoreViewController];
+    if ([[NSUserDefaults standardUserDefaults] isProVersionDisabled]) {
+        if ([[IAEInAppPurchasesStore defaultStore] isInAppPurchasesAccesible]) {
+            if ([IAEInternet isConnected]) {
+                [self lauchInAppPurchaseStoreViewController];
+            } else {
+                [self launchAlertViewAboutInetConexionNotAvailable];
+            }
         } else {
-            [self launchAlertViewAboutInetConexionNotAvailable];
+            [self launchAlertViewAboutInAppPurchasesInaccesible];
         }
-    } else {
-        [self launchAlertViewAboutInAppPurchasesInaccesible];
     }
+    
 }
 
 - (void)lauchInAppPurchaseStoreViewController
 {
-    UIViewController *modalViewController = [[NSUserDefaults standardUserDefaults] isProVersionEnabled] ? [[IAEInfoProVersionLicenceViewController alloc] initWithNibName:nil bundle:nil] : [[IAEInAppPurchaseStoreViewController alloc] initWithNibName:nil bundle:nil];
+    UIViewController *modalViewController = [[IAEInAppPurchaseStoreViewController alloc] initWithNibName:nil bundle:nil];
     modalViewController.modalPresentationStyle = UIModalPresentationFormSheet;
     modalViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self presentViewController:modalViewController animated:YES completion:nil];

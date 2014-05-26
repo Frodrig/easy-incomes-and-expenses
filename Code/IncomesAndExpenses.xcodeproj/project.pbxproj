@@ -42,8 +42,6 @@
 		5B2512881851E07600669AE6 /* settingsindex_img_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B2512801851E07600669AE6 /* settingsindex_img_5@2x.png */; };
 		5B251FA117AACA71000957A5 /* IAEStrokeAnimatableLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B251FA017AACA71000957A5 /* IAEStrokeAnimatableLineView.m */; };
 		5B25B3A41925F2D0009B53BA /* IAEMainNavigationTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B25B3A31925F2D0009B53BA /* IAEMainNavigationTitle.m */; };
-		5B25B3AA1925F8A7009B53BA /* IAEInfoProVersionLicenceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B25B3A81925F8A7009B53BA /* IAEInfoProVersionLicenceViewController.m */; };
-		5B25B3AB1925F8A7009B53BA /* IAEInfoProVersionLicenceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B25B3A91925F8A7009B53BA /* IAEInfoProVersionLicenceViewController.xib */; };
 		5B25B3B01925F90F009B53BA /* IAEInAppPurchaseStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B25B3AE1925F90F009B53BA /* IAEInAppPurchaseStoreViewController.m */; };
 		5B25B3B11925F90F009B53BA /* IAEInAppPurchaseStoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B25B3AF1925F90F009B53BA /* IAEInAppPurchaseStoreViewController.xib */; };
 		5B28813417985822006E4F9B /* IAEVersionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B28813317985822006E4F9B /* IAEVersionHelper.m */; };
@@ -331,9 +329,6 @@
 		5B251FA317AACA8E000957A5 /* IAEStrokeAnimatableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEStrokeAnimatableViewDelegate.h; sourceTree = "<group>"; };
 		5B25B3A21925F2D0009B53BA /* IAEMainNavigationTitle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEMainNavigationTitle.h; sourceTree = "<group>"; };
 		5B25B3A31925F2D0009B53BA /* IAEMainNavigationTitle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEMainNavigationTitle.m; sourceTree = "<group>"; };
-		5B25B3A71925F8A7009B53BA /* IAEInfoProVersionLicenceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEInfoProVersionLicenceViewController.h; sourceTree = "<group>"; };
-		5B25B3A81925F8A7009B53BA /* IAEInfoProVersionLicenceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEInfoProVersionLicenceViewController.m; sourceTree = "<group>"; };
-		5B25B3A91925F8A7009B53BA /* IAEInfoProVersionLicenceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEInfoProVersionLicenceViewController.xib; sourceTree = "<group>"; };
 		5B25B3AD1925F90F009B53BA /* IAEInAppPurchaseStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEInAppPurchaseStoreViewController.h; sourceTree = "<group>"; };
 		5B25B3AE1925F90F009B53BA /* IAEInAppPurchaseStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEInAppPurchaseStoreViewController.m; sourceTree = "<group>"; };
 		5B25B3AF1925F90F009B53BA /* IAEInAppPurchaseStoreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEInAppPurchaseStoreViewController.xib; sourceTree = "<group>"; };
@@ -888,16 +883,6 @@
 			name = MainNavigationTitle;
 			sourceTree = "<group>";
 		};
-		5B25B3A61925F88A009B53BA /* InfoProVersionLicence */ = {
-			isa = PBXGroup;
-			children = (
-				5B25B3A71925F8A7009B53BA /* IAEInfoProVersionLicenceViewController.h */,
-				5B25B3A81925F8A7009B53BA /* IAEInfoProVersionLicenceViewController.m */,
-				5B25B3A91925F8A7009B53BA /* IAEInfoProVersionLicenceViewController.xib */,
-			);
-			name = InfoProVersionLicence;
-			sourceTree = "<group>";
-		};
 		5B25B3AC1925F8EA009B53BA /* InAppPurchaseStore */ = {
 			isa = PBXGroup;
 			children = (
@@ -1256,7 +1241,6 @@
 				5BAEAE141876B5D200271B47 /* Favorite Concepts */,
 				5B32D65A177C417A0070AC72 /* Year Selector */,
 				5B25B3AC1925F8EA009B53BA /* InAppPurchaseStore */,
-				5B25B3A61925F88A009B53BA /* InfoProVersionLicence */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -2557,7 +2541,6 @@
 				5B5A059B192D096600154371 /* imageLoader-4.gif in Resources */,
 				5B5544A2177460DD009CFC84 /* Main.storyboard in Resources */,
 				5BD94C0F1786B896009009B1 /* IAECategoryTableViewCell.xib in Resources */,
-				5B25B3AB1925F8A7009B53BA /* IAEInfoProVersionLicenceViewController.xib in Resources */,
 				5B5A0598192D096600154371 /* imageLoader-1.gif in Resources */,
 				5B5A05AA192D096600154371 /* imageLoader-19.gif in Resources */,
 				5B879779180EA90500554E13 /* IAEHelpViewController.xib in Resources */,
@@ -2739,7 +2722,6 @@
 				5BF1DFDF18F994460024B3AD /* IAEMonthSelectorCollectionViewCell.m in Sources */,
 				5B5497B71820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.m in Sources */,
 				5B069D85191E2423002442F6 /* IAEPasswordChangedEmailRequest.m in Sources */,
-				5B25B3AA1925F8A7009B53BA /* IAEInfoProVersionLicenceViewController.m in Sources */,
 				5B251FA117AACA71000957A5 /* IAEStrokeAnimatableLineView.m in Sources */,
 				5BEA608217A6A36600520E09 /* IAEReportAreaView.m in Sources */,
 				5B5773BB18FF9A7600672C29 /* IAEHelpConfigureConfirmRemoveConceptCell.m in Sources */,

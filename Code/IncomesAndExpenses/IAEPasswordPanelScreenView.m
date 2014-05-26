@@ -7,11 +7,12 @@
 //
 
 #import "IAEPasswordPanelScreenView.h"
+#import "IAEPasswordCheckView.h"
 
 @interface IAEPasswordPanelScreenView()
 
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
-@property (weak, nonatomic) IBOutlet UIView *labelCodesContainerView;
+@property (weak, nonatomic) IBOutlet UIView *passwordCheckContainerView;
 
 @end
 
@@ -52,35 +53,36 @@ static float kFXInvalidPasswordDuration = 0.25;
 
 - (void)addCodeAtPosition:(NSInteger)position
 {
-    [self vinculeCodeSymbol:kCodeSymbol toLabelCodeAtPosition:position];
+    IAEPasswordCheckView *passwordCheckView = [self findPasswordCheckViewAtPosition:position];
+    [passwordCheckView showCheckWithAnimation:YES];
 }
 
 - (void)clearCodeAtPosition:(NSInteger)position
 {
-    [self vinculeCodeSymbol:kClearCodeSymbol toLabelCodeAtPosition:position];
+    [self clearCodeAtPosition:position withAnimation:YES];
+}
+
+- (void)clearCodeAtPosition:(NSInteger)position withAnimation:(BOOL)animation
+{
+    IAEPasswordCheckView *passwordCheckView = [self findPasswordCheckViewAtPosition:position];
+    [passwordCheckView hideCheckWithAnimation:animation];
 }
 
 - (void)clearAllCodes
 {
     for (NSUInteger position = 0; position < 4; position++) {
-        [self vinculeCodeSymbol:kClearCodeSymbol toLabelCodeAtPosition:position];
+        [self clearCodeAtPosition:position withAnimation:NO];
     }
 }
 
-- (void)vinculeCodeSymbol:(NSString *)codeSymbol toLabelCodeAtPosition:(NSUInteger)position
-{
-    UILabel *label = [self findLabelCodeAtPosition:position];
-    label.text = codeSymbol;
-}
-
-- (UILabel *)findLabelCodeAtPosition:(NSInteger)position
+- (IAEPasswordCheckView *)findPasswordCheckViewAtPosition:(NSInteger)position
 {
     const NSUInteger labelTag = position + 1;
     NSAssert(labelTag > 0, @"");
     NSAssert(labelTag < 5, @"");
     
-    UILabel *label = (UILabel *)[self.labelCodesContainerView viewWithTag:labelTag];
-    return label;
+    IAEPasswordCheckView *passwordCheckView = (IAEPasswordCheckView *)[self.passwordCheckContainerView viewWithTag:labelTag];
+    return passwordCheckView;
 }
 
 - (void)executeFXInvalidPassword

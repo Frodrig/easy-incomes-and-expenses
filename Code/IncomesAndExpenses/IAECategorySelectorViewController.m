@@ -52,7 +52,7 @@ static NSString * const kFontOfGeneralCategoryLabel = @"HelveticaNeue-Thin_Itali
 static NSString * const kFontOfUserCategoryLabel = @"HelveticaNeue-Thin";
 static const CGFloat kSizeOfCategoryNameLabel = 21;
 static const CGFloat kSmallSizeOfCategoryNameLabel = 21;
-static const CGFloat kHeightOfCategoriesWithoutNumberOfConceptsCell = 38;
+static const CGFloat kHeightOfCategoriesWithoutNumberOfConceptsCell = 44;
 static const CGFloat kHeightOfCategoriesWithNumberOfConceptsCell = 78;
 
 static const CGFloat kDurationOfAnimationOfOpenDecoratorView = 0.1;

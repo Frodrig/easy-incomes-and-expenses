@@ -9,6 +9,7 @@
 #import "IAEHelpAboutCollectionViewCell.h"
 #import "IAEHelpAboutCollectionViewCellDelegate.h"
 #import "IAENibUtils.h"
+#import "NSUserDefaults+EasyIncAndExp.h"
 
 @interface IAEHelpAboutCollectionViewCell()
 
@@ -22,12 +23,11 @@
 
 static const NSUInteger kTitleLabelViewTag = 101;
 static const NSUInteger kUrlButtonTag = 102;
-static const NSUInteger kLiteLabelViewTag = 103;
+static const NSUInteger kVersionLabelViewTag = 103;
 static const NSUInteger kDesignedAndDevelopedLabelViewTag = 201;
 static const NSUInteger kDeveloperNameLabelViewTag = 202;
 static const NSUInteger kFeedbackLabelViewTag = 301;
 static const NSUInteger kEmailButtonTag = 302;
-static const NSUInteger kProVersionInfoLabelTag = 401;
 
 static NSString * const kLTextTitle = @"LTEXT_SETTINGS_ABOUT_TITLE";
 static NSString * const kLTextUrl = @"LTEXT_SETTINGS_ABOUT_URL";
@@ -36,7 +36,6 @@ static NSString * const kLTextDesignedAndDeveloped = @"LTEXT_SETTINGS_ABOUT_DESI
 static NSString * const kLTextDeveloperName = @"LTEXT_SETTINGS_ABOUT_DEVELOPER";
 static NSString * const kLTextFeedback = @"LTEXT_SETTINGS_ABOUT_FEEDBACK";
 static NSString * const kLTextEmail = @"LTEXT_SETTINGS_ABOUT_EMAIL";
-static NSString * const kLTextProVersionInfo = @"LTEXT_SETTINGS_ABOUT_PROVERSIONINFO";
 
 static NSString * const kNibName = @"IAEHelpAboutCollectionViewCell";
 
@@ -80,12 +79,11 @@ static NSString * const kNibName = @"IAEHelpAboutCollectionViewCell";
 {
     [self localizeLabel:(UILabel *)[self viewWithTag:kTitleLabelViewTag] withUnlocalizedText:kLTextTitle];
     [self localizeButton:(UIButton *)[self viewWithTag:kUrlButtonTag] withUnlocalizedText:kLTextUrl];
-    [self localizeLabel:(UILabel *)[self viewWithTag:kLiteLabelViewTag] withUnlocalizedText:kLTextLiteTitle];
+    [self localizedVersionLabel:(UILabel *)[self viewWithTag:kVersionLabelViewTag]];
     [self localizeLabel:(UILabel *)[self viewWithTag:kDesignedAndDevelopedLabelViewTag] withUnlocalizedText:kLTextDesignedAndDeveloped];
     [self localizeLabel:(UILabel *)[self viewWithTag:kDeveloperNameLabelViewTag] withUnlocalizedText:kLTextDeveloperName];
     [self localizeLabel:(UILabel *)[self viewWithTag:kFeedbackLabelViewTag] withUnlocalizedText:kLTextFeedback];
     [self localizeButton:(UIButton *)[self viewWithTag:kEmailButtonTag] withUnlocalizedText:kLTextEmail];
-    [self localizeLabel:(UILabel *)[self viewWithTag:kProVersionInfoLabelTag] withUnlocalizedText:kLTextProVersionInfo];
 
 }
 
@@ -93,6 +91,14 @@ static NSString * const kNibName = @"IAEHelpAboutCollectionViewCell";
 {
     label.attributedText = [[NSAttributedString alloc] initWithString:NSLocalizedString(text, @"")
                                                            attributes:[label.attributedText attributesAtIndex:0 effectiveRange:NULL]];
+}
+
+- (void)localizedVersionLabel:(UILabel *)label
+{
+    NSString *versionText = [[NSUserDefaults standardUserDefaults] isProVersionEnabled] ? NSLocalizedString(@"LTEXT_SETTINGS_ABOUT_PRO", @"") : NSLocalizedString(@"LTEXT_SETTINGS_ABOUT_LITE", @"");
+    versionText = [versionText stringByAppendingString:@" "];
+    versionText = [versionText stringByAppendingString:NSLocalizedString(@"LTEXT_VERSION", @"")];
+    label.text = versionText;
 }
 
 - (void)localizeButton:(UIButton *)button withUnlocalizedText:(NSString *)text

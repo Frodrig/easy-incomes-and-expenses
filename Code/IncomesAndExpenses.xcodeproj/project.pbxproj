@@ -69,6 +69,7 @@
 		5B36AFF71785BBF400132475 /* NSDecimalNumber+AbsoluteValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B36AFF61785BBF400132475 /* NSDecimalNumber+AbsoluteValue.m */; };
 		5B36AFFC1785D73800132475 /* IAECategorySelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B36AFFA1785D73800132475 /* IAECategorySelectorViewController.m */; };
 		5B36AFFD1785D73800132475 /* IAECategorySelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B36AFFB1785D73800132475 /* IAECategorySelectorViewController.xib */; };
+		5B3CD7791933391200AF2A0C /* IAEPasswordCheckView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3CD7781933391200AF2A0C /* IAEPasswordCheckView.m */; };
 		5B5497B71820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5497B51820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.m */; };
 		5B5497B81820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B5497B61820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.xib */; };
 		5B5544A2177460DD009CFC84 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B5544A1177460DD009CFC84 /* Main.storyboard */; };
@@ -367,6 +368,8 @@
 		5B36AFF91785D73800132475 /* IAECategorySelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAECategorySelectorViewController.h; sourceTree = "<group>"; };
 		5B36AFFA1785D73800132475 /* IAECategorySelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAECategorySelectorViewController.m; sourceTree = "<group>"; };
 		5B36AFFB1785D73800132475 /* IAECategorySelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAECategorySelectorViewController.xib; sourceTree = "<group>"; };
+		5B3CD7771933391200AF2A0C /* IAEPasswordCheckView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEPasswordCheckView.h; sourceTree = "<group>"; };
+		5B3CD7781933391200AF2A0C /* IAEPasswordCheckView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEPasswordCheckView.m; sourceTree = "<group>"; };
 		5B48BFFA1799425500BF0A68 /* IAEDayCalendarSelectorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEDayCalendarSelectorViewControllerDelegate.h; sourceTree = "<group>"; };
 		5B5497B41820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelpConfigureStartMonthSelectorTableViewController.h; sourceTree = "<group>"; };
 		5B5497B51820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelpConfigureStartMonthSelectorTableViewController.m; sourceTree = "<group>"; };
@@ -1038,6 +1041,15 @@
 				5BCE3AC017A9788E00CD01E7 /* Protocols */,
 			);
 			name = "Category Selector";
+			sourceTree = "<group>";
+		};
+		5B3CD776193338FC00AF2A0C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5B3CD7771933391200AF2A0C /* IAEPasswordCheckView.h */,
+				5B3CD7781933391200AF2A0C /* IAEPasswordCheckView.m */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		5B5497B31820FD9C0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController */ = {
@@ -2205,6 +2217,7 @@
 		5BDD9A2F18572F66001A6CEF /* IAEPasswordPanelScreenView */ = {
 			isa = PBXGroup;
 			children = (
+				5B3CD776193338FC00AF2A0C /* Views */,
 				5BDD9A3018572F99001A6CEF /* IAEPasswordPanelScreenView.h */,
 				5BDD9A3118572F99001A6CEF /* IAEPasswordPanelScreenView.m */,
 				5BDD9A3318572FB3001A6CEF /* IAEPasswordPanelScreenView.xib */,
@@ -2668,6 +2681,7 @@
 				5B55C406178AA8C20066F586 /* IAECategoryEditorViewController.m in Sources */,
 				5BFF5BA11928F945009CAEE6 /* SKProduct+FormatedPrice.m in Sources */,
 				5BCE3A9F17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m in Sources */,
+				5B3CD7791933391200AF2A0C /* IAEPasswordCheckView.m in Sources */,
 				5BE84E7C180DA8F500F4A80B /* IAEHelpIndexViewController.m in Sources */,
 				5B879759180E7DCD00554E13 /* IAEHelpAboutViewController.m in Sources */,
 				5BDE0A30190EE15E001F45D9 /* IAEContextMenuActionSheetViewController.m in Sources */,

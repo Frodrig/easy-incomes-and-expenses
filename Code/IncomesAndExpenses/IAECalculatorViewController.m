@@ -36,6 +36,12 @@ typedef NS_ENUM(NSUInteger, CalculatorMode) {
     CM_EXPENSE
 };
 
+typedef NS_ENUM(NSUInteger, KeyboardActionType) {
+    KeyboardActionTypeInvalid,
+    KeyboardActionTypeValidAdd,
+    KeyboardActionTypeValidFavorites
+};
+
 @property (weak, nonatomic) IBOutlet IAEDisplayPanelCalculatorView *displayPanel;
 @property (weak, nonatomic) IBOutlet IAEKeyboardPanelCalculatorView *keyboardPanel;
 @property (weak, nonatomic) IBOutlet UIButton *incomeButton;
@@ -517,17 +523,18 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 75;
 
 - (IBAction)keyboardNumberPressed:(UIButton *)button
 {
-    BOOL validAction = [self numberPressedWithValue:button.tag];
-    [self doFXAfterPressedButton:button withVaidAction:validAction];
+    const BOOL validAction = [self numberPressedWithValue:button.tag];
+    [self doFXAfterPressedButton:button withActionType:validAction ? KeyboardActionTypeValidAdd : KeyboardActionTypeInvalid];
 }
 
 - (IBAction)keyboardDeletePressed:(UIButton *)button
 {
-    BOOL validAction = [self deleteOneValueInAmount];
+    const BOOL validAction = [self deleteOneValueInAmount];
     if (validAction) {
         [self configureDisplayPanelWithActualAmount];
     }
-    [self doFXAfterPressedButton:button withVaidAction:validAction];
+    
+    [self doFXAfterPressedButton:button withActionType:validAction ? KeyboardActionTypeValidAdd : KeyboardActionTypeInvalid];
 }
 
 - (BOOL)deleteOneValueInAmount
@@ -580,7 +587,7 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 75;
         [self configureDisplayPanelWithActualAmount];
     }
     
-    [self doFXAfterPressedButton:button withVaidAction:validAction];
+    [self doFXAfterPressedButton:button withActionType:validAction ? KeyboardActionTypeValidAdd : KeyboardActionTypeInvalid];
 }
 
 - (BOOL)appendDecimalSeparatorInAmount
@@ -609,18 +616,20 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 75;
 
 - (IBAction)keyboardEnterPressed:(UIButton *)button
 {
-    BOOL validAddAction = YES;
+    KeyboardActionType actionType = KeyboardActionTypeValidAdd;
+    
     if ([self isActualAmountOverZero]) {
         [self createNewConcept];
     } else if ([self isFavoritePinActive] && [[NSUserDefaults standardUserDefaults] isProVersionEnabled]) {
         [self launchPopoverForSelectFavoriteConceptsFromAddButton:button];
+        actionType = KeyboardActionTypeValidFavorites;
     } else {
-        validAddAction = NO;
+        actionType = KeyboardActionTypeInvalid;
     }
     
-    [self doFXAfterPressedButton:button withVaidAction:validAddAction];
-    if (validAddAction) {
-        [self setDisplayColorUsingAnimation:validAddAction];
+    [self doFXAfterPressedButton:button withActionType:actionType];
+    if (actionType == KeyboardActionTypeValidAdd) {
+        [self setDisplayColorUsingAnimation:YES];
     }
 }
 
@@ -640,20 +649,21 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 75;
     [self.delegate calculatorViewController:self didCreateNewConcept:newConcept];
 }
 
-- (void)doFXAfterPressedButton:(UIButton *)button withVaidAction:(BOOL)action
+
+- (void)doFXAfterPressedButton:(UIButton *)button withActionType:(KeyboardActionType)actionType
 {
-    [self applyPressedAnimationOverButton:button withValidAction:action];
+    [self applyPressedAnimationOverButton:button withActionType:actionType];
 }
 
-- (void)applyPressedAnimationOverButton:(UIButton *)button withValidAction:(BOOL)validAction
+- (void)applyPressedAnimationOverButton:(UIButton *)button withActionType:(KeyboardActionType)actionType
 {
-    button.backgroundColor = validAction ? self.validActionBaseColor : self.invalidActionTransitionColor;
+    button.backgroundColor = actionType != KeyboardActionTypeInvalid ? self.validActionBaseColor : self.invalidActionTransitionColor;
     [UIView animateWithDuration:kDurationInvalidActionFXFadeIn animations:^{
-        button.backgroundColor = validAction ? self.validActionTransitionColor : self.invalidActionTransitionColor;
+        button.backgroundColor = actionType != KeyboardActionTypeInvalid ? self.validActionTransitionColor : self.invalidActionTransitionColor;
     } completion:^(BOOL finished) {
         [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
         [UIView animateWithDuration:kDurationInvalidActionFXFadeOut animations:^{
-            button.backgroundColor = validAction ? self.validActionBaseColor : self.invalidActionBaseColor;
+            button.backgroundColor = actionType != KeyboardActionTypeInvalid ? self.validActionBaseColor : self.invalidActionBaseColor;
         } completion:^(BOOL finished) {
             button.backgroundColor = [UIColor clearColor];
         }];

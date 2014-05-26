@@ -408,5 +408,9 @@ static const CGFloat kFadeInStateTime = 0.75;
     }
 }
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    NSLog(@"X");
+}
 
 @end

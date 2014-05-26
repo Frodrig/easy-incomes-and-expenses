@@ -22,26 +22,7 @@
 
 + (IAEBook *)sharedBook;
 
-/////
-
-/*
-- (instancetype)initWithManagedObjectModel:(NSManagedObjectModel *)model andManagedObjectContext:(NSManagedObjectContext *)context;
-
-- (void)loadAll;
-- (void)loadYear:(NSUInteger)yearDate;
-- (void)unloadAllAndLoadYearDates:(NSArray *)yearDates;
-- (void)loadMoreRecientYear;
-- (void)unloadAll;
-
-- (IAEYear *)createYear:(NSNumber *)yearDate;
-- (void)deleteYear:(NSNumber *)yearDate;
-- (void)loadAllYearsRemovingYearsWithZeroConceptsAndPreservingActualYear;
-- (void)deleteAllConceptsOfYear:(IAEYear *)year;
-*/
-/////
-
 - (void)openAll;
-- (void)openMostRecientCreatedYear;
 - (IAEOpenYear *)openYear:(NSNumber *)yearDate;
 
 - (void)closeAll;
@@ -53,11 +34,7 @@
 - (NSArray *)findInOpenYearsAllConceptsWithCategory:(IAECategory *)category;
 - (NSArray *)findAllOpenYearsWithConcepts;
 
-//- (IAEYear *)findYearWithDate:(NSNumber *)yearDate;
-//- (IAEYear *)findActualYear;
 - (NSArray *)findAllYeardDatesLoaded;
-//- (NSArray *)findAllConceptsWithCategory:(IAECategory *)category;
-//- (NSArray *)findAllYearWithConcepts;
 
 - (BOOL)saveAll;
 

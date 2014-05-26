@@ -478,6 +478,20 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     return resultOpenYears;
 }
 
+- (NSArray *)findAllOpenYearsWithConceptsSorted
+{
+    NSArray *years = [self findAllOpenYearsWithConcepts];
+    years = [years sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        IAEOpenYear *openYear1 = obj1;
+        IAEOpenYear *openYear2 = obj2;
+        return [@(openYear1.yearDate) compare:@(openYear2.yearDate)];
+    }];
+    
+    years = [years.reverseObjectEnumerator allObjects];
+    
+    return years;
+}
+
 - (IAEOpenYear *)findActualOpenYear
 {
     // Siempre se considera que el año actualmente abierto es el primero

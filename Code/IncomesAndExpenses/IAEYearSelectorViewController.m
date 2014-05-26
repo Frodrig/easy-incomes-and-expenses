@@ -188,7 +188,7 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
     NSIndexPath *indexPath = nil;
     if ([self isSegmentedControlInWithConceptsYearsState]) {
         IAEOpenYear *year = [[IAEBook sharedBook] findOpenYearWithDate:@(yearDate)];
-        indexPath = [NSIndexPath indexPathForRow:[[[IAEBook sharedBook] findAllOpenYearsWithConcepts] indexOfObject:year] inSection:0];
+        indexPath = [NSIndexPath indexPathForRow:[[[IAEBook sharedBook] findAllOpenYearsWithConceptsSorted] indexOfObject:year] inSection:0];
     } else if ([self isSegmentedControlInAllYearsState]) {
         indexPath = [NSIndexPath indexPathForRow:[IAEDateHelper findActualYearDate] - yearDate inSection:0];
     }
@@ -331,7 +331,8 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 
 - (IAEOpenYear *)findYearUsingIndexAccessOfIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray *years = [[IAEBook sharedBook] findAllOpenYearsWithConcepts];
+    NSArray *years = [[IAEBook sharedBook] findAllOpenYearsWithConceptsSorted];
+    
     IAEOpenYear *year = years.count > indexPath.row ? [years objectAtIndex:indexPath.row] : nil;
     
     return year;

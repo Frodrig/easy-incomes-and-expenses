@@ -67,7 +67,10 @@
 - (void)configureOptionButtonsTitles
 {
     [self.csvExportOptionButton setTitle:NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_OPTION_EXPORTCSV", @"") forState:UIControlStateNormal];
+    [self.csvExportOptionButton setTitle:NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_OPTION_EXPORTCSV", @"") forState:UIControlStateDisabled];
+
     [self.removeAllConceptsOptionButton setTitle:NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_OPTION_REMOVEALLCONCEPTS", @"") forState:UIControlStateNormal];
+    [self.removeAllConceptsOptionButton setTitle:NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_OPTION_REMOVEALLCONCEPTS", @"") forState:UIControlStateDisabled];
 }
 
 - (void)configureOptionButtonsBasedInEnabledOption

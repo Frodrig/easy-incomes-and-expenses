@@ -470,9 +470,13 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 
 - (BOOL)canCleanYearAtIndexPath:(NSIndexPath *)indexPath
 {
-    IAEOpenYear *year = [self yearBasedInSegmentedControlStateUsingIndexPath:indexPath];
+    BOOL canClean = indexPath != nil;
+    if (canClean) {
+        IAEOpenYear *year = [self yearBasedInSegmentedControlStateUsingIndexPath:indexPath];
+        canClean = [year findNumberOfConcepts] > 0;
+    }
     
-    return [year findNumberOfConcepts] > 0;
+    return canClean;
 }
 
 - (void)launchCleanConfirmationAlertView
@@ -494,12 +498,14 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
     } else {
         [self.selectedCellToClean exitFromStrokeModeWithAnimation:YES];
         [self.strokeAnimatableLineView resetStroke];
+        self.selectedCellToClean = nil;
     }
 }
 
 - (void)cleanYearSelectedAndUpdateControl
 {
     NSIndexPath *indexPathOfSelectedCellToClean = [self.yearsCollectionView indexPathForCell:self.selectedCellToClean];
+    NSAssert(indexPathOfSelectedCellToClean, @"");
     NSUInteger yearDateSelectedForClean = [self yearDateBasedInSegmentedControlStateFromCell:self.selectedCellToClean];
     IAEOpenYear *yearSelectedForClean = [self yearBasedInSegmentedControlStateUsingCell:self.selectedCellToClean];
     [Flurry logEvent:@"year_clean" withParameters:@{@"year" :@(yearSelectedForClean.yearDate)}];

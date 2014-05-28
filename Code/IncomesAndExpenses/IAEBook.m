@@ -398,6 +398,8 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
         [self closeYearWithYearDate:openYearDateToClose.integerValue];
         [helperOpenYearDatesToClose removeObject:openYearDateToClose];
     }
+    
+    [self saveAll];
 }
 
 - (void)closeYearWithYearDate:(NSUInteger)yearDate

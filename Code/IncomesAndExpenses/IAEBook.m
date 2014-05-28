@@ -276,38 +276,6 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     return openYear;
 }
 
-- (void)closeYearWithYearDate:(NSUInteger)yearDate
-{
-    [self removeOpenYearObjectWithoutUnloadYearObjectsWithDate:yearDate];
-    
-    [self unloadOrDestroyIfNoConceptsOrOpenYearReferencesYearObjectWithDate:yearDate];
-    [self unloadOrDestroyIfNoConceptsOrOpenYearReferencesYearObjectWithDate:yearDate + 1];
-}
-
-- (void)removeOpenYearObjectWithoutUnloadYearObjectsWithDate:(NSUInteger)yearDate
-{
-    IAEOpenYear *openYear = [self findOpenYearObjectWithDate:yearDate];
-    NSMutableArray *newOpenYear = [NSMutableArray arrayWithArray:self.openYears];
-    [newOpenYear removeObject:openYear];
-    
-    self.openYears = [NSArray arrayWithArray:newOpenYear];
-}
-
-- (void)unloadOrDestroyIfNoConceptsOrOpenYearReferencesYearObjectWithDate:(NSUInteger)yearDate
-{
-    IAEYear *yearObject = [self findYearObjectWithDate:yearDate];
-    if (yearObject) {
-        NSArray *openYearsWithReferences = [self findOpenYearsObjectsWithReferencesToYearObject:yearObject];
-        const BOOL canUnloadOrDestroy = openYearsWithReferences.count <= 1;
-        
-        if (canUnloadOrDestroy) {
-            const NSUInteger numberOfConcepts = [yearObject findNumberOfConcepts];
-            const BOOL permanentDelete = 0 == numberOfConcepts;
-            [self deleteYearObject:yearObject permanent:permanentDelete];
-        }
-    }
-}
-
 - (void)deleteYearObject:(IAEYear *)year permanent:(BOOL)permanent
 {
     [self.years removeObject:year];
@@ -388,25 +356,10 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     }
 }
 
-- (void)closeAll
-{
-    while (self.openYears.count > 0) {
-        IAEOpenYear *openYear = [self.years objectAtIndex:0];
-        [self closeYearWithYearDate:openYear.yearDate];
-    }
-}
-
 - (void)saveAndCloseAllAndOpenYearWithDate:(NSNumber *)yearDate
 {
     [self saveAll];
     [self closeAllAndOpenYearWithDate:yearDate];
-}
-
-- (void)closeAllAndOpenYearWithDate:(NSNumber *)yearDate
-{
-    NSMutableArray *openYearsToClose = [NSMutableArray arrayWithArray:[self findOpenYearsDifferentFromYearDate:yearDate]];
-    [self closeOpenYearsWithDates:openYearsToClose];
-    [self openYear:yearDate];
 }
 
 - (NSArray *)findOpenYearsDifferentFromYearDate:(NSNumber *)yearDate
@@ -421,13 +374,61 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     return [NSArray arrayWithArray:openYearsToClose];
 }
 
-- (void)closeOpenYearsWithDates:(NSMutableArray *)openYearDatesToClose
+- (void)closeAll
 {
-    while (openYearDatesToClose.count > 0) {
-        NSNumber *openYearDateToClose = openYearDatesToClose[0];
-        [self closeYearWithYearDate:openYearDateToClose.integerValue];
-        [openYearDatesToClose removeObject:openYearDateToClose];
+    while (self.openYears.count > 0) {
+        IAEOpenYear *openYear = [self.years objectAtIndex:0];
+        [self closeYearWithYearDate:openYear.yearDate];
     }
+}
+
+- (void)closeAllAndOpenYearWithDate:(NSNumber *)yearDate
+{
+    NSArray *openYearsToClose = [NSArray arrayWithArray:[self findOpenYearsDifferentFromYearDate:yearDate]];
+    [self closeOpenYearsWithDates:openYearsToClose];
+    [self openYear:yearDate];
+}
+
+- (void)closeOpenYearsWithDates:(NSArray *)openYearDatesToClose
+{
+    NSMutableArray *helperOpenYearDatesToClose = [NSMutableArray arrayWithArray:openYearDatesToClose];
+    
+    while (helperOpenYearDatesToClose.count > 0) {
+        NSNumber *openYearDateToClose = helperOpenYearDatesToClose[0];
+        [self closeYearWithYearDate:openYearDateToClose.integerValue];
+        [helperOpenYearDatesToClose removeObject:openYearDateToClose];
+    }
+}
+
+- (void)closeYearWithYearDate:(NSUInteger)yearDate
+{
+    [self removeOpenYearObjectWithoutUnloadYearObjectsWithDate:yearDate];
+    
+    [self unloadOrDestroyIfNoConceptsOrOpenYearReferencesYearObjectWithDate:yearDate];
+    [self unloadOrDestroyIfNoConceptsOrOpenYearReferencesYearObjectWithDate:yearDate + 1];
+    [self unloadOrDestroyIfNoConceptsOrOpenYearReferencesYearObjectWithDate:yearDate - 1];
+}
+
+- (void)unloadOrDestroyIfNoConceptsOrOpenYearReferencesYearObjectWithDate:(NSUInteger)yearDate
+{
+    IAEYear *yearObject = [self findYearObjectWithDate:yearDate];
+    if (yearObject) {
+        NSArray *openYearsWithReferences = [self findOpenYearsObjectsWithReferencesToYearObject:yearObject];
+        const BOOL canUnloadOrDestroy = openYearsWithReferences.count == 0;
+        if (canUnloadOrDestroy) {
+            const NSUInteger numberOfConcepts = [yearObject findNumberOfConcepts];
+            const BOOL permanentDelete = 0 == numberOfConcepts;
+            [self deleteYearObject:yearObject permanent:permanentDelete];
+        }
+    }
+}
+
+- (void)removeOpenYearObjectWithoutUnloadYearObjectsWithDate:(NSUInteger)yearDate
+{
+    IAEOpenYear *openYear = [self findOpenYearObjectWithDate:yearDate];
+    NSMutableArray *newOpenYears = [NSMutableArray arrayWithArray:self.openYears];
+    [newOpenYears removeObject:openYear];
+    self.openYears = [NSArray arrayWithArray:newOpenYears];
 }
 
 - (BOOL)saveAll

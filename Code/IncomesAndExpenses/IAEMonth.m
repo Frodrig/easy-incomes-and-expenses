@@ -15,21 +15,6 @@
 #import "IAEDateHelper.h"
 #import <Crashlytics/Crashlytics.h>
 
-@interface IAEMonth()
-
-@property (nonatomic, strong) NSMutableDictionary *categoryConceptSearchCache;
-
-@end
-
-@implementation IAEMonth
-
-@dynamic month;
-@dynamic concepts;
-@dynamic year;
-
-@synthesize delegate = _delegate;
-@synthesize categoryConceptSearchCache = _categoryConceptSearchCache;
-
 static const NSUInteger kInvalidDayOfTheMonth = 0;
 
 static NSString * const kEntityNameConcept = @"IAEConcept";
@@ -46,6 +31,25 @@ static NSString * const kLTextSeptemberName = @"September";
 static NSString * const kLTextOctoberName = @"October";
 static NSString * const kLTextNovemberName = @"November";
 static NSString * const kLTextDecemberName = @"December";
+@interface IAEMonth()
+
+@property (nonatomic, strong) NSMutableDictionary *categoryConceptSearchCache;
+
+@end
+
+@implementation IAEMonth
+
+@dynamic month;
+@dynamic concepts;
+@dynamic year;
+
+@synthesize delegate = _delegate;
+@synthesize categoryConceptSearchCache = _categoryConceptSearchCache;
+
+- (void)awakeFromFetch
+{
+    NSLog(@"");
+}
 
 - (NSNumber *)daysOfTheMonth
 {

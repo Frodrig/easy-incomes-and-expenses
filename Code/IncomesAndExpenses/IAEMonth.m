@@ -48,7 +48,6 @@ static NSString * const kLTextDecemberName = @"December";
 
 - (void)awakeFromFetch
 {
-    NSLog(@"");
 }
 
 - (NSNumber *)daysOfTheMonth

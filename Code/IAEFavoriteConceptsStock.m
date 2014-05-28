@@ -83,6 +83,12 @@ static NSString * const kFavoriteConceptsFile = @"favorite_concepts.data";
     [self save];
 }
 
+- (void)removeAndSaveFavoriteWithCategory:(NSString *)category
+{
+    [self removeFavoriteWithCategory:category];
+    [self save];
+}
+
 - (void)removeFavoriteWithCategory:(NSString *)category andValue:(NSString *)value
 {
     NSMutableArray *valuesOfCategory = [self.favorites valueForKey:category];
@@ -114,6 +120,11 @@ static NSString * const kFavoriteConceptsFile = @"favorite_concepts.data";
     NSString *valueString = [concept.amount stringValue];
     
     [self removeFavoriteWithCategory:categoryString andValue:valueString];
+}
+
+- (void)removeFavoriteWithCategory:(NSString *)category
+{
+    [self.favorites removeObjectForKey:category];
 }
 
 - (BOOL)isMarkedAsFavorite:(IAEConcept *)concept

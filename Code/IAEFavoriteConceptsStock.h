@@ -19,8 +19,10 @@
 - (void)addFavorite:(IAEConcept *)concept;
 
 - (void)removeFavoriteWithCategory:(NSString *)category andValue:(NSString *)value;
+- (void)removeFavoriteWithCategory:(NSString *)category;
 - (void)removeFavoriteOfConcept:(IAEConcept *)concept;
 - (void)removeAndSaveFavoriteWithCategory:(NSString *)category andValue:(NSString *)value;
+- (void)removeAndSaveFavoriteWithCategory:(NSString *)category;
 - (void)removeAndSaveFavoriteOfConcept:(IAEConcept *)concept;
 
 - (BOOL)isMarkedAsFavorite:(IAEConcept *)concept;

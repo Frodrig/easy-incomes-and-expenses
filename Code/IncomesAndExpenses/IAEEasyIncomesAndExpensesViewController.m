@@ -1921,6 +1921,8 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)executeDuplicateConceptOfCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
+    [Flurry logEvent:@"Concept_Duplicate"];
+
     IAEConcept *concept = [self findConceptOfCell:cell];
     IAEConcept *newConcept = [concept.month duplicateConcept:concept];
     [[IAEBook sharedBook] saveAll];
@@ -1955,7 +1957,8 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (BOOL)isFavoritePinInteractionEnabledInConcepts
 {
-    return [self.calculatorViewController isOpen] && [[NSUserDefaults standardUserDefaults] isProVersionEnabled];
+    //return [self.calculatorViewController isOpen] && [[NSUserDefaults standardUserDefaults] isProVersionEnabled];
+    return [[NSUserDefaults standardUserDefaults] isProVersionEnabled];
 }
 
 - (void)executeLogicAfterFavoritePinTapForCell:(IAEEditModeConceptCollectionViewCell *)cell
@@ -2460,6 +2463,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     if ([[NSUserDefaults standardUserDefaults] isProVersionDisabled]) {
         if ([[IAEInAppPurchasesStore defaultStore] isInAppPurchasesAccesible]) {
             if ([IAEInternet isConnected]) {
+                [Flurry logEvent:@"InAppPurchaseStore_LaunchStore"];
                 [self lauchInAppPurchaseStoreViewController];
             } else {
                 [self launchAlertViewAboutInetConexionNotAvailable];
@@ -2521,25 +2525,6 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     [self.yearSelectorViewController closeButtonPressed:nil];
     [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
 }
-
-/*
-- (void)notificationFixRemoveCategoryActionLostInUnloadedYearsReport:(NSDictionary *)userInfo
-{
-    MFMailComposeViewController *appEmailViewController = [[MFMailComposeViewController alloc] init];
-    appEmailViewController.mailComposeDelegate = self;
-    
-    NSString *subject = NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.emailSubject", @"");
-    [appEmailViewController setSubject:subject];
-    [appEmailViewController setToRecipients:nil];
-    
-    NSString *beginMessage = NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.emailBeginMessage", @"");
-    NSString *reportOfFix = userInfo[@"report"];
-    NSString *messageBody = [beginMessage stringByAppendingString:reportOfFix];
-    [appEmailViewController setMessageBody:messageBody isHTML:NO];
-    
-    [self presentViewController:appEmailViewController animated:YES completion:nil];
-}
-*/
 
 #pragma mark - IAEDayCalendarSelectorViewControllerDelegate
 
@@ -2620,9 +2605,11 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     
     self.attachBehaviorForContainerFX.anchorPoint = self.calculatorViewController.view.center;
     
+    /*
     for (IAEEditModeConceptCollectionViewCell *cell in self.conceptsCollectionView.visibleCells) {
         [cell hideFavoritePinWithAnimation:animation];
     }
+     */
 }
 
 - (void)updateFramePositionBeforeShowCalculatorForView:(UIView *)view
@@ -2786,7 +2773,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)exportAllConceptsOfActualSelectionContextViewToCSVIfApplicable
 {
-    [Flurry logEvent:@"settingsindex_csvexport"];
+    [Flurry logEvent:@"CSVEXPORT"];
 
     if ([MFMailComposeViewController canSendMail]) {
         if ([self isActualSelectedContextAMonth]) {
@@ -2956,9 +2943,11 @@ didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
     IAEConcept *concept = [self findConceptOfCell:cell];
     [month duplicateConcept:concept];
     if (purpose == MonthSelectorPurposeCopy) {
+        [Flurry logEvent:@"Concept_Copy"];
         [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
         [self.contextMenuView animateOptionAtIndex:month.month withAnimationType:TextRawSelectorAnimation_Blink];
     } else if (purpose == MonthSelectorPurposeMove) {
+        [Flurry logEvent:@"Concept_Move"];
         self.conceptCellToRemove = cell;
         [self removeConceptAndUpdateBalancesOfCell:cell withAnimation:YES];
         [self.contextMenuView animateOptionAtIndex:month.month withAnimationType:TextRawSelectorAnimation_Blink];
@@ -2972,6 +2961,7 @@ didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
 
 - (void)resetToLaunchState
 {
+    [self.conceptsCollectionView reloadData];
     [self.calculatorViewController hideWithoutAnimation];
     [self configureNavigationBar];
     [self reloadMainNavigationTitle];

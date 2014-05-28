@@ -185,12 +185,20 @@ static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
         [cell disableFavoritePin];
     }
 
+    if ([[NSUserDefaults standardUserDefaults] isProVersionEnabled]) {
+        [cell showFavoritePin];
+    } else {
+        [cell hideFavoritePinWithAnimation:NO];
+    }
+    
+    /*
     const BOOL editModeActive = [self.iaeViewControllerQuery isEditModeActive] && [self.iaeViewControllerQuery isCalculatorOpen];
     if (editModeActive && [[NSUserDefaults standardUserDefaults] isProVersionEnabled]) {
         [cell showFavoritePin];
     } else {
         [cell hideFavoritePinWithAnimation:NO];
     }
+     */
 }
 
 @end

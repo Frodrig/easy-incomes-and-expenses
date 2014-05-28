@@ -17,6 +17,7 @@
 #import "IAEValueDecoratorView.h"
 #import "IAEColorHelper.h"
 #import "IAENumberFormatterManager.h"
+#import "Flurry.h"
 
 static NSString * const kCategoryKey = @"category";
 static NSString * const kValueKey = @"value";
@@ -512,6 +513,9 @@ static const CGFloat kAlphaForCellStroked = 0.2;
     NSArray *favoriteIncomes = [self findFavoriteIncomesSelected];
     NSArray *favoriteExpenses = [self findFavoriteExpensesSelected];
     [self.delegate favoriteConceptsViewController:self didPressedAddOptionWithFavoriteIncomes:favoriteIncomes andExpenses:favoriteExpenses];
+    
+    [Flurry logEvent:@"Favorites_ADD" withParameters:@{@"incomes_total": @(favoriteIncomes.count),
+                                                       @"expenses_total": @(favoriteExpenses.count)}];
 }
 
 - (NSArray *)findFavoriteIncomesSelected

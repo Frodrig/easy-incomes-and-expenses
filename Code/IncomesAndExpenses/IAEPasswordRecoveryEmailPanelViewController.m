@@ -10,6 +10,7 @@
 #import "NSUserDefaults+EasyIncAndExp.h"
 #import "IAEEmailChecker.h"
 #import "IAEEmailSender.h"
+#import "Flurry.h"
 
 typedef NS_ENUM(NSUInteger, AlertViewType) {
     AlertViewRecoveryEmailLinked,
@@ -190,6 +191,8 @@ static const CGFloat kDissolveMessagesTime = 0.5;
 
 - (IBAction)saveButton:(id)sender
 {
+    [Flurry logEvent:@"Password_emailLinked"];
+
     [self saveActualEmailRecoveryAddress];
     [self sendConfirmationLinkedEmailRecoveryAddress];
     [self launchPreDismissAlertViewWithInformationAboutVinculeEmailRecoveryAddress];
@@ -342,6 +345,8 @@ static const CGFloat kDissolveMessagesTime = 0.5;
 
 - (IBAction)unlinkButtonPressed:(id)sender
 {
+    [Flurry logEvent:@"Password_emailUnlinked"];
+
     [self launchAlertViewToConfirmDesvinculeRecoveryEmail];
 }
 

@@ -31,7 +31,6 @@ static NSString * const kEntityNameMonth = @"IAEMonth";
 
 - (void)awakeFromFetch
 {
-    NSLog(@"");
 }
 
 - (void)awakeFromInsert

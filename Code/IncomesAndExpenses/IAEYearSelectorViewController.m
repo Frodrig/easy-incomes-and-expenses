@@ -216,8 +216,10 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 {
     NSAssert(self.openYearDateBeforeStart != 0, @"");
     [[IAEBook sharedBook] saveAndCloseAllAndOpenYearWithDate:@(self.openYearDateBeforeStart)];
-    [self.delegate closeButtonWasPressedInYearSelectorViewController:self];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    __weak IAEYearSelectorViewController *weakSelf = self;
+    [self dismissViewControllerAnimated:YES completion:^{
+        [weakSelf.delegate closeButtonWasPressedInYearSelectorViewController:self];
+    }];
 }
 
 - (IBAction)yearSegmentedControlPressed:(id)sender
@@ -412,8 +414,10 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSUInteger yearDate = [self yearDateBasedInSegmentedControlStateUsingIndexPath:indexPath];
-    [self sendToDelegateTheChosenActionAfterSelectCellWithYearDate:yearDate];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    __weak IAEYearSelectorViewController *weakSelf = self;
+    [self dismissViewControllerAnimated:YES completion:^{
+        [weakSelf sendToDelegateTheChosenActionAfterSelectCellWithYearDate:yearDate];
+    }];
 }
 
 - (void)sendToDelegateTheChosenActionAfterSelectCellWithYearDate:(NSUInteger)yearDateSelected

@@ -2375,6 +2375,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 {
     [self.contextMenuView animateOptionAtIndex:0 withAnimationType:TextRawSelectorAnimation_DestroyWithGosthAndReload];
     [self reloadAllWithAnimation:YES];
+
     self.yearSelectorViewController = nil;
 }
 

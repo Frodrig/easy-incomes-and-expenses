@@ -255,7 +255,7 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     
     if (!openYear) {
         MonthType startMonth = [[NSUserDefaults standardUserDefaults] actualInitialMonth];
-        IAEOpenYear *openYear = [[IAEOpenYear alloc] initWithYears:@[firstYear, secondYear] andStartMonth:startMonth];
+        openYear = [[IAEOpenYear alloc] initWithYears:@[firstYear, secondYear] andStartMonth:startMonth];
         _openYears = _openYears ? [_openYears arrayByAddingObject:openYear] : [NSArray arrayWithObject:openYear];
     }
     
@@ -332,25 +332,54 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
 
 - (void)openAll
 {
-    [self loadYearsNotLoadedYet];
+    [self loadYearsNotLoadedYetWithBonduaryYears];
     [self openAllYearsBasedInLoadedYears];
-    
+}
+
+- (void)loadYearsNotLoadedYetWithBonduaryYears
+{
+    [self loadYearsNotLoadedYet];
+    [self createBonduaryYears];
+    [self loadYearsNotLoadedYet];
 }
 
 - (void)loadYearsNotLoadedYet
 {
     NSArray *allYearsObjects = [NSMutableArray arrayWithArray:[self loadYearsWithLimit:UINT_MAX andPredicate:nil]];
-    for (IAEYear *yearObject in allYearsObjects) {
-        if ([_years indexOfObject:yearObject] == NSNotFound) {
-            [_years addObject:yearObject];
+    for (IAEYear *yearObjectIt in allYearsObjects) {
+        if ([_years indexOfObject:yearObjectIt] == NSNotFound) {
+            [_years addObject:yearObjectIt];
+        }
+    }
+}
+
+// Nota:
+// En caso de que se cambie el mes inicial de Enero es necesario que todo año con conceptos tenga un año previo creado con el fin
+// de que se de siempre una combinatoria de años (año-1,año) y (año,año+1) que garantice que el concepto que tenga siempre este presente
+// Este metodo se encarga de esto.
+// No hay que preocuparse por la memoria. El sistema se encarga de eliminar años sin conceptos.
+- (void)createBonduaryYears
+{
+    NSArray *allYearsLoaded = [_years copy];
+    for (IAEYear *yearIt in allYearsLoaded) {
+        if ([yearIt findNumberOfConcepts] > 0) {
+            NSUInteger previousYearDate = yearIt.yearDate - 1;
+            IAEYear *previousYear = [self findYearObjectWithDate:previousYearDate];
+            if (!previousYear) {
+                [self createYearObjectWithDate:previousYearDate];
+            }
         }
     }
 }
 
 - (void)openAllYearsBasedInLoadedYears
 {
+    // Nota:
+    // - It's necessary to copy the _years array because the methods that appear here can create new IAEYear objects in the
+    // _year array. That was, in fact, the caouse of a bug.
     NSMutableArray *allExistingYearsDates = [[NSMutableArray alloc] initWithCapacity:_years.count];
-    for (IAEYear *year in _years) {
+    NSArray *actualLoadedYears = [NSArray arrayWithArray:_years];
+    for (IAEYear *year in actualLoadedYears) {
         [allExistingYearsDates addObject:@(year.yearDate)];
     }
     

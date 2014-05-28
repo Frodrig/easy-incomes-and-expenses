@@ -12,7 +12,7 @@
 
 @implementation IAEDateHelper
 
-+ (NSUInteger)findActualYearDate
++ (NSUInteger)findPresentYearDate
 {
     NSDate *actualDate = [NSDate date];
     NSCalendar *calendar = [NSCalendar currentCalendar];
@@ -21,11 +21,18 @@
     return dateComponents.year;
 }
 
-+ (NSUInteger)findActualDayOfTheMonth
++ (NSUInteger)findPresentDayOfThePresentMonth
 {
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents* components = [calendar components:NSDayCalendarUnit fromDate:[NSDate date]];
     return [components day];
+}
+
++ (NSUInteger)findPresentMonthOfThePresentYear
+{
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents* components = [calendar components:NSMonthCalendarUnit fromDate:[NSDate date]];
+    return [components month];
 }
 
 + (NSCalendar *)findCurrentCalendar

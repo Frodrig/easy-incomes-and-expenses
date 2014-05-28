@@ -12,12 +12,11 @@
 
 + (instancetype)sharedInstance;
 
-- (void)sendConfirmationLinkedMailForRecoveryPasswordEmail;
-- (void)sendUnlinkedMailForRecoveryPasswordEmail;
-- (void)sendRecoveryPasswordEmail;
-- (void)sendPasswordDisabledEmail;
-- (void)sendPasswordEnabledEmail;
-- (void)sendPasswordChangedEmail;
-
+- (void)sendConfirmationLinkedMailForRecoveryPasswordEmailWithCompletionBlock:(void(^)(NSError *error))completionBlock;
+- (void)sendUnlinkedMailForRecoveryPasswordEmailWithCompletionBlock:(void(^)(NSError *error))completionBlock;
+- (void)sendRecoveryPasswordEmailWithCompletionBlock:(void(^)(NSError *error))completionBlock;
+- (void)sendPasswordDisabledEmailWithCompletionBlock:(void(^)(NSError *error))completionBlock;
+- (void)sendPasswordEnabledEmailWithCompletionBlock:(void(^)(NSError *error))completionBlock;
+- (void)sendPasswordChangedEmailWithCompletionBlock:(void(^)(NSError *error))completionBlock;
 
 @end

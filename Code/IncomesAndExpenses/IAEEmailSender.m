@@ -51,41 +51,60 @@ static NSString * const kPostmarkAPIKey = @"REMOVED_POSTMARK_TOKEN";
 
 #pragma mark - Actions
 
-- (void)sendPasswordDisabledEmail
+- (void)sendPasswordDisabledEmailWithCompletionBlock:(void(^)(NSError *error))completionBlock
 {
-    [self sendEmailRequestOfType:PasswordDisabledEmailRequest];
+    [self sendEmailRequestOfType:PasswordDisabledEmailRequest withCompletionBlock:completionBlock];
 }
 
-- (void)sendPasswordEnabledEmail
+- (void)sendPasswordEnabledEmailWithCompletionBlock:(void(^)(NSError *error))completionBlock
 {
-    [self sendEmailRequestOfType:PasswordEnabledEmailRequest];
+    [self sendEmailRequestOfType:PasswordEnabledEmailRequest withCompletionBlock:completionBlock];
 }
 
-- (void)sendPasswordChangedEmail
+- (void)sendPasswordChangedEmailWithCompletionBlock:(void(^)(NSError *error))completionBlock
 {
-    [self sendEmailRequestOfType:PasswordChangedEmailRequest];
+    [self sendEmailRequestOfType:PasswordChangedEmailRequest withCompletionBlock:completionBlock];
 }
 
-- (void)sendRecoveryPasswordEmail
+- (void)sendRecoveryPasswordEmailWithCompletionBlock:(void(^)(NSError *error))completionBlock
 {
-    [self sendEmailRequestOfType:RecoveryEmailRequest];
+    [self sendEmailRequestOfType:RecoveryEmailRequest withCompletionBlock:completionBlock];
 }
 
-- (void)sendConfirmationLinkedMailForRecoveryPasswordEmail
+- (void)sendConfirmationLinkedMailForRecoveryPasswordEmailWithCompletionBlock:(void(^)(NSError *error))completionBlock
 {
-    [self sendEmailRequestOfType:RecoveryMailLinkedEmailRequest];
+    [self sendEmailRequestOfType:RecoveryMailLinkedEmailRequest withCompletionBlock:completionBlock];
 }
 
-- (void)sendUnlinkedMailForRecoveryPasswordEmail
+- (void)sendUnlinkedMailForRecoveryPasswordEmailWithCompletionBlock:(void(^)(NSError *error))completionBlock
 {
-    [self sendEmailRequestOfType:MailUnlinkedEmailRequest];
+    [self sendEmailRequestOfType:MailUnlinkedEmailRequest withCompletionBlock:completionBlock];
 }
 
-- (void)sendEmailRequestOfType:(IAEEmailRequestType)emailRequestType
+- (void)sendEmailRequestOfType:(IAEEmailRequestType)emailRequestType withCompletionBlock:(void(^)(NSError *error))completionBlock
 {
     [self.postmark sendEmail:[IAEEmailRequest emailRequestWithType:emailRequestType] completion:^(BOOL success, NSError *error) {
-        NSAssert(!error, @"");
+        if (error) {
+            [self lauchAlertViewWithError:error];
+        }
+        
+        if (completionBlock) {
+            completionBlock(error);
+        }
     }];
+}
+
+- (void)lauchAlertViewWithError:(NSError *)error
+{
+    NSAssert(error, @"");
+    
+    NSString *message = [NSString stringWithFormat:@"%@%@", error.localizedDescription, NSLocalizedString(@"LTEXT_EMAILSENDER_ALERTVIEWERROR_POSTMESSAGE", @"")];
+    UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_EMAILSENDER_ALERTVIEWERROR_TITLE", @"")
+                                                             message:message
+                                                            delegate:nil
+                                                   cancelButtonTitle:NSLocalizedString(@"LTEXT_EMAILSENDER_ALERTVIEWERROR_OK", @"")
+                                                   otherButtonTitles:nil];
+    [errorAlertView show];
 }
 
 @end

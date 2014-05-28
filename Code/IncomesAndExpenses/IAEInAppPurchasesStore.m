@@ -166,6 +166,16 @@ static NSString * const kInAppPurchaseProVersionIdentifier = @"com.easyincomesan
     self.productRequestCompletionBlock = nil;
 }
 
+- (void)request:(SKRequest *)request didFailWithError:(NSError *)error
+{
+    if (self.productRequestCompletionBlock) {
+        self.productRequestCompletionBlock(nil);
+    }
+    
+    self.productRequest = nil;
+    self.productRequestCompletionBlock = nil;
+}
+
 - (SKProduct *)findProductFromProVersionProductsResponse:(SKProductsResponse *)response
 {
     SKProduct *product = nil;

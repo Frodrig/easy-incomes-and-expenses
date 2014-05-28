@@ -2265,6 +2265,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     const BOOL actualContextHaveCategoriesOfThisType = [self actualContextHaveConceptsOfCategory:category];
     NSString *tagOfCategory = [category.tag copy];
     const CategoryType categoryType = category.categoryType;
+    [[IAEFavoriteConceptsStock sharedInstance] removeAndSaveFavoriteWithCategory:category.localizedTag];
     [[IAECategoryStore sharedCategoryStore] removeCategoryByTag:tagOfCategory];
     [[IAEBook sharedBook] saveAll];
 

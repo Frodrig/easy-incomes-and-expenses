@@ -103,9 +103,11 @@ static const CGFloat kAlphaForCellStroked = 0.2;
     NSDictionary *favorites = [IAEFavoriteConceptsStock sharedInstance].favorites;
     for (NSString *category in favorites) {
         CategoryType categoryType = [[IAECategoryStore sharedCategoryStore] findTypeOfCategoryTag:category];
-        NSMutableArray *container = [self findFavoriteContainerOfType:categoryType];
-        for (NSString *categoryValue in favorites[category]) {
-            [container addObject:@{kCategoryKey : category, kValueKey : categoryValue}];
+        if (categoryType != InvalidCategory) {
+            NSMutableArray *container = [self findFavoriteContainerOfType:categoryType];
+            for (NSString *categoryValue in favorites[category]) {
+                [container addObject:@{kCategoryKey : category, kValueKey : categoryValue}];
+            }
         }
     }
 }

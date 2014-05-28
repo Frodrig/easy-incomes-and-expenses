@@ -112,6 +112,7 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
                forCellWithReuseIdentifier:kCollectionViewCellReuseIdentifier];
     
     self.yearsCollectionView.allowsSelection = YES;
+    self.yearsCollectionView.alwaysBounceVertical = YES;
     [self.yearsCollectionView addGestureRecognizer:self.swipeGestureRecognizer];
     
     self.yearsCollectionView.dataSource = self;

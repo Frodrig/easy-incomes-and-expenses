@@ -29,6 +29,11 @@ static NSString * const kEntityNameMonth = @"IAEMonth";
     return ordererMonths_;
 }
 
+- (void)awakeFromFetch
+{
+    NSLog(@"");
+}
+
 - (void)awakeFromInsert
 {
     [super awakeFromInsert];

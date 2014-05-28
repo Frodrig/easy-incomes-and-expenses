@@ -14,6 +14,7 @@
 #import "KeychainItemWrapper.h"
 #import "IAEEmailSender.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
+#import "IAEInternet.h"
 
 static const CGFloat kDelayTimeForActionsAfterInvalidPassword = 0.25;
 
@@ -269,9 +270,9 @@ static const NSInteger kBasePanelPasswordTag = 100;
     [[KeychainItemWrapper defaultKeychain] setNewPassword:self.pendingConfirmationPassword];
     
     if (canSendPasswordChangedEmail) {
-        [[IAEEmailSender sharedInstance] sendPasswordChangedEmail];
+        [[IAEEmailSender sharedInstance] sendPasswordChangedEmailWithCompletionBlock:nil];
     } else if (canSendPasswordEnabledEmail){
-        [[IAEEmailSender sharedInstance] sendPasswordEnabledEmail];
+        [[IAEEmailSender sharedInstance] sendPasswordEnabledEmailWithCompletionBlock:nil];
     }
     
     [self.delegate dismissAll];
@@ -356,7 +357,7 @@ static const NSInteger kBasePanelPasswordTag = 100;
 {
     [[KeychainItemWrapper defaultKeychain] clearPassword];
     if ([[NSUserDefaults standardUserDefaults] isPasswordRecoveryEmailSet]) {
-        [[IAEEmailSender sharedInstance] sendPasswordDisabledEmail];
+        [[IAEEmailSender sharedInstance] sendPasswordDisabledEmailWithCompletionBlock:nil];
     }
 }
 
@@ -397,8 +398,11 @@ static const NSInteger kBasePanelPasswordTag = 100;
 
 - (IBAction)recoveryButtonPressed:(id)sender
 {
-    [[IAEEmailSender sharedInstance] sendRecoveryPasswordEmail];
-    [self launchAlertViewToInformAboutRecoveryPasswordEmailWasSend];
+    [[IAEEmailSender sharedInstance] sendRecoveryPasswordEmailWithCompletionBlock:^(NSError *error) {
+        if (!error) {
+            [self launchAlertViewToInformAboutRecoveryPasswordEmailWasSend];
+        }
+    }];
 }
 
 - (void)launchAlertViewToInformAboutRecoveryPasswordEmailWasSend

@@ -2235,8 +2235,6 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 {
     [self dismisPopover];
     
-    [self.popover dismissPopoverAnimated:YES];
-    
     self.categoryRenaming = nil;
     
     IAECategoryEditorViewController *categoryEditorViewController = [[IAECategoryEditorViewController alloc] initToAddCategoryOfType:categoryType];
@@ -2741,7 +2739,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
         [self lauchAlertViewToConfirmRemoveAllConceptsInActualContext];
     }
     
-    [self.popover dismissPopoverAnimated:YES];
+    [self dismisPopover];
 }
 
 - (void)lauchAlertViewToConfirmRemoveAllConceptsInActualContext
@@ -2947,7 +2945,7 @@ didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
 
 - (void)monthSelectorViewController:(IAEMonthSelectorViewController *)monthSelectorViewController didSelectMonth:(MonthType)month
 {
-    [self.popover dismissPopoverAnimated:YES];
+    [self dismisPopover];
     [self executeActionOnMonth:[[[IAEBook sharedBook] findActualOpenYear] findMonthObjectOfMonthDate:month]
                 basedInPurpose:self.monthSelectorPurpose
                    withConceptOfCell:[self findConceptCollectionCellWithMenuModeActive]];

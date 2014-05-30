@@ -553,7 +553,7 @@ static const CGFloat kAlphaForCellStroked = 0.2;
 - (void)swipeGestureRecognizerEvent:(UIGestureRecognizer *)gesture
 {
     CGPoint location = [gesture locationInView:self.tableView];
-    self.strokedCellIndexPath = [self.tableView indexPathForRowAtPoint:location];
+    self.strokedCellIndexPath = [self indexPathForStrokeFavoriteAtPoint:location];
     if (self.strokedCellIndexPath) {
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:self.strokedCellIndexPath];
         [UIView animateWithDuration:self.strokeAnimatableLineView.durationOfStrokeAnimation animations:^{
@@ -561,6 +561,17 @@ static const CGFloat kAlphaForCellStroked = 0.2;
         }];
         [self.strokeAnimatableLineView doStrokeOverTheView:cell];
     }
+}
+
+- (NSIndexPath *)indexPathForStrokeFavoriteAtPoint:(CGPoint)location
+{
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
+    NSMutableArray *favoriteConceptContainer = [self findFavoriteContainerAtIndexPath:indexPath];
+    if (favoriteConceptContainer.count == 0) {
+        indexPath = 0;
+    }
+
+    return indexPath;
 }
 
 #pragma mark - StrokeAnimatabeLinewView Delegate

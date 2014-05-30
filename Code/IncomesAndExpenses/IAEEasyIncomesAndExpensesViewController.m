@@ -127,7 +127,8 @@ static const CGFloat kDampingForContainerFXAttachBehavior = 0.6;
 static const CGFloat kDurationModeFadeOut = 0.35;
 static const CGFloat kDurationModeFadeIn = 0.75;
 
-static const CGFloat kMarginBaseForConceptCellPopover = 10.0;
+static const CGFloat kXMarginBaseForConceptCellPopover = 40.0;
+static const CGFloat kYMarginBaseForConceptCellPopover = 10.0;
 
 static const NSUInteger kNumberOfMonths = 12;
 
@@ -2014,7 +2015,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)createAndPresentPopoverForAdjustConceptCellView:(UILabel *)amountLabel withViewController:(UIViewController *)viewController
 {
-    CGFloat xMargin = kMarginBaseForConceptCellPopover;
+    CGFloat xMargin = kXMarginBaseForConceptCellPopover;
     CGSize textSize = [[amountLabel text] sizeWithAttributes:[amountLabel.attributedText attributesAtIndex:0 effectiveRange:NULL]];
     if (textSize.width > amountLabel.bounds.size.width) {
         textSize = CGSizeMake(amountLabel.bounds.size.width, textSize.height);
@@ -2023,9 +2024,9 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     
     CGRect translateViewFrameToGlobalCoordination = [amountLabel.superview convertRect:amountLabel.frame toView:amountLabel.superview];
     CGRect presentPopoverFrame = CGRectMake(translateViewFrameToGlobalCoordination.origin.x - xMargin + translateViewFrameToGlobalCoordination.size.width,
-                                            translateViewFrameToGlobalCoordination.origin.y + kMarginBaseForConceptCellPopover,
+                                            translateViewFrameToGlobalCoordination.origin.y + kYMarginBaseForConceptCellPopover,
                                             translateViewFrameToGlobalCoordination.size.width,
-                                            translateViewFrameToGlobalCoordination.size.height - kMarginBaseForConceptCellPopover);
+                                            translateViewFrameToGlobalCoordination.size.height - kYMarginBaseForConceptCellPopover);
     
     [self presentPopoverForConceptCellView:amountLabel withViewController:viewController usingFrame:presentPopoverFrame andArrowDirection:UIPopoverArrowDirectionRight];
 }
@@ -2034,9 +2035,9 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 {
     CGRect translateViewFrameToGlobalCoordination = [view.superview convertRect:view.frame toView:view.superview];
     CGRect presentPopoverFrame = CGRectMake(translateViewFrameToGlobalCoordination.origin.x,
-                                            translateViewFrameToGlobalCoordination.origin.y + kMarginBaseForConceptCellPopover,
+                                            translateViewFrameToGlobalCoordination.origin.y + kYMarginBaseForConceptCellPopover,
                                             translateViewFrameToGlobalCoordination.size.width,
-                                            translateViewFrameToGlobalCoordination.size.height - kMarginBaseForConceptCellPopover);
+                                            translateViewFrameToGlobalCoordination.size.height - kYMarginBaseForConceptCellPopover);
     
     UIPopoverArrowDirection arrowDirection = [self.calculatorViewController isInVisibleMode] ? UIPopoverArrowDirectionUp : UIPopoverArrowDirectionDown;
     

@@ -23,12 +23,12 @@
 static const NSUInteger kTagOfMonthTitleLabel = 10;
 static NSString * const kFamilyFontNameForTitle = @"HelveticaNeue-Ultralight";
 static const NSUInteger kFontSizeForTitle = 34;
-static const NSUInteger kFontKernForTitle = 10;
+static const NSUInteger kFontKernForTitle = 4;
 
 static const NSUInteger kTagOfMonthInfoLabel = 20;
 static NSString * const kFamilyFontNameForInfo = @"HelveticaNeue-Ultralightitalic";
 static const NSUInteger kFontSizeForInfo = 21;
-static const NSUInteger kFontKernForInfo = 1;
+static const NSUInteger kFontKernForInfo = 0;
 
 static NSString * const kNibName = @"IAEEditModeConceptCollectionViewHeader";
 

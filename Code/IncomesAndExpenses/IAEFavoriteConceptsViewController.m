@@ -554,11 +554,13 @@ static const CGFloat kAlphaForCellStroked = 0.2;
 {
     CGPoint location = [gesture locationInView:self.tableView];
     self.strokedCellIndexPath = [self.tableView indexPathForRowAtPoint:location];
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:self.strokedCellIndexPath];
-    [UIView animateWithDuration:self.strokeAnimatableLineView.durationOfStrokeAnimation animations:^{
-        cell.alpha = kAlphaForCellStroked;
-    }];
-    [self.strokeAnimatableLineView doStrokeOverTheView:cell];
+    if (self.strokedCellIndexPath) {
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:self.strokedCellIndexPath];
+        [UIView animateWithDuration:self.strokeAnimatableLineView.durationOfStrokeAnimation animations:^{
+            cell.alpha = kAlphaForCellStroked;
+        }];
+        [self.strokeAnimatableLineView doStrokeOverTheView:cell];
+    }
 }
 
 #pragma mark - StrokeAnimatabeLinewView Delegate

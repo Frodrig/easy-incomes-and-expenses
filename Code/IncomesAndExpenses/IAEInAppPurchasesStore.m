@@ -99,7 +99,7 @@ static NSString * const kInAppPurchaseProVersionIdentifier = @"com.easyincomesan
 {
     [[SKPaymentQueue defaultQueue] finishTransaction:paymentTransacction];
     
-    // ToDo:
+    // To Make Better:
     // - Validate receipt
     //   - Verify signature
     //   - Verify device

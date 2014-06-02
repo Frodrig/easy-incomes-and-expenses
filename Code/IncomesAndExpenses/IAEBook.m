@@ -278,8 +278,11 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
 
 - (void)deleteYearObject:(IAEYear *)year permanent:(BOOL)permanent
 {
+    NSMutableSet *exceptionObjects = [NSMutableSet setWithArray:self.years];
+    [exceptionObjects removeObject:year];
+    
+    [self doRefreshObjectMergeChangesExceptForObjects:exceptionObjects];
     [self.years removeObject:year];
-    [self doRefreshObjectMergeChangesExceptForObjects:[NSSet setWithArray:self.years]];
     if (permanent) {
         [self.context deleteObject:year];
     }

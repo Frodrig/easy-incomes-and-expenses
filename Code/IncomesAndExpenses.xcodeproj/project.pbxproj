@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5B0038FE18CFC13900044B2D /* libFlurry_4.3.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B00386718CFC13900044B2D /* libFlurry_4.3.2.a */; };
-		5B00398418CFC13900044B2D /* libFlurryAds_4.3.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B0038F218CFC13900044B2D /* libFlurryAds_4.3.2.a */; };
 		5B0574C117AFE2F600B95D50 /* IAEWithoutConceptsTextWarningReportMode.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B0574C317AFE2F600B95D50 /* IAEWithoutConceptsTextWarningReportMode.xib */; };
 		5B069D7F191E2400002442F6 /* IAEPasswordDisabledEmailRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B069D7E191E2400002442F6 /* IAEPasswordDisabledEmailRequest.m */; };
 		5B069D82191E2412002442F6 /* IAEPasswordEnabledEmailRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B069D81191E2412002442F6 /* IAEPasswordEnabledEmailRequest.m */; };
@@ -195,7 +194,6 @@
 		5BBD37CB180BFF5B0095A15A /* ProjectApiKey.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5BBD3739180BFF5B0095A15A /* ProjectApiKey.txt */; };
 		5BBD37CD180BFF730095A15A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BBD37CC180BFF730095A15A /* SystemConfiguration.framework */; };
 		5BBD37CF180BFF990095A15A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BBD37CE180BFF990095A15A /* Security.framework */; };
-		5BBD37D1180BFF9F0095A15A /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BBD37D0180BFF9F0095A15A /* AdSupport.framework */; };
 		5BBD37D3180C01850095A15A /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BBD37D2180C01850095A15A /* MediaPlayer.framework */; };
 		5BC1110017CD1DF500FF6D6B /* 730-envelope.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BC110FE17CD1DF500FF6D6B /* 730-envelope.png */; };
 		5BC1110117CD1DF500FF6D6B /* 730-envelope@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BC110FF17CD1DF500FF6D6B /* 730-envelope@2x.png */; };
@@ -725,11 +723,9 @@
 				5BBD37CD180BFF730095A15A /* SystemConfiguration.framework in Frameworks */,
 				5BFF5B9D1928D2CD009CAEE6 /* StoreKit.framework in Frameworks */,
 				5BDEEC03191033B200646726 /* CFNetwork.framework in Frameworks */,
-				5B00398418CFC13900044B2D /* libFlurryAds_4.3.2.a in Frameworks */,
 				5BBD37CF180BFF990095A15A /* Security.framework in Frameworks */,
 				5B1C904E18EDED9600A7BC68 /* Crashlytics.framework in Frameworks */,
 				5BBD37D3180C01850095A15A /* MediaPlayer.framework in Frameworks */,
-				5BBD37D1180BFF9F0095A15A /* AdSupport.framework in Frameworks */,
 				5B7A4D7F16B68062001751A9 /* MessageUI.framework in Frameworks */,
 				5BC31A8416651F1F009F23D6 /* QuartzCore.framework in Frameworks */,
 				5BD06168163A8CFF00A80BE3 /* CoreData.framework in Frameworks */,

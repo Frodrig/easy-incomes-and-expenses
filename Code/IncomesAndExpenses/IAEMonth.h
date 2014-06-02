@@ -54,10 +54,12 @@
 
 - (NSArray *)allConceptsSortedByEntryInstant;
 - (NSArray *)allConceptsSortedByDay;
+
 - (NSArray *)findAllConceptsWithCategory:(IAECategory *)category;
 - (NSArray *)findAllConceptsWithCategoryTag:(NSString *)tag;
 - (NSArray *)findAllCategoriesInConceptsOfType:(CategoryType)type;
 - (NSArray *)findAllCategoriesSortedByAbsoluteValueOfAmountsInConceptsOfType:(CategoryType)type;
+- (NSUInteger)findMaxDays;
 
 - (NSString *)monthAsString;
 

@@ -88,11 +88,16 @@ static NSString * const kLTextDecemberName = @"December";
         newConcept.category = category;
         newConcept.amount = amount;
         newConcept.date = date;
-        newConcept.dayOfTheMonth = dayOfTheMonth;
+        newConcept.dayOfTheMonth = MIN(dayOfTheMonth,  [self findMaxDays]);
         newConcept.detailDescription = [description copy];
     }
     
     return newConcept;
+}
+
+- (NSUInteger)findMaxDays
+{
+    return [IAEDateHelper findNumberOfDaysFromYearDate:self.year.yearDate andMonthIndex:self.month];
 }
 
 - (IAEConcept *)duplicateConcept:(IAEConcept *)concept

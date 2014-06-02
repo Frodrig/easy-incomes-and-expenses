@@ -224,11 +224,33 @@ static const CGFloat kFadeInStateTime = 0.75;
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.alignment = NSTextAlignmentCenter;
     paragraphStyle.lineSpacing = 8;
-    return [[NSAttributedString alloc] initWithString:product.localizedDescription attributes:@{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:21],
-                                                                                                                                NSForegroundColorAttributeName: [UIColor blackColor],
-                                                                                                                                NSParagraphStyleAttributeName: paragraphStyle,
-                                                                                                                                NSKernAttributeName: [NSNumber numberWithInteger:0.5]}];
 
+    return [[NSAttributedString alloc] initWithString:[self productDescriptionFromProduct:product]
+                                           attributes:@{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:21],
+                                                        NSForegroundColorAttributeName: [UIColor blackColor],
+                                                        NSParagraphStyleAttributeName: paragraphStyle,
+                                                        NSKernAttributeName: [NSNumber numberWithInteger:0.5]}];
+
+}
+
+- (NSString *)productDescriptionFromProduct:(SKProduct *)product
+{
+    NSString *productDescription = nil;
+    if ([self isCatalanLanguageActive]) {
+        productDescription = NSLocalizedString(@"LTEXT_PRODESCRIPTIONCATALAN", @"");
+    } else {
+        productDescription = product.localizedDescription;
+    }
+    
+    return productDescription;
+}
+
+- (BOOL)isCatalanLanguageActive
+{
+    NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
+    const BOOL catalanLanguageActive = [language isEqualToString:@"ca"];
+    
+    return catalanLanguageActive;
 }
 
 - (void)setWaitingForPurchaseOrRestoreState

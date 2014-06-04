@@ -51,6 +51,7 @@
                                                                       IAEContextMenuActionSheetViewControllerDelegate>
 
 @property (nonatomic, weak) id<IAEEasyIncomesAndExpensesViewControllerDelegate> delegate;
+@property (nonatomic) BOOL helpModeActivated;
 
 - (void)categoriesButtonPressed:(id)sender;
 - (void)yearsButtonPressed:(id)sender;

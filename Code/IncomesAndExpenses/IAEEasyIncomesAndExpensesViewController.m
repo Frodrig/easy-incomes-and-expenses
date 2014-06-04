@@ -474,18 +474,20 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 {
     [super viewWillAppear:animated];
 
-    [self vinculeSelectorContextViewContent];
-    [self vinculeContextMenuView];
-    [self vinculeCalculatorViewControllerView];
-    [self vinculeReportAreaView];
-    [self vinculeReportMenuView];
-    [self createAndVinculeAttachBehavior];
-    [self gotoToTodayMonthByInitialPositioning];
-    // Nota: En el momento en que se asigna un datasource al collection view se procede a la carga de informacion.
-    //       Antes de que ocurra eso, nos aseguramos de estar en el contexto adecuado.
-    [self vinculeConceptsCollectionView];
-    
-    [self prepareViewForInitialAnimation];
+    if (!self.helpModeActivated) {
+        [self vinculeSelectorContextViewContent];
+        [self vinculeContextMenuView];
+        [self vinculeCalculatorViewControllerView];
+        [self vinculeReportAreaView];
+        [self vinculeReportMenuView];
+        [self createAndVinculeAttachBehavior];
+        [self gotoToTodayMonthByInitialPositioning];
+        // Nota: En el momento en que se asigna un datasource al collection view se procede a la carga de informacion.
+        //       Antes de que ocurra eso, nos aseguramos de estar en el contexto adecuado.
+        [self vinculeConceptsCollectionView];
+        
+        [self prepareViewForInitialAnimation];
+    }
 }
 
 - (void)vinculeConceptsCollectionView
@@ -584,10 +586,13 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    self.navigationController.navigationBar.alpha = 0;
-
-    [self executeInitialAnimation];
-    [self checkFixesExecuted];
+    
+    if (!self.helpModeActivated) {
+        self.navigationController.navigationBar.alpha = 0;
+        
+        [self executeInitialAnimation];
+        [self checkFixesExecuted];
+    }
 }
 
 - (void)executeInitialAnimation

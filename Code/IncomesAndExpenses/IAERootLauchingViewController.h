@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "IAEEasyIncomesAndExpensesViewControllerDelegate.h"
 #import "IAEHelpIndexViewControllerDelegate.h"
+#import "IAEHelpCarouselViewControllerDelegate.h"
 
 @interface IAERootLauchingViewController : UIViewController<IAEEasyIncomesAndExpensesViewControllerDelegate,
-                                                            IAEHelpIndexViewControllerDelegate>
+                                                            IAEHelpIndexViewControllerDelegate,
+                                                            IAEHelpCarouselViewControllerDelegate>
 
 - (void)performActionsAfterInsertedAsRootViewController;
 

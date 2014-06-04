@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IAEHelpCarouselViewControllerDelegate.h"
 
 @interface IAEHelpCarouselViewController : UIViewController
+
+@property (nonatomic, weak) id<IAEHelpCarouselViewControllerDelegate> delegate;
 
 @end

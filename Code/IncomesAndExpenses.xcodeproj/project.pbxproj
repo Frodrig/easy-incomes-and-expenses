@@ -185,6 +185,8 @@
 		5BAEAE1318769A7400271B47 /* 869-pin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BAEAE1118769A7400271B47 /* 869-pin@2x.png */; };
 		5BAEAE181876B8C300271B47 /* IAEFavoriteConceptsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BAEAE161876B8C300271B47 /* IAEFavoriteConceptsViewController.m */; };
 		5BAEAE191876B8C300271B47 /* IAEFavoriteConceptsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BAEAE171876B8C300271B47 /* IAEFavoriteConceptsViewController.xib */; };
+		5BB527FF193F561E004E3A9B /* IAEHelpCarouselViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB527FD193F561E004E3A9B /* IAEHelpCarouselViewController.m */; };
+		5BB52800193F561E004E3A9B /* IAEHelpCarouselViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BB527FE193F561E004E3A9B /* IAEHelpCarouselViewController.xib */; };
 		5BB8AD1217FAC2F200BAAB96 /* editconceptcontainerviewbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BB8AD1017FAC2F200BAAB96 /* editconceptcontainerviewbackground.png */; };
 		5BB8AD1317FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BB8AD1117FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png */; };
 		5BB937CC191938060001A31E /* IAEEmailSender.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB937CB191938060001A31E /* IAEEmailSender.m */; };
@@ -569,6 +571,9 @@
 		5BB0222217E2F7BD00CF75B8 /* IAEEasyIncomesAndExpensesViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEasyIncomesAndExpensesViewControllerDelegate.h; sourceTree = "<group>"; };
 		5BB2048B17D47E7100563B7C /* IAEDisplayPanelCalculatorViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEDisplayPanelCalculatorViewDataSource.h; sourceTree = "<group>"; };
 		5BB2048D17D4C92700563B7C /* IAEReportAreaViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEReportAreaViewDelegate.h; sourceTree = "<group>"; };
+		5BB527FC193F561E004E3A9B /* IAEHelpCarouselViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelpCarouselViewController.h; sourceTree = "<group>"; };
+		5BB527FD193F561E004E3A9B /* IAEHelpCarouselViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelpCarouselViewController.m; sourceTree = "<group>"; };
+		5BB527FE193F561E004E3A9B /* IAEHelpCarouselViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEHelpCarouselViewController.xib; sourceTree = "<group>"; };
 		5BB8AD1017FAC2F200BAAB96 /* editconceptcontainerviewbackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = editconceptcontainerviewbackground.png; sourceTree = "<group>"; };
 		5BB8AD1117FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editconceptcontainerviewbackground@2x.png"; sourceTree = "<group>"; };
 		5BB937CA191938060001A31E /* IAEEmailSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEmailSender.h; sourceTree = "<group>"; };
@@ -1252,6 +1257,7 @@
 				5B55C402178AA79D0066F586 /* Category Editor */,
 				5BAEAE141876B5D200271B47 /* Favorite Concepts */,
 				5B32D65A177C417A0070AC72 /* Year Selector */,
+				5BB527FB193F55F2004E3A9B /* HelpCarousel */,
 				5B25B3AC1925F8EA009B53BA /* InAppPurchaseStore */,
 			);
 			name = Application;
@@ -1914,6 +1920,16 @@
 			name = "Favorite Concepts";
 			sourceTree = "<group>";
 		};
+		5BB527FB193F55F2004E3A9B /* HelpCarousel */ = {
+			isa = PBXGroup;
+			children = (
+				5BB527FC193F561E004E3A9B /* IAEHelpCarouselViewController.h */,
+				5BB527FD193F561E004E3A9B /* IAEHelpCarouselViewController.m */,
+				5BB527FE193F561E004E3A9B /* IAEHelpCarouselViewController.xib */,
+			);
+			name = HelpCarousel;
+			sourceTree = "<group>";
+		};
 		5BB937C8191937660001A31E /* Modules */ = {
 			isa = PBXGroup;
 			children = (
@@ -2545,6 +2561,7 @@
 				5BF8A08918EA0A8B0039F19B /* IAEHelpConfigureConceptsWithDaysCell.xib in Resources */,
 				5B5497B81820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.xib in Resources */,
 				5B2AAA3017C773CF00E7C7A5 /* 747-minus-circle@2x.png in Resources */,
+				5BB52800193F561E004E3A9B /* IAEHelpCarouselViewController.xib in Resources */,
 				5BC1110017CD1DF500FF6D6B /* 730-envelope.png in Resources */,
 				5B879767180E8FCB00554E13 /* IAEHelpConfigureViewController.xib in Resources */,
 				5B2512881851E07600669AE6 /* settingsindex_img_5@2x.png in Resources */,
@@ -2667,6 +2684,7 @@
 				5BD01CA21929F78700348C91 /* IAEIdentifiers.m in Sources */,
 				5B6F45E5181ED29F0073B1AC /* IAEOpenYear.m in Sources */,
 				5B907832179D1AA700B2A0F7 /* IAECalculatorViewController.m in Sources */,
+				5BB527FF193F561E004E3A9B /* IAEHelpCarouselViewController.m in Sources */,
 				5B0EDE9F1900EEE0009A3DF5 /* IAEEmailChecker.m in Sources */,
 				5B069D7F191E2400002442F6 /* IAEPasswordDisabledEmailRequest.m in Sources */,
 				5B32D65D177C41980070AC72 /* IAEYearSelectorViewController.m in Sources */,

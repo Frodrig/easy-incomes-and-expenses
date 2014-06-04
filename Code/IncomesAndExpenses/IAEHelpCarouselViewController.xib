@@ -6,6 +6,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IAEHelpCarouselViewController">
             <connections>
+                <outlet property="pageController" destination="a7D-Vb-PEM" id="ObH-q7-T23"/>
+                <outlet property="scrollView" destination="oZB-2M-21V" id="jUj-uA-qji"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

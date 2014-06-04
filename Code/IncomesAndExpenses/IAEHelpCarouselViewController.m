@@ -50,7 +50,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+ 
     [self prepareScrollView];
     [self configurePageController];
 }
@@ -87,13 +87,30 @@
 
 - (void)configurePageController
 {
-    
+    self.pageController.numberOfPages = self.helpScreens.count;
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self updatePageControl];
+}
+
+- (void)updatePageControl
+{
+    self.pageController.currentPage = self.scrollView.contentOffset.x / CGRectGetWidth(self.scrollView.frame);
 }
 
 #pragma mark - Events

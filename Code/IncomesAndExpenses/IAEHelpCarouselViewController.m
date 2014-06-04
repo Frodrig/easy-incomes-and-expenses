@@ -136,7 +136,9 @@
 
 - (IBAction)doneButtonPressed:(id)sender
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.delegate helpCaruoselViewControllerDidDismiss:self];
+    }];
 }
 
 @end

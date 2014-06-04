@@ -582,6 +582,7 @@
 		5BB52817193F6A09004E3A9B /* es */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = es; path = "es.lproj/HelpScreen_01_cropped@2x.jpg"; sourceTree = "<group>"; };
 		5BB52819193F6A10004E3A9B /* en */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = en; path = "en.lproj/HelpScreen_01_cropped@2x.jpg"; sourceTree = "<group>"; };
 		5BB5281A193F6A13004E3A9B /* ca */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = ca; path = "ca.lproj/HelpScreen_01_cropped@2x.jpg"; sourceTree = "<group>"; };
+		5BB5281B193F7EF2004E3A9B /* IAEHelpCarouselViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelpCarouselViewControllerDelegate.h; sourceTree = "<group>"; };
 		5BB8AD1017FAC2F200BAAB96 /* editconceptcontainerviewbackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = editconceptcontainerviewbackground.png; sourceTree = "<group>"; };
 		5BB8AD1117FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editconceptcontainerviewbackground@2x.png"; sourceTree = "<group>"; };
 		5BB937CA191938060001A31E /* IAEEmailSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEmailSender.h; sourceTree = "<group>"; };
@@ -1935,6 +1936,7 @@
 				5BB527FC193F561E004E3A9B /* IAEHelpCarouselViewController.h */,
 				5BB527FD193F561E004E3A9B /* IAEHelpCarouselViewController.m */,
 				5BB527FE193F561E004E3A9B /* IAEHelpCarouselViewController.xib */,
+				5BB5281B193F7EF2004E3A9B /* IAEHelpCarouselViewControllerDelegate.h */,
 			);
 			name = HelpCarousel;
 			sourceTree = "<group>";

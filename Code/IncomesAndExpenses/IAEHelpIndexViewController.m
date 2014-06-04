@@ -30,7 +30,7 @@ typedef NS_ENUM(NSUInteger, IAESettingsIndexOptionType) {
 static NSString * const kNotificationDayModeOnName = @"dayModeToOn";
 static NSString * const kNotificationDayModeOffName = @"dayModeToOff";
 static NSString * const kNotificationInitialMonthChanged = @"initialMonthChange";
-
+static NSString * const kNotificationHelpOptionPressed = @"helpOptionPressed";
 static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 
 #pragma mark - Interface
@@ -109,15 +109,24 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 
 - (void)dismissAll
 {
+    [self dismissAllAfterPressingHelpOption:NO];
+}
+
+- (void)dismissAllAfterPressingHelpOption:(BOOL)afterPressingHelpOption
+{
     [self notifyGlobalValueChangesIfAppropiate];
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+        if (afterPressingHelpOption) {
+            [self notifyHelpOptionPressed];
+        }
+    }];
 }
 
 #pragma mark - BarButtons
 
 - (void)doneButtonPressed:(id)sender
 {
-    [self dismissAll];
+    [self dismissAllAfterPressingHelpOption:NO];
 }
 
 - (void)notifyGlobalValueChangesIfAppropiate
@@ -132,6 +141,12 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
     if (actualDayModeActive != self.dayModeWasActiveAtStart) {
         [self notifyDayModeChanged:actualDayModeActive];
     }
+}
+
+- (void)notifyHelpOptionPressed
+{
+    NSNotification *notification = [NSNotification notificationWithName:kNotificationHelpOptionPressed object:nil];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
 - (void)notifyDayModeChanged:(BOOL)dayModeOn
@@ -200,14 +215,18 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIViewController *nextViewController = [self createNextViewControllerBasedInSelectRowAtIndexPath:indexPath];
-    [self.navigationController pushViewController:nextViewController animated:YES];
+    if ([self findOptionTypeFromIndexPath:indexPath] == IAESettingsIndexOptionHelp) {
+        [self dismissAllAfterPressingHelpOption:YES];
+    } else {
+        UIViewController *nextViewController = [self createNextViewControllerBasedInSelectRowAtIndexPath:indexPath];
+        [self.navigationController pushViewController:nextViewController animated:YES];
+    }
 }
 
 - (UIViewController *)createNextViewControllerBasedInSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UIViewController *viewController = nil;
-    IAESettingsIndexOptionType optionType = (IAESettingsIndexOptionType)[[[self findOptionsForActualVersion] objectAtIndex:indexPath.row] unsignedIntegerValue];
+    IAESettingsIndexOptionType optionType = [self findOptionTypeFromIndexPath:indexPath];
     
     if (optionType == IAESettingsIndexOptionConfigure) {
         [Flurry logEvent:@"settingsindex_configure"];
@@ -228,12 +247,18 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
     return viewController;
 }
 
+- (IAESettingsIndexOptionType)findOptionTypeFromIndexPath:(NSIndexPath *)indexPath
+{
+    IAESettingsIndexOptionType optionType = (IAESettingsIndexOptionType)[[[self findOptionsForActualVersion] objectAtIndex:indexPath.row] unsignedIntegerValue];
+    return optionType;
+}
+
 #pragma mark - MFMailComposeViewControllerDelegate
 
 -(void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
     [controller dismissViewControllerAnimated:YES completion:nil];
-    [self dismissAll];
+    [self dismissAllAfterPressingHelpOption:NO];
 }
 
 

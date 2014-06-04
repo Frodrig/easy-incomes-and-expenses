@@ -11,12 +11,14 @@
 #import "IAEPasswordPanelViewController.h"
 #import "KeychainItemWrapper.h"
 #import "IAEInAppPurchaseStoreViewControllerDefs.h"
+#import "IAEHelpCarouselViewController.h"
 
 #pragma mark - constants
 
 static NSString * const kMainStoryBoardName = @"Main";
 static NSString * const kLaunchImageName = @"ipadlandscape_launchimage";
 static NSString * const kEasyIncomesAndExpensesViewControllerID = @"EasyIncomesAndExpensesViewControllerID";
+static NSString * const kNotificationHelpOptionPressed = @"helpOptionPressed";
 static const CGFloat kFadeInCourtainViewTransitionToProVersionEffectTime = 1.0;
 static const CGFloat kFadeOutCourtainViewTransitionToProVersionEffectTime = 3.0;
 
@@ -63,6 +65,11 @@ static const CGFloat kFadeOutCourtainViewTransitionToProVersionEffectTime = 3.0;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(notificationCenterProVersionEnabledFromStore:)
                                                  name:kProVersionEnabledFromStore
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notificationCenterHelpOptionPressed:)
+                                                 name:kNotificationHelpOptionPressed
                                                object:nil];
 }
 
@@ -236,6 +243,16 @@ static const CGFloat kFadeOutCourtainViewTransitionToProVersionEffectTime = 3.0;
     [self.view bringSubviewToFront:courtainView];
     
     return courtainView;
+}
+
+- (void)notificationCenterHelpOptionPressed:(NSNotification *)notification
+{
+    NSAssert(nil == self.courtainView, @"");
+    if (!self.courtainView) {
+        IAEHelpCarouselViewController *helpCarouselViewController = [[IAEHelpCarouselViewController alloc] initWithNibName:nil bundle:nil];
+        helpCarouselViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        [self presentViewController:helpCarouselViewController animated:YES completion:nil];
+    }
 }
 
 @end

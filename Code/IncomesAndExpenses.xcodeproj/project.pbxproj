@@ -187,6 +187,7 @@
 		5BAEAE191876B8C300271B47 /* IAEFavoriteConceptsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BAEAE171876B8C300271B47 /* IAEFavoriteConceptsViewController.xib */; };
 		5BB527FF193F561E004E3A9B /* IAEHelpCarouselViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB527FD193F561E004E3A9B /* IAEHelpCarouselViewController.m */; };
 		5BB52800193F561E004E3A9B /* IAEHelpCarouselViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BB527FE193F561E004E3A9B /* IAEHelpCarouselViewController.xib */; };
+		5BB5280C193F5FE6004E3A9B /* HelpScreen_01@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5BB5280E193F5FE6004E3A9B /* HelpScreen_01@2x.jpg */; };
 		5BB8AD1217FAC2F200BAAB96 /* editconceptcontainerviewbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BB8AD1017FAC2F200BAAB96 /* editconceptcontainerviewbackground.png */; };
 		5BB8AD1317FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BB8AD1117FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png */; };
 		5BB937CC191938060001A31E /* IAEEmailSender.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB937CB191938060001A31E /* IAEEmailSender.m */; };
@@ -574,6 +575,9 @@
 		5BB527FC193F561E004E3A9B /* IAEHelpCarouselViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelpCarouselViewController.h; sourceTree = "<group>"; };
 		5BB527FD193F561E004E3A9B /* IAEHelpCarouselViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelpCarouselViewController.m; sourceTree = "<group>"; };
 		5BB527FE193F561E004E3A9B /* IAEHelpCarouselViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEHelpCarouselViewController.xib; sourceTree = "<group>"; };
+		5BB5280D193F5FE6004E3A9B /* es */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = es; path = "es.lproj/HelpScreen_01@2x.jpg"; sourceTree = "<group>"; };
+		5BB5280F193F5FED004E3A9B /* en */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = en; path = "en.lproj/HelpScreen_01@2x.jpg"; sourceTree = "<group>"; };
+		5BB52810193F5FF1004E3A9B /* ca */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = ca; path = "ca.lproj/HelpScreen_01@2x.jpg"; sourceTree = "<group>"; };
 		5BB8AD1017FAC2F200BAAB96 /* editconceptcontainerviewbackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = editconceptcontainerviewbackground.png; sourceTree = "<group>"; };
 		5BB8AD1117FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editconceptcontainerviewbackground@2x.png"; sourceTree = "<group>"; };
 		5BB937CA191938060001A31E /* IAEEmailSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEmailSender.h; sourceTree = "<group>"; };
@@ -931,9 +935,10 @@
 		5B29ED30179FC2C300FCC5C6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5BB52802193F5F84004E3A9B /* Help */,
 				5B5DBB0817E1BF3800716503 /* Launch */,
 				5B5DBB0717E1BF2A00716503 /* Icons */,
-				5B7FCE9217D63D1200624D25 /* App */,
+				5B7FCE9217D63D1200624D25 /* Glyphs */,
 			);
 			name = Resources;
 			path = IncomesAndExpenses;
@@ -1556,7 +1561,7 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
-		5B7FCE9217D63D1200624D25 /* App */ = {
+		5B7FCE9217D63D1200624D25 /* Glyphs */ = {
 			isa = PBXGroup;
 			children = (
 				5B3CD77A193346F500AF2A0C /* nextDecoratorTableView.png */,
@@ -1628,7 +1633,7 @@
 				5BE8A68218FDCF9300475F68 /* starblack.png */,
 				5BE8A68318FDCF9300475F68 /* starblack@2x.png */,
 			);
-			name = App;
+			name = Glyphs;
 			sourceTree = "<group>";
 		};
 		5B879755180E7D7A00554E13 /* IAEAbout */ = {
@@ -1928,6 +1933,14 @@
 				5BB527FE193F561E004E3A9B /* IAEHelpCarouselViewController.xib */,
 			);
 			name = HelpCarousel;
+			sourceTree = "<group>";
+		};
+		5BB52802193F5F84004E3A9B /* Help */ = {
+			isa = PBXGroup;
+			children = (
+				5BB5280E193F5FE6004E3A9B /* HelpScreen_01@2x.jpg */,
+			);
+			name = Help;
 			sourceTree = "<group>";
 		};
 		5BB937C8191937660001A31E /* Modules */ = {
@@ -2525,6 +2538,7 @@
 				5B5DBB3C17E1F01400716503 /* ipadlandscape_launchimage@2x.png in Resources */,
 				5B5A05A0192D096600154371 /* imageLoader-9.gif in Resources */,
 				5BAEAE1218769A7400271B47 /* 869-pin.png in Resources */,
+				5BB5280C193F5FE6004E3A9B /* HelpScreen_01@2x.jpg in Resources */,
 				5B2512861851E07600669AE6 /* settingsindex_img_4@2x.png in Resources */,
 				5B23FD9217CFAB5100B4AD77 /* 727-more@2x.png in Resources */,
 				5BDD9A2718571B60001A6CEF /* IAEHelpPasswordIndexViewController.xib in Resources */,
@@ -2843,6 +2857,16 @@
 				5BBD37D7180C117B0095A15A /* ca */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		5BB5280E193F5FE6004E3A9B /* HelpScreen_01@2x.jpg */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5BB5280D193F5FE6004E3A9B /* es */,
+				5BB5280F193F5FED004E3A9B /* en */,
+				5BB52810193F5FF1004E3A9B /* ca */,
+			);
+			name = "HelpScreen_01@2x.jpg";
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

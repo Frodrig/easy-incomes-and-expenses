@@ -188,6 +188,7 @@
 		5BB527FF193F561E004E3A9B /* IAEHelpCarouselViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB527FD193F561E004E3A9B /* IAEHelpCarouselViewController.m */; };
 		5BB52800193F561E004E3A9B /* IAEHelpCarouselViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BB527FE193F561E004E3A9B /* IAEHelpCarouselViewController.xib */; };
 		5BB5280C193F5FE6004E3A9B /* HelpScreen_01@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5BB5280E193F5FE6004E3A9B /* HelpScreen_01@2x.jpg */; };
+		5BB52818193F6A09004E3A9B /* HelpScreen_01_cropped@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5BB52816193F6A09004E3A9B /* HelpScreen_01_cropped@2x.jpg */; };
 		5BB8AD1217FAC2F200BAAB96 /* editconceptcontainerviewbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BB8AD1017FAC2F200BAAB96 /* editconceptcontainerviewbackground.png */; };
 		5BB8AD1317FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BB8AD1117FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png */; };
 		5BB937CC191938060001A31E /* IAEEmailSender.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB937CB191938060001A31E /* IAEEmailSender.m */; };
@@ -578,6 +579,9 @@
 		5BB5280D193F5FE6004E3A9B /* es */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = es; path = "es.lproj/HelpScreen_01@2x.jpg"; sourceTree = "<group>"; };
 		5BB5280F193F5FED004E3A9B /* en */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = en; path = "en.lproj/HelpScreen_01@2x.jpg"; sourceTree = "<group>"; };
 		5BB52810193F5FF1004E3A9B /* ca */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = ca; path = "ca.lproj/HelpScreen_01@2x.jpg"; sourceTree = "<group>"; };
+		5BB52817193F6A09004E3A9B /* es */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = es; path = "es.lproj/HelpScreen_01_cropped@2x.jpg"; sourceTree = "<group>"; };
+		5BB52819193F6A10004E3A9B /* en */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = en; path = "en.lproj/HelpScreen_01_cropped@2x.jpg"; sourceTree = "<group>"; };
+		5BB5281A193F6A13004E3A9B /* ca */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = ca; path = "ca.lproj/HelpScreen_01_cropped@2x.jpg"; sourceTree = "<group>"; };
 		5BB8AD1017FAC2F200BAAB96 /* editconceptcontainerviewbackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = editconceptcontainerviewbackground.png; sourceTree = "<group>"; };
 		5BB8AD1117FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editconceptcontainerviewbackground@2x.png"; sourceTree = "<group>"; };
 		5BB937CA191938060001A31E /* IAEEmailSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEmailSender.h; sourceTree = "<group>"; };
@@ -1939,6 +1943,7 @@
 			isa = PBXGroup;
 			children = (
 				5BB5280E193F5FE6004E3A9B /* HelpScreen_01@2x.jpg */,
+				5BB52816193F6A09004E3A9B /* HelpScreen_01_cropped@2x.jpg */,
 			);
 			name = Help;
 			sourceTree = "<group>";
@@ -2527,6 +2532,7 @@
 			files = (
 				5B767E011636D7FC005315F8 /* InfoPlist.strings in Resources */,
 				5B28D1AF18200C1300EF4D48 /* 766-arrow-right@2x.png in Resources */,
+				5BB52818193F6A09004E3A9B /* HelpScreen_01_cropped@2x.jpg in Resources */,
 				5BB8AD1317FAC2F200BAAB96 /* editconceptcontainerviewbackground@2x.png in Resources */,
 				5BE84E7D180DA8F500F4A80B /* IAEHelpIndexViewController.xib in Resources */,
 				5B2A41B017C77C8100C29036 /* 765-arrow-left.png in Resources */,
@@ -2867,6 +2873,16 @@
 				5BB52810193F5FF1004E3A9B /* ca */,
 			);
 			name = "HelpScreen_01@2x.jpg";
+			sourceTree = "<group>";
+		};
+		5BB52816193F6A09004E3A9B /* HelpScreen_01_cropped@2x.jpg */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5BB52817193F6A09004E3A9B /* es */,
+				5BB52819193F6A10004E3A9B /* en */,
+				5BB5281A193F6A13004E3A9B /* ca */,
+			);
+			name = "HelpScreen_01_cropped@2x.jpg";
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

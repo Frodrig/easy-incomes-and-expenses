@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIPageControl *pageController;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) NSArray *helpScreens;
+@property (weak, nonatomic) IBOutlet UIButton *doneButton;
 
 @end
 
@@ -53,8 +54,8 @@
  
     [self prepareScrollView];
     [self configurePageController];
+    [self prepareAdjustButton];
 }
-
 
 - (void)prepareScrollView
 {
@@ -66,7 +67,6 @@
 {
     self.scrollView.contentOffset = CGPointZero;
     self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame) * self.helpScreens.count, CGRectGetHeight(self.scrollView.frame));
-    NSLog(@"SCROLL VIEW contentSize %@", NSStringFromCGSize(self.scrollView.contentSize));
     self.scrollView.bounces = YES;
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
@@ -79,9 +79,27 @@
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:self.helpScreens[helpScreenIndexIt]]];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         imageView.center = CGPointMake(CGRectGetMidX(self.scrollView.frame) + CGRectGetWidth(self.scrollView.frame) * helpScreenIndexIt, CGRectGetMidY(self.scrollView.frame));
-        NSLog(@"ImageView CENTER %@", NSStringFromCGPoint(imageView.center));
-        
         [self.scrollView addSubview:imageView];
+    }
+}
+
+- (void)prepareAdjustButton
+{
+    [self localizeDoneButton];
+    [self adjustDoneButtonPosition];
+}
+
+- (void)localizeDoneButton
+{
+    [self.doneButton setTitle:NSLocalizedString(@"LTEXT_HELPCAROUSEL_EXIT", @"") forState:UIControlStateNormal];
+}
+
+- (void)adjustDoneButtonPosition
+{
+    if (self.scrollView.subviews.count > 0) {
+        UIImageView *referenceImage = self.scrollView.subviews[0];
+        const NSUInteger border = (CGRectGetWidth(self.scrollView.frame) - CGRectGetWidth(referenceImage.frame)) / 2;
+        self.doneButton.frame = CGRectMake(self.doneButton.frame.origin.x - border, self.doneButton.frame.origin.y, self.doneButton.frame.size.width, self.doneButton.frame.size.height);
     }
 }
 

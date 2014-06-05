@@ -174,6 +174,11 @@
 		5B951F6C17D88F1700CCEACE /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B951F6A17D88F1700CCEACE /* icon.png */; };
 		5B951F6D17D88F1700CCEACE /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B951F6B17D88F1700CCEACE /* icon@2x.png */; };
 		5B98F0B4185884770051333A /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B98F0B3185884770051333A /* KeychainItemWrapper.m */; };
+		5B9BEAA11940BF8E00D752C0 /* HelpScreen_01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5B9BEA971940BF8E00D752C0 /* HelpScreen_01.jpg */; };
+		5B9BEAA21940BF8E00D752C0 /* HelpScreen_02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5B9BEA991940BF8E00D752C0 /* HelpScreen_02.jpg */; };
+		5B9BEAA31940BF8E00D752C0 /* HelpScreen_03.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5B9BEA9B1940BF8E00D752C0 /* HelpScreen_03.jpg */; };
+		5B9BEAA41940BF8E00D752C0 /* HelpScreen_04.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5B9BEA9D1940BF8E00D752C0 /* HelpScreen_04.jpg */; };
+		5B9BEAA51940BF8E00D752C0 /* HelpScreen_05.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5B9BEA9F1940BF8E00D752C0 /* HelpScreen_05.jpg */; };
 		5BA0130D179800AC00337E84 /* NSString+TwoDigitString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA0130C179800AC00337E84 /* NSString+TwoDigitString.m */; };
 		5BA0131217983A9000337E84 /* IAEDayCalendarSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA0131017983A9000337E84 /* IAEDayCalendarSelectorViewController.m */; };
 		5BA0131317983A9000337E84 /* IAEDayCalendarSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA0131117983A9000337E84 /* IAEDayCalendarSelectorViewController.xib */; };
@@ -557,6 +562,21 @@
 		5B951F6B17D88F1700CCEACE /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		5B98F0B2185884770051333A /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
 		5B98F0B3185884770051333A /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
+		5B9BEA981940BF8E00D752C0 /* es */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = es; path = es.lproj/HelpScreen_01.jpg; sourceTree = "<group>"; };
+		5B9BEA9A1940BF8E00D752C0 /* es */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = es; path = es.lproj/HelpScreen_02.jpg; sourceTree = "<group>"; };
+		5B9BEA9C1940BF8E00D752C0 /* es */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = es; path = es.lproj/HelpScreen_03.jpg; sourceTree = "<group>"; };
+		5B9BEA9E1940BF8E00D752C0 /* es */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = es; path = es.lproj/HelpScreen_04.jpg; sourceTree = "<group>"; };
+		5B9BEAA01940BF8E00D752C0 /* es */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = es; path = es.lproj/HelpScreen_05.jpg; sourceTree = "<group>"; };
+		5B9BEAA61940BF9300D752C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = en; path = en.lproj/HelpScreen_01.jpg; sourceTree = "<group>"; };
+		5B9BEAA71940BF9500D752C0 /* ca */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = ca; path = ca.lproj/HelpScreen_01.jpg; sourceTree = "<group>"; };
+		5B9BEAA81940BF9900D752C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = en; path = en.lproj/HelpScreen_02.jpg; sourceTree = "<group>"; };
+		5B9BEAA91940BF9C00D752C0 /* ca */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = ca; path = ca.lproj/HelpScreen_02.jpg; sourceTree = "<group>"; };
+		5B9BEAAA1940BFA000D752C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = en; path = en.lproj/HelpScreen_03.jpg; sourceTree = "<group>"; };
+		5B9BEAAB1940BFA300D752C0 /* ca */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = ca; path = ca.lproj/HelpScreen_03.jpg; sourceTree = "<group>"; };
+		5B9BEAAC1940BFA700D752C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = en; path = en.lproj/HelpScreen_04.jpg; sourceTree = "<group>"; };
+		5B9BEAAD1940BFA900D752C0 /* ca */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = ca; path = ca.lproj/HelpScreen_04.jpg; sourceTree = "<group>"; };
+		5B9BEAAE1940BFAD00D752C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = en; path = en.lproj/HelpScreen_05.jpg; sourceTree = "<group>"; };
+		5B9BEAAF1940BFB000D752C0 /* ca */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = ca; path = ca.lproj/HelpScreen_05.jpg; sourceTree = "<group>"; };
 		5BA0130B179800AC00337E84 /* NSString+TwoDigitString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+TwoDigitString.h"; sourceTree = "<group>"; };
 		5BA0130C179800AC00337E84 /* NSString+TwoDigitString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+TwoDigitString.m"; sourceTree = "<group>"; };
 		5BA0130F17983A9000337E84 /* IAEDayCalendarSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEDayCalendarSelectorViewController.h; sourceTree = "<group>"; };
@@ -1956,6 +1976,11 @@
 		5BB52802193F5F84004E3A9B /* Help */ = {
 			isa = PBXGroup;
 			children = (
+				5B9BEA971940BF8E00D752C0 /* HelpScreen_01.jpg */,
+				5B9BEA991940BF8E00D752C0 /* HelpScreen_02.jpg */,
+				5B9BEA9B1940BF8E00D752C0 /* HelpScreen_03.jpg */,
+				5B9BEA9D1940BF8E00D752C0 /* HelpScreen_04.jpg */,
+				5B9BEA9F1940BF8E00D752C0 /* HelpScreen_05.jpg */,
 				5B2C9A30194080940019918F /* HelpScreen_05@2x.jpg */,
 				5B2C9A2819407C430019918F /* HelpScreen_04@2x.jpg */,
 				5B2C9A23194076FF0019918F /* HelpScreen_03@2x.jpg */,
@@ -2592,6 +2617,7 @@
 				5BCB5F531822C1BD00A37013 /* 743-printer@2x.png in Resources */,
 				5BDD9A1F1857183D001A6CEF /* settingsindex_img_2@2x.png in Resources */,
 				5B25B3B11925F90F009B53BA /* IAEInAppPurchaseStoreViewController.xib in Resources */,
+				5B9BEAA51940BF8E00D752C0 /* HelpScreen_05.jpg in Resources */,
 				5B5A05A9192D096600154371 /* imageLoader-18.gif in Resources */,
 				5BAEAE1318769A7400271B47 /* 869-pin@2x.png in Resources */,
 				5B2A41B117C77C8100C29036 /* 765-arrow-left@2x.png in Resources */,
@@ -2620,6 +2646,7 @@
 				5B5A059C192D096600154371 /* imageLoader-5.gif in Resources */,
 				5BAEAE0F1876926700271B47 /* 726-star@2x.png in Resources */,
 				5B55C407178AA8C20066F586 /* IAECategoryEditorViewController.xib in Resources */,
+				5B9BEAA41940BF8E00D752C0 /* HelpScreen_04.jpg in Resources */,
 				5BAEAE191876B8C300271B47 /* IAEFavoriteConceptsViewController.xib in Resources */,
 				5B5A05A4192D096600154371 /* imageLoader-13.gif in Resources */,
 				5B2512871851E07600669AE6 /* settingsindex_img_5.png in Resources */,
@@ -2633,6 +2660,7 @@
 				5BDE0A31190EE15E001F45D9 /* IAEContextMenuActionSheetViewController.xib in Resources */,
 				5BE8A68118FDCD2A00475F68 /* star@2x.png in Resources */,
 				5B87978C180EEC7200554E13 /* IAEHelpThemeViewController.xib in Resources */,
+				5B9BEAA21940BF8E00D752C0 /* HelpScreen_02.jpg in Resources */,
 				5B2AAA2B17C773C500E7C7A5 /* 746-plus-circle.png in Resources */,
 				5BF1DFD918F991BD0024B3AD /* IAEMonthSelectorViewController.xib in Resources */,
 				5B4C064B1940682200DFE743 /* HelpScreen_02@2x.jpg in Resources */,
@@ -2647,11 +2675,13 @@
 				5B5A05AC192D096600154371 /* imageLoader-21.gif in Resources */,
 				5BCB5F521822C1BD00A37013 /* 743-printer.png in Resources */,
 				5B5A0599192D096600154371 /* imageLoader-2.gif in Resources */,
+				5B9BEAA31940BF8E00D752C0 /* HelpScreen_03.jpg in Resources */,
 				5BE8A68518FDCF9300475F68 /* starblack@2x.png in Resources */,
 				5B5A059D192D096600154371 /* imageLoader-6.gif in Resources */,
 				5B2E93D217DCDDF6007D4284 /* eiae_icon40.png in Resources */,
 				5B5A05A8192D096600154371 /* imageLoader-17.gif in Resources */,
 				5B5DBB3D17E1F01400716503 /* ipadlandscape_launchimage.png in Resources */,
+				5B9BEAA11940BF8E00D752C0 /* HelpScreen_01.jpg in Resources */,
 				5B3CD77C193346F500AF2A0C /* nextDecoratorTableView.png in Resources */,
 				5BDD9A201857183D001A6CEF /* 745-unlocked.png in Resources */,
 				5BCB5F3F1822640C00A37013 /* 702-share@2x.png in Resources */,
@@ -2923,6 +2953,56 @@
 				5BBD37D7180C117B0095A15A /* ca */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		5B9BEA971940BF8E00D752C0 /* HelpScreen_01.jpg */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5B9BEA981940BF8E00D752C0 /* es */,
+				5B9BEAA61940BF9300D752C0 /* en */,
+				5B9BEAA71940BF9500D752C0 /* ca */,
+			);
+			name = HelpScreen_01.jpg;
+			sourceTree = "<group>";
+		};
+		5B9BEA991940BF8E00D752C0 /* HelpScreen_02.jpg */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5B9BEA9A1940BF8E00D752C0 /* es */,
+				5B9BEAA81940BF9900D752C0 /* en */,
+				5B9BEAA91940BF9C00D752C0 /* ca */,
+			);
+			name = HelpScreen_02.jpg;
+			sourceTree = "<group>";
+		};
+		5B9BEA9B1940BF8E00D752C0 /* HelpScreen_03.jpg */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5B9BEA9C1940BF8E00D752C0 /* es */,
+				5B9BEAAA1940BFA000D752C0 /* en */,
+				5B9BEAAB1940BFA300D752C0 /* ca */,
+			);
+			name = HelpScreen_03.jpg;
+			sourceTree = "<group>";
+		};
+		5B9BEA9D1940BF8E00D752C0 /* HelpScreen_04.jpg */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5B9BEA9E1940BF8E00D752C0 /* es */,
+				5B9BEAAC1940BFA700D752C0 /* en */,
+				5B9BEAAD1940BFA900D752C0 /* ca */,
+			);
+			name = HelpScreen_04.jpg;
+			sourceTree = "<group>";
+		};
+		5B9BEA9F1940BF8E00D752C0 /* HelpScreen_05.jpg */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5B9BEAA01940BF8E00D752C0 /* es */,
+				5B9BEAAE1940BFAD00D752C0 /* en */,
+				5B9BEAAF1940BFB000D752C0 /* ca */,
+			);
+			name = HelpScreen_05.jpg;
 			sourceTree = "<group>";
 		};
 		5BB5280E193F5FE6004E3A9B /* HelpScreen_01@2x.jpg */ = {

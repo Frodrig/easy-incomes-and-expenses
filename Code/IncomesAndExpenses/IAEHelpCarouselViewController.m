@@ -15,11 +15,18 @@
 @property (weak, nonatomic) IBOutlet UIPageControl *pageController;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) NSArray *helpScreens;
-@property (weak, nonatomic) IBOutlet UIButton *doneButton;
-
+@property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
+@property (nonatomic, strong) UINavigationBar *navigationBar;
 @end
 
 @implementation IAEHelpCarouselViewController
+
+#pragma mark - Dealloc
+
+- (void)dealloc
+{
+    [self.view removeGestureRecognizer:self.tapGestureRecognizer];
+}
 
 #pragma mark - Properties
 
@@ -46,6 +53,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapGesture:)];
+    [self.view addGestureRecognizer:tapGesture];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -54,7 +64,6 @@
  
     [self prepareScrollView];
     [self configurePageController];
-    [self prepareAdjustButton];
 }
 
 - (void)prepareScrollView
@@ -84,26 +93,6 @@
     }
 }
 
-- (void)prepareAdjustButton
-{
-    [self localizeDoneButton];
-    [self adjustDoneButtonPosition];
-}
-
-- (void)localizeDoneButton
-{
-    [self.doneButton setTitle:NSLocalizedString(@"LTEXT_HELPCAROUSEL_EXIT", @"") forState:UIControlStateNormal];
-}
-
-- (void)adjustDoneButtonPosition
-{
-    if (self.scrollView.subviews.count > 0) {
-        UIImageView *referenceImage = self.scrollView.subviews[0];
-        const NSUInteger border = (CGRectGetWidth(self.scrollView.frame) - CGRectGetWidth(referenceImage.frame)) / 2;
-        self.doneButton.frame = CGRectMake(self.doneButton.frame.origin.x - border, self.doneButton.frame.origin.y, self.doneButton.frame.size.width, self.doneButton.frame.size.height);
-    }
-}
-
 - (void)configurePageController
 {
     self.pageController.numberOfPages = self.helpScreens.count;
@@ -115,9 +104,16 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Status Bar
+
 - (BOOL)prefersStatusBarHidden
 {
-    return YES;
+    return self.navigationBar == nil;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleDefault;
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -134,8 +130,47 @@
 
 #pragma mark - Events
 
+- (void)onTapGesture:(UIGestureRecognizer *)gesture
+{
+    if (!self.navigationBar) {
+        [self createAndVinculeNavigationBar];
+    } else {
+        [self removeNavigationBar];
+    }
+    
+    [self setNeedsStatusBarAppearanceUpdate];
+}
 
-- (IBAction)doneButtonPressed:(id)sender
+- (void)createAndVinculeNavigationBar
+{
+    self.navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64.0)];
+    [self.navigationBar pushNavigationItem:[self createNavigationBarNavigationItem] animated:NO];
+    [self.view addSubview:self.navigationBar];
+}
+
+- (UINavigationItem *)createNavigationBarNavigationItem
+{
+    UINavigationItem *navigationItem = [[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"LTEXT_HELPCAROUSEL_NAVIGATIONBAR_TITLE", @"")];
+    navigationItem.leftBarButtonItem = [self createNavigationBarExitButton];
+    
+    return navigationItem;
+}
+
+- (UIBarButtonItem *)createNavigationBarExitButton
+{
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"LTEXT_HELPCAROUSEL_NAVIGATIONBAR_EXITBUTTON", @"") style:UIBarButtonItemStyleDone target:nil action:@selector(doneButtonPressed:)];
+    doneButton.tintColor = [UIColor colorWithWhite:0.4 alpha:1.0];
+
+    return doneButton;
+}
+
+- (void)removeNavigationBar
+{
+    [self.navigationBar removeFromSuperview];
+    self.navigationBar = nil;
+}
+
+- (void)doneButtonPressed:(id)sender
 {
     [self dismiss];
 }

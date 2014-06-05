@@ -56,6 +56,7 @@
 		5B2AAA2C17C773C500E7C7A5 /* 746-plus-circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B2AAA2A17C773C500E7C7A5 /* 746-plus-circle@2x.png */; };
 		5B2AAA3017C773CF00E7C7A5 /* 747-minus-circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B2AAA2E17C773CF00E7C7A5 /* 747-minus-circle@2x.png */; };
 		5B2AAA3217C7747100E7C7A5 /* 747-minus-circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B2AAA3117C7747100E7C7A5 /* 747-minus-circle.png */; };
+		5B2C9A25194076FF0019918F /* HelpScreen_03@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5B2C9A23194076FF0019918F /* HelpScreen_03@2x.jpg */; };
 		5B2D38B817AFA8CE0056488B /* IAEWithoutConceptsTextWarning.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B2D38B517AFA1B30056488B /* IAEWithoutConceptsTextWarning.xib */; };
 		5B2E93D117DCDDF6007D4284 /* eiae_icon40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B2E93CD17DCDDF6007D4284 /* eiae_icon40@2x.png */; };
 		5B2E93D217DCDDF6007D4284 /* eiae_icon40.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B2E93CE17DCDDF6007D4284 /* eiae_icon40.png */; };
@@ -71,6 +72,7 @@
 		5B3CD7791933391200AF2A0C /* IAEPasswordCheckView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3CD7781933391200AF2A0C /* IAEPasswordCheckView.m */; };
 		5B3CD77C193346F500AF2A0C /* nextDecoratorTableView.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3CD77A193346F500AF2A0C /* nextDecoratorTableView.png */; };
 		5B3CD77D193346F500AF2A0C /* nextDecoratorTableView@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B3CD77B193346F500AF2A0C /* nextDecoratorTableView@2x.png */; };
+		5B4C064B1940682200DFE743 /* HelpScreen_02@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5B4C06491940682200DFE743 /* HelpScreen_02@2x.jpg */; };
 		5B5497B71820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5497B51820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.m */; };
 		5B5497B81820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B5497B61820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.xib */; };
 		5B5544A2177460DD009CFC84 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B5544A1177460DD009CFC84 /* Main.storyboard */; };
@@ -352,6 +354,9 @@
 		5B2AAA2A17C773C500E7C7A5 /* 746-plus-circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "746-plus-circle@2x.png"; sourceTree = "<group>"; };
 		5B2AAA2E17C773CF00E7C7A5 /* 747-minus-circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "747-minus-circle@2x.png"; sourceTree = "<group>"; };
 		5B2AAA3117C7747100E7C7A5 /* 747-minus-circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "747-minus-circle.png"; sourceTree = "<group>"; };
+		5B2C9A24194076FF0019918F /* es */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = es; path = "es.lproj/HelpScreen_03@2x.jpg"; sourceTree = "<group>"; };
+		5B2C9A26194077040019918F /* en */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = en; path = "en.lproj/HelpScreen_03@2x.jpg"; sourceTree = "<group>"; };
+		5B2C9A27194077070019918F /* ca */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = ca; path = "ca.lproj/HelpScreen_03@2x.jpg"; sourceTree = "<group>"; };
 		5B2D38B417AFA1B30056488B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/IAEWithoutConceptsTextWarning.xib; sourceTree = "<group>"; };
 		5B2D38B617AFA1B90056488B /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/IAEWithoutConceptsTextWarning.xib; sourceTree = "<group>"; };
 		5B2E93CD17DCDDF6007D4284 /* eiae_icon40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eiae_icon40@2x.png"; sourceTree = "<group>"; };
@@ -376,6 +381,9 @@
 		5B3CD77A193346F500AF2A0C /* nextDecoratorTableView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nextDecoratorTableView.png; sourceTree = "<group>"; };
 		5B3CD77B193346F500AF2A0C /* nextDecoratorTableView@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nextDecoratorTableView@2x.png"; sourceTree = "<group>"; };
 		5B48BFFA1799425500BF0A68 /* IAEDayCalendarSelectorViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEDayCalendarSelectorViewControllerDelegate.h; sourceTree = "<group>"; };
+		5B4C064A1940682200DFE743 /* es */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = es; path = "es.lproj/HelpScreen_02@2x.jpg"; sourceTree = "<group>"; };
+		5B4C064C1940682B00DFE743 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = en; path = "en.lproj/HelpScreen_02@2x.jpg"; sourceTree = "<group>"; };
+		5B4C064D1940682F00DFE743 /* ca */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = ca; path = "ca.lproj/HelpScreen_02@2x.jpg"; sourceTree = "<group>"; };
 		5B5497B41820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelpConfigureStartMonthSelectorTableViewController.h; sourceTree = "<group>"; };
 		5B5497B51820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelpConfigureStartMonthSelectorTableViewController.m; sourceTree = "<group>"; };
 		5B5497B61820FDDE0024318A /* IAEHelpConfigureStartMonthSelectorTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEHelpConfigureStartMonthSelectorTableViewController.xib; sourceTree = "<group>"; };
@@ -1940,6 +1948,8 @@
 		5BB52802193F5F84004E3A9B /* Help */ = {
 			isa = PBXGroup;
 			children = (
+				5B2C9A23194076FF0019918F /* HelpScreen_03@2x.jpg */,
+				5B4C06491940682200DFE743 /* HelpScreen_02@2x.jpg */,
 				5BB5280E193F5FE6004E3A9B /* HelpScreen_01@2x.jpg */,
 			);
 			name = Help;
@@ -2614,7 +2624,9 @@
 				5B87978C180EEC7200554E13 /* IAEHelpThemeViewController.xib in Resources */,
 				5B2AAA2B17C773C500E7C7A5 /* 746-plus-circle.png in Resources */,
 				5BF1DFD918F991BD0024B3AD /* IAEMonthSelectorViewController.xib in Resources */,
+				5B4C064B1940682200DFE743 /* HelpScreen_02@2x.jpg in Resources */,
 				5BEAA3B11922287C0078CB2D /* IAEHelpSelectorTableViewCell.xib in Resources */,
+				5B2C9A25194076FF0019918F /* HelpScreen_03@2x.jpg in Resources */,
 				5BDD9A211857183D001A6CEF /* 745-unlocked@2x.png in Resources */,
 				5B5A059E192D096600154371 /* imageLoader-7.gif in Resources */,
 				5B879760180E7E6F00554E13 /* IAEHelpAboutCollectionViewCell.xib in Resources */,
@@ -2841,6 +2853,16 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
+		5B2C9A23194076FF0019918F /* HelpScreen_03@2x.jpg */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5B2C9A24194076FF0019918F /* es */,
+				5B2C9A26194077040019918F /* en */,
+				5B2C9A27194077070019918F /* ca */,
+			);
+			name = "HelpScreen_03@2x.jpg";
+			sourceTree = "<group>";
+		};
 		5B2D38B517AFA1B30056488B /* IAEWithoutConceptsTextWarning.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2849,6 +2871,16 @@
 				5BBD37D6180C117B0095A15A /* ca */,
 			);
 			name = IAEWithoutConceptsTextWarning.xib;
+			sourceTree = "<group>";
+		};
+		5B4C06491940682200DFE743 /* HelpScreen_02@2x.jpg */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5B4C064A1940682200DFE743 /* es */,
+				5B4C064C1940682B00DFE743 /* en */,
+				5B4C064D1940682F00DFE743 /* ca */,
+			);
+			name = "HelpScreen_02@2x.jpg";
 			sourceTree = "<group>";
 		};
 		5B767DFF1636D7FC005315F8 /* InfoPlist.strings */ = {

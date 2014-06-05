@@ -201,14 +201,20 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 
 - (void)configureCell:(UITableViewCell *)cell ofTableView:(UITableView *)tableView forIndexPath:(NSIndexPath *)indexPath
 {
-    IAESettingsIndexOptionType optionType = (IAESettingsIndexOptionType)[[[self findOptionsForActualVersion] objectAtIndex:indexPath.row] unsignedIntegerValue];
+    IAESettingsIndexOptionType optionType = [self findOptionTypeFromIndexPath:indexPath];
 
     const NSUInteger indexSufix = optionType + 1;
     NSString *ltext = [NSString stringWithFormat:@"LTEXT_SETTINGSINDEX_%lu", (unsigned long)indexSufix];
     cell.textLabel.text = NSLocalizedString(ltext, @"");
     NSString *imageName = [NSString stringWithFormat:@"settingsindex_img_%lu", (unsigned long)indexSufix];
     cell.imageView.image = [UIImage imageNamed:imageName];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.accessoryType = optionType == IAESettingsIndexOptionHelp ? UITableViewCellAccessoryNone : UITableViewCellAccessoryDisclosureIndicator;
+}
+
+- (BOOL)isIndexPathRelatedToHelpOption:(NSIndexPath *)indexPath
+{
+    IAESettingsIndexOptionType optionType = (IAESettingsIndexOptionType)[[[self findOptionsForActualVersion] objectAtIndex:indexPath.row] unsignedIntegerValue];
+    return optionType == IAESettingsIndexOptionHelp;
 }
 
 #pragma mark - Table view delegate

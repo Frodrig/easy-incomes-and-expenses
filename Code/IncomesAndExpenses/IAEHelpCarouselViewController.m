@@ -26,7 +26,7 @@
 - (NSArray *)helpScreens
 {
     if (!_helpScreens) {
-        _helpScreens = @[@"HelpScreen_01.jpg", @"HelpScreen_02.jpg", @"HelpScreen_03.jpg"];
+        _helpScreens = @[@"HelpScreen_01.jpg", @"HelpScreen_02.jpg", @"HelpScreen_03.jpg", @"HelpScreen_04.jpg", @"HelpScreen_05.jpg"];
     }
     
     return _helpScreens;

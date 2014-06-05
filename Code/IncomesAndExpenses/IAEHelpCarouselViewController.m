@@ -78,6 +78,7 @@
     for (NSUInteger helpScreenIndexIt = 0; helpScreenIndexIt < self.helpScreens.count; ++helpScreenIndexIt) {
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:self.helpScreens[helpScreenIndexIt]]];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
+        imageView.frame = self.scrollView.bounds;
         imageView.center = CGPointMake(CGRectGetMidX(self.scrollView.frame) + CGRectGetWidth(self.scrollView.frame) * helpScreenIndexIt, CGRectGetMidY(self.scrollView.frame));
         [self.scrollView addSubview:imageView];
     }
@@ -135,6 +136,11 @@
 
 
 - (IBAction)doneButtonPressed:(id)sender
+{
+    [self dismiss];
+}
+
+- (void)dismiss
 {
     [self dismissViewControllerAnimated:YES completion:^{
         [self.delegate helpCaruoselViewControllerDidDismiss:self];

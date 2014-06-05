@@ -6,7 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IAEHelpCarouselViewController">
             <connections>
-                <outlet property="doneButton" destination="SgX-pB-tzl" id="Zqc-yk-pcu"/>
+                <outlet property="doneButton" destination="9z5-ep-N0e" id="wte-M4-wC2"/>
                 <outlet property="pageController" destination="a7D-Vb-PEM" id="ObH-q7-T23"/>
                 <outlet property="scrollView" destination="oZB-2M-21V" id="jUj-uA-qji"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -34,13 +34,14 @@
                             <color key="pageIndicatorTintColor" red="0.80784313730000001" green="0.80784313730000001" blue="0.80784313730000001" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="currentPageIndicatorTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </pageControl>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="SgX-pB-tzl">
-                            <rect key="frame" x="979" y="-3" width="45" height="44"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="9z5-ep-N0e">
+                            <rect key="frame" x="985" y="0.0" width="37" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
-                            <state key="normal" title="Done"/>
+                            <state key="normal" title="Done">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
                             <connections>
-                                <action selector="doneButtonPressed:" destination="-1" eventType="touchUpInside" id="ZS5-vz-gK1"/>
+                                <action selector="doneButtonPressed:" destination="-1" eventType="touchUpInside" id="gbU-0T-qVP"/>
                             </connections>
                         </button>
                     </subviews>

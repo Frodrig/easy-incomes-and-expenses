@@ -70,6 +70,8 @@ typedef NS_ENUM(NSUInteger, PinchConceptCollectionViewState) {
     PinchConceptCollectionViewStateToNone,
     PinchConceptCollectionViewStateToNote,
     PinchConceptCollectionViewStateToData,
+    PinchConceptCollectionViewStateInNote,
+    PinchConceptCollectionViewStateInData,
 };
 
 #pragma mark - Constants
@@ -177,6 +179,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 @property (nonatomic, strong) UIPanGestureRecognizer *panCalculatorGestureRecognizer;
 @property (nonatomic, strong) UIPinchGestureRecognizer *pinchConceptsGestureRecognizer;
 @property (nonatomic) PinchConceptCollectionViewState pinchConceptCollectionViewState;
+@property (nonatomic) CGFloat pinchVirtualAlphaValue;
 @property (nonatomic, strong) IAEStrokeAnimatableLineView *strokeAnimatableLineView;
 @property (nonatomic, weak) IAEEditModeConceptCollectionViewCell *conceptCellToRemove;
 @property (nonatomic) BOOL initialPositioning;
@@ -281,6 +284,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     _initialPositioning = YES;
     _lastContextIndexMenuPressed = -1;
     _pinchConceptCollectionViewState = PinchConceptCollectionViewStateToNone;
+    _pinchVirtualAlphaValue = 1.0;
 }
 
 - (void)initTapConceptsGestureRecognizer
@@ -1773,23 +1777,48 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 #pragma mark - UIPinchGestureRecognizer
 
+// REFACTORIZAR
+
 - (void)pinchOnConceptsCollectionView:(UIPinchGestureRecognizer *)pinchGestureRecognizer
 {
+    if (pinchGestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
+        self.conceptsCollectionView.scrollEnabled = NO;
+    }
+    
     if (pinchGestureRecognizer.state == UIGestureRecognizerStateBegan ||
         pinchGestureRecognizer.state == UIGestureRecognizerStateChanged) {
         if (pinchGestureRecognizer.scale > 1.0) {
-            self.conceptsCollectionView.alpha = MAX(0.1, self.conceptsCollectionView.alpha - (pinchGestureRecognizer.scale - 1.0));
+            self.pinchVirtualAlphaValue = pinchGestureRecognizer.scale - 1.0;
             self.pinchConceptCollectionViewState = PinchConceptCollectionViewStateToNote;
+            [self.conceptsCollectionView.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                IAEEditModeConceptCollectionViewCell *cell = obj;
+                [cell updateChangeToNoteMode:self.pinchVirtualAlphaValue];
+            }];
         } else {
-            self.conceptsCollectionView.alpha = MIN(1.0, self.conceptsCollectionView.alpha + (1.0 - pinchGestureRecognizer.scale));
+            self.pinchVirtualAlphaValue = 1.0 - pinchGestureRecognizer.scale;
             self.pinchConceptCollectionViewState = PinchConceptCollectionViewStateToData;
+            [self.conceptsCollectionView.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                IAEEditModeConceptCollectionViewCell *cell = obj;
+                [cell updateChangeToDataMode:self.pinchVirtualAlphaValue];
+            }];
         }
     } else {
-        const CGFloat conceptsCollectonViewAlpha = [self conceptsCollectionViewAlphaForCurrentPinchState];
-        self.pinchConceptCollectionViewState = PinchConceptCollectionViewStateToNone;
-        [UIView animateWithDuration:0.25 animations:^{
-            self.conceptsCollectionView.alpha = conceptsCollectonViewAlpha;
-        }];
+        if (self.pinchConceptCollectionViewState == PinchConceptCollectionViewStateToData) {
+            self.pinchConceptCollectionViewState = PinchConceptCollectionViewStateToData;
+            [self.conceptsCollectionView.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                IAEEditModeConceptCollectionViewCell *cell = obj;
+                [cell changeToDataModeWithAnimation:YES];
+            }];
+        } else if (self.pinchConceptCollectionViewState == PinchConceptCollectionViewStateToNote) {
+            self.pinchConceptCollectionViewState = PinchConceptCollectionViewStateToNote;
+            [self.conceptsCollectionView.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                IAEEditModeConceptCollectionViewCell *cell = obj;
+                [cell changeToNoteModeWithAnimation:YES];
+            }];
+        }
+        
+        self.conceptsCollectionView.scrollEnabled = YES;
     }
     
     pinchGestureRecognizer.scale = 1;

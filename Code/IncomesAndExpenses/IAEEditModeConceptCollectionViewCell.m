@@ -22,9 +22,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *optionDuplicateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *optionCopyLabel;
 @property (weak, nonatomic) IBOutlet UIView *otherOptionsContainerView;
+@property (weak, nonatomic) IBOutlet UILabel *optionMoveLabel;
+@property (weak, nonatomic) IBOutlet UITextField *noteTextField;
+@property (nonatomic, readwrite) GlobalModeType globalModeType;
 @property (nonatomic, readwrite, getter = isInStrokeState) BOOL strokeState;
 @property (nonatomic, readwrite) BOOL menuModeActive;
-@property (weak, nonatomic) IBOutlet UILabel *optionMoveLabel;
 
 @end
 
@@ -54,7 +56,6 @@ static NSString * const kLTexForEntryWithNoDay = @"LTEXT_EDITMODECONCEPTCELL_ENT
 static const CGFloat kDefaultDurationOfStrokeStateModeTransition = 0.25;
 static const CGFloat kAlphaValueForStrokeState = 0.3;
 
-static const CGFloat kEditModeYTranslation = 5.0;
 static NSString * const kEditModeAnimationKey = @"editModeAnimation";
 
 static const CGFloat kBaseCellIndexValue = 100;
@@ -92,6 +93,7 @@ static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
     if (self) {
         _favoritePinEnabled = YES;
         _menuModeActive = NO;
+        _globalModeType = GlobalModeTypeData;
         self.durationOfStrokeStateTransition = kDefaultDurationOfStrokeStateModeTransition;
     }
     
@@ -100,6 +102,7 @@ static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
 
 - (void)awakeFromNib
 {
+    _globalModeType = GlobalModeTypeData;
     [self localizedSubmenuOptionLabels];
 }
 
@@ -609,5 +612,41 @@ static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
     self.favoritePinEnabled = !self.favoritePinEnabled;
     self.starContainerView.alpha = self.favoritePinEnabled ? kEnableAlphaValueForFavoritePin : kDisableAlphaValueForFavoritePin;
 }
+
+#pragma mark - GlobalMode
+
+- (void)changeToNoteModeWithAnimation:(BOOL)animation
+{
+    self.globalModeType = GlobalModeTypeNote;
+    self.noteTextField.userInteractionEnabled = YES;
+    self.noteTextField.alpha = 1.0;
+    self.containerScrollView.userInteractionEnabled = NO;
+    self.containerScrollView.alpha = 0.4;
+}
+
+- (void)changeToDataModeWithAnimation:(BOOL)animation
+{
+    self.globalModeType = GlobalModeTypeData;
+    self.noteTextField.userInteractionEnabled = NO;
+    self.noteTextField.alpha = 0;
+    self.containerScrollView.userInteractionEnabled = YES;
+    self.containerScrollView.alpha = 1;
+}
+
+- (void)updateChangeToNoteMode:(CGFloat)percentage
+{
+    self.globalModeType = GlobalModeTypeUpdating;
+    self.containerScrollView.alpha = MAX(0.4, self.containerScrollView.alpha - percentage);
+    self.noteTextField.alpha = MIN(1.0, self.noteTextField.alpha + percentage);
+    NSLog(@"percentage %@ ToNote with notealpha %@ y dataalpha %@", @(percentage), @(self.noteTextField.alpha), @(self.containerScrollView.alpha));
+}
+
+- (void)updateChangeToDataMode:(CGFloat)percentage
+{
+    self.globalModeType = GlobalModeTypeUpdating;
+    self.noteTextField.alpha = MAX(0.0 ,self.noteTextField.alpha - percentage);
+    self.containerScrollView.alpha = MIN(1.0, self.containerScrollView.alpha + percentage);
+}
+
 
 @end

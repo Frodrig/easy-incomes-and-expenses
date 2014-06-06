@@ -66,6 +66,12 @@ typedef NS_ENUM(NSUInteger, MonthSelectorPurpose) {
     MonthSelectorPurposeMove,
 };
 
+typedef NS_ENUM(NSUInteger, PinchConceptCollectionViewState) {
+    PinchConceptCollectionViewStateToNone,
+    PinchConceptCollectionViewStateToNote,
+    PinchConceptCollectionViewStateToData,
+};
+
 #pragma mark - Constants
 
 static const CGFloat kSelectorContextViewYOutsideMargin = 100;
@@ -169,6 +175,8 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 @property (nonatomic, strong) UISwipeGestureRecognizer *swipeRightConceptsGestureRecognizer;
 @property (nonatomic, strong) UISwipeGestureRecognizer *swipeLeftConceptsGestureRecognizer;
 @property (nonatomic, strong) UIPanGestureRecognizer *panCalculatorGestureRecognizer;
+@property (nonatomic, strong) UIPinchGestureRecognizer *pinchConceptsGestureRecognizer;
+@property (nonatomic) PinchConceptCollectionViewState pinchConceptCollectionViewState;
 @property (nonatomic, strong) IAEStrokeAnimatableLineView *strokeAnimatableLineView;
 @property (nonatomic, weak) IAEEditModeConceptCollectionViewCell *conceptCellToRemove;
 @property (nonatomic) BOOL initialPositioning;
@@ -241,6 +249,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     [self.conceptsCollectionView removeGestureRecognizer:self.tapConceptsRecognizer];
     [self.conceptsCollectionView removeGestureRecognizer:self.swipeRightConceptsGestureRecognizer];
     [self.conceptsCollectionView removeGestureRecognizer:self.swipeLeftConceptsGestureRecognizer];
+    [self.conceptsCollectionView removeGestureRecognizer:self.pinchConceptsGestureRecognizer];
     [self.editAndReportModeContentContainerView removeGestureRecognizer:self.tapEditAndReportModeContainerViewRecognizer];
 }
 
@@ -254,6 +263,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
         [self initTapConceptsGestureRecognizer];
         [self initRightSwipeConceptsGestureRecognizer];
         [self initLeftSwipeConceptsGestureRecognizer];
+        [self initPinchConceptsGestureRecognizer];
         [self initPanCalculatorGestureRecognizer];
         [self initAsObserverOfNotificationCenter];
         [self initContextMenuView];
@@ -270,6 +280,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 {
     _initialPositioning = YES;
     _lastContextIndexMenuPressed = -1;
+    _pinchConceptCollectionViewState = PinchConceptCollectionViewStateToNone;
 }
 
 - (void)initTapConceptsGestureRecognizer
@@ -293,6 +304,11 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 {
     _swipeLeftConceptsGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeftOnConceptsCollectionView:)];
     _swipeLeftConceptsGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+}
+
+-(void)initPinchConceptsGestureRecognizer
+{
+    _pinchConceptsGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchOnConceptsCollectionView:)];
 }
 
 - (void)initPanCalculatorGestureRecognizer
@@ -437,6 +453,13 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)configureConceptsCollectionView
 {
+    [self registerNibsForConceptsCollectionView];
+    [self configurePropertiesForConceptsCollectionView];
+    [self addConceptsCollectionViewGestureRecognizers];
+}
+
+- (void)registerNibsForConceptsCollectionView
+{
     UINib *nibForConceptCell = [UINib nibWithNibName:kNibConceptCellName bundle:[NSBundle mainBundle]];
     [self.conceptsCollectionView registerNib:nibForConceptCell forCellWithReuseIdentifier:kIdConceptCellName];
     
@@ -444,16 +467,23 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     [self.conceptsCollectionView registerNib:nibForConceptHeaderInYearMode
                   forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
                          withReuseIdentifier:kCollectionViewHeaderIdentifier];
-    
+}
+
+- (void)configurePropertiesForConceptsCollectionView
+{
     self.conceptsCollectionView.backgroundColor = [UIColor clearColor];
     self.conceptsCollectionView.showsHorizontalScrollIndicator = NO;
     self.conceptsCollectionView.showsVerticalScrollIndicator = NO;
     self.conceptsCollectionView.indicatorStyle = UIScrollViewIndicatorStyleBlack;
     self.conceptsCollectionView.bounces = YES;
-    
+}
+
+- (void)addConceptsCollectionViewGestureRecognizers
+{
     [self.conceptsCollectionView addGestureRecognizer:self.tapConceptsRecognizer];
     [self.conceptsCollectionView addGestureRecognizer:self.swipeRightConceptsGestureRecognizer];
     [self.conceptsCollectionView addGestureRecognizer:self.swipeLeftConceptsGestureRecognizer];
+    [self.conceptsCollectionView addGestureRecognizer:self.pinchConceptsGestureRecognizer];
 }
 
 - (void)configureReportAreaView
@@ -1739,6 +1769,36 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     if (panGestureRecognizer.state == UIGestureRecognizerStateEnded) {
         [self.calculatorViewController endDragTranslation];
     }
+}
+
+#pragma mark - UIPinchGestureRecognizer
+
+- (void)pinchOnConceptsCollectionView:(UIPinchGestureRecognizer *)pinchGestureRecognizer
+{
+    if (pinchGestureRecognizer.state == UIGestureRecognizerStateBegan ||
+        pinchGestureRecognizer.state == UIGestureRecognizerStateChanged) {
+        if (pinchGestureRecognizer.scale > 1.0) {
+            self.conceptsCollectionView.alpha = MAX(0.1, self.conceptsCollectionView.alpha - (pinchGestureRecognizer.scale - 1.0));
+            self.pinchConceptCollectionViewState = PinchConceptCollectionViewStateToNote;
+        } else {
+            self.conceptsCollectionView.alpha = MIN(1.0, self.conceptsCollectionView.alpha + (1.0 - pinchGestureRecognizer.scale));
+            self.pinchConceptCollectionViewState = PinchConceptCollectionViewStateToData;
+        }
+    } else {
+        const CGFloat conceptsCollectonViewAlpha = [self conceptsCollectionViewAlphaForCurrentPinchState];
+        self.pinchConceptCollectionViewState = PinchConceptCollectionViewStateToNone;
+        [UIView animateWithDuration:0.25 animations:^{
+            self.conceptsCollectionView.alpha = conceptsCollectonViewAlpha;
+        }];
+    }
+    
+    pinchGestureRecognizer.scale = 1;
+}
+
+- (CGFloat)conceptsCollectionViewAlphaForCurrentPinchState
+{
+    const CGFloat retAlpha = self.pinchConceptCollectionViewState == PinchConceptCollectionViewStateToNote ? 0.1 : 1.0;
+    return retAlpha;
 }
 
 #pragma mark - UISwipeGestureRecognizer

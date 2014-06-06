@@ -11,6 +11,7 @@
 #import "UIView+DrawBottomLine.m"
 #import "NSNumber+DefaultValues.h"
 #import "NSString+TwoDigitString.h"
+#import "UIView+FloatingAnimation.h"
 
 @interface IAEEditModeConceptCollectionViewCell()
 
@@ -503,17 +504,9 @@ static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
 {
     UIView *view = [self findViewForConceptElement:conceptElement];
     if (editMode) {
-        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.translation.y"];
-        animation.removedOnCompletion = NO;
-        animation.autoreverses = YES;
-        animation.repeatCount = HUGE_VALF;
-        animation.toValue = @(kEditModeYTranslation);
-        animation.duration = 1;
-        animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-        animation.cumulative = NO;
-        [view.layer addAnimation:animation forKey:kEditModeAnimationKey];
+        [view startFloatingAnimation];
     } else {
-        [view.layer removeAnimationForKey:kEditModeAnimationKey];
+        [view endCurrentFloatingAnimation];
     }
 }
 

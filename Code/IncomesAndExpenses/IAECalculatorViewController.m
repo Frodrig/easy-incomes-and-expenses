@@ -27,6 +27,7 @@
 #import "IAEFavoriteConceptsViewController.h"
 #import "IAEKeyboardPanelCalculatorView.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
+#import "UIView+FloatingAnimation.h"
 
 @interface IAECalculatorViewController ()
 
@@ -52,6 +53,7 @@ typedef NS_ENUM(NSUInteger, KeyboardActionType) {
 @property (nonatomic) NSUInteger actualDay;
 @property (nonatomic, strong) NSMutableString *actualAmount;
 @property (nonatomic, strong) UIPopoverController *popover;
+@property (nonatomic, weak) UIView *currentFloatingDisplayButtonView;
 @property (nonatomic, strong) NSDecimalNumber *maxDecimalNumberAllowed;
 @property (nonatomic) NSUInteger numberConceptsCreatedInSession;
 @property (nonatomic) CGPoint centerPositionBeforeDisable;
@@ -98,7 +100,7 @@ static NSString * const kValueKey = @"value";
 
 static const CGFloat kUpdateFavoritePinAnimationTime = 0.35;
 
-static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 75;
+static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 360;
 
 #pragma mark - Properties
 
@@ -475,7 +477,14 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 75;
 - (IBAction)categoryButtonPressed:(UIButton *)button
 {
     CGRect rect = [button convertRect:button.frame toView:self.displayPanel];
+    [self startCurrentFloatingDisplayButtonWithView:button];
     [self launchPopoverForSelectCategoryFromRect:rect];
+}
+
+- (void)startCurrentFloatingDisplayButtonWithView:(UIView *)floatingView
+{
+    self.currentFloatingDisplayButtonView = floatingView;
+    [self.currentFloatingDisplayButtonView startFloatingAnimation];
 }
 
 - (void)launchPopoverForSelectCategoryFromRect:(CGRect)rect
@@ -483,7 +492,8 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 75;
     NSUInteger categorySelectorOptions = CATEGORYSELECTOR_EXTRAACTION_CATEGORYSELECTION | CATEGORYSELECTOR_EXTRAACTION_ADD;
     IAECategorySelectorViewController *viewController = [[IAECategorySelectorViewController alloc] initWithExtraActions:categorySelectorOptions
                                                                                                    withSelectedCategory:self.actualCategory];
-    viewController.view.frame = CGRectMake(viewController.view.frame.origin.x, viewController.view.frame.origin.y, viewController.view.bounds.size.width, viewController.view.bounds.size.height + kPopoverAdditionalHeightAmountForChangeCategory);
+    viewController.view.frame = CGRectMake(CGRectGetWidth(rect), CGRectGetHeight(rect) / 2.0, viewController.view.bounds.size.width, viewController.view.bounds.size.height + kPopoverAdditionalHeightAmountForChangeCategory);
+    
     viewController.showNumberOfConcepts = NO;
     viewController.delegate = self;
 
@@ -493,13 +503,14 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 75;
     
     [self.popover presentPopoverFromRect:rect
                                   inView:self.displayPanel
-                permittedArrowDirections:UIPopoverArrowDirectionDown
+                permittedArrowDirections:UIPopoverArrowDirectionLeft
                                 animated:YES];
 }
 
 - (IBAction)dayButtonPressed:(UIButton *)button
 {
     CGRect rect = [button convertRect:button.frame toView:self.displayPanel];
+    [self startCurrentFloatingDisplayButtonWithView:button];
     [self launchPopoverForSelectDayFromRect:rect];
 }
 
@@ -880,6 +891,13 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 75;
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
 {
     self.popover = nil;
+    [self endFloatingDisplayButtonView];
+}
+
+- (void)endFloatingDisplayButtonView
+{
+    [self.currentFloatingDisplayButtonView endCurrentFloatingAnimation];
+    self.currentFloatingDisplayButtonView = nil;
 }
 
 - (BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController
@@ -893,8 +911,13 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 75;
                      didSelectCategory:(IAECategory *)category
 {
     [self changeActualCategoryTo:category];
-    
+    [self dismissPopoverAndEndFloatingDisplayButtonView];
+}
+
+- (void)dismissPopoverAndEndFloatingDisplayButtonView
+{
     [self dismissPopover];
+    [self endFloatingDisplayButtonView];
 }
 
 - (void)changeActualCategoryTo:(IAECategory *)category
@@ -924,7 +947,7 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 75;
     self.actualDay = day;
     [self configureDisplayPanelWithActualDayWithAnimation:YES];
     
-    [self dismissPopover];
+    [self dismissPopoverAndEndFloatingDisplayButtonView];
 }
 
 #pragma mark - IAECategoryEditorViewControllerDelegate

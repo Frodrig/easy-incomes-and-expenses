@@ -930,7 +930,7 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 360;
 - (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
             didSelectAddCategoryOfType:(CategoryType)categoryType
 {
-    [self dismissPopover];
+    [self dismissPopoverAndEndFloatingDisplayButtonView];
 
     IAECategoryEditorViewController *categoryEditorViewController = [[IAECategoryEditorViewController alloc] initToAddCategoryOfType:categoryType];
     categoryEditorViewController.delegate = self;

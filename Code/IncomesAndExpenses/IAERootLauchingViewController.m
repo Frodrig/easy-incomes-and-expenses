@@ -12,6 +12,7 @@
 #import "KeychainItemWrapper.h"
 #import "IAEInAppPurchaseStoreViewControllerDefs.h"
 #import "IAEHelpCarouselViewController.h"
+#import "Flurry.h"
 
 #pragma mark - constants
 
@@ -32,6 +33,13 @@ static const CGFloat kFadeOutCourtainViewTransitionToProVersionEffectTime = 3.0;
 @end
 
 @implementation IAERootLauchingViewController
+
+#pragma mark - Dealloc
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 #pragma mark - init
 
@@ -249,6 +257,8 @@ static const CGFloat kFadeOutCourtainViewTransitionToProVersionEffectTime = 3.0;
 {
     NSAssert(nil == self.courtainView, @"");
     if (!self.courtainView) {
+        [Flurry logEvent:@"settingsindex_help"];
+
         IAEHelpCarouselViewController *helpCarouselViewController = [[IAEHelpCarouselViewController alloc] initWithNibName:nil bundle:nil];
         helpCarouselViewController.delegate = self;
         helpCarouselViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;

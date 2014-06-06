@@ -109,14 +109,14 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 
 - (void)dismissAll
 {
-    [self dismissAllAfterPressingHelpOption:NO];
+    [self dismissAllAndNotifyPressingHelpOption:NO];
 }
 
-- (void)dismissAllAfterPressingHelpOption:(BOOL)afterPressingHelpOption
+- (void)dismissAllAndNotifyPressingHelpOption:(BOOL)notifyPressingHelpOption
 {
     [self notifyGlobalValueChangesIfAppropiate];
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
-        if (afterPressingHelpOption) {
+        if (notifyPressingHelpOption) {
             [self notifyHelpOptionPressed];
         }
     }];
@@ -126,7 +126,7 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 
 - (void)doneButtonPressed:(id)sender
 {
-    [self dismissAllAfterPressingHelpOption:NO];
+    [self dismissAllAndNotifyPressingHelpOption:NO];
 }
 
 - (void)notifyGlobalValueChangesIfAppropiate
@@ -222,7 +222,7 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([self findOptionTypeFromIndexPath:indexPath] == IAESettingsIndexOptionHelp) {
-        [self dismissAllAfterPressingHelpOption:YES];
+        [self dismissAllAndNotifyPressingHelpOption:YES];
     } else {
         UIViewController *nextViewController = [self createNextViewControllerBasedInSelectRowAtIndexPath:indexPath];
         [self.navigationController pushViewController:nextViewController animated:YES];
@@ -264,7 +264,7 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 -(void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
     [controller dismissViewControllerAnimated:YES completion:nil];
-    [self dismissAllAfterPressingHelpOption:NO];
+    [self dismissAllAndNotifyPressingHelpOption:NO];
 }
 
 

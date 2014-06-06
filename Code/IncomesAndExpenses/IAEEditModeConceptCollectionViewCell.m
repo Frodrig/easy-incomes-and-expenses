@@ -619,18 +619,22 @@ static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
 {
     self.globalModeType = GlobalModeTypeNote;
     self.noteTextField.userInteractionEnabled = YES;
-    self.noteTextField.alpha = 1.0;
     self.containerScrollView.userInteractionEnabled = NO;
-    self.containerScrollView.alpha = 0.4;
+    [UIView animateWithDuration:animation ? 0.25 : 0 animations:^{
+        self.noteTextField.alpha = 1.0;
+        self.containerScrollView.alpha = 0.4;
+    }];
 }
 
 - (void)changeToDataModeWithAnimation:(BOOL)animation
 {
     self.globalModeType = GlobalModeTypeData;
     self.noteTextField.userInteractionEnabled = NO;
-    self.noteTextField.alpha = 0;
     self.containerScrollView.userInteractionEnabled = YES;
-    self.containerScrollView.alpha = 1;
+    [UIView animateWithDuration:animation ? 0.25 : 0 animations:^{
+        self.noteTextField.alpha = 0;
+        self.containerScrollView.alpha = 1;
+    }];
 }
 
 - (void)updateChangeToNoteMode:(CGFloat)percentage
@@ -638,7 +642,6 @@ static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
     self.globalModeType = GlobalModeTypeUpdating;
     self.containerScrollView.alpha = MAX(0.4, self.containerScrollView.alpha - percentage);
     self.noteTextField.alpha = MIN(1.0, self.noteTextField.alpha + percentage);
-    NSLog(@"percentage %@ ToNote with notealpha %@ y dataalpha %@", @(percentage), @(self.noteTextField.alpha), @(self.containerScrollView.alpha));
 }
 
 - (void)updateChangeToDataMode:(CGFloat)percentage
@@ -648,5 +651,14 @@ static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
     self.containerScrollView.alpha = MIN(1.0, self.containerScrollView.alpha + percentage);
 }
 
+- (GlobalModeType)findGlobalModeTypeIfUpdatingEndsRightNow
+{
+    GlobalModeType globalMode = self.globalModeType;
+    if (globalMode == GlobalModeTypeUpdating) {
+        globalMode = self.noteTextField.alpha > 0.3 ? GlobalModeTypeNote : GlobalModeTypeData;
+    }
+    
+    return globalMode;
+}
 
 @end

@@ -18,6 +18,7 @@ typedef NS_ENUM(NSUInteger, GlobalModeType) {
     GlobalModeTypeData,
     GlobalModeTypeNote,
     GlobalModeTypeUpdating,
+    GlobalModeTypeNone,
 };
 
 @class IAEValueDecoratorView;
@@ -71,6 +72,7 @@ typedef NS_ENUM(NSUInteger, GlobalModeType) {
 - (UIView *)viewOfCopyMenuOption;
 - (UIView *)viewOfMoveMenuOption;
 
+- (GlobalModeType)findGlobalModeTypeIfUpdatingEndsRightNow;
 - (void)changeToNoteModeWithAnimation:(BOOL)animation;
 - (void)changeToDataModeWithAnimation:(BOOL)animation;
 - (void)updateChangeToNoteMode:(CGFloat)percentage;

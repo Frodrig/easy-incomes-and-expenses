@@ -66,14 +66,6 @@ typedef NS_ENUM(NSUInteger, MonthSelectorPurpose) {
     MonthSelectorPurposeMove,
 };
 
-typedef NS_ENUM(NSUInteger, PinchConceptCollectionViewState) {
-    PinchConceptCollectionViewStateToNone,
-    PinchConceptCollectionViewStateToNote,
-    PinchConceptCollectionViewStateToData,
-    PinchConceptCollectionViewStateInNote,
-    PinchConceptCollectionViewStateInData,
-};
-
 #pragma mark - Constants
 
 static const CGFloat kSelectorContextViewYOutsideMargin = 100;
@@ -178,8 +170,6 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 @property (nonatomic, strong) UISwipeGestureRecognizer *swipeLeftConceptsGestureRecognizer;
 @property (nonatomic, strong) UIPanGestureRecognizer *panCalculatorGestureRecognizer;
 @property (nonatomic, strong) UIPinchGestureRecognizer *pinchConceptsGestureRecognizer;
-@property (nonatomic) PinchConceptCollectionViewState pinchConceptCollectionViewState;
-@property (nonatomic) CGFloat pinchVirtualAlphaValue;
 @property (nonatomic, strong) IAEStrokeAnimatableLineView *strokeAnimatableLineView;
 @property (nonatomic, weak) IAEEditModeConceptCollectionViewCell *conceptCellToRemove;
 @property (nonatomic) BOOL initialPositioning;
@@ -283,8 +273,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 {
     _initialPositioning = YES;
     _lastContextIndexMenuPressed = -1;
-    _pinchConceptCollectionViewState = PinchConceptCollectionViewStateToNone;
-    _pinchVirtualAlphaValue = 1.0;
+
 }
 
 - (void)initTapConceptsGestureRecognizer
@@ -1782,52 +1771,83 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 - (void)pinchOnConceptsCollectionView:(UIPinchGestureRecognizer *)pinchGestureRecognizer
 {
     if (pinchGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
-        self.conceptsCollectionView.scrollEnabled = NO;
+        [self beginPinchForConceptsCollectionView];
     }
     
     if (pinchGestureRecognizer.state == UIGestureRecognizerStateBegan ||
         pinchGestureRecognizer.state == UIGestureRecognizerStateChanged) {
-        if (pinchGestureRecognizer.scale > 1.0) {
-            self.pinchVirtualAlphaValue = pinchGestureRecognizer.scale - 1.0;
-            self.pinchConceptCollectionViewState = PinchConceptCollectionViewStateToNote;
-            [self.conceptsCollectionView.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                IAEEditModeConceptCollectionViewCell *cell = obj;
-                [cell updateChangeToNoteMode:self.pinchVirtualAlphaValue];
-            }];
-        } else {
-            self.pinchVirtualAlphaValue = 1.0 - pinchGestureRecognizer.scale;
-            self.pinchConceptCollectionViewState = PinchConceptCollectionViewStateToData;
-            [self.conceptsCollectionView.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                IAEEditModeConceptCollectionViewCell *cell = obj;
-                [cell updateChangeToDataMode:self.pinchVirtualAlphaValue];
-            }];
-        }
-    } else {
-        if (self.pinchConceptCollectionViewState == PinchConceptCollectionViewStateToData) {
-            self.pinchConceptCollectionViewState = PinchConceptCollectionViewStateToData;
-            [self.conceptsCollectionView.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                IAEEditModeConceptCollectionViewCell *cell = obj;
-                [cell changeToDataModeWithAnimation:YES];
-            }];
-        } else if (self.pinchConceptCollectionViewState == PinchConceptCollectionViewStateToNote) {
-            self.pinchConceptCollectionViewState = PinchConceptCollectionViewStateToNote;
-            [self.conceptsCollectionView.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                IAEEditModeConceptCollectionViewCell *cell = obj;
-                [cell changeToNoteModeWithAnimation:YES];
-            }];
+        [self updateVisibleConceptsCollectionViewCellsForChangeToAppropiateModeWithPinchGestureRecognizer:pinchGestureRecognizer];
+    } else if (pinchGestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        GlobalModeType globalModeType = [self findGlobalModeTypeForConceptsEditMode];
+        if (globalModeType != GlobalModeTypeNone) {
+            IAEEditModeConceptCollectionViewCell *cell = self.conceptsCollectionView.visibleCells[0];
+            const GlobalModeType cellGlobalModeTypeData = [cell findGlobalModeTypeIfUpdatingEndsRightNow];
+            if (cellGlobalModeTypeData == GlobalModeTypeData) {
+                [self.conceptsCollectionView.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    IAEEditModeConceptCollectionViewCell *cell = obj;
+                    [cell changeToDataModeWithAnimation:YES];
+                }];
+            } else if (cellGlobalModeTypeData == GlobalModeTypeNote) {
+                [self.conceptsCollectionView.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    IAEEditModeConceptCollectionViewCell *cell = obj;
+                    [cell changeToNoteModeWithAnimation:YES];
+                }];
+            } else if (cellGlobalModeTypeData == GlobalModeTypeUpdating) {
+                NSAssert(0, @"No deberia de darse nunca esgte caso");
+            }
         }
         
-        self.conceptsCollectionView.scrollEnabled = YES;
+        [self endPinchForConceptsCollectionView];
     }
     
     pinchGestureRecognizer.scale = 1;
 }
 
-- (CGFloat)conceptsCollectionViewAlphaForCurrentPinchState
+- (void)beginPinchForConceptsCollectionView
 {
-    const CGFloat retAlpha = self.pinchConceptCollectionViewState == PinchConceptCollectionViewStateToNote ? 0.1 : 1.0;
-    return retAlpha;
+    [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
+    self.conceptsCollectionView.scrollEnabled = NO;
+}
+
+- (void)endPinchForConceptsCollectionView
+{
+    self.conceptsCollectionView.scrollEnabled = YES;
+}
+
+- (void)updateVisibleConceptsCollectionViewCellsForChangeToAppropiateModeWithPinchGestureRecognizer:(UIPinchGestureRecognizer *)pinchGestureRecognizer
+{
+    if (pinchGestureRecognizer.scale > 1.0) {
+        [self updateVisibleConceptsCollectionViewCellsChangeToNoteModeWithPinchGestureRecognizer:pinchGestureRecognizer];
+    } else {
+        [self updateVisibleConceptsCollectionViewCellsChangeToDataModeWithPinchGestureRecognizer:pinchGestureRecognizer];
+    }
+}
+
+- (void)updateVisibleConceptsCollectionViewCellsChangeToNoteModeWithPinchGestureRecognizer:(UIPinchGestureRecognizer *)pinchGestureRecognizer
+{
+    [self.conceptsCollectionView.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        IAEEditModeConceptCollectionViewCell *cell = obj;
+        [cell updateChangeToNoteMode:pinchGestureRecognizer.scale - 1.0];
+    }];
+}
+
+- (void)updateVisibleConceptsCollectionViewCellsChangeToDataModeWithPinchGestureRecognizer:(UIPinchGestureRecognizer *)pinchGestureRecognizer
+{
+    [self.conceptsCollectionView.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        IAEEditModeConceptCollectionViewCell *cell = obj;
+        [cell updateChangeToDataMode:1.0 - pinchGestureRecognizer.scale];
+    }];
+}
+
+- (GlobalModeType)findGlobalModeTypeForConceptsEditMode
+{
+    GlobalModeType cellGlobalModeTypeData = GlobalModeTypeNone;
+    if (self.conceptsCollectionView.visibleCells.count > 0) {
+        IAEEditModeConceptCollectionViewCell *cell = self.conceptsCollectionView.visibleCells[0];
+        cellGlobalModeTypeData = [cell findGlobalModeTypeIfUpdatingEndsRightNow];
+    }
+    
+    return cellGlobalModeTypeData;
 }
 
 #pragma mark - UISwipeGestureRecognizer

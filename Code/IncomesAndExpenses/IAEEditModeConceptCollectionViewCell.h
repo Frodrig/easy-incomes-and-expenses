@@ -14,6 +14,12 @@ typedef NS_ENUM(NSUInteger, EditModeConceptElement) {
     EditModeConceptElement_Amount
 };
 
+typedef NS_ENUM(NSUInteger, GlobalModeType) {
+    GlobalModeTypeData,
+    GlobalModeTypeNote,
+    GlobalModeTypeUpdating,
+};
+
 @class IAEValueDecoratorView;
 
 @interface IAEEditModeConceptCollectionViewCell : UICollectionViewCell
@@ -21,8 +27,8 @@ typedef NS_ENUM(NSUInteger, EditModeConceptElement) {
 @property (weak, nonatomic) IBOutlet UIView *conceptInformationContainerView;
 @property (weak, nonatomic) IBOutlet IAEValueDecoratorView *valueDecoratorView;
 @property (weak, nonatomic) IBOutlet UIView *identifierContainerView;
-//@property (weak, nonatomic) IBOutlet UIImageView *favoritePinImage;
 @property (weak, nonatomic) IBOutlet UIView *starContainerView;
+@property (nonatomic, readonly) GlobalModeType globalModeType;
 @property (nonatomic) CGFloat durationOfStrokeStateTransition;
 @property (nonatomic, readonly, getter = isInStrokeState) BOOL strokeState;
 @property (nonatomic, readonly) BOOL menuModeActive;
@@ -64,6 +70,11 @@ typedef NS_ENUM(NSUInteger, EditModeConceptElement) {
 - (UIView *)viewOfDuplicateMenuOption;
 - (UIView *)viewOfCopyMenuOption;
 - (UIView *)viewOfMoveMenuOption;
+
+- (void)changeToNoteModeWithAnimation:(BOOL)animation;
+- (void)changeToDataModeWithAnimation:(BOOL)animation;
+- (void)updateChangeToNoteMode:(CGFloat)percentage;
+- (void)updateChangeToDataMode:(CGFloat)percentage;
 
 - (void)setVisualAspectInEditMode:(BOOL)editMode forConceptElement:(EditModeConceptElement)conceptElement;
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
     <dependencies>
         <development version="5000" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -106,6 +106,19 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </scrollView>
+                    <textField opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="center" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" adjustsFontSizeToFit="NO" minimumFontSize="17" clearButtonMode="always" id="mjb-9s-QKT" userLabel="Note - UITextField">
+                        <rect key="frame" x="49" y="68" width="860" height="44"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <attributedString key="attributedText">
+                            <fragment content="jjjjjj">
+                                <attributes>
+                                    <font key="NSFont" size="20" name="HelveticaNeue-LightItalic"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" firstLineHeadIndent="2"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -117,6 +130,7 @@
                 <outlet property="conceptInformationContainerView" destination="XdT-BY-TUN" id="6wF-SQ-rdo"/>
                 <outlet property="containerScrollView" destination="2c2-si-b4E" id="ufe-Jv-XDh"/>
                 <outlet property="identifierContainerView" destination="0jx-Qr-cEo" id="e3U-B0-Uj6"/>
+                <outlet property="noteTextField" destination="mjb-9s-QKT" id="WY2-QJ-BZO"/>
                 <outlet property="optionCopyLabel" destination="xQF-Xb-xt2" id="l6a-Xg-NXW"/>
                 <outlet property="optionDuplicateLabel" destination="nyY-ns-twb" id="vjH-MZ-DQq"/>
                 <outlet property="optionMoveLabel" destination="UjS-l6-lkg" id="EmO-F7-rmQ"/>

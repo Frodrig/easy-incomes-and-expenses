@@ -16,6 +16,7 @@
 		5B0F8BC416B94ADD002D62A5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5B0F8BC616B94ADD002D62A5 /* Localizable.strings */; };
 		5B0FEE9B1902484F0067CA38 /* IAEPasswordRecoveryEmailPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0FEE991902484F0067CA38 /* IAEPasswordRecoveryEmailPanelViewController.m */; };
 		5B0FEE9C1902484F0067CA38 /* IAEPasswordRecoveryEmailPanelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B0FEE9A1902484F0067CA38 /* IAEPasswordRecoveryEmailPanelViewController.xib */; };
+		5B1B3E6D1941A07400050F89 /* UIView+FloatingAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1B3E6C1941A07400050F89 /* UIView+FloatingAnimation.m */; };
 		5B1B7F8B18D791070012AC21 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B767DF81636D7FC005315F8 /* Foundation.framework */; };
 		5B1B7F8C18D791070012AC21 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B767DF61636D7FC005315F8 /* UIKit.framework */; };
 		5B1B7F9218D791070012AC21 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5B1B7F9018D791070012AC21 /* InfoPlist.strings */; };
@@ -308,6 +309,8 @@
 		5B0FEE981902484F0067CA38 /* IAEPasswordRecoveryEmailPanelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEPasswordRecoveryEmailPanelViewController.h; sourceTree = "<group>"; };
 		5B0FEE991902484F0067CA38 /* IAEPasswordRecoveryEmailPanelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEPasswordRecoveryEmailPanelViewController.m; sourceTree = "<group>"; };
 		5B0FEE9A1902484F0067CA38 /* IAEPasswordRecoveryEmailPanelViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEPasswordRecoveryEmailPanelViewController.xib; sourceTree = "<group>"; };
+		5B1B3E6B1941A07400050F89 /* UIView+FloatingAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+FloatingAnimation.h"; sourceTree = "<group>"; };
+		5B1B3E6C1941A07400050F89 /* UIView+FloatingAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+FloatingAnimation.m"; sourceTree = "<group>"; };
 		5B1B7F8818D791070012AC21 /* IncomesAndExpenses Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "IncomesAndExpenses Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B1B7F8918D791070012AC21 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		5B1B7F8F18D791070012AC21 /* IncomesAndExpenses Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IncomesAndExpenses Tests-Info.plist"; sourceTree = "<group>"; };
@@ -848,6 +851,15 @@
 			name = PasswordRecoveryEmailPanel;
 			sourceTree = "<group>";
 		};
+		5B1B3E6A1941A06100050F89 /* FloatingAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				5B1B3E6B1941A07400050F89 /* UIView+FloatingAnimation.h */,
+				5B1B3E6C1941A07400050F89 /* UIView+FloatingAnimation.m */,
+			);
+			name = FloatingAnimation;
+			sourceTree = "<group>";
+		};
 		5B1B7F8D18D791070012AC21 /* IncomesAndExpenses Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1228,6 +1240,7 @@
 		5B5C967C17816A01008CD851 /* UIView */ = {
 			isa = PBXGroup;
 			children = (
+				5B1B3E6A1941A06100050F89 /* FloatingAnimation */,
 				5B2D38A717AF846A0056488B /* LoadFromXib */,
 				5B2D38A617AF84620056488B /* RoundedCorners */,
 				5B2D38A817AF84730056488B /* DrawBottomLine */,
@@ -2765,6 +2778,7 @@
 				5B8CD5D117A262A800A353A5 /* IAEContextView.m in Sources */,
 				5BF1DFD818F991BD0024B3AD /* IAEMonthSelectorViewController.m in Sources */,
 				5BD94C0B1786B864009009B1 /* IAECategoryTableViewCell.m in Sources */,
+				5B1B3E6D1941A07400050F89 /* UIView+FloatingAnimation.m in Sources */,
 				5B62D874178EC20E009879A6 /* IAEOrientationHelper.m in Sources */,
 				5B36AFFC1785D73800132475 /* IAECategorySelectorViewController.m in Sources */,
 				5B8F843417B1002200C17020 /* IAEGlobalConstants.m in Sources */,

@@ -29,7 +29,7 @@
 #import "NSUserDefaults+EasyIncAndExp.h"
 #import "UIView+FloatingAnimation.h"
 
-@interface IAECalculatorViewController ()
+#pragma mark - Enums
 
 typedef NS_ENUM(NSUInteger, CalculatorMode) {
     CM_HIDE,
@@ -43,37 +43,7 @@ typedef NS_ENUM(NSUInteger, KeyboardActionType) {
     KeyboardActionTypeValidFavorites
 };
 
-@property (weak, nonatomic) IBOutlet IAEDisplayPanelCalculatorView *displayPanel;
-@property (weak, nonatomic) IBOutlet IAEKeyboardPanelCalculatorView *keyboardPanel;
-@property (weak, nonatomic) IBOutlet UIButton *incomeButton;
-@property (weak, nonatomic) IBOutlet UIButton *expenseButton;
-@property (weak, nonatomic) IBOutlet UIImageView *pinFavoriteImage;
-@property (nonatomic) CalculatorMode mode;
-@property (nonatomic, strong) IAECategory *actualCategory;
-@property (nonatomic) NSUInteger actualDay;
-@property (nonatomic, strong) NSMutableString *actualAmount;
-@property (nonatomic, strong) UIPopoverController *popover;
-@property (nonatomic, weak) UIView *currentFloatingDisplayButtonView;
-@property (nonatomic, strong) NSDecimalNumber *maxDecimalNumberAllowed;
-@property (nonatomic) NSUInteger numberConceptsCreatedInSession;
-@property (nonatomic) CGPoint centerPositionBeforeDisable;
-@property (nonatomic, strong) UIColor *validActionBaseColor;
-@property (nonatomic, strong) UIColor *validActionTransitionColor;
-@property (nonatomic, strong) UIColor *invalidActionBaseColor;
-@property (nonatomic, strong) UIColor *invalidActionTransitionColor;
-@property (nonatomic, weak) UIPanGestureRecognizer *panGestureRecognizer;
-@property (nonatomic) CGRect frameInHideMode;
-@property (nonatomic) CGRect frameInVisibleMode;
-@property (nonatomic, readwrite, getter = isInDisableMode) BOOL disableMode;
-@property (nonatomic, readwrite, getter = isInDragMode) BOOL dragMode;
-@property (nonatomic) BOOL automaticDragMode;
-@property (nonatomic) CalculatorMode previousCalculatorMode;
-
-@end
-
-@implementation IAECalculatorViewController
-
-@synthesize sizeHeightOfDragPanel = _sizeHeightOfDragPanel;
+#pragma mark - Constants
 
 static const CGFloat kAnimationDurationShowHideAction = 0.5;
 static const CGFloat kMarginHeightOffsetWhenShowed = 10;
@@ -101,6 +71,44 @@ static NSString * const kValueKey = @"value";
 static const CGFloat kUpdateFavoritePinAnimationTime = 0.35;
 
 static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 360;
+
+static const CGFloat kUserInteractionFXAnimationDuration = 0.25;
+static const CGFloat kUserInteractionFXAlphaValue = 0.5;
+
+@interface IAECalculatorViewController ()
+
+@property (weak, nonatomic) IBOutlet IAEDisplayPanelCalculatorView *displayPanel;
+@property (weak, nonatomic) IBOutlet IAEKeyboardPanelCalculatorView *keyboardPanel;
+@property (weak, nonatomic) IBOutlet UIButton *incomeButton;
+@property (weak, nonatomic) IBOutlet UIButton *expenseButton;
+@property (weak, nonatomic) IBOutlet UIImageView *pinFavoriteImage;
+@property (nonatomic) CalculatorMode mode;
+@property (nonatomic, strong) IAECategory *actualCategory;
+@property (nonatomic) NSUInteger actualDay;
+@property (nonatomic, strong) NSMutableString *actualAmount;
+@property (nonatomic, strong) UIPopoverController *popover;
+@property (nonatomic, weak) UIView *currentFloatingDisplayButtonView;
+@property (nonatomic, strong) NSDecimalNumber *maxDecimalNumberAllowed;
+@property (nonatomic) NSUInteger numberConceptsCreatedInSession;
+@property (nonatomic) CGPoint centerPositionBeforeDisable;
+@property (nonatomic, strong) UIColor *validActionBaseColor;
+@property (nonatomic, strong) UIColor *validActionTransitionColor;
+@property (nonatomic, strong) UIColor *invalidActionBaseColor;
+@property (nonatomic, strong) UIColor *invalidActionTransitionColor;
+@property (nonatomic, weak) UIPanGestureRecognizer *panGestureRecognizer;
+@property (nonatomic) CGRect frameInHideMode;
+@property (nonatomic) CGRect frameInVisibleMode;
+@property (nonatomic, readwrite, getter = isInDisableMode) BOOL disableMode;
+@property (nonatomic, readwrite, getter = isInDragMode) BOOL dragMode;
+@property (nonatomic) BOOL automaticDragMode;
+@property (nonatomic) CalculatorMode previousCalculatorMode;
+@property (weak, nonatomic) IBOutlet UIView *disableFXView;
+
+@end
+
+@implementation IAECalculatorViewController
+
+@synthesize sizeHeightOfDragPanel = _sizeHeightOfDragPanel;
 
 #pragma mark - Properties
 
@@ -213,19 +221,24 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 360;
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(notificationKeyboardDidShow:)
-                                                 name:UIKeyboardDidShowNotification
+                                             selector:@selector(notificationKeyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(notificationKeyboardDidHide:)
-                                                 name:UIKeyboardDidHideNotification
+                                             selector:@selector(notificationKeyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                          selector:@selector(notificationKeyboardDidChange:)
-                                          name:UIKeyboardDidChangeFrameNotification
+                                          selector:@selector(notificationKeyboardWillChange:)
+                                          name:UIKeyboardWillChangeFrameNotification
                                           object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notificationKeyboardDidChange:)
+                                                 name:UIKeyboardDidChangeFrameNotification
+                                               object:nil];
 }
 
 - (void)viewDidLoad
@@ -1015,7 +1028,19 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 360;
     [self configureDisplayPanelWithActualDayWithAnimation:NO];
 }
 
+- (void)notificationKeyboardWillChange:(NSNotification *)notification
+{
+    [self updateUserInteractionAfterKeyboardChangeWithNotification:notification];
+}
+
 - (void)notificationKeyboardDidChange:(NSNotification *)notification
+{
+    // Nota: Si para capturar el evento de division de teclado solo usaramos el de WillChange no llegara en la notificacion el rect
+    // adecuado para saber que tal ha sucedido y debemos de activar la imagen de FX indicativa de que no puede haber interaccion
+    [self updateUserInteractionAfterKeyboardChangeWithNotification:notification];
+}
+
+- (void)updateUserInteractionAfterKeyboardChangeWithNotification:(NSNotification *)notification
 {
     CGRect keyboardEndFrame = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
@@ -1028,18 +1053,19 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 360;
     }
 }
 
-- (void)notificationKeyboardDidShow:(NSNotification *)notificacion
+- (void)notificationKeyboardWillShow:(NSNotification *)notificacion
 {
     [self disableUserInteraction];
 }
 
-- (void)notificationKeyboardDidHide:(NSNotification *)notification
+- (void)notificationKeyboardWillHide:(NSNotification *)notification
 {
     [self enableUserInteraction];
 }
 
 - (void)disableUserInteraction
 {
+    [self disableUserInteractionFXViewWithAnimation:YES];
     self.dragPanel.userInteractionEnabled = NO;
     self.displayPanel.userInteractionEnabled = NO;
     self.keyboardPanel.userInteractionEnabled = NO;
@@ -1047,9 +1073,32 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 360;
 
 - (void)enableUserInteraction
 {
+    [self enableUserInteractionFXViewWithAnimation:YES];
     self.dragPanel.userInteractionEnabled = YES;
     self.displayPanel.userInteractionEnabled = YES;
     self.keyboardPanel.userInteractionEnabled = YES;
+}
+
+- (void)disableUserInteractionFXViewWithAnimation:(BOOL)animation
+{
+    if (self.disableFXView.hidden) {
+        self.disableFXView.hidden = NO;
+        self.disableFXView.alpha = 0;
+        [UIView animateWithDuration:animation ? kUserInteractionFXAnimationDuration : 0 animations:^{
+            self.disableFXView.alpha = kUserInteractionFXAlphaValue;
+        }];
+    }
+}
+
+- (void)enableUserInteractionFXViewWithAnimation:(BOOL)animation
+{
+    if (!self.disableFXView.hidden) {
+        [UIView animateWithDuration:animation ? kUserInteractionFXAnimationDuration : 0 animations:^{
+            self.disableFXView.alpha = 0;
+        } completion:^(BOOL finished) {
+            self.disableFXView.hidden = YES;
+        }];
+    }
 }
 
 #pragma mark - IAEDisplayCalculatorViewDelegate

@@ -71,6 +71,7 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
 @property (weak, nonatomic) IBOutlet UIView *dayAndOrderLabel;
 @property (weak, nonatomic) IBOutlet UILabel *noteAmountIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *noteCategoryIndicator;
+@property (weak, nonatomic) IBOutlet UIImageView *notePresentIndicatorImageView;
 @property (nonatomic, readwrite) GlobalModeType globalModeType;
 @property (nonatomic, readwrite, getter = isInStrokeState) BOOL strokeState;
 @property (nonatomic, readwrite) BOOL menuModeActive;
@@ -116,6 +117,7 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
     self.noteTextField.delegate = self;
     self.noteTextField.placeholder = NSLocalizedString(@"LTEXT_CONCEPT_NOTETEXTFIELD_PLACEHOLDERTEXT", @"");
     [self localizedSubmenuOptionLabels];
+    [self updateVisibilityOfNotePresentIndicator];
 }
 
 - (void)localizedSubmenuOptionLabels
@@ -123,6 +125,11 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
     self.optionCopyLabel.text = NSLocalizedString(@"LTEXT_CONCEPT_SUBMENU_COPY", @"");
     self.optionMoveLabel.text = NSLocalizedString(@"LTEXT_CONCEPT_SUBMENU_MOVE", @"");
     self.optionDuplicateLabel.text = NSLocalizedString(@"LTEXT_CONCEPT_SUBMENU_DUPLICATE", @"");
+}
+
+- (void)updateVisibilityOfNotePresentIndicator
+{
+    self.notePresentIndicatorImageView.hidden = self.noteTextField.text.length > 0 ? NO : YES;
 }
 
 - (void)prepareForReuse
@@ -235,6 +242,7 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
 - (void)configureNoteLabelWithValue:(NSString *)description
 {
     self.noteTextField.text = [description stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    [self updateVisibilityOfNotePresentIndicator];
 }
 
 #pragma mark - Location Test
@@ -278,6 +286,11 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
 {
     CGRect test = [self convertRect:sourceView.frame fromView:fromView];
     return CGRectContainsPoint(test, location);
+}
+
+- (BOOL)isNoteDescriptionPresent
+{
+    return !self.notePresentIndicatorImageView.hidden;
 }
 
 // Esto va en otra clase como, por ejemplo, un configurador
@@ -726,6 +739,7 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
     [self cleanStartAndEndSpacesFromTextField];
+    [self updateVisibilityOfNotePresentIndicator];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"EndEditingNoteForModeConceptCollectionViewCell" object:self userInfo:@{@"note" : textField.text}];
     
     return YES;

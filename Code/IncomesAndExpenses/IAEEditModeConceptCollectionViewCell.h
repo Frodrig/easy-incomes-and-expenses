@@ -63,6 +63,7 @@ typedef NS_ENUM(NSUInteger, GlobalModeType) {
 - (BOOL)isDuplicateOptionContainingLocationPoint:(CGPoint)location;
 - (BOOL)isCopyOptionContainingLocationPoint:(CGPoint)location;
 - (BOOL)isMoveOptionContainingLocationPoint:(CGPoint)location;
+- (BOOL)isNoteDescriptionPresent;
 
 - (void)goToStrokeState;
 - (void)exitFromStrokeState;

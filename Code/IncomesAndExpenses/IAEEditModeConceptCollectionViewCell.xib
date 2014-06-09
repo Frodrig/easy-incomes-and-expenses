@@ -147,6 +147,7 @@
                 <outlet property="identifierContainerView" destination="0jx-Qr-cEo" id="e3U-B0-Uj6"/>
                 <outlet property="noteAmountIndicator" destination="YnV-jM-PM6" id="Vku-n2-ptN"/>
                 <outlet property="noteCategoryIndicator" destination="Qzj-MQ-VTa" id="bQH-ab-cVD"/>
+                <outlet property="notePresentIndicatorImageView" destination="az8-gU-cGn" id="cV3-6v-9xM"/>
                 <outlet property="noteTextField" destination="mjb-9s-QKT" id="WY2-QJ-BZO"/>
                 <outlet property="optionCopyLabel" destination="xQF-Xb-xt2" id="l6a-Xg-NXW"/>
                 <outlet property="optionDuplicateLabel" destination="nyY-ns-twb" id="vjH-MZ-DQq"/>

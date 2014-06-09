@@ -172,6 +172,13 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 360;
     return _validActionTransitionColor;
 }
 
+#pragma mark - Dealloc
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - Init
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -204,6 +211,21 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 360;
                                              selector:@selector(notificationCenterOnDayModeOff:)
                                                  name:kNotificationDayModeOffName
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notificationKeyboardDidShow:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notificationKeyboardDidHide:)
+                                                 name:UIKeyboardDidHideNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                          selector:@selector(notificationKeyboardDidChange:)
+                                          name:UIKeyboardDidChangeFrameNotification
+                                          object:nil];
 }
 
 - (void)viewDidLoad
@@ -990,8 +1012,44 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 360;
 
 - (void)notificationCenterOnDayModeOff:(NSNotification *)notification
 {
-    //self.actualDay = 0;
     [self configureDisplayPanelWithActualDayWithAnimation:NO];
+}
+
+- (void)notificationKeyboardDidChange:(NSNotification *)notification
+{
+    CGRect keyboardEndFrame = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    
+    if (CGRectIntersectsRect(keyboardEndFrame, screenRect)) {
+        [self disableUserInteraction];
+    } else {
+        [self enableUserInteraction];
+    }
+}
+
+- (void)notificationKeyboardDidShow:(NSNotification *)notificacion
+{
+    [self disableUserInteraction];
+}
+
+- (void)notificationKeyboardDidHide:(NSNotification *)notification
+{
+    [self enableUserInteraction];
+}
+
+- (void)disableUserInteraction
+{
+    self.dragPanel.userInteractionEnabled = NO;
+    self.displayPanel.userInteractionEnabled = NO;
+    self.keyboardPanel.userInteractionEnabled = NO;
+}
+
+- (void)enableUserInteraction
+{
+    self.dragPanel.userInteractionEnabled = YES;
+    self.displayPanel.userInteractionEnabled = YES;
+    self.keyboardPanel.userInteractionEnabled = YES;
 }
 
 #pragma mark - IAEDisplayCalculatorViewDelegate

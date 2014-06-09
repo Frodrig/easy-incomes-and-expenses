@@ -643,6 +643,7 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
     self.globalModeType = GlobalModeTypeNote;
     self.noteTextField.userInteractionEnabled = YES;
     self.containerScrollView.userInteractionEnabled = NO;
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
     [UIView animateWithDuration:animation ? 0.25 : 0 animations:^{
         self.noteTextField.alpha = 1.0;
         self.noteAmountIndicator.alpha = 1.0;
@@ -660,6 +661,7 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
     self.globalModeType = GlobalModeTypeData;
     self.noteTextField.userInteractionEnabled = NO;
     self.containerScrollView.userInteractionEnabled = YES;
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
     [UIView animateWithDuration:animation ? 0.25 : 0 animations:^{
         self.noteTextField.alpha = 0;
         self.noteAmountIndicator.alpha = 0;

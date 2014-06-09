@@ -173,6 +173,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 @property (nonatomic, strong) UISwipeGestureRecognizer *swipeLeftConceptsGestureRecognizer;
 @property (nonatomic, strong) UIPanGestureRecognizer *panCalculatorGestureRecognizer;
 @property (nonatomic, strong) UIPinchGestureRecognizer *pinchConceptsGestureRecognizer;
+@property (nonatomic, strong) UILongPressGestureRecognizer *longPressureConceptsGestureRecognizer;
 @property (nonatomic, strong) IAEStrokeAnimatableLineView *strokeAnimatableLineView;
 @property (nonatomic, weak) IAEEditModeConceptCollectionViewCell *conceptCellToRemove;
 @property (nonatomic) BOOL initialPositioning;
@@ -188,6 +189,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 @property (nonatomic, strong) IAEContextMenuActionSheetViewController *contextMenuActionSheetViewController;
 @property (nonatomic) BOOL waitingToConfirmRemoveAllConcepts;
 @property (nonatomic) BOOL noteModeWasActivatedWithoutCalculator;
+@property (nonatomic, weak) IAEEditModeConceptCollectionViewCell *longTapEditModeConceptCollectionViewCell;
 
 @end
 
@@ -248,6 +250,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     [self.conceptsCollectionView removeGestureRecognizer:self.swipeLeftConceptsGestureRecognizer];
     [self.conceptsCollectionView removeGestureRecognizer:self.pinchConceptsGestureRecognizer];
     [self.editAndReportModeContentContainerView removeGestureRecognizer:self.tapEditAndReportModeContainerViewRecognizer];
+    [self.editAndReportModeContentContainerView removeGestureRecognizer:self.longPressureConceptsGestureRecognizer];
 }
 
 #pragma mark - Init
@@ -262,6 +265,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
         [self initLeftSwipeConceptsGestureRecognizer];
         [self initPinchConceptsGestureRecognizer];
         [self initPanCalculatorGestureRecognizer];
+        [self initLongPressureGestureRecognizer];
         [self initAsObserverOfNotificationCenter];
         [self initContextMenuView];
         [self initCalculatorViewController];
@@ -311,6 +315,11 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 - (void)initPanCalculatorGestureRecognizer
 {
     _panCalculatorGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panOnCalculatorView:)];
+}
+
+- (void)initLongPressureGestureRecognizer
+{
+    _longPressureConceptsGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressureOnConceptsCollectionView:)];
 }
 
 - (void)initAsObserverOfNotificationCenter
@@ -498,6 +507,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     [self.conceptsCollectionView addGestureRecognizer:self.swipeRightConceptsGestureRecognizer];
     [self.conceptsCollectionView addGestureRecognizer:self.swipeLeftConceptsGestureRecognizer];
     [self.conceptsCollectionView addGestureRecognizer:self.pinchConceptsGestureRecognizer];
+    [self.conceptsCollectionView addGestureRecognizer:self.longPressureConceptsGestureRecognizer];
 }
 
 - (void)configureReportAreaView
@@ -1791,6 +1801,23 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     }
 }
 
+#pragma mark - UILongPressureGestureRecognizer
+
+- (void)longPressureOnConceptsCollectionView:(UILongPressGestureRecognizer *)longPressureGestureRecognizer
+{
+    if (longPressureGestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        if (!self.longTapEditModeConceptCollectionViewCell) {
+            self.longTapEditModeConceptCollectionViewCell = [self findConceptCellUnderLocationOfGestureRecognizer:longPressureGestureRecognizer];
+            [self.longTapEditModeConceptCollectionViewCell changeToNoteModeWithAnimation:YES];
+        }
+    } else if (longPressureGestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        if (self.longPressureConceptsGestureRecognizer) {
+            [self.longTapEditModeConceptCollectionViewCell changeToDataModeWithAnimation:YES];
+            self.longTapEditModeConceptCollectionViewCell = nil;
+        }
+    }
+}
+
 #pragma mark - UIPinchGestureRecognizer
 
 // REFACTORIZAR
@@ -2019,7 +2046,8 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 {
     return gestureRecognizer == self.tapConceptsRecognizer ||
            gestureRecognizer == self.swipeRightConceptsGestureRecognizer ||
-           gestureRecognizer == self.swipeLeftConceptsGestureRecognizer;
+           gestureRecognizer == self.swipeLeftConceptsGestureRecognizer ||
+           gestureRecognizer == self.longPressureConceptsGestureRecognizer;
 }
 
 - (void)executeActionInYearContextOnCellOfConceptCollectionView:(IAEEditModeConceptCollectionViewCell *)cell

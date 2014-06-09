@@ -1029,6 +1029,12 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     return self.contextMenuView.currentOptionIndexSelected == kGlobalIndexForYearInContextScrollView ? YES : NO;
 }
 
+- (BOOL)isNoteModeActiveInConcepts;
+{
+    const GlobalModeType globalModeType = [self findGlobalModeTypeForConceptsEditMode];
+    return globalModeType == GlobalModeTypeNote;
+}
+
 - (BOOL)isActualSelectedContextAMonth
 {
     return [self isActualSelectedContextTheYearOpen] ? NO : YES;

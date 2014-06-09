@@ -141,6 +141,7 @@ static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
     [cell configureAmountLabelWithValue:amountWithSignString andColor:colorForEconomicValueType];
     [self configureIdentifierOfConceptCell:cell atIndexPath:indexPath withIndex:instantEntryIndex];
     [self configureFavoritePinOfConceptCell:cell withConcept:concept];
+    [self configureDataOrNoteModeForCell:cell];
 }
 
 - (void)configureIdentifierOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
@@ -190,15 +191,15 @@ static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
     } else {
         [cell hideFavoritePinWithAnimation:NO];
     }
-    
-    /*
-    const BOOL editModeActive = [self.iaeViewControllerQuery isEditModeActive] && [self.iaeViewControllerQuery isCalculatorOpen];
-    if (editModeActive && [[NSUserDefaults standardUserDefaults] isProVersionEnabled]) {
-        [cell showFavoritePin];
+}
+
+- (void)configureDataOrNoteModeForCell:(IAEEditModeConceptCollectionViewCell *)cell
+{
+    if ([self.iaeViewControllerQuery isNoteModeActiveInConcepts]) {
+        [cell changeToNoteModeWithAnimation:NO];
     } else {
-        [cell hideFavoritePinWithAnimation:NO];
+        [cell changeToDataModeWithAnimation:NO];
     }
-     */
 }
 
 @end

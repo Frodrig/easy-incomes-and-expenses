@@ -30,6 +30,8 @@
 
 - (BOOL)isActualSelectedContextTheYearOpen;
 
+- (BOOL)isNoteModeActiveInConcepts;
+
 - (BOOL)isTheBalancesOptionSelectedInReportMenu;
 - (BOOL)isTheIncomesOptionSelectedInReportMenu;
 - (BOOL)isTheExpensesOptionSelectedInReportMenu;

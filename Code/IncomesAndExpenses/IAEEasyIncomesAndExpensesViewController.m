@@ -1790,15 +1790,9 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
                 IAEEditModeConceptCollectionViewCell *cell = self.conceptsCollectionView.visibleCells[0];
                 const GlobalModeType cellGlobalModeTypeData = [cell findGlobalModeTypeIfUpdatingEndsRightNow];
                 if (cellGlobalModeTypeData == GlobalModeTypeData) {
-                    [self.conceptsCollectionView.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                        IAEEditModeConceptCollectionViewCell *cell = obj;
-                        [cell changeToDataModeWithAnimation:YES];
-                    }];
+                    [self changeVisibleConceptsCollectionViewCellsToDataModeWithAnimation:YES];
                 } else if (cellGlobalModeTypeData == GlobalModeTypeNote) {
-                    [self.conceptsCollectionView.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                        IAEEditModeConceptCollectionViewCell *cell = obj;
-                        [cell changeToNoteModeWithAnimation:YES];
-                    }];
+                    [self changeVisibleConceptsCollectionViewCellsToNoteModeWithAnimation:YES];
                 } else if (cellGlobalModeTypeData == GlobalModeTypeUpdating) {
                     NSAssert(0, @"No deberia de darse nunca esgte caso");
                 }
@@ -1852,6 +1846,22 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     [self.conceptsCollectionView.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         IAEEditModeConceptCollectionViewCell *cell = obj;
         [cell updateChangeToDataMode:1.0 - pinchGestureRecognizer.scale];
+    }];
+}
+
+- (void)changeVisibleConceptsCollectionViewCellsToDataModeWithAnimation:(BOOL)animation
+{
+    [self.conceptsCollectionView.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        IAEEditModeConceptCollectionViewCell *cell = obj;
+        [cell changeToDataModeWithAnimation:animation];
+    }];
+}
+
+- (void)changeVisibleConceptsCollectionViewCellsToNoteModeWithAnimation:(BOOL)animation
+{
+    [self.conceptsCollectionView.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        IAEEditModeConceptCollectionViewCell *cell = obj;
+        [cell changeToNoteModeWithAnimation:animation];
     }];
 }
 
@@ -2769,6 +2779,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES andExecuteAfterAnimationTheLogicBlock:^{
         [self.conceptsCollectionView reloadData];
         [self updateBalancesAndAvailabilityOfSelectorContextSubmenuWithAnimation:NO];
+        [self changeVisibleConceptsCollectionViewCellsToDataModeWithAnimationIfAppropiate:YES];
     }];
 }
 
@@ -2776,7 +2787,15 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 {
     [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES andExecuteAfterAnimationTheLogicBlock:^{
         [self updateAfterNewConceptCreated:concept];
+        [self changeVisibleConceptsCollectionViewCellsToDataModeWithAnimationIfAppropiate:YES];
     }];
+}
+
+- (void)changeVisibleConceptsCollectionViewCellsToDataModeWithAnimationIfAppropiate:(BOOL)animation
+{
+    if ([self isNoteModeActiveInConcepts]) {
+        [self changeVisibleConceptsCollectionViewCellsToDataModeWithAnimation:animation];
+    }
 }
 
 - (void)updateAfterNewConceptCreated:(IAEConcept *)concept

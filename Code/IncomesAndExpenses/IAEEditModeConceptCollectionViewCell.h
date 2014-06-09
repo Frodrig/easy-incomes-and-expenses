@@ -41,6 +41,7 @@ typedef NS_ENUM(NSUInteger, GlobalModeType) {
 
 - (void)configureCategoryLabelWithName:(NSString *)name;
 - (void)configureAmountLabelWithValue:(NSString *)valueString andColor:(UIColor *)color;
+- (void)configureNoteLabelWithValue:(NSString *)description;
 
 - (void)setIdentifierWithEntryInstantIndex:(NSUInteger)index withAnimationDuration:(CGFloat)animationDuration;
 - (void)setIdentifierWithDayOfTheMonthIndex:(NSUInteger)index andDayOfTheWeekName:(NSString *)name;

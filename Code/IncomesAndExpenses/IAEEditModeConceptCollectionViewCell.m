@@ -223,6 +223,11 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
     return font;
 }
 
+- (void)configureNoteLabelWithValue:(NSString *)description
+{
+    self.noteTextField.text = [description stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+}
+
 #pragma mark - Location Test
 
 - (BOOL)isFavoritePinContainingLocationPoint:(CGPoint)location

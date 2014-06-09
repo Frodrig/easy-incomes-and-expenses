@@ -13,26 +13,6 @@
 #import "NSString+TwoDigitString.h"
 #import "UIView+FloatingAnimation.h"
 
-@interface IAEEditModeConceptCollectionViewCell()
-
-@property (weak, nonatomic) IBOutlet UIView *categoryAndDecoratorContentInformationView;
-@property (weak, nonatomic) IBOutlet UILabel *amountLabel;
-@property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
-@property (weak, nonatomic) IBOutlet UIScrollView *containerScrollView;
-@property (weak, nonatomic) IBOutlet UILabel *optionDuplicateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *optionCopyLabel;
-@property (weak, nonatomic) IBOutlet UIView *otherOptionsContainerView;
-@property (weak, nonatomic) IBOutlet UILabel *optionMoveLabel;
-@property (weak, nonatomic) IBOutlet UITextField *noteTextField;
-@property (nonatomic, readwrite) GlobalModeType globalModeType;
-@property (nonatomic, readwrite, getter = isInStrokeState) BOOL strokeState;
-@property (nonatomic, readwrite) BOOL menuModeActive;
-
-@end
-
-@implementation IAEEditModeConceptCollectionViewCell
-
-
 #pragma mark - Constants
 
 static const NSUInteger kTagForEntryInstantLabelOfIdentifierContainerView = 10;
@@ -68,6 +48,31 @@ static const CGFloat kCallForAttentionRationAlphaColor = 0.3;
 static const CGFloat kHideShowFavoritePinTime = 0.75;
 static const CGFloat kDisableAlphaValueForFavoritePin = 0.3;
 static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
+
+static const CGFloat kMinAlphaInNoteForStarSymbol = 0;
+static const CGFloat kMinAlphaInNoteForCategoryLabel = 0.2;
+static const CGFloat kMinAlphaInNoteForDecorator = 1.0;
+static const CGFloat kMinAlphaInNoteForTheRest = 0.3;
+
+@interface IAEEditModeConceptCollectionViewCell()
+
+@property (weak, nonatomic) IBOutlet UIView *categoryAndDecoratorContentInformationView;
+@property (weak, nonatomic) IBOutlet UILabel *amountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
+@property (weak, nonatomic) IBOutlet UIScrollView *containerScrollView;
+@property (weak, nonatomic) IBOutlet UILabel *optionDuplicateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *optionCopyLabel;
+@property (weak, nonatomic) IBOutlet UIView *otherOptionsContainerView;
+@property (weak, nonatomic) IBOutlet UILabel *optionMoveLabel;
+@property (weak, nonatomic) IBOutlet UITextField *noteTextField;
+@property (weak, nonatomic) IBOutlet UIView *dayAndOrderLabel;
+@property (nonatomic, readwrite) GlobalModeType globalModeType;
+@property (nonatomic, readwrite, getter = isInStrokeState) BOOL strokeState;
+@property (nonatomic, readwrite) BOOL menuModeActive;
+
+@end
+
+@implementation IAEEditModeConceptCollectionViewCell
 
 #pragma mark - Properties
 
@@ -622,7 +627,11 @@ static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
     self.containerScrollView.userInteractionEnabled = NO;
     [UIView animateWithDuration:animation ? 0.25 : 0 animations:^{
         self.noteTextField.alpha = 1.0;
-        self.containerScrollView.alpha = 0.4;
+        self.starContainerView.alpha = kMinAlphaInNoteForStarSymbol;
+        self.categoryAndDecoratorContentInformationView.alpha = kMinAlphaInNoteForDecorator;
+        self.amountLabel.alpha = kMinAlphaInNoteForTheRest;
+        self.dayAndOrderLabel.alpha = kMinAlphaInNoteForTheRest;
+        self.categoryLabel.alpha = kMinAlphaInNoteForCategoryLabel;
     }];
 }
 
@@ -633,22 +642,38 @@ static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
     self.containerScrollView.userInteractionEnabled = YES;
     [UIView animateWithDuration:animation ? 0.25 : 0 animations:^{
         self.noteTextField.alpha = 0;
-        self.containerScrollView.alpha = 1;
+        self.starContainerView.alpha = self.favoritePinEnabled ? kEnableAlphaValueForFavoritePin : kDisableAlphaValueForFavoritePin;
+        self.categoryAndDecoratorContentInformationView.alpha = 1;
+        self.amountLabel.alpha = 1;
+        self.categoryLabel.alpha = 1;
+        self.dayAndOrderLabel.alpha = 1;
     }];
 }
 
 - (void)updateChangeToNoteMode:(CGFloat)percentage
 {
     self.globalModeType = GlobalModeTypeUpdating;
-    self.containerScrollView.alpha = MAX(0.4, self.containerScrollView.alpha - percentage);
+  
+    self.starContainerView.alpha = MAX(kMinAlphaInNoteForStarSymbol, self.starContainerView.alpha - percentage);
+    self.categoryAndDecoratorContentInformationView.alpha = MAX(kMinAlphaInNoteForDecorator, self.categoryAndDecoratorContentInformationView.alpha - percentage);
+    self.amountLabel.alpha = MAX(kMinAlphaInNoteForTheRest, self.amountLabel.alpha - percentage);
+    self.categoryLabel.alpha = MAX(kMinAlphaInNoteForCategoryLabel, self.categoryLabel.alpha - percentage);
+    self.dayAndOrderLabel.alpha = MAX(kMinAlphaInNoteForTheRest, self.dayAndOrderLabel.alpha - percentage);
+    
     self.noteTextField.alpha = MIN(1.0, self.noteTextField.alpha + percentage);
 }
 
 - (void)updateChangeToDataMode:(CGFloat)percentage
 {
     self.globalModeType = GlobalModeTypeUpdating;
+    
     self.noteTextField.alpha = MAX(0.0 ,self.noteTextField.alpha - percentage);
-    self.containerScrollView.alpha = MIN(1.0, self.containerScrollView.alpha + percentage);
+    
+    self.starContainerView.alpha = MIN(self.favoritePinEnabled ? kEnableAlphaValueForFavoritePin : kDisableAlphaValueForFavoritePin, self.starContainerView.alpha + percentage);
+    self.categoryAndDecoratorContentInformationView.alpha = MIN(1.0, self.categoryAndDecoratorContentInformationView.alpha + percentage);
+    self.amountLabel.alpha = MIN(1.0, self.amountLabel.alpha + percentage);
+    self.categoryLabel.alpha = MIN(1.0, self.categoryLabel.alpha + percentage);
+    self.dayAndOrderLabel.alpha = MIN(1.0, self.dayAndOrderLabel.alpha + percentage);
 }
 
 - (GlobalModeType)findGlobalModeTypeIfUpdatingEndsRightNow

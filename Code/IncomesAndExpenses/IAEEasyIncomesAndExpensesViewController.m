@@ -88,6 +88,7 @@ static NSString * const kNotificationInitialMonthChanged = @"initialMonthChange"
 static NSString * const kNotificationMainLabelTitleTouched = @"mainLabelTitleTouched";
 static NSString * const kNotificationKeyboardResignFromEditingConceptsNotes = @"KeyboardResignFromEditingConceptsNotes";
 static NSString * const kNotificationKeyboardSignForEditingConceptsNotes = @"KeyboardSignForEditingConceptsNotes";
+static NSString * const kNotificationEndEditingNoteForModeConceptCollectionViewCell = @"EndEditingNoteForModeConceptCollectionViewCell";
 
 static NSString * const kLTextModeSegmentedControlEditMode = @"LTEXT_MODESEGMENTEDCONTROL_EDITMODE";
 static NSString * const kLTextModeSegmentedControlReportMode = @"LTEXT_MODESEGMENTEDCONTROL_REPORTMODE";
@@ -353,7 +354,13 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
                                              selector:@selector(notificationCenterKeyboardSignForEditingConceptsNotes:)
                                                  name:kNotificationKeyboardSignForEditingConceptsNotes
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notificationCenterEndEditingNoteForModeConceptCollectionViewCell:)
+                                                 name:kNotificationEndEditingNoteForModeConceptCollectionViewCell
+                                               object:nil];
 }
+
 
 - (void)initContextMenuView
 {
@@ -2699,6 +2706,19 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
         [self.calculatorViewController incomeButtonPressed:self];
     } else {
         self.noteModeWasActivatedWithoutCalculator = NO;
+    }
+}
+
+- (void)notificationCenterEndEditingNoteForModeConceptCollectionViewCell:(NSNotification *)notification
+{
+    IAEEditModeConceptCollectionViewCell *cell = notification.object;
+    if (cell) {
+        IAEConcept *concept = [self findConceptOfCell:cell];
+        NSString *noteForConcept = notification.userInfo[@"note"];
+        if (![concept.detailDescription isEqualToString:noteForConcept]) {
+            concept.detailDescription = noteForConcept;
+            [[IAEBook sharedBook] saveAll];
+        }
     }
 }
 

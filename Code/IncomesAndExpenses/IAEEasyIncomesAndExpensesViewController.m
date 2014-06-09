@@ -86,6 +86,8 @@ static NSString * const kNotificationDayModeOnName = @"dayModeToOn";
 static NSString * const kNotificationDayModeOffName = @"dayModeToOff";
 static NSString * const kNotificationInitialMonthChanged = @"initialMonthChange";
 static NSString * const kNotificationMainLabelTitleTouched = @"mainLabelTitleTouched";
+static NSString * const kNotificationKeyboardResignFromEditingConceptsNotes = @"KeyboardResignFromEditingConceptsNotes";
+static NSString * const kNotificationKeyboardSignForEditingConceptsNotes = @"KeyboardSignForEditingConceptsNotes";
 
 static NSString * const kLTextModeSegmentedControlEditMode = @"LTEXT_MODESEGMENTEDCONTROL_EDITMODE";
 static NSString * const kLTextModeSegmentedControlReportMode = @"LTEXT_MODESEGMENTEDCONTROL_REPORTMODE";
@@ -184,6 +186,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 @property (nonatomic) MonthSelectorPurpose monthSelectorPurpose;
 @property (nonatomic, strong) IAEContextMenuActionSheetViewController *contextMenuActionSheetViewController;
 @property (nonatomic) BOOL waitingToConfirmRemoveAllConcepts;
+@property (nonatomic) BOOL noteModeWasActivatedWithoutCalculator;
 
 @end
 
@@ -338,7 +341,18 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(notificationCenterMainNavitationTitleTouched:)
-                                                 name:kNotificationMainLabelTitleTouched object:nil];
+                                                 name:kNotificationMainLabelTitleTouched
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notificationCenterKeyboardResignFromEditingConceptsNotes:)
+                                                 name:kNotificationKeyboardResignFromEditingConceptsNotes
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notificationCenterKeyboardSignForEditingConceptsNotes:)
+                                                 name:kNotificationKeyboardSignForEditingConceptsNotes
+                                               object:nil];
 }
 
 - (void)initContextMenuView
@@ -2668,6 +2682,22 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 {
     [self.yearSelectorViewController closeButtonPressed:nil];
     [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
+}
+
+- (void)notificationCenterKeyboardResignFromEditingConceptsNotes:(NSNotification *)notification
+{
+    if ([self isNoteModeActiveInConcepts] && self.noteModeWasActivatedWithoutCalculator) {
+        [self.calculatorViewController hide];
+        self.noteModeWasActivatedWithoutCalculator = NO;
+    }
+}
+
+- (void)notificationCenterKeyboardSignForEditingConceptsNotes:(NSNotification *)notification
+{
+    if ([self isCalculatorInHideMode]) {
+        self.noteModeWasActivatedWithoutCalculator = YES;
+        [self.calculatorViewController incomeButtonPressed:self];
+    }
 }
 
 #pragma mark - IAEDayCalendarSelectorViewControllerDelegate

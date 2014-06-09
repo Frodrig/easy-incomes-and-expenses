@@ -694,6 +694,8 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"KeyboardSignForEditingConceptsNotes" object:self];
+
     return YES;
 }
 
@@ -708,6 +710,7 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
 {
     [self cleanStartAndEndSpacesFromTextField];
     [self endEditing:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"KeyboardResignFromEditingConceptsNotes" object:self];
     
     return YES;
 }

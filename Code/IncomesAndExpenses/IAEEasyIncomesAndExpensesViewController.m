@@ -1807,8 +1807,11 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 {
     if (longPressureGestureRecognizer.state == UIGestureRecognizerStateBegan) {
         if (!self.longTapEditModeConceptCollectionViewCell) {
-            self.longTapEditModeConceptCollectionViewCell = [self findConceptCellUnderLocationOfGestureRecognizer:longPressureGestureRecognizer];
-            [self.longTapEditModeConceptCollectionViewCell changeToNoteModeWithAnimation:YES];
+            IAEEditModeConceptCollectionViewCell *cell = [self findConceptCellUnderLocationOfGestureRecognizer:longPressureGestureRecognizer];
+            if ([cell isNoteDescriptionPresent]) {
+                self.longTapEditModeConceptCollectionViewCell = cell;
+                [self.longTapEditModeConceptCollectionViewCell changeToNoteModeWithAnimation:YES];
+            }
         }
     } else if (longPressureGestureRecognizer.state == UIGestureRecognizerStateEnded) {
         if (self.longPressureConceptsGestureRecognizer) {

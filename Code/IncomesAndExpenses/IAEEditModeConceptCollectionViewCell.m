@@ -53,7 +53,7 @@ static const CGFloat kMinAlphaInNoteForStarSymbol = 0;
 static const CGFloat kMinAlphaInNoteForCategoryLabel = 0.0;
 static const CGFloat kMinAlphaInNoteForDayNumberEntryLabel = 0.0;
 static const CGFloat kMinAlphaInNoteForDecorator = 1.0;
-static const CGFloat kMinAlphaInNoteForAmountLabel = 1;
+static const CGFloat kMinAlphaInNoteForAmountLabel = 0;
 
 static const NSUInteger kNoteTextFieldWidthMargin = 40;
 
@@ -69,6 +69,8 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
 @property (weak, nonatomic) IBOutlet UILabel *optionMoveLabel;
 @property (weak, nonatomic) IBOutlet UITextField *noteTextField;
 @property (weak, nonatomic) IBOutlet UIView *dayAndOrderLabel;
+@property (weak, nonatomic) IBOutlet UILabel *noteAmountIndicator;
+@property (weak, nonatomic) IBOutlet UILabel *noteCategoryIndicator;
 @property (nonatomic, readwrite) GlobalModeType globalModeType;
 @property (nonatomic, readwrite, getter = isInStrokeState) BOOL strokeState;
 @property (nonatomic, readwrite) BOOL menuModeActive;
@@ -112,6 +114,7 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
 {
     _globalModeType = GlobalModeTypeData;
     self.noteTextField.delegate = self;
+    self.noteTextField.placeholder = NSLocalizedString(@"LTEXT_CONCEPT_NOTETEXTFIELD_PLACEHOLDERTEXT", @"");
     [self localizedSubmenuOptionLabels];
 }
 
@@ -195,6 +198,9 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
     self.categoryLabel.attributedText = [[NSAttributedString alloc] initWithString:name
                                                                             attributes:categoryNameLabelAttributes];
     self.categoryLabel.numberOfLines = 2;
+    
+    self.noteCategoryIndicator.text = name;
+    self.noteCategoryIndicator.textColor = [UIColor blackColor];
 }
 
 - (void)configureAmountLabelWithValue:(NSString *)valueString andColor:(UIColor *)color
@@ -203,6 +209,9 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
                                                                                                size:kConceptAmountLabelFontFamilySize
                                                                                            andColor:color];
     self.amountLabel.attributedText = [[NSAttributedString alloc] initWithString:valueString attributes:amountLabelAttributes];
+    
+    self.noteAmountIndicator.text = valueString;
+    self.noteAmountIndicator.textColor = color;
 }
 
 - (NSDictionary *)createAttributeDictionaryForConceptCellWithFontName:(NSString *)fontFamily
@@ -636,6 +645,8 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
     self.containerScrollView.userInteractionEnabled = NO;
     [UIView animateWithDuration:animation ? 0.25 : 0 animations:^{
         self.noteTextField.alpha = 1.0;
+        self.noteAmountIndicator.alpha = 1.0;
+        self.noteCategoryIndicator.alpha = 1.0;
         self.starContainerView.alpha = kMinAlphaInNoteForStarSymbol;
         self.categoryAndDecoratorContentInformationView.alpha = kMinAlphaInNoteForDecorator;
         self.amountLabel.alpha = kMinAlphaInNoteForAmountLabel;
@@ -651,6 +662,8 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
     self.containerScrollView.userInteractionEnabled = YES;
     [UIView animateWithDuration:animation ? 0.25 : 0 animations:^{
         self.noteTextField.alpha = 0;
+        self.noteAmountIndicator.alpha = 0;
+        self.noteCategoryIndicator.alpha = 0;
         self.starContainerView.alpha = self.favoritePinEnabled ? kEnableAlphaValueForFavoritePin : kDisableAlphaValueForFavoritePin;
         self.categoryAndDecoratorContentInformationView.alpha = 1;
         self.amountLabel.alpha = 1;
@@ -670,6 +683,8 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
     self.dayAndOrderLabel.alpha = MAX(kMinAlphaInNoteForDayNumberEntryLabel, self.dayAndOrderLabel.alpha - percentage);
     
     self.noteTextField.alpha = MIN(1.0, self.noteTextField.alpha + percentage);
+    self.noteAmountIndicator.alpha = self.noteTextField.alpha;
+    self.noteCategoryIndicator.alpha = self.noteTextField.alpha;
 }
 
 - (void)updateChangeToDataMode:(CGFloat)percentage
@@ -677,7 +692,9 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
     self.globalModeType = GlobalModeTypeUpdating;
     
     self.noteTextField.alpha = MAX(0.0 ,self.noteTextField.alpha - percentage);
-    
+    self.noteAmountIndicator.alpha = self.noteTextField.alpha;
+    self.noteCategoryIndicator.alpha = self.noteTextField.alpha;
+
     self.starContainerView.alpha = MIN(self.favoritePinEnabled ? kEnableAlphaValueForFavoritePin : kDisableAlphaValueForFavoritePin, self.starContainerView.alpha + percentage);
     self.categoryAndDecoratorContentInformationView.alpha = MIN(1.0, self.categoryAndDecoratorContentInformationView.alpha + percentage);
     self.amountLabel.alpha = MIN(1.0, self.amountLabel.alpha + percentage);

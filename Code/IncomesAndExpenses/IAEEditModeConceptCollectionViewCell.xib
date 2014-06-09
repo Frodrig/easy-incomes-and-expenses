@@ -106,13 +106,28 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </scrollView>
-                    <textField opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="center" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Pulsa aquí para escribir una descripción" adjustsFontSizeToFit="NO" minimumFontSize="17" clearButtonMode="whileEditing" id="mjb-9s-QKT" userLabel="Note - UITextField">
-                        <rect key="frame" x="49" y="34" width="460" height="30"/>
+                    <textField opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="center" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" clearButtonMode="whileEditing" id="mjb-9s-QKT" userLabel="Note Description - UITextField">
+                        <rect key="frame" x="50" y="18" width="874" height="44"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <nil key="textColor"/>
-                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="21"/>
-                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="34"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                     </textField>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YnV-jM-PM6" userLabel="Note Amount - Label">
+                        <rect key="frame" x="599" y="69" width="320" height="24"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="28"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Qzj-MQ-VTa" userLabel="Note Category - Label">
+                        <rect key="frame" x="50" y="69" width="528" height="24"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="20"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -125,6 +140,8 @@
                 <outlet property="containerScrollView" destination="2c2-si-b4E" id="ufe-Jv-XDh"/>
                 <outlet property="dayAndOrderLabel" destination="0jx-Qr-cEo" id="IRd-tl-ZpL"/>
                 <outlet property="identifierContainerView" destination="0jx-Qr-cEo" id="e3U-B0-Uj6"/>
+                <outlet property="noteAmountIndicator" destination="YnV-jM-PM6" id="Vku-n2-ptN"/>
+                <outlet property="noteCategoryIndicator" destination="Qzj-MQ-VTa" id="bQH-ab-cVD"/>
                 <outlet property="noteTextField" destination="mjb-9s-QKT" id="WY2-QJ-BZO"/>
                 <outlet property="optionCopyLabel" destination="xQF-Xb-xt2" id="l6a-Xg-NXW"/>
                 <outlet property="optionDuplicateLabel" destination="nyY-ns-twb" id="vjH-MZ-DQq"/>

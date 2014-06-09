@@ -53,7 +53,7 @@ static const CGFloat kMinAlphaInNoteForStarSymbol = 0;
 static const CGFloat kMinAlphaInNoteForCategoryLabel = 0.0;
 static const CGFloat kMinAlphaInNoteForDayNumberEntryLabel = 0.0;
 static const CGFloat kMinAlphaInNoteForDecorator = 1.0;
-static const CGFloat kMinAlphaInNoteForTheRest = 0.5;
+static const CGFloat kMinAlphaInNoteForAmountLabel = 0.4;
 
 @interface IAEEditModeConceptCollectionViewCell()
 
@@ -630,7 +630,7 @@ static const CGFloat kMinAlphaInNoteForTheRest = 0.5;
         self.noteTextField.alpha = 1.0;
         self.starContainerView.alpha = kMinAlphaInNoteForStarSymbol;
         self.categoryAndDecoratorContentInformationView.alpha = kMinAlphaInNoteForDecorator;
-        self.amountLabel.alpha = kMinAlphaInNoteForTheRest;
+        self.amountLabel.alpha = kMinAlphaInNoteForAmountLabel;
         self.dayAndOrderLabel.alpha = kMinAlphaInNoteForDayNumberEntryLabel;
         self.categoryLabel.alpha = kMinAlphaInNoteForCategoryLabel;
     }];
@@ -657,7 +657,7 @@ static const CGFloat kMinAlphaInNoteForTheRest = 0.5;
   
     self.starContainerView.alpha = MAX(kMinAlphaInNoteForStarSymbol, self.starContainerView.alpha - percentage);
     self.categoryAndDecoratorContentInformationView.alpha = MAX(kMinAlphaInNoteForDecorator, self.categoryAndDecoratorContentInformationView.alpha - percentage);
-    self.amountLabel.alpha = MAX(kMinAlphaInNoteForTheRest, self.amountLabel.alpha - percentage);
+    self.amountLabel.alpha = MAX(kMinAlphaInNoteForAmountLabel, self.amountLabel.alpha - percentage);
     self.categoryLabel.alpha = MAX(kMinAlphaInNoteForCategoryLabel, self.categoryLabel.alpha - percentage);
     self.dayAndOrderLabel.alpha = MAX(kMinAlphaInNoteForDayNumberEntryLabel, self.dayAndOrderLabel.alpha - percentage);
     

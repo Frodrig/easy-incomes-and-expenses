@@ -53,7 +53,7 @@ static const CGFloat kMinAlphaInNoteForStarSymbol = 0;
 static const CGFloat kMinAlphaInNoteForCategoryLabel = 0.0;
 static const CGFloat kMinAlphaInNoteForDayNumberEntryLabel = 0.0;
 static const CGFloat kMinAlphaInNoteForDecorator = 1.0;
-static const CGFloat kMinAlphaInNoteForAmountLabel = 0.4;
+static const CGFloat kMinAlphaInNoteForAmountLabel = 1;
 
 static const NSUInteger kNoteTextFieldWidthMargin = 40;
 

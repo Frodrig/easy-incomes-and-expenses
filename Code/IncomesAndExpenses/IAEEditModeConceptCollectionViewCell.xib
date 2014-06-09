@@ -106,11 +106,11 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </scrollView>
-                    <textField opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="center" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Pulsa aquí para escribir una nota" adjustsFontSizeToFit="NO" minimumFontSize="17" clearButtonMode="always" id="mjb-9s-QKT" userLabel="Note - UITextField">
-                        <rect key="frame" x="49" y="34" width="878" height="44"/>
+                    <textField opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="center" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Pulsa aquí para escribir una descripción" adjustsFontSizeToFit="NO" minimumFontSize="17" clearButtonMode="whileEditing" id="mjb-9s-QKT" userLabel="Note - UITextField">
+                        <rect key="frame" x="49" y="34" width="460" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <nil key="textColor"/>
-                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="32"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="21"/>
                         <textInputTraits key="textInputTraits" returnKeyType="done"/>
                     </textField>
                 </subviews>

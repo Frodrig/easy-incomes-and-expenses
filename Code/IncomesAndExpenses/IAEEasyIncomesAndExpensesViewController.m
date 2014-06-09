@@ -1029,7 +1029,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     return self.contextMenuView.currentOptionIndexSelected == kGlobalIndexForYearInContextScrollView ? YES : NO;
 }
 
-- (BOOL)isNoteModeActiveInConcepts;
+- (BOOL)isNoteModeActiveInConcepts
 {
     const GlobalModeType globalModeType = [self findGlobalModeTypeForConceptsEditMode];
     return globalModeType == GlobalModeTypeNote;
@@ -1776,37 +1776,47 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)pinchOnConceptsCollectionView:(UIPinchGestureRecognizer *)pinchGestureRecognizer
 {
-    if (pinchGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        [self beginPinchForConceptsCollectionView];
-    }
-    
-    if (pinchGestureRecognizer.state == UIGestureRecognizerStateBegan ||
-        pinchGestureRecognizer.state == UIGestureRecognizerStateChanged) {
-        [self updateVisibleConceptsCollectionViewCellsForChangeToAppropiateModeWithPinchGestureRecognizer:pinchGestureRecognizer];
-    } else if (pinchGestureRecognizer.state == UIGestureRecognizerStateEnded) {
-        GlobalModeType globalModeType = [self findGlobalModeTypeForConceptsEditMode];
-        if (globalModeType != GlobalModeTypeNone) {
-            IAEEditModeConceptCollectionViewCell *cell = self.conceptsCollectionView.visibleCells[0];
-            const GlobalModeType cellGlobalModeTypeData = [cell findGlobalModeTypeIfUpdatingEndsRightNow];
-            if (cellGlobalModeTypeData == GlobalModeTypeData) {
-                [self.conceptsCollectionView.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                    IAEEditModeConceptCollectionViewCell *cell = obj;
-                    [cell changeToDataModeWithAnimation:YES];
-                }];
-            } else if (cellGlobalModeTypeData == GlobalModeTypeNote) {
-                [self.conceptsCollectionView.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                    IAEEditModeConceptCollectionViewCell *cell = obj;
-                    [cell changeToNoteModeWithAnimation:YES];
-                }];
-            } else if (cellGlobalModeTypeData == GlobalModeTypeUpdating) {
-                NSAssert(0, @"No deberia de darse nunca esgte caso");
-            }
+    if ([self canExecutePinchOnConceptsColletionView]) {
+        if (pinchGestureRecognizer.state == UIGestureRecognizerStateBegan) {
+            [self beginPinchForConceptsCollectionView];
         }
         
-        [self endPinchForConceptsCollectionView];
+        if (pinchGestureRecognizer.state == UIGestureRecognizerStateBegan ||
+            pinchGestureRecognizer.state == UIGestureRecognizerStateChanged) {
+            [self updateVisibleConceptsCollectionViewCellsForChangeToAppropiateModeWithPinchGestureRecognizer:pinchGestureRecognizer];
+        } else if (pinchGestureRecognizer.state == UIGestureRecognizerStateEnded) {
+            GlobalModeType globalModeType = [self findGlobalModeTypeForConceptsEditMode];
+            if (globalModeType != GlobalModeTypeNone) {
+                IAEEditModeConceptCollectionViewCell *cell = self.conceptsCollectionView.visibleCells[0];
+                const GlobalModeType cellGlobalModeTypeData = [cell findGlobalModeTypeIfUpdatingEndsRightNow];
+                if (cellGlobalModeTypeData == GlobalModeTypeData) {
+                    [self.conceptsCollectionView.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                        IAEEditModeConceptCollectionViewCell *cell = obj;
+                        [cell changeToDataModeWithAnimation:YES];
+                    }];
+                } else if (cellGlobalModeTypeData == GlobalModeTypeNote) {
+                    [self.conceptsCollectionView.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                        IAEEditModeConceptCollectionViewCell *cell = obj;
+                        [cell changeToNoteModeWithAnimation:YES];
+                    }];
+                } else if (cellGlobalModeTypeData == GlobalModeTypeUpdating) {
+                    NSAssert(0, @"No deberia de darse nunca esgte caso");
+                }
+            }
+            
+            [self endPinchForConceptsCollectionView];
+        }
+        
+        pinchGestureRecognizer.scale = 1;
     }
+}
+
+- (BOOL)canExecutePinchOnConceptsColletionView
+{
+    const BOOL can = ![self isActualSelectedContextTheYearOpen] &&
+                     [self existConceptsInActualSelectedContext];
     
-    pinchGestureRecognizer.scale = 1;
+    return can;
 }
 
 - (void)beginPinchForConceptsCollectionView
@@ -1875,6 +1885,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 - (BOOL)canDoLeftSwipeOnConceptsCollectionViewCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
     const BOOL can = [self isActualSelectedContextAMonth] &&
+                     ![self isNoteModeActiveInConcepts] &&
                      ![self.calculatorViewController isAnyTranslationActive] &&
                      !self.conceptCellToRemove &&
                      !cell.menuModeActive &&
@@ -1903,6 +1914,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 - (BOOL)canDoRightSwipeOnConceptsCollectionView
 {
     const BOOL can = [self isActualSelectedContextAMonth] &&
+                     ![self isNoteModeActiveInConcepts] &&
                      ![self.calculatorViewController isAnyTranslationActive] &&
                      !self.conceptCellToRemove;
     
@@ -1936,7 +1948,8 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (BOOL)canTapOnConceptCollectionViewCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
-    const BOOL can = ![self.calculatorViewController isAnyTranslationActive];
+    const BOOL can = ![self.calculatorViewController isAnyTranslationActive] &&
+                     ![self isNoteModeActiveInConcepts];
     
     return can;
 }

@@ -699,19 +699,38 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
+    [self cleanStartAndEndSpacesFromTextField];
+    
     return YES;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    [self cleanStartAndEndSpacesFromTextField];
+    [self endEditing:YES];
+    
     return YES;
+}
+
+- (void)cleanStartAndEndSpacesFromTextField
+{
+    if (self.noteTextField.text) {
+        self.noteTextField.text = [self.noteTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    }
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    NSString *newText = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    CGSize sizeOfNewText = [newText sizeWithAttributes:textField.defaultTextAttributes];
-    return sizeOfNewText.width < CGRectGetWidth(textField.frame) - kNoteTextFieldWidthMargin;
+    return [self spaceAvailableForCharactersInRange:range withReplacementString:string];
+}
+
+- (BOOL)spaceAvailableForCharactersInRange:(NSRange)range withReplacementString:(NSString *)string
+{
+    NSString *newText = [self.noteTextField.text stringByReplacingCharactersInRange:range withString:string];
+    CGSize sizeOfNewText = [newText sizeWithAttributes:self.noteTextField.defaultTextAttributes];
+    const BOOL spaceAvailable = sizeOfNewText.width < CGRectGetWidth(self.noteTextField.frame) - kNoteTextFieldWidthMargin;
+    
+    return spaceAvailable;
 }
 
 @end

@@ -139,6 +139,7 @@ static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
     [cell setTagWithIndex:index];
     [cell configureCategoryLabelWithName:[category localizedTag]];
     [cell configureAmountLabelWithValue:amountWithSignString andColor:colorForEconomicValueType];
+    [cell configureNoteLabelWithValue:concept.detailDescription];
     [self configureIdentifierOfConceptCell:cell atIndexPath:indexPath withIndex:instantEntryIndex];
     [self configureFavoritePinOfConceptCell:cell withConcept:concept];
     [self configureDataOrNoteModeForCell:cell];

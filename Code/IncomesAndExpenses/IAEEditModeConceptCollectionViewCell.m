@@ -50,9 +50,10 @@ static const CGFloat kDisableAlphaValueForFavoritePin = 0.3;
 static const CGFloat kEnableAlphaValueForFavoritePin = 1.0;
 
 static const CGFloat kMinAlphaInNoteForStarSymbol = 0;
-static const CGFloat kMinAlphaInNoteForCategoryLabel = 0.2;
+static const CGFloat kMinAlphaInNoteForCategoryLabel = 0.0;
+static const CGFloat kMinAlphaInNoteForDayNumberEntryLabel = 0.0;
 static const CGFloat kMinAlphaInNoteForDecorator = 1.0;
-static const CGFloat kMinAlphaInNoteForTheRest = 0.3;
+static const CGFloat kMinAlphaInNoteForTheRest = 0.5;
 
 @interface IAEEditModeConceptCollectionViewCell()
 
@@ -630,7 +631,7 @@ static const CGFloat kMinAlphaInNoteForTheRest = 0.3;
         self.starContainerView.alpha = kMinAlphaInNoteForStarSymbol;
         self.categoryAndDecoratorContentInformationView.alpha = kMinAlphaInNoteForDecorator;
         self.amountLabel.alpha = kMinAlphaInNoteForTheRest;
-        self.dayAndOrderLabel.alpha = kMinAlphaInNoteForTheRest;
+        self.dayAndOrderLabel.alpha = kMinAlphaInNoteForDayNumberEntryLabel;
         self.categoryLabel.alpha = kMinAlphaInNoteForCategoryLabel;
     }];
 }
@@ -658,7 +659,7 @@ static const CGFloat kMinAlphaInNoteForTheRest = 0.3;
     self.categoryAndDecoratorContentInformationView.alpha = MAX(kMinAlphaInNoteForDecorator, self.categoryAndDecoratorContentInformationView.alpha - percentage);
     self.amountLabel.alpha = MAX(kMinAlphaInNoteForTheRest, self.amountLabel.alpha - percentage);
     self.categoryLabel.alpha = MAX(kMinAlphaInNoteForCategoryLabel, self.categoryLabel.alpha - percentage);
-    self.dayAndOrderLabel.alpha = MAX(kMinAlphaInNoteForTheRest, self.dayAndOrderLabel.alpha - percentage);
+    self.dayAndOrderLabel.alpha = MAX(kMinAlphaInNoteForDayNumberEntryLabel, self.dayAndOrderLabel.alpha - percentage);
     
     self.noteTextField.alpha = MIN(1.0, self.noteTextField.alpha + percentage);
 }

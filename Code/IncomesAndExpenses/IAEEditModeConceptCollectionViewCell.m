@@ -707,6 +707,7 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
     [self cleanStartAndEndSpacesFromTextField];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"EndEditingNoteForModeConceptCollectionViewCell" object:self userInfo:@{@"note" : textField.text}];
     
     return YES;
 }

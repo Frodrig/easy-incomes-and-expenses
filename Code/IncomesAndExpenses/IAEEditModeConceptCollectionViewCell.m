@@ -55,7 +55,9 @@ static const CGFloat kMinAlphaInNoteForDayNumberEntryLabel = 0.0;
 static const CGFloat kMinAlphaInNoteForDecorator = 1.0;
 static const CGFloat kMinAlphaInNoteForAmountLabel = 0.4;
 
-@interface IAEEditModeConceptCollectionViewCell()
+static const NSUInteger kNoteTextFieldWidthMargin = 40;
+
+@interface IAEEditModeConceptCollectionViewCell()<UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *categoryAndDecoratorContentInformationView;
 @property (weak, nonatomic) IBOutlet UILabel *amountLabel;
@@ -109,6 +111,7 @@ static const CGFloat kMinAlphaInNoteForAmountLabel = 0.4;
 - (void)awakeFromNib
 {
     _globalModeType = GlobalModeTypeData;
+    self.noteTextField.delegate = self;
     [self localizedSubmenuOptionLabels];
 }
 
@@ -685,6 +688,30 @@ static const CGFloat kMinAlphaInNoteForAmountLabel = 0.4;
     }
     
     return globalMode;
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    return YES;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString *newText = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    CGSize sizeOfNewText = [newText sizeWithAttributes:textField.defaultTextAttributes];
+    return sizeOfNewText.width < CGRectGetWidth(textField.frame) - kNoteTextFieldWidthMargin;
 }
 
 @end

@@ -106,7 +106,7 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </scrollView>
-                    <textField opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="center" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="jjjjjj" adjustsFontSizeToFit="NO" minimumFontSize="17" clearButtonMode="always" id="mjb-9s-QKT" userLabel="Note - UITextField">
+                    <textField opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="center" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Pulsa aquí para escribir una nota" adjustsFontSizeToFit="NO" minimumFontSize="17" clearButtonMode="always" id="mjb-9s-QKT" userLabel="Note - UITextField">
                         <rect key="frame" x="49" y="34" width="860" height="44"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <nil key="textColor"/>

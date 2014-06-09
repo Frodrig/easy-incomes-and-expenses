@@ -2697,6 +2697,8 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     if ([self isCalculatorInHideMode]) {
         self.noteModeWasActivatedWithoutCalculator = YES;
         [self.calculatorViewController incomeButtonPressed:self];
+    } else {
+        self.noteModeWasActivatedWithoutCalculator = NO;
     }
 }
 

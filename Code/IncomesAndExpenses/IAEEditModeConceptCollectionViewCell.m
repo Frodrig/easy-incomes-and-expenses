@@ -12,6 +12,7 @@
 #import "NSNumber+DefaultValues.h"
 #import "NSString+TwoDigitString.h"
 #import "UIView+FloatingAnimation.h"
+#import "NSUserDefaults+EasyIncAndExp.h"
 
 #pragma mark - Constants
 
@@ -129,7 +130,10 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
 
 - (void)updateVisibilityOfNotePresentIndicator
 {
-    self.notePresentIndicatorImageView.hidden = self.noteTextField.text.length > 0 ? NO : YES;
+    self.notePresentIndicatorImageView.hidden = [[NSUserDefaults standardUserDefaults] isProVersionDisabled];
+    if (!self.notePresentIndicatorImageView.hidden) {
+        self.notePresentIndicatorImageView.hidden = self.noteTextField.text.length > 0 ? NO : YES;
+    }
 }
 
 - (void)prepareForReuse

@@ -2937,7 +2937,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     if ([self isDayModeActiveForConcepts]) {
         [self reloadConceptsCollectionViewWithDayModeAfterCreateNewConcept:concept];
     } else {
-        [self reloadConceptsCollectionViewWithoutDayModeAfterCreateNewConcept];
+        [self reloadConceptsCollectionViewWithoutDayModeAfterCreateNewConcept:concept];
     }
 }
 
@@ -2991,10 +2991,15 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     }
 }
 
-- (void)reloadConceptsCollectionViewWithoutDayModeAfterCreateNewConcept
+- (void)reloadConceptsCollectionViewWithoutDayModeAfterCreateNewConcept:(IAEConcept *)concept
 {
-    [self.conceptsCollectionView scrollRectToVisible:CGRectMake(0, 0, self.conceptsCollectionView.bounds.size.width, self.conceptsCollectionView.bounds.size.height) animated:NO];
-    [self.conceptsCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]];
+    IAEMonth *month = [self findActualSelectedMonth];
+    NSAssert(month, @"");
+    NSUInteger indexOfConcept = [[month allConceptsSortedByEntryInstant] indexOfObject:concept];
+    NSAssert(indexOfConcept != NSNotFound, @"");
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:indexOfConcept inSection:0];
+    [self.conceptsCollectionView insertItemsAtIndexPaths:@[indexPath]];
+    [self.conceptsCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
 }
 
 #pragma mark - IAEContextMenuActionSheetViewControllerDelegate

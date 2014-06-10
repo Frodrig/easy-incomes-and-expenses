@@ -369,7 +369,6 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
                                                object:nil];
 }
 
-
 - (void)initContextMenuView
 {
     _contextMenuView = [[IAETextRawSelectorMenuView alloc] init];
@@ -1856,24 +1855,31 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
             pinchGestureRecognizer.state == UIGestureRecognizerStateChanged) {
             [self updateVisibleConceptsCollectionViewCellsForChangeToAppropiateModeWithPinchGestureRecognizer:pinchGestureRecognizer];
         } else if (pinchGestureRecognizer.state == UIGestureRecognizerStateEnded) {
-            GlobalModeType globalModeType = [self findGlobalModeTypeForConceptsEditMode];
-            if (globalModeType != GlobalModeTypeNone) {
-                IAEEditModeConceptCollectionViewCell *cell = self.conceptsCollectionView.visibleCells[0];
-                const GlobalModeType cellGlobalModeTypeData = [cell findGlobalModeTypeIfUpdatingEndsRightNow];
-                if (cellGlobalModeTypeData == GlobalModeTypeData) {
-                    [self changeVisibleConceptsCollectionViewCellsToDataModeWithAnimation:YES];
-                } else if (cellGlobalModeTypeData == GlobalModeTypeNote) {
-                    [self changeVisibleConceptsCollectionViewCellsToNoteModeWithAnimation:YES];
-                } else if (cellGlobalModeTypeData == GlobalModeTypeUpdating) {
-                    NSAssert(0, @"No deberia de darse nunca esgte caso");
-                }
-            }
-            
-            [self endPinchForConceptsCollectionView];
+            [self releaseCurrentPinchGestureRecognizerIfAppropiate];
         }
         
         pinchGestureRecognizer.scale = 1;
     }
+}
+
+- (void)releaseCurrentPinchGestureRecognizerIfAppropiate
+{
+    self.noteModeWasActivatedWithoutCalculator = NO;
+    
+    GlobalModeType globalModeType = [self findGlobalModeTypeForConceptsEditMode];
+    if (globalModeType != GlobalModeTypeNone) {
+        IAEEditModeConceptCollectionViewCell *cell = self.conceptsCollectionView.visibleCells[0];
+        const GlobalModeType cellGlobalModeTypeData = [cell findGlobalModeTypeIfUpdatingEndsRightNow];
+        if (cellGlobalModeTypeData == GlobalModeTypeData) {
+            [self changeVisibleConceptsCollectionViewCellsToDataModeWithAnimation:YES];
+        } else if (cellGlobalModeTypeData == GlobalModeTypeNote) {
+            [self changeVisibleConceptsCollectionViewCellsToNoteModeWithAnimation:YES];
+        } else if (cellGlobalModeTypeData == GlobalModeTypeUpdating) {
+            NSAssert(0, @"No deberia de darse nunca esgte caso");
+        }
+    }
+    
+    [self endPinchForConceptsCollectionView];
 }
 
 - (BOOL)canExecutePinchOnConceptsColletionView
@@ -1917,6 +1923,14 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     [self.conceptsCollectionView.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         IAEEditModeConceptCollectionViewCell *cell = obj;
         [cell updateChangeToDataMode:1.0 - pinchGestureRecognizer.scale];
+    }];
+}
+
+- (void)updateVisibleConceptsCollectionViewCellsChangeToDataMode
+{
+    [self.conceptsCollectionView.visibleCells enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        IAEEditModeConceptCollectionViewCell *cell = obj;
+        [cell changeToDataModeWithAnimation:YES];
     }];
 }
 
@@ -2746,6 +2760,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 {
     if ([self isNoteModeActiveInConcepts] && self.noteModeWasActivatedWithoutCalculator) {
         [self.calculatorViewController hide];
+        [self updateVisibleConceptsCollectionViewCellsChangeToDataMode];
         self.noteModeWasActivatedWithoutCalculator = NO;
     }
 }
@@ -2756,7 +2771,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
         self.noteModeWasActivatedWithoutCalculator = YES;
         [self.calculatorViewController incomeButtonPressed:self];
     } else {
-        self.noteModeWasActivatedWithoutCalculator = NO;
+        
     }
 }
 

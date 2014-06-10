@@ -1814,11 +1814,18 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)longPressureOnConceptsCollectionView:(UILongPressGestureRecognizer *)longPressureGestureRecognizer
 {
-    if (longPressureGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        [self acquiresLongPressureOnConceptsCollectionViewFromGesture:longPressureGestureRecognizer];
-    } else if (longPressureGestureRecognizer.state == UIGestureRecognizerStateEnded) {
-        [self releaseLongPressureOnConceptsCollectionView];
+    if ([self canExecuteLongPressureOnConceptsCollectionView]) {
+        if (longPressureGestureRecognizer.state == UIGestureRecognizerStateBegan) {
+            [self acquiresLongPressureOnConceptsCollectionViewFromGesture:longPressureGestureRecognizer];
+        } else if (longPressureGestureRecognizer.state == UIGestureRecognizerStateEnded) {
+            [self releaseLongPressureOnConceptsCollectionView];
+        }
     }
+}
+
+- (BOOL)canExecuteLongPressureOnConceptsCollectionView
+{
+    return [[NSUserDefaults standardUserDefaults] isProVersionEnabled];
 }
 
 - (void)acquiresLongPressureOnConceptsCollectionViewFromGesture:(UILongPressGestureRecognizer *)longPressureGestureRecognizer
@@ -1885,7 +1892,8 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 - (BOOL)canExecutePinchOnConceptsColletionView
 {
     const BOOL can = ![self isActualSelectedContextTheYearOpen] &&
-                     [self existConceptsInActualSelectedContext];
+                     [self existConceptsInActualSelectedContext] &&
+                     [[NSUserDefaults standardUserDefaults] isProVersionEnabled];
     
     return can;
 }

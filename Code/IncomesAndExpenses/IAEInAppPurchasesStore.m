@@ -80,7 +80,7 @@ static NSString * const kInAppPurchaseProVersionIdentifier = @"proversion.easyin
                     break;
             }
 
-            //self.paymentCompletionBlock = self.restoreCompletionBlock = nil;
+            self.paymentCompletionBlock = self.restoreCompletionBlock = nil;
         }
     }
 }
@@ -91,7 +91,10 @@ static NSString * const kInAppPurchaseProVersionIdentifier = @"proversion.easyin
 
 - (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error
 {
-    self.restoreCompletionBlock(error);
+    if (self.restoreCompletionBlock) {
+        self.restoreCompletionBlock(error);
+    }
+    
     self.paymentCompletionBlock = self.restoreCompletionBlock = nil;
 }
 
@@ -106,9 +109,9 @@ static NSString * const kInAppPurchaseProVersionIdentifier = @"proversion.easyin
     //   - Make sure the product purchase is what must be
     // If the purchase is correct then, enableProVersion
     
-    
-    
-    completionBlock(error);
+    if (completionBlock) {
+        completionBlock(error);
+    }
 }
 
 - (void)finishTransactionFailedWithPaymentTransaction:(SKPaymentTransaction *)paymentTransacction

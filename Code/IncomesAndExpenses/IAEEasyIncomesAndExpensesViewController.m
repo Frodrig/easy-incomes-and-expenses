@@ -1833,6 +1833,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     if (!self.longTapEditModeConceptCollectionViewCell) {
         IAEEditModeConceptCollectionViewCell *cell = [self findConceptCellUnderLocationOfGestureRecognizer:longPressureGestureRecognizer];
         if ([cell isNoteDescriptionPresent]) {
+            [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
             self.longTapEditModeConceptCollectionViewCell = cell;
             [self.longTapEditModeConceptCollectionViewCell changeToNoteModeWithAnimation:YES];
         }

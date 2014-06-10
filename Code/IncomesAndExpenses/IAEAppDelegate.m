@@ -48,11 +48,21 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
     [self processFixes];
     [self createYearBookIfProceed];
     [self createWindowRootLaunchingViewControllerAndMakeVisible];
-    
-    // Precargamos en la inicializacion
+
+    // Precargamos
+    [self preloadKeyboard];
     [IAECategoryStore sharedCategoryStore];
-    
+
     return YES;
+}
+
+- (void)preloadKeyboard
+{
+    UITextField *lagFreeField = [[UITextField alloc] init];
+    [self.window addSubview:lagFreeField];
+    [lagFreeField becomeFirstResponder];
+    [lagFreeField resignFirstResponder];
+    [lagFreeField removeFromSuperview];
 }
 
 - (void)processFixes

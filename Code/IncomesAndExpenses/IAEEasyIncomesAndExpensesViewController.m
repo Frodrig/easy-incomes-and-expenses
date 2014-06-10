@@ -190,7 +190,6 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 @property (nonatomic) BOOL waitingToConfirmRemoveAllConcepts;
 @property (nonatomic) BOOL noteModeWasActivatedWithoutCalculator;
 @property (nonatomic, weak) IAEEditModeConceptCollectionViewCell *longTapEditModeConceptCollectionViewCell;
-
 @end
 
 @implementation IAEEasyIncomesAndExpensesViewController

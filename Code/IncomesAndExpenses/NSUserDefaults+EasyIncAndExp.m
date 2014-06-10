@@ -39,7 +39,7 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
                                 kUserDefaultsProVersionKey : @(YES)};
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
     
-    //[self disableProVersion];
+    [self disableProVersion];
 }
 
 #pragma mark - ReportSection

@@ -84,9 +84,9 @@ static NSString * const kNotificationMainLabelTitleTouched = @"mainLabelTitleTou
 {
     CABasicAnimation *animationAlpha = [CABasicAnimation animationWithKeyPath:@"opacity"];
     animationAlpha.fromValue = @(1.0);
-    animationAlpha.toValue = @(0.5);
+    animationAlpha.toValue = @(0.0);
     animationAlpha.duration = 1.0;
-    animationAlpha.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    animationAlpha.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     animationAlpha.autoreverses = YES;
     animationAlpha.repeatCount = HUGE_VALF;
 

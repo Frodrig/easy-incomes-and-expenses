@@ -98,7 +98,7 @@ static const CGFloat kFadeInStateTime = 0.75;
 
 - (void)configureNavigationItem
 {
-    self.navItem.title = NSLocalizedString(@"LTEXT_MAINNAVIGATION_TITLE_NOPROVERSION", @"");
+    self.navItem.title = NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_TITLE", @"");
 }
 
 - (void)localizePurchaseRestoreContainerViewLabels

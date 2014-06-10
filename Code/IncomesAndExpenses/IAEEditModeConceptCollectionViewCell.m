@@ -671,6 +671,8 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
 
 - (void)changeToDataModeWithAnimation:(BOOL)animation
 {
+    [self.noteTextField resignFirstResponder];
+    
     self.globalModeType = GlobalModeTypeData;
     self.noteTextField.userInteractionEnabled = NO;
     self.containerScrollView.userInteractionEnabled = YES;
@@ -715,6 +717,10 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
     self.amountLabel.alpha = MIN(1.0, self.amountLabel.alpha + percentage);
     self.categoryLabel.alpha = MIN(1.0, self.categoryLabel.alpha + percentage);
     self.dayAndOrderLabel.alpha = MIN(1.0, self.dayAndOrderLabel.alpha + percentage);
+    
+    if (self.noteTextField.alpha == 0) {
+        [self.noteTextField resignFirstResponder];
+    }
 }
 
 - (GlobalModeType)findGlobalModeTypeIfUpdatingEndsRightNow

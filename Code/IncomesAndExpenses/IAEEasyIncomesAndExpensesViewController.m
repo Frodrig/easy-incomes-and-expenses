@@ -1806,18 +1806,28 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 - (void)longPressureOnConceptsCollectionView:(UILongPressGestureRecognizer *)longPressureGestureRecognizer
 {
     if (longPressureGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        if (!self.longTapEditModeConceptCollectionViewCell) {
-            IAEEditModeConceptCollectionViewCell *cell = [self findConceptCellUnderLocationOfGestureRecognizer:longPressureGestureRecognizer];
-            if ([cell isNoteDescriptionPresent]) {
-                self.longTapEditModeConceptCollectionViewCell = cell;
-                [self.longTapEditModeConceptCollectionViewCell changeToNoteModeWithAnimation:YES];
-            }
-        }
+        [self acquiresLongPressureOnConceptsCollectionViewFromGesture:longPressureGestureRecognizer];
     } else if (longPressureGestureRecognizer.state == UIGestureRecognizerStateEnded) {
-        if (self.longPressureConceptsGestureRecognizer) {
-            [self.longTapEditModeConceptCollectionViewCell changeToDataModeWithAnimation:YES];
-            self.longTapEditModeConceptCollectionViewCell = nil;
+        [self releaseLongPressureOnConceptsCollectionView];
+    }
+}
+
+- (void)acquiresLongPressureOnConceptsCollectionViewFromGesture:(UILongPressGestureRecognizer *)longPressureGestureRecognizer
+{
+    if (!self.longTapEditModeConceptCollectionViewCell) {
+        IAEEditModeConceptCollectionViewCell *cell = [self findConceptCellUnderLocationOfGestureRecognizer:longPressureGestureRecognizer];
+        if ([cell isNoteDescriptionPresent]) {
+            self.longTapEditModeConceptCollectionViewCell = cell;
+            [self.longTapEditModeConceptCollectionViewCell changeToNoteModeWithAnimation:YES];
         }
+    }
+}
+
+- (void)releaseLongPressureOnConceptsCollectionView
+{
+    if (self.longPressureConceptsGestureRecognizer) {
+        [self.longTapEditModeConceptCollectionViewCell changeToDataModeWithAnimation:YES];
+        self.longTapEditModeConceptCollectionViewCell = nil;
     }
 }
 

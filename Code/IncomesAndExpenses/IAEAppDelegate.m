@@ -47,11 +47,11 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
     [self processProcessInfoEnvironment];
     [self processFixes];
     [self createYearBookIfProceed];
-    [self createWindowRootLaunchingViewControllerAndMakeVisible];
-
     // Precargamos
     [self preloadKeyboard];
     [IAECategoryStore sharedCategoryStore];
+    
+    [self createWindowRootLaunchingViewControllerAndMakeVisible];
 
     return YES;
 }

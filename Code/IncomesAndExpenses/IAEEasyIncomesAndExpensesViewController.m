@@ -812,6 +812,8 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (IBAction)segmentedControlPressed:(UISegmentedControl *)sender
 {
+    [self releaseLongPressureOnConceptsCollectionView];
+
     if ([self isEditModeActive]) {
         [self updateAfterChangeToEditMode];
     } else if ([self isReportModeActive]) {

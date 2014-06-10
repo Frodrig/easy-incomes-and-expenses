@@ -13,7 +13,7 @@
 
 #pragma mark - Constants
 
-static NSString * const kInAppPurchaseProVersionIdentifier = @"com.easyincomesandexpenses.frodrig.proversion";
+static NSString * const kInAppPurchaseProVersionIdentifier = @"proversion.easyincomesandexpenses.frodrig.com";
 
 #pragma mark - Definition
 

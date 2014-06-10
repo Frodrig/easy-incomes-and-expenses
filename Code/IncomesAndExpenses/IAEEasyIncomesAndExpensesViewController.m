@@ -1798,6 +1798,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 - (void)doPanCalculatorWithGesture:(UIPanGestureRecognizer *)panGestureRecognizer
 {
     if (panGestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        [self releaseLongPressureOnConceptsCollectionView];
         [self.calculatorViewController beginDragTranslation];
     }
     
@@ -2833,6 +2834,8 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)showButtonWasPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
 {
+    [self releaseLongPressureOnConceptsCollectionView];
+
     [self setNavigationButtonsEnabled:NO];
     
     self.attachBehaviorForContainerFX.anchorPoint = self.calculatorViewController.view.center;

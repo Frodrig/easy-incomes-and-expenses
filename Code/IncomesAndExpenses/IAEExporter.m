@@ -143,8 +143,11 @@ static NSString * const kCSVCommaSeparator = @",";
     headerStr = [headerStr stringByAppendingString:kCSVCommaSeparator];
     headerStr = [headerStr stringByAppendingString:NSLocalizedString(@"LTEXT_EXPORTCSV_COLUMN_CATEGORY", "")];
     headerStr = [headerStr stringByAppendingString:kCSVCommaSeparator];
+    headerStr = [headerStr stringByAppendingString:NSLocalizedString(@"LTEXT_EXPORTCSV_COLUMN_DESCRIPTION", "")];
+    headerStr = [headerStr stringByAppendingString:kCSVCommaSeparator];
     headerStr = [headerStr stringByAppendingString:NSLocalizedString(@"LTEXT_EXPORTCSV_COLUMN_AMOUNT", "")];
-    
+    headerStr = [headerStr stringByAppendingString:@"\n"];
+
     NSData *data = [headerStr dataUsingEncoding:kEntringEncondig];
     [fileHandle writeData:data];
 }
@@ -177,13 +180,13 @@ static NSString * const kCSVCommaSeparator = @",";
     }
 }
 
-
 - (void)writeConcept:(IAEConcept *)concept toCSVWithFileHandle:(NSFileHandle *)fileHandle
 {
     NSString *openYearStr = [NSString stringWithFormat:@"%d", concept.month.year.yearDate];
     NSString *monthString = [IAEDateHelper findMonthNameStringWithMonthIndex:concept.month.month inShortForm:NO];
 
-    NSString *conceptToWrite = @"\n";
+    //NSString *conceptToWrite = @"\n";
+    NSString *conceptToWrite = @"";
     
     conceptToWrite = [[conceptToWrite stringByAppendingString:openYearStr] stringByAppendingString:kCSVCommaSeparator];
     
@@ -198,16 +201,31 @@ static NSString * const kCSVCommaSeparator = @",";
     conceptToWrite = [[conceptToWrite stringByAppendingString:categoryTypeStr] stringByAppendingString:kCSVCommaSeparator];
     
     NSString *categoryTag = [concept.category localizedTag];
-    categoryTag = [categoryTag stringByReplacingOccurrencesOfString:@"," withString:@"\",\""];
+    categoryTag = [self stringSorroundedByQuotesFromString:categoryTag];
     categoryTag = [categoryTag stringByAppendingString:kCSVCommaSeparator];
     conceptToWrite = [conceptToWrite stringByAppendingString:categoryTag];
-    
+
+    NSString *detailDescription = concept.detailDescription;
+    detailDescription = [self stringSorroundedByQuotesFromString:detailDescription];
+    conceptToWrite = [conceptToWrite stringByAppendingString:detailDescription];
+    conceptToWrite = [conceptToWrite stringByAppendingString:kCSVCommaSeparator];
+
     NSNumberFormatter *formatter = [IAENumberFormatterManager sharedManager].currencyFormatter;
     NSString *categoryAmount = [formatter stringFromNumber:concept.amountWithSign];
-    categoryAmount = [categoryAmount stringByReplacingOccurrencesOfString:@"," withString:@"\",\""];
+    categoryAmount = [self stringSorroundedByQuotesFromString:categoryAmount];
     conceptToWrite = [conceptToWrite stringByAppendingString:categoryAmount];
     
+    conceptToWrite = [conceptToWrite stringByAppendingString:@"\n"];
+
     NSData *dataToWrite = [conceptToWrite dataUsingEncoding:kEntringEncondig];
     [fileHandle writeData:dataToWrite];
 }
+
+- (NSString *)stringSorroundedByQuotesFromString:(NSString *)string
+{
+    NSString *newString = [@"\"" stringByAppendingString:string];
+    newString = [newString stringByAppendingString:@"\""];
+    return newString;
+}
+
 @end

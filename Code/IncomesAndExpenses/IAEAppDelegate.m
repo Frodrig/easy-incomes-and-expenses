@@ -49,6 +49,9 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
     [self createYearBookIfProceed];
     [self createWindowRootLaunchingViewControllerAndMakeVisible];
     
+    // Precargamos en la inicializacion
+    [IAECategoryStore sharedCategoryStore];
+    
     return YES;
 }
 

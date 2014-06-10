@@ -733,6 +733,8 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)favoritesButtonPressed:(id)sender
 {
+    [self releaseLongPressureOnConceptsCollectionView];
+    
     IAEFavoriteConceptsViewController *favoriteConceptsViewController = [[IAEFavoriteConceptsViewController alloc] initWithOptions:FC_REMOVE];
     favoriteConceptsViewController.delegate = self;
     favoriteConceptsViewController.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -742,6 +744,8 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)categoriesButtonPressed:(id)sender
 {
+    [self releaseLongPressureOnConceptsCollectionView];
+
     [self openModalForPresentCategorySelectorViewController];
 }
 
@@ -762,6 +766,8 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)yearsButtonPressed:(id)sender
 {
+    [self releaseLongPressureOnConceptsCollectionView];
+
     [self openModalForPresentYearSelectorViewController];
 }
 
@@ -796,6 +802,8 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)settingsOptionPressed:(id)sender
 {
+    [self releaseLongPressureOnConceptsCollectionView];
+
     self.aboutAndOptions2ViewController = [[IAESettingsViewController alloc] initWithNibName:nil bundle:nil];
     self.aboutAndOptions2ViewController.modalPresentationStyle = UIModalPresentationFormSheet;
     

@@ -80,7 +80,7 @@ static NSString * const kInAppPurchaseProVersionIdentifier = @"proversion.easyin
                     break;
             }
 
-            self.paymentCompletionBlock = self.restoreCompletionBlock = nil;
+            //self.paymentCompletionBlock = self.restoreCompletionBlock = nil;
         }
     }
 }

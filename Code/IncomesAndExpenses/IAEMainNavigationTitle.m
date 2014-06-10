@@ -57,7 +57,7 @@ static NSString * const kNotificationMainLabelTitleTouched = @"mainLabelTitleTou
 - (void)configureText
 {
     self.text = NSLocalizedString([[NSUserDefaults standardUserDefaults] isProVersionEnabled] ? @"LTEXT_MAINNAVIGATION_TITLE_PROVERSION" : @"LTEXT_MAINNAVIGATION_TITLE_NOPROVERSION" , @"");
-
+    self.textAlignment = NSTextAlignmentCenter;
 }
 
 - (void)configureAnimation
@@ -89,6 +89,7 @@ static NSString * const kNotificationMainLabelTitleTouched = @"mainLabelTitleTou
     animationAlpha.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     animationAlpha.autoreverses = YES;
     animationAlpha.repeatCount = HUGE_VALF;
+    animationAlpha.beginTime = CACurrentMediaTime() + 1.5;
 
     return animationAlpha;
 }

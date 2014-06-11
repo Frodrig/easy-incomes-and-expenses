@@ -73,7 +73,11 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
     self = [super initWithStyle:style];
     if (self) {
         [self prepareGlobalSettingsInformation];
+        [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidEnterBackgroundNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+            [self notifyGlobalValueChangesIfAppropiate];
+        }];
     }
+    
     return self;
 }
 

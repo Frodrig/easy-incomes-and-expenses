@@ -2931,17 +2931,40 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 {
     [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
     [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES andExecuteAfterAnimationTheLogicBlock:^{
-        [self.conceptsCollectionView reloadData];
-        [self updateBalancesAndAvailabilityOfSelectorContextSubmenuWithAnimation:NO];
-        [self changeVisibleConceptsCollectionViewCellsToDataModeWithAnimationIfAppropiate:YES];
+        NSArray *indexPathsOfNewConcepts = [self findIndexPathsOfNewCreatedConcepts:concepts withDaysActive:[self isDayModeActiveForConcepts]];
+        [self.conceptsCollectionView performBatchUpdates:^{
+            [self.conceptsCollectionView insertItemsAtIndexPaths:indexPathsOfNewConcepts];
+        } completion:^(BOOL finished) {
+            if (self.conceptsCollectionView.visibleCells.count > 0) {
+                [self.conceptsCollectionView scrollToItemAtIndexPath:indexPathsOfNewConcepts[indexPathsOfNewConcepts.count - 1] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+            }
+            [self updateBalancesAndAvailabilityOfSelectorContextSubmenuWithAnimation:NO];
+            [self changeVisibleConceptsCollectionViewCellsToDataModeWithAnimationIfAppropiate:YES];
+        }];
     }];
+}
+
+- (NSArray *)findIndexPathsOfNewCreatedConcepts:(NSArray *)newCreatedConcepts withDaysActive:(BOOL)daysActive
+{
+    IAEMonth *currentMonth = [self findActualSelectedMonth];
+    NSArray *sortedConcepts = daysActive ? [currentMonth allConceptsSortedByDay] : [currentMonth allConceptsSortedByEntryInstant];
+    
+    NSMutableArray *indexPathOfConcepts = [NSMutableArray arrayWithCapacity:newCreatedConcepts.count];
+    for (IAEConcept *concept in newCreatedConcepts) {
+        const NSUInteger indexOfConcept = [sortedConcepts indexOfObject:concept];
+        NSAssert(indexOfConcept != NSNotFound, @"");
+        NSIndexPath *indexPathOfConcept = [NSIndexPath indexPathForItem:indexOfConcept inSection:0];
+        [indexPathOfConcepts addObject:indexPathOfConcept];
+    }
+    
+    return [NSArray arrayWithArray:indexPathOfConcepts];
 }
 
 - (void)calculatorViewController:(IAECalculatorViewController *)calculatorViewController didCreateNewConcept:(IAEConcept *)concept
 {
     [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
     [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES andExecuteAfterAnimationTheLogicBlock:^{
-        [self updateAfterNewConceptCreated:concept withCallForAttentionAnimation:YES];
+        [self updateAfterNewConceptCreated:concept withCallForAttentionAnimation:NO];
         [self changeVisibleConceptsCollectionViewCellsToDataModeWithAnimationIfAppropiate:YES];
     }];
 }

@@ -1752,6 +1752,8 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)strokeAnimatableView:(IAEStrokeAnimatableLineView *)strokeAnimatableView didStrokeOverTheView:(UIView *)view
 {
+    [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
+
     if ([[NSUserDefaults standardUserDefaults] isRemoveConceptConfirmationActive] && [[NSUserDefaults standardUserDefaults] isProVersionEnabled]) {
         [self lauchAlertViewToConfirmRemoveOfStrokedConceptCell];
     } else {

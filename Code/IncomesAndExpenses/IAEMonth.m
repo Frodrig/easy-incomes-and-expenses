@@ -102,7 +102,7 @@ static NSString * const kLTextDecemberName = @"December";
 
 - (IAEConcept *)duplicateConcept:(IAEConcept *)concept
 {
-    return [self addConceptWithAmount:concept.amount category:concept.category date:concept.date dayOfTheMonth:concept.dayOfTheMonth andDescription:concept.detailDescription];
+    return [self addConceptWithAmount:concept.amount category:concept.category date:[[NSDate date] timeIntervalSince1970] dayOfTheMonth:concept.dayOfTheMonth andDescription:concept.detailDescription];
 }
 
 - (void)deleteAllConcepts

@@ -56,6 +56,8 @@ static const CGFloat kMinAlphaInNoteForAmountLabel = 0;
 
 static const NSUInteger kNoteTextFieldWidthMargin = 40;
 
+static const CGFloat kAlphaForNotePresentIndicatorImageView = 0.2;
+
 @interface IAEEditModeConceptCollectionViewCell()<UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *categoryAndDecoratorContentInformationView;
@@ -596,7 +598,7 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
         [UIView animateWithDuration:kDurationOfCallForAttentionAnimationOut animations:^{
             self.dayAndOrderLabel.alpha = 1;
             self.amountLabel.alpha = 1;
-            self.notePresentIndicatorImageView.alpha = 1;
+            self.notePresentIndicatorImageView.alpha = kAlphaForNotePresentIndicatorImageView;
             self.categoryLabel.alpha = 1;
         }];
     }];

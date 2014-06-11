@@ -125,7 +125,7 @@ static const CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.5;
 static const NSInteger kInvalidOptionIndex = -1;
 
 static const CGFloat kFrecuencyForContainerFXAttachBehavior = 1;
-static const CGFloat kDampingForContainerFXAttachBehavior = 0.6;
+static const CGFloat kDampingForContainerFXAttachBehavior = 0.5;
 
 static const CGFloat kDurationModeFadeOut = 0.35;
 static const CGFloat kDurationModeFadeIn = 0.75;
@@ -603,7 +603,6 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 {
     self.attachBehaviorForContainerFX = [[UIAttachmentBehavior alloc] initWithItem:self.containerViewForDynamicFX
                                                                   attachedToAnchor:self.calculatorViewController.view.center];
-    
     
     self.attachBehaviorForContainerFX.frequency = kFrecuencyForContainerFXAttachBehavior;
     self.attachBehaviorForContainerFX.damping = kDampingForContainerFXAttachBehavior;
@@ -1913,6 +1912,9 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)preloadKeyboard
 {
+    // Necesitamos precargar el teclado para asegurarnos de que la primera vez que se lance ya este en memoria o de lo contrario
+    // la animacion que se ejecute con el ira muy lenta si tiene carga visual importante. Esto lo hemos visto cuando hemos ejecutado
+    // la animacion de desplazamiento de conceptos al querer editar la descripción de uno.
     UITextField *field = [UITextField new];
     [[[[UIApplication sharedApplication] windows] lastObject] addSubview:field];
     [field becomeFirstResponder];
@@ -2791,12 +2793,16 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)notificationCenterKeyboardSignForEditingConceptsNotes:(NSNotification *)notification
 {
-    if ([self isCalculatorInHideMode]) {
-        self.noteModeWasActivatedWithoutCalculator = YES;
-        [self.calculatorViewController incomeButtonPressed:self];
-    } else {
-        
-    }
+    // Añadimos un delay para que al teclado le de tiempo a coger ventaja y no haya un cuello de botella con la animacion
+    // de desplazamiento del area de conceptos
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        if ([self isCalculatorInHideMode]) {
+            self.noteModeWasActivatedWithoutCalculator = YES;
+            [self.calculatorViewController incomeButtonPressed:self];
+        } else {
+            
+        }
+    });
 }
 
 - (void)notificationCenterEndEditingNoteForModeConceptCollectionViewCell:(NSNotification *)notification

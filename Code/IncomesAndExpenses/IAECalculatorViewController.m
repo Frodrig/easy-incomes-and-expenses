@@ -1232,32 +1232,41 @@ static const NSUInteger kInvalidSelecteDay = 0;
 didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
                            andExpenses:(NSArray *)expenses
 {
-    [self createFromFavoritesNewConcepts:incomes ofType:IncomeCategory];
-    [self createFromFavoritesNewConcepts:expenses ofType:ExpenseCategory];
-    
+    NSArray *incomeConceptsCreated = [self createFromFavoritesNewConcepts:incomes ofType:IncomeCategory];
+    NSArray *expenseConceptsCreated = [self createFromFavoritesNewConcepts:expenses ofType:ExpenseCategory];
+    [[IAEBook sharedBook] saveAll];
+
+    NSArray *newConceptsCreated = [NSArray arrayWithArray:incomeConceptsCreated];
+    newConceptsCreated = [newConceptsCreated arrayByAddingObjectsFromArray:expenseConceptsCreated];
+    if (newConceptsCreated.count > 0) {
+        [self.delegate calculatorViewController:self didCreateNewConcepts:newConceptsCreated];
+    }
+
     [self.popover dismissPopoverAnimated:YES];
 }
 
-- (void)createFromFavoritesNewConcepts:(NSArray *)concepts ofType:(CategoryType)type
+- (NSArray *)createFromFavoritesNewConcepts:(NSArray *)concepts ofType:(CategoryType)type
 {
     NSMutableArray *newConcepts = [NSMutableArray arrayWithCapacity:concepts.count];
-    
-    IAEMonth *month = [self.dataSource monthForCalculatorViewController:self];
-    for (NSDictionary *conceptIt in concepts) {
-        NSString *category = conceptIt[kCategoryKey];
-        NSString *value = conceptIt[kValueKey];
-        IAEConcept *newConcept = [month addConceptWithAmount:[self convertToDecimalNumberKeyboardAmountValue:value]
-                                                    category:[[IAECategoryStore sharedCategoryStore] findCategoryByTag:category]
-                                                        date:[[NSDate date] timeIntervalSince1970]
-                                               dayOfTheMonth:self.actualDay
-                                              andDescription:@""];
-        [newConcepts addObject:newConcept];
+
+    if (concepts.count > 0) {
+        IAEMonth *month = [self.dataSource monthForCalculatorViewController:self];
+        for (NSDictionary *conceptIt in concepts) {
+            NSString *category = conceptIt[kCategoryKey];
+            NSString *value = conceptIt[kValueKey];
+            IAEConcept *newConcept = [month addConceptWithAmount:[self convertToDecimalNumberKeyboardAmountValue:value]
+                                                        category:[[IAECategoryStore sharedCategoryStore] findCategoryByTag:category]
+                                                            date:[[NSDate date] timeIntervalSince1970]
+                                                   dayOfTheMonth:self.actualDay
+                                                  andDescription:@""];
+
+            [newConcepts addObject:newConcept];
+        }
+        
+        self.numberConceptsCreatedInSession += concepts.count;
     }
     
-    self.numberConceptsCreatedInSession += concepts.count;
-    [[IAEBook sharedBook] saveAll];
-    
-    [self.delegate calculatorViewController:self didCreateNewConcepts:[NSArray arrayWithArray:newConcepts]];
+    return [NSArray arrayWithArray:newConcepts];
 }
 
 - (NSUInteger)findAutomaticDayForNewConcept

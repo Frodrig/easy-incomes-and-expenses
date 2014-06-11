@@ -389,7 +389,7 @@ static const CGFloat kUserInteractionFXAlphaValue = 0.5;
 - (void)configureDisplayPanelWithActualDayWithAnimation:(BOOL)animation forceActualDaySelected:(BOOL)forceActualDaySelected
 {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsDayModeActive]) {
-        [self.displayPanel setDay:forceActualDaySelected ? self.actualDay : [self findDayForNewConcept]
+        [self.displayPanel setDay:forceActualDaySelected ? self.actualDay : [self findAutomaticDayForNewConcept]
                   withDayweekName:[self findDayOfTheWeekName]
                       inMonthName:[self findMonthName]
                        ofYearName:[self findYearName]];
@@ -421,7 +421,7 @@ static const CGFloat kUserInteractionFXAlphaValue = 0.5;
     IAEMonth *actualMonth = [self.dataSource monthForCalculatorViewController:self];
     NSUInteger dayOfTheWeekIndex = [IAEDateHelper findDayOfTheWeekIndexFromYearDate:actualMonth.year.yearDate
                                                                          monthIndex:actualMonth.month
-                                                                   andDayOfTheMonth:[self findDayForNewConcept]];
+                                                                   andDayOfTheMonth:self.actualDay];
     NSString *dayOfTheWeekName = [IAEDateHelper findDayOfTheWeekNameStringWithDayOfTheWeekIndex:dayOfTheWeekIndex inShortForm:NO];
     
     return dayOfTheWeekName;
@@ -436,6 +436,7 @@ static const CGFloat kUserInteractionFXAlphaValue = 0.5;
 {
     NSAssert(mode != CM_HIDE, @"");
     self.mode = mode;
+    self.actualDay = [self findAutomaticDayForNewConcept];
     [self updateVisibilityToShow:YES usingAnimation:YES];
     [self prepareActualMode];
     [self.delegate showButtonWasPressedOnCalculatorViewController:self];
@@ -469,7 +470,7 @@ static const CGFloat kUserInteractionFXAlphaValue = 0.5;
 - (void)hideWithAnimation:(BOOL)animation
 {
     self.previousCalculatorMode = self.mode;
-    self.actualDay = [IAEDateHelper findPresentDayOfThePresentMonth];
+    self.actualDay = [self findAutomaticDayForNewConcept];
     self.mode = CM_HIDE;
     [self updateVisibilityToShow:NO usingAnimation:animation];
     [self.delegate calculatorViewController:self hideButtonWasPressedWithAnimation:animation];
@@ -554,7 +555,7 @@ static const CGFloat kUserInteractionFXAlphaValue = 0.5;
     IAEMonth *month = [self.dataSource monthForCalculatorViewController:self];
     IAEDayCalendarSelectorViewController *viewController = [[IAEDayCalendarSelectorViewController alloc] initWithYearDate:month.year.yearDate
                                                                                                                monthIndex:month.month
-                                                                                                           andDaySelected:[self findDayForNewConcept]];
+                                                                                                           andDaySelected:self.actualDay];
     viewController.delegate = self;
     
     self.popover = [[UIPopoverController alloc] initWithContentViewController:viewController];
@@ -686,7 +687,7 @@ static const CGFloat kUserInteractionFXAlphaValue = 0.5;
     IAEConcept *newConcept = [month addConceptWithAmount:[self convertToDecimalNumberKeyboardAmountValue:self.actualAmount]
                                                 category:self.actualCategory
                                                     date:[[NSDate date] timeIntervalSince1970]
-                                           dayOfTheMonth:[self findDayForNewConcept]
+                                           dayOfTheMonth:self.actualDay
                                           andDescription:@""];
     self.numberConceptsCreatedInSession++;
     [[IAEBook sharedBook] saveAll];
@@ -1244,7 +1245,7 @@ didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
         IAEConcept *newConcept = [month addConceptWithAmount:[self convertToDecimalNumberKeyboardAmountValue:value]
                                                     category:[[IAECategoryStore sharedCategoryStore] findCategoryByTag:category]
                                                         date:[[NSDate date] timeIntervalSince1970]
-                                               dayOfTheMonth:[self findDayForNewConcept]
+                                               dayOfTheMonth:self.actualDay
                                               andDescription:@""];
         [newConcepts addObject:newConcept];
     }
@@ -1255,7 +1256,7 @@ didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
     [self.delegate calculatorViewController:self didCreateNewConcepts:[NSArray arrayWithArray:newConcepts]];
 }
 
-- (NSUInteger)findDayForNewConcept
+- (NSUInteger)findAutomaticDayForNewConcept
 {
     NSUInteger retDay = self.actualDay;
     IAEMonth *month = [self.dataSource monthForCalculatorViewController:self];
@@ -1269,6 +1270,8 @@ didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
             retDay = [month daysOfTheMonth].unsignedIntegerValue;
         } else if (month.month > [IAEDateHelper findPresentMonthOfThePresentYear]) {
             retDay = 1;
+        } else {
+            retDay = [IAEDateHelper findPresentDayOfThePresentMonth];
         }
     }
     

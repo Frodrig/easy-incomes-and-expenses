@@ -2833,6 +2833,11 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 #pragma mark - IAECalculatorViewControllerDelegate
 
+- (void)showFavoritesButtonWasPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
+{
+    [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
+}
+
 - (void)setNavigationButtonsEnabled:(BOOL)enabled
 {
     self.yearsButton.enabled = enabled;

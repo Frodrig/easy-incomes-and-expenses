@@ -21,4 +21,6 @@
 
 - (void)calculatorViewController:(IAECalculatorViewController *)calculatorViewController didRemoveFavoriteConceptWithCategory:(NSString *)category andValue:(NSString *)value;
 
+- (void)showFavoritesButtonWasPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController;
+
 @end

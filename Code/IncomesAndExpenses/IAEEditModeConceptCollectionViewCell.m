@@ -138,12 +138,14 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
 
 - (void)prepareForReuse
 {
+    [super prepareForReuse];
+    
     [self setIndividualsInformationElementsWithAlpha:1.0];
     [self removeIdentifierContainerViewSubviews];
+    [self executeScrollToNormalModeWithAnimation:NO];
     self.durationOfStrokeStateTransition = kDefaultDurationOfStrokeStateModeTransition;
     self.strokeState = NO;
     self.menuModeActive = NO;
-    [self executeScrollToNormalModeWithAnimation:NO];
 }
 
 - (void)scrollToMenuMode

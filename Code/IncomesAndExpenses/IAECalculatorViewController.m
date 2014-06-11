@@ -668,6 +668,7 @@ static const CGFloat kUserInteractionFXAlphaValue = 0.5;
         [self createNewConcept];
     } else if ([self isFavoritePinActive] && [[NSUserDefaults standardUserDefaults] isProVersionEnabled]) {
         [self launchPopoverForSelectFavoriteConceptsFromAddButton:button];
+        [self.delegate showFavoritesButtonWasPressedOnCalculatorViewController:self];
         actionType = KeyboardActionTypeValidFavorites;
     } else {
         actionType = KeyboardActionTypeInvalid;

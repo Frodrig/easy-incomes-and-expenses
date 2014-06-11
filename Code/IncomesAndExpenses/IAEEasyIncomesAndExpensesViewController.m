@@ -2172,7 +2172,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     IAEConcept *newConcept = [concept.month duplicateConcept:concept];
     [[IAEBook sharedBook] saveAll];
     [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
-    [self updateAfterNewConceptCreated:newConcept];
+    [self updateAfterNewConceptCreated:newConcept withCallForAttentionAnimation:YES];
 }
 
 - (void)openPopoverForSelectMonthToCopyConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
@@ -2924,7 +2924,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 {
     [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
     [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES andExecuteAfterAnimationTheLogicBlock:^{
-        [self updateAfterNewConceptCreated:concept];
+        [self updateAfterNewConceptCreated:concept withCallForAttentionAnimation:NO];
         [self changeVisibleConceptsCollectionViewCellsToDataModeWithAnimationIfAppropiate:YES];
     }];
 }
@@ -2936,18 +2936,18 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     }
 }
 
-- (void)updateAfterNewConceptCreated:(IAEConcept *)concept
+- (void)updateAfterNewConceptCreated:(IAEConcept *)concept withCallForAttentionAnimation:(BOOL)callForAttentionAnimation
 {
-    [self reloadConceptsCollectionViewAfterCreateNewConcept:concept];
+    [self reloadConceptsCollectionViewAfterCreateNewConcept:concept withCallForAttentionAnimation:callForAttentionAnimation];
     [self updateBalancesAndAvailabilityOfSelectorContextSubmenuWithAnimation:NO];
 }
 
-- (void)reloadConceptsCollectionViewAfterCreateNewConcept:(IAEConcept *)concept
+- (void)reloadConceptsCollectionViewAfterCreateNewConcept:(IAEConcept *)concept withCallForAttentionAnimation:(BOOL)callForAttentionAnimation
 {
     if ([self isDayModeActiveForConcepts]) {
         [self reloadConceptsCollectionViewWithDayModeAfterCreateNewConcept:concept];
     } else {
-        [self reloadConceptsCollectionViewWithoutDayModeAfterCreateNewConcept:concept];
+        [self reloadConceptsCollectionViewWithoutDayModeAfterCreateNewConcept:concept withCallForAttentionAnimation:callForAttentionAnimation];
     }
 }
 
@@ -3001,19 +3001,24 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     }
 }
 
-- (void)reloadConceptsCollectionViewWithoutDayModeAfterCreateNewConcept:(IAEConcept *)concept
+- (void)reloadConceptsCollectionViewWithoutDayModeAfterCreateNewConcept:(IAEConcept *)concept withCallForAttentionAnimation:(BOOL)callForAttentionAnimation
 {
     IAEMonth *month = [self findActualSelectedMonth];
     NSAssert(month, @"");
     NSUInteger indexOfConcept = [[month allConceptsSortedByEntryInstant] indexOfObject:concept];
     NSAssert(indexOfConcept != NSNotFound, @"");
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:indexOfConcept inSection:0];
-    [self.conceptsCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+    if (self.conceptsCollectionView.visibleCells.count > 0) {
+        [self.conceptsCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+    }
     [self.conceptsCollectionView performBatchUpdates:^{
         [self.conceptsCollectionView insertItemsAtIndexPaths:@[indexPath]];
     } completion:^(BOOL finished) {
-        IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:indexPath];
-        [cell doCallForAttentionAnimation];
+        if (callForAttentionAnimation) {
+            IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:indexPath];
+            [cell doCallForAttentionAnimation];
+        }
+        
         NSMutableArray *visibleItemsMinusNewConcept = [NSMutableArray arrayWithArray:self.conceptsCollectionView.indexPathsForVisibleItems];
         [visibleItemsMinusNewConcept removeObject:indexPath];
         [self.conceptsCollectionView reloadItemsAtIndexPaths:visibleItemsMinusNewConcept];

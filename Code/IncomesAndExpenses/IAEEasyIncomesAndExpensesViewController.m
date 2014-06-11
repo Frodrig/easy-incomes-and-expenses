@@ -3008,8 +3008,16 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     NSUInteger indexOfConcept = [[month allConceptsSortedByEntryInstant] indexOfObject:concept];
     NSAssert(indexOfConcept != NSNotFound, @"");
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:indexOfConcept inSection:0];
-    [self.conceptsCollectionView insertItemsAtIndexPaths:@[indexPath]];
-    [self.conceptsCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+    [self.conceptsCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+    [self.conceptsCollectionView performBatchUpdates:^{
+        [self.conceptsCollectionView insertItemsAtIndexPaths:@[indexPath]];
+    } completion:^(BOOL finished) {
+        IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:indexPath];
+        [cell doCallForAttentionAnimation];
+        NSMutableArray *visibleItemsMinusNewConcept = [NSMutableArray arrayWithArray:self.conceptsCollectionView.indexPathsForVisibleItems];
+        [visibleItemsMinusNewConcept removeObject:indexPath];
+        [self.conceptsCollectionView reloadItemsAtIndexPaths:visibleItemsMinusNewConcept];
+    }];
 }
 
 #pragma mark - IAEContextMenuActionSheetViewControllerDelegate

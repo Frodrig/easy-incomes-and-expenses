@@ -375,7 +375,7 @@ static const CGFloat kUserInteractionFXAlphaValue = 0.5;
     NSAssert(![self isInHideMode], @"");
     
     [self configureDisplayPanelWithActualCategoryWithAnimation:NO];
-    [self configureDisplayPanelWithActualDayWithAnimation:NO];
+    [self configureDisplayPanelWithActualDayWithAnimation:NO forceActualDaySelected:NO];
     [self configureDisplayPanelWithActualAmount];
     [self setDisplayColorUsingAnimation:NO];
 }
@@ -386,10 +386,10 @@ static const CGFloat kUserInteractionFXAlphaValue = 0.5;
     [self setDisplayColorUsingAnimation:animation];
 }
 
-- (void)configureDisplayPanelWithActualDayWithAnimation:(BOOL)animation
+- (void)configureDisplayPanelWithActualDayWithAnimation:(BOOL)animation forceActualDaySelected:(BOOL)forceActualDaySelected
 {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsDayModeActive]) {
-        [self.displayPanel setDay:[self findDayForNewConcept]
+        [self.displayPanel setDay:forceActualDaySelected ? self.actualDay : [self findDayForNewConcept]
                   withDayweekName:[self findDayOfTheWeekName]
                       inMonthName:[self findMonthName]
                        ofYearName:[self findYearName]];
@@ -981,7 +981,7 @@ static const CGFloat kUserInteractionFXAlphaValue = 0.5;
                              didSelectDay:(NSUInteger)day
 {
     self.actualDay = day;
-    [self configureDisplayPanelWithActualDayWithAnimation:YES];
+    [self configureDisplayPanelWithActualDayWithAnimation:YES forceActualDaySelected:YES];
     
     [self dismissPopoverAndEndFloatingDisplayButtonView];
 }
@@ -1021,12 +1021,12 @@ static const CGFloat kUserInteractionFXAlphaValue = 0.5;
 
 - (void)notificationCenterOnDayModeOn:(NSNotification *)notification
 {
-    [self configureDisplayPanelWithActualDayWithAnimation:NO];
+    [self configureDisplayPanelWithActualDayWithAnimation:NO forceActualDaySelected:NO];
 }
 
 - (void)notificationCenterOnDayModeOff:(NSNotification *)notification
 {
-    [self configureDisplayPanelWithActualDayWithAnimation:NO];
+    [self configureDisplayPanelWithActualDayWithAnimation:NO forceActualDaySelected:NO];
 }
 
 - (void)notificationKeyboardWillChange:(NSNotification *)notification

@@ -75,6 +75,8 @@ static const NSUInteger kPopoverAdditionalHeightAmountForChangeCategory = 360;
 static const CGFloat kUserInteractionFXAnimationDuration = 0.25;
 static const CGFloat kUserInteractionFXAlphaValue = 0.5;
 
+static const NSUInteger kInvalidSelecteDay = 0;
+
 @interface IAECalculatorViewController ()
 
 @property (weak, nonatomic) IBOutlet IAEDisplayPanelCalculatorView *displayPanel;
@@ -981,8 +983,10 @@ static const CGFloat kUserInteractionFXAlphaValue = 0.5;
 - (void)dayCalendarSelectorViewController:(IAEDayCalendarSelectorViewController *)dayCalendarSelectorViewController
                              didSelectDay:(NSUInteger)day
 {
-    self.actualDay = day;
-    [self configureDisplayPanelWithActualDayWithAnimation:YES forceActualDaySelected:YES];
+    if (day != kInvalidSelecteDay) {
+        self.actualDay = day;
+        [self configureDisplayPanelWithActualDayWithAnimation:YES forceActualDaySelected:YES];
+    }
     
     [self dismissPopoverAndEndFloatingDisplayButtonView];
 }

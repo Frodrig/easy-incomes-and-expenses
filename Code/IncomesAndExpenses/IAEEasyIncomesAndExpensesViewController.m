@@ -183,7 +183,6 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 @property (nonatomic, strong) UIAttachmentBehavior *attachBehaviorForContainerFX;
 @property (nonatomic, strong) UIDynamicAnimator *dynamicAnimator;
 @property (nonatomic, strong) NSIndexPath *pendingScrollToEditModeConceptCellIndexPath;
-@property (nonatomic, strong) NSIndexPath *indexPathOfCellWithPendingCallForAttentionAnimation;
 @property (nonatomic, strong) IAEMonthSelectorViewController *monthSelectorViewController;
 @property (nonatomic) MonthSelectorPurpose monthSelectorPurpose;
 @property (nonatomic, strong) IAEContextMenuActionSheetViewController *contextMenuActionSheetViewController;
@@ -2945,26 +2944,31 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 - (void)reloadConceptsCollectionViewAfterCreateNewConcept:(IAEConcept *)concept withCallForAttentionAnimation:(BOOL)callForAttentionAnimation
 {
     if ([self isDayModeActiveForConcepts]) {
-        [self reloadConceptsCollectionViewWithDayModeAfterCreateNewConcept:concept];
+        [self reloadConceptsCollectionViewWithDayModeAfterCreateNewConcept:concept withCallForAttentionAnimation:callForAttentionAnimation];
     } else {
         [self reloadConceptsCollectionViewWithoutDayModeAfterCreateNewConcept:concept withCallForAttentionAnimation:callForAttentionAnimation];
     }
 }
 
-- (void)reloadConceptsCollectionViewWithDayModeAfterCreateNewConcept:(IAEConcept *)concept
+- (void)reloadConceptsCollectionViewWithDayModeAfterCreateNewConcept:(IAEConcept *)concept withCallForAttentionAnimation:(BOOL)callForAttentionAnimation
 {
     NSArray *concepts = [self allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath:nil];
-    NSUInteger indexOfConcept = [concepts indexOfObject:concept];
+    const NSUInteger indexOfConcept = [concepts indexOfObject:concept];
     NSIndexPath *indexPathOfInsertion = [NSIndexPath indexPathForRow:indexOfConcept inSection:0];
+    if (self.conceptsCollectionView.visibleCells.count > 0) {
+        // Aproximamos el scroll pues la celda aun no se ha creado
+        NSIndexPath *indexPathForScroll = [NSIndexPath indexPathForRow:MIN([self.conceptsCollectionView numberOfItemsInSection:0] - 1, indexOfConcept) inSection:0];
+        [self.conceptsCollectionView scrollToItemAtIndexPath:indexPathForScroll atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+    }
     
     [self.conceptsCollectionView performBatchUpdates:^{
-        CLSLog(@"insertItemsAtIndexPaths from reloadConceptsCollectionViewWithDayModeAfterCreateNewConcept");
         [self.conceptsCollectionView insertItemsAtIndexPaths:@[indexPathOfInsertion]];
     } completion:^(BOOL finished) {
-        // Nota: En caso de que la posición a la que ir no esté visible, la resaltaremos al terminar el scroll
-        [self.conceptsCollectionView scrollToItemAtIndexPath:indexPathOfInsertion atScrollPosition:UIScrollViewIndicatorStyleDefault animated:YES];
-        if (![self.conceptsCollectionView cellForItemAtIndexPath:indexPathOfInsertion]) {
-            self.indexPathOfCellWithPendingCallForAttentionAnimation = indexPathOfInsertion;
+        // Hacemos el scroll exacto
+        [self.conceptsCollectionView scrollToItemAtIndexPath:indexPathOfInsertion atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+        if (callForAttentionAnimation) {
+            IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:indexPathOfInsertion];
+            [cell doCallForAttentionAnimation];
         }
     }];
 }
@@ -2982,22 +2986,6 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 {
     for (IAEEditModeConceptCollectionViewCell *cell in self.conceptsCollectionView.visibleCells) {
         [cell scrollToNormalModeUsingAnimation:animation];
-    }
-}
-
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
-{
-    if (scrollView == self.conceptsCollectionView) {
-        [self executeCallForAttentionAnimationInPendingCellIfAppropiate];
-    }
-}
-
-- (void)executeCallForAttentionAnimationInPendingCellIfAppropiate
-{
-    if (self.indexPathOfCellWithPendingCallForAttentionAnimation) {
-        IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:self.indexPathOfCellWithPendingCallForAttentionAnimation];
-        [cell doCallForAttentionAnimation];
-        self.indexPathOfCellWithPendingCallForAttentionAnimation = nil;
     }
 }
 

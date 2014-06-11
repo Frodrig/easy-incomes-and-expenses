@@ -2837,11 +2837,13 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
         NSArray *concepts = [self isDayModeActiveForConcepts] ? [concept.month allConceptsSortedByDay] : [concept.month allConceptsSortedByEntryInstant];
         NSUInteger newIndexOfConcept = [concepts indexOfObject:concept];
         NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:newIndexOfConcept inSection:0];
+        [self.conceptsCollectionView scrollToItemAtIndexPath:newIndexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
         [self.conceptsCollectionView performBatchUpdates:^{
             [self.conceptsCollectionView moveItemAtIndexPath:dayCalendarSelectorViewController.conceptCellIndexPath toIndexPath:newIndexPath];
         } completion:^(BOOL finished) {
-            [self.conceptsCollectionView reloadItemsAtIndexPaths:@[newIndexPath]];
-            [self.conceptsCollectionView scrollToItemAtIndexPath:newIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
+            [self.conceptsCollectionView reloadItemsAtIndexPaths:self.conceptsCollectionView.indexPathsForVisibleItems];
+            IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:newIndexPath];
+            [cell doCallForAttentionAnimation];
         }];
     }
 }

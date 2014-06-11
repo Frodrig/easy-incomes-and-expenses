@@ -143,6 +143,7 @@ static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
     [self configureIdentifierOfConceptCell:cell atIndexPath:indexPath withIndex:instantEntryIndex];
     [self configureFavoritePinOfConceptCell:cell withConcept:concept];
     [self configureDataOrNoteModeForCell:cell];
+    [cell scrollToNormalModeUsingAnimation:NO];
 }
 
 - (void)configureIdentifierOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell

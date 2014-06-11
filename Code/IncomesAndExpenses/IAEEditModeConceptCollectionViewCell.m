@@ -43,8 +43,6 @@ static const CGFloat kBaseCellIndexValue = 100;
 
 static const CGFloat kDurationOfCallForAttentionAnimationIn = 0.15;
 static const CGFloat kDurationOfCallForAttentionAnimationOut = 0.75;
-static const CGFloat kCallForAttentionRatioWhiteColor = 0.8;
-static const CGFloat kCallForAttentionRationAlphaColor = 0.3;
 
 static const CGFloat kHideShowFavoritePinTime = 0.75;
 static const CGFloat kDisableAlphaValueForFavoritePin = 0.3;
@@ -587,16 +585,19 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
 
 - (void)doCallForAttentionAnimation
 {
-    __block UIColor *backgroundColor = [self.contentView.backgroundColor copy];
-    __block UIColor *destinationColor = [UIColor colorWithWhite:kCallForAttentionRatioWhiteColor alpha:kCallForAttentionRationAlphaColor];
-
     [UIView setAnimationCurve:UIViewAnimationCurveLinear];
     [UIView animateWithDuration:kDurationOfCallForAttentionAnimationIn animations:^{
-        self.contentView.backgroundColor = destinationColor;
+        self.dayAndOrderLabel.alpha = 0;
+        self.amountLabel.alpha = 0;
+        self.notePresentIndicatorImageView.alpha = 0;
+        self.categoryLabel.alpha = 0;
     } completion:^(BOOL finished) {
         [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
         [UIView animateWithDuration:kDurationOfCallForAttentionAnimationOut animations:^{
-            self.contentView.backgroundColor = backgroundColor;
+            self.dayAndOrderLabel.alpha = 1;
+            self.amountLabel.alpha = 1;
+            self.notePresentIndicatorImageView.alpha = 1;
+            self.categoryLabel.alpha = 1;
         }];
     }];
 }

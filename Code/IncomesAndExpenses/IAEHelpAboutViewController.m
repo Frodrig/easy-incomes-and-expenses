@@ -115,6 +115,8 @@ static NSString * const kCollectionViewAboutCellIdentifier = @"IAEInfoCell";
 {
     [Flurry logEvent:@"safary_openoficialurl"];
     
+    [self.delegate dismissAll];
+    
     NSString *urlString = NSLocalizedString(kLTextAppUrl, @"");
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
 }

@@ -9,6 +9,7 @@
 #import "NSUserDefaults+EasyIncAndExp.h"
 #import "IAEIdentifiers.h"
 #import "Flurry.h"
+//#import "KeychainItemWrapper.h"
 
 @implementation NSUserDefaults (EasyIncAndExp)
 
@@ -39,7 +40,12 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
                                 kUserDefaultsProVersionKey : @(YES)};
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
     
-    //[self disableProVersion];
+    /*
+    [self disableProVersion];
+    if ([self isProVersionDisabled]) {
+        [[KeychainItemWrapper defaultKeychain] clearPassword];
+    }
+     */
 }
 
 #pragma mark - ReportSection

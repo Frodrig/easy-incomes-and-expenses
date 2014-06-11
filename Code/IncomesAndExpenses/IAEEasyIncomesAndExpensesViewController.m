@@ -2955,9 +2955,10 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     NSArray *concepts = [self allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath:nil];
     const NSUInteger indexOfConcept = [concepts indexOfObject:concept];
     NSIndexPath *indexPathOfInsertion = [NSIndexPath indexPathForRow:indexOfConcept inSection:0];
+    NSIndexPath *indexPathForScroll = nil;
     if (self.conceptsCollectionView.visibleCells.count > 0) {
         // Aproximamos el scroll pues la celda aun no se ha creado
-        NSIndexPath *indexPathForScroll = [NSIndexPath indexPathForRow:MIN([self.conceptsCollectionView numberOfItemsInSection:0] - 1, indexOfConcept) inSection:0];
+         indexPathForScroll = [NSIndexPath indexPathForRow:MIN([self.conceptsCollectionView numberOfItemsInSection:0] - 1, indexOfConcept) inSection:0];
         [self.conceptsCollectionView scrollToItemAtIndexPath:indexPathForScroll atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
     }
     
@@ -2966,27 +2967,12 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     } completion:^(BOOL finished) {
         // Hacemos el scroll exacto
         [self.conceptsCollectionView scrollToItemAtIndexPath:indexPathOfInsertion atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+        [self reloadVisibleItemsofConceptCollectionViewExceptItemAtIndexPath:indexPathOfInsertion];
+
         if (callForAttentionAnimation) {
-            IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:indexPathOfInsertion];
-            [cell doCallForAttentionAnimation];
+            [self doCallForAttentionAnimationAtConceptCollectionViewCellWithIndexPath:indexPathOfInsertion];
         }
     }];
-}
-
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
-    if (scrollView == self.conceptsCollectionView) {
-        [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
-    }
-}
-
-- (void)hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:(BOOL)animation
-{
-    for (IAEEditModeConceptCollectionViewCell *cell in self.conceptsCollectionView.visibleCells) {
-        [cell scrollToNormalModeUsingAnimation:animation];
-    }
 }
 
 - (void)reloadConceptsCollectionViewWithoutDayModeAfterCreateNewConcept:(IAEConcept *)concept withCallForAttentionAnimation:(BOOL)callForAttentionAnimation
@@ -3003,14 +2989,40 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
         [self.conceptsCollectionView insertItemsAtIndexPaths:@[indexPath]];
     } completion:^(BOOL finished) {
         if (callForAttentionAnimation) {
-            IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:indexPath];
-            [cell doCallForAttentionAnimation];
+            [self doCallForAttentionAnimationAtConceptCollectionViewCellWithIndexPath:indexPath];
         }
         
-        NSMutableArray *visibleItemsMinusNewConcept = [NSMutableArray arrayWithArray:self.conceptsCollectionView.indexPathsForVisibleItems];
-        [visibleItemsMinusNewConcept removeObject:indexPath];
-        [self.conceptsCollectionView reloadItemsAtIndexPaths:visibleItemsMinusNewConcept];
+        [self reloadVisibleItemsofConceptCollectionViewExceptItemAtIndexPath:indexPath];
     }];
+}
+
+- (void)doCallForAttentionAnimationAtConceptCollectionViewCellWithIndexPath:(NSIndexPath *)indexPath
+{
+    IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:indexPath];
+    [cell doCallForAttentionAnimation];
+}
+
+- (void)reloadVisibleItemsofConceptCollectionViewExceptItemAtIndexPath:(NSIndexPath *)exceptItemIndexPath
+{
+    NSMutableArray *visibleItemsMinusNewConcept = [NSMutableArray arrayWithArray:self.conceptsCollectionView.indexPathsForVisibleItems];
+    [visibleItemsMinusNewConcept removeObject:exceptItemIndexPath];
+    [self.conceptsCollectionView reloadItemsAtIndexPaths:visibleItemsMinusNewConcept];
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    if (scrollView == self.conceptsCollectionView) {
+        [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
+    }
+}
+
+- (void)hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:(BOOL)animation
+{
+    for (IAEEditModeConceptCollectionViewCell *cell in self.conceptsCollectionView.visibleCells) {
+        [cell scrollToNormalModeUsingAnimation:animation];
+    }
 }
 
 #pragma mark - IAEContextMenuActionSheetViewControllerDelegate

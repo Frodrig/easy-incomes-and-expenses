@@ -2861,6 +2861,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)showButtonWasPressedOnCalculatorViewController:(IAECalculatorViewController *)calculatorViewController
 {
+    [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
     [self releaseLongPressureOnConceptsCollectionView];
 
     [self setNavigationButtonsEnabled:NO];
@@ -2876,6 +2877,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)calculatorViewController:(IAECalculatorViewController *)calculatorViewController hideButtonWasPressedWithAnimation:(BOOL)animation
 {
+    [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
     [self updateBalancesAndAvailabilityOfSelectorContextSubmenuWithAnimation:animation];
 
     [self setNavigationButtonsEnabled:YES];

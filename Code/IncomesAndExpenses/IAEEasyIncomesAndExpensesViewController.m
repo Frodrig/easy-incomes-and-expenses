@@ -731,6 +731,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)favoritesButtonPressed:(id)sender
 {
+    [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
     [self releaseLongPressureOnConceptsCollectionView];
     
     IAEFavoriteConceptsViewController *favoriteConceptsViewController = [[IAEFavoriteConceptsViewController alloc] initWithOptions:FC_REMOVE];
@@ -742,6 +743,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)categoriesButtonPressed:(id)sender
 {
+    [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
     [self releaseLongPressureOnConceptsCollectionView];
 
     [self openModalForPresentCategorySelectorViewController];
@@ -764,6 +766,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)yearsButtonPressed:(id)sender
 {
+    [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
     [self releaseLongPressureOnConceptsCollectionView];
 
     [self openModalForPresentYearSelectorViewController];
@@ -800,6 +803,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)settingsOptionPressed:(id)sender
 {
+    [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
     [self releaseLongPressureOnConceptsCollectionView];
 
     self.aboutAndOptions2ViewController = [[IAESettingsViewController alloc] initWithNibName:nil bundle:nil];
@@ -3150,6 +3154,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)optionIndex:(NSUInteger)optionIndex wasReSelectedInTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenuView
 {
+    [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
     [self lauchContextMenuActionSheetForContextMenuAtOptionIndexIfApplicable:optionIndex];
 }
 

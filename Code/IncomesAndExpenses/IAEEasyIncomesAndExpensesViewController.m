@@ -2924,7 +2924,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 {
     [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
     [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES andExecuteAfterAnimationTheLogicBlock:^{
-        [self updateAfterNewConceptCreated:concept withCallForAttentionAnimation:NO];
+        [self updateAfterNewConceptCreated:concept withCallForAttentionAnimation:YES];
         [self changeVisibleConceptsCollectionViewCellsToDataModeWithAnimationIfAppropiate:YES];
     }];
 }

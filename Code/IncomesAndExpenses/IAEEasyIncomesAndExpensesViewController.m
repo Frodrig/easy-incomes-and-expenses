@@ -1906,8 +1906,18 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)beginPinchForConceptsCollectionView
 {
+    [self preloadKeyboard];
     [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
     self.conceptsCollectionView.scrollEnabled = NO;
+}
+
+- (void)preloadKeyboard
+{
+    UITextField *field = [UITextField new];
+    [[[[UIApplication sharedApplication] windows] lastObject] addSubview:field];
+    [field becomeFirstResponder];
+    [field resignFirstResponder];
+    [field removeFromSuperview];
 }
 
 - (void)endPinchForConceptsCollectionView

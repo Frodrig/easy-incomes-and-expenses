@@ -742,7 +742,7 @@ static const NSUInteger kNoteTextFieldWidthMargin = 40;
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
+{    
     return YES;
 }
 

@@ -1201,23 +1201,21 @@ static const NSUInteger kInvalidSelecteDay = 0;
 - (void)updateFavoritePinWithAnimation:(BOOL)animation;
 {
     const BOOL showPin = ![self actualAmountWithData] && [[NSUserDefaults standardUserDefaults] isProVersionEnabled];
-    if (showPin == self.pinFavoriteImage.hidden) {
-        if (animation) {
-            [UIView animateWithDuration:kUpdateFavoritePinAnimationTime animations:^{
-                if (showPin) {
-                    self.pinFavoriteImage.hidden = NO;
-                    self.pinFavoriteImage.alpha = 0.0;
-                }
-                self.pinFavoriteImage.alpha = showPin ? 1.0 : 0.0;
-            } completion:^(BOOL finished) {
-                if (!showPin && finished) {
-                    self.pinFavoriteImage.hidden = YES;
-                    self.pinFavoriteImage.alpha = 0;
-                }
-            }];
-        } else {
-            self.pinFavoriteImage.hidden = showPin;
-        }
+    if (animation) {
+        [UIView animateWithDuration:kUpdateFavoritePinAnimationTime animations:^{
+            if (showPin) {
+                self.pinFavoriteImage.hidden = NO;
+                self.pinFavoriteImage.alpha = 0.0;
+            }
+            self.pinFavoriteImage.alpha = showPin ? 1.0 : 0.0;
+        } completion:^(BOOL finished) {
+            if (!showPin && finished) {
+                self.pinFavoriteImage.hidden = YES;
+                self.pinFavoriteImage.alpha = 0;
+            }
+        }];
+    } else {
+        self.pinFavoriteImage.hidden = showPin;
     }
 }
 

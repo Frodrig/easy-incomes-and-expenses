@@ -2890,12 +2890,6 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
     [self setNavigationButtonsEnabled:YES];
     
     self.attachBehaviorForContainerFX.anchorPoint = self.calculatorViewController.view.center;
-    
-    /*
-    for (IAEEditModeConceptCollectionViewCell *cell in self.conceptsCollectionView.visibleCells) {
-        [cell hideFavoritePinWithAnimation:animation];
-    }
-     */
 }
 
 - (void)updateFramePositionBeforeShowCalculatorForView:(UIView *)view
@@ -2918,6 +2912,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)calculatorViewController:(IAECalculatorViewController *)calculatorViewController didCreateNewConcepts:(NSArray *)concepts
 {
+    [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
     [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES andExecuteAfterAnimationTheLogicBlock:^{
         [self.conceptsCollectionView reloadData];
         [self updateBalancesAndAvailabilityOfSelectorContextSubmenuWithAnimation:NO];
@@ -2927,6 +2922,7 @@ static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 - (void)calculatorViewController:(IAECalculatorViewController *)calculatorViewController didCreateNewConcept:(IAEConcept *)concept
 {
+    [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
     [self showWithoutConceptsWarningViewIfAppropriateWithAnimation:YES andExecuteAfterAnimationTheLogicBlock:^{
         [self updateAfterNewConceptCreated:concept];
         [self changeVisibleConceptsCollectionViewCellsToDataModeWithAnimationIfAppropiate:YES];

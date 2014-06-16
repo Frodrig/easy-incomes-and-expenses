@@ -9,6 +9,7 @@
 #import <Crashlytics/Crashlytics.h>
 #import "Flurry.h"
 #import "IAEEasyIncomesAndExpensesViewController.h"
+#import "IAEEasyIncomesAndExpensesViewControllerDefs.h"
 #import "IAEEasyIncomesAndExpensesViewControllerDelegate.h"
 #import "IAECurrencyManager.h"
 #import "IAEBook.h"
@@ -60,85 +61,6 @@
 #import "IAEInAppPurchasesStore.h"
 #import "IAEInternet.h"
 #import "IAEMainNavigationTitle.h"
-
-typedef NS_ENUM(NSUInteger, MonthSelectorPurpose) {
-    MonthSelectorPurposeCopy,
-    MonthSelectorPurposeMove,
-};
-
-#pragma mark - Constants
-
-static const CGFloat kSelectorContextViewYOutsideMargin = 100;
-
-static const CGFloat kDurationInitializationAnimationNavigationFadeIn = 0.75;
-static const CGFloat kDurationInitializationAnimationContextAndModesFadeIn = 1;
-static const CGFloat kDurationInitializationAnimationTraslantionFadeIn = 1.25;
-
-static NSString * const kLTextNavigationBarTitle = @"LTEXT_NAVIGATIONBAR_TITLE";
-static NSString * const kLTextSettingsBarButtonTitle = @"LTEXT_BARBUTTON_SETTINGS_TITLE";
-static NSString * const kLTextYearsBarButtonTitle = @"LTEXT_BARBUTTON_YEARS_TITLE";
-static NSString * const kLTextCategoriesBarButtonTitle = @"LTEXT_BARBUTTON_CATEGORIES_TITLE";
-static NSString * const kLTextFavoritesBarButtonTitle = @"LTEXT_BARBUTTON_FAVORITES_TITLE";
-
-static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
-
-static NSString * const kNotificationDayModeOnName = @"dayModeToOn";
-static NSString * const kNotificationDayModeOffName = @"dayModeToOff";
-static NSString * const kNotificationInitialMonthChanged = @"initialMonthChange";
-static NSString * const kNotificationMainLabelTitleTouched = @"mainLabelTitleTouched";
-static NSString * const kNotificationKeyboardResignFromEditingConceptsNotes = @"KeyboardResignFromEditingConceptsNotes";
-static NSString * const kNotificationKeyboardSignForEditingConceptsNotes = @"KeyboardSignForEditingConceptsNotes";
-static NSString * const kNotificationEndEditingNoteForModeConceptCollectionViewCell = @"EndEditingNoteForModeConceptCollectionViewCell";
-
-static NSString * const kLTextModeSegmentedControlEditMode = @"LTEXT_MODESEGMENTEDCONTROL_EDITMODE";
-static NSString * const kLTextModeSegmentedControlReportMode = @"LTEXT_MODESEGMENTEDCONTROL_REPORTMODE";
-
-static const NSUInteger kGlobalIndexForYearInContextScrollView = 0;
-
-static NSString * const kNibConceptCellName = @"IAEEditModeConceptCollectionViewCell";
-static NSString * const kIdConceptCellName = @"EditModeConceptCell";
-
-static NSString * const kNibConceptCellHeaderInYearModeName = @"IAEEditModeConceptCollectionViewHeader";
-static NSString * const kCollectionViewHeaderIdentifier = @"EditModeConceptHeader";
-
-static const NSUInteger kSegmentedControlIndexEditMode = 0;
-static const NSUInteger kSegmentedControlIndexReportMode = 1;
-
-static const NSUInteger kReportMenuIndexOfBalancesOption = 0;
-static const NSUInteger kReportMenuIndexOfIncomesOption = 1;
-static const NSUInteger kReportMenuIndexOfExpensesOption = 2;
-
-static const CGFloat kDurationStrokeAnimationForConcepts = 0.25;
-static const CGFloat kColorWhiteComponentForStrokeAnimationForConcepts = 0.8;
-static const CGFloat kColorWhiteAlphaComponentForStrokeAnimationForConcepts = 1.0;
-static const NSInteger kTypeStrokeAnimationForConcepts = STROKEANIMATABLE_TYPE_THIN;
-static const CGFloat kDelayToExecuteRemoveConceptCell = 0.2;
-
-static const CGFloat KDurationOfAnimationUpdateForEntryInstantIndex = 0.5;
-
-static const CGFloat kDurationOfEditConceptCollectionViewTransition = 0.5;
-
-static NSString * const kXibWithoutConceptsWarningInEditModeViewName = @"IAEWithoutConceptsTextWarning";
-static NSString * const kXibWithoutConceptsWarningInReportModeViewName = @"IAEWithoutConceptsTextWarningReportMode";
-static const CGFloat kDurationOfWithoutConceptsWarningVieTransition = 0.5;
-
-static const NSInteger kInvalidOptionIndex = -1;
-
-static const CGFloat kFrecuencyForContainerFXAttachBehavior = 1;
-static const CGFloat kDampingForContainerFXAttachBehavior = 0.5;
-
-static const CGFloat kDurationModeFadeOut = 0.35;
-static const CGFloat kDurationModeFadeIn = 0.75;
-
-static const CGFloat kXMarginBaseForConceptCellPopover = 40.0;
-static const CGFloat kYMarginBaseForConceptCellPopover = 10.0;
-
-static const NSUInteger kNumberOfMonths = 12;
-
-static const NSUInteger kAlertViewButtonCancelIndex = 0;
-static const NSUInteger kAltertViewButtonConfirmationIndex = 1;
-
-static const CGFloat kAnimationForReloadDataAfterRemoveAllConcepts = 0.3;
 
 @interface IAEEasyIncomesAndExpensesViewController ()
 

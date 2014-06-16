@@ -7,14 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IAEStrokeAnimatableLineViewDefs.h"
 
 @protocol IAEStrokeAnimatableViewDelegate;
-
-typedef NS_ENUM(NSInteger, StrokeType) {
-    STROKEANIMATABLE_TYPE_THIN,
-    STROKEANIMATABLE_TYPE_MEDIUM,
-    STROKEANIMATABLE_TYPE_STRONG
-};
 
 @interface IAEStrokeAnimatableLineView : UIView
 
@@ -22,8 +17,8 @@ typedef NS_ENUM(NSInteger, StrokeType) {
 
 @property (nonatomic) CGPoint edgeInsetForHoriziontalCenterAndBottom;
 @property (nonatomic) CGFloat durationOfStrokeAnimation;
-@property (nonatomic, copy) UIColor *strokeColor;
 @property (nonatomic) StrokeType strokeType;
+@property (nonatomic, copy) UIColor *strokeColor;
 @property (nonatomic, readonly) BOOL isAnimationActive;
 
 + (instancetype)strokeAnimatableLineView;

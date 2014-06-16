@@ -236,6 +236,8 @@
 		5BCE3AB417A9689600CD01E7 /* IAEHelperReportTextRawMenuDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3AB317A9689600CD01E7 /* IAEHelperReportTextRawMenuDataSource.m */; };
 		5BCE3AB917A9703B00CD01E7 /* IAEHelperCalculatorDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3AB817A9703B00CD01E7 /* IAEHelperCalculatorDataSource.m */; };
 		5BCE3ABD17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3ABC17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.m */; };
+		5BCFFE86194F54E200A38373 /* IAEEasyIncomesAndExpensesViewControllerDefs.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCFFE84194F54E200A38373 /* IAEEasyIncomesAndExpensesViewControllerDefs.m */; };
+		5BCFFE89194F56F000A38373 /* IAEStrokeAnimatableLineViewDefs.h in Sources */ = {isa = PBXBuildFile; fileRef = 5BCFFE88194F56F000A38373 /* IAEStrokeAnimatableLineViewDefs.h */; };
 		5BD01C9E1929F48C00348C91 /* IAEHasthUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD01C9D1929F48C00348C91 /* IAEHasthUtilities.m */; };
 		5BD01CA21929F78700348C91 /* IAEIdentifiers.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD01CA11929F78700348C91 /* IAEIdentifiers.m */; };
 		5BD06157163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5BD06155163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld */; };
@@ -693,6 +695,10 @@
 		5BCE3ABB17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelperConceptsCollectionViewDataSource.h; sourceTree = "<group>"; };
 		5BCE3ABC17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHelperConceptsCollectionViewDataSource.m; sourceTree = "<group>"; };
 		5BCF718A19070D5F0084F187 /* IAESelectorContextViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAESelectorContextViewDataSource.h; sourceTree = "<group>"; };
+		5BCFFE84194F54E200A38373 /* IAEEasyIncomesAndExpensesViewControllerDefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEasyIncomesAndExpensesViewControllerDefs.m; sourceTree = "<group>"; };
+		5BCFFE85194F54E200A38373 /* IAEEasyIncomesAndExpensesViewControllerDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEasyIncomesAndExpensesViewControllerDefs.h; sourceTree = "<group>"; };
+		5BCFFE88194F56F000A38373 /* IAEStrokeAnimatableLineViewDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IAEStrokeAnimatableLineViewDefs.h; path = IncomesAndExpenses/IAEStrokeAnimatableLineViewDefs.h; sourceTree = "<group>"; };
+		5BCFFE8A194F579B00A38373 /* IAEStrokeAnimatableLineViewDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEStrokeAnimatableLineViewDefs.h; sourceTree = "<group>"; };
 		5BD01C9C1929F48C00348C91 /* IAEHasthUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHasthUtilities.h; sourceTree = "<group>"; };
 		5BD01C9D1929F48C00348C91 /* IAEHasthUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHasthUtilities.m; sourceTree = "<group>"; };
 		5BD01CA01929F78700348C91 /* IAEIdentifiers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEIdentifiers.h; sourceTree = "<group>"; };
@@ -932,6 +938,7 @@
 		5B251FA217AACA76000957A5 /* StrokeAnimatableView */ = {
 			isa = PBXGroup;
 			children = (
+				5BCFFE8A194F579B00A38373 /* IAEStrokeAnimatableLineViewDefs.h */,
 				5B251F9F17AACA71000957A5 /* IAEStrokeAnimatableLineView.h */,
 				5B251FA017AACA71000957A5 /* IAEStrokeAnimatableLineView.m */,
 				5B251FA317AACA8E000957A5 /* IAEStrokeAnimatableViewDelegate.h */,
@@ -1063,6 +1070,8 @@
 		5B32D659177C41170070AC72 /* Easy Incomes and Expenses */ = {
 			isa = PBXGroup;
 			children = (
+				5BCFFE84194F54E200A38373 /* IAEEasyIncomesAndExpensesViewControllerDefs.m */,
+				5BCFFE85194F54E200A38373 /* IAEEasyIncomesAndExpensesViewControllerDefs.h */,
 				5B32D652177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.h */,
 				5B32D653177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m */,
 				5BCE3AA317A95B4A00CD01E7 /* Protocols */,
@@ -1537,6 +1546,7 @@
 		5B767DE71636D7FC005315F8 = {
 			isa = PBXGroup;
 			children = (
+				5BCFFE88194F56F000A38373 /* IAEStrokeAnimatableLineViewDefs.h */,
 				5BBD3739180BFF5B0095A15A /* ProjectApiKey.txt */,
 				5B0F8BC116B94A7B002D62A5 /* Localizacion */,
 				5B29ED30179FC2C300FCC5C6 /* Resources */,
@@ -2768,6 +2778,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BCFFE89194F56F000A38373 /* IAEStrokeAnimatableLineViewDefs.h in Sources */,
 				5B28813417985822006E4F9B /* IAEVersionHelper.m in Sources */,
 				5B879786180EBA0E00554E13 /* IAEHelpBook.m in Sources */,
 				5B5C968C17816EF0008CD851 /* IAEValueDecoratorViewZeroConfigurator.m in Sources */,
@@ -2782,6 +2793,7 @@
 				5BDD9A3818576AAB001A6CEF /* IAEPasswordPanelKeyboardView.m in Sources */,
 				5BCE3ABD17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.m in Sources */,
 				5BDD9A2D18572256001A6CEF /* IAEPasswordPanelViewController.m in Sources */,
+				5BCFFE86194F54E200A38373 /* IAEEasyIncomesAndExpensesViewControllerDefs.m in Sources */,
 				5BE84E77180DA8CF00F4A80B /* IAESettingsViewController.m in Sources */,
 				5B23F04017FED21C00477D34 /* NSUserDefaults+EasyIncAndExp.m in Sources */,
 				5BD01CA21929F78700348C91 /* IAEIdentifiers.m in Sources */,

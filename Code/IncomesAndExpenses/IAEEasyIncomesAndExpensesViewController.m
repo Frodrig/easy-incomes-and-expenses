@@ -873,10 +873,6 @@
     return [self findGlobalModeTypeForConceptsEditMode];
 }
 
-#pragma mark - IAEEasyIncomesAndExpensesViewControllerQuery
-
-#pragma mark - Finds
-
 #pragma mark - Update
 
 - (void)updateBalancesAndAvailabilityOfSelectorContextSubmenuWithAnimation:(BOOL)animation

@@ -1074,12 +1074,12 @@
 				5BCFFE85194F54E200A38373 /* IAEEasyIncomesAndExpensesViewControllerDefs.h */,
 				5B32D652177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.h */,
 				5B32D653177C387A0070AC72 /* IAEEasyIncomesAndExpensesViewController.m */,
-				5BCE3AA317A95B4A00CD01E7 /* Protocols */,
-				5B903BB91782DBAF00DBEFB2 /* Views */,
-				5BCE3AB517A9700800CD01E7 /* DataSources */,
 				5BCFFE8D194F58CE00A38373 /* IAEEasyIncomesAndExpensesQuery.h */,
 				5BCFFE8E194F58CE00A38373 /* IAEEasyIncomesAndExpensesQuery.m */,
 				5BB2248019501AFC00A02416 /* IAEEasyIncomesAndExpensesQueryDataSource.h */,
+				5BCE3AA317A95B4A00CD01E7 /* Protocols */,
+				5B903BB91782DBAF00DBEFB2 /* Views */,
+				5BCE3AB517A9700800CD01E7 /* DataSources */,
 			);
 			name = "Easy Incomes and Expenses";
 			sourceTree = "<group>";

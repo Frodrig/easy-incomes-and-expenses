@@ -12,18 +12,23 @@
 #import "IAETextRawSelectorMenuView.h"
 #import "IAEEasyIncomesAndExpensesViewControllerDefs.h"
 #import "IAEEditModeConceptCollectionViewCell.h"
+#import "IAESelectorContextView.h"
 #import "IAEDateHelper.h"
 #import "IAEOpenYear.h"
 #import "IAEMonth.h"
 #import "IAEYear.h"
 #import "IAEBook.h"
 #import "IAEConcept.h"
+#import "IAECategory.h"
+#import "IAEContextView.h"
 
 @interface IAEEasyIncomesAndExpensesQuery()
 
 @end
 
 @implementation IAEEasyIncomesAndExpensesQuery
+
+#pragma mark - Global
 
 - (BOOL)isEditModeActive
 {
@@ -289,6 +294,157 @@
     NSString *dayOfTheWeekName = [IAEDateHelper findDayOfTheWeekNameStringWithDayOfTheWeekIndex:dayOfTheWeekIndex inShortForm:NO];
     
     return dayOfTheWeekName;
+}
+
+#pragma mark - forViewController
+
+- (IAECategory *)findCategoryOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
+{
+    IAEConcept *concept = [self findConceptOfCell:cell];
+    IAECategory *categoryOfConcept = concept.category;
+    
+    return categoryOfConcept;
+}
+
+- (CategoryType)findCategoryTypeOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
+{
+    IAEConcept *concept = [self findConceptOfCell:cell];
+    IAECategory *categoryOfConcept = concept.category;
+    
+    return categoryOfConcept.categoryType;
+}
+
+- (NSUInteger)findTodayMonthContextViewGlobalIndexInSelectorContextView
+{
+    NSUInteger todayMonthContextViewGlobalIndex = [self findTodayMonthIndex] + 1;
+    
+    return todayMonthContextViewGlobalIndex;
+}
+
+- (NSUInteger)findTodayMonthIndex
+{
+    NSDate *today = [NSDate date];
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *monthComponents = [gregorian components:NSMonthCalendarUnit fromDate:today];
+    
+    IAEOpenYear *openYear = [self findOpenYear];
+    const NSUInteger todayLocalMonthIndex = [openYear findIndexOfMonth:(MonthType)(monthComponents.month)];
+    
+    return todayLocalMonthIndex;
+}
+
+- (IAEMonth *)findMonthOfPresentDay
+{
+    NSUInteger todayMonthIndex = [self findTodayMonthIndex];
+    return [self findMonthForOpenYearAtIndex:todayMonthIndex];
+}
+
+- (IAEMonth *)findMonthForOpenYearAtIndex:(NSUInteger)index
+{
+    IAEOpenYear *year = [self findOpenYear];
+    return [year.months objectAtIndex:index];
+}
+
+- (NSArray *)allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath:(NSIndexPath *)indexPath
+{
+    IAEMonth *month = nil;
+    if ([self isActualSelectedContextAMonth]) {
+        month = [self findActualSelectedMonth];
+    } else {
+        NSArray *months = [self findAllOrdererMonthsWithConceptsOfOpenYear];
+        month = months[indexPath.section];
+    }
+    
+    NSArray *allConcepts = [self isDayModeActiveForConcepts] ? [month allConceptsSortedByDay] : [month allConceptsSortedByEntryInstant];
+    
+    return allConcepts;
+}
+
+- (IAEConcept *)findConceptOfCell:(UICollectionViewCell *)cell
+{
+    NSIndexPath *indexPathOfCell = [[self.dataSource conceptsCollectionViewForEasyIncomesAndExpensesQuery:self] indexPathForCell:cell];
+    return [self findConceptAtIndexPath:indexPathOfCell];
+}
+
+- (IAEEditModeConceptCollectionViewCell *)findConceptCellOfConcept:(IAEConcept *)concept
+{
+    const BOOL dayMode = [self isDayModeActiveForConcepts];
+    NSArray *concepts = dayMode ? [concept.month allConceptsSortedByDay] : [concept.month allConceptsSortedByEntryInstant];
+    NSUInteger conceptIndex = [concepts indexOfObject:concept];
+    NSIndexPath *indexPathOfCell = [NSIndexPath indexPathForRow:conceptIndex inSection:0];
+    IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell*) [[self.dataSource conceptsCollectionViewForEasyIncomesAndExpensesQuery:self] cellForItemAtIndexPath:indexPathOfCell];
+    
+    NSAssert(cell, @"");
+    return cell;
+}
+
+- (IAEContextView *)findActualSelectedMonthContextView
+{
+    return [self.dataSource contextMenuViewForEasyIncomesAndExpensesQuery:self].currentOptionIndexSelected > 0 ? [self findContextViewAtGlobalPosition:[self.dataSource contextMenuViewForEasyIncomesAndExpensesQuery:self].currentOptionIndexSelected] : nil;
+}
+
+- (IAEContextView *)findOpenYearContextView
+{
+    return [self findContextViewAtGlobalPosition:0];
+}
+
+- (IAEContextView *)findContextViewAtGlobalPosition:(NSUInteger)globalPosition
+{
+    IAEContextView *contextView = [[self.dataSource selectorContextViewForEasyIncomesAndExpensesQuery:self] findContextViewAtIndex:globalPosition];
+    
+    return contextView;
+}
+
+- (BOOL)categorySelectorViewControllerWasLaunchedFromCategoryButton
+{
+    // Nota: Solo tendra sentido si realmente se ha lanzado
+    const BOOL launchedFromCategoryButton = [self.dataSource currentPopoverForEasyIncomesAndExpensesQuery:self] == nil && [self.dataSource categorySelectorViewControllerForEasyIncomesAndExpensesQuery:self] != nil;
+    
+    return launchedFromCategoryButton;
+}
+
+- (BOOL)categorySelectorViewControllerWasLaunchedFromConcept
+{
+    return [self.dataSource currentPopoverForEasyIncomesAndExpensesQuery:self] != nil;
+}
+
+- (IAEContextView *)findActualSelectedContext
+{
+    IAEContextView *actualSelectedContext = nil;
+    if ([self isActualSelectedContextAMonth]) {
+        actualSelectedContext = [self findActualSelectedMonthContextView];
+    } else {
+        actualSelectedContext = [self findContextViewAtGlobalPosition:kGlobalIndexForYearInContextScrollView];
+    }
+    
+    return actualSelectedContext;
+}
+
+- (NSArray *)findCategoriesOfActualSelectedContextViewWithType:(CategoryType)type
+{
+    id modelObj = [self findModelObjectOfActualSelectedContextView];
+    NSArray *categories = [modelObj findAllCategoriesSortedByAbsoluteValueOfAmountsInConceptsOfType:type];
+    
+    return categories;
+}
+
+- (NSUInteger)findDayOfTheMonthForConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
+{
+    IAEConcept *concept = [self findConceptOfCell:cell];
+    return concept.dayOfTheMonth;
+}
+
+- (IAEEditModeConceptCollectionViewCell *)findConceptCollectionCellWithMenuModeActive
+{
+    IAEEditModeConceptCollectionViewCell *retCell = nil;
+    for (IAEEditModeConceptCollectionViewCell *cellIt in [self.dataSource conceptsCollectionViewForEasyIncomesAndExpensesQuery:self].visibleCells) {
+        if (cellIt.menuModeActive) {
+            retCell = cellIt;
+            break;
+        }
+    }
+    
+    return retCell;
 }
 
 @end

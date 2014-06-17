@@ -11,6 +11,8 @@
 
 @class IAEOpenYear;
 @class IAEConcept;
+@class IAECategory;
+@class IAEContextView;
 
 @interface IAEEasyIncomesAndExpensesQuery : NSObject
 
@@ -65,5 +67,24 @@
 - (NSString *)findInActualOpenYearMonthNameWithMonthIndex:(NSUInteger)monthIndex inShortForm:(BOOL)shortForm;
 
 - (BOOL)isDayModeActiveForConcepts;
+
+- (IAECategory *)findCategoryOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell;
+- (CategoryType)findCategoryTypeOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell;
+- (NSUInteger)findTodayMonthContextViewGlobalIndexInSelectorContextView;
+- (NSUInteger)findTodayMonthIndex;
+- (IAEMonth *)findMonthOfPresentDay;
+- (IAEMonth *)findMonthForOpenYearAtIndex:(NSUInteger)index;
+- (NSArray *)allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath:(NSIndexPath *)indexPath;
+- (IAEConcept *)findConceptOfCell:(UICollectionViewCell *)cell;
+- (IAEEditModeConceptCollectionViewCell *)findConceptCellOfConcept:(IAEConcept *)concept;
+- (IAEContextView *)findActualSelectedMonthContextView;
+- (IAEContextView *)findOpenYearContextView;
+- (IAEContextView *)findContextViewAtGlobalPosition:(NSUInteger)globalPosition;
+- (BOOL)categorySelectorViewControllerWasLaunchedFromCategoryButton;
+- (BOOL)categorySelectorViewControllerWasLaunchedFromConcept;
+- (IAEContextView *)findActualSelectedContext;
+- (NSArray *)findCategoriesOfActualSelectedContextViewWithType:(CategoryType)type;
+- (NSUInteger)findDayOfTheMonthForConceptCell:(IAEEditModeConceptCollectionViewCell *)cell;
+- (IAEEditModeConceptCollectionViewCell *)findConceptCollectionCellWithMenuModeActive;
 
 @end

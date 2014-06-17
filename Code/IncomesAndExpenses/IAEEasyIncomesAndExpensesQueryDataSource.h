@@ -15,9 +15,17 @@
 @class IAEMonth;
 @class IAECalculatorViewController;
 @class IAETextRawSelectorMenuView;
+@class IAESelectorContextView;
+@class IAECategorySelectorViewController;
 
 @protocol IAEEasyIncomesAndExpensesQueryDataSource <NSObject>
 
+- (IAECategorySelectorViewController *)categorySelectorViewControllerForEasyIncomesAndExpensesQuery:(IAEEasyIncomesAndExpensesQuery *)easyIncomesAndExpensesQuery;
+
+- (UIPopoverController *)currentPopoverForEasyIncomesAndExpensesQuery:(IAEEasyIncomesAndExpensesQuery *)easyIncomesAndExpensesQuery;
+
+- (UICollectionView *)conceptsCollectionViewForEasyIncomesAndExpensesQuery:(IAEEasyIncomesAndExpensesQuery *)easyIncomesAndExpensesQuery;
+- (IAESelectorContextView *)selectorContextViewForEasyIncomesAndExpensesQuery:(IAEEasyIncomesAndExpensesQuery *)easyIncomesAndExpensesQuery;
 - (UISegmentedControl *)modeSegmentedControlForEasyIncomesAndExpensesQuery:(IAEEasyIncomesAndExpensesQuery *)easyIncomesAndExpensesQuery;
 - (IAECalculatorViewController *)calculatorViewControllerForEasyIncomesAndExpensesQuery:(IAEEasyIncomesAndExpensesQuery *)easyIncomesAndExpensesQuery;
 

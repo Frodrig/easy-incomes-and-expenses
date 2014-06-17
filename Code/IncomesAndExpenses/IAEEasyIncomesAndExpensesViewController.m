@@ -12,7 +12,7 @@
 #import "IAEEasyIncomesAndExpensesViewControllerDefs.h"
 #import "IAEEasyIncomesAndExpensesViewControllerDelegate.h"
 #import "IAEBook.h"
-#import "IAEYear.h"
+//#import "IAEYear.h"
 #import "IAEOpenYear.h"
 #import "IAEMonth.h"
 #import "IAEConcept.h"
@@ -542,7 +542,7 @@
 
 - (void)goToTodayMonth
 {
-    NSUInteger globalContextViewIndex = [self findTodayMonthContextViewGlobalIndexInSelectorContextView];
+    NSUInteger globalContextViewIndex = [self.easyIncomesAndExpensesQuery findTodayMonthContextViewGlobalIndexInSelectorContextView];
     [self gotoToContextViewWithIndex:globalContextViewIndex];
 }
 
@@ -803,6 +803,26 @@
 
 #pragma mark - IAEEasyIncomesAndExpensesQueryDataSource
 
+- (IAECategorySelectorViewController *)categorySelectorViewControllerForEasyIncomesAndExpensesQuery:(IAEEasyIncomesAndExpensesQuery *)easyIncomesAndExpensesQuery
+{
+    return self.categoriesSelectorViewController;
+}
+
+- (UIPopoverController *)currentPopoverForEasyIncomesAndExpensesQuery:(IAEEasyIncomesAndExpensesQuery *)easyIncomesAndExpensesQuery
+{
+    return self.popover;
+}
+
+- (IAESelectorContextView *)selectorContextViewForEasyIncomesAndExpensesQuery:(IAEEasyIncomesAndExpensesQuery *)easyIncomesAndExpensesQuery
+{
+    return self.selectorContextView;
+}
+
+- (UICollectionView *)conceptsCollectionViewForEasyIncomesAndExpensesQuery:(IAEEasyIncomesAndExpensesQuery *)easyIncomesAndExpensesQuery
+{
+    return self.conceptsCollectionView;
+}
+
 - (UISegmentedControl *)modeSegmentedControlForEasyIncomesAndExpensesQuery:(IAEEasyIncomesAndExpensesQuery *)easyIncomesAndExpensesQuery
 {
     return self.modeSegmentedControl;
@@ -825,7 +845,7 @@
 
 - (NSArray *)easyIncomesAndExpensesQuery:(IAEEasyIncomesAndExpensesQuery *)easyIncomesAndExpensesQuery allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath:(NSIndexPath *)indexPath
 {
-    return [self allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath:indexPath];
+    return [self.easyIncomesAndExpensesQuery allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath:indexPath];
 }
 
 - (UICollectionView *)findConceptsCollectionViewForEasyIncomesAndExpensesQuery:(IAEEasyIncomesAndExpensesQuery *)easyIncomesAndExpensesQuery
@@ -840,12 +860,12 @@
 
 - (IAEMonth *)easyIncomesAndExpensesQuery:(IAEEasyIncomesAndExpensesQuery *)easyIncomesAndExpensesQuery findMonthForOpenYearAtIndex:(NSUInteger)index
 {
-    return [self findMonthForOpenYearAtIndex:index];
+    return [self.easyIncomesAndExpensesQuery findMonthForOpenYearAtIndex:index];
 }
 
 - (NSArray *)easyIncomesAndExpensesQuery:(IAEEasyIncomesAndExpensesQuery *)easyIncomesAndExpensesQuery findCategoriesOfActualSelectedContextViewWithType:(CategoryType)type
 {
-    return [self findCategoriesOfActualSelectedContextViewWithType:type];
+    return [self.easyIncomesAndExpensesQuery findCategoriesOfActualSelectedContextViewWithType:type];
 }
 
 - (GlobalModeType)findGlobalModeTypeForConceptsEditModeForEasyIncomesAndExpensesQuery:(IAEEasyIncomesAndExpensesQuery *)easyIncomesAndExpensesQuery
@@ -857,161 +877,7 @@
 
 #pragma mark - Finds
 
-- (IAECategory *)findCategoryOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
-{
-    IAEConcept *concept = [self findConceptOfCell:cell];
-    IAECategory *categoryOfConcept = concept.category;
-    
-    return categoryOfConcept;
-}
-
-- (CategoryType)findCategoryTypeOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
-{
-    IAEConcept *concept = [self findConceptOfCell:cell];
-    IAECategory *categoryOfConcept = concept.category;
-    
-    return categoryOfConcept.categoryType;
-}
-
-- (NSUInteger)findTodayMonthContextViewGlobalIndexInSelectorContextView
-{
-    NSUInteger todayMonthContextViewGlobalIndex = [self findTodayMonthIndex] + 1;
-  
-    return todayMonthContextViewGlobalIndex;
-}
-
-- (NSUInteger)findTodayMonthIndex
-{
-    NSDate *today = [NSDate date];
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *monthComponents = [gregorian components:NSMonthCalendarUnit fromDate:today];
-    
-    IAEOpenYear *openYear = [self.easyIncomesAndExpensesQuery findOpenYear];
-    const NSUInteger todayLocalMonthIndex = [openYear findIndexOfMonth:(MonthType)(monthComponents.month)];
-    
-    return todayLocalMonthIndex;
-}
-
-- (IAEMonth *)findMonthOfPresentDay
-{
-    NSUInteger todayMonthIndex = [self findTodayMonthIndex];
-    return [self findMonthForOpenYearAtIndex:todayMonthIndex];
-}
-
-- (IAEMonth *)findMonthForOpenYearAtIndex:(NSUInteger)index
-{
-    IAEOpenYear *year = [self.easyIncomesAndExpensesQuery findOpenYear];
-    return [year.months objectAtIndex:index];
-}
-
-- (NSArray *)allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath:(NSIndexPath *)indexPath
-{
-    IAEMonth *month = nil;
-    if ([self.easyIncomesAndExpensesQuery isActualSelectedContextAMonth]) {
-        month = [self.easyIncomesAndExpensesQuery findActualSelectedMonth];
-        CLSLog(@"allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath - MONTH: %d", month.month);
-    } else {
-        NSArray *months = [self.easyIncomesAndExpensesQuery findAllOrdererMonthsWithConceptsOfOpenYear];
-        month = months[indexPath.section];
-        CLSLog(@"allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath - YEAR: %d & MONTH: %d", month.year.yearDate, month.month);
-    }
-    
-    CLSLog(@"day mode active ? %@", [self.easyIncomesAndExpensesQuery isDayModeActiveForConcepts] ? @"YES" : @"NO");
-    NSArray *allConcepts = [self.easyIncomesAndExpensesQuery isDayModeActiveForConcepts] ? [month allConceptsSortedByDay] : [month allConceptsSortedByEntryInstant];
-    
-    return allConcepts;
-}
-
-- (IAEConcept *)findConceptOfCell:(UICollectionViewCell *)cell
-{
-    CLSLog(@"%s", __FUNCTION__);
-    
-    NSIndexPath *indexPathOfCell = [self.conceptsCollectionView indexPathForCell:cell];
-    return [self.easyIncomesAndExpensesQuery findConceptAtIndexPath:indexPathOfCell];
-}
-
-- (IAEEditModeConceptCollectionViewCell *)findConceptCellOfConcept:(IAEConcept *)concept
-{
-    const BOOL dayMode = [self.easyIncomesAndExpensesQuery isDayModeActiveForConcepts];
-    NSArray *concepts = dayMode ? [concept.month allConceptsSortedByDay] : [concept.month allConceptsSortedByEntryInstant];
-    NSUInteger conceptIndex = [concepts indexOfObject:concept];
-    NSIndexPath *indexPathOfCell = [NSIndexPath indexPathForRow:conceptIndex inSection:0];
-    IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell*) [self.conceptsCollectionView cellForItemAtIndexPath:indexPathOfCell];
-
-    NSAssert(cell, @"");
-    return cell;
-}
-
-- (IAEContextView *)findActualSelectedMonthContextView
-{
-    return self.contextMenuView.currentOptionIndexSelected > 0 ? [self findContextViewAtGlobalPosition:self.contextMenuView.currentOptionIndexSelected] : nil;
-}
-
-- (IAEContextView *)findOpenYearContextView
-{
-    return [self findContextViewAtGlobalPosition:0];
-}
-
-- (IAEContextView *)findContextViewAtGlobalPosition:(NSUInteger)globalPosition
-{
-    IAEContextView *contextView = [self.selectorContextView findContextViewAtIndex:globalPosition];
-    
-    return contextView;
-}
-
-- (BOOL)categorySelectorViewControllerWasLaunchedFromCategoryButton
-{
-    // Nota: Solo tendra sentido si realmente se ha lanzado
-    const BOOL launchedFromCategoryButton = self.popover == nil && self.categoriesSelectorViewController != nil;
-    
-    return launchedFromCategoryButton;
-}
-
-- (BOOL)categorySelectorViewControllerWasLaunchedFromConcept
-{
-    return self.popover != nil;
-}
-
-- (IAEContextView *)findActualSelectedContext
-{
-    IAEContextView *actualSelectedContext = nil;
-    if ([self.easyIncomesAndExpensesQuery isActualSelectedContextAMonth]) {
-        actualSelectedContext = [self findActualSelectedMonthContextView];
-    } else {
-        actualSelectedContext = [self findContextViewAtGlobalPosition:kGlobalIndexForYearInContextScrollView];
-    }
-    
-    return actualSelectedContext;
-}
-
-- (NSArray *)findCategoriesOfActualSelectedContextViewWithType:(CategoryType)type
-{
-    id modelObj = [self.easyIncomesAndExpensesQuery findModelObjectOfActualSelectedContextView];
-    NSArray *categories = [modelObj findAllCategoriesSortedByAbsoluteValueOfAmountsInConceptsOfType:type];
-    
-    return categories;
-}
-
-- (NSUInteger)findDayOfTheMonthForConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
-{
-    IAEConcept *concept = [self findConceptOfCell:cell];
-    return concept.dayOfTheMonth;
-}
-
-- (IAEEditModeConceptCollectionViewCell *)findConceptCollectionCellWithMenuModeActive
-{
-    IAEEditModeConceptCollectionViewCell *retCell = nil;
-    for (IAEEditModeConceptCollectionViewCell *cellIt in self.conceptsCollectionView.visibleCells) {
-        if (cellIt.menuModeActive) {
-            retCell = cellIt;
-            break;
-        }
-    }
-    
-    return retCell;
-}
-
-#pragma mark - Update 
+#pragma mark - Update
 
 - (void)updateBalancesAndAvailabilityOfSelectorContextSubmenuWithAnimation:(BOOL)animation
 {
@@ -1023,7 +889,7 @@
 
 - (void)updateSelectedMonthBalanceWithAnimation:(BOOL)animation
 {
-    IAEContextView *contextView = [self findActualSelectedMonthContextView];
+    IAEContextView *contextView = [self.easyIncomesAndExpensesQuery findActualSelectedMonthContextView];
     if (animation) {
         [contextView reloadDataWithAnimationFromUsingZeroValue:NO];
     } else {
@@ -1033,7 +899,7 @@
 
 - (void)updateOpenYearBalance
 {
-    IAEContextView *contextView = [self findOpenYearContextView];
+    IAEContextView *contextView = [self.easyIncomesAndExpensesQuery findOpenYearContextView];
     [contextView reloadDataWithoutAnimation];
 }
 
@@ -1881,7 +1747,7 @@
 {
     [Flurry logEvent:@"Concept_Duplicate"];
 
-    IAEConcept *concept = [self findConceptOfCell:cell];
+    IAEConcept *concept = [self.easyIncomesAndExpensesQuery findConceptOfCell:cell];
     IAEConcept *newConcept = [concept.month duplicateConcept:concept];
     [[IAEBook sharedBook] saveAll];
     [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
@@ -1922,7 +1788,7 @@
 - (void)executeLogicAfterFavoritePinTapForCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
     const BOOL willFavoritePinBeEnabled = !cell.favoritePinEnabled;
-    IAEConcept *conceptOfCell = [self findConceptOfCell:cell];
+    IAEConcept *conceptOfCell = [self.easyIncomesAndExpensesQuery findConceptOfCell:cell];
     if (willFavoritePinBeEnabled) {
         [[IAEFavoriteConceptsStock sharedInstance] addFavorite:conceptOfCell];
     } else {
@@ -1959,7 +1825,7 @@
 {
     [cell setVisualAspectInEditMode:YES forConceptElement:EditModeConceptElement_Category];
 
-    IAECategory *categoryOfCell = [self findCategoryOfConceptCell:cell];
+    IAECategory *categoryOfCell = [self.easyIncomesAndExpensesQuery findCategoryOfConceptCell:cell];
     IAECategorySelectorViewController *viewController = [[IAECategorySelectorViewController alloc]
                                                          initWithExtraActions:CATEGORYSELECTOR_EXTRAACTION_CATEGORYSELECTION | CATEGORYSELECTOR_EXTRAACTION_ADD
                                                          withSelectedCategory:categoryOfCell];
@@ -2022,7 +1888,7 @@
     
     IAEOpenYear *year = [self.easyIncomesAndExpensesQuery findOpenYear];
     IAEMonth *month = [self.easyIncomesAndExpensesQuery findActualSelectedMonth];
-    NSUInteger selectedDay = [self findDayOfTheMonthForConceptCell:cell];
+    NSUInteger selectedDay = [self.easyIncomesAndExpensesQuery findDayOfTheMonthForConceptCell:cell];
     
     IAEDayCalendarSelectorViewController *viewController = [[IAEDayCalendarSelectorViewController alloc] initWithYearDate:year.yearDate
                                                                                                                monthIndex:month.month
@@ -2037,7 +1903,7 @@
 {
     NSAssert(cell, @"");
 
-    IAEConcept *concept = [self findConceptOfCell:cell];
+    IAEConcept *concept = [self.easyIncomesAndExpensesQuery findConceptOfCell:cell];
     IAEMonth *month = [self.easyIncomesAndExpensesQuery findActualSelectedMonth];
     const NSUInteger numberOfConceptsBeforeRemove = month.concepts.count;
     const NSUInteger numberOfConceptsAfterRemove = numberOfConceptsBeforeRemove - 1;
@@ -2114,7 +1980,7 @@
 
 - (void)doneButtonWasPressedInCategorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
 {
-    NSAssert([self categorySelectorViewControllerWasLaunchedFromCategoryButton], @"");
+    NSAssert([self.easyIncomesAndExpensesQuery categorySelectorViewControllerWasLaunchedFromCategoryButton], @"");
     [self dismissViewControllerAnimated:YES completion:^{
         self.categoriesSelectorViewController = nil;
     }];
@@ -2123,9 +1989,9 @@
 - (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
                      didSelectCategory:(IAECategory *)category
 {
-    if ([self categorySelectorViewControllerWasLaunchedFromCategoryButton]) {
+    if ([self.easyIncomesAndExpensesQuery categorySelectorViewControllerWasLaunchedFromCategoryButton]) {
         [self launchCategoryEditorViewControllerModalFromCategorySelectorViewController:categorySelectorViewController ToRenameCategory:category];
-    } else if ([self categorySelectorViewControllerWasLaunchedFromConcept]) {
+    } else if ([self.easyIncomesAndExpensesQuery categorySelectorViewControllerWasLaunchedFromConcept]) {
         [self dismissPopoverAndChangeCategoryOfConceptAtIndexPath:categorySelectorViewController.conceptCellIndexPath toCategory:category];
     } else {
         NSAssert(0, @"Nunca se deberia de llegar a este punto");
@@ -2163,7 +2029,7 @@
 - (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
             didSelectAddCategoryOfType:(CategoryType)categoryType
 {
-    if ([self categorySelectorViewControllerWasLaunchedFromCategoryButton]) {
+    if ([self.easyIncomesAndExpensesQuery categorySelectorViewControllerWasLaunchedFromCategoryButton]) {
         [self launchCategoryEditorViewControllerModalToAddCategoryFromCategorySelectorViewController:categorySelectorViewController
                                                                         andCategoryType:categoryType];
     } else if ([self isPopoverAssociatedToConceptBecauseACategorySelectorViewController]) {
@@ -2232,7 +2098,7 @@
         [self reloadActiveModeAfterRemoveCategoryWithTag:tagOfCategory andType:categoryType];
     }
     
-    NSAssert([self categorySelectorViewControllerWasLaunchedFromCategoryButton], @"");
+    NSAssert([self.easyIncomesAndExpensesQuery categorySelectorViewControllerWasLaunchedFromCategoryButton], @"");
     [categorySelectorViewController reloadAfterRemoveCellWithCategoryTag:tagOfCategory];
 }
 
@@ -2263,7 +2129,7 @@
 - (void)categoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
              didCancelRenameCategory:(IAECategory *)category
 {
-    if ([self categorySelectorViewControllerWasLaunchedFromCategoryButton]) {
+    if ([self.easyIncomesAndExpensesQuery categorySelectorViewControllerWasLaunchedFromCategoryButton]) {
         [categoryEditorViewController dismissViewControllerAnimated:YES completion:nil];
     } else {
         [self dismissViewControllerAnimated:YES completion:nil];
@@ -2274,7 +2140,7 @@
            didValidateNewCategoryTag:(NSString *)categoryTag
                       ofCategoryType:(CategoryType)categoryType
 {
-    [Flurry logEvent:[self categorySelectorViewControllerWasLaunchedFromCategoryButton] ? @"modal_newcategorycreated" : @"concept_newcategorycreated"];
+    [Flurry logEvent:[self.easyIncomesAndExpensesQuery categorySelectorViewControllerWasLaunchedFromCategoryButton] ? @"modal_newcategorycreated" : @"concept_newcategorycreated"];
     
     IAECategory *newCategory = [[IAECategoryStore sharedCategoryStore] createCategoryOfType:categoryType
                                                                                      andTag:categoryTag
@@ -2291,7 +2157,7 @@
 - (void)returnFromCategoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
                           atPositionOfCategory:(IAECategory *)newCategory
 {
-    if ([self categorySelectorViewControllerWasLaunchedFromCategoryButton]) {
+    if ([self.easyIncomesAndExpensesQuery categorySelectorViewControllerWasLaunchedFromCategoryButton]) {
         [self returnToUpdatedCategorySelectorViewControllerFromCategoryEditorViewController:categoryEditorViewController
                                                                        atPositionOfCategory:newCategory];
     } else {
@@ -2511,7 +2377,7 @@
 {
     IAEEditModeConceptCollectionViewCell *cell = notification.object;
     if (cell) {
-        IAEConcept *concept = [self findConceptOfCell:cell];
+        IAEConcept *concept = [self.easyIncomesAndExpensesQuery findConceptOfCell:cell];
         NSString *noteForConcept = notification.userInfo[@"note"];
         if (![concept.detailDescription isEqualToString:noteForConcept]) {
             concept.detailDescription = noteForConcept;
@@ -2695,7 +2561,7 @@
 
 - (void)reloadConceptsCollectionViewWithDayModeAfterCreateNewConcept:(IAEConcept *)concept withCallForAttentionAnimation:(BOOL)callForAttentionAnimation
 {
-    NSArray *concepts = [self allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath:nil];
+    NSArray *concepts = [self.easyIncomesAndExpensesQuery allConceptsSortedAsAppropriateFromActualSelectedContextWithIndexPath:nil];
     const NSUInteger indexOfConcept = [concepts indexOfObject:concept];
     NSIndexPath *indexPathOfInsertion = [NSIndexPath indexPathForRow:indexOfConcept inSection:0];
     NSIndexPath *indexPathForScroll = nil;
@@ -2988,12 +2854,12 @@ didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
     [self dismisPopover];
     [self executeActionOnMonth:[[[IAEBook sharedBook] findActualOpenYear] findMonthObjectOfMonthDate:month]
                 basedInPurpose:self.monthSelectorPurpose
-                   withConceptOfCell:[self findConceptCollectionCellWithMenuModeActive]];
+                   withConceptOfCell:[self.easyIncomesAndExpensesQuery findConceptCollectionCellWithMenuModeActive]];
 }
 
 - (void)executeActionOnMonth:(IAEMonth *)month basedInPurpose:(MonthSelectorPurpose)purpose withConceptOfCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
-    IAEConcept *concept = [self findConceptOfCell:cell];
+    IAEConcept *concept = [self.easyIncomesAndExpensesQuery findConceptOfCell:cell];
     [month duplicateConcept:concept];
     if (purpose == MonthSelectorPurposeCopy) {
         [Flurry logEvent:@"Concept_Copy"];

@@ -6,14 +6,17 @@
 //  Copyright (c) 2013 Fernando Rodríguez Martínez. All rights reserved.
 //
 
+#import "IAEEasyIncomesAndExpensesQuery.h"
 #import "IAEHelperContextTextRawMenuDataSource.h"
-#import "IAEEasyIncomesAndExpensesViewControllerQuery.h"
 #import "IAEDateHelper.h"
 #import "IAEOpenYear.h"
+#import "IAEYear.h"
+#import "IAEMonth.h"
+#import "IAEConcept.h"
 
 @interface IAEHelperContextTextRawMenuDataSource()
 
-@property (nonatomic, weak) id<IAEEasyIncomesAndExpensesViewControllerQuery> iaeViewControllerQuery;
+@property (nonatomic, weak) IAEEasyIncomesAndExpensesQuery *iaeViewControllerQuery;
 
 @end
 
@@ -34,7 +37,7 @@ static const CGFloat kColorAlphaForSelectorIndicatorBackground = 1.0;
 
 #pragma mark - Init
 
-- (id)initWithEasyIncomesAndExpensesViewControllerQuery:(id<IAEEasyIncomesAndExpensesViewControllerQuery>)query
+- (id)initWithEasyIncomesAndExpensesViewControllerQuery:(IAEEasyIncomesAndExpensesQuery *)query
 {
     self = [super init];
     if (self) {

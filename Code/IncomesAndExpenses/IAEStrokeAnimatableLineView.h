@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "IAEStrokeAnimatableLineViewDefs.h"
+#import "IAEStrokeAnimatableLineView.h"
+
+typedef NS_ENUM(NSInteger, StrokeType) {
+    STROKEANIMATABLE_TYPE_THIN,
+    STROKEANIMATABLE_TYPE_MEDIUM,
+    STROKEANIMATABLE_TYPE_STRONG
+};
 
 @protocol IAEStrokeAnimatableViewDelegate;
 

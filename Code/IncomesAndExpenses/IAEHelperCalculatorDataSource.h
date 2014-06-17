@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "IAECalculatorViewControllerDataSource.h"
 
-@protocol IAEEasyIncomesAndExpensesViewControllerQuery;
+@class IAEEasyIncomesAndExpensesQuery;
 
 @interface IAEHelperCalculatorDataSource : NSObject<IAECalculatorViewControllerDataSource>
 
-- (id)initWithEasyIncomesAndExpensesViewControllerQuery:(id<IAEEasyIncomesAndExpensesViewControllerQuery>)query;
+- (id)initWithEasyIncomesAndExpensesViewControllerQuery:(IAEEasyIncomesAndExpensesQuery *)query;
 
 @end

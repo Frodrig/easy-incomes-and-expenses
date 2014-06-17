@@ -7,7 +7,7 @@
 //
 
 #import "IAEHelperConceptsCollectionViewDataSource.h"
-#import "IAEEasyIncomesAndExpensesViewControllerQuery.h"
+#import "IAEEasyIncomesAndExpensesQuery.h"
 #import "IAEEditModeConceptCollectionViewCell.h"
 #import "IAEEditModeConceptCollectionViewHeader.h"
 #import "IAEValueDecoratorView.h"
@@ -25,7 +25,7 @@
 
 @interface IAEHelperConceptsCollectionViewDataSource()
 
-@property (nonatomic, weak) id<IAEEasyIncomesAndExpensesViewControllerQuery> iaeViewControllerQuery;
+@property (nonatomic, weak) IAEEasyIncomesAndExpensesQuery *iaeViewControllerQuery;
 
 @end
 
@@ -41,7 +41,7 @@ static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
 
 #pragma mark - Init
 
-- (id)initWithEasyIncomesAndExpensesViewControllerQuery:(id<IAEEasyIncomesAndExpensesViewControllerQuery>)query
+- (id)initWithEasyIncomesAndExpensesViewControllerQuery:(IAEEasyIncomesAndExpensesQuery *)query
 {
     self = [super init];
     if (self) {

@@ -7,11 +7,11 @@
 //
 
 #import "IAEHelperCalculatorDataSource.h"
-#import "IAEEasyIncomesAndExpensesViewControllerQuery.h"
+#import "IAEEasyIncomesAndExpensesQuery.h"
 
 @interface IAEHelperCalculatorDataSource()
 
-@property (nonatomic, weak) id<IAEEasyIncomesAndExpensesViewControllerQuery> iaeViewControllerQuery;
+@property (nonatomic, weak) IAEEasyIncomesAndExpensesQuery *iaeViewControllerQuery;
 
 @end
 
@@ -19,7 +19,7 @@
 
 #pragma mark - Init
 
-- (id)initWithEasyIncomesAndExpensesViewControllerQuery:(id<IAEEasyIncomesAndExpensesViewControllerQuery>)query
+- (id)initWithEasyIncomesAndExpensesViewControllerQuery:(IAEEasyIncomesAndExpensesQuery *)query
 {
     self = [super init];
     if (self) {

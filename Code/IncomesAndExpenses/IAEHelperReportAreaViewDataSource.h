@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "IAEReportAreaViewDataSource.h"
 
-@protocol IAEEasyIncomesAndExpensesViewControllerQuery;
+@class IAEEasyIncomesAndExpensesQuery;
 
 @interface IAEHelperReportAreaViewDataSource : NSObject<IAEReportAreaViewDataSource>
 
-- (id)initWithEasyIncomesViewControllerQuery:(id<IAEEasyIncomesAndExpensesViewControllerQuery>)query;
+- (id)initWithEasyIncomesViewControllerQuery:(IAEEasyIncomesAndExpensesQuery *)query;
 
 @end

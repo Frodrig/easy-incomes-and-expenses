@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "IAETextRawSelectorMenuViewDataSource.h"
 
-@protocol IAEEasyIncomesAndExpensesViewControllerQuery;
+@class IAEEasyIncomesAndExpensesQuery;
 
 @interface IAEHelperContextTextRawMenuDataSource : NSObject<IAETextRawSelectorMenuViewDataSource>
 
-- (id)initWithEasyIncomesAndExpensesViewControllerQuery:(id<IAEEasyIncomesAndExpensesViewControllerQuery>)query;
+- (id)initWithEasyIncomesAndExpensesViewControllerQuery:(IAEEasyIncomesAndExpensesQuery *)query;
 
 @end

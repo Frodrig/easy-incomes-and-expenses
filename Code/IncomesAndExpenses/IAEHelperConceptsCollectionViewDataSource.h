@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol IAEEasyIncomesAndExpensesViewControllerQuery;
+@class IAEEasyIncomesAndExpensesQuery;
 @class IAEEditModeConceptCollectionViewCell;
 
 @interface IAEHelperConceptsCollectionViewDataSource : NSObject<UICollectionViewDataSource>
 
-- (id)initWithEasyIncomesAndExpensesViewControllerQuery:(id<IAEEasyIncomesAndExpensesViewControllerQuery>)query;
+- (id)initWithEasyIncomesAndExpensesViewControllerQuery:(IAEEasyIncomesAndExpensesQuery *)query;
 
 - (void)configureEditModeConceptCell:(IAEEditModeConceptCollectionViewCell *)cell withConceptAtIndexPath:(NSIndexPath *)indexPath;
 

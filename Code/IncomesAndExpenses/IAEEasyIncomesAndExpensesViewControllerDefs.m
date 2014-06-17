@@ -10,7 +10,7 @@
 #define IncomesAndExpenses_IAEEasyIncomesAndExpensesViewControllerDefs_h
 
 #import "IAEEasyIncomesAndExpensesViewControllerDefs.h"
-#import "IAEStrokeAnimatableLineViewDefs.h"
+#import "IAEStrokeAnimatableLineView.h"
 
 const CGFloat kSelectorContextViewYOutsideMargin = 100;
 

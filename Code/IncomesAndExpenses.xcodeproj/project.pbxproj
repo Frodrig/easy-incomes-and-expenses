@@ -237,7 +237,7 @@
 		5BCE3AB917A9703B00CD01E7 /* IAEHelperCalculatorDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3AB817A9703B00CD01E7 /* IAEHelperCalculatorDataSource.m */; };
 		5BCE3ABD17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCE3ABC17A9724100CD01E7 /* IAEHelperConceptsCollectionViewDataSource.m */; };
 		5BCFFE86194F54E200A38373 /* IAEEasyIncomesAndExpensesViewControllerDefs.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCFFE84194F54E200A38373 /* IAEEasyIncomesAndExpensesViewControllerDefs.m */; };
-		5BCFFE89194F56F000A38373 /* IAEStrokeAnimatableLineViewDefs.h in Sources */ = {isa = PBXBuildFile; fileRef = 5BCFFE88194F56F000A38373 /* IAEStrokeAnimatableLineViewDefs.h */; };
+		5BCFFE8F194F58CE00A38373 /* IAEEasyIncomesAndExpensesQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCFFE8E194F58CE00A38373 /* IAEEasyIncomesAndExpensesQuery.m */; };
 		5BD01C9E1929F48C00348C91 /* IAEHasthUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD01C9D1929F48C00348C91 /* IAEHasthUtilities.m */; };
 		5BD01CA21929F78700348C91 /* IAEIdentifiers.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD01CA11929F78700348C91 /* IAEIdentifiers.m */; };
 		5BD06157163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5BD06155163A891F00A80BE3 /* IncomesAndExpenses.xcdatamodeld */; };
@@ -592,6 +592,7 @@
 		5BB0222217E2F7BD00CF75B8 /* IAEEasyIncomesAndExpensesViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEasyIncomesAndExpensesViewControllerDelegate.h; sourceTree = "<group>"; };
 		5BB2048B17D47E7100563B7C /* IAEDisplayPanelCalculatorViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEDisplayPanelCalculatorViewDataSource.h; sourceTree = "<group>"; };
 		5BB2048D17D4C92700563B7C /* IAEReportAreaViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEReportAreaViewDelegate.h; sourceTree = "<group>"; };
+		5BB2248019501AFC00A02416 /* IAEEasyIncomesAndExpensesQueryDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEasyIncomesAndExpensesQueryDataSource.h; sourceTree = "<group>"; };
 		5BB3A776194771E900D7FBD4 /* es */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = es; path = es.lproj/HelpScreen_01.jpg; sourceTree = "<group>"; };
 		5BB3A778194771E900D7FBD4 /* es */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = es; path = "es.lproj/HelpScreen_01@2x.jpg"; sourceTree = "<group>"; };
 		5BB3A77A194771E900D7FBD4 /* es */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = es; path = es.lproj/HelpScreen_02.jpg; sourceTree = "<group>"; };
@@ -681,7 +682,6 @@
 		5BCE3A9D17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEditModeConceptCollectionViewHeader.h; sourceTree = "<group>"; };
 		5BCE3A9E17A8FDE400CD01E7 /* IAEEditModeConceptCollectionViewHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEditModeConceptCollectionViewHeader.m; sourceTree = "<group>"; };
 		5BCE3AA017A8FDF700CD01E7 /* IAEEditModeConceptCollectionViewHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAEEditModeConceptCollectionViewHeader.xib; sourceTree = "<group>"; };
-		5BCE3AA417A95B7600CD01E7 /* IAEEasyIncomesAndExpensesViewControllerQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEasyIncomesAndExpensesViewControllerQuery.h; sourceTree = "<group>"; };
 		5BCE3AA617A95D5300CD01E7 /* IAENumberUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAENumberUtils.h; sourceTree = "<group>"; };
 		5BCE3AA717A95D5300CD01E7 /* IAENumberUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAENumberUtils.m; sourceTree = "<group>"; };
 		5BCE3AA917A95EDB00CD01E7 /* IAEHelperReportAreaViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHelperReportAreaViewDataSource.h; sourceTree = "<group>"; };
@@ -698,7 +698,8 @@
 		5BCFFE84194F54E200A38373 /* IAEEasyIncomesAndExpensesViewControllerDefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEasyIncomesAndExpensesViewControllerDefs.m; sourceTree = "<group>"; };
 		5BCFFE85194F54E200A38373 /* IAEEasyIncomesAndExpensesViewControllerDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEasyIncomesAndExpensesViewControllerDefs.h; sourceTree = "<group>"; };
 		5BCFFE88194F56F000A38373 /* IAEStrokeAnimatableLineViewDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IAEStrokeAnimatableLineViewDefs.h; path = IncomesAndExpenses/IAEStrokeAnimatableLineViewDefs.h; sourceTree = "<group>"; };
-		5BCFFE8A194F579B00A38373 /* IAEStrokeAnimatableLineViewDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEStrokeAnimatableLineViewDefs.h; sourceTree = "<group>"; };
+		5BCFFE8D194F58CE00A38373 /* IAEEasyIncomesAndExpensesQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEasyIncomesAndExpensesQuery.h; sourceTree = "<group>"; };
+		5BCFFE8E194F58CE00A38373 /* IAEEasyIncomesAndExpensesQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEasyIncomesAndExpensesQuery.m; sourceTree = "<group>"; };
 		5BD01C9C1929F48C00348C91 /* IAEHasthUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHasthUtilities.h; sourceTree = "<group>"; };
 		5BD01C9D1929F48C00348C91 /* IAEHasthUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEHasthUtilities.m; sourceTree = "<group>"; };
 		5BD01CA01929F78700348C91 /* IAEIdentifiers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEIdentifiers.h; sourceTree = "<group>"; };
@@ -938,7 +939,6 @@
 		5B251FA217AACA76000957A5 /* StrokeAnimatableView */ = {
 			isa = PBXGroup;
 			children = (
-				5BCFFE8A194F579B00A38373 /* IAEStrokeAnimatableLineViewDefs.h */,
 				5B251F9F17AACA71000957A5 /* IAEStrokeAnimatableLineView.h */,
 				5B251FA017AACA71000957A5 /* IAEStrokeAnimatableLineView.m */,
 				5B251FA317AACA8E000957A5 /* IAEStrokeAnimatableViewDelegate.h */,
@@ -1077,6 +1077,9 @@
 				5BCE3AA317A95B4A00CD01E7 /* Protocols */,
 				5B903BB91782DBAF00DBEFB2 /* Views */,
 				5BCE3AB517A9700800CD01E7 /* DataSources */,
+				5BCFFE8D194F58CE00A38373 /* IAEEasyIncomesAndExpensesQuery.h */,
+				5BCFFE8E194F58CE00A38373 /* IAEEasyIncomesAndExpensesQuery.m */,
+				5BB2248019501AFC00A02416 /* IAEEasyIncomesAndExpensesQueryDataSource.h */,
 			);
 			name = "Easy Incomes and Expenses";
 			sourceTree = "<group>";
@@ -2149,7 +2152,6 @@
 		5BCE3AA317A95B4A00CD01E7 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				5BCE3AA417A95B7600CD01E7 /* IAEEasyIncomesAndExpensesViewControllerQuery.h */,
 				5BB0222217E2F7BD00CF75B8 /* IAEEasyIncomesAndExpensesViewControllerDelegate.h */,
 			);
 			name = Protocols;
@@ -2778,7 +2780,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5BCFFE89194F56F000A38373 /* IAEStrokeAnimatableLineViewDefs.h in Sources */,
 				5B28813417985822006E4F9B /* IAEVersionHelper.m in Sources */,
 				5B879786180EBA0E00554E13 /* IAEHelpBook.m in Sources */,
 				5B5C968C17816EF0008CD851 /* IAEValueDecoratorViewZeroConfigurator.m in Sources */,
@@ -2842,6 +2843,7 @@
 				5B5C968617816ED0008CD851 /* IAEValueDecoratorViewIncomeConfigurator.m in Sources */,
 				5B879780180EAE6B00554E13 /* IAEHelpPage.m in Sources */,
 				5B62D86F178EC20E009879A6 /* IAEAnimateValueUpdater.m in Sources */,
+				5BCFFE8F194F58CE00A38373 /* IAEEasyIncomesAndExpensesQuery.m in Sources */,
 				5B5C96A91781E877008CD851 /* NSNumber+DefaultValues.m in Sources */,
 				5B1F0D3517841CB400D0B4F1 /* IAEEditModeConceptCollectionViewCell.m in Sources */,
 				5BAEAE0B1876828A00271B47 /* IAEFavoriteConceptsStock.m in Sources */,

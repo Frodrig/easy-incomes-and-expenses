@@ -9,7 +9,7 @@
 #import <Crashlytics/Crashlytics.h>
 #import "IAEHelperReportAreaViewDataSource.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
-#import "IAEEasyIncomesAndExpensesViewControllerQuery.h"
+#import "IAEEasyIncomesAndExpensesQuery.h"
 #import "IAEReportAreaView.h"
 #import "IAENumberUtils.h"
 #import "IAEColorHelper.h"
@@ -21,7 +21,7 @@
 
 @interface IAEHelperReportAreaViewDataSource()
 
-@property (nonatomic, weak) id<IAEEasyIncomesAndExpensesViewControllerQuery> iaeViewControllerQuery;
+@property (nonatomic, weak) IAEEasyIncomesAndExpensesQuery *iaeViewControllerQuery;
 @property (nonatomic, strong) NSArray *allIncomeCategoriesOfActualContextCache;
 @property (nonatomic, strong) NSArray *allExpenseCategoriesOfActualContextCache;
 @property (nonatomic) CGFloat maxValueOfItemsCache;
@@ -39,7 +39,7 @@ static NSString * const kLTextExpenseCategoryTypeName = @"LTEXT_CATEGORYTYPEEXPE
 
 #pragma mark - Init
 
-- (id)initWithEasyIncomesViewControllerQuery:(id<IAEEasyIncomesAndExpensesViewControllerQuery>)query
+- (id)initWithEasyIncomesViewControllerQuery:(IAEEasyIncomesAndExpensesQuery *)query
 {
     self = [super init];
     if (self) {

@@ -1,20 +1,20 @@
 //
-//  IAEEasyIncomesAndExpensesViewControllerQueries.h
+//  IAEEasyIncomesAndExpensesQuery.h
 //  IncomesAndExpenses
 //
-//  Created by Fernando Rodríguez on 31/07/13.
-//  Copyright (c) 2013 Fernando Rodríguez Martínez. All rights reserved.
+//  Created by Fernando Rodríguez Martínez on 16/06/14.
+//  Copyright (c) 2014 Fernando Rodríguez Martínez. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "CategoryDefs.h"
+#import "IAEEasyIncomesAndExpensesQueryDataSource.h"
 
 @class IAEOpenYear;
-@class IAEMonth;
 @class IAEConcept;
-@class IAETextRawSelectorMenuView;
 
-@protocol IAEEasyIncomesAndExpensesViewControllerQuery <NSObject>
+@interface IAEEasyIncomesAndExpensesQuery : NSObject
+
+@property (nonatomic, weak) id<IAEEasyIncomesAndExpensesQueryDataSource> dataSource;
 
 - (BOOL)isEditModeActive;
 - (BOOL)isReportModeActive;
@@ -22,6 +22,9 @@
 - (BOOL)isCalculatorClosed;
 - (BOOL)isCalculatorInHideMode;
 - (BOOL)isCalculatorInVisibleMode;
+- (BOOL)isActualSelectedContextAMonth;
+
+- (BOOL)existConceptsInActualSelectedContext;
 
 - (UICollectionView *)findConceptsCollectionView;
 

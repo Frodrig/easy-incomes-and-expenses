@@ -18,13 +18,13 @@
 #import "IAECalculatorViewControllerDelegate.h"
 #import "IAETextRawSelectorMenuViewDelegate.h"
 #import "IAEStrokeAnimatableViewDelegate.h"
-#import "IAEEasyIncomesAndExpensesViewControllerQuery.h"
 #import "IAEReportAreaViewDelegate.h"
 #import "IAEAdjustConceptAmountViewControllerDataSource.h"
 #import <MessageUI/MFMailComposeViewController.h>
 #import "IAEFavoriteConceptsViewControllerDelegate.h"
 #import "IAEMonthSelectorViewControllerDelegate.h"
 #import "IAEContextMenuActionSheetViewControllerDelegate.h"
+#import "IAEEasyIncomesAndExpensesQueryDataSource.h"
 
 @protocol IAEEasyIncomesAndExpensesViewControllerDelegate;
 
@@ -43,12 +43,13 @@
                                                                       IAEStrokeAnimatableViewDelegate,
                                                                       IAEReportAreaViewDelegate,
                                                                       IAEAdjustConceptAmountViewControllerDataSource,
-                                                                      IAEEasyIncomesAndExpensesViewControllerQuery,
+
                                                                       MFMailComposeViewControllerDelegate,
                                                                       UIAlertViewDelegate,
                                                                       IAEFavoriteConceptsViewControllerDelegate,
                                                                       IAEMonthSelectorViewControllerDelegate,
-                                                                      IAEContextMenuActionSheetViewControllerDelegate>
+                                                                      IAEContextMenuActionSheetViewControllerDelegate,
+                                                                      IAEEasyIncomesAndExpensesQueryDataSource>
 
 @property (nonatomic, weak) id<IAEEasyIncomesAndExpensesViewControllerDelegate> delegate;
 @property (nonatomic) BOOL helpModeActivated;

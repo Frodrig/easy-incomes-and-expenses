@@ -8,10 +8,11 @@
 
 #import "IAEHelperReportTextRawMenuDataSource.h"
 #import "IAETextRawSelectorMenuViewDataSource.h"
+#import "IAEEasyIncomesAndExpensesQuery.h"
 
 @interface IAEHelperReportTextRawMenuDataSource()
 
-@property (nonatomic, weak) id<IAEEasyIncomesAndExpensesViewControllerQuery> iaeViewControllerQuery;
+@property (nonatomic, weak) IAEEasyIncomesAndExpensesQuery *iaeViewControllerQuery;
 
 @end
 
@@ -32,7 +33,7 @@ static const CGFloat kRadiusOfBorderForOptions = 0;
 
 #pragma mark - Init
 
-- (id)initWithEasyIncomesAndExpensesViewControllerQuery:(id<IAEEasyIncomesAndExpensesViewControllerQuery>)query
+- (id)initWithEasyIncomesAndExpensesViewControllerQuery:(IAEEasyIncomesAndExpensesQuery *)query
 {
     self = [super init];
     if (self) {

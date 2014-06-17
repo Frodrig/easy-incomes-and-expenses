@@ -2871,9 +2871,6 @@ didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
 
 #pragma mark - Actions
 
-
-#pragma mark - Actions
-
 - (void)resetToLaunchState
 {
     [self.conceptsCollectionView reloadData];

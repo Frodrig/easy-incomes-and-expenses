@@ -790,6 +790,7 @@
 			files = (
 				5BBD37CD180BFF730095A15A /* SystemConfiguration.framework in Frameworks */,
 				5BFF5B9D1928D2CD009CAEE6 /* StoreKit.framework in Frameworks */,
+				5B767DF91636D7FC005315F8 /* Foundation.framework in Frameworks */,
 				5BDEEC03191033B200646726 /* CFNetwork.framework in Frameworks */,
 				5BBD37CF180BFF990095A15A /* Security.framework in Frameworks */,
 				5B1C904E18EDED9600A7BC68 /* Crashlytics.framework in Frameworks */,
@@ -798,7 +799,6 @@
 				5BC31A8416651F1F009F23D6 /* QuartzCore.framework in Frameworks */,
 				5BD06168163A8CFF00A80BE3 /* CoreData.framework in Frameworks */,
 				5B767DF71636D7FC005315F8 /* UIKit.framework in Frameworks */,
-				5B767DF91636D7FC005315F8 /* Foundation.framework in Frameworks */,
 				5B767DFB1636D7FC005315F8 /* CoreGraphics.framework in Frameworks */,
 				5B0038FE18CFC13900044B2D /* libFlurry_4.3.2.a in Frameworks */,
 			);

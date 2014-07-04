@@ -498,6 +498,8 @@ static const NSUInteger kInvalidSelecteDay = 0;
 
 - (void)launchPopoverForSelectFavoriteConceptsFromAddButton:(UIButton *)addButton
 {
+    [self dismissPopover];
+
     IAEFavoriteConceptsViewController *favoriteConceptsViewController = [[IAEFavoriteConceptsViewController alloc] initWithOptions:FC_ADD];
     favoriteConceptsViewController.delegate = self;
     
@@ -527,6 +529,8 @@ static const NSUInteger kInvalidSelecteDay = 0;
 
 - (void)launchPopoverForSelectCategoryFromRect:(CGRect)rect
 {
+    [self dismissPopover];
+    
     NSUInteger categorySelectorOptions = CATEGORYSELECTOR_EXTRAACTION_CATEGORYSELECTION | CATEGORYSELECTOR_EXTRAACTION_ADD;
     IAECategorySelectorViewController *viewController = [[IAECategorySelectorViewController alloc] initWithExtraActions:categorySelectorOptions
                                                                                                    withSelectedCategory:self.actualCategory];
@@ -554,6 +558,8 @@ static const NSUInteger kInvalidSelecteDay = 0;
 
 - (void)launchPopoverForSelectDayFromRect:(CGRect)rect
 {
+    [self dismissPopover];
+
     IAEMonth *month = [self.dataSource monthForCalculatorViewController:self];
     IAEDayCalendarSelectorViewController *viewController = [[IAEDayCalendarSelectorViewController alloc] initWithYearDate:month.year.yearDate
                                                                                                                monthIndex:month.month

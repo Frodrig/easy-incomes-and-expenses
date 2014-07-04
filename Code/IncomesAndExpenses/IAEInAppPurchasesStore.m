@@ -87,6 +87,13 @@ static NSString * const kInAppPurchaseProVersionIdentifier = @"verpro.easyincome
 
 - (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue
 {
+    // En caso de que se llegue aqui sin version Pro significara que el usuario ha intentado restaurar una compra
+    // que jamas realizo. Simplemente cerramos el cuadro de dialogo
+    if ([[NSUserDefaults standardUserDefaults] isProVersionDisabled]) {
+        // Llamar a otro finish sin transation para cerrar el dialogo con error
+        //[self finishTransactionFailedWithPaymentTransaction:nil];
+        [self finishTransactionFailedTryingToRestore];
+    }
 }
 
 - (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error
@@ -96,6 +103,15 @@ static NSString * const kInAppPurchaseProVersionIdentifier = @"verpro.easyincome
     }
     
     self.paymentCompletionBlock = self.restoreCompletionBlock = nil;
+}
+
+- (void)finishTransactionFailedTryingToRestore
+{
+    if (self.restoreCompletionBlock) {
+        NSError *error = [[NSError alloc] initWithDomain:@"InAppPurchasesPropetaryErrorDomain"
+                                                    code:100 userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"LTEXT_PURCHASEPROVERSIONMODAL_ERRORRESTOREPRODUCTNOOWNER_MESSAGE", @"")}];
+        self.restoreCompletionBlock(error);
+    }
 }
 
 - (void)finishTransactionAndGiveFeaturesWithPaymentTransaction:(SKPaymentTransaction *)paymentTransacction withBlock:(void(^)(NSError *error))completionBlock andError:(NSError *)error

@@ -205,14 +205,16 @@ static const CGFloat kAlphaForNotePresentIndicatorImageView = 0.2;
 
 - (void)configureCategoryLabelWithName:(NSString *)name
 {
+    NSAssert(name, @"");
+    
     NSDictionary *categoryNameLabelAttributes = [self createAttributeDictionaryForConceptCellWithFontName:kCategoryLabelFontFamilyName
                                                                                                      size:kCategoryLabelFontSize
                                                                                              andColor:[UIColor blackColor]];
-    self.categoryLabel.attributedText = [[NSAttributedString alloc] initWithString:name
+    self.categoryLabel.attributedText = [[NSAttributedString alloc] initWithString:name ? name : @""
                                                                             attributes:categoryNameLabelAttributes];
     self.categoryLabel.numberOfLines = 2;
     
-    self.noteCategoryIndicator.text = name;
+    self.noteCategoryIndicator.text = name ? name : @"";
     self.noteCategoryIndicator.textColor = [UIColor blackColor];
 }
 

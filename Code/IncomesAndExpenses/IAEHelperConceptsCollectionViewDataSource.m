@@ -127,6 +127,11 @@ static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
     NSAssert(concept, @"");
     IAECategory *category = concept.category;
     NSAssert(category, @"");
+    
+    if (!concept || !category) {
+        CLSLog(@"Se ha intentado configurar una celda de concepto y no tenemos el modelo logico o la categoría. Concepto? %d Category? %d", concept ? 1 : 0, category ? 1 : 0);
+    }
+    
     NSDecimalNumber *amountWithSign = [concept amountWithSign];
     NSString *amountWithSignString = [[IAENumberFormatterManager sharedManager].currencyFormatter stringFromNumber:amountWithSign];
     const EconomicValueType economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:amountWithSign];

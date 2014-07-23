@@ -377,11 +377,14 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     return [NSArray arrayWithArray:openYearsToClose];
 }
 
+// SOLO PARA EL FIX DE INICIO
 - (void)closeAll
 {
-    while (self.openYears.count > 0) {
-        IAEOpenYear *openYear = [self.years objectAtIndex:0];
-        [self closeYearWithYearDate:openYear.yearDate];
+    self.openYears = [NSArray array];
+
+    while (self.years.count > 0) {
+        IAEYear *year = [self.years objectAtIndex:0];
+        [self deleteYearObject:year permanent:[year findAllConcepts].count == 0];
     }
 }
 

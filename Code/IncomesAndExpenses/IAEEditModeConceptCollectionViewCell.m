@@ -427,6 +427,9 @@ static const CGFloat kAlphaForNotePresentIndicatorImageView = 0.2;
     } else {
         label.attributedText = [[NSAttributedString alloc] initWithString:text attributes:attributes];
     }
+
+    [label sizeToFit];
+    label.center = CGPointMake(self.identifierContainerView.bounds.size.width / 2.0, self.identifierContainerView.bounds.size.height / 2.0);
 }
 
 - (void)createAndAddInIdentifierContainerViewDayLabels

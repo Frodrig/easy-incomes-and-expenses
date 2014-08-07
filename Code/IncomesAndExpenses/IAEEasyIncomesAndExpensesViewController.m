@@ -2755,7 +2755,10 @@
 - (BOOL)canSelectOptionIndex:(NSUInteger)optionIndex inTextRawSelectorMenuView:(IAETextRawSelectorMenuView *)textRawSelectorMenuView
 {
     BOOL canSelect = YES;
-    if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenuView]) {
+    
+    if (self.conceptCellToRemove) {
+        canSelect = NO;
+    } else if ([self isTheReportMenuTheTextRawSelectorMenuView:textRawSelectorMenuView]) {
         canSelect = ![self.reportAreaView existChangeTitleInProgressOnReportAreaItems];
     }
     

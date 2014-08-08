@@ -1633,7 +1633,8 @@
 
 - (BOOL)canTapOnConceptCollectionViewCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
-    const BOOL can = ![self.calculatorViewController isAnyTranslationActive] &&
+    const BOOL can = cell &&
+                     ![self.calculatorViewController isAnyTranslationActive] &&
                      ![self.easyIncomesAndExpensesQuery isNoteModeActiveInConcepts];
     
     return can;
@@ -2590,6 +2591,7 @@
     if (self.conceptsCollectionView.visibleCells.count > 0) {
         [self.conceptsCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
     }
+    
     [self.conceptsCollectionView performBatchUpdates:^{
         [self.conceptsCollectionView insertItemsAtIndexPaths:@[indexPath]];
     } completion:^(BOOL finished) {

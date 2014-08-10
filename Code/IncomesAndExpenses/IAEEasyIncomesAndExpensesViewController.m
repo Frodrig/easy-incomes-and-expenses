@@ -1902,25 +1902,16 @@
 
     IAEConcept *concept = [self.easyIncomesAndExpensesQuery findConceptOfCell:cell];
     IAEMonth *month = [self.easyIncomesAndExpensesQuery findActualSelectedMonth];
-    const NSUInteger numberOfConceptsBeforeRemove = month.concepts.count;
-    const NSUInteger numberOfConceptsAfterRemove = numberOfConceptsBeforeRemove - 1;
     NSIndexPath *indexPathOfCell = [self.conceptsCollectionView indexPathForCell:cell];
-    const BOOL isLastCell = indexPathOfCell.row == numberOfConceptsBeforeRemove - 1;
     
     [month removeConcept:concept];
     [[IAEBook sharedBook] saveAll];
     
     [self.conceptsCollectionView performBatchUpdates:^{
         // En algunas ocasiones nos ha dado fallo en este punto porque indexPathOfCell era nil
-        // Se han colocado assertos pero vamos a proteger por si acaso
         CLSLog(@"deleteItemsAtIndexPaths from removeConceptAndUpdateBalancesOfCell");
+        NSAssert(indexPathOfCell, @"");
         [self.conceptsCollectionView deleteItemsAtIndexPaths:@[indexPathOfCell]];
-        if (isLastCell && numberOfConceptsAfterRemove > 0) {
-            NSIndexPath *indexPathOfNewLastCell = [NSIndexPath indexPathForRow:indexPathOfCell.row - 1
-                                                                     inSection:indexPathOfCell.section];
-            CLSLog(@"reloadItemsAtIndexPaths from removeConceptAndUpdateBalancesOfCell");
-            [self.conceptsCollectionView reloadItemsAtIndexPaths:@[indexPathOfNewLastCell]];
-        }
     } completion:^(BOOL finished) {
         [self updateBalancesAndAvailabilityOfSelectorContextSubmenuWithAnimation:YES];
     }];

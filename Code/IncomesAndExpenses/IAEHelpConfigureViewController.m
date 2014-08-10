@@ -17,8 +17,8 @@
 
 typedef NS_ENUM(NSUInteger, IAESectionConfigurationOptionType) {
     IAESectionConfigurationOptionConceptsWithDays,
-    IAESectionConfigurationOptionChangeStartMonth,
     IAESectionConfigurationOptionRemoveConceptConfirmation,
+    IAESectionConfigurationOptionChangeStartMonth,
 };
 
 #pragma mark - Constantes
@@ -58,7 +58,7 @@ static NSString * const kCollectionViewRemoveConceptsWithConfirmationCellIdentif
 - (NSArray *)sectionConfigurationOptionsProVersion
 {
     if (!_sectionConfigurationOptionsProVersion) {
-        _sectionConfigurationOptionsProVersion = @[@(IAESectionConfigurationOptionConceptsWithDays), @(IAESectionConfigurationOptionChangeStartMonth), @(IAESectionConfigurationOptionRemoveConceptConfirmation)];
+        _sectionConfigurationOptionsProVersion = @[@(IAESectionConfigurationOptionConceptsWithDays), @(IAESectionConfigurationOptionRemoveConceptConfirmation), @(IAESectionConfigurationOptionChangeStartMonth)];
     }
     
     return _sectionConfigurationOptionsProVersion;

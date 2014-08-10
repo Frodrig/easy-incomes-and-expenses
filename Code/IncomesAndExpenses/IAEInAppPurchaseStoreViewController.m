@@ -125,6 +125,8 @@ static const CGFloat kFadeInStateTime = 0.75;
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     [self setRequestingProVersionProductState];
 }
 

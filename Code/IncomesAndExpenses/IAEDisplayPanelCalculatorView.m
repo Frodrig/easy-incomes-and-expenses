@@ -189,6 +189,7 @@ static const CGFloat kAlphaValueForDayButtonTitleDisabled = 0.2;
 
 - (void)setMonthName:(NSString *)monthName ofYearName:(NSString *)yearName
 {
+    self.dayButton.enabled = YES;
     NSString *monthAndYearPhrase = [self makeStringPhraseWithMonthName:monthName andYearName:yearName withDotAtEnd:NO];
     [self.dayButton setTitle:monthAndYearPhrase forState:UIControlStateNormal];
     [self.dayButton setTitleColor:[UIColor colorWithWhite:0.0 alpha:kAlphaValueForDayButtonTitleDisabled] forState:UIControlStateDisabled];

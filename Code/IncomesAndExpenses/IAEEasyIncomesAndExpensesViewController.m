@@ -678,6 +678,7 @@
     self.categoriesSelectorViewController.showNumberOfConcepts = YES;
     self.categoriesSelectorViewController.delegate = self;
     self.categoriesSelectorViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+    //self.categoriesSelectorViewController.conceptCellIndexPath = ;
     
     [self presentViewController:self.categoriesSelectorViewController animated:YES completion:nil];
 }
@@ -1829,6 +1830,8 @@
     viewController.showNumberOfConcepts = NO;
     viewController.delegate = self;
     viewController.conceptCellIndexPath = [self.conceptsCollectionView indexPathForCell:cell];
+
+    self.categoriesSelectorViewController = viewController;
     
     [self createAndPresentPopoverForConceptCellView:[cell findCategoryLabel] withViewController:viewController];
 }
@@ -2054,6 +2057,9 @@
     
     IAECategoryEditorViewController *categoryEditorViewController = [[IAECategoryEditorViewController alloc] initToAddCategoryOfType:categoryType];
     categoryEditorViewController.delegate = self;
+    categoryEditorViewController.conceptCellIndexPath = self.categoriesSelectorViewController.conceptCellIndexPath;
+    
+    self.categoriesSelectorViewController = nil;
     
     [self presentViewController:categoryEditorViewController animated:YES completion:nil];
 }
@@ -2156,8 +2162,8 @@
 - (void)returnToUpdatedEditModeViewControllerFromCategoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
                                                  changingConceptToNewCategory:(IAECategory *)newCategory
 {
-    [self changeCategoryOfConceptAtIndexPath:self.categoriesSelectorViewController.conceptCellIndexPath toCategory:newCategory];
-    [self reloadContentOfConceptsCollectionView];
+    [self changeCategoryOfConceptAtIndexPath:categoryEditorViewController.conceptCellIndexPath toCategory:newCategory];
+    //[self reloadContentOfConceptsCollectionView];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

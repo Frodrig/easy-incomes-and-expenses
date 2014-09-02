@@ -16,6 +16,7 @@
 @interface IAECategoryEditorViewController : UIViewController<UITextFieldDelegate>
 
 @property(nonatomic, weak)id<IAECategoryEditorViewControllerDelegate> delegate;
+@property(nonatomic, strong) NSIndexPath *conceptCellIndexPath;
 
 - (id)initToAddCategoryOfType:(CategoryType)categoryType;
 - (id)initToRenameCategory:(IAECategory *)category;

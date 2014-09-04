@@ -1385,7 +1385,9 @@
 {
     if ([self canExecuteLongPressureOnConceptsCollectionView]) {
         if (longPressureGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-            [self acquiresLongPressureOnConceptsCollectionViewFromGesture:longPressureGestureRecognizer];
+            if (![self isGlobalModeTypeNote]) {
+                [self acquiresLongPressureOnConceptsCollectionViewFromGesture:longPressureGestureRecognizer];
+            }
         } else if (longPressureGestureRecognizer.state == UIGestureRecognizerStateEnded) {
             [self releaseLongPressureOnConceptsCollectionView];
         }
@@ -1395,6 +1397,11 @@
 - (BOOL)canExecuteLongPressureOnConceptsCollectionView
 {
     return [[NSUserDefaults standardUserDefaults] isProVersionEnabled];
+}
+
+- (BOOL)isGlobalModeTypeNote
+{
+    return [self findGlobalModeTypeForConceptsEditMode] == GlobalModeTypeNote;
 }
 
 - (void)acquiresLongPressureOnConceptsCollectionViewFromGesture:(UILongPressGestureRecognizer *)longPressureGestureRecognizer

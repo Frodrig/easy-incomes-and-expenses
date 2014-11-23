@@ -697,7 +697,6 @@
 		5BCF718A19070D5F0084F187 /* IAESelectorContextViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAESelectorContextViewDataSource.h; sourceTree = "<group>"; };
 		5BCFFE84194F54E200A38373 /* IAEEasyIncomesAndExpensesViewControllerDefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEasyIncomesAndExpensesViewControllerDefs.m; sourceTree = "<group>"; };
 		5BCFFE85194F54E200A38373 /* IAEEasyIncomesAndExpensesViewControllerDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEasyIncomesAndExpensesViewControllerDefs.h; sourceTree = "<group>"; };
-		5BCFFE88194F56F000A38373 /* IAEStrokeAnimatableLineViewDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IAEStrokeAnimatableLineViewDefs.h; path = IncomesAndExpenses/IAEStrokeAnimatableLineViewDefs.h; sourceTree = "<group>"; };
 		5BCFFE8D194F58CE00A38373 /* IAEEasyIncomesAndExpensesQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEEasyIncomesAndExpensesQuery.h; sourceTree = "<group>"; };
 		5BCFFE8E194F58CE00A38373 /* IAEEasyIncomesAndExpensesQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEEasyIncomesAndExpensesQuery.m; sourceTree = "<group>"; };
 		5BD01C9C1929F48C00348C91 /* IAEHasthUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEHasthUtilities.h; sourceTree = "<group>"; };
@@ -1549,7 +1548,6 @@
 		5B767DE71636D7FC005315F8 = {
 			isa = PBXGroup;
 			children = (
-				5BCFFE88194F56F000A38373 /* IAEStrokeAnimatableLineViewDefs.h */,
 				5BBD3739180BFF5B0095A15A /* ProjectApiKey.txt */,
 				5B0F8BC116B94A7B002D62A5 /* Localizacion */,
 				5B29ED30179FC2C300FCC5C6 /* Resources */,

@@ -36,8 +36,8 @@
 - (void) setUp {
     [super setUp];
 
-    [self createCoreDataStack];
-    [self createSut];
+    //[self createCoreDataStack];
+    //[self createSut];
     
 }
 
@@ -57,7 +57,7 @@
 
 
 - (void) createSut {
-    sut = [[IAEBook alloc] initWithManagedObjectModel:model andManagedObjectContext:context];
+    //sut = [[IAEBook alloc] initWithManagedObjectModel:model andManagedObjectContext:context];
 }
 
 
@@ -84,8 +84,8 @@
 }
 
 - (void) tearDown {
-    [self releaseSut];
-    [self releaseCoreDataStack];
+    //[self releaseSut];
+    //[self releaseCoreDataStack];
 
     [super tearDown];
 }
@@ -112,7 +112,7 @@
     // Operate
 
     // Check
-    XCTAssertNotNil(sut, @"The object to test must be created in setUp.");
+    //XCTAssertNotNil(sut, @"The object to test must be created in setUp.");
 }
 
 @end

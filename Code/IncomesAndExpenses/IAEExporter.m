@@ -16,18 +16,22 @@
 #import "IAECategory.h"
 #import "IAEYear.h"
 #import "IAENumberFormatterManager.h"
+#import "IAECurrencyManager.h"
 
 static NSStringEncoding kEntringEncondig = NSUTF8StringEncoding;
 
 @interface IAEExporter()
 @property (nonatomic, strong) NSFileHandle *exportFileHandle;
+@property (nonatomic, strong) NSString *separatorSymbol;
 @end
 
 @implementation IAEExporter
 
 #pragma mark - Constants
 
+static NSString * const kCSVNumbersPeriodSeparator = @".";
 static NSString * const kCSVCommaSeparator = @",";
+static NSString * const kCSVSemiColonSeparator = @";";
 
 #pragma mark - Class
 
@@ -60,6 +64,16 @@ static NSString * const kCSVCommaSeparator = @",";
     }
     
     return exportCSVFileName;
+}
+
+#pragma mark - Dynamic properties
+
+-(NSString *)separatorSymbol {
+    if (!_separatorSymbol) {
+        _separatorSymbol = [[[IAECurrencyManager sharedManager] decimalSeparator] isEqualToString:kCSVNumbersPeriodSeparator] ? kCSVCommaSeparator : kCSVSemiColonSeparator;
+    }
+    
+    return _separatorSymbol;
 }
 
 #pragma mark - Export
@@ -134,17 +148,17 @@ static NSString * const kCSVCommaSeparator = @",";
 - (void)writeHeaderColumnsToCSVWithFileHandle:(NSFileHandle *)fileHandle
 {
     NSString *headerStr = NSLocalizedString(@"LTEXT_EXPORTCSV_COLUMN_YEAR", "");
-    headerStr = [headerStr stringByAppendingString:kCSVCommaSeparator];
+    headerStr = [headerStr stringByAppendingString:self.separatorSymbol];
     headerStr = [headerStr stringByAppendingString:NSLocalizedString(@"LTEXT_EXPORTCSV_COLUMN_MONTH", "")];
-    headerStr = [headerStr stringByAppendingString:kCSVCommaSeparator];
+    headerStr = [headerStr stringByAppendingString:self.separatorSymbol];
     headerStr = [headerStr stringByAppendingString:NSLocalizedString(@"LTEXT_EXPORTCSV_COLUMN_DAY", "")];
-    headerStr = [headerStr stringByAppendingString:kCSVCommaSeparator];
+    headerStr = [headerStr stringByAppendingString:self.separatorSymbol];
     headerStr = [headerStr stringByAppendingString:NSLocalizedString(@"LTEXT_EXPORTCSV_COLUMN_TYPE", "")];
-    headerStr = [headerStr stringByAppendingString:kCSVCommaSeparator];
+    headerStr = [headerStr stringByAppendingString:self.separatorSymbol];
     headerStr = [headerStr stringByAppendingString:NSLocalizedString(@"LTEXT_EXPORTCSV_COLUMN_CATEGORY", "")];
-    headerStr = [headerStr stringByAppendingString:kCSVCommaSeparator];
+    headerStr = [headerStr stringByAppendingString:self.separatorSymbol];
     headerStr = [headerStr stringByAppendingString:NSLocalizedString(@"LTEXT_EXPORTCSV_COLUMN_DESCRIPTION", "")];
-    headerStr = [headerStr stringByAppendingString:kCSVCommaSeparator];
+    headerStr = [headerStr stringByAppendingString:self.separatorSymbol];
     headerStr = [headerStr stringByAppendingString:NSLocalizedString(@"LTEXT_EXPORTCSV_COLUMN_AMOUNT", "")];
     headerStr = [headerStr stringByAppendingString:@"\n"];
 
@@ -188,27 +202,27 @@ static NSString * const kCSVCommaSeparator = @",";
     //NSString *conceptToWrite = @"\n";
     NSString *conceptToWrite = @"";
     
-    conceptToWrite = [[conceptToWrite stringByAppendingString:openYearStr] stringByAppendingString:kCSVCommaSeparator];
+    conceptToWrite = [[conceptToWrite stringByAppendingString:openYearStr] stringByAppendingString:self.separatorSymbol];
     
-    conceptToWrite = [[conceptToWrite stringByAppendingString:monthString] stringByAppendingString:kCSVCommaSeparator];
+    conceptToWrite = [[conceptToWrite stringByAppendingString:monthString] stringByAppendingString:self.separatorSymbol];
     
     if (concept.dayOfTheMonth != 0) {
         conceptToWrite = [conceptToWrite stringByAppendingString:[NSString stringWithFormat:@"%d", concept.dayOfTheMonth]];
     }
-    conceptToWrite = [conceptToWrite stringByAppendingString:kCSVCommaSeparator];
+    conceptToWrite = [conceptToWrite stringByAppendingString:self.separatorSymbol];
     
     NSString *categoryTypeStr = concept.category.categoryType == IncomeCategory ? NSLocalizedString(@"LTEXT_EXPORTCSV_CATEGORY_INCOME", "") : NSLocalizedString(@"LTEXT_EXPORTCSV_CATEGORY_EXPENSE", "");
-    conceptToWrite = [[conceptToWrite stringByAppendingString:categoryTypeStr] stringByAppendingString:kCSVCommaSeparator];
+    conceptToWrite = [[conceptToWrite stringByAppendingString:categoryTypeStr] stringByAppendingString:self.separatorSymbol];
     
     NSString *categoryTag = [concept.category localizedTag];
     categoryTag = [self stringSorroundedByQuotesFromString:categoryTag];
-    categoryTag = [categoryTag stringByAppendingString:kCSVCommaSeparator];
+    categoryTag = [categoryTag stringByAppendingString:self.separatorSymbol];
     conceptToWrite = [conceptToWrite stringByAppendingString:categoryTag];
 
     NSString *detailDescription = concept.detailDescription;
     detailDescription = [self stringSorroundedByQuotesFromString:detailDescription];
     conceptToWrite = [conceptToWrite stringByAppendingString:detailDescription];
-    conceptToWrite = [conceptToWrite stringByAppendingString:kCSVCommaSeparator];
+    conceptToWrite = [conceptToWrite stringByAppendingString:self.separatorSymbol];
 
     NSNumberFormatter *formatter = [IAENumberFormatterManager sharedManager].currencyFormatter;
     NSString *categoryAmount = [formatter stringFromNumber:concept.amountWithSign];

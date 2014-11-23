@@ -78,8 +78,7 @@
 {
     NSAssert(self.maximumFractionDigitState && self.minimumFractionDigitState, @"");
     
-    self.currencyFormatter.maximumFractionDigits = [self.maximumFractionDigitState unsignedIntegerValue];
-    self.currencyFormatter.minimumFractionDigits = [self.minimumFractionDigitState unsignedIntegerValue];
+    self.currencyFormatter = nil;
     
     self.maximumFractionDigitState = nil;
     self.minimumFractionDigitState = nil;

@@ -16,3 +16,11 @@ profile
 *.moved-aside
 DerivedData
 .idea/
+Code/ca.lproj/Localizable.strings.BACKUP.10067.strings
+Code/ca.lproj/Localizable.strings.BASE.10067.strings
+Code/ca.lproj/Localizable.strings.LOCAL.10067.strings
+Code/ca.lproj/Localizable.strings.REMOTE.10067.strings
+Code/en.lproj/Localizable.strings.BACKUP.9756.strings
+Code/en.lproj/Localizable.strings.BASE.9756.strings
+Code/en.lproj/Localizable.strings.LOCAL.9756.strings
+Code/en.lproj/Localizable.strings.REMOTE.9756.strings

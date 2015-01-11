@@ -121,6 +121,14 @@ static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
 - (void)configureEditModeConceptCell:(IAEEditModeConceptCollectionViewCell *)cell withConceptAtIndexPath:(NSIndexPath *)indexPath
 {
     CLSLog(@"%s", __FUNCTION__);
+    if (indexPath) {
+        CLSLog(@"row: %ld", (long)indexPath.row);
+        if ([self.iaeViewControllerQuery isActualSelectedContextTheYearOpen]) {
+            CLSLog(@"Actual selected context is Year Open");
+        } else {
+            CLSLog(@"Actual selected context is Month");
+        }
+    }
     
     // Nota: Por defecto los conceptos tienen el valor absoluto de la cantidad que almacenan de ahi el pedir la cantidad con signo si procede
     IAEConcept *concept = [self.iaeViewControllerQuery findConceptAtIndexPath:indexPath];

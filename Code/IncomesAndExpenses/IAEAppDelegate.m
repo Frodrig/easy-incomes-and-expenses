@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 Fernando Rodríguez Martínez. All rights reserved.
 //
 
-#import "Flurry.h"
 #import "IAEAppDelegate.h"
 #import "IAEBook.h"
 #import "IAEYear.h"
@@ -41,7 +40,6 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [self prepareCrashlytics];
-    [self prepareFlurry];
     [[NSUserDefaults standardUserDefaults] prepareDefaults];
     [[IAEInAppPurchasesStore defaultStore] beginTransationObserverSession];
     [self processProcessInfoEnvironment];
@@ -69,13 +67,6 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
     [Crashlytics setObjectValue:NSLocalizedString(@"LTEXT_LANGUAGE", @"") forKey:@"Language"];
     [Crashlytics setObjectValue:@"Edit" forKey:@"Mode"];
     [Crashlytics setObjectValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"dayModeActive"] forKey:@"Days Mode"];
-}
-
-- (void)prepareFlurry
-{
-    //note: iOS only allows one crash reporting tool per app; if using another, set to: NO
-    [Flurry setCrashReportingEnabled:NO];
-    [Flurry startSession:@"KH93RSRMDFKFKGG3HS39"];
 }
 
 - (void)processProcessInfoEnvironment

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5B0038FE18CFC13900044B2D /* libFlurry_4.3.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B00386718CFC13900044B2D /* libFlurry_4.3.2.a */; };
 		5B0574C117AFE2F600B95D50 /* IAEWithoutConceptsTextWarningReportMode.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B0574C317AFE2F600B95D50 /* IAEWithoutConceptsTextWarningReportMode.xib */; };
 		5B069D7F191E2400002442F6 /* IAEPasswordDisabledEmailRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B069D7E191E2400002442F6 /* IAEPasswordDisabledEmailRequest.m */; };
 		5B069D82191E2412002442F6 /* IAEPasswordEnabledEmailRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B069D81191E2412002442F6 /* IAEPasswordEnabledEmailRequest.m */; };
@@ -294,11 +293,6 @@
 
 /* Begin PBXFileReference section */
 		5B0002B7182A615600CE7843 /* IAEExporterDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEExporterDefs.h; sourceTree = "<group>"; };
-		5B00386618CFC13900044B2D /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
-		5B00386718CFC13900044B2D /* libFlurry_4.3.2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_4.3.2.a; sourceTree = "<group>"; };
-		5B0038F018CFC13900044B2D /* FlurryAdDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAdDelegate.h; sourceTree = "<group>"; };
-		5B0038F118CFC13900044B2D /* FlurryAds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAds.h; sourceTree = "<group>"; };
-		5B0038F218CFC13900044B2D /* libFlurryAds_4.3.2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurryAds_4.3.2.a; sourceTree = "<group>"; };
 		5B021D3716B8363F000B8D4F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5B0574C217AFE2F600B95D50 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/IAEWithoutConceptsTextWarningReportMode.xib; sourceTree = "<group>"; };
 		5B0574C417AFE2F900B95D50 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/IAEWithoutConceptsTextWarningReportMode.xib; sourceTree = "<group>"; };
@@ -799,41 +793,12 @@
 				5BD06168163A8CFF00A80BE3 /* CoreData.framework in Frameworks */,
 				5B767DF71636D7FC005315F8 /* UIKit.framework in Frameworks */,
 				5B767DFB1636D7FC005315F8 /* CoreGraphics.framework in Frameworks */,
-				5B0038FE18CFC13900044B2D /* libFlurry_4.3.2.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5B00386418CFC13900044B2D /* Flurry-iOS-4.3.2 */ = {
-			isa = PBXGroup;
-			children = (
-				5B00386518CFC13900044B2D /* Flurry */,
-				5B0038EF18CFC13900044B2D /* FlurryAds */,
-			);
-			path = "Flurry-iOS-4.3.2";
-			sourceTree = "<group>";
-		};
-		5B00386518CFC13900044B2D /* Flurry */ = {
-			isa = PBXGroup;
-			children = (
-				5B00386618CFC13900044B2D /* Flurry.h */,
-				5B00386718CFC13900044B2D /* libFlurry_4.3.2.a */,
-			);
-			path = Flurry;
-			sourceTree = "<group>";
-		};
-		5B0038EF18CFC13900044B2D /* FlurryAds */ = {
-			isa = PBXGroup;
-			children = (
-				5B0038F018CFC13900044B2D /* FlurryAdDelegate.h */,
-				5B0038F118CFC13900044B2D /* FlurryAds.h */,
-				5B0038F218CFC13900044B2D /* libFlurryAds_4.3.2.a */,
-			);
-			path = FlurryAds;
-			sourceTree = "<group>";
-		};
 		5B0574BE17AFE0CA00B95D50 /* SinConceptosEnModoReporte */ = {
 			isa = PBXGroup;
 			children = (
@@ -1596,7 +1561,6 @@
 			children = (
 				5BA98C56191D46C0005D49FB /* Third Party */,
 				5B1B7FA218D7A1C90012AC21 /* Fix */,
-				5B00386418CFC13900044B2D /* Flurry-iOS-4.3.2 */,
 				5B8F842F17B0FEA800C17020 /* Global constants */,
 				5BF925331795447D0002CF9F /* Assets */,
 				5B62D861178EC1FA009879A6 /* Utils */,
@@ -3237,8 +3201,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
-					"$(PROJECT_DIR)/IncomesAndExpenses/Flurry-iOS-4.3.2/Flurry",
-					"$(PROJECT_DIR)/IncomesAndExpenses/Flurry-iOS-4.3.2/FlurryAds",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "";
@@ -3271,8 +3233,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
-					"$(PROJECT_DIR)/IncomesAndExpenses/Flurry-iOS-4.3.2/Flurry",
-					"$(PROJECT_DIR)/IncomesAndExpenses/Flurry-iOS-4.3.2/FlurryAds",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";

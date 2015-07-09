@@ -7,7 +7,6 @@
 //
 
 #import <Crashlytics/Crashlytics.h>
-#import "Flurry.h"
 #import "IAEEasyIncomesAndExpensesViewController.h"
 #import "IAEEasyIncomesAndExpensesViewControllerDefs.h"
 #import "IAEEasyIncomesAndExpensesViewControllerDelegate.h"
@@ -1616,8 +1615,6 @@
 
 - (void)doStrokeOverConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
-    [Flurry logEvent:@"concept_stroke"];
-
     self.conceptCellToRemove = cell;
     self.conceptCellToRemove.durationOfStrokeStateTransition = self.strokeAnimatableLineView.durationOfStrokeAnimation;
     [self.strokeAnimatableLineView doStrokeOverTheView:self.conceptCellToRemove.conceptInformationContainerView];
@@ -1750,8 +1747,6 @@
 
 - (void)executeDuplicateConceptOfCell:(IAEEditModeConceptCollectionViewCell *)cell
 {
-    [Flurry logEvent:@"Concept_Duplicate"];
-
     IAEConcept *concept = [self.easyIncomesAndExpensesQuery findConceptOfCell:cell];
     IAEConcept *newConcept = [concept.month duplicateConcept:concept];
     [[IAEBook sharedBook] saveAll];
@@ -1933,8 +1928,6 @@
           didPressedAdjustButtonWithAmount:(NSNumber *)amount
 {
     CLSLog(@"%s", __FUNCTION__);
-    
-    [Flurry logEvent:@"changeconcept_amount"];
 
     IAEConcept *concept = [self.easyIncomesAndExpensesQuery findConceptAtIndexPath:adjustConceptsAmountViewController.conceptCellIndexPath];
     
@@ -2000,8 +1993,6 @@
 {
     [self dismisPopover];
     [self changeCategoryOfConceptAtIndexPath:indexPath toCategory:category];
-    
-    [Flurry logEvent:@"changeconcept_category"];
 }
 
 - (void)changeCategoryOfConceptAtIndexPath:(NSIndexPath *)indexPath toCategory:(IAECategory *)category
@@ -2141,8 +2132,6 @@
            didValidateNewCategoryTag:(NSString *)categoryTag
                       ofCategoryType:(CategoryType)categoryType
 {
-    [Flurry logEvent:[self.easyIncomesAndExpensesQuery categorySelectorViewControllerWasLaunchedFromCategoryButton] ? @"modal_newcategorycreated" : @"concept_newcategorycreated"];
-    
     IAECategory *newCategory = [[IAECategoryStore sharedCategoryStore] createCategoryOfType:categoryType
                                                                                      andTag:categoryTag
                                                                        withValidityTagCheck:NO];
@@ -2288,7 +2277,6 @@
     if ([[NSUserDefaults standardUserDefaults] isProVersionDisabled]) {
         if ([[IAEInAppPurchasesStore defaultStore] isInAppPurchasesAccesible]) {
             if ([IAEInternet isConnected]) {
-                [Flurry logEvent:@"InAppPurchaseStore_LaunchStore"];
                 [self lauchInAppPurchaseStoreViewController];
             } else {
                 [self launchAlertViewAboutInetConexionNotAvailable];
@@ -2398,7 +2386,6 @@
 
     IAEConcept *concept = [self.easyIncomesAndExpensesQuery findConceptAtIndexPath:dayCalendarSelectorViewController.conceptCellIndexPath];
     if (concept.dayOfTheMonth != day) {
-        [Flurry logEvent:@"changeconcept_day"];
 
         concept.dayOfTheMonth = day;
         [[IAEBook sharedBook] saveAll];
@@ -2693,8 +2680,6 @@
 
 - (void)exportAllConceptsOfActualSelectionContextViewToCSVIfApplicable
 {
-    [Flurry logEvent:@"CSVEXPORT"];
-
     if ([MFMailComposeViewController canSendMail]) {
         if ([self.easyIncomesAndExpensesQuery isActualSelectedContextAMonth]) {
             NSString *attachmentNameDescriptor = [self makeAttachmentNameDescriptorWithYear:[[self.easyIncomesAndExpensesQuery findOpenYear] yearDateAsString] andMonth:[self.easyIncomesAndExpensesQuery findActualSelectedMonth].description];
@@ -2867,11 +2852,9 @@ didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
     IAEConcept *concept = [self.easyIncomesAndExpensesQuery findConceptOfCell:cell];
     [month duplicateConcept:concept];
     if (purpose == MonthSelectorPurposeCopy) {
-        [Flurry logEvent:@"Concept_Copy"];
         [self hideMenuModeActiveInAllConceptsCollectionCellUsingAnimation:YES];
         [self.contextMenuView animateOptionAtIndex:month.month withAnimationType:TextRawSelectorAnimation_Blink];
     } else if (purpose == MonthSelectorPurposeMove) {
-        [Flurry logEvent:@"Concept_Move"];
         self.conceptCellToRemove = cell;
         [self removeConceptAndUpdateBalancesOfCell:cell withAnimation:YES];
         [self.contextMenuView animateOptionAtIndex:month.month withAnimationType:TextRawSelectorAnimation_Blink];

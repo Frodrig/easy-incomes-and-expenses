@@ -8,7 +8,6 @@
 
 #import "IAEHelpConfigureConceptsWithDaysCell.h"
 #import <Crashlytics/Crashlytics.h>
-#import "Flurry.h"
 #import "IAENibUtils.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
 
@@ -65,7 +64,6 @@ static NSString * const kNibName = @"IAEHelpConfigureConceptsWithDaysCell";
 {
     [[NSUserDefaults standardUserDefaults] changeDayModeActiveForConcepts];
     [Crashlytics setObjectValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"dayModeActive"] forKey:@"Days Mode"];
-    [Flurry logEvent:@"daymode_activation" withParameters:@{@"DayMode" : [NSNumber numberWithBool:self.dayModeSwitch.on]}];
 }
 
 #pragma mark - Acciones directas

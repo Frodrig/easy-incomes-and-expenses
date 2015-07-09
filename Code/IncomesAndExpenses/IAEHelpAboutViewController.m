@@ -7,7 +7,6 @@
 //
 
 #import "IAEHelpAboutViewController.h"
-#import "Flurry.h"
 #import "IAEHelpAboutCollectionViewCell.h"
 #import "IAEHelpIndexViewControllerDelegate.h"
 
@@ -113,8 +112,6 @@ static NSString * const kCollectionViewAboutCellIdentifier = @"IAEInfoCell";
 
 - (void)launchSafariWithAppUrl
 {
-    [Flurry logEvent:@"safary_openoficialurl"];
-    
     [self.delegate dismissAll];
     
     NSString *urlString = NSLocalizedString(kLTextAppUrl, @"");

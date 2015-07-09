@@ -7,7 +7,6 @@
 //
 
 #import "IAEHelpIndexViewController.h"
-#import "Flurry.h"
 #import "IAEHelpConfigureViewController.h"
 #import "IAEHelpAboutViewController.h"
 #import "IAEHelpViewController.h"
@@ -239,16 +238,12 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
     IAESettingsIndexOptionType optionType = [self findOptionTypeFromIndexPath:indexPath];
     
     if (optionType == IAESettingsIndexOptionConfigure) {
-        [Flurry logEvent:@"settingsindex_configure"];
         viewController = [[IAEHelpConfigureViewController alloc] initWithNibName:@"IAEHelpConfigureViewController" bundle:[NSBundle mainBundle]];
     } else if (optionType == IAESettingsIndexOptionPassword) {
-        [Flurry logEvent:@"settingsindex_password"];
         viewController = [[IAEHelpPasswordIndexViewController alloc] initWithNibName:@"IAEHelpPasswordIndexViewController" bundle:[NSBundle mainBundle]];
     } else if (optionType == IAESettingsIndexOptionHelp) {
-        [Flurry logEvent:@"settingsindex_help"];
         viewController = [[IAEHelpViewController alloc] initWithNibName:@"IAEHelpViewController" bundle:[NSBundle mainBundle]];
     } else if (optionType == IAESettingsIndexOptionAbout) {
-        [Flurry logEvent:@"settingsindex_about"];
         viewController = [[IAEHelpAboutViewController alloc] initWithNibName:@"IAEHelpAboutViewController" bundle:[NSBundle mainBundle]];
     }
 

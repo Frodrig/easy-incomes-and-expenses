@@ -8,7 +8,6 @@
 
 #import "NSUserDefaults+EasyIncAndExp.h"
 #import "IAEIdentifiers.h"
-#import "Flurry.h"
 //#import "KeychainItemWrapper.h"
 
 @implementation NSUserDefaults (EasyIncAndExp)
@@ -97,8 +96,6 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 
 - (void)changeToReportAmountModeInReportSectionOfType:(NSString *)reportAmountModeType
 {
-    [Flurry logEvent:@"report_changemode" withParameters:@{@"mode" :reportAmountModeType}];
-    
     [[NSUserDefaults standardUserDefaults] setValue:reportAmountModeType forKey:kUserDefaultsReportAmountModeKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
@@ -171,9 +168,7 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 
 - (void)changeInitialMonthTo:(MonthType)startMonth
 {
-    NSAssert(startMonth != InvalidMonth, @"");
-    [Flurry logEvent:@"initalmonth_change" withParameters:@{@"month" : @(startMonth)}];
-    
+    NSAssert(startMonth != InvalidMonth, @"");    
     [[NSUserDefaults standardUserDefaults] setValue:@(startMonth) forKey:kUserDefaultInitialMonthKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }

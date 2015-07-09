@@ -7,7 +7,6 @@
 //
 
 #import "IAEYearSelectorViewController.h"
-#import "Flurry.h"
 #import "IAEYearSelectorViewControllerDelegate.h"
 #import "IAEYearSelectorCollectionViewCell.h"
 #import "IAEDateHelper.h"
@@ -423,8 +422,6 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 
 - (void)sendToDelegateTheChosenActionAfterSelectCellWithYearDate:(NSUInteger)yearDateSelected
 {
-    [Flurry logEvent:@"year_open" withParameters:@{@"year" :@(yearDateSelected)}];
-
     if (yearDateSelected == self.openYearDateBeforeStart) {
         [self sendToDelegateActionChosenSelectedActualYear];
     } else if ([[IAEBook sharedBook] findOpenYearWithDate:@(yearDateSelected)]) {
@@ -513,7 +510,6 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
     NSAssert(indexPathOfSelectedCellToClean, @"");
     NSUInteger yearDateSelectedForClean = [self yearDateBasedInSegmentedControlStateFromCell:self.selectedCellToClean];
     IAEOpenYear *yearSelectedForClean = [self yearBasedInSegmentedControlStateUsingCell:self.selectedCellToClean];
-    [Flurry logEvent:@"year_clean" withParameters:@{@"year" :@(yearSelectedForClean.yearDate)}];
     [yearSelectedForClean deleteAllConcepts];
     [[IAEBook sharedBook] saveAll];
     

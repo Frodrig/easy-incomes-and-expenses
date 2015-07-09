@@ -15,7 +15,6 @@
 #import "IAEEmailSender.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
 #import "IAEInternet.h"
-#include "Flurry.h"
 
 static const CGFloat kDelayTimeForActionsAfterInvalidPassword = 0.25;
 
@@ -268,7 +267,6 @@ static const NSInteger kBasePanelPasswordTag = 100;
     const BOOL canSendPasswordChangedEmail = passwordRecoveryEmailSet && [[KeychainItemWrapper defaultKeychain] isPasswordActivated];
     const BOOL canSendPasswordEnabledEmail = passwordRecoveryEmailSet && ![[KeychainItemWrapper defaultKeychain] isPasswordActivated];
     
-    [Flurry logEvent:@"Password_ON"];
     [[KeychainItemWrapper defaultKeychain] setNewPassword:self.pendingConfirmationPassword];
     
     if (canSendPasswordChangedEmail) {
@@ -357,8 +355,6 @@ static const NSInteger kBasePanelPasswordTag = 100;
 
 - (void)clearUserPasswordAndNotifyWithRecoveryEmailIfApplicable
 {
-    [Flurry logEvent:@"Password_OFF"];
-
     [[KeychainItemWrapper defaultKeychain] clearPassword];
     if ([[NSUserDefaults standardUserDefaults] isPasswordRecoveryEmailSet]) {
         [[IAEEmailSender sharedInstance] sendPasswordDisabledEmailWithCompletionBlock:nil];
@@ -402,7 +398,6 @@ static const NSInteger kBasePanelPasswordTag = 100;
 
 - (IBAction)recoveryButtonPressed:(id)sender
 {
-    [Flurry logEvent:@"Password_RecoveryButtonPressed"];
     [[IAEEmailSender sharedInstance] sendRecoveryPasswordEmailWithCompletionBlock:^(NSError *error) {
         if (!error) {
             [self launchAlertViewToInformAboutRecoveryPasswordEmailWasSend];

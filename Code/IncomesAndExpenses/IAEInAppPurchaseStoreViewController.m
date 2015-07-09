@@ -13,7 +13,6 @@
 #import "NSUserDefaults+EasyIncAndExp.h"
 #import "IAEInAppPurchaseStoreViewControllerDefs.h"
 #import "IAELoaderIndicatorView.h"
-#import "Flurry.h"
 
 typedef NS_ENUM(NSUInteger, ControllerStateType) {
     ControllerStateTypeRequestingProVersionProduct,
@@ -314,8 +313,6 @@ static const CGFloat kFadeInStateTime = 0.75;
 
 - (IBAction)purchaseButtonPressed:(id)sender
 {
-    [Flurry logEvent:@"InAppPurchaseStore_PurchaseButtonPressed"];
-
     [self setWaitingForPurchaseOrRestoreState];
     [[IAEInAppPurchasesStore defaultStore] payForProduct:self.proVersionProduct withCompletionBlock:^(NSError *error) {
         [self checkPayProductsResultWithError:error];
@@ -326,8 +323,6 @@ static const CGFloat kFadeInStateTime = 0.75;
 
 - (IBAction)restoreButtonPressed:(id)sender
 {
-    [Flurry logEvent:@"InAppPurchaseStore_RestoreButtonPressed"];
-
     [self setWaitingForPurchaseOrRestoreState];
     [[IAEInAppPurchasesStore defaultStore] restorePurchasedProductsWithCompletionBlock:^(NSError *error) {
         [self checkRestoreProductsResultWithError:error];
@@ -352,7 +347,6 @@ static const CGFloat kFadeInStateTime = 0.75;
         }
         [self setShowingPurchaseAndRestoreStateWithProduct:self.proVersionProduct];
     } else {
-        [Flurry logEvent:@"InAppPurchaseStore_PROVERSIONENABLED"];
         [[NSUserDefaults standardUserDefaults] enableProVersion];
         self.leavingWithPurchaseOrRestore = YES;
         [self launchAlertViewThankYouOfType:alertViewType];

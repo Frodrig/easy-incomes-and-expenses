@@ -15,6 +15,8 @@
 #import "IAEFixRemoveCategoryActionLostInUnloadedYears.h"
 #import "IAEInAppPurchasesStore.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 
 static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
 static NSString * const kUserDefaultsReportAmountMode = @"reportAmountMode";
@@ -38,6 +40,8 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [Fabric with:@[[Crashlytics class]]];
+
     [[NSUserDefaults standardUserDefaults] prepareDefaults];
     [[IAEInAppPurchasesStore defaultStore] beginTransationObserverSession];
     [self processProcessInfoEnvironment];
@@ -59,12 +63,13 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
 - (void)processProcessInfoEnvironment
 {
     return;
-    
+    /*
     NSNumber *testEnviromentVariable = [[NSProcessInfo processInfo].environment valueForKey:@"createTestDataAtLaunch"];
     if ([testEnviromentVariable boolValue]) {
         [[IAEBook sharedBook] deleteAllAndSave];
         [self createYearTest2];
     }
+     */
 }
 
 - (void)createYearBookIfProceed

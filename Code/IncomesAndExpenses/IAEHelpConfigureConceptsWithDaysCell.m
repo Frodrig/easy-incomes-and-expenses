@@ -7,7 +7,6 @@
 //
 
 #import "IAEHelpConfigureConceptsWithDaysCell.h"
-#import <Crashlytics/Crashlytics.h>
 #import "IAENibUtils.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
 
@@ -63,7 +62,6 @@ static NSString * const kNibName = @"IAEHelpConfigureConceptsWithDaysCell";
 - (IBAction)daySwitchValueChanged:(id)sender
 {
     [[NSUserDefaults standardUserDefaults] changeDayModeActiveForConcepts];
-    [Crashlytics setObjectValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"dayModeActive"] forKey:@"Days Mode"];
 }
 
 #pragma mark - Acciones directas

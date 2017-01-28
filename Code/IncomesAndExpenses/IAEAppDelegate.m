@@ -15,7 +15,6 @@
 #import "IAEFixRemoveCategoryActionLostInUnloadedYears.h"
 #import "IAEInAppPurchasesStore.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
-#import <Crashlytics/Crashlytics.h>
 
 static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
 static NSString * const kUserDefaultsReportAmountMode = @"reportAmountMode";
@@ -39,7 +38,6 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [self prepareCrashlytics];
     [[NSUserDefaults standardUserDefaults] prepareDefaults];
     [[IAEInAppPurchasesStore defaultStore] beginTransationObserverSession];
     [self processProcessInfoEnvironment];
@@ -56,17 +54,6 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
 - (void)processFixes
 {
     [[IAEFixRemoveCategoryActionLostInUnloadedYears defaultFix] checkAndExecuteIfApplicable];
-}
-
-- (void)prepareCrashlytics
-{
-    [Crashlytics startWithAPIKey:@"ed113bdf0c248b243b565ef1fdac0f966317a7b8"];
-
-    [Crashlytics setObjectValue:NSLocalizedString(@"LTEXT_VERSION", @"") forKey:@"Version Number"];
-    [Crashlytics setObjectValue:[[NSUserDefaults standardUserDefaults] isProVersionEnabled] ? @"YES" : @"NO" forKey:@"Pro Version"];
-    [Crashlytics setObjectValue:NSLocalizedString(@"LTEXT_LANGUAGE", @"") forKey:@"Language"];
-    [Crashlytics setObjectValue:@"Edit" forKey:@"Mode"];
-    [Crashlytics setObjectValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"dayModeActive"] forKey:@"Days Mode"];
 }
 
 - (void)processProcessInfoEnvironment

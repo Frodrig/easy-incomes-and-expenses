@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 Fernando Rodríguez Martínez. All rights reserved.
 //
 
-#import <Crashlytics/Crashlytics.h>
 #import "IAEHelperReportAreaViewDataSource.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
 #import "IAEEasyIncomesAndExpensesQuery.h"

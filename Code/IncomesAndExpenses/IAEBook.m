@@ -13,7 +13,6 @@
 #import "IAEOpenYear.h"
 #import "MonthDefs.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
-#import <Crashlytics/Crashlytics.h>
 
 @interface IAEBook()
 
@@ -242,7 +241,6 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
     NSError *error;
     NSArray *yearsLoaded = [self.context executeFetchRequest:request error:&error];
     if (!yearsLoaded) {
-        CLS_LOG(@"Fallo haciendo fetch de años. Razon %@", [error localizedDescription]);
         [NSException raise:@"Fetch failed loading years" format:@"Reason: %@", [error localizedDescription]];
     }
     

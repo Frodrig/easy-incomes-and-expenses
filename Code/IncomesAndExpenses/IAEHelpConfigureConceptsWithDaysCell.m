@@ -38,6 +38,8 @@ static NSString * const kNibName = @"IAEHelpConfigureConceptsWithDaysCell";
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
+
     [self initDayModeSetting];
 }
 

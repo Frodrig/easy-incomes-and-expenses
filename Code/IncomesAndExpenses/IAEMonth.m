@@ -55,8 +55,8 @@ static NSString * const kLTextDecemberName = @"December";
     dateComponents.year = self.year.yearDate;
     dateComponents.month = self.month;
     NSCalendar *currentCalendar = [NSCalendar currentCalendar];
-    NSRange daysRange = [currentCalendar rangeOfUnit:NSDayCalendarUnit
-                                              inUnit:NSMonthCalendarUnit
+    NSRange daysRange = [currentCalendar rangeOfUnit:NSCalendarUnitDay
+                                              inUnit:NSCalendarUnitMonth
                                              forDate:[currentCalendar dateFromComponents:dateComponents]];
         
     return [NSNumber numberWithInteger:daysRange.length];

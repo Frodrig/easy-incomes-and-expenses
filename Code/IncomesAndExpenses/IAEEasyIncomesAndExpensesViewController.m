@@ -349,7 +349,7 @@
 - (UIBarButtonItem *)makeBarButtonWithTitle:(NSString *)title andSelector:(SEL)selector
 {
     UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(title, @"")
-                                                               style:UIBarButtonItemStyleBordered
+                                                               style:UIBarButtonItemStylePlain
                                                               target:self
                                                               action:selector];
 

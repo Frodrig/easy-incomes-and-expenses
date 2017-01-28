@@ -35,6 +35,8 @@
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
+
     [self configureCellGeneralAspect];
     self.month = InvalidMonth;
     self.disabledAspect = NO;

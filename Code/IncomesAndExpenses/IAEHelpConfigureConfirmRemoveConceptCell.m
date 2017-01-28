@@ -41,6 +41,8 @@ static NSString * const kNibName = @"IAEConfirmRemoveConceptCell";
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
+
     [self configureConfirmSwitch];
     [self configureDescriptionLabel];
 }

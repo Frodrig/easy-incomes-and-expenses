@@ -134,7 +134,7 @@ static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
     
     cell.valueDecoratorView.economicValueType = [IAEEconomicValueTypeHelper economicValueTypeFromEconomicValue:amountWithSign];
     cell.drawSeparatorLine = indexPath.row != numberOfConcepts - 1;
-    [cell setTagWithIndex:index];
+    [cell setTagWithIndex:instantEntryIndex];
     [cell configureCategoryLabelWithName:[category localizedTag]];
     [cell configureAmountLabelWithValue:amountWithSignString andColor:colorForEconomicValueType];
     [cell configureNoteLabelWithValue:concept.detailDescription];

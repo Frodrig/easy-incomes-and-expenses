@@ -66,6 +66,8 @@ static NSString * const kNibName = @"IAEEditModeConceptCollectionViewHeader";
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
+
     _titleLabel = (UILabel *)[self viewWithTag:kTagOfMonthTitleLabel];
     _infoLabel = (UILabel *)[self viewWithTag:kTagOfMonthInfoLabel];
 }

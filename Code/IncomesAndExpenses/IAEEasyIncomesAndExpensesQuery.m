@@ -324,8 +324,8 @@
 - (NSUInteger)findTodayMonthIndex
 {
     NSDate *today = [NSDate date];
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *monthComponents = [gregorian components:NSMonthCalendarUnit fromDate:today];
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *monthComponents = [gregorian components:NSCalendarUnitMonth fromDate:today];
     
     IAEOpenYear *openYear = [self findOpenYear];
     const NSUInteger todayLocalMonthIndex = [openYear findIndexOfMonth:(MonthType)(monthComponents.month)];

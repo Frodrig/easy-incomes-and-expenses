@@ -16,22 +16,22 @@
 {
     NSDate *actualDate = [NSDate date];
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *dateComponents = [calendar components:NSYearCalendarUnit fromDate:actualDate];
+    NSDateComponents *dateComponents = [calendar components:NSCalendarUnitYear fromDate:actualDate];
     
     return dateComponents.year;
 }
 
 + (NSUInteger)findPresentDayOfThePresentMonth
 {
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents* components = [calendar components:NSDayCalendarUnit fromDate:[NSDate date]];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents* components = [calendar components:NSCalendarUnitDay fromDate:[NSDate date]];
     return [components day];
 }
 
 + (NSUInteger)findPresentMonthOfThePresentYear
 {
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents* components = [calendar components:NSMonthCalendarUnit fromDate:[NSDate date]];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents* components = [calendar components:NSCalendarUnitMonth fromDate:[NSDate date]];
     return [components month];
 }
 
@@ -112,7 +112,7 @@
 {
     NSDateComponents *dateComponents = [self createDateComponentsForDay:dayOfTheMonth month:monthIndex andYearDate:yearDate];
     NSDate *date = [[self findCurrentCalendar] dateFromComponents:dateComponents];
-    NSDateComponents *dateComponentsWithWeekDay = [[self findCurrentCalendar] components:NSWeekdayCalendarUnit fromDate:date];
+    NSDateComponents *dateComponentsWithWeekDay = [[self findCurrentCalendar] components:NSCalendarUnitWeekday fromDate:date];
     
     return dateComponentsWithWeekDay.weekday;
 }
@@ -121,7 +121,7 @@
 {
     NSDateComponents *dateComponents = [self createDateComponentsFromYearDate:yearDate andMonthIndex:monthIndex];
     NSDate *date = [[self findCurrentCalendar] dateFromComponents:dateComponents];
-    NSRange rangeDaysOfMonth = [[self findCurrentCalendar] rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:date];
+    NSRange rangeDaysOfMonth = [[self findCurrentCalendar] rangeOfUnit:NSCalendarUnitDay inUnit:NSCalendarUnitMonth forDate:date];
     
     return rangeDaysOfMonth.length;
 }

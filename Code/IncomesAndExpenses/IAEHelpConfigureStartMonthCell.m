@@ -43,6 +43,8 @@ static NSString * const kLTextStartLabelBaseText = @"LTEXT_ABOUTANDOPTIONS_START
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
+
     [self initStartMonthSettings];
 }
 

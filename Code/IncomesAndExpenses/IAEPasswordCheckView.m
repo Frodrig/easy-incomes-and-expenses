@@ -29,6 +29,8 @@ static const CGFloat kShowHideCheckAnimationTime = 0.25;
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
+
     [self configureBorderWith];
     [self createAndVinculeLabelCheck];
     [self hideCheckWithAnimation:NO];

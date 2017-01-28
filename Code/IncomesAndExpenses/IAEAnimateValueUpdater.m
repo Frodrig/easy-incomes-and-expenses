@@ -92,7 +92,7 @@ static const CGFloat kRationOfDurationByUpdateProcessEconomicLabel = 0.1;
 - (void)addNewEntryForLabel:(UILabel *)label
                     toValue:(NSDecimalNumber *)destinationValue
                withDuration:(CGFloat)duration
-               andValueType:(EconomicValueType)valueType
+               andValueType:(ValueType)valueType
 {
     NSDictionary *newLabelToUpdateEntry = [self makeDictionaryEntryForLabel:label
                                                            destinationValue:destinationValue

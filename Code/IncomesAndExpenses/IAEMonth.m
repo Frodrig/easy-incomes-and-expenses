@@ -13,7 +13,6 @@
 #import "IAECategoryStore.h"
 #import "IAEBook.h"
 #import "IAEDateHelper.h"
-#import <Crashlytics/Crashlytics.h>
 
 static const NSUInteger kInvalidDayOfTheMonth = 0;
 

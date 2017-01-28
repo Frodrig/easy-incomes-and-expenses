@@ -7,7 +7,6 @@
 //
 
 #import "IAECategorySelectorViewController.h"
-#import <Crashlytics/Crashlytics.h>
 #import "IAECategoryStore.h"
 #import "IAECategoryTableViewCell.h"
 #import "IAECategory.h"
@@ -313,7 +312,6 @@ static const CGFloat kAlphaOfColorWhiteValueForAttractAttentionFadeIn = 0.3;
         NSAssert(category != InvalidCategory, @"");
         self.categorySegmentedControl.selectedSegmentIndex = [self segmentedIndexForCategoryType:category];
         
-        CLSLog(@"reloadData from changeToSectionOfCategoryType");
         [self reloadData];
     }
 }

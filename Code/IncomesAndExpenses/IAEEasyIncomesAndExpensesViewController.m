@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 Fernando Rodríguez Martínez. All rights reserved.
 //
 
-#import <Crashlytics/Crashlytics.h>
 #import "IAEEasyIncomesAndExpensesViewController.h"
 #import "IAEEasyIncomesAndExpensesViewControllerDefs.h"
 #import "IAEEasyIncomesAndExpensesViewControllerDelegate.h"
@@ -743,8 +742,6 @@
 
 - (void)updateAfterChangeToEditMode
 {
-    [Crashlytics setObjectValue:@"Edit" forKey:@"Mode"];
-
     [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
     [UIView animateWithDuration:kDurationModeFadeOut animations:^{
         self.editAndReportModeContentContainerView.alpha = 0.0;
@@ -773,8 +770,6 @@
 
 - (void)updateAfterChangeToReportMode
 {
-    [Crashlytics setObjectValue:@"Report" forKey:@"Mode"];
-
     [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
     [UIView animateWithDuration:kDurationModeFadeOut animations:^{
         self.editAndReportModeContentContainerView.alpha = 0.0;
@@ -1914,7 +1909,6 @@
     
     [self.conceptsCollectionView performBatchUpdates:^{
         // En algunas ocasiones nos ha dado fallo en este punto porque indexPathOfCell era nil
-        CLSLog(@"deleteItemsAtIndexPaths from removeConceptAndUpdateBalancesOfCell");
         NSAssert(indexPathOfCell, @"");
         [self.conceptsCollectionView deleteItemsAtIndexPaths:@[indexPathOfCell]];
     } completion:^(BOOL finished) {
@@ -1927,8 +1921,6 @@
 - (void)adjustConceptsAmountViewController:(IAEAdjustConceptAmountViewController *)adjustConceptsAmountViewController
           didPressedAdjustButtonWithAmount:(NSNumber *)amount
 {
-    CLSLog(@"%s", __FUNCTION__);
-
     IAEConcept *concept = [self.easyIncomesAndExpensesQuery findConceptAtIndexPath:adjustConceptsAmountViewController.conceptCellIndexPath];
     
     IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:adjustConceptsAmountViewController.conceptCellIndexPath];
@@ -1959,8 +1951,6 @@
 
 - (BOOL)canAdjustConceptAmountViewController:(IAEAdjustConceptAmountViewController *)adjustConceptViewController addAmount:(NSNumber *)amount
 {
-    CLSLog(@"%s", __FUNCTION__);
-    
     IAEConcept *concept = [self.easyIncomesAndExpensesQuery findConceptAtIndexPath:adjustConceptViewController.conceptCellIndexPath];
     const BOOL can = [concept canAddAmount:amount];
     
@@ -1997,8 +1987,6 @@
 
 - (void)changeCategoryOfConceptAtIndexPath:(NSIndexPath *)indexPath toCategory:(IAECategory *)category
 {
-    CLSLog(@"%s", __FUNCTION__);
-    
     IAEConcept *concept = [self.easyIncomesAndExpensesQuery findConceptAtIndexPath:indexPath];
     if (concept.category != category) {
         CategoryType originalCategoryType = concept.category.categoryType;
@@ -2105,7 +2093,6 @@
 - (void)reloadActiveModeAfterRemoveCategoryWithTag:(NSString *)tagOfCategory andType:(CategoryType)type
 {
     if ([self.easyIncomesAndExpensesQuery isEditModeActive]) {
-        CLSLog(@"reloadData from reloadActiveModeAfterRemoveCategoryWithTag - if ([self isEditModeActive])");
         [self reloadContentOfConceptsCollectionView];
     } else if ([self.easyIncomesAndExpensesQuery isReportModeActive]) {
         const BOOL reload = (self.reportMenuView.currentOptionIndexSelected == kReportMenuIndexOfExpensesOption && type == ExpenseCategory) ||
@@ -2136,7 +2123,6 @@
                                                                                      andTag:categoryTag
                                                                        withValidityTagCheck:NO];
     if (!newCategory) {
-        CLSLog(@"No se creo la categoría con tag %@", categoryTag);
         NSAssert(newCategory, @"");
     }
     [[IAEBook sharedBook] saveAll];
@@ -2380,8 +2366,6 @@
 - (void)dayCalendarSelectorViewController:(IAEDayCalendarSelectorViewController *)dayCalendarSelectorViewController
                              didSelectDay:(NSUInteger)day
 {
-    CLSLog(@"%s", __FUNCTION__);
-    
     [self dismisPopover];
 
     IAEConcept *concept = [self.easyIncomesAndExpensesQuery findConceptAtIndexPath:dayCalendarSelectorViewController.conceptCellIndexPath];

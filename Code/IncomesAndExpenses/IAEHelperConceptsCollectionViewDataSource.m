@@ -21,7 +21,6 @@
 #import "IAECategory.h"
 #import "IAEFavoriteConceptsStock.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
-#import <Crashlytics/Crashlytics.h>
 
 @interface IAEHelperConceptsCollectionViewDataSource()
 
@@ -120,25 +119,11 @@ static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
 
 - (void)configureEditModeConceptCell:(IAEEditModeConceptCollectionViewCell *)cell withConceptAtIndexPath:(NSIndexPath *)indexPath
 {
-    CLSLog(@"%s", __FUNCTION__);
-    if (indexPath) {
-        CLSLog(@"row: %ld", (long)indexPath.row);
-        if ([self.iaeViewControllerQuery isActualSelectedContextTheYearOpen]) {
-            CLSLog(@"Actual selected context is Year Open");
-        } else {
-            CLSLog(@"Actual selected context is Month");
-        }
-    }
-    
     // Nota: Por defecto los conceptos tienen el valor absoluto de la cantidad que almacenan de ahi el pedir la cantidad con signo si procede
     IAEConcept *concept = [self.iaeViewControllerQuery findConceptAtIndexPath:indexPath];
     NSAssert(concept, @"");
     IAECategory *category = concept.category;
     NSAssert(category, @"");
-    
-    if (!concept || !category) {
-        CLSLog(@"Se ha intentado configurar una celda de concepto y no tenemos el modelo logico o la categoría. Concepto? %d Category? %d", concept ? 1 : 0, category ? 1 : 0);
-    }
     
     NSDecimalNumber *amountWithSign = [concept amountWithSign];
     NSString *amountWithSignString = [[IAENumberFormatterManager sharedManager].currencyFormatter stringFromNumber:amountWithSign];
@@ -174,8 +159,6 @@ static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
 
 - (BOOL)isDayOfTheMonthAssociatedWithConceptCell:(IAEEditModeConceptCollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    CLSLog(@"%s", __FUNCTION__);
-    
     IAEConcept *concept = [self.iaeViewControllerQuery findConceptAtIndexPath:indexPath];
     return concept.dayOfTheMonth != 0;
 }
@@ -183,9 +166,7 @@ static NSString * const kLTextBaseTextForHeaderInfo = @"LTEXT_EDITMODECONCEPTHEA
 - (void)setIdentifierForDayOfTheMonthAndDayOfTheWeekNameForCell:(IAEEditModeConceptCollectionViewCell *)cell
                                                     atIndexPath:(NSIndexPath *)indexPath
                                                       withIndex:(NSUInteger)index
-{
-    CLSLog(@"%s", __FUNCTION__);
-    
+{    
     IAEConcept *concept = [self.iaeViewControllerQuery findConceptAtIndexPath:indexPath];
     NSString *dayOfTheWeekName = [self.iaeViewControllerQuery findDayOfTheWeekNameFromConcept:concept];
     

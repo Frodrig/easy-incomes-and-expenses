@@ -96,7 +96,9 @@ static const CGFloat kAlphaInStrokeState = 0.25;
 
 - (void)awakeFromNib
 {
-    [self.questionButton addTarget:self action:@selector(questionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [super awakeFromNib];
+    
+    //[self.questionButton addTarget:self action:@selector(questionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark - StrokeState

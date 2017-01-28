@@ -38,6 +38,8 @@ static const CGFloat kStrokeHeightForStrokeTypeStrong = 4.0;
 
 - (id)initWithFrame:(CGRect)frame
 {
+    self = [super initWithFrame:frame];
+    
     NSAssert(0, @"use init");
     return nil;
 }

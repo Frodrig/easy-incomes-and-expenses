@@ -158,8 +158,8 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
 
 - (BOOL)isPresentOrPastYearTheYearDate:(NSUInteger)yearDate
 {
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *components = [gregorian components:NSYearCalendarUnit fromDate:[NSDate date]];
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *components = [gregorian components:NSCalendarUnitYear fromDate:[NSDate date]];
     const BOOL isPresentOrPastYearDate = yearDate <= components.year;
     
     return isPresentOrPastYearDate;

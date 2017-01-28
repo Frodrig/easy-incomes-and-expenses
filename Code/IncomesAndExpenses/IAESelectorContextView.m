@@ -83,7 +83,7 @@ static const CGFloat kDurationOfAnimationOfChangeContext = 0.6;
 {
     BOOL canAdd = [self canAddContextViewWithIndex:index];
     if (canAdd) {
-        self.contextViews[[NSNumber numberWithInt:index]] = contextView;
+        self.contextViews[[NSNumber numberWithInt:(int)index]] = contextView;
         contextView.backgroundColor = [UIColor clearColor];
         [self.scrollViewContainer addSubview:contextView];
         contextView.hidden = YES;
@@ -134,7 +134,7 @@ static const CGFloat kDurationOfAnimationOfChangeContext = 0.6;
         contextViewToHide.alpha = 1.0;
         contextViewToHide.hidden = YES;
         _animationInProgress = NO;
-        [self sendToDelegateChangeToContextViewAtIndex:index];
+        [self sendToDelegateChangeToContextViewAtIndex:[self findActualContextViewIndex]];
     }];
     
 }
@@ -148,7 +148,7 @@ static const CGFloat kDurationOfAnimationOfChangeContext = 0.6;
     [contextViewToShow reloadDataWithoutAnimation];
 
     _animationInProgress = NO;
-    [self sendToDelegateChangeToContextViewAtIndex:index];
+    [self sendToDelegateChangeToContextViewAtIndex:[self findActualContextViewIndex]];
 }
 
 - (void)sendToDelegateChangeToContextViewAtIndex:(NSUInteger)index

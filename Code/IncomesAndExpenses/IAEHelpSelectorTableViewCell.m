@@ -28,6 +28,8 @@ static const NSUInteger kProVersionSegmentedControlSection = 1;
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
+
     [self configureSegmentedControl];
 }
 

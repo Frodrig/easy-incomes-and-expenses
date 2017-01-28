@@ -72,6 +72,8 @@ static NSString * const kNibName = @"IAEHelpAboutCollectionViewCell";
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
+
     [self localizeControls];
 }
 

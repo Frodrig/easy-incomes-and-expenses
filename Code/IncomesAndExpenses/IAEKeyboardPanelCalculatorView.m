@@ -82,6 +82,8 @@ static NSString * const kLTextAddButtonTitle = @"LTEXT_CALCULATOR_BUTTON_ADD";
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
+
     [self configureKeyboardButtons];
     [self configureDecimalButton];
     [self configureAddButton];

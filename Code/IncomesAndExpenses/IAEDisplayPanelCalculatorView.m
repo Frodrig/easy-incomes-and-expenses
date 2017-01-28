@@ -128,6 +128,8 @@ static const CGFloat kAlphaValueForDayButtonTitleDisabled = 0.2;
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
+
     [self configureControls];
 }
 

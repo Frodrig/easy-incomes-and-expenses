@@ -21,6 +21,8 @@ static NSString * const kNotificationMainLabelTitleTouched = @"mainLabelTitleTou
 
 - (id)initWithFrame:(CGRect)frame
 {
+    self = [super initWithFrame:frame];
+    
     NSAssert(0, @"Se espera que se cargue desde un StoryBoard / XIB");
     return nil;
 }

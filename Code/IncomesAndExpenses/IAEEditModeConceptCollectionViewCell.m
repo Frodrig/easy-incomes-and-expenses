@@ -95,6 +95,8 @@ static const CGFloat kAlphaForNotePresentIndicatorImageView = 0.2;
 
 - (id)initWithFrame:(CGRect)frame
 {
+    self = [super initWithFrame:frame];
+    
     NSAssert(0, @"");
     return nil;
 }
@@ -114,6 +116,8 @@ static const CGFloat kAlphaForNotePresentIndicatorImageView = 0.2;
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
+
     _globalModeType = GlobalModeTypeData;
     self.noteTextField.delegate = self;
     self.noteTextField.placeholder = NSLocalizedString(@"LTEXT_CONCEPT_NOTETEXTFIELD_PLACEHOLDERTEXT", @"");

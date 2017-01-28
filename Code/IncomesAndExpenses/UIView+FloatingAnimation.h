@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIView (FloatingAnimation)
+@interface UIView (FloatingAnimation)<CAAnimationDelegate>
 
 - (void)startFloatingAnimation;
 - (void)endCurrentFloatingAnimation;

@@ -39,6 +39,8 @@ static const CGFloat kCalculatorTitleLabelKern = 5;
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
+
     [self configureTitleLabel];
 }
 

@@ -74,8 +74,8 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
 
 - (void)createYearBookIfProceed
 {
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *yearComponent = [gregorian components:NSYearCalendarUnit fromDate:[NSDate date]];
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *yearComponent = [gregorian components:NSCalendarUnitYear fromDate:[NSDate date]];
     [[IAEBook sharedBook] openYear:@(yearComponent.year)];
 }
 

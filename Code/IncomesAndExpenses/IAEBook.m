@@ -71,7 +71,7 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
         [NSException raise:@"Open DB failed" format:@"Reason: %@", [error localizedDescription]];
     }
     
-    _context = [[NSManagedObjectContext alloc] init];
+    _context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     _context.persistentStoreCoordinator = persistentStore;
     _context.undoManager = nil;
 }
@@ -97,7 +97,6 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
         [NSException raise:@"Open DB failed" format:@"Reason: %@", [error localizedDescription]];
     }
     
-    //NSManagedObjectContext *context = [[NSManagedObjectContext alloc] init];
     NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     context.persistentStoreCoordinator = persistentStore;
     context.undoManager = nil;

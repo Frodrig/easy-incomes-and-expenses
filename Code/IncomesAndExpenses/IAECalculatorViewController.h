@@ -18,7 +18,7 @@
 @protocol IAECalculatorViewControllerDelegate;
 @protocol IAECalculatorViewControllerDataSource;
 
-@interface IAECalculatorViewController : UIViewController<UIPopoverControllerDelegate,
+@interface IAECalculatorViewController : UIViewController<UIPopoverPresentationControllerDelegate,
                                                           IAECategorySelectorViewControllerDelegate,
                                                           IAEDayCalendarSelectorViewControllerDelegate,
                                                           IAECategoryEditorViewControllerDelegate,

@@ -87,7 +87,6 @@ static const NSUInteger kInvalidSelecteDay = 0;
 @property (nonatomic, strong) IAECategory *actualCategory;
 @property (nonatomic) NSUInteger actualDay;
 @property (nonatomic, strong) NSMutableString *actualAmount;
-@property (nonatomic, strong) UIPopoverController *popover;
 @property (nonatomic, weak) UIView *currentFloatingDisplayButtonView;
 @property (nonatomic, strong) NSDecimalNumber *maxDecimalNumberAllowed;
 @property (nonatomic) NSUInteger numberConceptsCreatedInSession;
@@ -258,8 +257,8 @@ static const NSUInteger kInvalidSelecteDay = 0;
 
 - (void)dismissPopover
 {
-    [self.popover dismissPopoverAnimated:YES];
-    self.popover = nil;
+    //[self.popover dismissPopoverAnimated:YES];
+    [self.popoverPresentationController.presentedViewController dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)configureInitialVisibilityOfPinFavoriteImage
@@ -502,15 +501,18 @@ static const NSUInteger kInvalidSelecteDay = 0;
     IAEFavoriteConceptsViewController *favoriteConceptsViewController = [[IAEFavoriteConceptsViewController alloc] initWithOptions:FC_ADD];
     favoriteConceptsViewController.delegate = self;
     
-    self.popover = [[UIPopoverController alloc] initWithContentViewController:favoriteConceptsViewController];
-    self.popover.popoverContentSize = favoriteConceptsViewController.view.frame.size;
-    self.popover.delegate = self;
-    
     CGRect presentRect = CGRectMake(addButton.frame.origin.x,
                                     addButton.frame.origin.y + kPopoverYOffsetForFavoriteConceptsViewController,
                                     addButton.frame.size.width,
                                     addButton.frame.size.height);
-    [self.popover presentPopoverFromRect:presentRect inView:self.keyboardPanel permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
+
+    favoriteConceptsViewController.modalPresentationStyle                   = UIModalPresentationPopover;
+    favoriteConceptsViewController.popoverPresentationController.sourceView = self.keyboardPanel;
+    favoriteConceptsViewController.popoverPresentationController.sourceRect = presentRect;
+    favoriteConceptsViewController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionDown;
+    favoriteConceptsViewController.popoverPresentationController.delegate = self;
+    
+    [self presentViewController:favoriteConceptsViewController animated:YES completion:nil];    
 }
 
 - (IBAction)categoryButtonPressed:(UIButton *)button
@@ -532,20 +534,19 @@ static const NSUInteger kInvalidSelecteDay = 0;
     
     NSUInteger categorySelectorOptions = CATEGORYSELECTOR_EXTRAACTION_CATEGORYSELECTION | CATEGORYSELECTOR_EXTRAACTION_ADD;
     IAECategorySelectorViewController *viewController = [[IAECategorySelectorViewController alloc] initWithExtraActions:categorySelectorOptions
-                                                                                                   withSelectedCategory:self.actualCategory];
+                                                                                               withSelectedCategory:self.actualCategory];
     viewController.view.frame = CGRectMake(CGRectGetWidth(rect), CGRectGetHeight(rect) / 2.0, viewController.view.bounds.size.width, viewController.view.bounds.size.height + kPopoverAdditionalHeightAmountForChangeCategory);
     
     viewController.showNumberOfConcepts = NO;
     viewController.delegate = self;
 
-    self.popover = [[UIPopoverController alloc] initWithContentViewController:viewController];
-    self.popover.popoverContentSize = viewController.view.frame.size;
-    self.popover.delegate = self;
+    viewController.modalPresentationStyle                   = UIModalPresentationPopover;
+    viewController.popoverPresentationController.sourceView = self.displayPanel;
+    viewController.popoverPresentationController.sourceRect = rect;
+    viewController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionLeft;
+    viewController.popoverPresentationController.delegate = self;
     
-    [self.popover presentPopoverFromRect:rect
-                                  inView:self.displayPanel
-                permittedArrowDirections:UIPopoverArrowDirectionLeft
-                                animated:YES];
+    [self presentViewController:viewController animated:YES completion:nil];
 }
 
 - (IBAction)dayButtonPressed:(UIButton *)button
@@ -564,15 +565,14 @@ static const NSUInteger kInvalidSelecteDay = 0;
                                                                                                                monthIndex:month.month
                                                                                                            andDaySelected:self.actualDay];
     viewController.delegate = self;
+
+    viewController.modalPresentationStyle                   = UIModalPresentationPopover;
+    viewController.popoverPresentationController.sourceView = self.displayPanel;
+    viewController.popoverPresentationController.sourceRect = rect;
+    viewController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionDown;
+    viewController.popoverPresentationController.delegate = self;
     
-    self.popover = [[UIPopoverController alloc] initWithContentViewController:viewController];
-    self.popover.popoverContentSize = viewController.view.frame.size;
-    self.popover.delegate = self;
-    
-    [self.popover presentPopoverFromRect:rect
-                                  inView:self.displayPanel
-                permittedArrowDirections:UIPopoverArrowDirectionDown
-                                animated:YES];
+    [self presentViewController:viewController animated:YES completion:nil];
 }
 
 - (IBAction)keyboardNumberPressed:(UIButton *)button
@@ -932,9 +932,10 @@ static const NSUInteger kInvalidSelecteDay = 0;
 
 #pragma mark - UIPopoverControllerDelegate
 
-- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+//- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+- (void)popoverPresentationControllerDidDismissPopover:(UIPopoverPresentationController *)popoverController
 {
-    self.popover = nil;
+    //self.popover = nil;
     [self endFloatingDisplayButtonView];
 }
 
@@ -944,7 +945,7 @@ static const NSUInteger kInvalidSelecteDay = 0;
     self.currentFloatingDisplayButtonView = nil;
 }
 
-- (BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController
+- (BOOL)popoverPresentationControllerShouldDismissPopover:(UIPopoverPresentationController *)popoverController
 {
     return YES;
 }
@@ -1241,7 +1242,7 @@ didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
         [self.delegate calculatorViewController:self didCreateNewConcepts:newConceptsCreated];
     }
 
-    [self.popover dismissPopoverAnimated:YES];
+    [self.popoverPresentationController.presentedViewController dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (NSArray *)createFromFavoritesNewConcepts:(NSArray *)concepts ofType:(CategoryType)type

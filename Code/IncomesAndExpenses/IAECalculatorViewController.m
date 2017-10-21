@@ -257,8 +257,9 @@ static const NSUInteger kInvalidSelecteDay = 0;
 
 - (void)dismissPopover
 {
-    //[self.popover dismissPopoverAnimated:YES];
-    [self.popoverPresentationController.presentedViewController dismissViewControllerAnimated:YES completion:NULL];
+    [self endFloatingDisplayButtonView];
+
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)configureInitialVisibilityOfPinFavoriteImage
@@ -497,7 +498,7 @@ static const NSUInteger kInvalidSelecteDay = 0;
 - (void)launchPopoverForSelectFavoriteConceptsFromAddButton:(UIButton *)addButton
 {
     [self dismissPopover];
-
+    
     IAEFavoriteConceptsViewController *favoriteConceptsViewController = [[IAEFavoriteConceptsViewController alloc] initWithOptions:FC_ADD];
     favoriteConceptsViewController.delegate = self;
     
@@ -932,10 +933,8 @@ static const NSUInteger kInvalidSelecteDay = 0;
 
 #pragma mark - UIPopoverControllerDelegate
 
-//- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
 - (void)popoverPresentationControllerDidDismissPopover:(UIPopoverPresentationController *)popoverController
 {
-    //self.popover = nil;
     [self endFloatingDisplayButtonView];
 }
 
@@ -962,7 +961,6 @@ static const NSUInteger kInvalidSelecteDay = 0;
 - (void)dismissPopoverAndEndFloatingDisplayButtonView
 {
     [self dismissPopover];
-    [self endFloatingDisplayButtonView];
 }
 
 - (void)changeActualCategoryTo:(IAECategory *)category
@@ -975,12 +973,14 @@ static const NSUInteger kInvalidSelecteDay = 0;
 - (void)categorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController
             didSelectAddCategoryOfType:(CategoryType)categoryType
 {
-    [self dismissPopoverAndEndFloatingDisplayButtonView];
-
+    [self dismissPopover];
+    
+    [self endFloatingDisplayButtonView];
+        
     IAECategoryEditorViewController *categoryEditorViewController = [[IAECategoryEditorViewController alloc] initToAddCategoryOfType:categoryType];
     categoryEditorViewController.delegate = self;
     categoryEditorViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    
+        
     [self presentViewController:categoryEditorViewController animated:YES completion:nil];
 }
 
@@ -1002,7 +1002,6 @@ static const NSUInteger kInvalidSelecteDay = 0;
 - (void)categoryEditorViewController:(IAECategoryEditorViewController *)categoryEditorViewController
              didCancelRenameCategory:(IAECategory *)category
 {
-    
     [categoryEditorViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -1242,7 +1241,7 @@ didPressedAddOptionWithFavoriteIncomes:(NSArray *)incomes
         [self.delegate calculatorViewController:self didCreateNewConcepts:newConceptsCreated];
     }
 
-    [self.popoverPresentationController.presentedViewController dismissViewControllerAnimated:YES completion:NULL];
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (NSArray *)createFromFavoritesNewConcepts:(NSArray *)concepts ofType:(CategoryType)type

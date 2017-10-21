@@ -76,7 +76,7 @@
 @property (nonatomic, strong) IAEHelperConceptsCollectionViewDataSource *helperConceptsCollectionViewDataSource;
 @property (nonatomic, strong) UIView *withoutConceptsWarningInMonthEditModeView;
 @property (nonatomic, strong) UIView *withoutConceptsWarningInMonthReportModeView;
-@property (nonatomic, strong) UIPopoverController *popover;
+@property (nonatomic, strong) UIViewController *popoverContentViewController;
 @property (nonatomic, strong) UITapGestureRecognizer *tapConceptsRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *tapEditAndReportModeContainerViewRecognizer;
 @property (nonatomic, strong) UISwipeGestureRecognizer *swipeRightConceptsGestureRecognizer;
@@ -803,9 +803,9 @@
     return self.categoriesSelectorViewController;
 }
 
-- (UIPopoverController *)currentPopoverForEasyIncomesAndExpensesQuery:(IAEEasyIncomesAndExpensesQuery *)easyIncomesAndExpensesQuery
+- (UIViewController *)currentPopoverForEasyIncomesAndExpensesQuery:(IAEEasyIncomesAndExpensesQuery *)easyIncomesAndExpensesQuery
 {
-    return self.popover;
+    return self.popoverContentViewController;
 }
 
 - (IAESelectorContextView *)selectorContextViewForEasyIncomesAndExpensesQuery:(IAEEasyIncomesAndExpensesQuery *)easyIncomesAndExpensesQuery
@@ -916,8 +916,8 @@
 
 - (void)dismisPopover
 {
-    [self.popover dismissPopoverAnimated:YES];
-    [self performActionsAfterDismissPopover:self.popover];
+    [self dismissViewControllerAnimated:YES completion:NULL];
+    [self performActionsAfterDismissPopover:self.popoverContentViewController];
 }
 
 #pragma mark - ScrollViewMonths (vincule)
@@ -949,63 +949,63 @@
 
 #pragma mark - UIPopoverControllerViewDelegate
 
-- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+- (void)popoverPresentationControllerDidDismissPopover:(UIPopoverPresentationController *)popoverPresentationController
 {
-    [self performActionsAfterDismissPopover:popoverController];
+    [self performActionsAfterDismissPopover:popoverPresentationController.presentedViewController];
 }
 
-- (void)performActionsAfterDismissPopover:(UIPopoverController *)popoverController
+- (void)performActionsAfterDismissPopover:(UIViewController *)popoverController
 {
-    if ([popoverController.contentViewController isKindOfClass:[IAEAdjustConceptAmountViewController class]]) {
+    if ([popoverController isKindOfClass:[IAEAdjustConceptAmountViewController class]]) {
         [self performActionsAfterDismissAdjustConceptAmountPopover:popoverController];
-    } else if ([popoverController.contentViewController isKindOfClass:[IAEDayCalendarSelectorViewController class]]) {
+    } else if ([popoverController isKindOfClass:[IAEDayCalendarSelectorViewController class]]) {
         [self performActionsAfterDismissDayCalendarSelectorPopover:popoverController];
-    } else if ([popoverController.contentViewController isKindOfClass:[IAECategorySelectorViewController class]]) {
+    } else if ([popoverController isKindOfClass:[IAECategorySelectorViewController class]]) {
         [self performActionsAfterDismissCategorySelectorPopover:popoverController];
-    } else if ([popoverController.contentViewController isKindOfClass:[IAEMonthSelectorViewController class]]) {
+    } else if ([popoverController isKindOfClass:[IAEMonthSelectorViewController class]]) {
         [self performActionsAfterMonthSelectorViewController:popoverController];
-    } else if ([popoverController.contentViewController isKindOfClass:[IAEContextMenuActionSheetViewController class]]) {
+    } else if ([popoverController isKindOfClass:[IAEContextMenuActionSheetViewController class]]) {
         [self performActionsAfterContextMenuActionSheetViewController:popoverController];
     }
     
-    self.popover = nil;
+    self.popoverContentViewController = nil;
 }
 
-- (void)performActionsAfterDismissAdjustConceptAmountPopover:(UIPopoverController *)popoverController
+- (void)performActionsAfterDismissAdjustConceptAmountPopover:(UIViewController *)popoverController
 {
     [self updateBalancesAndAvailabilityOfSelectorContextSubmenuWithAnimation:YES];
-    IAEAdjustConceptAmountViewController *controller = (IAEAdjustConceptAmountViewController *)popoverController.contentViewController;
+    IAEAdjustConceptAmountViewController *controller = (IAEAdjustConceptAmountViewController *)popoverController;
     IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:controller.conceptCellIndexPath];
     [cell setVisualAspectInEditMode:NO forConceptElement:EditModeConceptElement_Amount];
 }
 
-- (void)performActionsAfterDismissDayCalendarSelectorPopover:(UIPopoverController *)popoverController
+- (void)performActionsAfterDismissDayCalendarSelectorPopover:(UIViewController *)popoverController
 {
-    IAEDayCalendarSelectorViewController *controller = (IAEDayCalendarSelectorViewController *)popoverController.contentViewController;
+    IAEDayCalendarSelectorViewController *controller = (IAEDayCalendarSelectorViewController *)popoverController;
     IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:controller.conceptCellIndexPath];
     [cell setVisualAspectInEditMode:NO forConceptElement:EditModeConceptElement_DayOrNumberInstance];
 }
 
-- (void)performActionsAfterDismissCategorySelectorPopover:(UIPopoverController *)popoverController
+- (void)performActionsAfterDismissCategorySelectorPopover:(UIViewController *)popoverController
 {
-    IAECategorySelectorViewController *controller = (IAECategorySelectorViewController *)popoverController.contentViewController;
+    IAECategorySelectorViewController *controller = (IAECategorySelectorViewController *)popoverController;
     IAEEditModeConceptCollectionViewCell *cell = (IAEEditModeConceptCollectionViewCell *)[self.conceptsCollectionView cellForItemAtIndexPath:controller.conceptCellIndexPath];
     [cell setVisualAspectInEditMode:NO forConceptElement:EditModeConceptElement_Category];
 }
 
-- (void)performActionsAfterMonthSelectorViewController:(UIPopoverController *)popover
+- (void)performActionsAfterMonthSelectorViewController:(UIViewController *)popover
 {
     self.monthSelectorViewController = nil;
 }
 
-- (void)performActionsAfterContextMenuActionSheetViewController:(UIPopoverController *)popover
+- (void)performActionsAfterContextMenuActionSheetViewController:(UIViewController *)popover
 {
     self.contextMenuActionSheetViewController = nil;
 }
 
-- (void)updateBalancesIfDismissFromAdjustConceptAmountPopover:(UIPopoverController *)popover
+- (void)updateBalancesIfDismissFromAdjustConceptAmountPopover:(UIViewController *)popover
 {
-    if ([popover.contentViewController isKindOfClass:[IAEAdjustConceptAmountViewController class]]) {
+    if ([popover isKindOfClass:[IAEAdjustConceptAmountViewController class]]) {
         [self updateBalancesAndAvailabilityOfSelectorContextSubmenuWithAnimation:YES];
     }
 }
@@ -1869,6 +1869,18 @@
                               usingFrame:(CGRect)frame
                        andArrowDirection:(UIPopoverArrowDirection)arrowDirection
 {
+    
+    viewController.modalPresentationStyle                   = UIModalPresentationPopover;
+    viewController.popoverPresentationController.sourceView = view.superview;
+    viewController.popoverPresentationController.sourceRect = frame;
+    viewController.preferredContentSize = viewController.view.bounds.size;
+    viewController.popoverPresentationController.permittedArrowDirections = arrowDirection;
+    viewController.popoverPresentationController.delegate = self;
+
+    [self presentViewController:viewController animated:YES completion:nil];
+    
+    self.popoverContentViewController = viewController;
+    /*
     self.popover = [[UIPopoverController alloc] initWithContentViewController:viewController];
     self.popover.delegate = self;
     self.popover.popoverContentSize = viewController.view.bounds.size;
@@ -1876,7 +1888,7 @@
                                   inView:view.superview
                 permittedArrowDirections:arrowDirection
                                 animated:YES];
-    
+     */
 }
 
 - (void)openPopoverForSelectDayOfConceptCell:(IAEEditModeConceptCollectionViewCell *)cell
@@ -2018,8 +2030,8 @@
 
 - (BOOL)isPopoverAssociatedToConceptBecauseACategorySelectorViewController
 {
-    IAECategorySelectorViewController *categorySelector = (IAECategorySelectorViewController *)self.popover.contentViewController;
-    const BOOL isPopoverAssociated = self.popover != NULL && categorySelector && categorySelector.conceptCellIndexPath;
+    IAECategorySelectorViewController *categorySelector = (IAECategorySelectorViewController *)self.popoverContentViewController;
+    const BOOL isPopoverAssociated = self.popoverContentViewController != NULL && categorySelector && categorySelector.conceptCellIndexPath;
     
     return isPopoverAssociated;
 }
@@ -2764,6 +2776,19 @@
     if ([[NSUserDefaults standardUserDefaults] isProVersionEnabled]) {
         self.contextMenuActionSheetViewController = [[IAEContextMenuActionSheetViewController alloc] initWithEnabledOption:[self.easyIncomesAndExpensesQuery existConceptsInActualSelectedContext] ? IAEContextMenuActionSheetOptionAll : IAEContextMenuActionSheetOptionOptionsNone];
         self.contextMenuActionSheetViewController.delegate = self;
+        self.contextMenuActionSheetViewController.modalPresentationStyle                   = UIModalPresentationPopover;
+        self.contextMenuActionSheetViewController.popoverPresentationController.sourceView = self.contextMenuView;
+        self.contextMenuActionSheetViewController.popoverPresentationController.sourceRect = CGRectOffset([self.contextMenuView rectOfOptionAtIndex:optionIndex], 0, 4);
+        self.contextMenuActionSheetViewController.preferredContentSize = self.contextMenuActionSheetViewController.view.bounds.size;
+        self.contextMenuActionSheetViewController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionUp;
+        self.contextMenuActionSheetViewController.popoverPresentationController.delegate = self;
+        
+        [self presentViewController:self.contextMenuActionSheetViewController animated:YES completion:nil];
+        
+        self.popoverContentViewController = self.contextMenuActionSheetViewController;
+        
+        /*
+        
         self.popover = [[UIPopoverController alloc] initWithContentViewController:self.contextMenuActionSheetViewController];
         self.popover.delegate = self;
         self.popover.popoverContentSize = self.contextMenuActionSheetViewController.view.bounds.size;
@@ -2771,6 +2796,7 @@
                                       inView:self.contextMenuView
                     permittedArrowDirections:UIPopoverArrowDirectionUp
                                     animated:YES];
+        */
     }
 }
 

@@ -28,7 +28,7 @@
 
 @protocol IAEEasyIncomesAndExpensesViewControllerDelegate;
 
-@interface IAEEasyIncomesAndExpensesViewController : UIViewController<UIPopoverControllerDelegate,
+@interface IAEEasyIncomesAndExpensesViewController : UIViewController<UIPopoverPresentationControllerDelegate,
                                                                       IAESelectorContextViewDelegate,
                                                                       IAESelectorContextViewDataSource,
                                                                       UICollectionViewDelegate,

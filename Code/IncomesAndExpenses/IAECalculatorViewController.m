@@ -257,8 +257,6 @@ static const NSUInteger kInvalidSelecteDay = 0;
 
 - (void)dismissPopover
 {
-    [self endFloatingDisplayButtonView];
-
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
@@ -961,6 +959,7 @@ static const NSUInteger kInvalidSelecteDay = 0;
 - (void)dismissPopoverAndEndFloatingDisplayButtonView
 {
     [self dismissPopover];
+    [self endFloatingDisplayButtonView];
 }
 
 - (void)changeActualCategoryTo:(IAECategory *)category

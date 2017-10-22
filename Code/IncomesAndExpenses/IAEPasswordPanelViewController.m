@@ -407,13 +407,21 @@ static const NSInteger kBasePanelPasswordTag = 100;
 
 - (void)launchAlertViewToInformAboutRecoveryPasswordEmailWasSend
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_PASSWORDPANEL_VALIDATE_ALERTVIEWRECOVERYEMAILPASSWORDSEND_TITLE", @"")
-                                                        message:NSLocalizedString(@"LTEXT_PASSWORDPANEL_VALIDATE_ALERTVIEWRECOVERYEMAILPASSWORDSEND_MESSAGE", @"")
-                                                       delegate:nil
-                                              cancelButtonTitle:NSLocalizedString(@"LTEXT_PASSWORDPANEL_VALIDATE_ALERTVIEWRECOVERYEMAILPASSWORDSEND_OK", @"")
-                                              otherButtonTitles:nil];
-    [alertView show];
+    UIAlertController *alert = [UIAlertController
+                                alertControllerWithTitle:NSLocalizedString(@"LTEXT_PASSWORDPANEL_VALIDATE_ALERTVIEWRECOVERYEMAILPASSWORDSEND_TITLE", @"")
+                                message:NSLocalizedString(@"LTEXT_PASSWORDPANEL_VALIDATE_ALERTVIEWRECOVERYEMAILPASSWORDSEND_MESSAGE", @"")
+                                preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* okButton = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(@"LTEXT_PASSWORDPANEL_VALIDATE_ALERTVIEWRECOVERYEMAILPASSWORDSEND_OK", @"")
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action) {
+                                   //Handle your yes please button action here
+                               }];
+    
+    [alert addAction:okButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
-
 
 @end

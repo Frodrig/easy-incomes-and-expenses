@@ -151,12 +151,21 @@ static const NSUInteger kNumberOfOptionsAvailable = 3;
 
 - (void)launchAlertViewAboutCantVinculeEmailRecovery
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_PASSWORDPANEL_CANTVINCULEMAIL_ALERTVIEW_TITLE", @"")
-                                                        message:NSLocalizedString(@"LTEXT_PASSWORDPANEL_CANTVINCULEMAIL_ALERTVIEW_MESSAGE", @"")
-                                                       delegate:nil
-                                              cancelButtonTitle:NSLocalizedString(@"LTEXT_PASSWORDPANEL_CANTVINCULEMAIL_ALERTVIEW_OK", @"")
-                                              otherButtonTitles:nil];
-    [alertView show];
+    UIAlertController *alert = [UIAlertController
+                                alertControllerWithTitle:NSLocalizedString(@"LTEXT_PASSWORDPANEL_CANTVINCULEMAIL_ALERTVIEW_TITLE", @"")
+                                message:NSLocalizedString(@"LTEXT_PASSWORDPANEL_CANTVINCULEMAIL_ALERTVIEW_MESSAGE", @"")
+                                preferredStyle:UIAlertControllerStyleAlert];
+
+    UIAlertAction* okButton = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(@"LTEXT_PASSWORDPANEL_CANTVINCULEMAIL_ALERTVIEW_OK", @"")
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action) {
+                                    //Handle your yes please button action here
+                               }];
+    
+    [alert addAction:okButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (BOOL)isIndexPathForPasswordPanelViewController:(NSIndexPath *)indexPath

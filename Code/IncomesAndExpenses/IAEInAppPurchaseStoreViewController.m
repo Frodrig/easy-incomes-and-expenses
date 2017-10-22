@@ -355,12 +355,26 @@ static const CGFloat kFadeInStateTime = 0.75;
          
 - (void)launchAlertViewThankYouOfType:(ThankYouAlertViewType)alertViewType
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[self titleStringForAlertViewThankYouOfType:alertViewType]
-                                                        message:[self messageStringForAlertViewThankYouOfType:alertViewType]
-                                                       delegate:self
-                                              cancelButtonTitle:[self cancelStringAlertViewThankYouOfType:alertViewType]
-                                              otherButtonTitles:nil];
-    [alertView show];
+    UIAlertController *alert = [UIAlertController
+                                alertControllerWithTitle:[self titleStringForAlertViewThankYouOfType:alertViewType]
+                                message:[self messageStringForAlertViewThankYouOfType:alertViewType]
+                                preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* cancelButton = [UIAlertAction
+                                   actionWithTitle:[self cancelStringAlertViewThankYouOfType:alertViewType]
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action) {
+                                       //Handle your yes please button action here
+                                       if (self.leavingWithPurchaseOrRestore) {
+                                           [self dismissViewControllerAnimated:YES completion:^{
+                                               [[NSNotificationCenter defaultCenter] postNotificationName:kProVersionEnabledFromStore object:self];
+                                           }];
+                                       }
+                                   }];
+    
+    [alert addAction:cancelButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (NSString *)titleStringForAlertViewThankYouOfType:(ThankYouAlertViewType)alertViewType
@@ -410,8 +424,21 @@ static const CGFloat kFadeInStateTime = 0.75;
 
 - (void)launchAlertViewWithPaymentOrRestoreProcessWithError:(NSError *)error
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_INAPPPURCHASESPROBLEMSINPAYMENTORRESTORE_ALERTVIEW_TITLE", @"") message:error.localizedDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"LTEXT_INAPPPURCHASESPROBLEMSINPAYMENTORRESTORE_ALERTVIEW_CANCEL", @"") otherButtonTitles:nil];
-    [alertView show];
+    UIAlertController *alert = [UIAlertController
+                                alertControllerWithTitle:NSLocalizedString(@"LTEXT_INAPPPURCHASESPROBLEMSINPAYMENTORRESTORE_ALERTVIEW_TITLE", @"")
+                                message:error.localizedDescription
+                                preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* cancelButton = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"LTEXT_INAPPPURCHASESPROBLEMSINPAYMENTORRESTORE_ALERTVIEW_CANCEL", @"")
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action) {
+                                       //Handle your yes please button action here
+                                   }];
+    
+    [alert addAction:cancelButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - RetryButtonPressed
@@ -422,15 +449,6 @@ static const CGFloat kFadeInStateTime = 0.75;
 }
 
 #pragma mark - AlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if (self.leavingWithPurchaseOrRestore) {
-        [self dismissViewControllerAnimated:YES completion:^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:kProVersionEnabledFromStore object:self];
-        }];
-    }
-}
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {

@@ -483,25 +483,34 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 
 - (void)launchCleanConfirmationAlertView
 {
-    UIAlertView *alertView = [[UIAlertView alloc]
-                                initWithTitle:NSLocalizedString(kLTextAlertViewConfirmCleanTitle, @"")
+    UIAlertController *alert = [UIAlertController
+                                alertControllerWithTitle:NSLocalizedString(kLTextAlertViewConfirmCleanTitle, @"")
                                 message:NSLocalizedString(kLTextAlertViewConfirmCleanMessage, @"")
-                                delegate:self
-                                cancelButtonTitle:NSLocalizedString(kLTextAlertViewConfirmCancelOption, @"")
-                                otherButtonTitles:NSLocalizedString(kLTextAlertViewConfirmCleanOption, @""), nil];
-        
-    [alertView show];
-}
+                                preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* cancelButton = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(kLTextAlertViewConfirmCancelOption, @"")
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action) {
+                                       //Handle your yes please button action here
+                                       [self.selectedCellToClean exitFromStrokeModeWithAnimation:YES];
+                                       [self.strokeAnimatableLineView resetStroke];
+                                       self.selectedCellToClean = nil;
+                                   }];
+   
+    UIAlertAction* confirmButton = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(kLTextAlertViewConfirmCleanOption, @"")
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action) {
+                                       //Handle your yes please button action here
+                                       [self cleanYearSelectedAndUpdateControl];
+                                   }];
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == kAlertViewCleanButtonIndex) {
-        [self cleanYearSelectedAndUpdateControl];
-    } else {
-        [self.selectedCellToClean exitFromStrokeModeWithAnimation:YES];
-        [self.strokeAnimatableLineView resetStroke];
-        self.selectedCellToClean = nil;
-    }
+    
+    [alert addAction:cancelButton];
+    [alert addAction:confirmButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)cleanYearSelectedAndUpdateControl

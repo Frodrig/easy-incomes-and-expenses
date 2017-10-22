@@ -153,6 +153,7 @@
         }
     }
     NSData *postJSON = [NSJSONSerialization dataWithJSONObject:sendMail options:0 error:nil];
+        
     [NSURLConnection sendAsynchronousRequest:[self _requestForBatchEmails:postJSON] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *responseData, NSError *error) {
         if (!response && error != nil) {
             NSError *networkError = [NSError errorWithDomain:SSPostmarkNetworkErrorDomain code:[error code] userInfo:[error userInfo]];

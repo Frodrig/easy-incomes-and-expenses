@@ -239,6 +239,11 @@ static const NSUInteger kInvalidSelecteDay = 0;
                                              selector:@selector(notificationKeyboardDidChange:)
                                                  name:UIKeyboardDidChangeFrameNotification
                                                object:nil];
+
+    
+    // REMOVE REMOVE REMOVE REMOVE
+    [[NSUserDefaults standardUserDefaults] enableProVersion];
+
 }
 
 - (void)viewDidLoad

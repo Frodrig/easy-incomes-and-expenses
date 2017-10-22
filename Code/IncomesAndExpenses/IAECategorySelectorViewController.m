@@ -626,14 +626,31 @@ static const CGFloat kAlphaOfColorWhiteValueForAttractAttentionFadeIn = 0.3;
 
 - (void)launchAlertViewBeforeDeleteCategory
 {
-    UIAlertView *alertView = [[UIAlertView alloc]
-                              initWithTitle:NSLocalizedString(@"LTEXT_ALERTVIEW_REMOVECATEGORY_TITLE", @"")
-                              message:NSLocalizedString(@"LTEXT_ALERTVIEW_REMOVECATEGORY_MESSAGE", @"")
-                              delegate:self
-                              cancelButtonTitle:NSLocalizedString(@"LTEXT_ALERTVIEW_REMOVECATEGORY_CANCELOPTION", @"")
-                              otherButtonTitles:NSLocalizedString(@"LTEXT_ALERTVIEW_REMOVECATEGORY_REMOVEOPTION", @""), nil];
+    UIAlertController *alert = [UIAlertController
+                                alertControllerWithTitle:NSLocalizedString(@"LTEXT_ALERTVIEW_REMOVECATEGORY_TITLE", @"")
+                                message:NSLocalizedString(@"LTEXT_ALERTVIEW_REMOVECATEGORY_MESSAGE", @"")
+                                preferredStyle:UIAlertControllerStyleAlert];
     
-    [alertView show];
+    UIAlertAction* cancelButton = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"LTEXT_ALERTVIEW_REMOVECATEGORY_CANCELOPTION", @"")
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action) {
+                                       //Handle your yes please button action here
+                                       [self exitOfStrokeStateInCellOfSelectedCategory];
+                                   }];
+
+    UIAlertAction* removeButton = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"LTEXT_ALERTVIEW_REMOVECATEGORY_REMOVEOPTION", @"")
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action) {
+                                       //Handle your yes please button action here
+                                       [self sendRemoveCategoryOfCellSelectedActionExecuted];
+                                   }];
+
+    [alert addAction:cancelButton];
+    [alert addAction:removeButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)sendRemoveCategoryOfCellSelectedActionExecuted
@@ -641,17 +658,6 @@ static const CGFloat kAlphaOfColorWhiteValueForAttractAttentionFadeIn = 0.3;
     NSAssert(self.categoryOfCellSelectedToRemove, @"");
     [self.delegate categorySelectorViewController:self didSelectRemoveCategory:self.categoryOfCellSelectedToRemove];
     self.categoryOfCellSelectedToRemove = nil;
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == kButtonIndexOfRemoveConfirmationAlertView) {
-        [self sendRemoveCategoryOfCellSelectedActionExecuted];
-    } else {
-        [self exitOfStrokeStateInCellOfSelectedCategory];
-    }
 }
 
 - (void)exitOfStrokeStateInCellOfSelectedCategory

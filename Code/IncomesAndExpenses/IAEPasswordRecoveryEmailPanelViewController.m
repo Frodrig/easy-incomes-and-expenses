@@ -207,34 +207,27 @@ static const CGFloat kDissolveMessagesTime = 0.5;
 
 - (void)launchPreDismissAlertViewWithInformationAboutVinculeEmailRecoveryAddress
 {
-    self.actualAlertView = AlertViewRecoveryEmailLinked;
+    UIAlertController *alert = [UIAlertController
+                                alertControllerWithTitle:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_TITLE", @"")
+                                message:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_MESSAGE", @"")
+                                preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_TITLE", @"")
-                                                        message:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_MESSAGE", @"")
-                                                       delegate:self
-                                              cancelButtonTitle:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_OK", @"")
-                                              otherButtonTitles:nil];
-    [alertView show];
+    UIAlertAction* okButton = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_OK", @"")
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action) {
+                                   //Handle your yes please button action here
+                                   [self dismissViewControllerAnimated:YES completion:nil];
+                               }];
+    
+    [alert addAction:okButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (NSString *)actualPasswordRecoveryEmailWithValidFormat
 {
     return [self.passwordTextFieldView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-}
-
-#pragma mark - AlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (self.actualAlertView == AlertViewRecoveryEmailLinked) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    } else if (self.actualAlertView == AlertViewRecoveryEmailUnlinked) {
-        if (buttonIndex == 1) {
-            [[IAEEmailSender sharedInstance] sendUnlinkedMailForRecoveryPasswordEmailWithCompletionBlock:nil];
-            [[NSUserDefaults standardUserDefaults] desvinculePasswordRecoveryEmail];
-            [self dismissViewControllerAnimated:YES completion:nil];
-        }
-    }
 }
 
 #pragma mark - UITextFieldDelegate
@@ -251,12 +244,21 @@ static const CGFloat kDissolveMessagesTime = 0.5;
 
 - (void)launchAlertViewWithWarningAboutBeginEditingWithPasswordRecoveryEmailSet
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_WARNINGCANTEDITEMAILWITHLINKEDEMAIL_TITLE", @"")
-                                                        message:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_WARNINGCANTEDITEMAILWITHLINKEDEMAIL_MESSAGE", @"")
-                                                       delegate:nil
-                                              cancelButtonTitle:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_WARNINGCANTEDITEMAILWITHLINKEDEMAIL_OK", @"")
-                                              otherButtonTitles:nil];
-    [alertView show];
+    UIAlertController *alert = [UIAlertController
+                                alertControllerWithTitle:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_WARNINGCANTEDITEMAILWITHLINKEDEMAIL_TITLE", @"")
+                                message:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_WARNINGCANTEDITEMAILWITHLINKEDEMAIL_MESSAGE", @"")
+                                preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* cancelButton = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_WARNINGCANTEDITEMAILWITHLINKEDEMAIL_OK", @"")
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action) {
+                                   //Handle your yes please button action here
+                               }];
+    
+    [alert addAction:cancelButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -347,14 +349,32 @@ static const CGFloat kDissolveMessagesTime = 0.5;
 
 - (void)launchAlertViewToConfirmDesvinculeRecoveryEmail
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_CONFIRMUNLINKRECOVERYEMAIL_TITLE", @"")
-                                                        message:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_CONFIRMUNLINKRECOVERYEMAIL_MESSAGE", @"")
-                                                       delegate:self
-                                              cancelButtonTitle:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_CONFIRMUNLINKRECOVERYEMAIL_NO", @"")
-                                              otherButtonTitles:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_CONFIRMUNLINKRECOVERYEMAIL_YES", @""), nil];
-    [alertView show];
+    UIAlertController *alert = [UIAlertController
+                                alertControllerWithTitle:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_CONFIRMUNLINKRECOVERYEMAIL_TITLE", @"")
+                                message:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_CONFIRMUNLINKRECOVERYEMAIL_MESSAGE", @"")
+                                preferredStyle:UIAlertControllerStyleAlert];
     
-    self.actualAlertView = AlertViewRecoveryEmailUnlinked;
+    UIAlertAction* cancelButton = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_CONFIRMUNLINKRECOVERYEMAIL_NO", @"")
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action) {
+                                   //Handle your yes please button action here
+                               }];
+
+    UIAlertAction* yesButton = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"LTEXT_PASSWORDPANELEMAILEDITOR_ALERTVIEW_CONFIRMUNLINKRECOVERYEMAIL_YES", @"")
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action) {
+                                       //Handle your yes please button action here
+                                       [[IAEEmailSender sharedInstance] sendUnlinkedMailForRecoveryPasswordEmailWithCompletionBlock:nil];
+                                       [[NSUserDefaults standardUserDefaults] desvinculePasswordRecoveryEmail];
+                                       [self dismissViewControllerAnimated:YES completion:nil];
+                                   }];
+
+    [alert addAction:cancelButton];
+    [alert addAction:yesButton];
+
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 @end

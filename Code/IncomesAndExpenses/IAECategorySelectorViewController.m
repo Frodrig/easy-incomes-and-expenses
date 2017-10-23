@@ -56,8 +56,6 @@ static const CGFloat kHeightOfCategoriesWithNumberOfConceptsCell = 78;
 
 static const CGFloat kDurationOfAnimationOfOpenDecoratorView = 0.1;
 
-static const NSUInteger kButtonIndexOfRemoveConfirmationAlertView = 1;
-
 static const CGFloat kDurationStrokeAnimation = 0.25;
 static const CGFloat kColorWhiteComponentForStrokeAnimation = 0.8;
 static const CGFloat kColorWhiteAlphaComponentForStrokeAnimation = 1.0;

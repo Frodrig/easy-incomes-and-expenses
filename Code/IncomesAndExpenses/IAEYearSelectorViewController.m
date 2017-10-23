@@ -40,8 +40,6 @@ static const NSUInteger kFontFamilySizeForActualYearOpenLabel = 17;
 static const NSUInteger kYearsSegmentedControlYearsWithConceptsIndex = 0;
 static const NSUInteger kYearsSegmentedControlAllYearsIndex = 1;
 
-static const NSUInteger kAlertViewCleanButtonIndex = 1;
-
 static const CGFloat kDurationStrokeAnimation = 0.25;
 static const CGFloat kColorWhiteComponentForStrokeAnimation = 0.8;
 static const CGFloat kColorWhiteAlphaComponentForStrokeAnimation = 1.0;

@@ -202,7 +202,9 @@ static const CGFloat kDissolveMessagesTime = 0.5;
 
 - (void)sendConfirmationLinkedEmailRecoveryAddress
 {
-    [[IAEEmailSender sharedInstance] sendConfirmationLinkedMailForRecoveryPasswordEmailWithCompletionBlock:nil];
+    [[IAEEmailSender sharedInstance] sendConfirmationLinkedMailForRecoveryPasswordEmailWithCompletionBlock:^(NSError *error){
+        [self launchDefaultSendEmailErrorAlert:error];
+    }];
 }
 
 - (void)launchPreDismissAlertViewWithInformationAboutVinculeEmailRecoveryAddress
@@ -366,7 +368,9 @@ static const CGFloat kDissolveMessagesTime = 0.5;
                                    style:UIAlertActionStyleDefault
                                    handler:^(UIAlertAction * action) {
                                        //Handle your yes please button action here
-                                       [[IAEEmailSender sharedInstance] sendUnlinkedMailForRecoveryPasswordEmailWithCompletionBlock:nil];
+                                       [[IAEEmailSender sharedInstance] sendUnlinkedMailForRecoveryPasswordEmailWithCompletionBlock:^(NSError *error){
+                                           [self launchDefaultSendEmailErrorAlert:error];
+                                       }];
                                        [[NSUserDefaults standardUserDefaults] desvinculePasswordRecoveryEmail];
                                        [self dismissViewControllerAnimated:YES completion:nil];
                                    }];
@@ -376,5 +380,29 @@ static const CGFloat kDissolveMessagesTime = 0.5;
 
     [self presentViewController:alert animated:YES completion:nil];
 }
+
+- (void)launchDefaultSendEmailErrorAlert:(NSError *)error {
+    if (error) {
+        NSString *message =
+            [NSString stringWithFormat:@"%@%@", error.localizedDescription, NSLocalizedString(@"LTEXT_EMAILSENDER_ALERTVIEWERROR_POSTMESSAGE", @"")];
+        
+        UIAlertController *alert = [UIAlertController
+                                    alertControllerWithTitle:NSLocalizedString(@"LTEXT_EMAILSENDER_ALERTVIEWERROR_TITLE", @"")
+                                    message:message
+                                    preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* cancelButton = [UIAlertAction
+                                       actionWithTitle:NSLocalizedString(@"LTEXT_EMAILSENDER_ALERTVIEWERROR_OK", @"")
+                                       style:UIAlertActionStyleDefault
+                                       handler:^(UIAlertAction * action) {
+                                           //Handle your yes please button action here
+                                       }];
+        
+        [alert addAction:cancelButton];
+        
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+}
+
 
 @end

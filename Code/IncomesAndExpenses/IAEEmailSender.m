@@ -84,27 +84,10 @@ static NSString * const kPostmarkAPIKey = @"REMOVED_POSTMARK_TOKEN";
 - (void)sendEmailRequestOfType:(IAEEmailRequestType)emailRequestType withCompletionBlock:(void(^)(NSError *error))completionBlock
 {
     [self.postmark sendEmail:[IAEEmailRequest emailRequestWithType:emailRequestType] completion:^(BOOL success, NSError *error) {
-        if (error) {
-            [self lauchAlertViewWithError:error];
-        }
-        
         if (completionBlock) {
             completionBlock(error);
         }
     }];
-}
-
-- (void)lauchAlertViewWithError:(NSError *)error
-{
-    NSAssert(error, @"");
-    
-    NSString *message = [NSString stringWithFormat:@"%@%@", error.localizedDescription, NSLocalizedString(@"LTEXT_EMAILSENDER_ALERTVIEWERROR_POSTMESSAGE", @"")];
-    UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_EMAILSENDER_ALERTVIEWERROR_TITLE", @"")
-                                                             message:message
-                                                            delegate:nil
-                                                   cancelButtonTitle:NSLocalizedString(@"LTEXT_EMAILSENDER_ALERTVIEWERROR_OK", @"")
-                                                   otherButtonTitles:nil];
-    [errorAlertView show];
 }
 
 @end

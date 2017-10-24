@@ -270,9 +270,13 @@ static const NSInteger kBasePanelPasswordTag = 100;
     [[KeychainItemWrapper defaultKeychain] setNewPassword:self.pendingConfirmationPassword];
     
     if (canSendPasswordChangedEmail) {
-        [[IAEEmailSender sharedInstance] sendPasswordChangedEmailWithCompletionBlock:nil];
+        [[IAEEmailSender sharedInstance] sendPasswordChangedEmailWithCompletionBlock:^(NSError *error){
+            [self launchDefaultSendEmailErrorAlert:error];
+        }];
     } else if (canSendPasswordEnabledEmail){
-        [[IAEEmailSender sharedInstance] sendPasswordEnabledEmailWithCompletionBlock:nil];
+        [[IAEEmailSender sharedInstance] sendPasswordEnabledEmailWithCompletionBlock:^(NSError *error){
+            [self launchDefaultSendEmailErrorAlert:error];
+        }];
     }
     
     [self.delegate dismissAll];
@@ -357,7 +361,32 @@ static const NSInteger kBasePanelPasswordTag = 100;
 {
     [[KeychainItemWrapper defaultKeychain] clearPassword];
     if ([[NSUserDefaults standardUserDefaults] isPasswordRecoveryEmailSet]) {
-        [[IAEEmailSender sharedInstance] sendPasswordDisabledEmailWithCompletionBlock:nil];
+        [[IAEEmailSender sharedInstance] sendPasswordDisabledEmailWithCompletionBlock:^(NSError *error){
+            [self launchDefaultSendEmailErrorAlert:error];
+        }];
+    }
+}
+
+- (void)launchDefaultSendEmailErrorAlert:(NSError *)error {
+    if (error) {
+        NSString *message =
+            [NSString stringWithFormat:@"%@%@", error.localizedDescription, NSLocalizedString(@"LTEXT_EMAILSENDER_ALERTVIEWERROR_POSTMESSAGE", @"")];
+        
+        UIAlertController *alert = [UIAlertController
+                                    alertControllerWithTitle:NSLocalizedString(@"LTEXT_EMAILSENDER_ALERTVIEWERROR_TITLE", @"")
+                                    message:message
+                                    preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* cancelButton = [UIAlertAction
+                                       actionWithTitle:NSLocalizedString(@"LTEXT_EMAILSENDER_ALERTVIEWERROR_OK", @"")
+                                       style:UIAlertActionStyleDefault
+                                       handler:^(UIAlertAction * action) {
+                                           //Handle your yes please button action here
+                                       }];
+        
+        [alert addAction:cancelButton];
+        
+        [self presentViewController:alert animated:YES completion:nil];
     }
 }
 

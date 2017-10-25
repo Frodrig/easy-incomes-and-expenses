@@ -130,9 +130,11 @@
 {
     NSDateComponents *dateComponents = [self createDateComponentsFromYearDate:yearDate andMonthIndex:monthIndex];
     NSDate *date = [[self findCurrentCalendar] dateFromComponents:dateComponents];
-    NSUInteger firstWeekDay = [[self findCurrentCalendar] ordinalityOfUnit:NSWeekdayCalendarUnit inUnit:NSWeekCalendarUnit forDate:date];
+   // NSUInteger firstWeekDay = [[self findCurrentCalendar] ordinalityOfUnit:NSWeekdayCalendarUnit inUnit:NSWeekCalendarUnit forDate:date];
     
-    return firstWeekDay;
+    NSUInteger firstWeekDay2 = [[self findCurrentCalendar] ordinalityOfUnit:NSCalendarUnitWeekday inUnit:NSCalendarUnitWeekOfMonth forDate:date];
+    //assert(firstWeekDay == firstWeekDay2);
+    return firstWeekDay2;
 }
 
 + (NSDateComponents *)createDateComponentsForDay:(NSUInteger)day month:(NSUInteger)monthIndex andYearDate:(NSUInteger)yearDate

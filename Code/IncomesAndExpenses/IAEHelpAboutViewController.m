@@ -115,7 +115,9 @@ static NSString * const kCollectionViewAboutCellIdentifier = @"IAEInfoCell";
     [self.delegate dismissAll];
     
     NSString *urlString = NSLocalizedString(kLTextAppUrl, @"");
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
+    
+    UIApplication *application = [UIApplication sharedApplication];
+    [application openURL:[NSURL URLWithString:urlString] options:@{} completionHandler:nil];
 }
 
 - (void)feedbackEmailButtonWasPressedInHelpAboutCollectionViewCell:(IAEHelpAboutCollectionViewCell *)cell

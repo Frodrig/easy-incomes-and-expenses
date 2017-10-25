@@ -575,7 +575,8 @@ static const NSUInteger kInvalidSelecteDay = 0;
     viewController.popoverPresentationController.sourceRect = rect;
     viewController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionDown;
     viewController.popoverPresentationController.delegate = self;
-    
+    viewController.preferredContentSize = viewController.view.frame.size;
+
     [self presentViewController:viewController animated:YES completion:nil];
 }
 

@@ -71,7 +71,9 @@
 }
 - (void)sendEmail:(SSPostmarkEmail *)email completion:(void(^)(BOOL success, NSError *error))completion {
     NSAssert(email, @"email is required");
-    [NSURLConnection sendAsynchronousRequest:[self _requestForEmail:email] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *responseData, NSError *error) {
+    
+    [[NSURLSession sharedSession] dataTaskWithRequest:[self _requestForEmail:email] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    /*[NSURLConnection sendAsynchronousRequest:[self _requestForEmail:email] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *responseData, NSError *error) {*/
         if (!response && error != nil) {
             NSError *networkError = [NSError errorWithDomain:SSPostmarkNetworkErrorDomain code:[error code] userInfo:[error userInfo]];
             completion(NO, networkError);
@@ -88,7 +90,7 @@
             return;
         }
         if (httpResponse.statusCode == 422 && completion) {
-            NSError *apiError = [NSError errorWithDomain:SSPostmarkAPIErrorDomain code:422 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Something with the message is not quite right (either malformed JSON or incorrect fields).", nil), @"responseBodyData" : responseData}];
+            NSError *apiError = [NSError errorWithDomain:SSPostmarkAPIErrorDomain code:422 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Something with the message is not quite right (either malformed JSON or incorrect fields).", nil), @"responseBodyData" : response}];
             completion(NO, apiError);
             return;
         }

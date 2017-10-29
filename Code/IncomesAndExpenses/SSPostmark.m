@@ -72,8 +72,8 @@
 - (void)sendEmail:(SSPostmarkEmail *)email completion:(void(^)(BOOL success, NSError *error))completion {
     NSAssert(email, @"email is required");
     
-    [[NSURLSession sharedSession] dataTaskWithRequest:[self _requestForEmail:email] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-    /*[NSURLConnection sendAsynchronousRequest:[self _requestForEmail:email] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *responseData, NSError *error) {*/
+    [[[NSURLSession sharedSession] dataTaskWithRequest:[self _requestForEmail:email] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        /* [NSURLConnection sendAsynchronousRequest:[self _requestForEmail:email] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *responseData, NSError *error) {*/
         if (!response && error != nil) {
             NSError *networkError = [NSError errorWithDomain:SSPostmarkNetworkErrorDomain code:[error code] userInfo:[error userInfo]];
             completion(NO, networkError);
@@ -99,7 +99,7 @@
             completion(NO, apiError);
             return;
         }
-    }];
+    }] resume];
 }
 
 - (NSMutableURLRequest *)_requestForEmail:(SSPostmarkEmail *)email {
@@ -159,10 +159,10 @@
     - (NSURLSessionDataTask *)dataTaskWithRequest:(NSURLRequest *)request completionHandler:(void (^)(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 */
     
-    [[NSURLSession sharedSession] dataTaskWithRequest:[self _requestForBatchEmails:postJSON] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-    /*
-    [NSURLConnection sendAsynchronousRequest:[self _requestForBatchEmails:postJSON] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *responseData, NSError *error) {
-        */
+    [[[NSURLSession sharedSession] dataTaskWithRequest:[self _requestForBatchEmails:postJSON] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        /*[NSURLConnection sendAsynchronousRequest:[self _requestForBatchEmails:postJSON] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *responseData, NSError *error) {*/
+        
         if (!response && error != nil) {
             NSError *networkError = [NSError errorWithDomain:SSPostmarkNetworkErrorDomain code:[error code] userInfo:[error userInfo]];
             completion(NO, networkError);
@@ -188,7 +188,7 @@
             completion(NO, apiError);
             return;
         }
-    }];
+    }] resume];
 }
 
 @end

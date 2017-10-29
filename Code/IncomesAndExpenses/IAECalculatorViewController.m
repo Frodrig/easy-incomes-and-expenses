@@ -508,10 +508,13 @@ static const NSUInteger kInvalidSelecteDay = 0;
     favoriteConceptsViewController.modalPresentationStyle                   = UIModalPresentationPopover;
     favoriteConceptsViewController.popoverPresentationController.sourceView = self.keyboardPanel;
     favoriteConceptsViewController.popoverPresentationController.sourceRect = presentRect;
+    favoriteConceptsViewController.preferredContentSize = favoriteConceptsViewController.view.bounds.size;
     favoriteConceptsViewController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionDown;
     favoriteConceptsViewController.popoverPresentationController.delegate = self;
     
-    [self presentViewController:favoriteConceptsViewController animated:YES completion:nil];    
+    [self presentViewController:favoriteConceptsViewController animated:YES completion:nil];
+    
+    
 }
 
 - (IBAction)categoryButtonPressed:(UIButton *)button

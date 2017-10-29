@@ -37,7 +37,6 @@ static const NSUInteger kSizeRoundedRectCorners = 10;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    NSAssert(@"No deberiamos de inicializar desde este punto", @"");
     self = nil;
     return self;
 }

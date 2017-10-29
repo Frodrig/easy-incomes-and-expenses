@@ -591,6 +591,25 @@
 - (void)checkFixesExecuted
 {
     if ([IAEFixRemoveCategoryActionLostInUnloadedYears defaultFix].resultReport.length > 0) {
+        UIAlertController *alert = [UIAlertController
+                                    alertControllerWithTitle:NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.alertview.subject", @"")
+                                    message:NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.alertview.message", @"")
+                                    preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* okButton = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.alertview.ok", @"")
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action) {
+                                        //Handle your yes please button action here
+                                       [self alertControllerClickedButtonAtIndex:0];
+                                   }];
+        
+  
+        [alert addAction:okButton];
+        
+        [self presentViewController:alert animated:YES completion:nil];
+
+/*
         UIAlertView *checkFixesExecutedAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.alertview.subject", @"")
                                                                               message:NSLocalizedString(@"IAEFixRemoveCategoryActionLostInUnloadedYears.alertview.message", @"")
                                                                              delegate:self
@@ -598,10 +617,27 @@
                                                                     otherButtonTitles:nil];
         [checkFixesExecutedAlertView show];
     }
+ */
+    }
 }
 
 #pragma mark - AlertViewDelegate
 
+-(void)alertControllerClickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (self.conceptCellToRemove) {
+        [self executeLogicAfterDissmisAlertViewConfirmationRemoveConceptWithButtonClickedAtIndex:buttonIndex];
+    } else if (self.waitingToConfirmRemoveAllConcepts) {
+        self.waitingToConfirmRemoveAllConcepts = NO;
+        if (buttonIndex == 1) {
+            [self deleteAllConceptsOfActualSelectionContextViewAndUpdateUserInterface];
+        }
+    } else {
+        [self executeLogicAfterFixRemoveCategoryActionLostInUnloadedYearsAlertViewOk];
+    }
+}
+
+/*
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (self.conceptCellToRemove) {
@@ -615,6 +651,7 @@
         [self executeLogicAfterFixRemoveCategoryActionLostInUnloadedYearsAlertViewOk];
     }
 }
+*/
 
 - (void)executeLogicAfterDissmisAlertViewConfirmationRemoveConceptWithButtonClickedAtIndex:(NSInteger)buttonIndex
 {
@@ -1320,12 +1357,40 @@
 
 - (void)lauchAlertViewToConfirmRemoveOfStrokedConceptCell
 {
+    UIAlertController *alert = [UIAlertController
+                                alertControllerWithTitle:NSLocalizedString(@"LTEXT_ALERTVIEW_CONFIRMREMOVECONCEPT_TITLE", @"")
+                                message:NSLocalizedString(@"LTEXT_ALERTVIEW_CONFIRMREMOVECONCEPT_MESSAGE", @"")
+                                preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* noButton = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(@"LTEXT_ALERTVIEW_CONFIRMREMOVECONCEPT_NO", @"")
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action) {
+                                   //Handle your yes please button action here
+                                   [self alertControllerClickedButtonAtIndex:0];
+                               }];
+    
+    UIAlertAction* yesButton = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(@"LTEXT_ALERTVIEW_CONFIRMREMOVECONCEPT_YES", @"")
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action) {
+                                   //Handle your yes please button action here
+                                   [self alertControllerClickedButtonAtIndex:1];
+                               }];
+    
+    [alert addAction:noButton];
+    [alert addAction:yesButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+    
+    /*
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_ALERTVIEW_CONFIRMREMOVECONCEPT_TITLE", @"")
                                                         message:NSLocalizedString(@"LTEXT_ALERTVIEW_CONFIRMREMOVECONCEPT_MESSAGE", @"")
                                                        delegate:self
                                               cancelButtonTitle:NSLocalizedString(@"LTEXT_ALERTVIEW_CONFIRMREMOVECONCEPT_NO", @"")
                                               otherButtonTitles:NSLocalizedString(@"LTEXT_ALERTVIEW_CONFIRMREMOVECONCEPT_YES", @""), nil];
     [alertView show];
+    */
 }
 
 - (void)doRemoveConceptCellToRemove
@@ -2296,6 +2361,23 @@
 
 - (void)launchAlertViewAboutInAppPurchasesInaccesible
 {
+    UIAlertController *alert = [UIAlertController
+                                alertControllerWithTitle:NSLocalizedString(@"LTEXT_INAPPPURCHASESINACCESIBLE_ALERTVIEW_TITLE", @"")
+                                message:NSLocalizedString(@"LTEXT_INAPPPURCHASESINACCESIBLE_ALERTVIEW_MESSAGE", @"")
+                                preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* cancelButton = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(@"LTEXT_INAPPPURCHASESINACCESIBLE_ALERTVIEW_CANCEL", @"")
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action) {
+                                   //Handle your yes please button action here
+                               }];
+    
+    [alert addAction:cancelButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+    
+    /*
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_INAPPPURCHASESINACCESIBLE_ALERTVIEW_TITLE", @"")
                                                         message:NSLocalizedString(@"LTEXT_INAPPPURCHASESINACCESIBLE_ALERTVIEW_MESSAGE", @"")
                                                        delegate:nil
@@ -2303,10 +2385,28 @@
                                               otherButtonTitles:nil];
     
     [alertView show];
+     */
 }
 
 - (void)launchAlertViewAboutInetConexionNotAvailable
 {
+    UIAlertController *alert = [UIAlertController
+                                alertControllerWithTitle:NSLocalizedString(@"LTEXT_INETCONEXION_ALERTVIEW_TITLE", @"")
+                                message:NSLocalizedString(@"LTEXT_INETCONEXION_ALERTVIEW_MESSAGE", @"")
+                                preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* cancelButton = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"LTEXT_INETCONEXION_ALERTVIEW_CANCEL", @"")
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action) {
+                                       //Handle your yes please button action here
+                                   }];
+    
+    [alert addAction:cancelButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+
+    /*
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_INETCONEXION_ALERTVIEW_TITLE", @"")
                                                         message:NSLocalizedString(@"LTEXT_INETCONEXION_ALERTVIEW_MESSAGE", @"")
                                                        delegate:nil
@@ -2314,6 +2414,7 @@
                                               otherButtonTitles:nil];
     
     [alertView show];
+     */
 }
 
 - (void)recalculeVisibleMonthsInOpenYearWithInitialMonth:(MonthType)initialMonth
@@ -2634,6 +2735,36 @@
 
 - (void)lauchAlertViewToConfirmRemoveAllConceptsInActualContext
 {
+    [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
+    
+    self.waitingToConfirmRemoveAllConcepts = YES;
+
+    UIAlertController *alert = [UIAlertController
+                                alertControllerWithTitle:NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_ALERTVIEWREMOVEALLCONCEPTS_TITLE", @"")
+                                message:[self.easyIncomesAndExpensesQuery isActualSelectedContextAMonth] ? NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_ALERTVIEWREMOVEALLCONCEPTS_MSG_MONTH", @"") : NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_ALERTVIEWREMOVEALLCONCEPTS_MSG_YEAR", @"")
+                                preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* cancelButton = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_ALERTVIEWREMOVEALLCONCEPTS_CANCELOPTION", @"")
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action) {
+                                       //Handle your yes please button action here
+                                       [self alertControllerClickedButtonAtIndex:0];
+                                   }];
+    UIAlertAction* removeButton = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_ALERTVIEWREMOVEALLCONCEPTS_REMOVEOPTION", @"")
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action) {
+                                       //Handle your yes please button action here
+                                       [self alertControllerClickedButtonAtIndex:1];
+                                   }];
+    
+    [alert addAction:cancelButton];
+    [alert addAction:removeButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+
+    /*
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_ALERTVIEWREMOVEALLCONCEPTS_TITLE", @"")
                                                         message:[self.easyIncomesAndExpensesQuery isActualSelectedContextAMonth] ? NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_ALERTVIEWREMOVEALLCONCEPTS_MSG_MONTH", @"") : NSLocalizedString(@"LTEXT_CONTEXTSUBMENU_ALERTVIEWREMOVEALLCONCEPTS_MSG_YEAR", @"")
                                                        delegate:self
@@ -2642,6 +2773,7 @@
     [alertView show];
     
     self.waitingToConfirmRemoveAllConcepts = YES;
+     */
 }
 
 - (void)deleteAllConceptsOfActualSelectionContextViewAndUpdateUserInterface
@@ -2707,8 +2839,27 @@
 
 - (void)lauchAlertViewCantSendCSVEmail
 {
+    [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
+    
+    UIAlertController *alert = [UIAlertController
+                                alertControllerWithTitle:NSLocalizedString(@"LTEXT_ALERT_CANTSENDEMAIL_ALERTVIEW_CSV_TITLE", @"")
+                                message:NSLocalizedString(@"LTEXT_ALERT_CANTSENDEMAIL_ALERTVIEW_CSV_MESSAGE", @"")
+                                preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* okButton = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"LTEXT_ALERT_CANTSENDEMAIL_ALERTVIEW_CSV_OKBUTTON", @"")
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action) {
+                                       //Handle your yes please button action here
+                                   }];
+    [alert addAction:okButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+
+    /*
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"LTEXT_ALERT_CANTSENDEMAIL_ALERTVIEW_CSV_TITLE", @"") message:NSLocalizedString(@"LTEXT_ALERT_CANTSENDEMAIL_ALERTVIEW_CSV_MESSAGE", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"LTEXT_ALERT_CANTSENDEMAIL_ALERTVIEW_CSV_OKBUTTON", @"") otherButtonTitles:nil];
     [alertView show];
+     */
 }
 
 - (void)lauchMailComposerViewControllerForSendCSVExport:(NSString *)attachmentNameDescriptor
@@ -2724,7 +2875,8 @@
     if (fileHandleOk) {
         NSData *fileData = [fileHandle readDataToEndOfFile];
         [appEmailViewController addAttachmentData:fileData mimeType:@"text/csv" fileName:attachmentNameDescriptor];
-        [self presentViewController:appEmailViewController animated:YES completion:nil];
+      //  [self presentViewController:appEmailViewController animated:YES completion:nil];
+        [self.view.window.rootViewController presentViewController:appEmailViewController animated:YES completion:nil];
     } else {
         [appEmailViewController dismissViewControllerAnimated:YES completion:nil];
     }

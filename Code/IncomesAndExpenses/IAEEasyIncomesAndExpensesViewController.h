@@ -62,4 +62,6 @@
 
 - (void)resetToLaunchState;
 
+- (void)alertControllerClickedButtonAtIndex:(NSInteger)buttonIndex;
+
 @end

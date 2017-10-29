@@ -242,7 +242,7 @@ static const NSUInteger kInvalidSelecteDay = 0;
 
     
     // REMOVE REMOVE REMOVE REMOVE
-    [[NSUserDefaults standardUserDefaults] enableProVersion];
+   // [[NSUserDefaults standardUserDefaults] enableProVersion];
 
 }
 

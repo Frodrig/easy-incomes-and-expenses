@@ -143,7 +143,7 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
 {
     IAEOpenYear *openYear = nil;
     
-    const BOOL isPresentOrPastYearDate = [self isPresentOrPastYearTheYearDate:yearDate.unsignedIntegerValue];
+    const BOOL isPresentOrPastYearDate = true;//[self isPresentOrPastYearTheYearDate:yearDate.unsignedIntegerValue];
     if (isPresentOrPastYearDate) {
         const NSUInteger firstYearDate = yearDate.unsignedIntegerValue;
         const NSUInteger secondYearDate = yearDate.unsignedIntegerValue + 1;
@@ -151,7 +151,18 @@ static NSString * const kFileNameForStoreData = @"incomeandexpenses.data";
         IAEYear *firstYear = [self findLoadOrCreateYearObjectWithDate:firstYearDate];
         IAEYear *secondYear = [self findLoadOrCreateYearObjectWithDate:secondYearDate];
         openYear = [self findOrCreateOpenYearObjectWithFirstYear:firstYear andSecondYear:secondYear];
-    }
+        
+    }/* else if (![self findYearObjectWithDate:yearDate.unsignedIntegerValue]) {
+        // future year that doesnt exist
+        const NSUInteger firstYearDate = yearDate.unsignedIntegerValue;
+        const NSUInteger secondYearDate = yearDate.unsignedIntegerValue + 1;
+
+        IAEYear *firstYear = [self findLoadOrCreateYearObjectWithDate:firstYearDate];
+        IAEYear *secondYear = [self findLoadOrCreateYearObjectWithDate:secondYearDate];
+        openYear = [self findOrCreateOpenYearObjectWithFirstYear:firstYear andSecondYear:secondYear];
+    } else {
+        openYear = [self findOpenYearWithDate:yearDate];
+    }*/
     
     return openYear;
 }

@@ -188,7 +188,7 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
         IAEOpenYear *year = [[IAEBook sharedBook] findOpenYearWithDate:@(yearDate)];
         indexPath = [NSIndexPath indexPathForRow:[[[IAEBook sharedBook] findAllOpenYearsWithConceptsSorted] indexOfObject:year] inSection:0];
     } else if ([self isSegmentedControlInAllYearsState]) {
-        indexPath = [NSIndexPath indexPathForRow:[IAEDateHelper findPresentYearDate] - yearDate inSection:0];
+        indexPath = [NSIndexPath indexPathForRow:[IAEDateHelper findPresentYearDate] - yearDate + 1 inSection:0];
     }
     
     return indexPath;
@@ -363,7 +363,7 @@ static const CGFloat kDurationChangeModeFadeOut = 0.35;
 - (NSUInteger)yearDateFromIndexPath:(NSIndexPath *)indexPath
 {
     NSUInteger actualYearDate = [IAEDateHelper findPresentYearDate];
-    NSUInteger yearDate = actualYearDate - indexPath.row;
+    NSUInteger yearDate = actualYearDate - indexPath.row + 1;
 
     return yearDate;
 }

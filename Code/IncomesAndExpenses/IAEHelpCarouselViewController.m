@@ -74,12 +74,13 @@
 
 - (void)configureScrollView
 {
-    self.scrollView.contentOffset = CGPointZero;
-    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame) * self.helpScreens.count, CGRectGetHeight(self.scrollView.frame));
+    CGSize contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame) * self.helpScreens.count, CGRectGetHeight(self.scrollView.frame));
+    self.scrollView.contentSize = contentSize;
     self.scrollView.bounces = YES;
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
     self.scrollView.pagingEnabled = YES;
+    self.scrollView.contentOffset = CGPointZero;
 }
 
 - (void)addImagesToScrollView
@@ -87,8 +88,10 @@
     for (NSUInteger helpScreenIndexIt = 0; helpScreenIndexIt < self.helpScreens.count; ++helpScreenIndexIt) {
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:self.helpScreens[helpScreenIndexIt]]];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
-        imageView.frame = self.scrollView.bounds;
-        imageView.center = CGPointMake(CGRectGetMidX(self.scrollView.frame) + CGRectGetWidth(self.scrollView.frame) * helpScreenIndexIt, CGRectGetMidY(self.scrollView.frame));
+        CGRect bounds = self.scrollView.bounds;
+        imageView.frame = bounds;
+        CGPoint center = CGPointMake(CGRectGetMidX(self.scrollView.frame) + CGRectGetWidth(self.scrollView.frame) * helpScreenIndexIt, CGRectGetMidY(bounds));
+        imageView.center = center;
         [self.scrollView addSubview:imageView];
     }
 }

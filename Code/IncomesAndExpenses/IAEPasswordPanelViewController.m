@@ -144,7 +144,10 @@ static const NSInteger kBasePanelPasswordTag = 100;
 
 - (void)addInsertToChangePasswordPanelScreen
 {
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.bounds.size.width * 3, self.scrollView.bounds.size.height);
+ //   CGSize size = CGSizeMake(self.scrollView.bounds.size.width * 3, self.scrollView.bounds.size.height);
+    CGSize contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame) * 3, CGRectGetHeight(self.scrollView.frame));
+
+    self.scrollView.contentSize = contentSize;
 
     [self createAndInsertPasswordPanelScreenViewWithMessage:@"LTEXT_PASSWORDPANEL_SCREENMESSAGE_INSERTOCHANGE" atScrollViewPosition:0];
     [self createAndInsertPasswordPanelScreenViewWithMessage:@"LTEXT_PASSWORDPANEL_SCREENMESSAGE_INSERTOCREATE" atScrollViewPosition:1];
@@ -154,7 +157,7 @@ static const NSInteger kBasePanelPasswordTag = 100;
 - (void)createAndInsertPasswordPanelScreenViewWithMessage:(NSString *)message atScrollViewPosition:(NSInteger)position
 {
     IAEPasswordPanelScreenView *panel = (IAEPasswordPanelScreenView *)[UIView viewFromXib:@"IAEPasswordPanelScreenView" withOwner:self];
-    panel.frame = CGRectMake(self.scrollView.bounds.size.width * position, 0, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height);
+    panel.frame = CGRectMake(CGRectGetWidth(self.scrollView.frame) * position, 0, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height);
     panel.tag = [self createTagForPasswordPanelAtPosition:position];
     [panel setMessage:NSLocalizedString(message, @"")];
     

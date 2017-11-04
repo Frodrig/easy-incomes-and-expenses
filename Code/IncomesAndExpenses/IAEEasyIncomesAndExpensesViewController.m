@@ -2103,7 +2103,7 @@
 
 - (void)launchCategoryEditorViewControllerModalToAddCategoryFromCategorySelectorViewController:(IAECategorySelectorViewController *)categorySelectorViewController andCategoryType:(CategoryType)categoryType
 {
-    [self dismisPopover];
+   // [self dismisPopover];
     
     IAECategoryEditorViewController *categoryEditorViewController = [[IAECategoryEditorViewController alloc] initToAddCategoryOfType:categoryType];
     categoryEditorViewController.delegate = self;

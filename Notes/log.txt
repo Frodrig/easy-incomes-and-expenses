@@ -1,4 +1,10 @@
 02/05/2020
 
-- Al arrancar el simulador y desplegar la calculadora con el + o el - la aplicación crashea intentando setear un tag de una categoría. 
-- Lo mismo ocurre si intentamos arrastrar el panel hacia arriba.
+Problemas:
+- Simbolo en la calculadora. FIXED.
+- Crash al desplegar la calculadora. FIXED.
+- Ventana de ayuda se ve pequeña. FIXED.
+- No sé si funciona el tema de la contraseña y si en la pantalla inicial te olvidas ¿como la recuperas?
+- Hemos quitado crashlitics.
+- No puedo probar que manda correctamente los emails.
+- No sé si funciona bien el tema de las in app purchases.

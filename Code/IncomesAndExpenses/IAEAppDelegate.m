@@ -15,8 +15,6 @@
 #import "IAEFixRemoveCategoryActionLostInUnloadedYears.h"
 #import "IAEInAppPurchasesStore.h"
 #import "NSUserDefaults+EasyIncAndExp.h"
-#import <Fabric/Fabric.h>
-#import <Crashlytics/Crashlytics.h>
 
 static NSString * const kUserDefaultsDayModeActiveKey = @"dayModeActive";
 static NSString * const kUserDefaultsReportAmountMode = @"reportAmountMode";
@@ -40,8 +38,6 @@ static NSString * const kUserDefaultsReportAmountModeTotalAmountValue = @"totalA
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [Fabric with:@[[Crashlytics class]]];
-
     [[NSUserDefaults standardUserDefaults] prepareDefaults];
     [[IAEInAppPurchasesStore defaultStore] beginTransationObserverSession];
     [self processProcessInfoEnvironment];

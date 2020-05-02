@@ -277,8 +277,6 @@
 		5BFF5B9B1928D251009CAEE6 /* IAEInAppPurchasesStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFF5B9A1928D251009CAEE6 /* IAEInAppPurchasesStore.m */; };
 		5BFF5B9D1928D2CD009CAEE6 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BFF5B9C1928D2CD009CAEE6 /* StoreKit.framework */; };
 		5BFF5BA11928F945009CAEE6 /* SKProduct+FormatedPrice.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFF5BA01928F945009CAEE6 /* SKProduct+FormatedPrice.m */; };
-		C1A308301E3CC1AD0025C682 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1A3082E1E3CC1AD0025C682 /* Fabric.framework */; };
-		C1A308331E3CC3300025C682 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1A308321E3CC3300025C682 /* Crashlytics.framework */; };
 		C1A308351E3CC3CC0025C682 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C1A308341E3CC3CC0025C682 /* libc++.tbd */; };
 		C1A308371E3CC3D30025C682 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C1A308361E3CC3D30025C682 /* libz.tbd */; };
 /* End PBXBuildFile section */
@@ -760,6 +758,7 @@
 		5BFF5B9C1928D2CD009CAEE6 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		5BFF5B9F1928F945009CAEE6 /* SKProduct+FormatedPrice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKProduct+FormatedPrice.h"; sourceTree = "<group>"; };
 		5BFF5BA01928F945009CAEE6 /* SKProduct+FormatedPrice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKProduct+FormatedPrice.m"; sourceTree = "<group>"; };
+		C1498CF5245D426C0047D1BD /* Easy Inc & Exp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Easy Inc & Exp.entitlements"; sourceTree = "<group>"; };
 		C1A3082E1E3CC1AD0025C682 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		C1A308321E3CC3300025C682 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		C1A308341E3CC3CC0025C682 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
@@ -785,14 +784,12 @@
 				C1A308351E3CC3CC0025C682 /* libc++.tbd in Frameworks */,
 				5BBD37CD180BFF730095A15A /* SystemConfiguration.framework in Frameworks */,
 				5BFF5B9D1928D2CD009CAEE6 /* StoreKit.framework in Frameworks */,
-				C1A308331E3CC3300025C682 /* Crashlytics.framework in Frameworks */,
 				5B767DF91636D7FC005315F8 /* Foundation.framework in Frameworks */,
 				5BDEEC03191033B200646726 /* CFNetwork.framework in Frameworks */,
 				5BBD37CF180BFF990095A15A /* Security.framework in Frameworks */,
 				5BBD37D3180C01850095A15A /* MediaPlayer.framework in Frameworks */,
 				5B7A4D7F16B68062001751A9 /* MessageUI.framework in Frameworks */,
 				5BC31A8416651F1F009F23D6 /* QuartzCore.framework in Frameworks */,
-				C1A308301E3CC1AD0025C682 /* Fabric.framework in Frameworks */,
 				5BD06168163A8CFF00A80BE3 /* CoreData.framework in Frameworks */,
 				5B767DF71636D7FC005315F8 /* UIKit.framework in Frameworks */,
 				5B767DFB1636D7FC005315F8 /* CoreGraphics.framework in Frameworks */,
@@ -1561,6 +1558,7 @@
 		5B767DFC1636D7FC005315F8 /* IncomesAndExpenses */ = {
 			isa = PBXGroup;
 			children = (
+				C1498CF5245D426C0047D1BD /* Easy Inc & Exp.entitlements */,
 				5BA98C56191D46C0005D49FB /* Third Party */,
 				5B1B7FA218D7A1C90012AC21 /* Fix */,
 				5B8F842F17B0FEA800C17020 /* Global constants */,
@@ -2510,7 +2508,6 @@
 				5B767DEE1636D7FC005315F8 /* Sources */,
 				5B767DEF1636D7FC005315F8 /* Frameworks */,
 				5B767DF01636D7FC005315F8 /* Resources */,
-				5B3ACD4917D8BF0B00771B11 /* ShellScript */,
 				C1A308311E3CC1DF0025C682 /* ShellScript */,
 			);
 			buildRules = (
@@ -2537,7 +2534,6 @@
 						TestTargetID = 5B767DF11636D7FC005315F8;
 					};
 					5B767DF11636D7FC005315F8 = {
-						DevelopmentTeam = JXDB6K5QLK;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
@@ -2551,6 +2547,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				es,
 				ca,
@@ -2717,19 +2714,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5B3ACD4917D8BF0B00771B11 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "./Fabric.framework/run ed113bdf0c248b243b565ef1fdac0f966317a7b8 5b77fb835e7f364686ee2eb031fac2f3c0e22e9011e4746f1300c0113bd3878d";
-		};
 		C1A308311E3CC1DF0025C682 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2741,7 +2725,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -3163,8 +3147,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -3216,8 +3200,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -3243,10 +3227,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "IncomesAndExpenses/Easy Inc & Exp.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Fernando Rodríguez Martínez (X8YC5J88PS)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				COPY_PHASE_STRIP = YES;
-				DEVELOPMENT_TEAM = JXDB6K5QLK;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -3267,6 +3253,7 @@
 				PRODUCT_NAME = "Easy Inc & Exp";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SUPPORTS_MACCATALYST = YES;
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
@@ -3276,11 +3263,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "IncomesAndExpenses/Easy Inc & Exp.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: Fernando Rodríguez Martínez (X8YC5J88PS)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = JXDB6K5QLK;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -3301,6 +3290,7 @@
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=*]" = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SUPPORTS_MACCATALYST = YES;
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};

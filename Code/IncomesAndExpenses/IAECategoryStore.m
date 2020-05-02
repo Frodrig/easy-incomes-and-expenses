@@ -247,14 +247,16 @@ static NSString * const kCategoryPropertyNameTag = @"tag";
 {    
     if ([keyPath isEqualToString:kCategoryPropertyNameTag]) {
         id oldValue = [change objectForKey:NSKeyValueChangeOldKey];
-        id newValue = [change objectForKey:NSKeyValueChangeNewKey];
-        if ([[change objectForKey:NSKeyValueChangeKindKey] intValue] == NSKeyValueChangeSetting && newValue != [NSNull null]) {
-            // Se ha producido un rename
-            // Nota: En caso de que se asigne el mismo string pero diferenciado en mayusculas y minusculas manda evento
-            NSString *strOldValue = oldValue;
-            NSString *strNewValue = newValue;
-             if (![strOldValue isEqualToString:strNewValue]) {
-                [self sortUserCategoriesByTag];
+        if (![oldValue isKindOfClass:[NSNull class]]) {
+            id newValue = [change objectForKey:NSKeyValueChangeNewKey];
+            if ([[change objectForKey:NSKeyValueChangeKindKey] intValue] == NSKeyValueChangeSetting && newValue != [NSNull null]) {
+                // Se ha producido un rename
+                // Nota: En caso de que se asigne el mismo string pero diferenciado en mayusculas y minusculas manda evento
+                NSString *strOldValue = oldValue;
+                NSString *strNewValue = newValue;
+                 if (![strOldValue isEqualToString:strNewValue]) {
+                    [self sortUserCategoriesByTag];
+                }
             }
         }
     }

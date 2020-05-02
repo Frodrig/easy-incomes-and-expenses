@@ -294,7 +294,6 @@
 /* Begin PBXFileReference section */
 		5B0002B7182A615600CE7843 /* IAEExporterDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEExporterDefs.h; sourceTree = "<group>"; };
 		5B021D3716B8363F000B8D4F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		5B0574C217AFE2F600B95D50 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/IAEWithoutConceptsTextWarningReportMode.xib; sourceTree = "<group>"; };
 		5B0574C417AFE2F900B95D50 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/IAEWithoutConceptsTextWarningReportMode.xib; sourceTree = "<group>"; };
 		5B069D7D191E2400002442F6 /* IAEPasswordDisabledEmailRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAEPasswordDisabledEmailRequest.h; sourceTree = "<group>"; };
 		5B069D7E191E2400002442F6 /* IAEPasswordDisabledEmailRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAEPasswordDisabledEmailRequest.m; sourceTree = "<group>"; };
@@ -360,7 +359,6 @@
 		5B2AAA2A17C773C500E7C7A5 /* 746-plus-circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "746-plus-circle@2x.png"; sourceTree = "<group>"; };
 		5B2AAA2E17C773CF00E7C7A5 /* 747-minus-circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "747-minus-circle@2x.png"; sourceTree = "<group>"; };
 		5B2AAA3117C7747100E7C7A5 /* 747-minus-circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "747-minus-circle.png"; sourceTree = "<group>"; };
-		5B2D38B417AFA1B30056488B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/IAEWithoutConceptsTextWarning.xib; sourceTree = "<group>"; };
 		5B2D38B617AFA1B90056488B /* es */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = es; path = es.lproj/IAEWithoutConceptsTextWarning.xib; sourceTree = "<group>"; };
 		5B2E93CD17DCDDF6007D4284 /* eiae_icon40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eiae_icon40@2x.png"; sourceTree = "<group>"; };
 		5B2E93CE17DCDDF6007D4284 /* eiae_icon40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eiae_icon40.png; sourceTree = "<group>"; };
@@ -758,6 +756,8 @@
 		5BFF5B9C1928D2CD009CAEE6 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		5BFF5B9F1928F945009CAEE6 /* SKProduct+FormatedPrice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKProduct+FormatedPrice.h"; sourceTree = "<group>"; };
 		5BFF5BA01928F945009CAEE6 /* SKProduct+FormatedPrice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKProduct+FormatedPrice.m"; sourceTree = "<group>"; };
+		C1117633245D506A004ABB69 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/IAEWithoutConceptsTextWarningReportMode.xib; sourceTree = "<group>"; };
+		C1117634245D506A004ABB69 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/IAEWithoutConceptsTextWarning.xib; sourceTree = "<group>"; };
 		C1498CF5245D426C0047D1BD /* Easy Inc & Exp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Easy Inc & Exp.entitlements"; sourceTree = "<group>"; };
 		C1A3082E1E3CC1AD0025C682 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		C1A308321E3CC3300025C682 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
@@ -2526,7 +2526,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = IAE;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = "Fernando Rodríguez Martínez";
 				TargetAttributes = {
 					5B1B7F8718D791070012AC21 = {
@@ -2544,13 +2544,13 @@
 			};
 			buildConfigurationList = 5B767DEC1636D7FC005315F8 /* Build configuration list for PBXProject "IncomesAndExpenses" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				es,
 				ca,
+				Base,
 			);
 			mainGroup = 5B767DE71636D7FC005315F8;
 			productRefGroup = 5B767DF31636D7FC005315F8 /* Products */;
@@ -2881,9 +2881,9 @@
 		5B0574C317AFE2F600B95D50 /* IAEWithoutConceptsTextWarningReportMode.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5B0574C217AFE2F600B95D50 /* en */,
 				5B0574C417AFE2F900B95D50 /* es */,
 				5BBD37D5180C117B0095A15A /* ca */,
+				C1117633245D506A004ABB69 /* Base */,
 			);
 			name = IAEWithoutConceptsTextWarningReportMode.xib;
 			sourceTree = "<group>";
@@ -2909,9 +2909,9 @@
 		5B2D38B517AFA1B30056488B /* IAEWithoutConceptsTextWarning.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5B2D38B417AFA1B30056488B /* en */,
 				5B2D38B617AFA1B90056488B /* es */,
 				5BBD37D6180C117B0095A15A /* ca */,
+				C1117634245D506A004ABB69 /* Base */,
 			);
 			name = IAEWithoutConceptsTextWarning.xib;
 			sourceTree = "<group>";
@@ -3136,11 +3136,13 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
@@ -3167,7 +3169,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "28D82C68-14DB-4784-B3F4-3AC432F97F97";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "28D82C68-14DB-4784-B3F4-3AC432F97F97";
@@ -3189,11 +3191,13 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
@@ -3212,7 +3216,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "28D82C68-14DB-4784-B3F4-3AC432F97F97";

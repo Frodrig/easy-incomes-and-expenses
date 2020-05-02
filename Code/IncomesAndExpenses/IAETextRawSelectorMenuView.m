@@ -431,7 +431,7 @@ static const CGFloat kMinimumAlphaOfAnimationOptionDestroyWithGosth = 0.1;
     UIButton *cloneOption = [self cloneOptionButton:option];
     [self.containerView addSubview:cloneOption];
 
-    [UIView setAnimationBeginsFromCurrentState:UIViewAnimationCurveEaseOut];
+    [UIView setAnimationBeginsFromCurrentState:TRUE];
     [UIView animateWithDuration:kDurationOfAnimationOptionDestroyWithGosth animations:^{
         cloneOption.center = CGPointMake(cloneOption.center.x, cloneOption.center.y + kDistanceOfAnimationOptionDestroyWithGosth);
         cloneOption.alpha = kMinimumAlphaOfAnimationOptionDestroyWithGosth;

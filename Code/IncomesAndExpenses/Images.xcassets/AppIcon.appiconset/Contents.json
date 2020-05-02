@@ -1,11 +1,13 @@
 {
   "images" : [
     {
+      "filename" : "incomes_fer220.png",
       "idiom" : "ipad",
       "scale" : "1x",
       "size" : "20x20"
     },
     {
+      "filename" : "incomes_fer240.png",
       "idiom" : "ipad",
       "scale" : "2x",
       "size" : "20x20"
@@ -53,6 +55,7 @@
       "size" : "83.5x83.5"
     },
     {
+      "filename" : "incomes_fer21024.png",
       "idiom" : "ios-marketing",
       "scale" : "1x",
       "size" : "1024x1024"

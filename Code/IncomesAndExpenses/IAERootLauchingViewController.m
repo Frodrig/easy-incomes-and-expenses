@@ -259,6 +259,7 @@ static const CGFloat kFadeOutCourtainViewTransitionToProVersionEffectTime = 3.0;
         IAEHelpCarouselViewController *helpCarouselViewController = [[IAEHelpCarouselViewController alloc] initWithNibName:nil bundle:nil];
         helpCarouselViewController.delegate = self;
         helpCarouselViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        helpCarouselViewController.modalPresentationStyle = UIModalPresentationFullScreen;
         [self.view.window.rootViewController presentViewController:helpCarouselViewController animated:YES completion:^{
             self.easyIncomesAndExpensesViewController.helpModeActivated = YES;
         }];

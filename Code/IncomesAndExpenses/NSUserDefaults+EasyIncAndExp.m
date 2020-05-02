@@ -190,6 +190,7 @@ static NSString * const kUserDefaultsDayModeActive = @"dayModeActive";
 
 - (BOOL)isProVersionEnabled
 {
+    return true;
     return [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultsProVersionKey];
 }
 

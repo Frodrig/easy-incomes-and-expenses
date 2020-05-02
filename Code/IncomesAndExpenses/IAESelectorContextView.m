@@ -133,7 +133,7 @@ static const CGFloat kDurationOfAnimationOfChangeContext = 0.6;
     } completion:^(BOOL finished) {
         contextViewToHide.alpha = 1.0;
         contextViewToHide.hidden = YES;
-        _animationInProgress = NO;
+        self->_animationInProgress = NO;
         [self sendToDelegateChangeToContextViewAtIndex:[self findActualContextViewIndex]];
     }];
     

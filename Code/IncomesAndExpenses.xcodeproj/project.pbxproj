@@ -3237,7 +3237,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 3.2.3;
+				CURRENT_PROJECT_VERSION = 3.2.4;
 				DEVELOPMENT_TEAM = JXDB6K5QLK;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3276,7 +3276,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3.2.3;
+				CURRENT_PROJECT_VERSION = 3.2.4;
 				DEVELOPMENT_TEAM = JXDB6K5QLK;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

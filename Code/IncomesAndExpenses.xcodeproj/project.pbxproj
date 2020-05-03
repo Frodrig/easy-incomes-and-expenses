@@ -3237,6 +3237,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 3.2.3;
 				DEVELOPMENT_TEAM = JXDB6K5QLK;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3251,6 +3252,7 @@
 					"$(inherited)",
 					"$(SRCROOT)",
 				);
+				MARKETING_VERSION = 3.2.0;
 				ONLY_ACTIVE_ARCH = NO;
 				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "";
 				OTHER_LDFLAGS = "-ObjC";
@@ -3274,6 +3276,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 3.2.3;
 				DEVELOPMENT_TEAM = JXDB6K5QLK;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3288,6 +3291,7 @@
 					"$(inherited)",
 					"$(SRCROOT)",
 				);
+				MARKETING_VERSION = 3.2.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.easyincomesandexpenses.frodrig;

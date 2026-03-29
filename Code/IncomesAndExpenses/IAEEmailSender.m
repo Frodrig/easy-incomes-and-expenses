@@ -13,9 +13,10 @@
 
 #pragma mark - Constants
 
-static NSString * const kAWSAccessKeyId = @"REMOVED_AWS_KEY_ID";
-static NSString * const kAWSSecretKey = @"REMOVED_AWS_SECRET";
-static NSString * const kPostmarkAPIKey = @"REMOVED_POSTMARK_TOKEN";
+// API keys removed — do not commit real credentials to public repositories
+static NSString * const kAWSAccessKeyId = @"";
+static NSString * const kAWSSecretKey = @"";
+static NSString * const kPostmarkAPIKey = @"";
 
 @interface IAEEmailSender()
 

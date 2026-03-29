@@ -1,6 +1,8 @@
 # Easy Incomes and Expenses
 
-A smart and simple personal finance app for iPad. https://frodrig.github.io/easy-incomes-and-expenses/
+A smart and simple personal finance app for iPad.
+
+https://frodrig.github.io/easy-incomes-and-expenses/
 
 Easy Incomes and Expenses lets you monitor your incomes and expenses easily. A ledger for each year, organised by month, where you can log every operation with categories that help you understand where your money goes. No unnecessary features. A simple application that looks nice and elegant.
 

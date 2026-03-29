@@ -1,5 +1,7 @@
 # Easy Incomes and Expenses
 
+> This project is archived and no longer maintained. It was built in 2013 for iOS 5.
+
 A smart and simple personal finance app for iPad.
 
 https://frodrig.github.io/easy-incomes-and-expenses/
